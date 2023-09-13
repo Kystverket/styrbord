@@ -20,7 +20,7 @@
   border: 2px solid var(--kyv-color-primary-2);
 }
 
-.kyv-button:focus {
+.kyv-button:focus-visible {
   outline: 0.125rem solid var(--kyv-color-secondary);
   outline-offset: 0.0625rem;
   z-index: 5;
