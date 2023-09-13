@@ -31,3 +31,25 @@ h4.kyv-h {
   line-height: 1.1;
   font-weight: 600;
 }
+.kyv-h.underline {
+  text-decoration: underline;
+  text-decoration-color: #ff3c14;
+  text-decoration-thickness: 0.125rem;
+  text-underline-offset: 0.125rem;
+}
+h1.kyv-h.underline {
+  text-decoration-thickness: 0.2rem;
+  text-underline-offset: 0.4rem;
+}
+h2.kyv-h.underline {
+  text-decoration-thickness: 0.175rem;
+  text-underline-offset: 0.3rem;
+}
+h3.kyv-h.underline {
+  text-decoration-thickness: 0.15rem;
+  text-underline-offset: 0.25rem;
+}
+h4.kyv-h.underline {
+  text-decoration-thickness: 0.1rem;
+  text-underline-offset: 0.2rem;
+}

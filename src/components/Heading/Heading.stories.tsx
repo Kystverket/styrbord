@@ -56,3 +56,27 @@ export const Heading4: Story = {
   ),
 };
 
+export const Heading1WithUnderline: Story = {
+  args: {
+    size: 'h1',
+    underline: true,
+  },
+  render: (args) => (
+    <Heading {...args}>
+      Dette er en overskrift
+    </Heading>
+  ),
+};
+
+export const Heading2WithUnderline: Story = {
+  args: {
+    size: 'h2',
+    underline: true,
+  },
+  render: (args) => (
+    <Heading {...args}>
+      Dette er en mindre overskrift
+    </Heading>
+  ),
+};
+
