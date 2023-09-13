@@ -1,0 +1,23 @@
+html {
+  --kyv-color-primary: #000667;
+  --kyv-color-primary-text: #fff;
+  --kyv-color-primary-2: #ff451f;
+  --kyv-color-primary-2-text: #000;
+  --kyv-color-primary-3: #a9e5fb;
+  --kyv-color-primary-3-text: #000;
+  --kyv-color-primary-4: #f9f6f3;
+  --kyv-color-primary-4-text: #000;
+
+  --kyv-color-secondary: #0596cb;
+  --kyv-color-secondary-text: #000;
+  --kyv-color-secondary-2: #5d5d5d;
+  --kyv-color-secondary-2-text: #fff;
+  --kyv-color-secondary-3: #3ba460;
+  --kyv-color-secondary-3-text: #000;
+
+  --kyv-color-white: #fff;
+  --kyv-color-white-text: var(--kyv-color-primary);
+
+  --kyv-color-black: #000;
+  --kyv-color-black-text: var(--kyv-color-primary-4);
+}
