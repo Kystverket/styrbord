@@ -2,7 +2,6 @@ import React from 'react';
 import './heading.css';
 
 interface HeadingProps {
-  className?: string;
   /**
    * Den (semantiske) størrelsen på overskriften.
    */
@@ -24,7 +23,7 @@ export const Heading = ({
   const CustomTag = size as keyof React.JSX.IntrinsicElements;
   return (
     <CustomTag
-      className={[props.className, 'kyv-h', (underline != 'none' ? 'kyv-h-underline kyv-h-underline-' + underline : '')].join(' ')}
+      className={['kyv-h', (underline != 'none' ? 'kyv-h-underline kyv-h-underline-' + underline : '')].join(' ')}
       {...props}
     >
       {props.children}

@@ -2,7 +2,6 @@ import React from 'react';
 import './divider.css';
 
 interface DividerProps {
-  className?: string;
   /**
    * Fargen på området over overgangen.
    */
@@ -33,7 +32,7 @@ export const Divider = ({
 }: DividerProps) => {
   return (
     <div
-      className={[props.className, 'kyv-divider', 'kyv-divider-from-' + from, 'kyv-divider-size-' + size, 'kyv-divider-to-' + to].join(' ')}
+      className={['kyv-divider', 'kyv-divider-from-' + from, 'kyv-divider-size-' + size, 'kyv-divider-to-' + to].join(' ')}
       {...props}
     >
       {type == 'fill' && <svg

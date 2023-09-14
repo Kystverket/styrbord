@@ -2,7 +2,6 @@ import React from 'react';
 import './area.css';
 
 interface AreaProps {
-  className?: string;
   /**
    * Farge på området.
    */
@@ -23,7 +22,7 @@ export const Area = ({
 }: React.PropsWithChildren<AreaProps>) => {
   return (
     <div
-      className={[props.className, 'kyv-body', 'kyv-area', 'kyv-area-bg-' + color, border != 'none' ? 'kyv-area-border' : '', 'kyv-area-border-' + border].join(' ')}
+      className={['kyv-body', 'kyv-area', 'kyv-area-bg-' + color, border != 'none' ? 'kyv-area-border' : '', 'kyv-area-border-' + border].join(' ')}
       {...props}
     >
       {props.children}

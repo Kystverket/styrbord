@@ -32,6 +32,14 @@
   border: 2px solid var(--kyv-color-rust);
 }
 
+.kyv-button--disabled,
+.kyv-button--disabled:hover {
+  background: #f8f8f8;
+  color: #ccc;
+  border: 2px solid #eee;
+  cursor: default;
+}
+
 .kyv-button--small {
   font-size: 12px;
   padding: 0.4rem 0.7rem;
