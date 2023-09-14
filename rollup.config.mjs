@@ -4,6 +4,8 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import postcss from 'rollup-plugin-postcss';
 import dts from 'rollup-plugin-dts';
+import css from 'rollup-plugin-import-css';
+import postcssImport from 'postcss-import';
 
 // This is required to read package.json file when
 // using Native ES modules in Node.js
@@ -33,8 +35,10 @@ export default [
       commonjs(),
       typescript(),
       postcss({
+        plugins: [postcssImport()],
         extensions: ['.css'],
       }),
+      css(),
     ],
   },
   {

@@ -33,7 +33,7 @@ export const Button = ({
   return (
     <button
       type="button"
-      className={['kyv', 'kyv-body', 'kyv-button', `kyv-button--${size}`, mode].join(' ')}
+      className={['kyv-body', 'kyv-button', `kyv-button--${size}`, mode].join(' ')}
       {...props}
     >
       {label}
