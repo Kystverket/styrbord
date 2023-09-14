@@ -1,0 +1,89 @@
+@import '../../styles/variables.css';
+
+.kyv-divider {
+  display: block;
+  background: transparent;
+  color: transparent;
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+}
+
+.kyv-divider-size-medium,
+.kyv-divider-size-medium svg,
+.kyv-divider,
+.kyv-divider svg {
+  height: 100px;
+}
+
+.kyv-divider-size-small,
+.kyv-divider-size-small svg {
+  height: 40px;
+}
+.kyv-divider-size-large,
+.kyv-divider-size-large svg {
+  height: 150px;
+}
+
+.kyv-divider-from-white {
+  background: var(--kyv-color-white);
+}
+.kyv-divider-to-white {
+  color: var(--kyv-color-white);
+}
+
+.kyv-divider-from-navy {
+  background: var(--kyv-color-navy);
+}
+.kyv-divider-to-navy {
+  color: var(--kyv-color-navy);
+}
+
+.kyv-divider-from-rust {
+  background: var(--kyv-color-rust);
+}
+.kyv-divider-to-rust {
+  color: var(--kyv-color-rust);
+}
+
+.kyv-divider-from-sky {
+  background: var(--kyv-color-sky);
+}
+.kyv-divider-to-sky {
+  color: var(--kyv-color-sky);
+}
+
+.kyv-divider-from-sand {
+  background: var(--kyv-color-sand);
+}
+.kyv-divider-to-sand {
+  color: var(--kyv-color-sand);
+}
+
+.kyv-divider-from-sea {
+  background: var(--kyv-color-sea);
+}
+.kyv-divider-to-sea {
+  color: var(--kyv-color-sea);
+}
+
+.kyv-divider-from-black {
+  background: var(--kyv-color-black);
+}
+.kyv-divider-to-black {
+  color: var(--kyv-color-black);
+}
+
+.kyv-divider-from-grey {
+  background: var(--kyv-color-grey);
+}
+.kyv-divider-to-grey {
+  color: var(--kyv-color-grey);
+}
+
+.kyv-divider-from-forest {
+  background: var(--kyv-color-forest);
+}
+.kyv-divider-to-forest {
+  color: var(--kyv-color-forest);
+}
