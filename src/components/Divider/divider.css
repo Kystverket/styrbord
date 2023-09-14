@@ -16,8 +16,12 @@
   height: 100px;
 }
 
+.kyv-divider-size-small {
+  overflow: hidden;
+}
 .kyv-divider-size-small,
 .kyv-divider-size-small svg {
+  transform: scaleX(1.05);
   height: 40px;
 }
 .kyv-divider-size-large,

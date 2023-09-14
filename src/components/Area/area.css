@@ -2,8 +2,8 @@
 
 .kyv-area {
   display: block;
-  background: transparent;
-  color: var(--kyv-color-navy);
+  background: var(--kyv-color-white);
+  color: var(--kyv-color-white-text);
   margin: 0px;
   padding: 0px;
   width: 100%;

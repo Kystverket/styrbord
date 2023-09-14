@@ -25,7 +25,20 @@ export const NavyToRustDivider: Story = {
 export const LargeSandDivider: Story = {
   args: {
     from: 'white',
-    to: 'rust',
+    to: 'sand',
+    size: "large",
+  },
+  render: (args) => (
+    <Divider {...args} />
+  ),
+};
+
+export const SmallStrokeDivider: Story = {
+  args: {
+    from: 'white',
+    to: 'navy',
+    size: "small",
+    type: 'stroke',
   },
   render: (args) => (
     <Divider {...args} />

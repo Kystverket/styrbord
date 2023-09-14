@@ -2,6 +2,7 @@ import React from 'react';
 import './button.css';
 
 interface ButtonProps {
+  className?: string;
   /**
    * Is this the principal call to action on the page?
    */
@@ -33,7 +34,7 @@ export const Button = ({
   return (
     <button
       type="button"
-      className={['kyv-body', 'kyv-button', `kyv-button--${size}`, mode].join(' ')}
+      className={[props.className, 'kyv-body', 'kyv-button', `kyv-button--${size}`, mode].join(' ')}
       {...props}
     >
       {label}
