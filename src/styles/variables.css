@@ -1,23 +1,28 @@
 html {
-  --kyv-color-primary: #000667;
-  --kyv-color-primary-text: #fff;
-  --kyv-color-primary-2: #ff451f;
-  --kyv-color-primary-2-text: #000;
-  --kyv-color-primary-3: #a9e5fb;
-  --kyv-color-primary-3-text: #000;
-  --kyv-color-primary-4: #f9f6f3;
-  --kyv-color-primary-4-text: #000;
-
-  --kyv-color-secondary: #0596cb;
-  --kyv-color-secondary-text: #000;
-  --kyv-color-secondary-2: #5d5d5d;
-  --kyv-color-secondary-2-text: #fff;
-  --kyv-color-secondary-3: #3ba460;
-  --kyv-color-secondary-3-text: #000;
+  --kyv-color-navy: #000667;
+  --kyv-color-navy-text: #fff;
+  --kyv-color-rust: #ff451f;
+  --kyv-color-rust-text: #000;
+  --kyv-color-sky: #a9e5fb;
+  --kyv-color-sky-text: #000;
+  --kyv-color-sand: #f9f6f3;
+  --kyv-color-sand-text: #000;
+  --kyv-color-sea: #0596cb;
+  --kyv-color-sea-text: #000;
+  --kyv-color-grey: #5d5d5d;
+  --kyv-color-grey-text: #fff;
+  --kyv-color-forest: #3ba460;
+  --kyv-color-forest-text: #000;
 
   --kyv-color-white: #fff;
-  --kyv-color-white-text: var(--kyv-color-primary);
+  --kyv-color-white-text: var(--kyv-color-navy);
 
   --kyv-color-black: #000;
-  --kyv-color-black-text: var(--kyv-color-primary-4);
+  --kyv-color-black-text: var(--kyv-color-sand);
+}
+
+.kyv-body {
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  font-weight: 400;
 }

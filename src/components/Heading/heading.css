@@ -7,7 +7,7 @@
   padding: 0.625rem 1.25rem;
   display: block;
   background: transparent;
-  color: var(--kyv-color-primary);
+  color: var(--kyv-color-navy);
   margin: 0px;
   padding: 0px;
   letter-spacing: 0.02rem;
@@ -33,7 +33,7 @@ h4.kyv-h {
 }
 .kyv-h.underline {
   text-decoration: underline;
-  text-decoration-color: #ff3c14;
+  text-decoration-color: var(--kyv-color-rust);
   text-decoration-thickness: 0.125rem;
   text-underline-offset: 0.125rem;
 }

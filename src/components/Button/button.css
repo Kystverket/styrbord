@@ -1,9 +1,6 @@
 @import '../../styles/variables.css';
 
 .kyv-button {
-  font-size: 16px;
-  font-family: Arial, sans-serif;
-  font-weight: 400;
   border: 0;
   border-radius: 0;
   padding: 0.625rem 1.25rem;
@@ -12,27 +9,27 @@
   display: inline-block;
   line-height: 1;
   background: transparent;
-  color: var(--kyv-color-primary);
-  border: 2px solid var(--kyv-color-primary);
+  color: var(--kyv-color-navy);
+  border: 2px solid var(--kyv-color-navy);
 }
 
 .kyv-button:hover {
-  border: 2px solid var(--kyv-color-primary-2);
+  border: 2px solid var(--kyv-color-rust);
 }
 
 .kyv-button:focus-visible {
-  outline: 0.125rem solid var(--kyv-color-secondary);
+  outline: 0.125rem solid var(--kyv-color-sea);
   outline-offset: 0.0625rem;
   z-index: 5;
 }
 
 .kyv-button--primary {
-  background: var(--kyv-color-primary);
-  color: var(--kyv-color-primary-text);
-  border: 2px solid var(--kyv-color-primary);
+  background: var(--kyv-color-navy);
+  color: var(--kyv-color-navy-text);
+  border: 2px solid var(--kyv-color-navy);
 }
 .kyv-button--primary:hover {
-  border: 2px solid var(--kyv-color-primary-2);
+  border: 2px solid var(--kyv-color-rust);
 }
 
 .kyv-button--small {
