@@ -32,7 +32,7 @@ export const Divider = ({
 }: DividerProps) => {
   return (
     <div
-      className={['kyv-divider', 'kyv-divider-from-' + from, 'kyv-divider-size-' + size, 'kyv-divider-to-' + to].join(' ')}
+      className={['kyv', 'kyv-divider', 'kyv-divider-from-' + from, 'kyv-divider-size-' + size, 'kyv-divider-to-' + to].join(' ')}
       {...props}
     >
       {type == 'fill' && <svg
