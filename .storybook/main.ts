@@ -6,6 +6,7 @@ const config: StorybookConfig = {
     "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
   addons: [
+    '@chakra-ui/storybook-addon',
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-onboarding",
@@ -15,8 +16,16 @@ const config: StorybookConfig = {
     name: "@storybook/react-webpack5",
     options: {},
   },
+  refs: {
+    '@chakra-ui/react': {
+      disable: true,
+    },
+  },
   docs: {
     autodocs: "tag",
-  },
+  },/*
+  features: {
+    emotionAlias: false,
+  },*/
 };
 export default config;
