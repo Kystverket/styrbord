@@ -1,5 +1,3 @@
-@import '../../styles/variables.css';
-
 .kyv-area {
   display: block;
   background: var(--kyv-color-white);

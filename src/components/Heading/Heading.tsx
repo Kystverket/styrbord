@@ -1,5 +1,6 @@
 import React from 'react';
 import './heading.css';
+import { colors } from '../../.';
 
 interface HeadingProps {
   /**
@@ -9,7 +10,7 @@ interface HeadingProps {
   /**
    * Farge på understrekelsen av overskriften.
    */
-  underline?: 'none' | 'navy' | 'rust' | 'sand' | 'sky' | 'forest' | 'sea' | 'black' | 'grey';
+  underline?: 'none' | colors;
 }
 
 /**

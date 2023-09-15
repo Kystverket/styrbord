@@ -1,6 +1,9 @@
-import { Button } from "./components/Button/Button";
-import { Heading } from "./components/Heading/Heading";
-import { Area } from "./components/Area/Area";
-import { Divider } from "./components/Divider/Divider";
+type colors = 'navy' | 'rust' | 'sand' | 'sky' | 'forest' | 'sea' | 'black' | 'grey';
 
-export { Button, Heading, Area, Divider };
+export type { colors }
+
+export * from './components/Button/Button';
+export * from './components/Heading/Heading';
+export * from './components/Area/Area';
+export * from './components/Divider/Divider';
+export * from './components/StyrbordProvider/StyrbordProvider';

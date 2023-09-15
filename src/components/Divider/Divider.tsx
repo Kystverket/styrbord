@@ -1,15 +1,16 @@
 import React from 'react';
 import './divider.css';
+import { colors } from '../../.';
 
 interface DividerProps {
   /**
    * Fargen på området over overgangen.
    */
-  from?: 'white' | 'navy' | 'rust' | 'sand' | 'sky' | 'forest' | 'sea' | 'black' | 'grey';
+  from?: 'white' | colors;
   /**
    * Farge på området under overgangen.
    */
-  to?: 'white' | 'navy' | 'rust' | 'sand' | 'sky' | 'forest' | 'sea' | 'black' | 'grey';
+  to?: 'white' | colors;
   /**
    * Høyde på overgangen.
    */

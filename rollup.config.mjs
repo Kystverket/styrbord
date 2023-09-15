@@ -30,6 +30,8 @@ export default [
     ],
     plugins: [
       postcss({
+        modules: true,
+        extract: true,
         plugins: [postcssImport()],
         extensions: ['.css'],
       }),
@@ -38,6 +40,10 @@ export default [
       commonjs(),
       typescript(),
     ],
+    onwarn: function (message) {
+      if (/chakra/.test(message)) return;
+      console.error(message);
+    },
   },
   {
     input: 'lib/index.d.ts',
