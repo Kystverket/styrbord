@@ -1,6 +1,6 @@
 {
   "name": "@kystverket/styrbord",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "A (test) component library for React using Storybook",
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
@@ -15,7 +15,8 @@
     "test": "echo \"Error: no test specified\" && exit 0",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "lint": "exit 0"
   },
   "author": "",
   "license": "ISC",
