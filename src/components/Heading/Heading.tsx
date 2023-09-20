@@ -1,5 +1,6 @@
 import React from 'react';
 import './heading.css';
+import { colors } from '../../.';
 
 interface HeadingProps {
   /**
@@ -7,9 +8,9 @@ interface HeadingProps {
    */
   size?: 'h1' | 'h2' | 'h3' | 'h4';
   /**
-   * Understrek overskriften.
+   * Farge på understrekelsen av overskriften.
    */
-  underline?: boolean;
+  underline?: 'none' | colors;
 }
 
 /**
@@ -17,13 +18,13 @@ interface HeadingProps {
  */
 export const Heading = ({
   size = 'h3',
-  underline = false,
+  underline = 'none',
   ...props
 }: React.PropsWithChildren<HeadingProps>) => {
   const CustomTag = size as keyof React.JSX.IntrinsicElements;
   return (
     <CustomTag
-      className={['kyv-h', (underline ? 'underline' : '')].join(' ')}
+      className={['kyv-h', (underline != 'none' ? 'kyv-h-underline kyv-h-underline-' + underline : '')].join(' ')}
       {...props}
     >
       {props.children}

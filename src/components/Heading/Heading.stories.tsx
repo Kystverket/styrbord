@@ -59,7 +59,7 @@ export const Heading4: Story = {
 export const Heading1WithUnderline: Story = {
   args: {
     size: 'h1',
-    underline: true,
+    underline: 'rust',
   },
   render: (args) => (
     <Heading {...args}>
@@ -71,7 +71,7 @@ export const Heading1WithUnderline: Story = {
 export const Heading2WithUnderline: Story = {
   args: {
     size: 'h2',
-    underline: true,
+    underline: 'rust',
   },
   render: (args) => (
     <Heading {...args}>

@@ -4,6 +4,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import postcss from 'rollup-plugin-postcss';
 import dts from 'rollup-plugin-dts';
+import postcssImport from 'postcss-import';
 
 // This is required to read package.json file when
 // using Native ES modules in Node.js
@@ -28,14 +29,21 @@ export default [
       },
     ],
     plugins: [
+      postcss({
+        modules: true,
+        extract: true,
+        plugins: [postcssImport()],
+        extensions: ['.css'],
+      }),
       peerDepsExternal(),
       resolve(),
       commonjs(),
       typescript(),
-      postcss({
-        extensions: ['.css'],
-      }),
     ],
+    onwarn: function (message) {
+      if (/chakra/.test(message)) return;
+      console.error(message);
+    },
   },
   {
     input: 'lib/index.d.ts',

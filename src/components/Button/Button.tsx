@@ -3,15 +3,19 @@ import './button.css';
 
 interface ButtonProps {
   /**
-   * Is this the principal call to action on the page?
+   * Primærhandling på siden eller i settet av knapper.
    */
   primary?: boolean;
   /**
-   * How large should the button be?
+   * Skru av mulighet til å klikke på knappen.
+   */
+  disabled?: boolean;
+  /**
+   * Størrelsen på knappen.
    */
   size?: 'small' | 'medium';
   /**
-   * Button contents
+   * Tekst i knappen.
    */
   label: string;
   /**
@@ -26,14 +30,17 @@ interface ButtonProps {
 export const Button = ({
   primary = false,
   size = 'medium',
+  disabled = false,
   label,
   ...props
 }: ButtonProps) => {
   const mode = primary ? 'kyv-button--primary' : 'kyv-button--secondary';
+  const disabledClass = disabled ? 'kyv-button--disabled' : 'kyv-button--enabled';
   return (
     <button
       type="button"
-      className={['kyv-body', 'kyv-button', `kyv-button--${size}`, mode].join(' ')}
+      disabled={disabled}
+      className={['kyv-body', 'kyv-button', `kyv-button--${size}`, mode, disabledClass].join(' ')}
       {...props}
     >
       {label}

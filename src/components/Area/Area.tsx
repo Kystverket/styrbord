@@ -1,15 +1,16 @@
 import React from 'react';
 import './area.css';
+import { colors } from '../../.';
 
 interface AreaProps {
   /**
    * Farge på området.
    */
-  color?: 'none' | 'navy' | 'rust' | 'sand' | 'sky' | 'forest' | 'sea' | 'black' | 'grey';
+  color?: 'none' | colors;
   /**
-   * Farge på kant.
+   * Farge på sidekant.
    */
-  border?: 'none' | 'navy' | 'rust' | 'sand' | 'sky' | 'forest' | 'sea' | 'black' | 'grey';
+  border?: 'none' | colors;
 }
 
 /**
