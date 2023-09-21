@@ -1,9 +1,8 @@
-import React from "react";
 import type { Meta, StoryObj } from '@storybook/react';
-import { Checkbox } from "./Checkbox";
+import { Checkbox } from './Checkbox.tsx';
 
 const meta: Meta<typeof Checkbox> = {
-    title: "Components/Checkbox",
+    title: 'Components/Checkbox',
     component: Checkbox,
     tags: ['autodocs'],
 };
@@ -14,7 +13,6 @@ type Story = StoryObj<typeof Checkbox>;
 
 export const Primary: Story = {
     args: {
-        label: "Toggle me",
+        label: 'Toggle me',
     },
 };
-

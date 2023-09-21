@@ -27,23 +27,32 @@ interface ButtonProps {
 /**
  * Primary UI component for user interaction
  */
-export const Button = ({
-  primary = false,
-  size = 'medium',
-  disabled = false,
-  label,
-  ...props
-}: ButtonProps) => {
-  const mode = primary ? 'kyv-button--primary' : 'kyv-button--secondary';
-  const disabledClass = disabled ? 'kyv-button--disabled' : 'kyv-button--enabled';
-  return (
-    <button
-      type="button"
-      disabled={disabled}
-      className={['kyv-body', 'kyv-button', `kyv-button--${size}`, mode, disabledClass].join(' ')}
-      {...props}
-    >
-      {label}
-    </button>
-  );
+function Button({
+    primary,
+    size,
+    disabled,
+    label,
+    onClick,
+}: ButtonProps) {
+    const mode = primary ? 'kyv-button--primary' : 'kyv-button--secondary';
+    const disabledClass = disabled ? 'kyv-button--disabled' : 'kyv-button--enabled';
+    return (
+        <button
+            type="button"
+            onClick={onClick}
+            disabled={disabled}
+            className={['kyv-body', 'kyv-button', `kyv-button--${size}`, mode, disabledClass].join(' ')}
+        >
+            {label}
+        </button>
+    );
+}
+
+Button.defaultProps = {
+    primary: false,
+    size: 'medium',
+    disabled: false,
+    onClick: () => { },
 };
+
+export { Button };
