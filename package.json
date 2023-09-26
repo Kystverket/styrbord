@@ -1,6 +1,6 @@
 {
   "name": "@kystverket/styrbord",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "A (test) component library for React using Storybook",
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
@@ -68,9 +68,12 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
+    "@chakra-ui/anatomy": "^2.2.1",
     "@chakra-ui/react": "^2.8.1",
+    "@chakra-ui/styled-system": "^2.9.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "formik": "^2.4.5",
     "framer-motion": "^10.16.4"
   }
 }

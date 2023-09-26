@@ -17,19 +17,19 @@ interface HeadingProps {
  * En generell komponent for overskift på en side eller over et avsnitt.
  */
 function Heading({ underline, size, children }: React.PropsWithChildren<HeadingProps>) {
-    const CustomTag = size as keyof React.JSX.IntrinsicElements;
-    return (
-        <CustomTag
-            className={['kyv-h', (underline !== 'none' ? `kyv-h-underline kyv-h-underline-${underline}` : '')].join(' ')}
-        >
-            { children }
-        </CustomTag>
-    );
+  const CustomTag = size as keyof React.JSX.IntrinsicElements;
+  return (
+    <CustomTag
+      className={['kyv-h', (underline !== 'none' ? `kyv-h-underline kyv-h-underline-${underline}` : '')].join(' ')}
+    >
+      { children }
+    </CustomTag>
+  );
 }
 
 Heading.defaultProps = {
-    size: 'h3',
-    underline: 'none',
+  size: 'h3',
+  underline: 'none',
 };
 
 export { Heading };

@@ -28,31 +28,31 @@ interface ButtonProps {
  * Primary UI component for user interaction
  */
 function Button({
-    primary,
-    size,
-    disabled,
-    label,
-    onClick,
+  primary,
+  size,
+  disabled,
+  label,
+  onClick,
 }: ButtonProps) {
-    const mode = primary ? 'kyv-button--primary' : 'kyv-button--secondary';
-    const disabledClass = disabled ? 'kyv-button--disabled' : 'kyv-button--enabled';
-    return (
-        <button
-            type="button"
-            onClick={onClick}
-            disabled={disabled}
-            className={['kyv-body', 'kyv-button', `kyv-button--${size}`, mode, disabledClass].join(' ')}
-        >
-            {label}
-        </button>
-    );
+  const mode = primary ? 'kyv-button--primary' : 'kyv-button--secondary';
+  const disabledClass = disabled ? 'kyv-button--disabled' : 'kyv-button--enabled';
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className={['kyv-body', 'kyv-button', `kyv-button--${size}`, mode, disabledClass].join(' ')}
+    >
+      {label}
+    </button>
+  );
 }
 
 Button.defaultProps = {
-    primary: false,
-    size: 'medium',
-    disabled: false,
-    onClick: () => { },
+  primary: false,
+  size: 'medium',
+  disabled: false,
+  onClick: () => { },
 };
 
 export { Button };
