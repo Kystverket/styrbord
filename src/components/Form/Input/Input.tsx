@@ -2,10 +2,12 @@ import {
   Input as ChakraInput, FormControl, FormErrorMessage, FormHelperText, FormLabel,
 } from '@chakra-ui/react';
 import React from 'react';
+import { Field } from "formik";
 
 interface InputProps {
     isRequired?: boolean
     isDisabled?: boolean
+    name: string
     label: string
     helpText?: string
     errorText?: string
@@ -13,7 +15,7 @@ interface InputProps {
 }
 
 function Input({
-  label, helpText, errorText, isRequired, isDisabled, variant,
+  name, label, helpText, errorText, isRequired, isDisabled, variant,
 }: InputProps) {
   return (
     <FormControl
@@ -23,7 +25,7 @@ function Input({
       isDisabled={isDisabled}
     >
       {variant !== 'floating' && <FormLabel>{label}</FormLabel>}
-      <ChakraInput placeholder="" />
+      <Field as={ChakraInput} name={name} placeholder="" />
       {/*
       It is important that the Label comes after the Control due to css selectors when floating
       */}
