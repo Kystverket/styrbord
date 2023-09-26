@@ -6,4 +6,6 @@ export * from './components/Button/Button.tsx';
 export * from './components/Heading/Heading.tsx';
 export * from './components/Area/Area.tsx';
 export * from './components/Divider/Divider.tsx';
+export * from './components/Form/Input/Input.tsx';
+export * from './components/Form/Checkbox/Checkbox.tsx';
 export * from './components/StyrbordProvider/StyrbordProvider.tsx';
