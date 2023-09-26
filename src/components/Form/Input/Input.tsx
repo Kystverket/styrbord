@@ -6,7 +6,6 @@ import React from 'react';
 interface InputProps {
     isRequired?: boolean
     isDisabled?: boolean
-    key: string,
     label: string
     helpText?: string
     errorText?: string
@@ -14,12 +13,11 @@ interface InputProps {
 }
 
 function Input({
-  key, label, helpText, errorText, isRequired, isDisabled, variant,
+  label, helpText, errorText, isRequired, isDisabled, variant,
 }: InputProps) {
   return (
     <FormControl
       variant={variant}
-      id={key}
       isRequired={isRequired}
       isInvalid={!!errorText}
       isDisabled={isDisabled}
