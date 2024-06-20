@@ -1,0 +1,61 @@
+import { Meta, Canvas, Controls, Primary } from '@storybook/blocks';
+
+import * as ChipStories from './Chip.stories';
+import * as ToggleChipStories from './Toggle/Toggle.stories';
+import * as RemovableChipStories from './Removable/Removable.stories';
+import * as GroupChipStories from './Group/Group.stories';
+
+<Meta of={ChipStories} />
+
+# Chip
+
+`Chips` er små avrundede knapper som kan brukes til å filtrere og navigere gjennom innhold eller data. For eksempel kan de brukes til å filtrere kategorier i et søkeresultat, samt vise hvilke filter som er aktive. Ikke bruk Chip til statisk metadata for å tagge innholdselementer. Bruk heller [Tag](https://storybook.designsystemet.no/?path=/docs/komponenter-tag--docs) -komponenten dersom informasjonen ikke er klikkbar.
+
+Chip eksisterer i ulike varianter:
+
+- `Chip.Toggle` er et alternativ til `Button`. Den brukes når handlingen(e) er direkte relatert til hovedinnholdet og når handlingen ikke krever like mye oppmerksomhet som vanlige knapper. Det kan for eksempel være å klikke på en Chip for så å bli sendt til en søkeresultatside med filtrering på denne kategorien.
+- `Chip.Toggle` med `selected=true` er alternativer til vanlige radiobuttons og checkboxer. Brukes til filtrering av innhold og data, når det skal tilbys et valg mellom flere ulike opsjoner. Innholdet endres til å vise kun det som er valgt.
+- `Chip.Removable` er valgte verdier som brukeren kan fjerne. For eksempel filter som har blitt aktivert i et søk som kan fjernes igjen, eller som har blitt valgt i en `Multiselect`.
+
+## Props
+
+<Primary />
+<Controls />
+
+## Bruk
+
+```tsx
+import { Chip } from '@digdir/designsystemet-react';
+
+<Chip.Toggle>You are using the Chip component!</Chip.Toggle>;
+```
+
+Chip-komponenten består av flere komponenter. Disse er:
+
+- `Chip.Toggle`
+- `Chip.Removable`
+- `Chip.Group`
+
+Hvordan komponentene som nevnes over brukes kan du se i eksemplene under.
+
+### Chip.Toggle
+
+Denne kodeblokken representerer en enkel Chip med teksten "Nynorsk".
+
+<Canvas of={ToggleChipStories.Preview} />
+<Controls of={ToggleChipStories.Preview} />
+
+### Chip.Removable
+
+Denne kodeblokken representerer en fjernbar Chip med teksten "Nynorsk". Denne komponenten viser også et kryss som indikerer at den kan fjernes. Det er viktig å merke seg at `aria-label` må legges til dersom innholdet
+i Chip ikke forklarer at den kan fjernes. I dette eksempelet er det lagt til `aria-label="Slett nynorsk"`.
+
+<Canvas of={RemovableChipStories.Preview} />
+<Controls of={RemovableChipStories.Preview} />
+
+### Chip.Group
+
+Denne kodeblokken viser hvordan du grupperer Chips ved hjelp av Chip.Group-komponenten. Eksempelet under inneholder to fjernbare brikker med tekstene "Nynorsk" og "Bokmål", men her kan du bruke Chips varianten som passer deg best.
+
+<Canvas of={GroupChipStories.Preview} />
+<Controls of={GroupChipStories.Preview} />

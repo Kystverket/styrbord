@@ -1,20 +1,22 @@
 // vite.config.ts
-import { defineConfig } from "vite";
+import { defineConfig } from 'vite';
 
-import typescript from "@rollup/plugin-typescript";
-import path from "path";
-import { typescriptPaths } from "rollup-plugin-typescript-paths";
+import typescript from '@rollup/plugin-typescript';
+import path from 'path';
+import { typescriptPaths } from 'rollup-plugin-typescript-paths';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  plugins: [react({
+  plugins: [
+    react({
       jsxRuntime: 'automatic',
-    }),],
+    }),
+  ],
   resolve: {
     alias: [
       {
-        find: "~",
-        replacement: path.resolve(__dirname, "./src"),
+        find: '~',
+        replacement: path.resolve(__dirname, './src'),
       },
     ],
   },
@@ -22,22 +24,21 @@ export default defineConfig({
     port: 3000,
   },
   build: {
-    manifest: true,
     minify: true,
     reportCompressedSize: true,
     lib: {
-      entry: path.resolve(__dirname, "src/main.ts"),
-      fileName: "main",
-      name: "Styrbord"
+      entry: path.resolve(__dirname, 'src/main.ts'),
+      fileName: 'main',
+      name: 'Styrbord',
     },
     rollupOptions: {
-      external: ['react', 'react-dom', '@digdir/designsystemet-react'],
+      external: ['react', 'react-dom', '@digdir/designsystemet-react', new RegExp('.*storybook.*')],
       output: {
         // Provide global variables to use in the UMD build
         // for externalized deps
         globals: {
           react: 'React',
-          '@digdir/designsystemet-react': '@digdir/designsystemet-react'
+          '@digdir/designsystemet-react': '@digdir/designsystemet-react',
         },
       },
       plugins: [
@@ -45,9 +46,10 @@ export default defineConfig({
           preserveExtensions: true,
         }),
         typescript({
+          exclude: ["**/storybook/**"],
           sourceMap: true,
           declaration: true,
-          outDir: "dist",
+          outDir: 'dist',
         }),
       ],
     },
