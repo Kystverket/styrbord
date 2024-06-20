@@ -2,7 +2,7 @@ import type { Meta, StoryFn, StoryObj } from '@storybook/react';
 
 import type { TagProps } from '@digdir/designsystemet-react';
 import { Tag } from '@digdir/designsystemet-react';
-import { Stack } from '~/components/Stack/Stack';
+import { Stack } from '../../../storybook/components/Stack/Stack';
 
 type Story = StoryObj<typeof Tag>;
 
