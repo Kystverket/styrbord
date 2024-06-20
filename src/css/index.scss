@@ -1,0 +1,22 @@
+@import './designsystemet/color-mode/light';
+@import './designsystemet/color-mode/dark';
+@import './designsystemet/typography';
+@import './designsystemet/semantic';
+@import './kystverket/colors';
+@import './kystverket/fonts';
+
+:root {
+  --ds-border-radius-base: 2px;
+  font-family: museo-sans, Arial, sans-serif;
+  --ds-font-size-f1: 16px;
+}
+
+:root,
+[data-ds-color-mode='light'] {
+  --ds-color-accent-base-default: var(--color-chartblue-90);
+  --ds-color-accent-base-hover: var(--color-blue-80);
+}
+
+.ds-btn {
+  text-transform: uppercase;
+}
