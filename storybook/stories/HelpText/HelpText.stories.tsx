@@ -1,6 +1,6 @@
 import type { Meta, StoryFn, StoryObj } from '@storybook/react';
 
-import { HelpText } from '.';
+import { HelpText } from '@digdir/designsystemet-react';
 
 type Story = StoryObj<typeof HelpText>;
 

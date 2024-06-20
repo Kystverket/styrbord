@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Heading } from './';
+import { Heading } from '@digdir/designsystemet-react';
 
 const meta: Meta<typeof Heading> = {
   title: 'Komponenter/Typography/Heading',

@@ -8,9 +8,7 @@ import {
   BellIcon,
 } from '@navikt/aksel-icons';
 
-import { Button } from '../Button';
-
-import { Tabs } from '.';
+import { Button, Tabs } from '@digdir/designsystemet-react';
 
 export default {
   title: 'Komponenter/Tabs',

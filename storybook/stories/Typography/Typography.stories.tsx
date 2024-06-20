@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
-import { Paragraph, Heading, Ingress } from './';
+import { Paragraph, Heading, Ingress } from '@digdir/designsystemet-react';
 
 const meta: Meta = {
   title: 'Komponenter/Typography',

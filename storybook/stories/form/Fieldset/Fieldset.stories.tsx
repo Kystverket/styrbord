@@ -1,9 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
-import { Textfield } from '../Textfield';
-import { Textarea } from '../Textarea';
-
-import { Fieldset } from '.';
+import { Textfield, Textarea, Fieldset } from '@digdir/designsystemet-react';
 
 type Story = StoryFn<typeof Fieldset>;
 

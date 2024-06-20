@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryFn } from '@storybook/react';
 
-import { Button, Paragraph } from '../../..';
-import { Radio } from '../';
+import { Button, Paragraph, Radio } from '@digdir/designsystemet-react';
 
 export default {
   title: 'Komponenter/Radio/Group',

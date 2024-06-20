@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { ErrorMessage } from './';
+import { ErrorMessage } from '@digdir/designsystemet-react';
 
 const meta: Meta<typeof ErrorMessage> = {
   title: 'Komponenter/Typography/ErrorMessage',

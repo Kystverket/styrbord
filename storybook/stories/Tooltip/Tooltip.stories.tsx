@@ -1,8 +1,6 @@
 import type { Meta, StoryObj, StoryFn } from '@storybook/react';
 
-import { Paragraph, Button } from '../..';
-
-import { Tooltip } from '.';
+import { Paragraph, Button, Tooltip } from '@digdir/designsystemet-react';
 
 type Story = StoryObj<typeof Tooltip>;
 

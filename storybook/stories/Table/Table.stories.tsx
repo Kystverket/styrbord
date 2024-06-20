@@ -2,19 +2,18 @@ import type { ChangeEvent } from 'react';
 import { useEffect, useState } from 'react';
 import type { Meta, StoryFn } from '@storybook/react';
 
-import { Checkbox } from '../form/Checkbox';
-import { Textfield } from '../form/Textfield';
-
-import type { TableHeaderCellProps } from './TableHeaderCell';
-
 import {
+  Checkbox,
+  Textfield,
   Table,
   TableHead,
   TableBody,
   TableRow,
   TableCell,
   TableHeaderCell,
-} from '.';
+} from '@digdir/designsystemet-react';
+import { TableHeaderCellProps } from '@digdir/designsystemet-react/dist/types/components/Table/TableHeaderCell';
+;
 
 type Story = StoryFn<typeof Table>;
 

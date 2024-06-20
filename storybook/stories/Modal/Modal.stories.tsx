@@ -1,9 +1,7 @@
 import { useRef, useState } from 'react';
 import type { Meta, StoryFn } from '@storybook/react';
 
-import { Combobox, Divider, Paragraph, Textfield, Button } from '..';
-
-import { Modal } from '.';
+import { Combobox, Divider, Paragraph, Textfield, Button, Modal } from '@digdir/designsystemet-react';
 
 const decorators = [
   (Story: StoryFn) => (

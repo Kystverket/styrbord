@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
-import { Spinner } from '.';
+import { Spinner } from '@digdir/designsystemet-react';
 
 type Story = StoryFn<typeof Spinner>;
 

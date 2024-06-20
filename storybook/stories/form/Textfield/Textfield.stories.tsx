@@ -1,9 +1,7 @@
 import type { Meta, StoryObj, StoryFn } from '@storybook/react';
 import { useState } from 'react';
 
-import { Button, Paragraph } from '../..';
-
-import { Textfield } from '.';
+import { Button, Paragraph, Textfield } from '@digdir/designsystemet-react';
 
 type Story = StoryObj<typeof Textfield>;
 

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Label } from './';
+import { Label } from '@digdir/designsystemet-react';
 
 const meta: Meta<typeof Label> = {
   title: 'Komponenter/Typography/Label',

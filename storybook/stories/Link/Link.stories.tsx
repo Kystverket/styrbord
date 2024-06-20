@@ -1,9 +1,7 @@
 import type { Meta, StoryFn, StoryObj } from '@storybook/react';
 import { EnvelopeClosedIcon } from '@navikt/aksel-icons';
 
-import { Paragraph } from '../Typography';
-
-import { Link } from '.';
+import { Paragraph, Link } from '@digdir/designsystemet-react';
 
 type Story = StoryObj<typeof Link>;
 

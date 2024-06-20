@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Ingress } from './';
+import { Ingress } from '@digdir/designsystemet-react';
 
 const meta: Meta<typeof Ingress> = {
   title: 'Komponenter/Typography/Ingress',

@@ -1,8 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
-import { Link } from '../Link';
-
-import { List } from '.';
+import { Link, List } from '@digdir/designsystemet-react';
 
 type Story = StoryFn<typeof List.Root>;
 

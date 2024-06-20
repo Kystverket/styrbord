@@ -8,9 +8,7 @@ import {
   BellFillIcon,
 } from '@navikt/aksel-icons';
 
-import { Button } from '../Button';
-
-import { ToggleGroup } from '.';
+import { Button, ToggleGroup } from '@digdir/designsystemet-react';
 
 export default {
   title: 'Komponenter/ToggleGroup',

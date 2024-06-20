@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
-import { NativeSelect } from './NativeSelect';
+import { NativeSelect } from '@digdir/designsystemet-react';
 
 export default {
   title: 'Komponenter/NativeSelect',

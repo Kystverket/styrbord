@@ -1,8 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
-import { Paragraph } from '../';
-
-import { SkipLink } from '.';
+import { Paragraph, SkipLink } from '@digdir/designsystemet-react';
 type Story = StoryFn<typeof SkipLink>;
 
 export default {

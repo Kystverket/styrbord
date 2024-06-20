@@ -1,9 +1,7 @@
 import type { Meta, StoryFn } from '@storybook/react';
 import { useState, useEffect } from 'react';
 
-import { Button, Paragraph } from '../..';
-
-import { Popover } from '.';
+import { Button, Paragraph, Popover } from '@digdir/designsystemet-react';
 
 const marginDecorator = (Story: StoryFn) => (
   <div style={{ margin: '10rem' }}>
@@ -29,7 +27,7 @@ Preview.args = {
   placement: 'top',
   variant: 'default',
   size: 'md',
-  onOpenChange: () => {},
+  onOpenChange: () => { },
 };
 
 Preview.decorators = [marginDecorator];

@@ -1,9 +1,6 @@
 import type { Meta, StoryObj, StoryFn } from '@storybook/react';
 
-import { Paragraph, Heading } from '../Typography';
-import { Button } from '../Button';
-
-import { Skeleton } from '.';
+import { Paragraph, Heading, Button, Skeleton } from '@digdir/designsystemet-react';
 
 type Story = StoryObj<typeof Skeleton.Rectangle>;
 

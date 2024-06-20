@@ -2,9 +2,7 @@ import { useState } from 'react';
 import type { Meta, StoryObj, StoryFn } from '@storybook/react';
 import { MagnifyingGlassIcon } from '@navikt/aksel-icons';
 
-import { Button, Paragraph, Heading } from '../..';
-
-import { Search } from '.';
+import { Button, Paragraph, Heading, Search } from '@digdir/designsystemet-react';
 
 type Story = StoryObj<typeof Search>;
 
