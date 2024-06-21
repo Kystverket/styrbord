@@ -1,12 +1,16 @@
 {
   "name": "@kystverket/styrbord",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "",
   "type": "module",
   "exports": {
     ".": {
       "import": "./dist/main.es.js",
       "require": "./dist/main.cjs.js"
+    },
+    "./dist/": {
+      "import": "./dist/",
+      "require": "./dist/"
     }
   },
   "main": "./dist/main.cjs.js",
