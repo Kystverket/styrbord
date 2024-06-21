@@ -1,5 +1,6 @@
 import { Meta, Canvas, Controls, Primary } from '@storybook/blocks';
-import { Do, Dont, Stack } from '@doc-components';
+import { Stack } from '../../../../../storybook/components/Stack/Stack';
+import { Do, Dont } from '../../../../../storybook/components/DoAndDont/DoAndDont';
 
 import * as TableStories from '../../Table/Table.stories';
 
@@ -25,11 +26,11 @@ Vær oppmerksom på:
 ```tsx
 import { Checkbox } from '@digdir/designsystemet-react';
 
-<Checkbox.Group legend='What would your D&D party like to eat?'>
-  <Checkbox value='elfsalad'>Wood Elf forest salad</Checkbox>
-  <Checkbox value='firecakes'>Fire breath rice cakes</Checkbox>
-  <Checkbox value='dumplings'>Chicken-something dumplings</Checkbox>
-  <Checkbox value='ribs'>Sembian honey-glazed rothè ribs</Checkbox>
+<Checkbox.Group legend="What would your D&D party like to eat?">
+  <Checkbox value="elfsalad">Wood Elf forest salad</Checkbox>
+  <Checkbox value="firecakes">Fire breath rice cakes</Checkbox>
+  <Checkbox value="dumplings">Chicken-something dumplings</Checkbox>
+  <Checkbox value="ribs">Sembian honey-glazed rothè ribs</Checkbox>
 </Checkbox.Group>;
 ```
 
@@ -96,19 +97,19 @@ Ikke bruk `disabled` med mindre det er absolutt umulig å gjøre noe annet.
 `Checkbox` skal som hovedregel kun plasseres vertikalt, av hensyn til lesbarhet. Det er enklere for brukere å skanne listen når alternativene ligger under hverandre. For brukere som trenger å forstørre (zoome inn) nettsiden for å se godt nok, er en horisontal liste ekstra vanskelig.
 
 <Stack
-  direction='row'
+  direction="row"
   style={{
     justifyContent: 'unset',
     alignItems: 'unset',
   }}
 >
   <Do
-    description='Plasser checkboxes vertikalt, slik at listen blir lettere å lese. '
-    image='/img/component-guidelines/checkbox/CheckboxGroupV.png'
+    description="Plasser checkboxes vertikalt, slik at listen blir lettere å lese. "
+    image="/img/component-guidelines/checkbox/CheckboxGroupV.png"
   />
   <Dont
-    description='Du bør unngå å plassere checkboxes i flere kolonner.'
-    image='/img/component-guidelines/checkbox/CheckboxGroupH.png'
+    description="Du bør unngå å plassere checkboxes i flere kolonner."
+    image="/img/component-guidelines/checkbox/CheckboxGroupH.png"
   />
 </Stack>
 
