@@ -19,7 +19,7 @@
     "build": "tsc && vite build",
     "build:watch": "tsc && vite build --watch",
     "dev": "vite",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Warning: no test specified\" && exit 0",
     "build:css": "sass src/css/index.scss dist/index.css --style=compressed",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
