@@ -1,6 +1,7 @@
 name: Build and Publish storybook to GitHub Pages
 
 on:
+  workflow_dispatch:
   release:
     types: [created]
 
