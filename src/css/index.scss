@@ -1,7 +1,9 @@
-@import './designsystemet/color-mode/light';
-@import './designsystemet/color-mode/dark';
-@import './designsystemet/typography';
-@import './designsystemet/semantic';
+@import '@digdir/designsystemet-css';
+@import '@digdir/designsystemet-theme/brand/altinn/semantic';
+@import '@digdir/designsystemet-theme/brand/altinn/typography';
+@import '@digdir/designsystemet-theme/brand/altinn/color-mode/dark';
+@import '@digdir/designsystemet-theme/brand/altinn/color-mode/light';
+
 @import './kystverket/colors';
 @import './kystverket/fonts';
 

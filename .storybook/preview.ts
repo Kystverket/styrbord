@@ -1,6 +1,5 @@
 import type { Preview } from "@storybook/react";
 
-import '@digdir/designsystemet-css';
 import '../src/css/index.scss';
 
 const preview: Preview = {
