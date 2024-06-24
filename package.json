@@ -1,5 +1,5 @@
 {
-  "name": "styrbord",
+  "name": "@kystverket/styrbord",
   "version": "0.20.2",
   "description": "",
   "type": "module",
