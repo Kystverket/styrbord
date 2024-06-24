@@ -1,12 +1,18 @@
 {
   "name": "@kystverket/styrbord",
-  "version": "0.20.2",
+  "version": "0.20.3",
   "description": "",
   "type": "module",
   "exports": {
-    "style": "./dist/style.css",
-    "import": "./dist/main.js",
-    "require": "./dist/main.umd.js"
+    ".": {
+      "style": "./dist/style.css",
+      "import": "./dist/main.js",
+      "require": "./dist/main.umd.js"
+    },
+    "./*.css": {
+      "import": "./dist/*.css",
+      "require": "./dist/*.css"
+    }
   },
   "main": "./dist/main.js",
   "typings": "./dist/main.d.ts",

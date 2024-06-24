@@ -2,14 +2,27 @@
 
 A (test) component library for React using Storybook
 
-## Chakra-UI
+This is a simple wrapper of designsystemet.no.
 
-We've added dependencies for [https://chakra-ui.com/docs/components](https://chakra-ui.com/docs/components). The intention is to wrap those components (as needed) and have an interface "controlled" by us.
+## Installation
 
-This is similar to what Kartverket has done here: [https://kartverket.github.io/kvib/](https://kartverket.github.io/kvib/).
+To install, add a file called ```.npmrc``` next to your ```package.json```.
 
-A simple wrap: [https://github.com/kartverket/kvib/blob/master/packages/react/src/checkbox/index.ts](https://github.com/kartverket/kvib/blob/master/packages/react/src/checkbox/index.ts)
+It should contain the following line:
 
-A more complex wrap: [https://github.com/kartverket/kvib/blob/master/packages/react/src/button/Button.tsx](https://github.com/kartverket/kvib/blob/master/packages/react/src/button/Button.tsx)
+```.env
+@kystverket:registry=https://npm.pkg.github.com
+```
 
-We might do something in between.
+Now you should be able to run
+
+```npm i @kystverket/styrbord```
+
+## Usage
+
+```js
+import '@kystverket/styrbord/style.css';
+import { Heading, Ingress, Tabs } from '@kystverket/styrbord';
+```
+
+The CSS can be imported once globally.
