@@ -1,0 +1,11 @@
+:root {
+  --ds-border-radius-base: 2px;
+  font-family: museo-sans, Arial, sans-serif;
+  font-weight: 300;
+  --ds-font-size-f1: 16px;
+}
+:root,
+[data-ds-color-mode='light'] {
+  --ds-color-accent-base-default: var(--color-chartblue-90);
+  --ds-color-accent-base-hover: var(--color-blue-80);
+}

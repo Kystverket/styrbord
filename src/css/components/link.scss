@@ -1,0 +1,19 @@
+:root,
+[data-ds-color-mode='light'] {
+  --dsc-link-color: #1a42c9;
+  --dsc-link-color-hover: #132496;
+  --dsc-link-color-active: #000667;
+  --dsc-link-color-active-background: #000667;
+  --dsc-link-color-visited: #9747ff;
+}
+.ds-link:hover {
+  color: var(--dsc-link-color-hover);
+  text-decoration-thickness: 1px;
+}
+.ds-link:focus-visible {
+  background: transparent;
+  color: #1a42c9;
+  outline: 2px solid #0995c9;
+  outline-offset: 6px;
+  border-radius: 1px;
+}

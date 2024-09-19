@@ -1,0 +1,11 @@
+@media (hover: hover) and (pointer: fine) {
+  .ds-checkbox:not(.ds-checkbox--readonly) .ds-checkbox__input:hover:not(:checked, :disabled, :focus-visible) {
+    --dsc-checkbox-border-color: #394597;
+    box-shadow: inset 0 0 0 2px var(--dsc-checkbox-border-color);
+  }
+  .ds-checkbox__input:hover:is(:checked) {
+    --dsc-checkbox-border-color: #394597;
+    --dsc-checkbox-background: #394597;
+    box-shadow: inset 0 0 0 2px var(--dsc-checkbox-border-color);
+  }
+}

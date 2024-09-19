@@ -1,6 +1,8 @@
 @font-face {
   font-family: 'museo-sans';
-  src: url('/fonts/museo-sans-300.woff2') format('woff2'), url('/fonts/museo-sans-300.woff') format('woff'),
+  src:
+    url('/fonts/museo-sans-300.woff2') format('woff2'),
+    url('/fonts/museo-sans-300.woff') format('woff'),
     url('/fonts/museo-sans-300.otf') format('opentype');
   font-display: auto;
   font-style: normal;
@@ -10,7 +12,9 @@
 
 @font-face {
   font-family: 'museo-sans';
-  src: url('/fonts/museo-sans-500.woff2') format('woff2'), url('/fonts/museo-sans-500.woff') format('woff'),
+  src:
+    url('/fonts/museo-sans-500.woff2') format('woff2'),
+    url('/fonts/museo-sans-500.woff') format('woff'),
     url('/fonts/museo-sans-500.otf') format('opentype');
   font-display: auto;
   font-style: normal;
@@ -20,7 +24,9 @@
 
 @font-face {
   font-family: 'museo-sans';
-  src: url('/fonts/museo-sans-700.woff2') format('woff2'), url('/fonts/museo-sans-700.woff') format('woff'),
+  src:
+    url('/fonts/museo-sans-700.woff2') format('woff2'),
+    url('/fonts/museo-sans-700.woff') format('woff'),
     url('/fonts/museo-sans-700.otf') format('opentype');
   font-display: auto;
   font-style: normal;
