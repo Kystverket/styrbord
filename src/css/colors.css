@@ -1,0 +1,12 @@
+:root {
+  --color-purple-12: #7b4ea7;
+
+  --color-neutral-text-default: #2c2c2c;
+  --color-neutral-text-subtle: #636363;
+
+  --color-accent-text-default: #0a227d;
+  --color-accent-text-subtle: #2a57c0;
+
+  --color-accent-surface-default: #d6e3ff;
+  --color-neutral-surface-default: #e7e1dc;
+}

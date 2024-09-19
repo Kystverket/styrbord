@@ -1,11 +1,14 @@
+.typography-body-medium {
+  font-size: var(--typography-body-medium-font-size);
+  font-weight: var(--typography-body-medium-font-weight);
+  line-height: var(--typography-body-medium-line-height);
+  letter-spacing: var(--typography-body-letter-spacing);
+}
+
 :root {
-  --ds-border-radius-base: 2px;
   font-family: museo-sans, Arial, sans-serif;
   font-weight: 300;
-  --ds-font-size-f1: 16px;
-}
-:root,
-[data-ds-color-mode='light'] {
-  --ds-color-accent-base-default: var(--color-chartblue-90);
-  --ds-color-accent-base-hover: var(--color-blue-80);
+  font-size: 16px;
+  text-align: left;
+  @extend .typography-body-medium;
 }
