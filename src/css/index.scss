@@ -1,18 +1,17 @@
 @layer dsno {
   @import '@digdir/designsystemet-css';
-  @import '@digdir/designsystemet-theme/brand/altinn/semantic';
-  @import '@digdir/designsystemet-theme/brand/altinn/typography/primary';
-  @import '@digdir/designsystemet-theme/brand/altinn/color-mode/dark';
-  @import '@digdir/designsystemet-theme/brand/altinn/color-mode/light';
+  @import '@digdir/designsystemet-theme';
 }
 @layer kyvtokens {
   @import 'kyv-tokens/dist/brandkystverket/brandkystverket-tokens.css';
   @import './fonts';
-  @import './colors';
+  @import './tokens';
+  @import './transforms';
 }
 @layer kyvified {
   @import './base';
   @import './components/link';
+  @import './components/button';
 }
 
 @layer dsno, kyvtokens, kyvified;

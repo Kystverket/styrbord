@@ -1,7 +1,7 @@
 import type { Meta, StoryFn, StoryObj } from '@storybook/react';
 import { EnvelopeClosedIcon } from '@navikt/aksel-icons';
 
-import { Paragraph, Link } from '@digdir/designsystemet-react';
+import { Paragraph, Link, Button, Alert, ChipToggle } from '@digdir/designsystemet-react';
 
 type Story = StoryObj<typeof Link>;
 
@@ -30,23 +30,23 @@ export const Normal: Story = {
 export const InText: StoryFn<typeof Link> = () => (
   <>
     <Paragraph>
-      Vi bruker komponenter fra{' '}
-      <Link href={designsystemetLink}>et fantastisk designsystem</Link>.
+      Vi bruker komponenter fra <Link href={designsystemetLink}>et fantastisk designsystem</Link>.
     </Paragraph>
     <Paragraph>
-      <Link href='mailto:designsystem@digdir.no'>
+      <Link href="mailto:designsystem@digdir.no">
         <EnvelopeClosedIcon aria-hidden />
         Kontakt oss
       </Link>
+      <Button>Hnm</Button>
+      <Alert>HHmm</Alert>
+      <ChipToggle>Chipps</ChipToggle>
     </Paragraph>
   </>
 );
 
 export const LongLink: StoryFn<typeof Link> = () => (
   <Paragraph>
-    <Link href={designsystemetLink}>
-      Dette er en lenke som brekker over flere linjer
-    </Link>
+    <Link href={designsystemetLink}>Dette er en lenke som brekker over flere linjer</Link>
   </Paragraph>
 );
 

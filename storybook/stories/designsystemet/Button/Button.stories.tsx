@@ -11,11 +11,10 @@ import {
   CogIcon,
   ArrowRightIcon,
   ArrowUndoIcon,
-  PlusIcon,
 } from '@navikt/aksel-icons';
 
-import { Stack } from '../../../components/Stack/Stack';
 import { Button, Spinner, Tooltip } from '@digdir/designsystemet-react';
+import { Stack } from '../../../components/Stack/Stack';
 
 type Story = StoryObj<typeof Button>;
 
@@ -36,22 +35,18 @@ export const Preview: Story = {
     return <Button {...args} />;
   },
   args: {
-    children: 'Knapp',
+    children: 'Label',
     disabled: false,
     variant: 'primary',
     color: 'accent',
     size: 'md',
     icon: false,
-    fullWidth: false,
   },
 };
 
 export const Primary: StoryFn<typeof Button> = () => (
   <>
-    <Button
-      variant='primary'
-      color='accent'
-    >
+    <Button variant="primary" color="accent">
       Lagre
     </Button>
   </>
@@ -61,10 +56,7 @@ Primary.decorators = [stack];
 
 export const Secondary: StoryFn<typeof Button> = () => (
   <>
-    <Button
-      variant='secondary'
-      color='accent'
-    >
+    <Button variant="secondary" color="accent">
       Avbryt
     </Button>
   </>
@@ -74,14 +66,8 @@ Secondary.decorators = [stack];
 
 export const Tertiary: StoryFn<typeof Button> = () => (
   <>
-    <Button
-      variant='tertiary'
-      color='accent'
-    >
-      <PencilWritingIcon
-        aria-hidden
-        fontSize='1.5rem'
-      />
+    <Button variant="tertiary" color="accent">
+      <PencilWritingIcon aria-hidden fontSize="1.5rem" />
       Rediger
     </Button>
   </>
@@ -91,22 +77,13 @@ Tertiary.decorators = [stack];
 
 export const First: StoryFn<typeof Button> = () => (
   <>
-    <Button
-      variant='primary'
-      color='accent'
-    >
+    <Button variant="primary" color="accent">
       Gå videre
     </Button>
-    <Button
-      variant='secondary'
-      color='accent'
-    >
+    <Button variant="secondary" color="accent">
       Fortsett senere
     </Button>
-    <Button
-      variant='tertiary'
-      color='accent'
-    >
+    <Button variant="tertiary" color="accent">
       Avbryt
     </Button>
   </>
@@ -116,34 +93,16 @@ First.decorators = [stack];
 
 export const Second: StoryFn<typeof Button> = () => (
   <>
-    <Button
-      variant='secondary'
-      color='neutral'
-    >
-      <PrinterSmallIcon
-        aria-hidden
-        fontSize='1.5rem'
-      />
+    <Button variant="secondary" color="neutral">
+      <PrinterSmallIcon aria-hidden fontSize="1.5rem" />
       Skriv ut
     </Button>
-    <Button
-      variant='secondary'
-      color='neutral'
-    >
-      <PencilWritingIcon
-        aria-hidden
-        fontSize='1.5rem'
-      />
+    <Button variant="secondary" color="neutral">
+      <PencilWritingIcon aria-hidden fontSize="1.5rem" />
       Rediger
     </Button>
-    <Button
-      variant='secondary'
-      color='neutral'
-    >
-      <ArrowForwardIcon
-        aria-hidden
-        fontSize='1.5rem'
-      />
+    <Button variant="secondary" color="neutral">
+      <ArrowForwardIcon aria-hidden fontSize="1.5rem" />
       Videresend
     </Button>
   </>
@@ -153,14 +112,8 @@ Second.decorators = [stack];
 
 export const Danger: StoryFn<typeof Button> = () => (
   <>
-    <Button
-      variant='primary'
-      color='danger'
-    >
-      <TrashIcon
-        aria-hidden
-        fontSize='1.5rem'
-      />
+    <Button variant="primary" color="danger">
+      <TrashIcon aria-hidden fontSize="1.5rem" />
       Slett
     </Button>
   </>
@@ -181,22 +134,13 @@ Danger.decorators = [
 
 export const KombinereFarger: StoryFn<typeof Button> = () => (
   <>
-    <Button
-      variant='primary'
-      color='neutral'
-    >
+    <Button variant="primary" color="neutral">
       Publiser
     </Button>
-    <Button
-      variant='secondary'
-      color='neutral'
-    >
+    <Button variant="secondary" color="neutral">
       Lagre kladd
     </Button>
-    <Button
-      variant='tertiary'
-      color='danger'
-    >
+    <Button variant="tertiary" color="danger">
       Forkast
     </Button>
   </>
@@ -206,47 +150,28 @@ KombinereFarger.decorators = [stack];
 
 export const KnappSomLenke: StoryFn<typeof Button> = () => (
   <Button asChild>
-    <a
-      target='_blank'
-      rel='noreferrer'
-      href='https://www.designsystemet.no'
-    >
+    <a target="_blank" rel="noreferrer" href="https://www.designsystemet.no">
       Gå til Designsystemet
-      <ExternalLinkIcon fontSize='1.5rem' />
+      <ExternalLinkIcon fontSize="1.5rem" />
     </a>
   </Button>
 );
 
 export const BareIkon: StoryFn<typeof Button> = () => (
   <>
-    <Tooltip content='Legg til ny'>
-      <Button
-        icon={true}
-        color='neutral'
-        variant='tertiary'
-        aria-label='Tertiary med ikon'
-      >
-        <PlusCircleIcon fontSize='1.5rem' />
+    <Tooltip content="Legg til ny">
+      <Button icon={true} color="neutral" variant="tertiary" aria-label="Tertiary med ikon">
+        <PlusCircleIcon fontSize="1.5rem" />
       </Button>
     </Tooltip>
-    <Tooltip content='Varslinger'>
-      <Button
-        icon={true}
-        color='neutral'
-        variant='tertiary'
-        aria-label='Tertiary med ikon'
-      >
-        <BellIcon fontSize='1.5rem' />
+    <Tooltip content="Varslinger">
+      <Button icon={true} color="neutral" variant="tertiary" aria-label="Tertiary med ikon">
+        <BellIcon fontSize="1.5rem" />
       </Button>
     </Tooltip>
-    <Tooltip content='Instillinger'>
-      <Button
-        icon={true}
-        color='neutral'
-        variant='tertiary'
-        aria-label='Tertiary med ikon'
-      >
-        <CogIcon fontSize='1.5rem' />
+    <Tooltip content="Instillinger">
+      <Button icon={true} color="neutral" variant="tertiary" aria-label="Tertiary med ikon">
+        <CogIcon fontSize="1.5rem" />
       </Button>
     </Tooltip>
   </>
@@ -267,24 +192,12 @@ BareIkon.decorators = [
 
 export const TekstOgIkon: StoryFn<typeof Button> = () => (
   <>
-    <Button
-      variant='primary'
-      color='neutral'
-    >
+    <Button variant="primary" color="neutral">
       Start utfylling
-      <ArrowRightIcon
-        aria-hidden
-        fontSize='1.5rem'
-      />
+      <ArrowRightIcon aria-hidden fontSize="1.5rem" />
     </Button>
-    <Button
-      variant='secondary'
-      color='neutral'
-    >
-      <ArrowUndoIcon
-        aria-hidden
-        fontSize='1.5rem'
-      />
+    <Button variant="secondary" color="neutral">
+      <ArrowUndoIcon aria-hidden fontSize="1.5rem" />
       Angre
     </Button>
   </>
@@ -294,37 +207,16 @@ TekstOgIkon.decorators = [stack];
 
 export const Lasting: StoryFn<typeof Button> = () => (
   <>
-    <Button
-      variant='primary'
-      aria-disabled
-    >
-      <Spinner
-        color='accent'
-        title='loading'
-        size='sm'
-      />
+    <Button variant="primary" aria-disabled>
+      <Spinner color="accent" title="loading" size="sm" />
       Laster...
     </Button>
-    <Button
-      variant='secondary'
-      aria-disabled
-    >
-      <Spinner
-        color='accent'
-        title='loading'
-        size='sm'
-      />
+    <Button variant="secondary" aria-disabled>
+      <Spinner color="accent" title="loading" size="sm" />
       Laster...
     </Button>
-    <Button
-      variant='tertiary'
-      aria-disabled
-    >
-      <Spinner
-        color='accent'
-        title='loading'
-        size='sm'
-      />
+    <Button variant="tertiary" aria-disabled>
+      <Spinner color="accent" title="loading" size="sm" />
       Laster...
     </Button>
   </>
@@ -332,45 +224,18 @@ export const Lasting: StoryFn<typeof Button> = () => (
 
 Lasting.decorators = [stack];
 
-export const FullBredde: Story = {
-  name: 'Full bredde',
-  args: {
-    children: (
-      <>
-        <PlusIcon fontSize='1.5rem' />
-        Last inn flere
-      </>
-    ),
-    fullWidth: true,
-    color: 'neutral',
-    variant: 'secondary',
-  },
-  parameters: {
-    layout: 'padded',
-  },
-};
-
 export const Ikoner: StoryFn<typeof Button> = () => (
   <>
-    <Button
-      variant='primary'
-      size='sm'
-    >
-      <CogIcon fontSize='1rem' />
+    <Button variant="primary" size="sm">
+      <CogIcon fontSize="1rem" />
       Small
     </Button>
-    <Button
-      variant='primary'
-      size='md'
-    >
-      <CogIcon fontSize='1.5rem' />
+    <Button variant="primary" size="md">
+      <CogIcon fontSize="1.5rem" />
       Medium
     </Button>
-    <Button
-      variant='primary'
-      size='lg'
-    >
-      <CogIcon fontSize='2rem' />
+    <Button variant="primary" size="lg">
+      <CogIcon fontSize="2rem" />
       Large
     </Button>
   </>
@@ -380,26 +245,14 @@ Ikoner.decorators = [stack];
 
 export const Kunikoner: StoryFn<typeof Button> = () => (
   <>
-    <Button
-      icon={true}
-      variant='primary'
-      size='sm'
-    >
-      <CogIcon fontSize='1.5rem' />
+    <Button icon={true} variant="primary" size="sm">
+      <CogIcon fontSize="1.5rem" />
     </Button>
-    <Button
-      icon={true}
-      variant='primary'
-      size='md'
-    >
-      <CogIcon fontSize='2rem' />
+    <Button icon={true} variant="primary" size="md">
+      <CogIcon fontSize="2rem" />
     </Button>
-    <Button
-      icon={true}
-      variant='primary'
-      size='lg'
-    >
-      <CogIcon fontSize='2.5rem' />
+    <Button icon={true} variant="primary" size="lg">
+      <CogIcon fontSize="2.5rem" />
     </Button>
   </>
 );

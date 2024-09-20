@@ -1,42 +1,9 @@
 .ds-link {
-  --color-link-text: var(--color-accent-text-subtle);
-  --color-link-text--hover: var(--color-accent-text-default);
-  --color-link-text--active: var(--color-accent-text-default);
-  --color-link-bg--active: var(--color-accent-surface-default);
-  --color-link-text--focus: var(--color-accent-text-default);
-  --color-link-bg--focus: var(--color-accent-surface-default);
-  --color-link-text--visited: var(--color-purple-12);
+  --dsc-link-background--active: var(--ds-color-accent-surface-default);
+  --dsc-link-background--focus: var(--ds-color-accent-surface-default);
+  --dsc-link-color--active: var(--ds-color-accent-text-default);
+  --dsc-link-color--focus: var(--ds-color-accent-text-default);
 
-  color: var(--color-link-text);
-  text-decoration-thickness: 1px;
-  padding: 2px;
-  border-radius: 2px;
-
-  &:hover {
-    color: var(--color-link-text--hover);
-    text-decoration-thickness: 1px;
-  }
-  &:active {
-    color: var(--color-link-text--active);
-    background: var(--color-link-bg--active);
-  }
-  &:focus-visible {
-    color: var(--color-link-text--focus);
-    background: var(--color-link-bg--focus);
-    outline-offset: 4px;
-    outline: 2px solid var(--color-link-text--focus);
-  }
-  &:visited {
-    color: var(--color-link-text--visited);
-  }
-
-  &[data-color='neutral'],
-  &.ds-link--neutral {
-    --color-link-text: var(--color-neutral-text-subtle);
-    --color-link-text--hover: var(--color-neutral-text-default);
-    --color-link-text--active: var(--color-neutral-text-default);
-    --color-link-bg--active: var(--color-neutral-surface-default);
-    --color-link-text--focus: var(--color-neutral-text-default);
-    --color-link-bg--focus: var(--color-neutral-surface-default);
-  }
+  --dsc-link-text-decoration-thickness--hover: 1px;
+  --dsc-link-text-decoration-thickness: 1px;
 }
