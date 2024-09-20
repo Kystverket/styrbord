@@ -1,14 +1,4 @@
-.typography-body-medium {
-  font-size: var(--typography-body-medium-font-size);
-  font-weight: var(--typography-body-medium-font-weight);
-  line-height: var(--typography-body-medium-line-height);
-  letter-spacing: var(--typography-body-letter-spacing);
-}
-
 :root {
   font-family: museo-sans, Arial, sans-serif;
   font-weight: 300;
-  font-size: 16px;
-  text-align: left;
-  @extend .typography-body-medium;
 }

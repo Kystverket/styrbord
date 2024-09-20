@@ -1,7 +1,7 @@
 import type { Meta, StoryFn, StoryObj } from '@storybook/react';
 import { EnvelopeClosedIcon } from '@navikt/aksel-icons';
 
-import { Paragraph, Link, Button, Alert, ChipToggle } from '@digdir/designsystemet-react';
+import { Paragraph, Link } from '@digdir/designsystemet-react';
 
 type Story = StoryObj<typeof Link>;
 
@@ -37,9 +37,6 @@ export const InText: StoryFn<typeof Link> = () => (
         <EnvelopeClosedIcon aria-hidden />
         Kontakt oss
       </Link>
-      <Button>Hnm</Button>
-      <Alert>HHmm</Alert>
-      <ChipToggle>Chipps</ChipToggle>
     </Paragraph>
   </>
 );
