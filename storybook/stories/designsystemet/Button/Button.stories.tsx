@@ -134,8 +134,11 @@ Danger.decorators = [
 
 export const KombinereFarger: StoryFn<typeof Button> = () => (
   <>
-    <Button variant="primary" color="neutral">
+    <Button variant="primary" color="accent">
       Publiser
+    </Button>
+    <Button variant="primary" color="neutral">
+      Test
     </Button>
     <Button variant="secondary" color="neutral">
       Lagre kladd

@@ -5,17 +5,22 @@
   --color-neutral-text-subtle: #636363;
   --color-neutral-surface-default: #e7e1dc;
 
+  --color-neutral-base-active: #373737;
+  --color-neutral-base-hover: #494949;
+  --color-neutral-base-default: #5d5d5d;
+  --color-neutral-contrast-default: #fff;
+
   --color-accent-text-default: #0a227d;
   --color-accent-text-subtle: #2a57c0;
   --color-accent-surface-default: #d6e3ff;
-
-  --color-focus-outer: #0a227d;
-  --color-focus-inner: #fff;
 
   --color-accent-base-active: #183a93;
   --color-accent-base-hover: #0a227d;
   --color-accent-base-default: #000067;
   --color-accent-contrast-default: #fff;
 
-  --border-radius-md: 0.125rem;
+  --color-focus-outer: #0a227d;
+  --color-focus-inner: #fff;
+
+  --border-radius-base: 0.125rem;
 }

@@ -1,10 +1,10 @@
 @layer dsno {
   @import '@digdir/designsystemet-css';
-  @import '@digdir/designsystemet-theme';
+  @import '@digdir/designsystemet-theme/altinn';
 }
 @layer kyvtokens {
   @import 'kyv-tokens/dist/brandkystverket/brandkystverket-tokens.css';
-  @import './fonts';
+  @import './font-family';
   @import './tokens';
   @import './transforms';
 }

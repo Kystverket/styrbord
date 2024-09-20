@@ -3,19 +3,24 @@
   --ds-color-accent-text-subtle: var(--color-accent-text-subtle);
   --ds-color-accent-surface-default: var(--color-accent-surface-default);
 
+  --ds-color-accent-base-active: var(--color-accent-base-active);
+  --ds-color-accent-base-hover: var(--color-accent-base-hover);
+  --ds-color-accent-base-default: var(--color-accent-base-default);
+  --ds-color-accent-contrast-default: var(--color-accent-contrast-default);
+
   --ds-color-neutral-text-default: var(--color-neutral-text-default);
   --ds-color-neutral-text-subtle: var(--color-neutral-text-subtle);
   --ds-color-neutral-surface-default: var(--color-neutral-surface-default);
+
+  --ds-color-neutral-base-active: var(--color-neutral-base-active);
+  --ds-color-neutral-base-hover: var(--color-neutral-base-hover);
+  --ds-color-neutral-base-default: var(--color-neutral-base-default);
+  --ds-color-neutral-contrast-default: var(--color-neutral-contrast-default);
 
   --ds-color-focus-outer: var(--color-focus-outer);
   --ds-color-focus-inner: var(--color-focus-inner);
 
   --ds-global-purple-12: var(--color-purple-12);
 
-  --ds-color-accent-base-active: var(--color-accent-base-active);
-  --ds-color-accent-base-hover: var(--color-accent-base-hover);
-  --ds-color-accent-base-default: var(--color-accent-base-default);
-  --ds-color-accent-contrast-default: var(--color-accent-contrast-default);
-
-  --ds-border-radius-md: var(--border-radius-md);
+  --ds-border-radius-base: var(--border-radius-base);
 }
