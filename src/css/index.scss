@@ -11,8 +11,8 @@
   @import './styrbord/sizes';
 }
 @layer kyvified {
-  @import './designsystemet/_transforms';
-  @import './designsystemet/_base';
+  @import './designsystemet/transforms';
+  @import './designsystemet/base';
   @import './designsystemet/link';
   @import './designsystemet/button';
 }
