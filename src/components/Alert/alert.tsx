@@ -1,13 +1,13 @@
 import classes from './alert.module.css';
 import React from 'react';
-import { Body, Label, Title } from '../Typography/typography';
+import { Body, Title } from '../Typography/typography';
 import { getIcon, rootAlertStyle } from './alert.util';
 import { AlertLevel, TextSize, Width } from './alert.types';
 import Icon from '../Icon/icon';
 
 export interface AlertProps {
   level: AlertLevel;
-  size: TextSize;
+  size?: TextSize;
   title?: string;
   text?: string;
   children?: React.ReactNode;
@@ -18,7 +18,7 @@ export interface AlertProps {
 
 const Alert = ({
   level,
-  size,
+  size = 'md',
   width = 'md',
   title = undefined,
   text = undefined,
@@ -30,7 +30,7 @@ const Alert = ({
   let HeaderComponent = Title.Medium;
   let BodyComponent = Body.Medium;
 
-  if (size === 'large') {
+  if (size === 'lg') {
     HeaderComponent = Title.Large;
     BodyComponent = Body.Large;
   }
