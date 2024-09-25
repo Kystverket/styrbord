@@ -18,7 +18,7 @@ type Story = StoryObj<typeof meta>;
 const defaultProps: AlertProps = {
   title: 'Informativ tittel',
   level: 'info',
-  size: 'normal',
+  size: 'md',
   text:
     'Bruk dette tekstfeltet til å beskrive hva varslingen handler om. Du kan bruke så mange linjer du har' +
     ' behov for, men prøv likevel å være kort og konsis.',
@@ -29,7 +29,7 @@ export const Default: Story = {
 };
 
 export const LargeWithDismiss: Story = {
-  args: { ...defaultProps, size: 'large', onDismiss: () => {} },
+  args: { ...defaultProps, size: 'lg', onDismiss: () => {} },
 };
 
 export const ClassName: Story = {
