@@ -1,4 +1,4 @@
-name: Publish package to GitHub Packages
+name: Versjoner, publiser og deploy storybook
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 permissions:
   contents: write
 jobs:
-  version:
+  increment-version:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,8 +19,8 @@ jobs:
       - run: git tag ${VERSION}
       - run: git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
       - run: git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
-  publish-gpr:
-    needs: version
+  publish-to-github-packages:
+    needs: increment-version
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -33,6 +33,7 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
           # Defaults to the user or organization that owns the workflow file
           scope: '@kystverket'
+      - run: git pull
       - name: Install dependencies
         run: |
           echo "//npm.pkg.github.com/:_authToken=$NODE_AUTH_TOKEN" > ~/.npmrc
@@ -44,3 +45,22 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  deploy-storybook:
+    needs: publish-to-github-packages
+    environment:
+      name: github-pages
+      url: ${{ steps.build-publish.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      # Manual Checkout
+      - uses: actions/checkout@v4
+
+      # Set up Node
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      - id: build-publish
+        uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+        with:
+          path: storybook-static
+          build_command: npm run build-storybook
