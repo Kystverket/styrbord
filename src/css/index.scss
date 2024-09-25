@@ -5,7 +5,10 @@
 @layer kyvtokens {
   @import 'kyv-tokens/dist/brandkystverket/brandkystverket-tokens.css';
   @import './styrbord/font-family';
-  @import './styrbord/tokens';
+  @import './styrbord/colors';
+  @import './styrbord/fonts';
+  @import './styrbord/spacing';
+  @import './styrbord/sizes';
 }
 @layer kyvified {
   @import './designsystemet/_transforms';

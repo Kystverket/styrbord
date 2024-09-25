@@ -1,0 +1,13 @@
+:root {
+  --size-base-8: 8px;
+  --size-base-12: 12px;
+  --size-base-20: 20px;
+  --size-base-48: 48px;
+
+  --size-border-size-thin: 1px;
+  --size-border-radius-2: 2px;
+  --size-border-radius-large: 4px;
+  --size-border-width-3: 3px;
+
+  --size-border-radius-default: var(--size-border-radius-2);
+}

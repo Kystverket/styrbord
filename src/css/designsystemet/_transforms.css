@@ -23,4 +23,10 @@
   --ds-global-purple-12: var(--color-purple-12);
 
   --ds-border-radius-base: var(--border-radius-base);
+
+  --ds-font-family: var(--font-family);
+
+  --ds-font-weight-regular: var(--font-weight-regular);
+  --ds-font-weight-medium: var(--font-weight-medium);
+  --ds-font-weight-semibold: var(--font-weight-semibold);
 }

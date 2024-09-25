@@ -1,0 +1,91 @@
+.widthMd {
+  width: 500px;
+}
+.widthFull {
+  width: 100%;
+}
+
+.root {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-top: var(--spacing-2);
+}
+.content {
+  margin: var(--spacing-2);
+  margin-bottom: var(--spacing-4);
+  padding-right: var(--spacing-4);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+.icon {
+  flex-shrink: 0;
+  margin: var(--spacing-2);
+  margin-right: 0;
+}
+.closeButton {
+  flex-shrink: 0;
+  margin: var(--spacing-2);
+  margin-left: 0;
+  font-size: 16px;
+  padding: 0px;
+  line-height: 0px;
+}
+
+.alertBox {
+  border-radius: var(--size-border-radius-default);
+  border: 0px solid transparent;
+  border-left: var(--size-border-width-3) solid var(--alert-color-border);
+  background: var(--alert-color-background);
+  color: var(--alert-color-text);
+}
+.alertBox .icon {
+  color: var(--alert-color-icon);
+}
+
+.warning {
+  composes: alertBox;
+  --alert-color-border: var(--color-border-warning-default);
+  --alert-color-background: var(--color-surface-warning-subtle);
+  --alert-color-text: var(--color-text-warning-default);
+  --alert-color-icon: var(--color-text-warning-subtle);
+}
+
+.error {
+  composes: alertBox;
+  --alert-color-border: var(--color-border-danger-default);
+  --alert-color-background: var(--color-surface-danger-subtle);
+  --alert-color-text: var(--color-text-danger-default);
+  --alert-color-icon: var(--color-text-danger-subtle);
+}
+
+.ghost {
+  composes: alertBox;
+  --alert-color-border: white;
+  --alert-color-background: white;
+  --alert-color-text: var(--color-text-neutral-default);
+  --alert-color-icon: var(--color-text-info-subtle);
+}
+
+.info {
+  composes: alertBox;
+  --alert-color-border: var(--color-border-info-default);
+  --alert-color-background: var(--color-surface-info-subtle);
+  --alert-color-text: var(--color-text-info-default);
+  --alert-color-icon: var(--color-text-info-subtle);
+}
+
+.success {
+  composes: alertBox;
+  --alert-color-border: var(--color-border-success-default);
+  --alert-color-background: var(--color-surface-success-subtle);
+  --alert-color-text: var(--color-text-success-default);
+  --alert-color-icon: var(--color-text-success-subtle);
+}
+
+.customWidth {
+  width: 700px;
+}

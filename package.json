@@ -74,5 +74,8 @@
     "extends": [
       "plugin:storybook/recommended"
     ]
+  },
+  "dependencies": {
+    "material-symbols": "^0.23.0"
   }
 }

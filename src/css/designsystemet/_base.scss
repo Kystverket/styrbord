@@ -1,10 +1,5 @@
 :root {
-  font-family: museo-sans, Arial, sans-serif;
-  --ds-font-family: 'museo-sans', Arial, sans-serif;
-
-  --ds-font-weight-regular: 300;
-  --ds-font-weight-medium: 500;
-  --ds-font-weight-semibold: 700;
+  font-family: var(--font-family);
 }
 
 .ds-paragraph--md {
