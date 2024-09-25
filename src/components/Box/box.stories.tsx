@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Box, { BoxProps } from './box';
-import StyrbordDecorator from '../../styrbordDecorator';
+import StyrbordDecorator from '../../../storybook/styrbordDecorator';
 
 const meta = {
   title: 'Components/Box',

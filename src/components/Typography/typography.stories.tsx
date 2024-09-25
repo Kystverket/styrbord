@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Body, Headline, Label, Title, TypographyProps } from './typography';
 import Box, { BoxProps } from '../Box/box';
-import StyrbordDecorator from '../../styrbordDecorator';
+import StyrbordDecorator from '../../../storybook/styrbordDecorator';
 
 const meta = {
   title: 'Components/Typography',

@@ -1,6 +1,6 @@
 import classes from './alert.module.css';
 import React from 'react';
-import { Body, Label } from '../Typography/typography';
+import { Body, Label, Title } from '../Typography/typography';
 import { getIcon, rootAlertStyle } from './alert.util';
 import { AlertLevel, TextSize, Width } from './alert.types';
 import Icon from '../Icon/icon';
@@ -27,11 +27,11 @@ const Alert = ({
 }: AlertProps) => {
   const icon = getIcon(level);
 
-  let HeaderComponent = Label.Strong.Medium;
+  let HeaderComponent = Title.Medium;
   let BodyComponent = Body.Medium;
 
   if (size === 'large') {
-    HeaderComponent = Label.Strong.Large;
+    HeaderComponent = Title.Large;
     BodyComponent = Body.Large;
   }
 

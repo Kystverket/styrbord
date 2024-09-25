@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Alert, { AlertProps } from './alert';
 import style from './alert.module.css';
-import StyrbordDecorator from '../../styrbordDecorator';
+import StyrbordDecorator from '../../../storybook/styrbordDecorator';
 
 const meta = {
   title: 'Components/Alert',

@@ -33,6 +33,9 @@
   font-size: 16px;
   padding: 0px;
   line-height: 0px;
+  background: transparent;
+  border: 0px;
+  cursor: pointer;
 }
 
 .alertBox {
@@ -48,42 +51,42 @@
 
 .warning {
   composes: alertBox;
-  --alert-color-border: var(--color-border-warning-default);
-  --alert-color-background: var(--color-surface-warning-subtle);
-  --alert-color-text: var(--color-text-warning-default);
-  --alert-color-icon: var(--color-text-warning-subtle);
+  --alert-color-border: var(--color-warning-border-default);
+  --alert-color-background: var(--color-warning-surface-subtle);
+  --alert-color-text: var(--color-warning-text-default);
+  --alert-color-icon: var(--color-warning-text-subtle);
 }
 
 .error {
   composes: alertBox;
-  --alert-color-border: var(--color-border-danger-default);
-  --alert-color-background: var(--color-surface-danger-subtle);
-  --alert-color-text: var(--color-text-danger-default);
-  --alert-color-icon: var(--color-text-danger-subtle);
+  --alert-color-border: var(--color-danger-border-default);
+  --alert-color-background: var(--color-danger-surface-subtle);
+  --alert-color-text: var(--color-danger-text-default);
+  --alert-color-icon: var(--color-danger-text-subtle);
 }
 
 .ghost {
   composes: alertBox;
   --alert-color-border: white;
   --alert-color-background: white;
-  --alert-color-text: var(--color-text-neutral-default);
-  --alert-color-icon: var(--color-text-info-subtle);
+  --alert-color-text: var(--color-neutral-text-default);
+  --alert-color-icon: var(--color-info-text-subtle);
 }
 
 .info {
   composes: alertBox;
-  --alert-color-border: var(--color-border-info-default);
-  --alert-color-background: var(--color-surface-info-subtle);
-  --alert-color-text: var(--color-text-info-default);
-  --alert-color-icon: var(--color-text-info-subtle);
+  --alert-color-border: var(--color-info-border-default);
+  --alert-color-background: var(--color-info-surface-subtle);
+  --alert-color-text: var(--color-info-text-default);
+  --alert-color-icon: var(--color-info-text-subtle);
 }
 
 .success {
   composes: alertBox;
-  --alert-color-border: var(--color-border-success-default);
-  --alert-color-background: var(--color-surface-success-subtle);
-  --alert-color-text: var(--color-text-success-default);
-  --alert-color-icon: var(--color-text-success-subtle);
+  --alert-color-border: var(--color-success-border-default);
+  --alert-color-background: var(--color-success-surface-subtle);
+  --alert-color-text: var(--color-success-text-default);
+  --alert-color-icon: var(--color-success-text-subtle);
 }
 
 .customWidth {
