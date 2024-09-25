@@ -6,3 +6,7 @@
   --ds-font-weight-medium: 500;
   --ds-font-weight-semibold: 700;
 }
+
+.ds-paragraph--md {
+  font-size: var(--ds-font-size-4);
+}
