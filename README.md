@@ -10,7 +10,7 @@ To install, add a file called ```.npmrc``` next to your ```package.json```.
 
 It should contain the following line:
 
-```.env
+```.npmrc
 @kystverket:registry=https://npm.pkg.github.com
 ```
 

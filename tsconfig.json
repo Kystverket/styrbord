@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "declaration": true,
     "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "types": ["vite/client", "node"],
@@ -20,6 +21,6 @@
       "~/*": ["src/*", "storybook/*"]
     }
   },
-  "include": ["./src", "storybook"],
+  "include": ["./src"],
   "exclude": ["node_modules"]
 }

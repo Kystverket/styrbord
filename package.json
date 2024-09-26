@@ -15,7 +15,7 @@
     }
   },
   "main": "./dist/main.js",
-  "typings": "./dist/main.d.ts",
+  "typings": "./dist/src/main.d.ts",
   "files": [
     "dist/**/*"
   ],
