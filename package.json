@@ -33,12 +33,16 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "@chromatic-com/storybook": "^1.5.0",
+  "peerDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "@digdir/designsystemet-css": "^1.0.0-next.33",
     "@digdir/designsystemet-react": "^1.0.0-next.33",
     "@digdir/designsystemet-theme": "^1.0.0-next.33",
-    "@navikt/aksel-icons": "^6.11.0",
+    "@navikt/aksel-icons": "^6.11.0"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^1.5.0",
     "@rollup/plugin-typescript": "^11.1.6",
     "@storybook/addon-essentials": "^8.3.3",
     "@storybook/addon-interactions": "^8.3.3",
@@ -65,8 +69,6 @@
     "kyv-tokens": "^1.4.0",
     "postcss": "^8.4.38",
     "prettier": "^3.3.3",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
     "react-syntax-highlighter": "^15.5.0",
     "rollup-plugin-typescript-paths": "^1.5.0",
     "sass": "^1.77.6",
