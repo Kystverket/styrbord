@@ -7,6 +7,7 @@
     ".": {
       "style": "./dist/style.css",
       "import": "./dist/main.js",
+      "types": "./dist/src/main.d.ts",
       "require": "./dist/main.umd.js"
     },
     "./*.css": {
