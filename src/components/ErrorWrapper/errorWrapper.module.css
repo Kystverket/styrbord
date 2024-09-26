@@ -1,0 +1,13 @@
+.error {
+  color: var(--color-danger-surface-default);
+}
+.error .text {
+  color: var(--color-danger-text-default);
+}
+.icon {
+  font-size: 20px;
+}
+
+.noErrors .error {
+  display: none;
+}
