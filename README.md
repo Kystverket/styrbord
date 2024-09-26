@@ -1,4 +1,4 @@
-# kyv-styrbord
+# Styrbord, komponentbiblioteketet
 
 A (test) component library for React using Storybook
 
