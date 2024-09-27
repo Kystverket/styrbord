@@ -5,7 +5,7 @@ import Icon from '../Icon/icon';
 import Box from '../Box/box';
 
 export interface ErrorWrapperProps {
-  error?: string | boolean | null;
+  error?: string | null;
   children: ReactNode;
 }
 
