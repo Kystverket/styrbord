@@ -5,10 +5,9 @@
   "type": "module",
   "exports": {
     ".": {
-      "style": "./dist/style.css",
-      "import": "./dist/main.js",
       "types": "./dist/src/main.d.ts",
-      "require": "./dist/main.umd.js"
+      "style": "./dist/style.css",
+      "import": "./dist/main.js"
     },
     "./*.css": {
       "import": "./dist/*.css",
@@ -29,7 +28,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "pretty:check": "npx prettier . --check",
-    "pretty:fix": "npx prettier . --write"
+    "pretty:fix": "npx prettier . --write",
+    "lint:pkg": "npx publint"
   },
   "author": "",
   "license": "ISC",
