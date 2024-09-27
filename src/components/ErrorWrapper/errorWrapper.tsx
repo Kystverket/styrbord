@@ -5,12 +5,12 @@ import Icon from '../Icon/icon';
 import Box from '../Box/box';
 
 export interface ErrorWrapperProps {
-  error?: string | boolean | null;
+  error?: string | null;
   children: ReactNode;
 }
 
 const ErrorWrapper = (props: ErrorWrapperProps) => {
-  const errorHasText = typeof props.error === 'string' && props.error.length > 0;
+  const errorHasText = (props.error?.length ?? 0) > 0;
   return (
     <Box gap={1} className={errorHasText ? style.withErrors : style.noErrors}>
       <Box>{props.children}</Box>
