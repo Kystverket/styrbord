@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Button, ButtonProps } from "@digdir/designsystemet-react";
+import { Button, ButtonProps } from "../../../../src/components/Button/button";
 import StyrbordDecorator from "../../../styrbordDecorator";
 
 const meta = {
@@ -15,7 +15,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const defaultProps: ButtonProps = {
-  variant: "primary",
+  design: "filled",
   color: "accent",
   size: "md",
   icon: undefined,
@@ -44,9 +44,13 @@ export const Danger: Story = {
 };
 
 export const Outlined: Story = {
-  args: { ...defaultProps, variant: "secondary" },
+  args: { ...defaultProps, design: "outlined" },
 };
 
 export const Ghost: Story = {
-  args: { ...defaultProps, variant: "tertiary" },
+  args: { ...defaultProps, design: "ghost" },
+};
+
+export const Dashed: Story = {
+  args: { ...defaultProps, design: "dashed" },
 };
