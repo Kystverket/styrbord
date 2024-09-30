@@ -29,7 +29,7 @@
     "build-storybook": "storybook build",
     "pretty:check": "npx prettier . --check",
     "pretty:fix": "npx prettier . --write",
-    "lint:pkg": "npx publint"
+    "lint:pkg": "npm exec -- publint"
   },
   "author": "",
   "license": "ISC",
@@ -71,6 +71,7 @@
     "kyv-tokens": "^1.4.0",
     "postcss": "^8.4.38",
     "prettier": "^3.3.3",
+    "publint": "^0.2.11",
     "react-syntax-highlighter": "^15.5.0",
     "rollup-plugin-typescript-paths": "^1.5.0",
     "sass": "^1.77.6",

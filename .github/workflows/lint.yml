@@ -5,6 +5,7 @@ on:
 
 jobs:
   check-version:
+    name: Is NPM version untagged?
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -22,6 +23,7 @@ jobs:
       - run: exit 1
         if: steps.check-tag.outputs.exists == 'true'
   run-linters:
+    name: Pretty / Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
