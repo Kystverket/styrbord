@@ -27,6 +27,9 @@ const defaultProps: BoxProps = {
       <Title.Large>Title Large</Title.Large>
       <Title.Medium>Title Medium</Title.Medium>
       <Title.Small>Title Small</Title.Small>
+      <Body.Strong.Large>Body Strong Large</Body.Strong.Large>
+      <Body.Strong.Medium>Body Strong Medium</Body.Strong.Medium>
+      <Body.Strong.Small>Body Strong Small</Body.Strong.Small>
       <Body.Large>Body Large</Body.Large>
       <Body.Medium>Body Medium</Body.Medium>
       <Body.Small>Body Small</Body.Small>

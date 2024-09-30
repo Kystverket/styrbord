@@ -193,10 +193,39 @@ const BodySmall = (props: TypographyProps) => {
   );
 };
 
+const BodyStrongLarge = (props: TypographyProps) => {
+  return (
+    <p className={getBodyClasses(typography.bodyStrongLg, props)}>
+      {props.children}
+    </p>
+  );
+};
+
+const BodyStrongMedium = (props: TypographyProps) => {
+  return (
+    <p className={getBodyClasses(typography.bodyStrongMd, props)}>
+      {props.children}
+    </p>
+  );
+};
+
+const BodyStrongSmall = (props: TypographyProps) => {
+  return (
+    <p className={getBodyClasses(typography.bodyStrongSm, props)}>
+      {props.children}
+    </p>
+  );
+};
+
 export const Body = {
   Large: BodyLarge,
   Medium: BodyMedium,
   Small: BodySmall,
+  Strong: {
+    Large: BodyStrongLarge,
+    Medium: BodyStrongMedium,
+    Small: BodyStrongSmall,
+  },
 };
 
 /*

@@ -1,4 +1,4 @@
-# Styrbord, et komponentbiblioteketet
+# Styrbord, et komponentbibliotek
 
 ## Installasjon
 
@@ -22,7 +22,7 @@ Nå skal du kunne kjøre følgende
 
 ## I bruk
 
-CSS holder å importere én gang globalt.
+Det holder å importere CSS én gang globalt.
 
 ```js
 import "@kystverket/styrbord/style.css";
