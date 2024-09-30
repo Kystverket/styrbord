@@ -15,4 +15,7 @@ export { default as Icon } from './components/Icon/icon';
 export { Display, Headline, Title, Body, Label } from './components/Typography/typography';
 export type { TypographyProps, HeaderTypographyProps } from './components/Typography/typography';
 
+export { Button } from './components/Button/button';
+export type { ButtonProps } from './components/Button/button';
+
 export * from '@digdir/designsystemet-react';

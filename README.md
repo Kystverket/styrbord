@@ -1,4 +1,4 @@
-# Styrbord, et komponentbibliotek
+# Styrbord
 
 ## Installasjon
 
@@ -6,7 +6,7 @@ Styrbord blir publisert til Github Packages. [Her](https://docs.github.com/en/pa
 
 Kort forklart:
 
-- Lag en `Personal Access Token` med lesetilgang på packages. Denne må være autorisert for Kystverket organisasjonen. Dette gjøres her: [https://github.com/settings/tokens](https://github.com/settings/tokens)
+- Lag en `Personal Access Token` med lesetilgang på packages. Denne må (enn så lenge) være autorisert for Kystverkets organisasjon. Dette gjøres her: [https://github.com/settings/tokens](https://github.com/settings/tokens)
 - Lag en fil som heter `.npmrc` i din hjemmemappe (`cd ~`) med følgende:
 
 ```.env
