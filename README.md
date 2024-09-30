@@ -1,4 +1,4 @@
-# Styrbord, et komponentbiblioteketet
+# Styrbord, et komponentbiblioteket
 
 ## Installasjon
 
