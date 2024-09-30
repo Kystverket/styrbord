@@ -1,13 +1,13 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { Body, Headline, Label, Title, TypographyProps } from "./typography";
-import Box, { BoxProps } from "../Box/box";
-import StyrbordDecorator from "../../../storybook/styrbordDecorator";
+import type { Meta, StoryObj } from '@storybook/react';
+import { Display, Body, Headline, Label, Title } from './typography';
+import Box, { BoxProps } from '../Box/box';
+import StyrbordDecorator from '../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: "Components/Typography",
+  title: 'Components/Typography',
   component: Box,
   decorators: [StyrbordDecorator],
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {},
 } satisfies Meta<typeof Box>;
 
@@ -18,6 +18,9 @@ type Story = StoryObj<typeof meta>;
 const defaultProps: BoxProps = {
   children: (
     <>
+      <Display.Large>Display Large</Display.Large>
+      <Display.Medium>Display Medium</Display.Medium>
+      <Display.Small>Display Small</Display.Small>
       <Headline.Large>Headline Large</Headline.Large>
       <Headline.Medium>Headline Medium</Headline.Medium>
       <Headline.Small>Headline Small</Headline.Small>

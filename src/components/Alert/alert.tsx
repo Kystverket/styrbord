@@ -1,9 +1,11 @@
-import classes from "./alert.module.css";
-import React from "react";
-import { Body, Title } from "../Typography/typography";
-import { getIcon, rootAlertStyle } from "./alert.util";
-import { AlertLevel, TextSize, Width } from "./alert.types";
-import Icon from "../Icon/icon";
+import classes from './alert.module.css';
+import React from 'react';
+import typography from '../Typography/typography.module.css';
+import { Title } from '../Typography/typography';
+import { getIcon, alertStyle } from './alert.util';
+import { AlertLevel, TextSize, Width } from './alert.types';
+import Icon from '../Icon/icon';
+import { Box } from '~/main';
 
 export interface AlertProps {
   level: AlertLevel;
@@ -18,39 +20,39 @@ export interface AlertProps {
 
 const Alert = ({
   level,
-  size = "md",
-  width = "md",
+  size = 'md',
+  width = 'md',
   title = undefined,
   text = undefined,
-  className = "",
+  className = '',
   ...props
 }: AlertProps) => {
   const icon = getIcon(level);
 
   let HeaderComponent = Title.Medium;
-  let BodyComponent = Body.Medium;
+  let bodyClasses = typography.bodyMd;
 
-  if (size === "lg") {
+  if (size === 'lg') {
     HeaderComponent = Title.Large;
-    BodyComponent = Body.Large;
+    bodyClasses = typography.bodyLg;
   }
 
   return (
-    <div className={rootAlertStyle(width, level, className)}>
+    <Box horizontal justify="between" pt={2} className={`${alertStyle(width, level)} ${className}`}>
       {icon}
-      <div className={classes.content}>
+      <Box m={2} mb={4} pr={4} gap={2} className={classes.content}>
         {title && <HeaderComponent>{title}</HeaderComponent>}
-        <BodyComponent>
+        <div className={bodyClasses}>
           {text}
           {props.children}
-        </BodyComponent>
-      </div>
+        </div>
+      </Box>
       {props.onDismiss ? (
         <button className={classes.closeButton} onClick={props.onDismiss}>
           <Icon material="close" />
         </button>
       ) : null}
-    </div>
+    </Box>
   );
 };
 
