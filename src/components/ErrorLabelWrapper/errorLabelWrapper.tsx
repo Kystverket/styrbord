@@ -1,15 +1,15 @@
 import { ReactNode } from "react";
-import style from "./errorWrapper.module.css";
+import style from "./errorLabelWrapper.module.css";
 import { Label } from "../Typography/typography";
 import Icon from "../Icon/icon";
 import Box from "../Box/box";
 
-export interface ErrorWrapperProps {
+export interface ErrorLabelWrapperProps {
   error?: string | null;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
-const ErrorWrapper = (props: ErrorWrapperProps) => {
+const ErrorLabelWrapper = (props: ErrorLabelWrapperProps) => {
   const errorHasText =
     typeof props.error === "string" && props.error.length > 0;
   return (
@@ -25,4 +25,4 @@ const ErrorWrapper = (props: ErrorWrapperProps) => {
   );
 };
 
-export default ErrorWrapper;
+export default ErrorLabelWrapper;

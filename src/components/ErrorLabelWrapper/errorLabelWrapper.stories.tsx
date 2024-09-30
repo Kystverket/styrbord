@@ -1,21 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import ErrorWrapper, { ErrorWrapperProps } from "./errorWrapper";
+import ErrorLabelWrapper, { ErrorLabelWrapperProps } from "./errorLabelWrapper";
 import { Textfield } from "@digdir/designsystemet-react";
 import StyrbordDecorator from "../../../storybook/styrbordDecorator";
 
 const meta = {
   title: "Form/ErrorWrapper",
-  component: ErrorWrapper,
+  component: ErrorLabelWrapper,
   decorators: [StyrbordDecorator],
   tags: ["autodocs"],
   argTypes: {},
-} satisfies Meta<typeof ErrorWrapper>;
+} satisfies Meta<typeof ErrorLabelWrapper>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const defaultProps: ErrorWrapperProps = {
+const defaultProps: ErrorLabelWrapperProps = {
   error: "I am an error",
   children: <Textfield />,
 };

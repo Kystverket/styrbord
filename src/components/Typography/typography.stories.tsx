@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Body, Headline, Label, Title, TypographyProps } from "./typography";
+import { Display, Body, Headline, Label, Title } from "./typography";
 import Box, { BoxProps } from "../Box/box";
 import StyrbordDecorator from "../../../storybook/styrbordDecorator";
 
@@ -18,18 +18,21 @@ type Story = StoryObj<typeof meta>;
 const defaultProps: BoxProps = {
   children: (
     <>
+      <Display.Large>Display Large</Display.Large>
+      <Display.Medium>Display Medium</Display.Medium>
+      <Display.Small>Display Small</Display.Small>
       <Headline.Large>Headline Large</Headline.Large>
       <Headline.Medium>Headline Medium</Headline.Medium>
       <Headline.Small>Headline Small</Headline.Small>
       <Title.Large>Title Large</Title.Large>
       <Title.Medium>Title Medium</Title.Medium>
       <Title.Small>Title Small</Title.Small>
-      <Body.Large>Body Large</Body.Large>
-      <Body.Medium>Body Medium</Body.Medium>
-      <Body.Small>Body Small</Body.Small>
       <Body.Strong.Large>Body Strong Large</Body.Strong.Large>
       <Body.Strong.Medium>Body Strong Medium</Body.Strong.Medium>
       <Body.Strong.Small>Body Strong Small</Body.Strong.Small>
+      <Body.Large>Body Large</Body.Large>
+      <Body.Medium>Body Medium</Body.Medium>
+      <Body.Small>Body Small</Body.Small>
       <Label.Strong.Large>Label Large Strong</Label.Strong.Large>
       <Label.Strong.Medium>Label Medium Strong</Label.Strong.Medium>
       <Label.Strong.Small>Label Small Strong</Label.Strong.Small>

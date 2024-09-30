@@ -16,12 +16,8 @@ export const getIcon = (level: AlertLevel) => {
   }
 };
 
-export const rootAlertStyle = (
-  width: Width,
-  level: AlertLevel,
-  className: string = "",
-) => {
-  const classNames = [classes.root, className];
+export const alertStyle = (width: Width, level: AlertLevel) => {
+  const classNames = [];
 
   switch (width) {
     case "md":

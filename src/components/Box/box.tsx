@@ -7,7 +7,8 @@ const getSpacingCss = (
   key: SpacingKey,
   value?: Spacing,
 ): Record<string, string> => {
-  if (!value) return {};
+  if (value === undefined) return {};
+
   const cssProperties = cssSpacingProperties[key];
   return cssProperties.reduce((acc, property) => {
     return { ...acc, [property]: `var(--spacing-${value})` };

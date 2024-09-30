@@ -1,8 +1,16 @@
 .box {
   display: flex;
   flex-direction: column;
-  padding: 0;
-  margin: 0;
+  --box-pt: 0;
+  --box-pr: 0;
+  --box-pb: 0;
+  --box-pl: 0;
+  --box-mt: 0;
+  --box-mr: 0;
+  --box-mb: 0;
+  --box-ml: 0;
+  padding: var(--box-pt) var(--box-pr) var(--box-pb) var(--box-pl);
+  margin: var(--box-mt) var(--box-mr) var(--box-mb) var(--box-ml);
   gap: var(--box-gap);
 }
 

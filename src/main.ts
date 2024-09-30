@@ -7,8 +7,8 @@ export type { AlertProps } from "./components/Alert/alert";
 export { default as Box } from "./components/Box/box";
 export type { BoxProps } from "./components/Box/box";
 
-export { default as ErrorWrapper } from "./components/ErrorWrapper/errorWrapper";
-export type { ErrorWrapperProps } from "./components/ErrorWrapper/errorWrapper";
+export { default as ErrorLabelWrapper } from "./components/ErrorLabelWrapper/errorLabelWrapper";
+export type { ErrorLabelWrapperProps } from "./components/ErrorLabelWrapper/errorLabelWrapper";
 
 export { default as Icon } from "./components/Icon/icon";
 
