@@ -19,7 +19,6 @@ jobs:
         id: check-tag
         with:
           tag: ${{ env.STYRBORD_VERSION }}
-          repo: 'actions/checkout'
       - run: exit 1
         if: steps.check-tag.outputs.exists == 'true'
   run-linters:
