@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { Button, ButtonProps } from "../../../../src/components/Button/button";
-import StyrbordDecorator from "../../../styrbordDecorator";
+import type { Meta, StoryObj } from '@storybook/react';
+import { Button, ButtonProps } from '../../../../src/components/Button/button';
+import StyrbordDecorator from '../../../styrbordDecorator';
 
 const meta = {
-  title: "Designsystemet/Button",
+  title: 'Designsystemet/Button',
   component: Button,
   decorators: [StyrbordDecorator],
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {},
 } satisfies Meta<typeof Button>;
 
@@ -15,12 +15,12 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const defaultProps: ButtonProps = {
-  design: "filled",
-  color: "accent",
-  size: "md",
+  design: 'filled',
+  color: 'accent',
+  size: 'md',
   icon: undefined,
   loading: false,
-  children: "Button",
+  children: 'Button',
 };
 
 export const Default: Story = {
@@ -28,29 +28,29 @@ export const Default: Story = {
 };
 
 export const Small: Story = {
-  args: { ...defaultProps, size: "sm" },
+  args: { ...defaultProps, size: 'sm' },
 };
 
 export const Large: Story = {
-  args: { ...defaultProps, size: "lg" },
+  args: { ...defaultProps, size: 'lg' },
 };
 
 export const Neutral: Story = {
-  args: { ...defaultProps, color: "neutral" },
+  args: { ...defaultProps, color: 'neutral' },
 };
 
 export const Danger: Story = {
-  args: { ...defaultProps, color: "danger" },
+  args: { ...defaultProps, color: 'danger' },
 };
 
 export const Outlined: Story = {
-  args: { ...defaultProps, design: "outlined" },
+  args: { ...defaultProps, design: 'outlined' },
 };
 
 export const Ghost: Story = {
-  args: { ...defaultProps, design: "ghost" },
+  args: { ...defaultProps, design: 'ghost' },
 };
 
 export const Dashed: Story = {
-  args: { ...defaultProps, design: "dashed" },
+  args: { ...defaultProps, design: 'dashed' },
 };

@@ -1,8 +1,5 @@
-import {
-  ButtonProps as DsButtonProps,
-  Button as DsButton,
-} from "@digdir/designsystemet-react";
-import classes from "./button.module.css";
+import { ButtonProps as DsButtonProps, Button as DsButton } from '@digdir/designsystemet-react';
+import classes from './button.module.css';
 
 /*
     Unionen av designsystemets ButtonProps og vår ButtonProps
@@ -15,28 +12,25 @@ import classes from "./button.module.css";
 */
 export type ButtonProps = {
   variant?: undefined;
-  design?: "filled" | "outlined" | "ghost" | "dashed";
+  design?: 'filled' | 'outlined' | 'ghost' | 'dashed';
 } & DsButtonProps;
 
 export const Button = ({ design, ...props }: ButtonProps) => {
   const propsToOverride: DsButtonProps = { ...props };
 
   switch (design) {
-    case "filled":
-      propsToOverride.variant = "primary";
+    case 'filled':
+      propsToOverride.variant = 'primary';
       break;
-    case "outlined":
-      propsToOverride.variant = "secondary";
+    case 'outlined':
+      propsToOverride.variant = 'secondary';
       break;
-    case "ghost":
-      propsToOverride.variant = "tertiary";
+    case 'ghost':
+      propsToOverride.variant = 'tertiary';
       break;
-    case "dashed":
-      propsToOverride.variant = "secondary";
-      propsToOverride.className = [
-        propsToOverride.className,
-        classes.dashed,
-      ].join(" ");
+    case 'dashed':
+      propsToOverride.variant = 'secondary';
+      propsToOverride.className = [propsToOverride.className, classes.dashed].join(' ');
       break;
   }
 

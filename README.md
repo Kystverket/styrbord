@@ -25,11 +25,11 @@ Nå skal du kunne kjøre følgende
 Det holder å importere CSS én gang globalt.
 
 ```js
-import "@kystverket/styrbord/style.css";
+import '@kystverket/styrbord/style.css';
 ```
 
 Importering av enkeltkomponenter.
 
 ```js
-import { Heading, Ingress, Tabs } from "@kystverket/styrbord";
+import { Heading, Ingress, Tabs } from '@kystverket/styrbord';
 ```

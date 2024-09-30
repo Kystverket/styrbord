@@ -1,7 +1,7 @@
-import type { Preview } from "@storybook/react";
-import { themes } from "@storybook/theming";
+import type { Preview } from '@storybook/react';
+import { themes } from '@storybook/theming';
 
-import "../src/css/index.scss";
+import '../src/css/index.scss';
 
 const preview: Preview = {
   parameters: {
@@ -16,12 +16,12 @@ const preview: Preview = {
     },
     options: {
       storySort: {
-        order: ["Intro", "Components", "Form"],
+        order: ['Intro', 'Components', 'Form'],
       },
     },
   },
 
-  tags: ["autodocs"],
+  tags: ['autodocs'],
 };
 
 export default preview;
