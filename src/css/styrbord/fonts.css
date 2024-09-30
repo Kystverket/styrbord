@@ -1,7 +1,7 @@
 :root {
   /* Defaults */
 
-  --font-family: 'museo-sans', Arial, sans-serif;
+  --font-family: "museo-sans", Arial, sans-serif;
   --font-family-default: var(--font-family);
 
   /* Font weights */

@@ -1,28 +1,35 @@
-# Styrbord, komponentbiblioteketet
+# Styrbord, et komponentbiblioteketet
 
-A (test) component library for React using Storybook
+## Installasjon
 
-This is a simple wrapper of designsystemet.no.
+Styrbord blir publisert til Github Packages. [Her](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#installing-a-package) er en ordrik guide for å kunne installere slike.
 
-## Installation
+Kort forklart:
 
-To install, add a file called ```.npmrc``` next to your ```package.json```.
+- Lag en `Personal Access Token` med lesetilgang på packages. Denne må være autorisert for Kystverket organisasjonen. Dette gjøres her: [https://github.com/settings/tokens](https://github.com/settings/tokens)
+- Lag en fil som heter `.npmrc` i din hjemmemappe (`cd ~`) med følgende:
 
-It should contain the following line:
-
-```.npmrc
-@kystverket:registry=https://npm.pkg.github.com
+```.env
+//npm.pkg.github.com/:_authToken=MITT_TOKEN
+@kystverket:registry=https://npm.pkg.github.com/
 ```
 
-Now you should be able to run
+- Bytt ut MITT_TOKEN med PAT du lagde over
 
-```npm i @kystverket/styrbord```
+Nå skal du kunne kjøre følgende
 
-## Usage
+`npm i @kystverket/styrbord`
+
+## I bruk
+
+CSS holder å importere én gang globalt.
 
 ```js
-import '@kystverket/styrbord/style.css';
-import { Heading, Ingress, Tabs } from '@kystverket/styrbord';
+import "@kystverket/styrbord/style.css";
 ```
 
-The CSS can be imported once globally.
+Importering av enkeltkomponenter.
+
+```js
+import { Heading, Ingress, Tabs } from "@kystverket/styrbord";
+```
