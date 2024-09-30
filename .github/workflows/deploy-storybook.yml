@@ -1,35 +1,16 @@
-name: Versjoner, publiser og deploy storybook
+name: Deploy storybook
 
 on:
   push:
     branches:
       - main
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    permissions:
-      packages: read
-      contents: read
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22.x'
-      - run: git pull
-      - name: Install dependencies
-        run: |
-          echo "//npm.pkg.github.com/:_authToken=$NODE_AUTH_TOKEN" > ~/.npmrc
-          npm ci
-        env:
-          NODE_AUTH_TOKEN: ${{ github.token }}
-      - run: npm ci
-      - run: npm run build
   deploy-storybook:
-    needs: build
     permissions:
       id-token: write
       pages: write
       contents: read
+      packages: read
     environment:
       name: github-pages
       url: ${{ steps.build-publish.outputs.page_url }}
@@ -43,6 +24,8 @@ jobs:
         with:
           node-version: '22.x'
       - run: git pull
+      - run: npm ci
+      - run: npm run build
       - id: build-publish
         uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
         with:
