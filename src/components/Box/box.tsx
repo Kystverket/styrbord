@@ -4,7 +4,8 @@ import { Spacing, SpacingKey, SpacingValues } from './box.types';
 import { cssSpacingProperties, spacingKeys } from './box.constants';
 
 const getSpacingCss = (key: SpacingKey, value?: Spacing): Record<string, string> => {
-  if (!value) return {};
+  if (value === undefined) return {};
+
   const cssProperties = cssSpacingProperties[key];
   return cssProperties.reduce((acc, property) => {
     return { ...acc, [property]: `var(--spacing-${value})` };
@@ -41,7 +42,6 @@ const Box = ({ className = '', gap = 0, children, align = 'start', ...props }: B
   }
 
   spacingKeys.forEach((key) => {
-    console.log(key, props[key], getSpacingCss(key, props[key]), styles);
     Object.assign(styles, getSpacingCss(key, props[key]));
   });
 
