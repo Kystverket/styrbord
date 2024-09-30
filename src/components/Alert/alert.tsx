@@ -1,11 +1,11 @@
-import classes from './alert.module.css';
-import React from 'react';
-import typography from '../Typography/typography.module.css';
-import { Title } from '../Typography/typography';
-import { getIcon, alertStyle } from './alert.util';
-import { AlertLevel, TextSize, Width } from './alert.types';
-import Icon from '../Icon/icon';
-import { Box } from '~/main';
+import classes from "./alert.module.css";
+import React from "react";
+import typography from "../Typography/typography.module.css";
+import { Title } from "../Typography/typography";
+import { getIcon, alertStyle } from "./alert.util";
+import { AlertLevel, TextSize, Width } from "./alert.types";
+import Icon from "../Icon/icon";
+import { Box } from "~/main";
 
 export interface AlertProps {
   level: AlertLevel;
@@ -20,11 +20,11 @@ export interface AlertProps {
 
 const Alert = ({
   level,
-  size = 'md',
-  width = 'md',
+  size = "md",
+  width = "md",
   title = undefined,
   text = undefined,
-  className = '',
+  className = "",
   ...props
 }: AlertProps) => {
   const icon = getIcon(level);
@@ -32,13 +32,18 @@ const Alert = ({
   let HeaderComponent = Title.Medium;
   let bodyClasses = typography.bodyMd;
 
-  if (size === 'lg') {
+  if (size === "lg") {
     HeaderComponent = Title.Large;
     bodyClasses = typography.bodyLg;
   }
 
   return (
-    <Box horizontal justify="between" pt={2} className={`${alertStyle(width, level)} ${className}`}>
+    <Box
+      horizontal
+      justify="between"
+      pt={2}
+      className={`${alertStyle(width, level)} ${className}`}
+    >
       {icon}
       <Box m={2} mb={4} pr={4} gap={2} className={classes.content}>
         {title && <HeaderComponent>{title}</HeaderComponent>}
