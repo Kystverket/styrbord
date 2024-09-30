@@ -1,26 +1,11 @@
-name: Versjoner, publiser og deploy storybook
+name: Publish release to GitHub Packages
 
 on:
-  push:
-    branches:
-      - main
+  release:
+    types: [created]
+
 jobs:
-  increment-version:
-    permissions:
-      contents: write
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - run: git config user.name "$GITHUB_ACTOR"
-      - run: git pull "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
-      - run: npm version minor -m "v%s"
-      - run: VERSION=$(node -p "require('./package.json').version")
-      - run: git tag ${VERSION}
-      - run: git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
-      - run: git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
   publish-to-github-packages:
-    needs: increment-version
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -43,29 +28,3 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-  deploy-storybook:
-    needs: publish-to-github-packages
-    permissions:
-      id-token: write
-      pages: write
-      contents: read
-    environment:
-      name: github-pages
-      url: ${{ steps.build-publish.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      # Manual Checkout
-      - uses: actions/checkout@v4
-
-      # Set up Node
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22.x'
-      - run: git pull
-      - id: build-publish
-        uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
-        with:
-          path: storybook-static
-          build_command: npm run build-storybook
