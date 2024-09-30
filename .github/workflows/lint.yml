@@ -16,7 +16,7 @@ jobs:
       - run: echo $STYRBORD_VERSION
       - uses: mukunku/tag-exists-action@v1.6.0
         id: check-tag
-        with: 
+        with:
           tag: $STYRBORD_VERSION
           repo: 'actions/checkout'
       - run: exit 1
