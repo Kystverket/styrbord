@@ -1,10 +1,11 @@
-name: Pretty / Build
+name: CI
 
 on:
   - pull_request
 
 jobs:
   check-version:
+    name: Is NPM version untagged?
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -12,16 +13,16 @@ jobs:
         with:
           node-version: '22.x'
       - name: Hente STYRBORD_VERSION
-        run: echo "STYRBORD_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+        run: echo "STYRBORD_VERSION=v$(node -p "require('./package.json').version")" >> $GITHUB_ENV
       - run: echo $STYRBORD_VERSION
       - uses: mukunku/tag-exists-action@v1.6.0
         id: check-tag
-        with: 
-          tag: $STYRBORD_VERSION
-          repo: 'actions/checkout'
+        with:
+          tag: ${{ env.STYRBORD_VERSION }}
       - run: exit 1
         if: steps.check-tag.outputs.exists == 'true'
   run-linters:
+    name: Pretty / Lint / Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -30,5 +31,5 @@ jobs:
           node-version: '22.x'
       - run: npm ci
       - run: npm run pretty:check
-      - run: npm run lint:pkg
       - run: npm run build
+      - run: npm run lint:pkg
