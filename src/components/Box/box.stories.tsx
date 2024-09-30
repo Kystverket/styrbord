@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import Box, { BoxProps } from './box';
-import StyrbordDecorator from '../../../storybook/styrbordDecorator';
+import type { Meta, StoryObj } from "@storybook/react";
+import Box, { BoxProps } from "./box";
+import StyrbordDecorator from "../../../storybook/styrbordDecorator";
 
 const meta = {
-  title: 'Components/Box',
+  title: "Components/Box",
   component: Box,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {},
 } satisfies Meta<typeof Box>;
 
@@ -17,10 +17,10 @@ type Story = StoryObj<typeof meta>;
 const defaultProps: BoxProps = {
   children: (
     <>
-      <div style={{ background: 'red', height: '50px' }}>Rød boks</div>
-      <div style={{ background: 'blue' }}>Blå boks</div>
-      <div style={{ background: 'green', height: '80px' }}>Grønn boks</div>
-      <div style={{ background: 'yellow' }}>Gul boks</div>
+      <div style={{ background: "red", height: "50px" }}>Rød boks</div>
+      <div style={{ background: "blue" }}>Blå boks</div>
+      <div style={{ background: "green", height: "80px" }}>Grønn boks</div>
+      <div style={{ background: "yellow" }}>Gul boks</div>
     </>
   ),
 };
@@ -38,11 +38,23 @@ export const Gap: Story = {
 };
 
 export const HorizontalJustifyEnd: Story = {
-  args: { ...defaultProps, gap: 4, justify: 'end', align: 'center', horizontal: true },
+  args: {
+    ...defaultProps,
+    gap: 4,
+    justify: "end",
+    align: "center",
+    horizontal: true,
+  },
 };
 
 export const HorizontalJustifyBetween: Story = {
-  args: { ...defaultProps, gap: 4, justify: 'between', align: 'center', horizontal: true },
+  args: {
+    ...defaultProps,
+    gap: 4,
+    justify: "between",
+    align: "center",
+    horizontal: true,
+  },
 };
 
 export const Spacings: Story = {

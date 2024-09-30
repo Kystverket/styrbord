@@ -1,19 +1,19 @@
 @layer dsno {
-  @import '@digdir/designsystemet-css';
-  @import '@digdir/designsystemet-theme/altinn';
+  @import "@digdir/designsystemet-css";
+  @import "@digdir/designsystemet-theme/altinn";
 }
 @layer kyvtokens {
-  @import './styrbord/font-family';
-  @import './styrbord/colors';
-  @import './styrbord/fonts';
-  @import './styrbord/spacing';
-  @import './styrbord/sizes';
+  @import "./styrbord/font-family";
+  @import "./styrbord/colors";
+  @import "./styrbord/fonts";
+  @import "./styrbord/spacing";
+  @import "./styrbord/sizes";
 }
 @layer kyvified {
-  @import './designsystemet/transforms';
-  @import './designsystemet/base';
-  @import './designsystemet/link';
-  @import './designsystemet/button';
+  @import "./designsystemet/transforms";
+  @import "./designsystemet/base";
+  @import "./designsystemet/link";
+  @import "./designsystemet/button";
 }
 
 @layer dsno, kyvtokens, kyvified;

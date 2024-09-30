@@ -1,7 +1,7 @@
 # Styrbord, et komponentbiblioteketet
 
-
 ## Installasjon
+
 Styrbord blir publisert til Github Packages. [Her](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#installing-a-package) er en ordrik guide for å kunne installere slike.
 
 Kort forklart:
@@ -18,18 +18,18 @@ Kort forklart:
 
 Nå skal du kunne kjøre følgende
 
-```npm i @kystverket/styrbord```
+`npm i @kystverket/styrbord`
 
 ## I bruk
 
 CSS holder å importere én gang globalt.
+
 ```js
-import '@kystverket/styrbord/style.css';
+import "@kystverket/styrbord/style.css";
 ```
 
 Importering av enkeltkomponenter.
 
 ```js
-import { Heading, Ingress, Tabs } from '@kystverket/styrbord';
+import { Heading, Ingress, Tabs } from "@kystverket/styrbord";
 ```
-

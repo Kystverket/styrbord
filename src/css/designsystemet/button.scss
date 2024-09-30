@@ -3,7 +3,7 @@
   font-weight: var(--ds-font-weight-medium);
   --dsc-button-font-size: var(--ds-font-size-4);
 
-  &[data-variant='tertiary'] {
+  &[data-variant="tertiary"] {
     text-decoration: underline;
     text-underline-offset: 2px;
   }

@@ -1,9 +1,9 @@
-import classes from './alert.module.css';
-import React from 'react';
-import { Body, Title } from '../Typography/typography';
-import { getIcon, rootAlertStyle } from './alert.util';
-import { AlertLevel, TextSize, Width } from './alert.types';
-import Icon from '../Icon/icon';
+import classes from "./alert.module.css";
+import React from "react";
+import { Body, Title } from "../Typography/typography";
+import { getIcon, rootAlertStyle } from "./alert.util";
+import { AlertLevel, TextSize, Width } from "./alert.types";
+import Icon from "../Icon/icon";
 
 export interface AlertProps {
   level: AlertLevel;
@@ -18,11 +18,11 @@ export interface AlertProps {
 
 const Alert = ({
   level,
-  size = 'md',
-  width = 'md',
+  size = "md",
+  width = "md",
   title = undefined,
   text = undefined,
-  className = '',
+  className = "",
   ...props
 }: AlertProps) => {
   const icon = getIcon(level);
@@ -30,7 +30,7 @@ const Alert = ({
   let HeaderComponent = Title.Medium;
   let BodyComponent = Body.Medium;
 
-  if (size === 'lg') {
+  if (size === "lg") {
     HeaderComponent = Title.Large;
     BodyComponent = Body.Large;
   }
