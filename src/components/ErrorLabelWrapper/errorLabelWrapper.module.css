@@ -1,8 +1,8 @@
 .error {
-  color: var(--color-danger-surface-default);
+  color: var(--color-red-60);
 }
 .error .text {
-  color: var(--color-danger-text-default);
+  color: var(--color-red-70);
 }
 .icon {
   font-size: 20px;
