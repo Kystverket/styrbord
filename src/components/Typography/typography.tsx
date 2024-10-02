@@ -178,6 +178,10 @@ export const Body = {
   Label
 */
 
+const LabelXLarge = (props: TypographyProps) => {
+  return <span className={getLabelClasses(typography.labelXl, props)}>{props.children}</span>;
+};
+
 const LabelLarge = (props: TypographyProps) => {
   return <span className={getLabelClasses(typography.labelLg, props)}>{props.children}</span>;
 };
@@ -194,6 +198,10 @@ const LabelStrongLarge = (props: TypographyProps) => {
   return <span className={getLabelClasses(typography.labelStrongLg, props)}>{props.children}</span>;
 };
 
+const LabelStrongXLarge = (props: TypographyProps) => {
+  return <span className={getLabelClasses(typography.labelStrongXl, props)}>{props.children}</span>;
+};
+
 const LabelStrongMedium = (props: TypographyProps) => {
   return <span className={getLabelClasses(typography.labelStrongMd, props)}>{props.children}</span>;
 };
@@ -203,10 +211,12 @@ const LabelStrongSmall = (props: TypographyProps) => {
 };
 
 export const Label = {
+  XLarge: LabelXLarge,
   Large: LabelLarge,
   Medium: LabelMedium,
   Small: LabelSmall,
   Strong: {
+    XLarge: LabelStrongXLarge,
     Large: LabelStrongLarge,
     Medium: LabelStrongMedium,
     Small: LabelStrongSmall,

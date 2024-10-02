@@ -20,13 +20,13 @@
   --ds-color-focus-outer: var(--color-focus-outer);
   --ds-color-focus-inner: var(--color-focus-inner);
 
-  --ds-global-purple-12: var(--color-purple-12);
+  --ds-global-purple-12: var(--color-link-visited);
 
-  --ds-border-radius-base: var(--border-radius-base);
+  --ds-border-radius-base: var(--border-radius-medium);
 
   --ds-font-family: var(--font-family);
 
   --ds-font-weight-regular: var(--font-weight-regular);
-  --ds-font-weight-medium: var(--font-weight-medium);
-  --ds-font-weight-semibold: var(--font-weight-semibold);
+  --ds-font-weight-medium: var(--font-weight-bold);
+  --ds-font-weight-semibold: var(--font-weight-extra-bold);
 }

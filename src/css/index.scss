@@ -3,6 +3,9 @@
   @import '@digdir/designsystemet-theme/altinn';
 }
 @layer kyvtokens {
+  @import 'kyv-tokens/dist/theme-kystverket/theme-kystverket-tokens';
+}
+@layer styrbord {
   @import './styrbord/font-family';
   @import './styrbord/colors';
   @import './styrbord/fonts';
@@ -16,4 +19,4 @@
   @import './designsystemet/button';
 }
 
-@layer dsno, kyvtokens, kyvified;
+@layer dsno, kyvtokens, styrbord, kyvified;
