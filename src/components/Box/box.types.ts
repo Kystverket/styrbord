@@ -1,6 +1,6 @@
 import { spacingKeys } from './box.constants';
 
-export type Spacing = 0 | 1 | 2 | 3 | 4 | 6 | 8 | 10 | 12 | 14 | 18 | 22 | 26 | 30;
+export type Spacing = 0 | 2 | 4 | 6 | 8 | 12 | 16 | 20 | 24 | 28 | 32 | 36 | 40 | 44 | 48 | 64 | 80 | 96 | 112 | 128;
 
 export type SpacingKey = (typeof spacingKeys)[number];
 

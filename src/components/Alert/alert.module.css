@@ -10,8 +10,7 @@
 }
 .icon {
   flex-shrink: 0;
-  margin: var(--spacing-2);
-  margin-right: 0;
+  margin: 0;
 }
 .closeButton {
   flex-shrink: 0;
@@ -26,9 +25,9 @@
 }
 
 .alertBox {
-  border-radius: var(--size-border-radius-default);
+  border-radius: var(--border-radius-medium);
   border: 0px solid transparent;
-  border-left: var(--size-border-width-3) solid var(--alert-color-border);
+  border-left: var(--border-width-thicker) solid var(--alert-color-border);
   background: var(--alert-color-background);
   color: var(--alert-color-text);
 }
@@ -39,7 +38,7 @@
 .warning {
   composes: alertBox;
   --alert-color-border: var(--color-warning-border-default);
-  --alert-color-background: var(--color-warning-surface-subtle);
+  --alert-color-background: var(--color-warning-surface-default);
   --alert-color-text: var(--color-warning-text-default);
   --alert-color-icon: var(--color-warning-text-subtle);
 }
@@ -47,7 +46,7 @@
 .error {
   composes: alertBox;
   --alert-color-border: var(--color-danger-border-default);
-  --alert-color-background: var(--color-danger-surface-subtle);
+  --alert-color-background: var(--color-danger-surface-default);
   --alert-color-text: var(--color-danger-text-default);
   --alert-color-icon: var(--color-danger-text-subtle);
 }
@@ -63,7 +62,7 @@
 .info {
   composes: alertBox;
   --alert-color-border: var(--color-info-border-default);
-  --alert-color-background: var(--color-info-surface-subtle);
+  --alert-color-background: var(--color-info-surface-default);
   --alert-color-text: var(--color-info-text-default);
   --alert-color-icon: var(--color-info-text-subtle);
 }
@@ -71,7 +70,7 @@
 .success {
   composes: alertBox;
   --alert-color-border: var(--color-success-border-default);
-  --alert-color-background: var(--color-success-surface-subtle);
+  --alert-color-background: var(--color-success-surface-default);
   --alert-color-text: var(--color-success-text-default);
   --alert-color-icon: var(--color-success-text-subtle);
 }

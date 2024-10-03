@@ -3,17 +3,17 @@
   @import '@digdir/designsystemet-theme/altinn';
 }
 @layer kyvtokens {
-  @import './styrbord/font-family';
-  @import './styrbord/colors';
-  @import './styrbord/fonts';
-  @import './styrbord/spacing';
-  @import './styrbord/sizes';
+  @import 'kyv-tokens/dist/theme-kystverket/theme-kystverket-tokens';
 }
-@layer kyvified {
-  @import './designsystemet/transforms';
+@layer kyv2ds {
+  @import './designsystemet/kyv2ds';
+}
+@layer styrbord {
+  @import './styrbord/font-family';
+  @import './designsystemet/manual2ds';
   @import './designsystemet/base';
   @import './designsystemet/link';
   @import './designsystemet/button';
 }
 
-@layer dsno, kyvtokens, kyvified;
+@layer dsno, kyvtokens, kyv2ds, styrbord;

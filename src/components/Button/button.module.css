@@ -2,3 +2,7 @@
   border-style: dashed;
   background: transparent;
 }
+.dashed:hover {
+  border-style: dashed;
+  background: var(--dsc-button-background--hover);
+}

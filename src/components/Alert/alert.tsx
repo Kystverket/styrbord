@@ -38,9 +38,9 @@ const Alert = ({
   }
 
   return (
-    <Box horizontal justify="between" pt={2} className={`${alertStyle(width, level)} ${className}`}>
+    <Box horizontal justify="between" p={12} pl={8} className={`${alertStyle(width, level)} ${className}`}>
       {icon}
-      <Box m={2} mb={4} pr={4} gap={2} className={classes.content}>
+      <Box m={8} mt={0} gap={4} className={classes.content}>
         {title && <HeaderComponent>{title}</HeaderComponent>}
         <div className={bodyClasses}>
           {text}

@@ -12,9 +12,9 @@ export interface ErrorLabelWrapperProps {
 const ErrorLabelWrapper = (props: ErrorLabelWrapperProps) => {
   const errorHasText = typeof props.error === 'string' && props.error.length > 0;
   return (
-    <Box gap={1} className={errorHasText ? style.withErrors : style.noErrors}>
+    <Box gap={4} className={errorHasText ? style.withErrors : style.noErrors}>
       <Box>{props.children}</Box>
-      <Box horizontal align="center" gap={1} className={style.error}>
+      <Box horizontal align="center" gap={4} className={style.error}>
         <Icon material="error" filled className={style.icon} />
         <Label.Strong.Small className={`${style.text}`}>{props.error}</Label.Strong.Small>
       </Box>
