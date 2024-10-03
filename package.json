@@ -29,7 +29,8 @@
     "build-storybook": "storybook build",
     "pretty:check": "npx prettier . --check",
     "pretty:fix": "npx prettier . --write",
-    "lint:pkg": "npm exec -- publint"
+    "lint:pkg": "npm exec -- publint",
+    "kyv-to-ds": "sed 's/--/--ds-/g' < node_modules/kyv-tokens/dist/theme-kystverket/theme-kystverket-tokens.css > src/css/designsystemet/kyv-tokens-to-ds_no.css"
   },
   "author": "",
   "license": "ISC",
