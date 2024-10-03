@@ -33,9 +33,11 @@ const defaultProps: BoxProps = {
       <Body.Large>Body Large</Body.Large>
       <Body.Medium>Body Medium</Body.Medium>
       <Body.Small>Body Small</Body.Small>
+      <Label.Strong.XLarge>Label XL Strong</Label.Strong.XLarge>
       <Label.Strong.Large>Label Large Strong</Label.Strong.Large>
       <Label.Strong.Medium>Label Medium Strong</Label.Strong.Medium>
       <Label.Strong.Small>Label Small Strong</Label.Strong.Small>
+      <Label.XLarge>Label XL Large</Label.XLarge>
       <Label.Large>Label Large</Label.Large>
       <Label.Medium>Label Medium</Label.Medium>
       <Label.Small>Label Small</Label.Small>

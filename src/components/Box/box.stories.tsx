@@ -41,7 +41,7 @@ export const Gap: Story = {
 export const HorizontalJustifyEnd: Story = {
   args: {
     ...defaultProps,
-    gap: 4,
+    gap: 16,
     justify: 'end',
     align: 'center',
     horizontal: true,
@@ -51,7 +51,7 @@ export const HorizontalJustifyEnd: Story = {
 export const HorizontalJustifyBetween: Story = {
   args: {
     ...defaultProps,
-    gap: 4,
+    gap: 16,
     justify: 'between',
     align: 'center',
     horizontal: true,
@@ -71,43 +71,43 @@ export const Spacings: Story = {
         }}
       >
         <div style={{ background: 'white' }}>
-          <Box p={8} pb={2} mt={4} className={classes.colored}>
-            p={8} pb={2} mt={4}
+          <Box p={32} pb={16} mt={8} className={classes.colored}>
+            p={32} pb={16} mt={8}
           </Box>
         </div>
         <div style={{ background: 'white' }}>
-          <Box m={8} pr={12} className={classes.colored}>
-            m={8} pr={12}
+          <Box m={32} pr={48} className={classes.colored}>
+            m={32} pr={48}
           </Box>
         </div>
         <div style={{ background: 'white' }}>
-          <Box p={18} px={4} py={0} className={classes.colored}>
-            p={18} px={4} py={0}
+          <Box p={64} px={16} py={0} className={classes.colored}>
+            p={64} px={16} py={0}
           </Box>
         </div>
         <div style={{ background: 'white' }}>
-          <Box p={18} pl={0} pt={2} pr={4} pb={6} className={classes.colored}>
-            p={18} pl={0} pt={2} pr={4} pb={6}
+          <Box p={64} pl={0} pt={8} pr={16} pb={32} className={classes.colored}>
+            p={64} pl={0} pt={8} pr={16} pb={32}
           </Box>
         </div>
         <div style={{ background: 'white' }}>
-          <Box m={18} mx={0} my={4} className={classes.colored}>
-            m={18} mx={0} my={4}
+          <Box m={64} mx={0} my={16} className={classes.colored}>
+            m={64} mx={0} my={16}
           </Box>
         </div>
         <div style={{ background: 'white' }}>
-          <Box m={18} ml={0} mt={2} mr={4} mb={6} className={classes.colored}>
-            m={18} ml={0} mt={2} mr={4} mb={6}
+          <Box m={64} ml={0} mt={8} mr={16} mb={32} className={classes.colored}>
+            m={64} ml={0} mt={8} mr={16} mb={32}
           </Box>
         </div>
         <div style={{ background: 'white' }}>
-          <Box pt={12} pr={8} pb={6} pl={4} className={classes.colored}>
-            pt={12} pr={8} pb={6} pl={4}
+          <Box pt={64} pr={32} pb={16} pl={8} className={classes.colored}>
+            pt={64} pr={32} pb={16} pl={8}
           </Box>
         </div>
         <div style={{ background: 'white' }}>
-          <Box mt={12} mr={8} mb={6} ml={4} className={classes.colored}>
-            mt={12} mr={8} mb={6} ml={4}
+          <Box mt={64} mr={32} mb={16} ml={8} className={classes.colored}>
+            mt={64} mr={32} mb={16} ml={8}
           </Box>
         </div>
       </div>
