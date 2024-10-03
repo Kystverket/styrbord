@@ -6,11 +6,11 @@
   @import 'kyv-tokens/dist/theme-kystverket/theme-kystverket-tokens';
 }
 @layer kyv2ds {
-  @import './designsystemet/kyv-tokens-to-ds_no';
+  @import './designsystemet/kyv2ds';
 }
 @layer styrbord {
   @import './styrbord/font-family';
-  @import './designsystemet/manual-to-ds_no';
+  @import './designsystemet/manual2ds';
   @import './designsystemet/base';
   @import './designsystemet/link';
   @import './designsystemet/button';
