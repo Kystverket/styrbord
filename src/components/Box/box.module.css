@@ -69,13 +69,13 @@
 .color-action {
   background: #0f62fe;
   color: white;
-  --border-color: #132496
+  --border-color: #132496;
 }
 
 .color-action.is-subtle {
   background: white;
   color: #161616;
-  --border-color: #C6C6C6;
+  --border-color: #c6c6c6;
 }
 
 .color-neutral {
@@ -87,7 +87,7 @@
 .color-neutral.is-subtle {
   background: #f6f6f6;
   color: #161616;
-  --border-color: #C6C6C6;
+  --border-color: #c6c6c6;
 }
 
 .color-danger {
