@@ -30,3 +30,24 @@
   --ds-font-weight-medium: var(--font-weight-bold);
   --ds-font-weight-semibold: var(--font-weight-extra-bold);
 }
+
+.ds-paragraph {
+  font-size: var(--ds-font-size-4);
+  line-height: var(--ds-line-height-md);
+  font-weight: var(--ds-font-weight-regular);
+  letter-spacing: var(--ds-letter-spacing-8);
+}
+
+.ds-paragraph--lg {
+  font-size: var(--ds-font-size-5);
+  line-height: var(--ds-line-height-lg);
+  font-weight: var(--ds-font-weight-regular);
+  letter-spacing: var(--ds-letter-spacing-8);
+}
+
+.ds-paragraph--sm {
+  font-size: var(--ds-font-size-3);
+  line-height: var(--ds-line-height-sm);
+  font-weight: var(--ds-font-weight-regular);
+  letter-spacing: var(--ds-letter-spacing-8);
+}

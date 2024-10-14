@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import classes from './box.module.css';
-import { Spacing, SpacingKey, SpacingValues } from './box.types';
+import { BorderRadiusValues, Spacing, SpacingKey, SpacingValues, SurfaceStyleValues } from './box.types';
 import { cssSpacingProperties, spacingKeys } from './box.constants';
 
 const getSpacingCss = (key: SpacingKey, value?: Spacing): Record<string, string> => {
@@ -25,12 +25,15 @@ type VerticalBoxProps = BaseBoxProps & {
 
 type HorizontalBoxProps = BaseBoxProps & {
   horizontal: true;
-  justify?: 'start' | 'center' | 'end' | 'between';
+  justify?: 'start' | 'center' | 'end' | 'between' | 'stretch';
 };
 
-export type BoxProps = VerticalBoxProps | HorizontalBoxProps;
+export type BoxProps = (VerticalBoxProps | HorizontalBoxProps) &
+  SpacingValues &
+  BorderRadiusValues &
+  SurfaceStyleValues;
 
-const Box = ({ className = '', gap = 0, children, align = 'start', ...props }: BoxProps & SpacingValues) => {
+const Box = ({ className = '', radius: b = undefined, gap = 0, children, align = 'start', ...props }: BoxProps) => {
   const classList = [classes.box];
   const styles: Record<string, string> = {
     '--box-gap': 'var(--spacing-' + gap + ')',
@@ -39,6 +42,23 @@ const Box = ({ className = '', gap = 0, children, align = 'start', ...props }: B
   if (props.horizontal) {
     classList.push(classes.horizontal);
     classList.push(classes[`justify-${props.justify ?? 'start'}`]);
+  }
+
+  if (b) {
+    classList.push(classes[`border-radius-${b}`]);
+  }
+
+  if (props.color) {
+    classList.push(classes[`color-${props.color}`]);
+
+    if (props.subtle) {
+      classList.push(classes['is-subtle']);
+    }
+
+    if (props.border) {
+      classList.push(classes[`has-border`]);
+      classList.push(classes[`border-width-${props.border}`]);
+    }
   }
 
   spacingKeys.forEach((key) => {

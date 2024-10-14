@@ -7,3 +7,13 @@ export type SpacingKey = (typeof spacingKeys)[number];
 export type SpacingValues = {
   [K in SpacingKey]?: Spacing;
 };
+
+export type BorderRadiusValues = {
+  radius?: 'sm' | 'md' | 'lg' | 'full';
+};
+
+export type SurfaceStyleValues = {
+  color?: 'action' | 'neutral' | 'danger' | 'success' | 'warning' | 'info';
+  subtle?: boolean;
+  border?: 'sm' | 'md' | 'lg';
+};
