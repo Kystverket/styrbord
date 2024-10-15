@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import ErrorLabelWrapper, { ErrorLabelWrapperProps } from './errorLabelWrapper';
 import { Textfield } from '@digdir/designsystemet-react';
-import StyrbordDecorator from '@/../storybook/styrbordDecorator';
+import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
   title: 'Components/ErrorLabelWrapper',
