@@ -5,15 +5,15 @@
 @layer kyvtokens {
   @import 'kyv-tokens/dist/theme-kystverket/theme-kystverket-tokens';
 }
-@layer kyv2ds {
-  @import './designsystemet/kyv2ds';
+@layer kyvtokenstodesignsystemet {
+  @import './kyv-tokens-to-designsystemet';
 }
 @layer styrbord {
   @import './styrbord/font-family';
-  @import './designsystemet/manual2ds';
-  @import './designsystemet/base';
-  @import './designsystemet/link';
-  @import './designsystemet/button';
+  @import './overrides-of-designsystemet/manual';
+  @import './overrides-of-designsystemet/root';
+  @import './overrides-of-designsystemet/link';
+  @import './overrides-of-designsystemet/button';
 }
 
-@layer dsno, kyvtokens, kyv2ds, styrbord;
+@layer dsno, kyvtokens, kyvtokenstodesignsystemet, styrbord;
