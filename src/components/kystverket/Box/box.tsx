@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import classes from './box.module.css';
-import { BorderRadiusValues, Spacing, SpacingKey, SpacingValues, SurfaceStyleValues } from './box.types';
+import { BorderRadiusProps, Spacing, SpacingKey, SpacingProps, SurfaceStyleProps } from './box.types';
 import { cssSpacingProperties, spacingKeys } from './box.constants';
 
 const getSpacingCss = (key: SpacingKey, value?: Spacing): Record<string, string> => {
@@ -28,10 +28,7 @@ type HorizontalBoxProps = BaseBoxProps & {
   justify?: 'start' | 'center' | 'end' | 'between' | 'stretch';
 };
 
-export type BoxProps = (VerticalBoxProps | HorizontalBoxProps) &
-  SpacingValues &
-  BorderRadiusValues &
-  SurfaceStyleValues;
+export type BoxProps = (VerticalBoxProps | HorizontalBoxProps) & SpacingProps & BorderRadiusProps & SurfaceStyleProps;
 
 const Box = ({ className = '', radius: b = undefined, gap = 0, children, align = 'start', ...props }: BoxProps) => {
   const classList = [classes.box];

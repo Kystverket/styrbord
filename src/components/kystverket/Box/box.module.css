@@ -18,6 +18,10 @@
   flex-direction: row;
 }
 
+.align-start {
+  align-items: start;
+}
+
 .align-center {
   align-items: center;
 }
