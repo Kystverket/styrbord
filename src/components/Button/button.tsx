@@ -11,9 +11,8 @@ import classes from './button.module.css';
     framoverkompatible med designsystemet.
 */
 export type ButtonProps = {
-  variant?: undefined;
   design?: 'filled' | 'outlined' | 'ghost' | 'dashed';
-} & DsButtonProps;
+} & Omit<DsButtonProps, 'variant'>;
 
 export const Button = ({ design, ...props }: ButtonProps) => {
   const propsToOverride: DsButtonProps = { ...props };
