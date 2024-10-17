@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Box, { BoxProps } from './box';
-import StyrbordDecorator from '../../../storybook/styrbordDecorator';
+import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
   title: 'Components/Box',
@@ -163,7 +163,7 @@ export const Colors: Story = {
         <Box color="danger" border="md" p={32} radius="lg">
           danger
         </Box>
-        <Box color="action" border="md" subtle p={32} radius="lg">
+        <Box color="action" border="sm" subtle p={32} radius="lg">
           action subtle
         </Box>
         <Box color="info" border="md" subtle p={32} radius="lg">
@@ -172,10 +172,10 @@ export const Colors: Story = {
         <Box color="success" border="md" subtle p={32} radius="lg">
           success subtle
         </Box>
-        <Box color="warning" border="md" subtle p={32} radius="lg">
+        <Box color="warning" border="lg" subtle p={32} radius="lg">
           warning subtle
         </Box>
-        <Box color="danger" border="md" subtle p={32} radius="lg">
+        <Box color="danger" border="lg" subtle p={32} radius="lg">
           danger subtle
         </Box>
       </Box>

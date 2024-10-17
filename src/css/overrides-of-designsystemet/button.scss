@@ -6,5 +6,7 @@
   &[data-variant='tertiary'] {
     text-decoration: underline;
     text-underline-offset: 2px;
+
+    text-underline-offset: var(--link-underline-offset);
   }
 }

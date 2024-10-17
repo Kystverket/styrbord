@@ -1,5 +1,5 @@
 import { ButtonProps as DsButtonProps, Button as DsButton } from '@digdir/designsystemet-react';
-import classes from './button.module.css';
+import classes from './button.module.scss';
 
 /*
     Unionen av designsystemets ButtonProps og vår ButtonProps
