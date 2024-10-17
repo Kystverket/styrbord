@@ -15,6 +15,7 @@ export interface AlertProps {
   children?: React.ReactNode;
   width?: Width;
   className?: string;
+  role?: 'status';
   onDismiss?: () => void;
 }
 
@@ -38,10 +39,14 @@ const Alert = ({
   }
 
   return (
-    <Box horizontal justify="between" p={12} pl={8} className={`${alertStyle(width, level)} ${className}`}>
+    <Box horizontal justify="between" p={12} className={`${alertStyle(width, level)} ${className}`}>
       {icon}
       <Box m={8} mt={0} gap={4} className={classes.content}>
-        {title && <HeaderComponent>{title}</HeaderComponent>}
+        {title && (
+          <HeaderComponent>
+            <span role={props.role}>{title}</span>
+          </HeaderComponent>
+        )}
         <div className={bodyClasses}>
           {text}
           {props.children}
