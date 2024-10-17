@@ -30,24 +30,16 @@ const Alert = ({
 }: AlertProps) => {
   const icon = getIcon(level);
 
-  let HeaderComponent = Title.Medium;
-  let bodyClasses = typography.bodyMd;
-
-  if (size === 'lg') {
-    HeaderComponent = Title.Large;
-    bodyClasses = typography.bodyLg;
-  }
-
   return (
     <Box horizontal justify="between" p={12} className={`${alertStyle(width, level)} ${className}`}>
       {icon}
       <Box m={8} mt={0} gap={4} className={classes.content}>
         {title && (
-          <HeaderComponent>
+          <Title size={size}>
             <span role={props.role}>{title}</span>
-          </HeaderComponent>
+          </Title>
         )}
-        <div className={bodyClasses}>
+        <div className={size === 'lg' ? typography.bodyLg : typography.bodyMd}>
           {text}
           {props.children}
         </div>

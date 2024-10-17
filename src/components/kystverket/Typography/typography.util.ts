@@ -1,20 +1,19 @@
-import { TypographyProps } from './typography';
+import typographyCss from './typography.module.css';
 import utilClasses from './util.module.css';
 
-export type Tint = 'black' | 'blue';
+export type TypographyPrefix = 'display' | 'headline' | 'title' | 'body' | 'label';
 
-export const getTintClass = (tint: undefined | Tint) => {
-  return tint === 'blue' ? utilClasses.blue : utilClasses.black;
-};
+export type AllSizes = 'sm' | 'md' | 'lg' | 'xl';
 
-export const getTitleClasses = (titleClass: string, props: TypographyProps) => {
-  return [getTintClass(props.tint), utilClasses.title, titleClass, props.className].join(' ');
-};
-
-export const getLabelClasses = (customClass: string, props: TypographyProps) => {
-  return [getTintClass(props.tint), utilClasses.label, customClass, props.className].join(' ');
-};
-
-export const getBodyClasses = (customClass: string, props: TypographyProps) => {
-  return [getTintClass(props.tint), utilClasses.body, customClass, props.className].join(' ');
+export const typographyClasses = (
+  typography: TypographyPrefix,
+  size: AllSizes = 'md',
+  strong: boolean,
+  className: string = '',
+) => {
+  return [
+    utilClasses[typography],
+    typographyCss[`${typography}-${size}${strong ? '-strong' : ''}`],
+    className ?? '',
+  ].join(' ');
 };

@@ -1,15 +1,25 @@
 import { ReactNode } from 'react';
-import typography from './typography.module.css';
-import { getBodyClasses, getLabelClasses, getTitleClasses, Tint } from './typography.util';
+import { typographyClasses } from './typography.util';
 
 export interface TypographyProps {
   className?: string;
-  tint?: Tint;
   children?: ReactNode | undefined;
 }
 
 export type HeaderTypographyProps = TypographyProps & {
+  size?: 'sm' | 'md' | 'lg';
   level?: '1' | '2' | '3' | '4' | '5' | '6';
+};
+
+export type BodyTypographyProps = TypographyProps & {
+  size?: 'sm' | 'md' | 'lg';
+  strong?: boolean;
+  inline?: boolean;
+};
+
+export type LabelTypographyProps = TypographyProps & {
+  size: 'sm' | 'md' | 'lg' | 'xl';
+  strong?: boolean;
 };
 
 type HeadingProps = React.HTMLAttributes<HTMLHeadingElement>;
@@ -33,192 +43,39 @@ const Heading = ({ level, children, ...props }: HeadingProps & HeaderTypographyP
   }
 };
 
-/*
-  Display
-*/
-
-const DisplayLarge = (props: HeaderTypographyProps) => {
+export const Display = (props: HeaderTypographyProps) => {
   return (
-    <Heading level={props.level} className={getTitleClasses(typography.displayLg, props)}>
+    <Heading level={props.level} className={typographyClasses('display', props.size, false, props.className)}>
       {props.children}
     </Heading>
   );
 };
 
-const DisplayMedium = (props: HeaderTypographyProps) => {
+export const Headline = (props: HeaderTypographyProps) => {
   return (
-    <Heading level={props.level} className={getTitleClasses(typography.displayMd, props)}>
+    <Heading level={props.level} className={typographyClasses('headline', props.size, false, props.className)}>
       {props.children}
     </Heading>
   );
 };
 
-const DisplaySmall = (props: HeaderTypographyProps) => {
+export const Title = (props: HeaderTypographyProps) => {
   return (
-    <Heading level={props.level} className={getTitleClasses(typography.displaySm, props)}>
+    <Heading level={props.level} className={typographyClasses('title', props.size, false, props.className)}>
       {props.children}
     </Heading>
   );
 };
 
-export const Display = {
-  Large: DisplayLarge,
-  Medium: DisplayMedium,
-  Small: DisplaySmall,
+export const Body = (props: BodyTypographyProps) => {
+  const classes = typographyClasses('body', props.size, props.strong ?? false, props.className);
+  if (props.inline) {
+    return <span className={classes}>{props.children}</span>;
+  }
+  return <p className={classes}>{props.children}</p>;
 };
 
-/*
-  Headline
-*/
-
-const HeadlineLarge = (props: HeaderTypographyProps) => {
-  return (
-    <Heading level={props.level} className={getTitleClasses(typography.headlineLg, props)}>
-      {props.children}
-    </Heading>
-  );
-};
-
-const HeadlineMedium = (props: HeaderTypographyProps) => {
-  return (
-    <Heading level={props.level} className={getTitleClasses(typography.headlineMd, props)}>
-      {props.children}
-    </Heading>
-  );
-};
-
-const HeadlineSmall = (props: HeaderTypographyProps) => {
-  return (
-    <Heading level={props.level} className={getTitleClasses(typography.headlineSm, props)}>
-      {props.children}
-    </Heading>
-  );
-};
-
-export const Headline = {
-  Large: HeadlineLarge,
-  Medium: HeadlineMedium,
-  Small: HeadlineSmall,
-};
-
-/*
-  Title
-*/
-
-const TitleLarge = (props: HeaderTypographyProps) => {
-  return (
-    <Heading level={props.level} className={getTitleClasses(typography.titleLg, props)}>
-      {props.children}
-    </Heading>
-  );
-};
-
-const TitleMedium = (props: HeaderTypographyProps) => {
-  return (
-    <Heading level={props.level} className={getTitleClasses(typography.titleMd, props)}>
-      {props.children}
-    </Heading>
-  );
-};
-
-const TitleSmall = (props: HeaderTypographyProps) => {
-  return (
-    <Heading level={props.level} className={getTitleClasses(typography.titleSm, props)}>
-      {props.children}
-    </Heading>
-  );
-};
-
-export const Title = {
-  Large: TitleLarge,
-  Medium: TitleMedium,
-  Small: TitleSmall,
-};
-
-/*
-  Body
-*/
-
-const BodyLarge = (props: TypographyProps) => {
-  return <p className={getBodyClasses(typography.bodyLg, props)}>{props.children}</p>;
-};
-
-const BodyMedium = (props: TypographyProps) => {
-  return <p className={getBodyClasses(typography.bodyMd, props)}>{props.children}</p>;
-};
-
-const BodySmall = (props: TypographyProps) => {
-  return <p className={getBodyClasses(typography.bodySm, props)}>{props.children}</p>;
-};
-
-const BodyStrongLarge = (props: TypographyProps) => {
-  return <p className={getBodyClasses(typography.bodyStrongLg, props)}>{props.children}</p>;
-};
-
-const BodyStrongMedium = (props: TypographyProps) => {
-  return <p className={getBodyClasses(typography.bodyStrongMd, props)}>{props.children}</p>;
-};
-
-const BodyStrongSmall = (props: TypographyProps) => {
-  return <p className={getBodyClasses(typography.bodyStrongSm, props)}>{props.children}</p>;
-};
-
-export const Body = {
-  Large: BodyLarge,
-  Medium: BodyMedium,
-  Small: BodySmall,
-  Strong: {
-    Large: BodyStrongLarge,
-    Medium: BodyStrongMedium,
-    Small: BodyStrongSmall,
-  },
-};
-
-/*
-  Label
-*/
-
-const LabelXLarge = (props: TypographyProps) => {
-  return <span className={getLabelClasses(typography.labelXl, props)}>{props.children}</span>;
-};
-
-const LabelLarge = (props: TypographyProps) => {
-  return <span className={getLabelClasses(typography.labelLg, props)}>{props.children}</span>;
-};
-
-const LabelMedium = (props: TypographyProps) => {
-  return <span className={getLabelClasses(typography.labelMd, props)}>{props.children}</span>;
-};
-
-const LabelSmall = (props: TypographyProps) => {
-  return <span className={getLabelClasses(typography.labelSm, props)}>{props.children}</span>;
-};
-
-const LabelStrongLarge = (props: TypographyProps) => {
-  return <span className={getLabelClasses(typography.labelStrongLg, props)}>{props.children}</span>;
-};
-
-const LabelStrongXLarge = (props: TypographyProps) => {
-  return <span className={getLabelClasses(typography.labelStrongXl, props)}>{props.children}</span>;
-};
-
-const LabelStrongMedium = (props: TypographyProps) => {
-  return <span className={getLabelClasses(typography.labelStrongMd, props)}>{props.children}</span>;
-};
-
-const LabelStrongSmall = (props: TypographyProps) => {
-  return <span className={getLabelClasses(typography.labelStrongSm, props)}>{props.children}</span>;
-};
-
-export const Label = {
-  XLarge: LabelXLarge,
-  Large: LabelLarge,
-  Medium: LabelMedium,
-  Small: LabelSmall,
-  Strong: {
-    XLarge: LabelStrongXLarge,
-    Large: LabelStrongLarge,
-    Medium: LabelStrongMedium,
-    Small: LabelStrongSmall,
-  },
+export const Label = (props: LabelTypographyProps) => {
+  const classes = typographyClasses('label', props.size, props.strong ?? false, props.className);
+  return <span className={classes}>{props.children}</span>;
 };

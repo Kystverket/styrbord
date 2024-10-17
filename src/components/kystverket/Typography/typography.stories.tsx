@@ -18,29 +18,43 @@ type Story = StoryObj<typeof meta>;
 const defaultProps: BoxProps = {
   children: (
     <>
-      <Display.Large>Display Large</Display.Large>
-      <Display.Medium>Display Medium</Display.Medium>
-      <Display.Small>Display Small</Display.Small>
-      <Headline.Large>Headline Large</Headline.Large>
-      <Headline.Medium>Headline Medium</Headline.Medium>
-      <Headline.Small>Headline Small</Headline.Small>
-      <Title.Large>Title Large</Title.Large>
-      <Title.Medium>Title Medium</Title.Medium>
-      <Title.Small>Title Small</Title.Small>
-      <Body.Strong.Large>Body Strong Large</Body.Strong.Large>
-      <Body.Strong.Medium>Body Strong Medium</Body.Strong.Medium>
-      <Body.Strong.Small>Body Strong Small</Body.Strong.Small>
-      <Body.Large>Body Large</Body.Large>
-      <Body.Medium>Body Medium</Body.Medium>
-      <Body.Small>Body Small</Body.Small>
-      <Label.Strong.XLarge>Label XL Strong</Label.Strong.XLarge>
-      <Label.Strong.Large>Label Large Strong</Label.Strong.Large>
-      <Label.Strong.Medium>Label Medium Strong</Label.Strong.Medium>
-      <Label.Strong.Small>Label Small Strong</Label.Strong.Small>
-      <Label.XLarge>Label XL Large</Label.XLarge>
-      <Label.Large>Label Large</Label.Large>
-      <Label.Medium>Label Medium</Label.Medium>
-      <Label.Small>Label Small</Label.Small>
+      <Display size="lg">Display Large</Display>
+      <Display size="md">Display Medium</Display>
+      <Display size="sm">Display Small</Display>
+      <Headline size="lg">Headline Large</Headline>
+      <Headline size="md">Headline Medium</Headline>
+      <Headline size="sm">Headline Small</Headline>
+      <Title size="lg">Title Large</Title>
+      <Title size="md">Title Medium</Title>
+      <Title size="sm">Title Small</Title>
+      <Body size="lg" strong>
+        Body Strong Large
+      </Body>
+      <Body size="md" strong>
+        Body Strong Medium
+      </Body>
+      <Body size="sm" strong>
+        Body Strong Small
+      </Body>
+      <Body size="lg">Body Large</Body>
+      <Body size="md">Body Medium</Body>
+      <Body size="sm">Body Small</Body>
+      <Label size="xl" strong>
+        Label XL Strong
+      </Label>
+      <Label size="lg" strong>
+        Label Large Strong
+      </Label>
+      <Label size="md" strong>
+        Label Medium Strong
+      </Label>
+      <Label size="sm" strong>
+        Label Small Strong
+      </Label>
+      <Label size="xl">Label XL Large</Label>
+      <Label size="lg">Label Large</Label>
+      <Label size="md">Label Medium</Label>
+      <Label size="sm">Label Small</Label>
     </>
   ),
 };

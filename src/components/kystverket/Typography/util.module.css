@@ -12,7 +12,3 @@
   align-items: center;
   gap: var(--spacing-2);
 }
-
-.blue {
-  color: var(--color-brand-chartblue);
-}
