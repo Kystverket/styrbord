@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button, ButtonProps } from '../../../../src/components/Button/button';
+import { Button, ButtonProps } from '../../../../src/components/designsystemet/Button/button';
 import StyrbordDecorator from '../../../styrbordDecorator';
 
 const meta = {

@@ -1,5 +1,5 @@
 import { ButtonProps as DsButtonProps, Button as DsButton } from '@digdir/designsystemet-react';
-import classes from './button.module.css';
+import classes from './button.module.scss';
 
 /*
     Unionen av designsystemets ButtonProps og vår ButtonProps
@@ -11,9 +11,8 @@ import classes from './button.module.css';
     framoverkompatible med designsystemet.
 */
 export type ButtonProps = {
-  variant?: undefined;
   design?: 'filled' | 'outlined' | 'ghost' | 'dashed';
-} & DsButtonProps;
+} & Omit<DsButtonProps, 'variant'>;
 
 export const Button = ({ design, ...props }: ButtonProps) => {
   const propsToOverride: DsButtonProps = { ...props };

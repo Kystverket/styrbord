@@ -1,6 +1,6 @@
 {
   "name": "@kystverket/styrbord",
-  "version": "0.60.1",
+  "version": "0.60.4",
   "description": "",
   "type": "module",
   "exports": {
@@ -35,9 +35,9 @@
   "author": "",
   "license": "ISC",
   "peerDependencies": {
-    "@digdir/designsystemet-css": "^1.0.0-next.33",
-    "@digdir/designsystemet-react": "^1.0.0-next.33",
-    "@digdir/designsystemet-theme": "^1.0.0-next.33",
+    "@digdir/designsystemet-css": "^1.0.0-next.35",
+    "@digdir/designsystemet-react": "^1.0.0-next.35",
+    "@digdir/designsystemet-theme": "^1.0.0-next.35",
     "@navikt/aksel-icons": "^6.11.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
