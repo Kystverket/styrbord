@@ -1,20 +1,28 @@
-import { TypographyProps } from './typography';
-import utilClasses from './util.module.css';
+import typography from './typography.module.css';
 
-export type Tint = 'black' | 'blue';
+export type TypographyPrefix = 'display' | 'headline' | 'title' | 'body' | 'label';
 
-export const getTintClass = (tint: undefined | Tint) => {
-  return tint === 'blue' ? utilClasses.blue : utilClasses.black;
+export type AllSizes = 'sm' | 'md' | 'lg' | 'xl';
+
+type BuildTypographyProps = {
+  type: TypographyPrefix;
+  size?: AllSizes;
+  strong?: boolean;
+  inline?: boolean;
+  className?: string;
 };
 
-export const getTitleClasses = (titleClass: string, props: TypographyProps) => {
-  return [getTintClass(props.tint), utilClasses.title, titleClass, props.className].join(' ');
-};
-
-export const getLabelClasses = (customClass: string, props: TypographyProps) => {
-  return [getTintClass(props.tint), utilClasses.label, customClass, props.className].join(' ');
-};
-
-export const getBodyClasses = (customClass: string, props: TypographyProps) => {
-  return [getTintClass(props.tint), utilClasses.body, customClass, props.className].join(' ');
+export const buildTypographyClasses = ({
+  type,
+  size = 'md',
+  strong = false,
+  inline = false,
+  className,
+}: BuildTypographyProps) => {
+  return [
+    typography[type],
+    typography[`${type}-${size}${strong ? '-strong' : ''}`],
+    inline ? typography.inline : '',
+    className ?? '',
+  ].join(' ');
 };
