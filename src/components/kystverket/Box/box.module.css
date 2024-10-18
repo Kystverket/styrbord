@@ -18,6 +18,10 @@
   flex-direction: row;
 }
 
+.align-normal {
+  align-items: normal;
+}
+
 .align-start {
   align-items: start;
 }

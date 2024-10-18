@@ -14,7 +14,7 @@ const getSpacingCss = (key: SpacingKey, value?: Spacing): Record<string, string>
 
 export interface BaseBoxProps {
   className?: string;
-  align?: 'start' | 'center' | 'end';
+  align?: 'normal' | 'start' | 'center' | 'end';
   gap?: Spacing;
   children: ReactNode;
 }
@@ -30,7 +30,7 @@ type HorizontalBoxProps = BaseBoxProps & {
 
 export type BoxProps = (VerticalBoxProps | HorizontalBoxProps) & SpacingProps & BorderRadiusProps & SurfaceStyleProps;
 
-const Box = ({ className = '', radius: b = undefined, gap = 0, children, align = 'start', ...props }: BoxProps) => {
+const Box = ({ className = '', radius: b = undefined, gap = 0, children, align = 'normal', ...props }: BoxProps) => {
   const classList = [classes.box];
   const styles: Record<string, string> = {
     '--box-gap': 'var(--spacing-' + gap + ')',
