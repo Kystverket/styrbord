@@ -1,3 +1,23 @@
+.display, .headline, .title {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.label,
+.body {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.inline {
+  display: inline-block;
+}
+
 .display-lg {
   font-size: var(--typescale-display-large-font-size);
   line-height: var(--typescale-display-large-line-height);

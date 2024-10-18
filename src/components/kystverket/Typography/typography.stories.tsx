@@ -55,6 +55,26 @@ const defaultProps: BoxProps = {
       <Label size="lg">Label Large</Label>
       <Label size="md">Label Medium</Label>
       <Label size="sm">Label Small</Label>
+      <p>
+        <Body size="lg" strong inline>
+          Body Large strong inline
+        </Body>
+        <Body size="md" strong inline>
+          Body Medium strong inline
+        </Body>
+        <Body size="sm" strong inline>
+          Body Small strong inline
+        </Body>
+        <Body size="lg" inline>
+          Body Large inline
+        </Body>
+        <Body size="md" inline>
+          Body Medium inline
+        </Body>
+        <Body size="sm" inline>
+          Body Small inline
+        </Body>
+      </p>
     </>
   ),
 };

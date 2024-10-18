@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { typographyClasses } from './typography.util';
+import { buildTypographyClasses } from './typography.util';
 
 export interface TypographyProps {
   className?: string;
@@ -24,58 +24,57 @@ export type LabelTypographyProps = TypographyProps & {
 
 type HeadingProps = React.HTMLAttributes<HTMLHeadingElement>;
 
-const Heading = ({ level, children, ...props }: HeadingProps & HeaderTypographyProps) => {
-  switch (level) {
-    case '1':
-      return <h1 {...props}>{children}</h1>;
-    case '2':
-      return <h2 {...props}>{children}</h2>;
-    case '3':
-      return <h3 {...props}>{children}</h3>;
-    case '4':
-      return <h4 {...props}>{children}</h4>;
-    case '5':
-      return <h5 {...props}>{children}</h5>;
-    case '6':
-      return <h6 {...props}>{children}</h6>;
-    default:
-      return <h1 {...props}>{children}</h1>;
+const Heading = ({ level = '1', children, ...props }: HeadingProps & HeaderTypographyProps) => {
+  const HeaderTag = `h${level}`;
+  return <HeaderTag {...props}>{children}</HeaderTag>;
+};
+
+export const Display = ({ level, size, className, children }: HeaderTypographyProps) => {
+  return (
+    <Heading level={level} className={buildTypographyClasses({ type: 'display', size, className })}>
+      {children}
+    </Heading>
+  );
+};
+
+export const Headline = ({ level, size, className, children }: HeaderTypographyProps) => {
+  return (
+    <Heading level={level} className={buildTypographyClasses({ type: 'headline', size, className })}>
+      {children}
+    </Heading>
+  );
+};
+
+export const Title = ({ level, size, className, children }: HeaderTypographyProps) => {
+  return (
+    <Heading level={level} className={buildTypographyClasses({ type: 'title', size, className })}>
+      {children}
+    </Heading>
+  );
+};
+
+export const Body = ({ inline, strong, size, className, children }: BodyTypographyProps) => {
+  const classes = buildTypographyClasses({
+    type: 'body',
+    size,
+    strong,
+    inline,
+    className,
+  });
+
+  if (inline) {
+    return <span className={`${classes}`}>{children}</span>;
   }
+  return <p className={classes}>{children}</p>;
 };
 
-export const Display = (props: HeaderTypographyProps) => {
-  return (
-    <Heading level={props.level} className={typographyClasses('display', props.size, false, props.className)}>
-      {props.children}
-    </Heading>
-  );
-};
+export const Label = ({ strong, size, className, children }: LabelTypographyProps) => {
+  const classes = buildTypographyClasses({
+    type: 'label',
+    size,
+    strong,
+    className,
+  });
 
-export const Headline = (props: HeaderTypographyProps) => {
-  return (
-    <Heading level={props.level} className={typographyClasses('headline', props.size, false, props.className)}>
-      {props.children}
-    </Heading>
-  );
-};
-
-export const Title = (props: HeaderTypographyProps) => {
-  return (
-    <Heading level={props.level} className={typographyClasses('title', props.size, false, props.className)}>
-      {props.children}
-    </Heading>
-  );
-};
-
-export const Body = (props: BodyTypographyProps) => {
-  const classes = typographyClasses('body', props.size, props.strong ?? false, props.className);
-  if (props.inline) {
-    return <span className={classes}>{props.children}</span>;
-  }
-  return <p className={classes}>{props.children}</p>;
-};
-
-export const Label = (props: LabelTypographyProps) => {
-  const classes = typographyClasses('label', props.size, props.strong ?? false, props.className);
-  return <span className={classes}>{props.children}</span>;
+  return <span className={classes}>{children}</span>;
 };

@@ -1,19 +1,28 @@
-import typographyCss from './typography.module.css';
-import utilClasses from './util.module.css';
+import typography from './typography.module.css';
 
 export type TypographyPrefix = 'display' | 'headline' | 'title' | 'body' | 'label';
 
 export type AllSizes = 'sm' | 'md' | 'lg' | 'xl';
 
-export const typographyClasses = (
-  typography: TypographyPrefix,
-  size: AllSizes = 'md',
-  strong: boolean,
-  className: string = '',
-) => {
+type BuildTypographyProps = {
+  type: TypographyPrefix;
+  size?: AllSizes;
+  strong?: boolean;
+  inline?: boolean;
+  className?: string;
+};
+
+export const buildTypographyClasses = ({
+  type,
+  size = 'md',
+  strong = false,
+  inline = false,
+  className,
+}: BuildTypographyProps) => {
   return [
-    utilClasses[typography],
-    typographyCss[`${typography}-${size}${strong ? '-strong' : ''}`],
+    typography[type],
+    typography[`${type}-${size}${strong ? '-strong' : ''}`],
+    inline ? typography.inline : '',
     className ?? '',
   ].join(' ');
 };
