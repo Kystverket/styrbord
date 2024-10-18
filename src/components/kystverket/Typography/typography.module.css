@@ -1,4 +1,6 @@
-.display, .headline, .title {
+.display,
+.headline,
+.title {
   display: flex;
   margin: 0;
   padding: 0;
