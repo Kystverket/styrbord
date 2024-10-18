@@ -17,7 +17,7 @@ const ErrorLabelWrapper = (props: ErrorLabelWrapperProps) => {
       {errorHasText && (
         <Box horizontal align="center" gap={4} className={style.error}>
           <Icon material="error" filled className={style.icon} />
-          <Label size="sm" strong className={`${style.text}`}>
+          <Label size="sm" strong className={style.text}>
             {props.error}
           </Label>
         </Box>
