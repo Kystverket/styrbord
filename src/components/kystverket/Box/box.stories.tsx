@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Box, { BoxProps } from './box';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
+import { Title } from '~/main';
 
 const meta = {
   title: 'Components/Box',
@@ -177,6 +178,51 @@ export const Colors: Story = {
         </Box>
         <Box color="danger" border="lg" subtle p={32} radius="lg">
           danger subtle
+        </Box>
+      </Box>
+    ),
+  },
+};
+
+export const WrapAndBasis: Story = {
+  args: {
+    children: (
+      <Box gap={32}>
+        <Title>Horizontal</Title>
+        <Box gap={32} horizontal>
+          <Box color="action" p={32} radius="lg" grow={3}>
+            1
+          </Box>
+          <Box color="info" p={32} radius="lg" grow={2}>
+            2
+          </Box>
+          <Box color="success" p={32} radius="lg" grow={1}>
+            3
+          </Box>
+        </Box>
+        <Title>Wrap</Title>
+        <Box gap={32} horizontal wrap>
+          <Box color="action" p={32} radius="lg" grow={1} basis="300px">
+            1
+          </Box>
+          <Box color="info" p={32} radius="lg" grow={1} basis="300px">
+            2
+          </Box>
+          <Box color="success" p={32} radius="lg" grow={1} basis="300px">
+            3
+          </Box>
+        </Box>
+        <Title>Reverse Wrap</Title>
+        <Box gap={32} horizontal wrap="reverse">
+          <Box color="action" p={32} radius="lg" grow={1} basis="300px">
+            1
+          </Box>
+          <Box color="info" p={32} radius="lg" grow={1} basis="300px">
+            2
+          </Box>
+          <Box color="success" p={32} radius="lg" grow={1} basis="300px">
+            3
+          </Box>
         </Box>
       </Box>
     ),

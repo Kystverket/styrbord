@@ -12,11 +12,17 @@ const getSpacingCss = (key: SpacingKey, value?: Spacing): Record<string, string>
   }, {});
 };
 
+type WrapType = boolean | 'reverse';
+
 export interface BaseBoxProps {
   className?: string;
   align?: 'normal' | 'start' | 'center' | 'end';
   gap?: Spacing;
   children: ReactNode;
+  wrap?: WrapType;
+  grow?: boolean | number;
+  shrink?: boolean | number;
+  basis?: string;
 }
 
 type VerticalBoxProps = BaseBoxProps & {
@@ -28,21 +34,44 @@ type HorizontalBoxProps = BaseBoxProps & {
   justify?: 'start' | 'center' | 'end' | 'between' | 'stretch';
 };
 
+function wrapTypeToCssValue(wrap?: WrapType): string {
+  if (wrap === true) return 'wrap';
+  if (wrap === false) return 'nowrap';
+  if (wrap === 'reverse') return 'wrap-reverse';
+  return 'nowrap';
+}
+
 export type BoxProps = (VerticalBoxProps | HorizontalBoxProps) & SpacingProps & BorderRadiusProps & SurfaceStyleProps;
 
-const Box = ({ className = '', radius: b = undefined, gap = 0, children, align = 'normal', ...props }: BoxProps) => {
+const Box = ({
+  className = '',
+  radius = undefined,
+  gap = 0,
+  wrap = false,
+  align = 'normal',
+  grow = false,
+  shrink = false,
+  basis = 'auto',
+  children,
+  ...props
+}: BoxProps) => {
   const classList = [classes.box];
   const styles: Record<string, string> = {
     '--box-gap': 'var(--spacing-' + gap + ')',
+    '--box-flex-grow': grow === true ? '1' : grow === false ? '0' : grow.toString(),
+    '--box-flex-shrink': shrink === true ? '1' : shrink === false ? '0' : grow.toString(),
+    '--box-flex-basis': basis,
   };
+
+  styles['--box-wrap'] = wrapTypeToCssValue(wrap);
 
   if (props.horizontal) {
     classList.push(classes.horizontal);
     classList.push(classes[`justify-${props.justify ?? 'start'}`]);
   }
 
-  if (b) {
-    classList.push(classes[`border-radius-${b}`]);
+  if (radius) {
+    classList.push(classes[`border-radius-${radius}`]);
   }
 
   if (props.color) {
