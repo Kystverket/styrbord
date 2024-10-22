@@ -152,6 +152,13 @@
   --border-color: #23bdf5;
 }
 
+.color-navy,
+.color-navy.is-subtle {
+  background: var(--color-accent-base-default);
+  color: white;
+  --border-color: var(--color-accent-base-default);
+}
+
 .border-width-sm {
   border: var(--ds-border-width-thin) solid var(--border-color);
 }

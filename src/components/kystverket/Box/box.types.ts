@@ -13,7 +13,7 @@ export type BorderRadiusProps = {
 };
 
 export type SurfaceStyleProps = {
-  color?: 'action' | 'neutral' | 'danger' | 'success' | 'warning' | 'info';
+  color?: 'action' | 'neutral' | 'danger' | 'success' | 'warning' | 'info' | 'navy';
   subtle?: boolean;
   border?: 'sm' | 'md' | 'lg';
 };
