@@ -16,7 +16,7 @@ type WrapType = boolean | 'reverse';
 
 export interface BaseBoxProps {
   className?: string;
-  align?: 'normal' | 'start' | 'center' | 'end';
+  align?: 'normal' | 'start' | 'center' | 'end' | 'stretch';
   gap?: Spacing;
   children: ReactNode;
   wrap?: WrapType;
