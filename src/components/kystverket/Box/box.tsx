@@ -23,6 +23,7 @@ export interface BaseBoxProps {
   grow?: boolean | number;
   shrink?: boolean | number;
   basis?: string;
+  width?: 'auto' | 'fit' | 'full' | 'container';
 }
 
 type VerticalBoxProps = BaseBoxProps & {
@@ -50,6 +51,7 @@ export type BoxProps = (VerticalBoxProps | HorizontalBoxProps) & SpacingProps & 
 const Box = ({
   className = '',
   radius = undefined,
+  width = undefined,
   gap = 0,
   wrap = false,
   align = 'normal',
@@ -72,6 +74,10 @@ const Box = ({
   if (props.horizontal) {
     classList.push(classes.horizontal);
     classList.push(classes[`justify-${props.justify ?? 'start'}`]);
+  }
+
+  if (width) {
+    classList.push(classes[`width-${width}`]);
   }
 
   if (radius) {

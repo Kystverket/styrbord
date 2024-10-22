@@ -170,3 +170,20 @@
 .border-width-lg {
   border: var(--ds-border-width-thicker) solid var(--border-color);
 }
+
+.width-fit {
+  width: fit-content;
+}
+
+.width-auto {
+  width: auto;
+}
+
+.width-full {
+  width: 100%;
+}
+
+.width-container {
+  width: 100%;
+  max-width: 80rem;
+}
