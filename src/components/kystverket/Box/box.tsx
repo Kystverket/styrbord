@@ -41,6 +41,10 @@ function wrapTypeToCssValue(wrap?: WrapType): string {
   return 'nowrap';
 }
 
+function growShrinkToCssValue(value?: boolean | number): string {
+  return value === true ? '1' : !value ? '0' : value.toString();
+}
+
 export type BoxProps = (VerticalBoxProps | HorizontalBoxProps) & SpacingProps & BorderRadiusProps & SurfaceStyleProps;
 
 const Box = ({
@@ -58,8 +62,8 @@ const Box = ({
   const classList = [classes.box];
   const styles: Record<string, string> = {
     '--box-gap': 'var(--spacing-' + gap + ')',
-    '--box-flex-grow': grow === true ? '1' : grow === false ? '0' : grow.toString(),
-    '--box-flex-shrink': shrink === true ? '1' : shrink === false ? '0' : grow.toString(),
+    '--box-flex-grow': growShrinkToCssValue(grow),
+    '--box-flex-shrink': growShrinkToCssValue(shrink),
     '--box-flex-basis': basis,
   };
 
