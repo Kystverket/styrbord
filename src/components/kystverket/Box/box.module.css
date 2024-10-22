@@ -12,6 +12,8 @@
   padding: var(--box-pt) var(--box-pr) var(--box-pb) var(--box-pl);
   margin: var(--box-mt) var(--box-mr) var(--box-mb) var(--box-ml);
   gap: var(--box-gap);
+  flex-wrap: var(--box-wrap);
+  flex: var(--box-flex-grow) var(--box-flex-shrink) var(--box-flex-basis);
 }
 
 .horizontal {
