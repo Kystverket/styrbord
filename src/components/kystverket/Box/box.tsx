@@ -55,8 +55,8 @@ const Box = ({
   gap = 0,
   wrap = false,
   align = 'normal',
-  grow = false,
-  shrink = false,
+  grow = 0,
+  shrink = 1,
   basis = 'auto',
   children,
   ...props
