@@ -58,6 +58,13 @@ export const HorizontalJustifyBetween: Story = {
   },
 };
 
+export const NoShrink: Story = {
+  args: {
+    ...defaultProps,
+    shrink: false,
+  },
+};
+
 export const Spacings: Story = {
   args: {
     children: (
