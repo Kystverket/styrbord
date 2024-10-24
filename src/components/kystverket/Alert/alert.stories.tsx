@@ -28,11 +28,15 @@ export const Default: Story = {
   args: defaultProps,
 };
 
+export const DefaultKort: Story = {
+  args: { ...defaultProps, text: 'Kort melding', onDismiss: () => {} },
+};
+
 export const LargeWithDismiss: Story = {
   args: { ...defaultProps, size: 'lg', onDismiss: () => {} },
 };
 
-export const ClassName: Story = {
+export const ClassNameCustomWidth: Story = {
   args: { ...defaultProps, className: style.customWidth },
 };
 

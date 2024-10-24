@@ -32,17 +32,23 @@ const Alert = ({
 
   return (
     <Box horizontal justify="between" p={12} className={`${alertStyle(width, level)} ${className}`}>
-      {icon}
-      <Box m={8} mt={0} gap={4} className={classes.content}>
-        {title && (
-          <Title size={size}>
-            <span role={props.role}>{title}</span>
-          </Title>
-        )}
-        <div className={size === 'lg' ? typography.bodyLg : typography.bodyMd}>
-          {text}
-          {props.children}
-        </div>
+      <Box horizontal>
+        {icon}
+        <Box m={8} mt={0} gap={4} className={classes.content}>
+          {title && (
+            <Title size={size}>
+              <span role={props.role}>{title}</span>
+            </Title>
+          )}
+          {text && (
+            <p className={`${classes.textContent} ${size === 'lg' ? typography['body-lg'] : typography['body-md']}`}>
+              {text}
+            </p>
+          )}
+          {props.children && (
+            <div className={size === 'lg' ? typography['body-lg'] : typography['body-md']}>props.children</div>
+          )}
+        </Box>
       </Box>
       {props.onDismiss ? (
         <button className={classes.closeButton} onClick={props.onDismiss}>

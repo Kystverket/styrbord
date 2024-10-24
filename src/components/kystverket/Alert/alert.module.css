@@ -8,6 +8,10 @@
 .content {
   flex-grow: 1;
 }
+.textContent {
+  margin: 0px;
+  padding: 0px;
+}
 .icon {
   flex-shrink: 0;
   margin: 0;

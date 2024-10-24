@@ -55,8 +55,8 @@ const Box = ({
   gap = 0,
   wrap = false,
   align = 'normal',
-  grow = false,
-  shrink = false,
+  grow = undefined,
+  shrink = undefined,
   basis = 'auto',
   children,
   ...props
@@ -64,8 +64,8 @@ const Box = ({
   const classList = [classes.box];
   const styles: Record<string, string> = {
     '--box-gap': 'var(--spacing-' + gap + ')',
-    '--box-flex-grow': growShrinkToCssValue(grow),
-    '--box-flex-shrink': growShrinkToCssValue(shrink),
+    '--box-flex-grow': growShrinkToCssValue(grow === undefined ? 0 : grow),
+    '--box-flex-shrink': growShrinkToCssValue(shrink === undefined ? 1 : shrink),
     '--box-flex-basis': basis,
   };
 
