@@ -46,7 +46,7 @@ const Alert = ({
             </p>
           )}
           {props.children && (
-            <div className={size === 'lg' ? typography['body-lg'] : typography['body-md']}>props.children</div>
+            <div className={size === 'lg' ? typography['body-lg'] : typography['body-md']}>{props.children}</div>
           )}
         </Box>
       </Box>
