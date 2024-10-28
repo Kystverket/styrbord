@@ -82,3 +82,8 @@ const defaultProps: BoxProps = {
 export const Default: Story = {
   args: defaultProps,
 };
+
+
+export const LangTittel: Story = {
+  args: { ...defaultProps, children: <Title size="lg">Søke om farvannsskilt og navigasjonsinnretninger</Title> },
+};
