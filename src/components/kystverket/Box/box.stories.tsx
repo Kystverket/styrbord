@@ -254,7 +254,7 @@ export const HorizontalBreakpoints: Story = {
             3
           </Box>
         </Box>
-        <Box gap={32} horizontal="screen2xs">
+        <Box gap={32} horizontal="screen-xxs">
           <Box color="action" p={32} radius="lg" grow={1}>
             Screen
           </Box>
@@ -262,10 +262,10 @@ export const HorizontalBreakpoints: Story = {
             &gt;
           </Box>
           <Box color="success" p={32} radius="lg" grow={1}>
-            2xs
+            Xxs
           </Box>
         </Box>
-        <Box gap={32} horizontal="screenXs">
+        <Box gap={32} horizontal="screen-xs">
           <Box color="action" p={32} radius="lg" grow={1}>
             Screen
           </Box>
@@ -276,7 +276,7 @@ export const HorizontalBreakpoints: Story = {
             Xs
           </Box>
         </Box>
-        <Box gap={32} horizontal="screenSm">
+        <Box gap={32} horizontal="screen-sm">
           <Box color="action" p={32} radius="lg" grow={1}>
             Screen
           </Box>
@@ -287,8 +287,8 @@ export const HorizontalBreakpoints: Story = {
             Sm
           </Box>
         </Box>
-        <Box gap={32} horizontal="screenMd">
-          <Box color="action" p={32} radius="lg" grow={1}>
+        <Box gap={32} horizontal="screen-md">
+          <Box color="warning" p={32} radius="lg" grow={1}>
             Screen
           </Box>
           <Box color="info" p={32} radius="lg" grow={1}>
@@ -298,8 +298,8 @@ export const HorizontalBreakpoints: Story = {
             Md
           </Box>
         </Box>
-        <Box gap={32} horizontal="screenLg">
-          <Box color="action" p={32} radius="lg" grow={1}>
+        <Box gap={32} horizontal="screen-lg">
+          <Box color="danger" p={32} radius="lg" grow={1}>
             Screen
           </Box>
           <Box color="info" p={32} radius="lg" grow={1}>

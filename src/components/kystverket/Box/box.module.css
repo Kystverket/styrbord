@@ -20,37 +20,71 @@
   flex-direction: row;
 }
 
+.show {
+  display: none;
+}
+
 /*
   Samme breakpoints som i tailwind
 */
 
 @media screen and (min-width: 384px) {
-  .horizontalScreen2xs {
+  .horizontal-screen-xxs {
     flex-direction: row;
+  }
+  .show-screen-xxs {
+    display: flex;
+  }
+  .hide-screen-xxs {
+    display: none;
   }
 }
 
 @media screen and (min-width: 512px) {
-  .horizontalScreenXs {
+  .horizontal-screen-xs {
     flex-direction: row;
+  }
+  .show-screen-xs {
+    display: flex;
+  }
+  .hide-screen-xs {
+    display: none;
   }
 }
 
 @media screen and (min-width: 640px) {
-  .horizontalScreenSm {
+  .horizontal-screen-sm {
     flex-direction: row;
+  }
+  .show-screen-sm {
+    display: flex;
+  }
+  .hide-screen-sm {
+    display: none;
   }
 }
 
 @media screen and (min-width: 768px) {
-  .horizontalScreenMd {
+  .horizontal-screen-md {
     flex-direction: row;
+  }
+  .show-screen-md {
+    display: flex;
+  }
+  .hide-screen-md {
+    display: none;
   }
 }
 
 @media screen and (min-width: 1024px) {
-  .horizontalScreenLg {
+  .horizontal-screen-lg {
     flex-direction: row;
+  }
+  .show-screen-lg {
+    display: flex;
+  }
+  .hide-screen-lg {
+    display: none;
   }
 }
 

@@ -2,7 +2,8 @@ import { ReactNode } from 'react';
 import classes from './box.module.css';
 import { BorderRadiusProps, Spacing, SpacingKey, SpacingProps, SurfaceStyleProps } from './box.types';
 import { cssSpacingProperties, spacingKeys } from './box.constants';
-import { capitalizeFirstLetter } from '~/utils/text';
+import { capitalizeFirstLetter, toLowerWithHyphens } from '~/utils/text';
+import { ScreenSize } from '~/utils/types';
 
 const getSpacingCss = (key: SpacingKey, value?: Spacing): Record<string, string> => {
   if (value === undefined) return {};
@@ -25,6 +26,8 @@ export interface BaseBoxProps {
   shrink?: boolean | number;
   basis?: string;
   width?: 'auto' | 'fit' | 'full' | 'container';
+  show?: ScreenSize;
+  hide?: ScreenSize;
 }
 
 type VerticalBoxProps = BaseBoxProps & {
@@ -32,7 +35,7 @@ type VerticalBoxProps = BaseBoxProps & {
 };
 
 type HorizontalBoxProps = BaseBoxProps & {
-  horizontal: true | 'screen2xs' | 'screenXs' | 'screenSm' | 'screenMd' | 'screenLg';
+  horizontal: true | ScreenSize;
   justify?: 'start' | 'center' | 'end' | 'between' | 'stretch';
 };
 
@@ -59,6 +62,8 @@ const Box = ({
   grow = 0,
   shrink = 1,
   basis = 'auto',
+  show = undefined,
+  hide = undefined,
   children,
   ...props
 }: BoxProps) => {
@@ -76,9 +81,19 @@ const Box = ({
     if (props.horizontal === true) {
       classList.push(classes.horizontal);
     } else {
-      classList.push(classes[`horizontal${capitalizeFirstLetter(props.horizontal)}`]);
+      classList.push(classes[`horizontal-${props.horizontal}`]);
     }
     classList.push(classes[`justify-${props.justify ?? 'start'}`]);
+  }
+
+  if (show) {
+    classList.push(classes.show);
+    classList.push(classes[`show-${show}`]);
+  }
+
+  if (hide) {
+    classList.push(classes.hide);
+    classList.push(classes[`hide-${hide}`]);
   }
 
   if (width) {
