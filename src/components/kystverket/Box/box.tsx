@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import classes from './box.module.css';
 import { BorderRadiusProps, Spacing, SpacingKey, SpacingProps, SurfaceStyleProps } from './box.types';
 import { cssSpacingProperties, spacingKeys } from './box.constants';
+import { capitalizeFirstLetter } from '~/utils/text';
 
 const getSpacingCss = (key: SpacingKey, value?: Spacing): Record<string, string> => {
   if (value === undefined) return {};
@@ -31,7 +32,7 @@ type VerticalBoxProps = BaseBoxProps & {
 };
 
 type HorizontalBoxProps = BaseBoxProps & {
-  horizontal: true;
+  horizontal: true | 'screen2xs' | 'screenXs' | 'screenSm' | 'screenMd' | 'screenLg';
   justify?: 'start' | 'center' | 'end' | 'between' | 'stretch';
 };
 
@@ -72,7 +73,11 @@ const Box = ({
   styles['--box-wrap'] = wrapTypeToCssValue(wrap);
 
   if (props.horizontal) {
-    classList.push(classes.horizontal);
+    if (props.horizontal === true) {
+      classList.push(classes.horizontal);
+    } else {
+      classList.push(classes[`horizontal${capitalizeFirstLetter(props.horizontal)}`]);
+    }
     classList.push(classes[`justify-${props.justify ?? 'start'}`]);
   }
 

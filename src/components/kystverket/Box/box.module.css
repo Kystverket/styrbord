@@ -20,6 +20,40 @@
   flex-direction: row;
 }
 
+/*
+  Samme breakpoints som i tailwind
+*/
+
+@media screen and (min-width: 384px) {
+  .horizontalScreen2xs {
+    flex-direction: row;
+  }
+}
+
+@media screen and (min-width: 512px) {
+  .horizontalScreenXs {
+    flex-direction: row;
+  }
+}
+
+@media screen and (min-width: 640px) {
+  .horizontalScreenSm {
+    flex-direction: row;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .horizontalScreenMd {
+    flex-direction: row;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .horizontalScreenLg {
+    flex-direction: row;
+  }
+}
+
 .align-normal {
   align-items: normal;
 }

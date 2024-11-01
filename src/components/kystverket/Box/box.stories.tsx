@@ -238,3 +238,78 @@ export const WrapAndBasis: Story = {
     ),
   },
 };
+
+export const HorizontalBreakpoints: Story = {
+  args: {
+    children: (
+      <Box gap={32}>
+        <Box gap={32} horizontal>
+          <Box color="action" p={32} radius="lg" grow={1}>
+            1
+          </Box>
+          <Box color="info" p={32} radius="lg" grow={1}>
+            2
+          </Box>
+          <Box color="success" p={32} radius="lg" grow={1}>
+            3
+          </Box>
+        </Box>
+        <Box gap={32} horizontal="screen2xs">
+          <Box color="action" p={32} radius="lg" grow={1}>
+            Screen
+          </Box>
+          <Box color="info" p={32} radius="lg" grow={1}>
+            &gt;
+          </Box>
+          <Box color="success" p={32} radius="lg" grow={1}>
+            2xs
+          </Box>
+        </Box>
+        <Box gap={32} horizontal="screenXs">
+          <Box color="action" p={32} radius="lg" grow={1}>
+            Screen
+          </Box>
+          <Box color="info" p={32} radius="lg" grow={1}>
+            &gt;
+          </Box>
+          <Box color="success" p={32} radius="lg" grow={1}>
+            Xs
+          </Box>
+        </Box>
+        <Box gap={32} horizontal="screenSm">
+          <Box color="action" p={32} radius="lg" grow={1}>
+            Screen
+          </Box>
+          <Box color="info" p={32} radius="lg" grow={1}>
+            &gt;
+          </Box>
+          <Box color="success" p={32} radius="lg" grow={1}>
+            Sm
+          </Box>
+        </Box>
+        <Box gap={32} horizontal="screenMd">
+          <Box color="action" p={32} radius="lg" grow={1}>
+            Screen
+          </Box>
+          <Box color="info" p={32} radius="lg" grow={1}>
+            &gt;
+          </Box>
+          <Box color="success" p={32} radius="lg" grow={1}>
+            Md
+          </Box>
+        </Box>
+        <Box gap={32} horizontal="screenLg">
+          <Box color="action" p={32} radius="lg" grow={1}>
+            Screen
+          </Box>
+          <Box color="info" p={32} radius="lg" grow={1}>
+            &gt;
+          </Box>
+          <Box color="success" p={32} radius="lg" grow={1}>
+            Lg
+          </Box>
+        </Box>
+      </Box>
+    ),
+  },
+};
