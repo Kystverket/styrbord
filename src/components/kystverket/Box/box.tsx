@@ -29,7 +29,7 @@ export interface BaseBoxProps {
   width?: 'auto' | 'fit' | 'full' | 'container';
   show?: ScreenSize;
   hide?: ScreenSize;
-  typography?: {
+  font?: {
     base?: TypographyPrefix;
     size?: AllSizes;
     strong?: boolean;
@@ -81,12 +81,12 @@ const Box = ({
     '--box-flex-basis': basis,
   };
 
-  if (props.typography) {
+  if (props.font) {
     classList.push(
       buildTypographyClasses({
-        type: props.typography.base ?? 'body',
-        size: props.typography.size ?? 'md',
-        strong: props.typography.strong,
+        type: props.font.base ?? 'body',
+        size: props.font.size ?? 'md',
+        strong: props.font.strong,
       }),
     );
   }
