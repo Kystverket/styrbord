@@ -4,6 +4,7 @@ import { BorderRadiusProps, Spacing, SpacingKey, SpacingProps, SurfaceStyleProps
 import { cssSpacingProperties, spacingKeys } from './box.constants';
 import { capitalizeFirstLetter, toLowerWithHyphens } from '~/utils/text';
 import { ScreenSize } from '~/utils/types';
+import { AllSizes, buildTypographyClasses, TypographyPrefix } from '../Typography/typography.util';
 
 const getSpacingCss = (key: SpacingKey, value?: Spacing): Record<string, string> => {
   if (value === undefined) return {};
@@ -28,6 +29,11 @@ export interface BaseBoxProps {
   width?: 'auto' | 'fit' | 'full' | 'container';
   show?: ScreenSize;
   hide?: ScreenSize;
+  font?: {
+    base?: TypographyPrefix;
+    size?: AllSizes;
+    strong?: boolean;
+  };
 }
 
 type VerticalBoxProps = BaseBoxProps & {
@@ -74,6 +80,16 @@ const Box = ({
     '--box-flex-shrink': growShrinkToCssValue(shrink),
     '--box-flex-basis': basis,
   };
+
+  if (props.font) {
+    classList.push(
+      buildTypographyClasses({
+        type: props.font.base ?? 'body',
+        size: props.font.size ?? 'md',
+        strong: props.font.strong,
+      }),
+    );
+  }
 
   styles['--box-wrap'] = wrapTypeToCssValue(wrap);
 

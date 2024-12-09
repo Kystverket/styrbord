@@ -18,7 +18,7 @@ export const buildTypographyClasses = ({
   strong = false,
   inline = false,
   className,
-}: BuildTypographyProps) => {
+}: BuildTypographyProps): string => {
   return [
     typography[type],
     typography[`${type}-${size}${strong ? '-strong' : ''}`],
