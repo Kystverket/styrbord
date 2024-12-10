@@ -87,7 +87,6 @@
     ]
   },
   "dependencies": {
-    "@jridgewell/gen-mapping": "^0.3.5",
     "material-symbols": "^0.23.0"
   }
 }
