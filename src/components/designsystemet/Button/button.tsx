@@ -1,4 +1,4 @@
-import { ButtonProps as DsButtonProps, Button as DsButton } from '@digdir/designsystemet-react';
+import { ButtonProps as DsButtonProps, Button as DsButton, Size } from '@digdir/designsystemet-react';
 import classes from './button.module.scss';
 
 /*
@@ -12,9 +12,10 @@ import classes from './button.module.scss';
 */
 export type ButtonProps = {
   design?: 'filled' | 'outlined' | 'ghost' | 'dashed';
-} & Omit<DsButtonProps, 'variant'>;
+  size?: Size;
+} & Omit<DsButtonProps, 'variant' | 'data-size'>;
 
-export const Button = ({ design, ...props }: ButtonProps) => {
+export const Button = ({ design, size = 'md', ...props }: ButtonProps) => {
   const propsToOverride: DsButtonProps = { ...props };
 
   switch (design) {
@@ -33,5 +34,5 @@ export const Button = ({ design, ...props }: ButtonProps) => {
       break;
   }
 
-  return <DsButton {...propsToOverride} />;
+  return <DsButton data-size={size} {...propsToOverride} />;
 };
