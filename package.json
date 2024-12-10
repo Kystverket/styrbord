@@ -1,6 +1,6 @@
 {
   "name": "@kystverket/styrbord",
-  "version": "0.61.13",
+  "version": "0.62.0",
   "description": "",
   "type": "module",
   "exports": {
@@ -30,15 +30,15 @@
     "pretty:check": "npx prettier . --check",
     "pretty:fix": "npx prettier . --write",
     "lint:pkg": "npm exec -- publint",
-    "kyv-to-ds": "sed 's/--/--ds-/g' < node_modules/kyv-tokens/dist/theme-kystverket/theme-kystverket-tokens.css > src/css/designsystemet/kyv-tokens-to-ds_no.css && sed -i '/--ds-spacing-/d' ./src/css/designsystemet/kyv-tokens-to-ds_no.css && sed -i '/--ds-sizing-/d' ./src/css/designsystemet/kyv-tokens-to-ds_no.css"
+    "kyv-to-ds": "sed 's/--/--ds-/g' < node_modules/kyv-tokens/dist/theme-kystverket/theme-kystverket-tokens.css > src/css/kyv-tokens-to-designsystemet.css && sed -i '/--ds-spacing-/d' ./src/css/kyv-tokens-to-designsystemet.css && sed -i '/--ds-sizing-/d' ./src/css/kyv-tokens-to-designsystemet.css"
   },
   "author": "",
   "license": "ISC",
   "peerDependencies": {
-    "@digdir/designsystemet-css": "1.0.0-next.35",
-    "@digdir/designsystemet-react": "1.0.0-next.35",
-    "@digdir/designsystemet-theme": "1.0.0-next.35",
-    "@navikt/aksel-icons": "^6.11.0",
+    "@digdir/designsystemet-css": "1.0.0-next.40",
+    "@digdir/designsystemet-react": "1.0.0-next.40",
+    "@digdir/designsystemet-theme": "1.0.0-next.40",
+    "@navikt/aksel-icons": "^6.17.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
@@ -69,7 +69,7 @@
     "eslint-config-next": "^14.2.4",
     "eslint-plugin-css": "^0.9.2",
     "eslint-plugin-storybook": "^0.8.0",
-    "kyv-tokens": "^1.11.0",
+    "kyv-tokens": "^1.12.0",
     "postcss": "^8.4.38",
     "prettier": "^3.3.3",
     "publint": "^0.2.11",
