@@ -3,7 +3,7 @@ import { useArgs } from '@storybook/preview-api';
 import style from './alert.module.css';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import BorderedRadioGroup, { BorderedRadioGroupProps } from './borderedRadioGroup';
-import { Box } from '~/main';
+import { Box, Icon } from '~/main';
 
 const meta = {
   title: 'Components/BorderedRadioGroup',
@@ -52,10 +52,34 @@ export const Default: Story = {
   },
 };
 
-export const Required: Story = {
+export const WithReactElementTitle: Story = {
   args: {
     ...defaultProps,
-    required: true,
+    title: (
+      <>
+        Title with icon <Icon material="check" />
+      </>
+    ),
+    onChange: (value: string) => console.log(value),
+  },
+  render: (args) => {
+    const [{ value }, updateArgs] = useArgs();
+    return (
+      <Box width="full">
+        <BorderedRadioGroup {...args} value={value} onChange={(v) => updateArgs({ value: v })} />
+      </Box>
+    );
+  },
+};
+
+export const WithReactElementDescription: Story = {
+  args: {
+    ...defaultProps,
+    description: (
+      <>
+        Description containing a <a href="#">link</a>
+      </>
+    ),
     onChange: (value: string) => console.log(value),
   },
   render: (args) => {

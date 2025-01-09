@@ -1,13 +1,12 @@
 import { Box, Fieldset, Radio, useRadioGroup, ValidationMessage } from '~/main';
 import classes from './borderedRadioGroup.module.css';
-import RequiredIndicator from '../RequiredIndicator/requiredIndicator';
+import { ReactNode } from 'react';
 
 export interface BorderedRadioGroupProps {
   name: string;
-  title: string;
-  description?: string;
+  title: ReactNode | string;
+  description?: ReactNode | string;
   value?: string;
-  required?: boolean;
   options: {
     label: string;
     value: string;
@@ -27,11 +26,7 @@ const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
   });
   return (
     <Fieldset>
-      {props.title && (
-        <Fieldset.Legend>
-          {props.title} {props.required && <RequiredIndicator />}
-        </Fieldset.Legend>
-      )}
+      {props.title && <Fieldset.Legend>{props.title}</Fieldset.Legend>}
       {props.description && <Fieldset.Description>{props.description}</Fieldset.Description>}
       <Box horizontal gap={16} mt={12}>
         {props.options.map(({ label, value }) => (
