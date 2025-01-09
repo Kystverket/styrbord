@@ -1,0 +1,15 @@
+.radioBoxActive {
+  border: var(--ds-border-width-thin) solid var(--ds-color-accent-border-strong) !important;
+  border-radius: var(--ds-border-radius-medium);
+  padding: var(--spacing-12);
+  background-color: var(--ds-color-accent-background-default);
+  flex: 1;
+}
+
+.radioBox {
+  border: var(--ds-border-width-thin) solid var(--ds-color-neutral-surface-hover) !important;
+  border-radius: var(--ds-border-radius-medium);
+  padding: var(--spacing-12);
+  background-color: var(--ds-color-neutral-background-default);
+  flex: 1;
+}
