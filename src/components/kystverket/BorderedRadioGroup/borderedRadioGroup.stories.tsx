@@ -91,3 +91,19 @@ export const WithReactElementDescription: Story = {
     );
   },
 };
+
+export const WithError: Story = {
+  args: {
+    ...defaultProps,
+    onChange: (value: string) => console.log(value),
+    error: 'This is an error message',
+  },
+  render: (args) => {
+    const [{ value }, updateArgs] = useArgs();
+    return (
+      <Box width="full">
+        <BorderedRadioGroup {...args} value={value} onChange={(v) => updateArgs({ value: v })} />
+      </Box>
+    );
+  },
+};
