@@ -30,7 +30,7 @@
     "pretty:check": "npx prettier . --check",
     "pretty:fix": "npx prettier . --write",
     "lint:pkg": "npm exec -- publint",
-    "kyv-to-ds": "sed 's/--/--ds-/g' < node_modules/kyv-tokens/dist/theme-kystverket/theme-kystverket-tokens.css > src/css/designsystemet/kyv-tokens-to-ds_no.css && sed -i '/--ds-spacing-/d' ./src/css/designsystemet/kyv-tokens-to-ds_no.css && sed -i '/--ds-sizing-/d' ./src/css/designsystemet/kyv-tokens-to-ds_no.css"
+    "kyv-to-ds": "sed 's/--/--ds-/g' < node_modules/kyv-tokens/dist/theme-kystverket/theme-kystverket-tokens.css > src/css/kyv-tokens-to-designsystemet.css && sed -i '/--ds-spacing-/d' ./src/css/kyv-tokens-to-designsystemet.css && sed -i '/--ds-sizing-/d' ./src/css/kyv-tokens-to-designsystemet.css"
   },
   "author": "",
   "license": "ISC",
