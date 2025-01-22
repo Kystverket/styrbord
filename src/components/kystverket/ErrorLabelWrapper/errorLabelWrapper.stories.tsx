@@ -17,7 +17,7 @@ type Story = StoryObj<typeof meta>;
 
 const defaultProps: ErrorLabelWrapperProps = {
   error: 'I am an error',
-  children: <Textfield label="Textfield label" />,
+  children: <Textfield />,
 };
 
 export const Default: Story = {
