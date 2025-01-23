@@ -255,3 +255,13 @@
   width: 100%;
   max-width: 80rem;
 }
+
+.width-form {
+  width: 100%;
+  max-width: 55.75rem;
+}
+
+.width-form-sidebar {
+  width: 100%;
+  max-width: 16.5rem;
+}

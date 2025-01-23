@@ -26,7 +26,7 @@ export interface BaseBoxProps {
   grow?: boolean | number;
   shrink?: boolean | number;
   basis?: string;
-  width?: 'auto' | 'fit' | 'full' | 'container';
+  width?: 'auto' | 'fit' | 'full' | 'container' | 'form' | 'form-sidebar';
   show?: ScreenSize;
   hide?: ScreenSize;
   font?: {
