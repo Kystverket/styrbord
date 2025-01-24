@@ -5,7 +5,15 @@
   background-color: var(--ds-color-neutral-background-default);
   flex: 1 1 auto;
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-8);
+  align-items: center;
 }
 .radioBoxActive {
   border: var(--ds-border-width-thin) solid var(--ds-color-accent-border-strong) !important;
+}
+.radioBoxError {
+  border: var(--ds-border-width-thin) solid var(--ds-color-danger-border-strong) !important;
+  color: var(--ds-color-danger-border-strong) !important;
 }

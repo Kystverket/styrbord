@@ -1,0 +1,19 @@
+.text {
+  color: var(--ds-color-danger-text-default);
+}
+.icon {
+  color: var(--ds-color-danger-base-default);
+  font-size: 20px;
+}
+.optional {
+  border: 1px solid #94C1E3;
+  background: #D3E5F4;
+  padding: 1px 4px 0px 4px !important;
+  border-radius: 2px;
+}
+.required {
+  border: 1px solid #ffe099;
+  background: #fff0cc;
+  padding: 1px 4px 0px 4px !important;
+  border-radius: 2px;
+}

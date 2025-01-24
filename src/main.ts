@@ -7,8 +7,10 @@ export type { AlertProps } from './components/kystverket/Alert/alert';
 export { default as Box } from './components/kystverket/Box/box';
 export type { BoxProps } from './components/kystverket/Box/box';
 
-export { default as ErrorLabelWrapper } from './components/kystverket/ErrorLabelWrapper/errorLabelWrapper';
-export type { ErrorLabelWrapperProps } from './components/kystverket/ErrorLabelWrapper/errorLabelWrapper';
+export { default as ErrorLabel } from './components/kystverket/ErrorLabel/errorLabel';
+export { default as ErrorLabelWrapper } from './components/kystverket/ErrorLabel/errorLabel';
+export type { ErrorLabelProps as ErrorLabelProps } from './components/kystverket/ErrorLabel/errorLabel';
+export type { ErrorLabelProps as ErrorLabelWrapperProps } from './components/kystverket/ErrorLabel/errorLabel';
 
 export { default as Icon } from './components/kystverket/Icon/icon';
 

@@ -1,25 +1,27 @@
 import { ReactNode } from 'react';
-import style from './errorLabelWrapper.module.css';
+import style from './errorLabel.module.css';
 import { Label } from '../Typography/typography';
 import Icon from '../Icon/icon';
 import Box from '../Box/box';
 
-export interface ErrorLabelWrapperProps {
+export interface ErrorLabelProps {
+  text?: string | null;
   error?: string | null;
   children?: ReactNode;
   align?: 'start' | 'center';
 }
 
-const ErrorLabelWrapper = ({ align = 'center', ...props }: ErrorLabelWrapperProps) => {
-  const errorHasText = typeof props.error === 'string' && props.error.length > 0;
+const ErrorLabel = ({ align = 'center', ...props }: ErrorLabelProps) => {
+  const errorText = props.text ?? props.error;
+  const errorHasText = typeof errorText === 'string' && errorText.length > 0;
   return (
     <Box gap={4}>
-      <div>{props.children}</div>
+      {props.children && <div>{props.children}</div>}
       {errorHasText && (
         <Box horizontal align={align} gap={4} className={style.error}>
           <Icon material="error" filled className={style.icon} />
           <Label size="sm" strong className={style.text}>
-            {props.error}
+            {errorText}
           </Label>
         </Box>
       )}
@@ -27,4 +29,4 @@ const ErrorLabelWrapper = ({ align = 'center', ...props }: ErrorLabelWrapperProp
   );
 };
 
-export default ErrorLabelWrapper;
+export default ErrorLabel;
