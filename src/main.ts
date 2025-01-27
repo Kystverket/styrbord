@@ -12,6 +12,9 @@ export { default as ErrorLabelWrapper } from './components/kystverket/ErrorLabel
 export type { ErrorLabelProps as ErrorLabelProps } from './components/kystverket/ErrorLabel/errorLabel';
 export type { ErrorLabelProps as ErrorLabelWrapperProps } from './components/kystverket/ErrorLabel/errorLabel';
 
+export { default as InputLabel } from './components/kystverket/InputLabel/inputLabel';
+export type { InputLabelProps } from './components/kystverket/InputLabel/inputLabel';
+
 export { default as Icon } from './components/kystverket/Icon/icon';
 
 export { Display, Headline, Title, Body, Label } from './components/kystverket/Typography/typography';
