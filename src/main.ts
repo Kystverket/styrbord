@@ -7,6 +7,9 @@ export type { AlertProps } from './components/kystverket/Alert/alert';
 export { default as Box } from './components/kystverket/Box/box';
 export type { BoxProps } from './components/kystverket/Box/box';
 
+export { default as Stepper } from './components/kystverket/Stepper/stepper';
+export type { StepperProps } from './components/kystverket/Stepper/stepper';
+
 export { default as ErrorLabel } from './components/kystverket/ErrorLabel/errorLabel';
 export { default as ErrorLabelWrapper } from './components/kystverket/ErrorLabel/errorLabel';
 export type { ErrorLabelProps as ErrorLabelProps } from './components/kystverket/ErrorLabel/errorLabel';
