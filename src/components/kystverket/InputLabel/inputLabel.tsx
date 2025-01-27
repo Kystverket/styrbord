@@ -1,10 +1,7 @@
-'use client';
-
-import { ReactNode, useContext, useMemo } from 'react';
+import { ReactNode } from 'react';
 import style from './inputLabel.module.css';
 import { Body, Label } from '../Typography/typography';
 import Box from '../Box/box';
-import { StyrbordContext } from '../context/styrbord.context';
 
 type InputLabelFieldTag = boolean | string | undefined;
 
@@ -29,8 +26,6 @@ const InputLabel = ({ text, subText, optional = false, required = false, childre
       </label>
     );
 
-  const inputLabelContext = useContext(StyrbordContext);
-
   const requiredText = typeof required === 'string' ? required : undefined;
   const optionalText = typeof optional === 'string' ? optional : undefined;
 
@@ -44,12 +39,12 @@ const InputLabel = ({ text, subText, optional = false, required = false, childre
             </Label>
             {required && (
               <Label size="sm" className={style.required}>
-                {requiredText ?? inputLabelContext.language?.label?.required ?? 'Må fylles ut'}
+                {requiredText ?? 'Må fylles ut'}
               </Label>
             )}
             {optional && (
               <Label size="sm" className={style.optional}>
-                {optionalText ?? inputLabelContext.language?.label?.optional ?? 'Valgfritt'}
+                {optionalText ?? 'Valgfritt'}
               </Label>
             )}
           </Box>
