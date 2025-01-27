@@ -1,11 +1,47 @@
 .radioBox {
-  border: var(--ds-border-width-thin) solid var(--ds-color-neutral-surface-hover) !important;
-  border-radius: var(--ds-border-radius-medium);
+  border: var(--ds-border-width-thin) solid var(--color-neutral-border-subtle) !important;
+  border-radius: var(--ds-border-radius-large);
   padding: var(--spacing-12);
   background-color: var(--ds-color-neutral-background-default);
   flex: 1 1 auto;
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-8);
+  align-items: center;
+  transition: all 0.15s;
 }
 .radioBoxActive {
-  border: var(--ds-border-width-thin) solid var(--ds-color-accent-border-strong) !important;
+  border: var(--ds-border-width-thin) solid var(--ds-color-accent-text-subtle) !important;
+  background-color: var(--ds-color-accent-background-subtle);
+}
+.radioBox:hover {
+  background-color: var(--ds-color-accent-background-subtle);
+}
+.radioBoxError {
+  border: var(--ds-border-width-thin) solid var(--ds-color-danger-border-strong) !important;
+  color: var(--ds-color-danger-border-strong) !important;
+}
+.radioGroup {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-8);
+}
+.radioBoxIndicator {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  border: 1px solid #636363;
+  line-height: 0;
+  flex-shrink: 0;
+}
+.radioBoxActive .radioBoxIndicator {
+  width: 8px;
+  height: 8px;
+  border-width: 6px;
+  border-color: #2a57c0;
+}
+.radioBoxText {
+  text-align: left;
 }

@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useArgs } from '@storybook/preview-api';
-import style from './alert.module.css';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
-import BorderedRadioGroup, { BorderedRadioGroupProps } from './borderedRadioGroup';
+import BorderedRadioGroup, { BorderedRadioGroupProps, RadioGroupValueType } from './borderedRadioGroup';
 import { Box, Icon } from '~/main';
 
 const meta = {
@@ -18,8 +17,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const defaultProps: Omit<BorderedRadioGroupProps, 'onChange'> = {
-  name: 'example-radio-group',
-  title: 'Title for group',
+  label: 'Title for group',
   description: 'Description for group',
   options: [
     {
@@ -40,7 +38,7 @@ const defaultProps: Omit<BorderedRadioGroupProps, 'onChange'> = {
 export const Default: Story = {
   args: {
     ...defaultProps,
-    onChange: (value: string) => console.log(value),
+    onChange: (value: RadioGroupValueType) => console.log(value),
   },
   render: (args) => {
     const [{ value }, updateArgs] = useArgs();
@@ -52,15 +50,24 @@ export const Default: Story = {
   },
 };
 
-export const WithReactElementTitle: Story = {
+export const WithLongOptionText: Story = {
   args: {
     ...defaultProps,
-    title: (
-      <>
-        Title with icon <Icon material="check" />
-      </>
-    ),
-    onChange: (value: string) => console.log(value),
+    options: [
+      {
+        label: 'Option A Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec odio vitae nunc.',
+        value: 'option-a',
+      },
+      {
+        label: 'Option B Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec odio vitae nunc.',
+        value: 'option-b',
+      },
+      {
+        label: 'Option C Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec odio vitae nunc.',
+        value: 'option-c',
+      },
+    ],
+    onChange: (value: RadioGroupValueType) => console.log(value),
   },
   render: (args) => {
     const [{ value }, updateArgs] = useArgs();
@@ -80,7 +87,7 @@ export const WithReactElementDescription: Story = {
         Description containing a <a href="#">link</a>
       </>
     ),
-    onChange: (value: string) => console.log(value),
+    onChange: (value: RadioGroupValueType) => console.log(value),
   },
   render: (args) => {
     const [{ value }, updateArgs] = useArgs();
@@ -95,7 +102,7 @@ export const WithReactElementDescription: Story = {
 export const WithError: Story = {
   args: {
     ...defaultProps,
-    onChange: (value: string) => console.log(value),
+    onChange: (value: RadioGroupValueType) => console.log(value),
     error: 'This is an error message',
   },
   render: (args) => {

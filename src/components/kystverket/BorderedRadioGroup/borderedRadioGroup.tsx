@@ -1,44 +1,53 @@
-import { Box, Fieldset, Radio, RadioGroup } from '~/main';
+import { Box, ErrorLabel, Fieldset, Icon, Label, Radio, RadioGroup } from '~/main';
 import classes from './borderedRadioGroup.module.css';
 import { ReactNode } from 'react';
+import InputLabel from '../InputLabel/inputLabel';
+
+export type RadioGroupValueType = string | boolean | number;
 
 export interface BorderedRadioGroupProps {
-  name: string;
-  title: ReactNode | string;
+  label?: string;
   description?: ReactNode | string;
-  value?: string;
+  value?: RadioGroupValueType;
   options: {
     label: string;
-    value: string;
+    value: RadioGroupValueType;
   }[];
-  onChange: (value: string) => void;
-  error?: string;
+  onChange: (value: RadioGroupValueType) => void;
+  error?: string | boolean;
 }
 
 const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
+  const errorText = typeof props.error === 'string' && props.error.length > 0 ? props.error : undefined;
+  const hasError = !!props.error;
+
   return (
-    <RadioGroup
-      name={props.name}
-      legend={props.title}
-      description={props.description}
-      error={props.error}
-      value={props.value}
-      onChange={props.onChange}
-    >
-      <Box horizontal gap={16} mt={12} wrap>
-        {props.options.map(({ label, value }) => (
-          <div
-            onClick={() => {
-              props.onChange(value);
-            }}
-            className={classes.radioBox + ' ' + (props.value === value ? classes.radioBoxActive : '')}
-            key={label}
-          >
-            <Radio value={value}>{label}</Radio>
-          </div>
-        ))}
-      </Box>
-    </RadioGroup>
+    <InputLabel text={props.label} subText={props.description}>
+      <ErrorLabel text={errorText}>
+        <div className={classes.radioGroup}>
+          {props.options.map(({ label, value }) => (
+            <button
+              onClick={() => {
+                props.onChange(value);
+              }}
+              className={
+                classes.radioBox +
+                ' ' +
+                (props.value === value ? classes.radioBoxActive : '') +
+                ' ' +
+                (hasError ? classes.radioBoxError : '')
+              }
+              key={label}
+            >
+              <span className={classes.radioBoxIndicator}></span>
+              <Label size="md" className={classes.radioBoxText}>
+                {label}
+              </Label>
+            </button>
+          ))}
+        </div>
+      </ErrorLabel>
+    </InputLabel>
   );
 };
 
