@@ -43,3 +43,7 @@ export const Required: Story = {
 export const Hvorfor: Story = {
   args: { ...defaultProps, required: true, optional: true },
 };
+
+export const Hvorfor2: Story = {
+  args: { ...defaultProps, required: 'Påkrevd', optional: 'Eller ikke' },
+};

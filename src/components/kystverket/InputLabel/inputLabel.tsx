@@ -4,11 +4,16 @@ import { Body, Label } from '../Typography/typography';
 import Box from '../Box/box';
 import { StyrbordContext, StyrbordContextProps } from '../context/styrbord.context';
 
-export interface InputLabelProps {
+type InputLabelFieldTag = boolean | string | undefined;
+
+export interface InputLabelFieldProps {
+  optional?: InputLabelFieldTag;
+  required?: InputLabelFieldTag;
+}
+
+export interface InputLabelProps extends InputLabelFieldProps {
   text?: string | null;
   subText?: ReactNode | string | null;
-  optional?: boolean;
-  required?: boolean;
   children?: ReactNode;
 }
 
@@ -24,6 +29,9 @@ const InputLabel = ({ text, subText, optional = false, required = false, childre
 
   const inputLabelContext = useContext(StyrbordContext);
 
+  const requiredText = typeof required === 'string' ? required : undefined;
+  const optionalText = typeof optional === 'string' ? optional : undefined;
+
   return (
     <label>
       <Box gap={8}>
@@ -34,12 +42,12 @@ const InputLabel = ({ text, subText, optional = false, required = false, childre
             </Label>
             {required && (
               <Label size="sm" className={style.required}>
-                {inputLabelContext.language?.label?.required ?? 'Må fylles ut'}
+                {requiredText ?? inputLabelContext.language?.label?.required ?? 'Må fylles ut'}
               </Label>
             )}
             {optional && (
               <Label size="sm" className={style.optional}>
-                {inputLabelContext.language?.label?.optional ?? 'Valgfritt'}
+                {optionalText ?? inputLabelContext.language?.label?.optional ?? 'Valgfritt'}
               </Label>
             )}
           </Box>
