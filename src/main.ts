@@ -23,4 +23,7 @@ export type { ButtonProps } from './components/designsystemet/Button/button';
 export { default as BorderedRadioGroup } from './components/kystverket/BorderedRadioGroup/borderedRadioGroup';
 export type { BorderedRadioGroupProps } from './components/kystverket/BorderedRadioGroup/borderedRadioGroup';
 
+export { StyrbordContext } from './components/kystverket/context/styrbord.context';
+export type { StyrbordContextProps } from './components/kystverket/context/styrbord.context';
+
 export * from '@digdir/designsystemet-react';

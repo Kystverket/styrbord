@@ -1,7 +1,8 @@
-import { ReactNode } from 'react';
+import { ReactNode, useContext, useMemo } from 'react';
 import style from './inputLabel.module.css';
 import { Body, Label } from '../Typography/typography';
 import Box from '../Box/box';
+import { StyrbordContext, StyrbordContextProps } from '../context/styrbord.context';
 
 export interface InputLabelProps {
   text?: string | null;
@@ -21,6 +22,8 @@ const InputLabel = ({ text, subText, optional = false, required = false, childre
       </label>
     );
 
+  const inputLabelContext = useContext(StyrbordContext);
+
   return (
     <label>
       <Box gap={8}>
@@ -31,12 +34,12 @@ const InputLabel = ({ text, subText, optional = false, required = false, childre
             </Label>
             {required && (
               <Label size="sm" className={style.required}>
-                Må fylles ut
+                {inputLabelContext.language?.label?.required ?? 'Må fylles ut'}
               </Label>
             )}
             {optional && (
               <Label size="sm" className={style.optional}>
-                Valgfritt
+                {inputLabelContext.language?.label?.optional ?? 'Valgfritt'}
               </Label>
             )}
           </Box>
