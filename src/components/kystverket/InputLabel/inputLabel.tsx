@@ -1,8 +1,10 @@
+'use client';
+
 import { ReactNode, useContext, useMemo } from 'react';
 import style from './inputLabel.module.css';
 import { Body, Label } from '../Typography/typography';
 import Box from '../Box/box';
-import { StyrbordContext, StyrbordContextProps } from '../context/styrbord.context';
+import { StyrbordContext } from '../context/styrbord.context';
 
 type InputLabelFieldTag = boolean | string | undefined;
 
