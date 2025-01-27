@@ -50,6 +50,35 @@ export const Default: Story = {
   },
 };
 
+export const WithLongOptionText: Story = {
+  args: {
+    ...defaultProps,
+    options: [
+      {
+        label: 'Option A Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec odio vitae nunc.',
+        value: 'option-a',
+      },
+      {
+        label: 'Option B Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec odio vitae nunc.',
+        value: 'option-b',
+      },
+      {
+        label: 'Option C Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec odio vitae nunc.',
+        value: 'option-c',
+      },
+    ],
+    onChange: (value: RadioGroupValueType) => console.log(value),
+  },
+  render: (args) => {
+    const [{ value }, updateArgs] = useArgs();
+    return (
+      <Box width="full">
+        <BorderedRadioGroup {...args} value={value} onChange={(v) => updateArgs({ value: v })} />
+      </Box>
+    );
+  },
+};
+
 export const WithReactElementDescription: Story = {
   args: {
     ...defaultProps,
