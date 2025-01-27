@@ -22,7 +22,8 @@ const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
   const hasError = !!props.error;
 
   return (
-    <InputLabel text={props.label} subText={props.description}>
+    <>
+      <InputLabel text={props.label} subText={props.description} />
       <ErrorLabel text={errorText}>
         <div className={classes.radioGroup}>
           {props.options.map(({ label, value }) => (
@@ -47,7 +48,7 @@ const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
           ))}
         </div>
       </ErrorLabel>
-    </InputLabel>
+    </>
   );
 };
 

@@ -24,7 +24,7 @@ const InputLabel = ({ text, subText, optional = false, required = false, childre
   return (
     <label>
       <Box gap={8}>
-        <Box gap={0}>
+        <Box gap={0} mb={children ? 0 : 8}>
           <Box horizontal align="start" gap={8}>
             <Label size="md" strong>
               {text}
