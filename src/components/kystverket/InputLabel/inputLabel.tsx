@@ -37,11 +37,12 @@ const InputLabel = ({ text, subText, optional = false, required = false, childre
             <Label size="md" strong>
               {text}
             </Label>
-            {required && (
+            {required && requiredText && (
               <Label size="sm" className={style.required}>
                 {requiredText ?? 'Må fylles ut'}
               </Label>
             )}
+            {required && !requiredText && <span className={style.requiredStar}>*</span>}
             {optional && (
               <Label size="sm" className={style.optional}>
                 {optionalText ?? 'Valgfritt'}

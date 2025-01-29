@@ -17,3 +17,8 @@
   padding: 1px 4px 0px 4px !important;
   border-radius: 2px;
 }
+.requiredStar {
+  color: var(--ds-color-danger-base-default);
+  user-select: none;
+  margin-left: -4px;
+}

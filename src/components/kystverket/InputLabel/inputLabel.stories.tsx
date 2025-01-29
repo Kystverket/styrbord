@@ -40,6 +40,10 @@ export const Required: Story = {
   args: { ...defaultProps, required: true },
 };
 
+export const RequiredText: Story = {
+  args: { ...defaultProps, required: 'Påkrevd' },
+};
+
 export const Hvorfor: Story = {
   args: { ...defaultProps, required: true, optional: true },
 };
