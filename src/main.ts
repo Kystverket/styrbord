@@ -26,6 +26,9 @@ export type { TypographyProps, HeaderTypographyProps } from './components/kystve
 export { Button } from './components/designsystemet/Button/button';
 export type { ButtonProps } from './components/designsystemet/Button/button';
 
+export { default as BorderedToggleGroup } from './components/kystverket/BorderedToggleGroup/borderedToggleGroup';
+export type { BorderedToggleGroupProps } from './components/kystverket/BorderedToggleGroup/borderedToggleGroup';
+
 export { default as BorderedRadioGroup } from './components/kystverket/BorderedRadioGroup/borderedRadioGroup';
 export type { BorderedRadioGroupProps } from './components/kystverket/BorderedRadioGroup/borderedRadioGroup';
 
