@@ -1,4 +1,4 @@
-.radioBox {
+.toggleBox {
   border: var(--ds-border-width-thin) solid var(--color-neutral-border-subtle) !important;
   border-radius: var(--ds-border-radius-large);
   padding: var(--spacing-12);
@@ -11,35 +11,51 @@
   align-items: center;
   transition: all 0.1s;
 }
-.radioBoxActive {
+.toggleBox:hover {
+  background-color: var(--ds-color-accent-background-subtle);
+}
+.toggledTrue {
   border: var(--ds-border-width-thin) solid var(--ds-color-accent-text-subtle) !important;
   background-color: var(--ds-color-accent-background-subtle);
 }
-.radioBox:hover {
-  background-color: var(--ds-color-accent-background-subtle);
-}
-.radioBoxError {
+.toggleBoxError {
   border: var(--ds-border-width-thin) solid var(--ds-color-danger-border-strong) !important;
   color: var(--ds-color-danger-border-strong) !important;
 }
-.radioGroup {
+.toggleGroup {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--spacing-8);
 }
-.radioBoxIndicator {
+.toggleBoxIndicator {
   display: block;
-  width: 18px;
-  height: 18px;
-  border-radius: 999px;
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
   border: 1px solid #636363;
   line-height: 0;
   flex-shrink: 0;
+  padding: 0;
+  margin: 0;
+  position: relative;
 }
-.radioBoxActive .radioBoxIndicator {
+.toggleBoxIndicatorIcon {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  top: -1px;
+  left: -1px;
+  font-size: 18px;
+  opacity: 0;
+}
+.toggledTrue .toggleBoxIndicator {
   border-color: #2a57c0;
-  box-shadow: inset 0 0 0 4px #2a57c0;
+  background: #2a57c0;
+  color: white;
 }
-.radioBoxText {
+.toggledTrue .toggleBoxIndicator .toggleBoxIndicatorIcon {
+  opacity: 1;
+}
+.toggleBoxText {
   text-align: left;
 }
