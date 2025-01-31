@@ -3,16 +3,17 @@ import classes from './borderedToggleGroup.module.css';
 import { ReactNode } from 'react';
 import InputLabel from '../InputLabel/inputLabel';
 
-export type RadioGroupValueType = string | boolean | number;
-
-export type ToggleValue = [string, boolean];
-export type ToggleGroupValues = ToggleValue[];
+export interface ToggleValue {
+  key: string;
+  label: string;
+  value: boolean;
+}
 
 export interface BorderedToggleGroupProps {
   label?: string;
   description?: ReactNode | string;
-  values: ToggleGroupValues;
-  onChanges?: (values: ToggleGroupValues) => void;
+  values: ToggleValue[];
+  onChanges?: (values: ToggleValue[]) => void;
   onChange?: (value: ToggleValue) => void;
   error?: string | boolean;
 }
@@ -21,36 +22,48 @@ const BorderedRadioGroup = (props: BorderedToggleGroupProps) => {
   const errorText = typeof props.error === 'string' && props.error.length > 0 ? props.error : undefined;
   const hasError = !!props.error;
 
-  const onClick = (label: string, newValue: boolean) => {
-    const newValues = props.values.map(([l, v]) => [l, l === label ? newValue : v] as ToggleValue);
-    if (props.onChanges) props.onChanges(newValues);
-    if (props.onChange) props.onChange([label, newValue]);
+  const onClick = (key: string, newValue: boolean) => {
+    if (props.onChanges && props.values) {
+      const newValues = props.values.map((e) => (e.key === key ? { ...e, value: newValue } : e));
+      props.onChanges(newValues);
+    }
+    if (props.onChange && props.values) {
+      const oldValue = props.values.find((e) => e.key === key);
+      if (!oldValue) {
+        return;
+      }
+      props.onChange({ ...oldValue, value: newValue });
+    }
   };
+
+  if (!props.values) {
+    return null;
+  }
 
   return (
     <Box>
       <InputLabel text={props.label} subText={props.description} />
       <ErrorLabel text={errorText}>
         <div className={classes.toggleGroup}>
-          {props.values.map(([label, value]) => (
+          {props.values.map((el) => (
             <button
               onClick={() => {
-                onClick(label, !value);
+                onClick(el.key, !el.value);
               }}
               className={
                 classes.toggleBox +
                 ' ' +
-                (value ? classes.toggledTrue : classes.toggledFalse) +
+                (el.value ? classes.toggledTrue : classes.toggledFalse) +
                 ' ' +
                 (hasError ? classes.toggleBoxError : '')
               }
-              key={label}
+              key={el.key}
             >
               <span className={classes.toggleBoxIndicator}>
                 <Icon className={classes.toggleBoxIndicatorIcon} material="check" />
               </span>
               <Label size="md" className={classes.toggleBoxText}>
-                {label}
+                {el.label}
               </Label>
             </button>
           ))}
