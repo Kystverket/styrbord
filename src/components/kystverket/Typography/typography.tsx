@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { buildTypographyClasses } from './typography.util';
+import style from './typography.module.css';
 
 export interface TypographyProps {
   className?: string;
@@ -20,6 +21,7 @@ export type BodyTypographyProps = TypographyProps & {
 export type LabelTypographyProps = TypographyProps & {
   size: 'sm' | 'md' | 'lg' | 'xl';
   strong?: boolean;
+  inline?: boolean;
 };
 
 type HeadingProps = React.HTMLAttributes<HTMLHeadingElement>;
@@ -68,13 +70,17 @@ export const Body = ({ inline, strong, size, className, children }: BodyTypograp
   return <p className={classes}>{children}</p>;
 };
 
-export const Label = ({ strong, size, className, children }: LabelTypographyProps) => {
-  const classes = buildTypographyClasses({
+export const Label = ({ strong, size, className, children, inline = false }: LabelTypographyProps) => {
+  let classes = buildTypographyClasses({
     type: 'label',
     size,
     strong,
     className,
   });
+
+  if (inline) {
+    classes += ` ${style.inline}`;
+  }
 
   return <span className={classes}>{children}</span>;
 };
