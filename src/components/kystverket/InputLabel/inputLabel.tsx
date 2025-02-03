@@ -34,28 +34,20 @@ const InputLabel = ({ text, subText, optional = false, required = false, childre
       <Box gap={8}>
         <Box gap={0} mb={children ? 0 : 8}>
           <Box horizontal align="start">
-            {required && requiredText && (
-              <Label inline size="md" strong>
-                {text}
+            <Label inline size="md" strong>
+              {text}
+              {required && requiredText && (
                 <Label inline size="sm" className={style.required}>
                   {requiredText ?? 'Må fylles ut'}
                 </Label>
-              </Label>
-            )}
-            {required && !requiredText && (
-              <Label inline size="md" strong>
-                {text}
-                <span className={style.requiredStar}>*</span>
-              </Label>
-            )}
-            {optional && (
-              <Label inline size="md" strong>
-                {text}
+              )}
+              {required && !requiredText && <span className={style.requiredStar}>*</span>}
+              {optional && (
                 <Label inline size="sm" className={style.optional}>
                   {optionalText ?? 'Valgfritt'}
                 </Label>
-              </Label>
-            )}
+              )}
+            </Label>
           </Box>
           {subText && <Body size="sm">{subText}</Body>}
         </Box>
