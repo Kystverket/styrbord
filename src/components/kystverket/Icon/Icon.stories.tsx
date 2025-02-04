@@ -15,7 +15,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const defaultProps: MaterialIconProps = {
-  material: 'chevron_left'
+  material: 'chevron_left',
 };
 
 export const Default: Story = {
@@ -23,5 +23,5 @@ export const Default: Story = {
 };
 
 export const Stylus: Story = {
-  args: {...defaultProps, material: 'stylus'}
-}
+  args: { ...defaultProps, material: 'stylus' },
+};

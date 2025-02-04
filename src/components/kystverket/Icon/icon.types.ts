@@ -18,6 +18,6 @@ const iconIdList = [
   'keyboard_arrow_up',
   'keyboard_arrow_down',
   'file_save',
-  'stylus'
+  'stylus',
 ] as const;
 export type IconId = (typeof iconIdList)[number];

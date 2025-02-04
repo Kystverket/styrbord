@@ -34,11 +34,13 @@
   transition: all 0.3s;
 }
 
-.completed-step, .incomplete-step {
-  color: #636363
+.completed-step,
+.incomplete-step {
+  color: #636363;
 }
-.completed-step .icon,.incomplete-step .icon {
-  border: 1px solid #BEBBB8;
+.completed-step .icon,
+.incomplete-step .icon {
+  border: 1px solid #bebbb8;
   background-color: transparent;
   color: #636363;
 }
@@ -47,18 +49,18 @@
 }
 
 .current-step {
-  color: #183A93;
+  color: #183a93;
 }
 .current-step .icon {
-  border: 1px solid #183A93;
-  background-color: #183A93;
+  border: 1px solid #183a93;
+  background-color: #183a93;
   color: white;
 }
 
 .divider {
   display: block;
   height: 1px;
-    background-color: #BEBBB8;
+  background-color: #bebbb8;
   flex: 1;
 }
 
@@ -74,7 +76,7 @@
     width: 1px;
     height: 15px;
     flex: 0 0 15px;
-    background-color: #BEBBB8;
+    background-color: #bebbb8;
     margin-left: 15px;
   }
 }
