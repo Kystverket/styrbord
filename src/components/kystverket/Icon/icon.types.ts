@@ -13,5 +13,11 @@ const iconIdList = [
   'check_circle',
   'radio_button_unchecked',
   'radio_button_checked',
+  'more_vert',
+  'download',
+  'keyboard_arrow_up',
+  'keyboard_arrow_down',
+  'file_save',
+  'stylus',
 ] as const;
 export type IconId = (typeof iconIdList)[number];
