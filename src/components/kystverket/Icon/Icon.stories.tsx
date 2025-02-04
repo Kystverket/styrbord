@@ -22,3 +22,6 @@ export const Default: Story = {
   args: defaultProps,
 };
 
+export const Stylus: Story = {
+  args: {...defaultProps, material: 'stylus'}
+}
