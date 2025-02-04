@@ -1,4 +1,4 @@
-import { Box, ErrorLabel, Fieldset, Icon, Label, Radio, RadioGroup } from '~/main';
+import { Box, ErrorLabel, Label } from '~/main';
 import classes from './borderedRadioGroup.module.css';
 import { ReactNode } from 'react';
 import InputLabel from '../InputLabel/inputLabel';
