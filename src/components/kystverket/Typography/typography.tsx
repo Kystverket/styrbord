@@ -24,6 +24,11 @@ export type LabelTypographyProps = TypographyProps & {
   inline?: boolean;
 };
 
+export type AccentTypographyProps = TypographyProps & {
+  size: 'sm' | 'md';
+  strong?: boolean;
+};
+
 type HeadingProps = React.HTMLAttributes<HTMLHeadingElement>;
 
 const Heading = ({ level = '1', children, ...props }: HeadingProps & HeaderTypographyProps) => {
@@ -81,6 +86,17 @@ export const Label = ({ strong, size, className, children, inline = false }: Lab
   if (inline) {
     classes += ` ${style.inline}`;
   }
+
+  return <span className={classes}>{children}</span>;
+};
+
+export const Accent = ({ strong, size, className, children }: AccentTypographyProps) => {
+  const classes = buildTypographyClasses({
+    type: 'accent',
+    size,
+    strong,
+    className,
+  });
 
   return <span className={classes}>{children}</span>;
 };

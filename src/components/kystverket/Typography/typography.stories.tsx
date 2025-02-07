@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Display, Body, Headline, Label, Title } from './typography';
+import { Display, Body, Headline, Label, Title, Accent } from './typography';
 import Box, { BoxProps } from '../Box/box';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
@@ -17,7 +17,7 @@ type Story = StoryObj<typeof meta>;
 
 const defaultProps: BoxProps = {
   children: (
-    <>
+    <Box gap={16}>
       <Display size="lg">Display Large</Display>
       <Display size="md">Display Medium</Display>
       <Display size="sm">Display Small</Display>
@@ -75,7 +75,15 @@ const defaultProps: BoxProps = {
           Body Small inline
         </Body>
       </p>
-    </>
+      <Accent size="md">Accent Medium</Accent>
+      <Accent size="sm">Accent Small</Accent>
+      <Accent size="md" strong>
+        Accent Medium strong
+      </Accent>
+      <Accent size="sm" strong>
+        Accent Small strong
+      </Accent>
+    </Box>
   ),
 };
 

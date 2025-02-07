@@ -168,3 +168,34 @@
   composes: label-sm;
   font-weight: var(--font-weight-semibold);
 }
+
+.accent {
+  color: var(--color-neutral-text-subtle);
+  text-transform: uppercase;
+}
+
+.accent-md {
+  composes: accent;
+  font-size: var(--ds-font-size-14);
+  line-height: var(--typescale-label-medium-line-height);
+  letter-spacing: var(--ds-letter-spacing-016);
+  font-weight: var(--font-weight-regular);
+}
+
+.accent-sm {
+  composes: accent;
+  font-size: var(--ds-font-size-12);
+  line-height: var(--typescale-label-small-line-height);
+  letter-spacing: var(--ds-letter-spacing-032);
+  font-weight: var(--font-weight-regular);
+}
+
+.accent-md-strong {
+  composes: label-md;
+  font-weight: var(--font-weight-semibold);
+}
+
+.accent-sm-strong {
+  composes: label-sm;
+  font-weight: var(--font-weight-semibold);
+}
