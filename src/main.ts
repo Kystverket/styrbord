@@ -20,7 +20,7 @@ export type { InputLabelProps, InputLabelFieldProps } from './components/kystver
 
 export { default as Icon } from './components/kystverket/Icon/icon';
 
-export { Display, Headline, Title, Body, Label } from './components/kystverket/Typography/typography';
+export { Display, Headline, Title, Body, Label, Accent } from './components/kystverket/Typography/typography';
 export type { TypographyProps, HeaderTypographyProps } from './components/kystverket/Typography/typography';
 
 export { Button } from './components/designsystemet/Button/button';
