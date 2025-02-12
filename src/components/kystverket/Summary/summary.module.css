@@ -1,0 +1,119 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  --span2: span 2;
+}
+
+.heading {
+  grid-column: var(--span2);
+  padding: 8px 0px;
+  margin-bottom: var(--spacing-12);
+}
+
+.valueError + .heading,
+.valueText + .heading,
+.contentError + .heading,
+.contentArea + .heading {
+  margin-top: var(--spacing-24);
+}
+
+.title {
+  grid-column: var(--span2);
+  background-color: #f9f6f3;
+  border: 1px solid #d5d0cb;
+  padding: 8px 12px;
+  border-radius: var(--spacing-2);
+}
+
+.valueError + .title,
+.valueText + .title,
+.contentError + .title,
+.contentArea + .title {
+  border-top: none;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+.title:has(+ .valueLabel) {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+*:has(+ .heading) {
+  border-bottom-left-radius: var(--spacing-2);
+  border-bottom-right-radius: var(--spacing-2);
+}
+
+.valueLabel {
+  border-left: 1px solid #d5d0cb;
+  border-bottom: 1px solid #d5d0cb;
+  padding: var(--spacing-8) var(--spacing-12);
+}
+.valueText {
+  border-right: 1px solid #d5d0cb;
+  border-bottom: 1px solid #d5d0cb;
+  padding: var(--spacing-8) var(--spacing-12);
+}
+.valueError {
+  grid-column: var(--span2);
+  border-bottom: 1px solid #d5d0cb;
+}
+.valueLabel:has(+ .valueError),
+.valueText:has(+ .valueError) {
+  border-bottom: none;
+}
+
+.contentLabel {
+  grid-column: var(--span2);
+  border-left: 1px solid #d5d0cb;
+  border-right: 1px solid #d5d0cb;
+  padding: var(--spacing-8) var(--spacing-12);
+}
+.contentArea {
+  grid-column: var(--span2);
+  border-left: 1px solid #d5d0cb;
+  border-right: 1px solid #d5d0cb;
+  border-bottom: 1px solid #d5d0cb;
+  padding: var(--spacing-8) var(--spacing-12);
+}
+.contentError {
+  grid-column: var(--span2);
+  border-bottom: 1px solid #d5d0cb;
+}
+.contentArea:has(+ .contentError) {
+  border-bottom: none;
+}
+
+.editButton {
+  font-size: var(--typescale-body-small-font-size);
+  line-height: var(--typescale-body-small-line-height);
+  letter-spacing: var(--typescale-body-small-letter-spacing);
+  font-weight: var(--font-weight-regular);
+  color: var(--ds-color-accent-12);
+  text-decoration: underline;
+  text-underline-offset: var(--spacing-6);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.editButton:hover {
+  color: var(--ds-color-accent-7);
+}
+
+@media screen and (max-width: 640px) {
+  .grid {
+    --span2: span 1;
+    grid-template-columns: 1fr;
+  }
+  .valueLabel {
+    border-left: 1px solid #d5d0cb;
+    border-right: 1px solid #d5d0cb;
+    border-bottom: none;
+  }
+  .valueText {
+    border-left: 1px solid #d5d0cb;
+    border-right: 1px solid #d5d0cb;
+    border-bottom: 1px solid #d5d0cb;
+  }
+}

@@ -32,5 +32,9 @@ export type { BorderedToggleGroupProps } from './components/kystverket/BorderedT
 export { default as BorderedRadioGroup } from './components/kystverket/BorderedRadioGroup/borderedRadioGroup';
 export type { BorderedRadioGroupProps } from './components/kystverket/BorderedRadioGroup/borderedRadioGroup';
 
+export { Summary } from './components/kystverket/Summary/summary';
+export type { SummaryProps, SummaryRowProps } from './components/kystverket/Summary/summary.types';
+
 export { Link } from '@digdir/designsystemet-react';
 export type { LinkProps } from '@digdir/designsystemet-react';
+;
