@@ -37,4 +37,3 @@ export type { SummaryProps, SummaryRowProps } from './components/kystverket/Summ
 
 export { Link } from '@digdir/designsystemet-react';
 export type { LinkProps } from '@digdir/designsystemet-react';
-;
