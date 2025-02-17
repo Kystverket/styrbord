@@ -36,6 +36,22 @@ export const LangTekst: Story = {
   },
 };
 
+export const LangRequired: Story = {
+  args: {
+    ...defaultProps,
+    text: 'Dette er en altfor lang tekst og bør stort sett aldri skje, men må allikevel håndteres. Det kan jo hende teksten ikke er for lang men containeren er for liten.',
+    required: true,
+  },
+};
+
+export const LangRequiredText: Story = {
+  args: {
+    ...defaultProps,
+    text: 'Dette er en altfor lang tekst og bør stort sett aldri skje, men må allikevel håndteres. Det kan jo hende teksten ikke er for lang men containeren er for liten.',
+    required: 'Påkrevd',
+  },
+};
+
 export const Required: Story = {
   args: { ...defaultProps, required: true },
 };
