@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button, ButtonProps } from '../../../../src/components/designsystemet/Button/button';
-import StyrbordDecorator from '../../../styrbordDecorator';
+import { Button, ButtonProps } from './Button';
+import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
   title: 'Designsystemet/Button',
@@ -15,9 +15,8 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const defaultProps: ButtonProps = {
-  design: 'filled',
+  variant: 'filled',
   color: 'accent',
-  size: 'md',
   icon: undefined,
   loading: false,
   children: 'Button',
@@ -25,14 +24,6 @@ const defaultProps: ButtonProps = {
 
 export const Default: Story = {
   args: defaultProps,
-};
-
-export const Small: Story = {
-  args: { ...defaultProps, size: 'sm' },
-};
-
-export const Large: Story = {
-  args: { ...defaultProps, size: 'lg' },
 };
 
 export const Neutral: Story = {
@@ -44,13 +35,13 @@ export const Danger: Story = {
 };
 
 export const Outlined: Story = {
-  args: { ...defaultProps, design: 'outlined' },
+  args: { ...defaultProps, variant: 'outlined' },
 };
 
 export const Ghost: Story = {
-  args: { ...defaultProps, design: 'ghost' },
+  args: { ...defaultProps, variant: 'ghost' },
 };
 
 export const Dashed: Story = {
-  args: { ...defaultProps, design: 'dashed' },
+  args: { ...defaultProps, variant: 'dashed' },
 };

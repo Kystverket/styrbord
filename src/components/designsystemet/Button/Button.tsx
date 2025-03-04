@@ -1,23 +1,23 @@
 import { ButtonProps as DsButtonProps, Button as DsButton } from '@digdir/designsystemet-react';
-import classes from './button.module.scss';
+import classes from './Button.module.scss';
 
 /*
     Unionen av designsystemets ButtonProps og vår ButtonProps
     gjør at variant aldri kan settes til noe annet enn undefined.
     Liten hack, men må til for å kunne overstyre designsystemets
-    variant med vår egen design-prop.
+    variant med vår egen variant-prop.
 
     Tanken med å gjøre det på denne måten er at vi er mest mulig
     framoverkompatible med designsystemet.
 */
 export type ButtonProps = {
-  design?: 'filled' | 'outlined' | 'ghost' | 'dashed';
+  variant?: 'filled' | 'outlined' | 'ghost' | 'dashed';
 } & Omit<DsButtonProps, 'variant'>;
 
-export const Button = ({ design, ...props }: ButtonProps) => {
+export const Button = ({ variant, ...props }: ButtonProps) => {
   const propsToOverride: DsButtonProps = { ...props };
 
-  switch (design) {
+  switch (variant) {
     case 'filled':
       propsToOverride.variant = 'primary';
       break;

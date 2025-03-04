@@ -33,3 +33,10 @@
   font-weight: 700;
   font-stretch: normal;
 }
+
+:root {
+  font-family: var(--font-family);
+  --spacing-0: 0;
+  --link-underline-offset: var(--spacing-6);
+  --ds-global-purple-12: var(--color-link-visited);
+}

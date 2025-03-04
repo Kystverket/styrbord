@@ -23,8 +23,8 @@ export { default as Icon } from './components/kystverket/Icon/icon';
 export { Display, Headline, Title, Body, Label, Accent } from './components/kystverket/Typography/typography';
 export type { TypographyProps, HeaderTypographyProps } from './components/kystverket/Typography/typography';
 
-export { Button } from './components/designsystemet/Button/button';
-export type { ButtonProps } from './components/designsystemet/Button/button';
+export { Button } from './components/designsystemet/Button/Button';
+export type { ButtonProps } from './components/designsystemet/Button/Button';
 
 export { default as BorderedToggleGroup } from './components/kystverket/BorderedToggleGroup/borderedToggleGroup';
 export type { BorderedToggleGroupProps } from './components/kystverket/BorderedToggleGroup/borderedToggleGroup';

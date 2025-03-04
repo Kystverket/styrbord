@@ -14,11 +14,9 @@
 }
 
 @layer styrbord {
-  @include meta.load-css('styrbord/font-family');
-  @include meta.load-css('overrides-of-designsystemet/manual');
-  @include meta.load-css('overrides-of-designsystemet/root');
-  @include meta.load-css('overrides-of-designsystemet/link');
-  @include meta.load-css('overrides-of-designsystemet/button');
+  @include meta.load-css('styrbord');
+  @include meta.load-css('../components/designsystemet/Link/Link.override.scss');
+  @include meta.load-css('../components/designsystemet/Button/Button.override.scss');
 }
 
 @layer dsno, kyvtokens, kyvtokenstodesignsystemet, styrbord;
