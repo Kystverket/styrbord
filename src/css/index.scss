@@ -3,7 +3,7 @@
   @import '@digdir/designsystemet-theme/altinn';
 }
 @layer kyvtokens {
-  @import 'kyv-tokens/dist/theme-kystverket/theme-kystverket-tokens';
+  @import 'kyv-tokens/dist/kystverket/styles';
 }
 @layer kyvtokenstodesignsystemet {
   @import './kyv-tokens-to-designsystemet';
