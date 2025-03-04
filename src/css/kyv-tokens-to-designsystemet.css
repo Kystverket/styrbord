@@ -231,10 +231,14 @@
   --ds-border-width-thick: 0.125rem;
   --ds-border-width-none: 0rem;
   --ds-shadows-xsmall: drop-shadow(0px 0px 1px #1616164d) drop-shadow(0px 1px 2px #1616161a);
-  --ds-shadows-small: drop-shadow(0px 0px 1px #1616164d) drop-shadow(0px 1px 2px #1616161a) drop-shadow(0px 2px 4px #1616161a);
-  --ds-shadows-medium: drop-shadow(0px 0px 1px #1616164d) drop-shadow(0px 2px 4px #1616161a) drop-shadow(0px 5px 10px #1616161a);
-  --ds-shadows-large: drop-shadow(0px 0px 1px #1616164d) drop-shadow(0px 4px 6px #1616161a) drop-shadow(0px 10px 15px #1616161a);
-  --ds-shadows-xlarge: drop-shadow(0px 0px 1px #1616164d) drop-shadow(0px 8px 10px #1616161a) drop-shadow(0px 25px 50px #1616161a);
+  --ds-shadows-small: drop-shadow(0px 0px 1px #1616164d) drop-shadow(0px 1px 2px #1616161a)
+    drop-shadow(0px 2px 4px #1616161a);
+  --ds-shadows-medium: drop-shadow(0px 0px 1px #1616164d) drop-shadow(0px 2px 4px #1616161a)
+    drop-shadow(0px 5px 10px #1616161a);
+  --ds-shadows-large: drop-shadow(0px 0px 1px #1616164d) drop-shadow(0px 4px 6px #1616161a)
+    drop-shadow(0px 10px 15px #1616161a);
+  --ds-shadows-xlarge: drop-shadow(0px 0px 1px #1616164d) drop-shadow(0px 8px 10px #1616161a)
+    drop-shadow(0px 25px 50px #1616161a);
   --ds-font-family: museo-sans;
   --ds-font-weight-regular: 300;
   --ds-font-weight-bold: 500;
