@@ -1,19 +1,24 @@
+@use 'sass:meta';
+
 @layer dsno {
-  @import '@digdir/designsystemet-css';
-  @import '@digdir/designsystemet-theme/altinn';
+  @include meta.load-css('@digdir/designsystemet-css/dist/src/index.css');
+  @include meta.load-css('@digdir/designsystemet-theme/brand/altinn.css');
 }
+
 @layer kyvtokens {
-  @import 'kyv-tokens/dist/kystverket/styles';
+  @include meta.load-css('kyv-tokens');
 }
+
 @layer kyvtokenstodesignsystemet {
-  @import './kyv-tokens-to-designsystemet';
+  @include meta.load-css('kyv-tokens-to-designsystemet');
 }
+
 @layer styrbord {
-  @import './styrbord/font-family';
-  @import './overrides-of-designsystemet/manual';
-  @import './overrides-of-designsystemet/root';
-  @import './overrides-of-designsystemet/link';
-  @import './overrides-of-designsystemet/button';
+  @include meta.load-css('styrbord/font-family');
+  @include meta.load-css('overrides-of-designsystemet/manual');
+  @include meta.load-css('overrides-of-designsystemet/root');
+  @include meta.load-css('overrides-of-designsystemet/link');
+  @include meta.load-css('overrides-of-designsystemet/button');
 }
 
 @layer dsno, kyvtokens, kyvtokenstodesignsystemet, styrbord;

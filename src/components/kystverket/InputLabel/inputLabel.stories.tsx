@@ -17,7 +17,7 @@ type Story = StoryObj<typeof meta>;
 
 const defaultProps: InputLabelProps = {
   text: 'Fyll inn ditt navn',
-  children: <Textfield label="Hei" value="" />,
+  children: <input type="text" />,
 };
 
 export const Default: Story = {
