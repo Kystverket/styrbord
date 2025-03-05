@@ -11,7 +11,6 @@
   background: var(--dsc-button-background--hover);
 }
 
-
 .subtle {
   color: var(--color-accent-text-default);
   background: var(--color-accent-surface-default);
@@ -23,24 +22,24 @@
   background: var(--color-accent-surface-active);
 }
 
-.subtle[data-color="neutral"] {
+.subtle[data-color='neutral'] {
   color: var(--color-neutral-text-default);
   background: var(--color-neutral-surface-default);
 }
-.subtle[data-color="neutral"]:hover {
+.subtle[data-color='neutral']:hover {
   background: var(--color-neutral-surface-hover);
 }
-.subtle[data-color="neutral"]:active {
+.subtle[data-color='neutral']:active {
   background: var(--color-neutral-surface-active);
 }
 
-.subtle[data-color="danger"] {
+.subtle[data-color='danger'] {
   color: var(--color-danger-text-default);
   background: var(--color-danger-surface-default);
 }
-.subtle[data-color="danger"]:hover {
+.subtle[data-color='danger']:hover {
   background: var(--color-danger-surface-hover);
 }
-.subtle[data-color="danger"]:active {
+.subtle[data-color='danger']:active {
   background: var(--color-danger-surface-active);
 }
