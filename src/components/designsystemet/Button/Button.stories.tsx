@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Button, ButtonProps } from './Button';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
+import { Icon } from '~/main';
 
 const meta = {
   title: 'Designsystemet/Button',
@@ -15,27 +16,19 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const defaultProps: ButtonProps = {
-  variant: 'filled',
-  color: 'accent',
-  icon: undefined,
-  loading: false,
-  children: 'Button',
+  children: 'Label',
 };
 
 export const Default: Story = {
   args: defaultProps,
 };
 
-export const Neutral: Story = {
-  args: { ...defaultProps, color: 'neutral' },
+export const Filled: Story = {
+  args: { ...defaultProps, variant: 'filled' },
 };
 
-export const Danger: Story = {
-  args: { ...defaultProps, color: 'danger' },
-};
-
-export const Outlined: Story = {
-  args: { ...defaultProps, variant: 'outlined' },
+export const Subtle: Story = {
+  args: { ...defaultProps, variant: 'subtle' },
 };
 
 export const Ghost: Story = {
@@ -44,4 +37,44 @@ export const Ghost: Story = {
 
 export const Dashed: Story = {
   args: { ...defaultProps, variant: 'dashed' },
+};
+
+export const Neutral: Story = {
+  args: { ...defaultProps, variant: 'filled', color: 'neutral' },
+};
+
+export const Danger: Story = {
+  args: { ...defaultProps, variant: 'filled', color: 'danger' },
+};
+
+export const LinkTo: Story = {
+  args: { ...defaultProps, variant: 'subtle', href: 'https://www.kystverket.no', text: 'Kystverket' },
+};
+
+export const Small: Story = {
+  args: { ...defaultProps, variant: 'filled', size: 'sm' },
+};
+
+export const Large: Story = {
+  args: { ...defaultProps, variant: 'filled', size: 'lg' },
+};
+
+export const Loading: Story = {
+  args: { ...defaultProps, variant: 'filled', loading: true },
+};
+
+export const Disabled: Story = {
+  args: { ...defaultProps, variant: 'filled', disabled: true },
+};
+
+export const WithIcon: Story = {
+  args: {
+    ...defaultProps,
+    children: (
+      <>
+        <Icon material="file_save" />
+        Lagre
+      </>
+    ),
+  },
 };

@@ -1,8 +1,9 @@
 import type { Meta, StoryFn, StoryObj } from '@storybook/react';
 import { EnvelopeClosedIcon } from '@navikt/aksel-icons';
 
-import { Paragraph, Link } from '@digdir/designsystemet-react';
+import { Link } from '@digdir/designsystemet-react';
 import React from 'react';
+import { Body } from '~/main';
 
 type Story = StoryObj<typeof Link>;
 
@@ -30,22 +31,22 @@ export const Normal: Story = {
 
 export const InText: StoryFn<typeof Link> = () => (
   <>
-    <Paragraph>
+    <Body>
       Vi bruker komponenter fra <Link href={designsystemetLink}>et fantastisk designsystem</Link>.
-    </Paragraph>
-    <Paragraph>
+    </Body>
+    <Body>
       <Link href="mailto:designsystem@digdir.no">
         <EnvelopeClosedIcon aria-hidden />
         Kontakt oss
       </Link>
-    </Paragraph>
+    </Body>
   </>
 );
 
 export const LongLink: StoryFn<typeof Link> = () => (
-  <Paragraph>
+  <Body>
     <Link href={designsystemetLink}>Dette er en lenke som brekker over flere linjer</Link>
-  </Paragraph>
+  </Body>
 );
 
 LongLink.decorators = [
@@ -56,10 +57,12 @@ LongLink.decorators = [
   ),
 ];
 
-export const Neutral: Story = {
-  args: {
-    children: 'Gå til designsystemet',
-    href: designsystemetLink,
-    color: 'neutral',
-  },
-};
+export const Neutral: StoryFn<typeof Link> = () => (
+  <>
+    <Body>
+      <Link color="neutral" href={designsystemetLink}>
+        Neutral
+      </Link>
+    </Body>
+  </>
+);

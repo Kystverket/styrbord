@@ -1,5 +1,9 @@
 import './css/index.scss';
 
+/*
+    Egenproduserte komponenter
+*/
+
 export { default as Alert } from './components/kystverket/Alert/alert';
 export type { AlertLevel } from './components/kystverket/Alert/alert.types';
 export type { AlertProps } from './components/kystverket/Alert/alert';
@@ -23,9 +27,6 @@ export { default as Icon } from './components/kystverket/Icon/icon';
 export { Display, Headline, Title, Body, Label, Accent } from './components/kystverket/Typography/typography';
 export type { TypographyProps, HeaderTypographyProps } from './components/kystverket/Typography/typography';
 
-export { Button } from './components/designsystemet/Button/Button';
-export type { ButtonProps } from './components/designsystemet/Button/Button';
-
 export { default as BorderedToggleGroup } from './components/kystverket/BorderedToggleGroup/borderedToggleGroup';
 export type { BorderedToggleGroupProps } from './components/kystverket/BorderedToggleGroup/borderedToggleGroup';
 
@@ -34,6 +35,13 @@ export type { BorderedRadioGroupProps } from './components/kystverket/BorderedRa
 
 export { Summary } from './components/kystverket/Summary/summary';
 export type { SummaryProps, SummaryRowProps } from './components/kystverket/Summary/summary.types';
+
+/*
+    Komponenter fra Designsystemet
+*/
+
+export { Button } from './components/designsystemet/Button/Button';
+export type { ButtonProps } from './components/designsystemet/Button/Button';
 
 export { Link } from '@digdir/designsystemet-react';
 export type { LinkProps } from '@digdir/designsystemet-react';
