@@ -1,0 +1,67 @@
+@font-face {
+  font-family: 'museo-sans';
+  src:
+    url('/fonts/museo-sans-300.woff2') format('woff2'),
+    url('/fonts/museo-sans-300.woff') format('woff'),
+    url('/fonts/museo-sans-300.otf') format('opentype');
+  font-display: auto;
+  font-style: normal;
+  font-weight: 300;
+  font-stretch: normal;
+}
+
+@font-face {
+  font-family: 'museo-sans';
+  src:
+    url('/fonts/museo-sans-500.woff2') format('woff2'),
+    url('/fonts/museo-sans-500.woff') format('woff'),
+    url('/fonts/museo-sans-500.otf') format('opentype');
+  font-display: auto;
+  font-style: normal;
+  font-weight: 500;
+  font-stretch: normal;
+}
+
+@font-face {
+  font-family: 'museo-sans';
+  src:
+    url('/fonts/museo-sans-700.woff2') format('woff2'),
+    url('/fonts/museo-sans-700.woff') format('woff'),
+    url('/fonts/museo-sans-700.otf') format('opentype');
+  font-display: auto;
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: normal;
+}
+
+:root {
+  font-family: var(--font-family);
+  --spacing-0: 0;
+  --link-underline-offset: var(--spacing-6);
+  --ds-global-purple-12: var(--color-link-visited);
+
+  --ds-body-xl-font-weight: var(--font-weight-regular);
+  --ds-body-xl-line-height: 1.5;
+  --ds-body-xl-font-size: 1.5rem;
+  --ds-body-xl-letter-spacing: 0.5%;
+
+  --ds-body-lg-font-weight: var(--font-weight-regular);
+  --ds-body-lg-line-height: var(--typescale-body-large-line-height);
+  --ds-body-lg-font-size: var(--typescale-body-large-font-size);
+  --ds-body-lg-letter-spacing: var(--typescale-body-large-letter-spacing);
+
+  --ds-body-md-font-weight: var(--font-weight-regular);
+  --ds-body-md-line-height: var(--typescale-body-medium-line-height);
+  --ds-body-md-font-size: var(--typescale-body-medium-font-size);
+  --ds-body-md-letter-spacing: var(--typescale-body-medium-letter-spacing);
+
+  --ds-body-sm-font-weight: var(--font-weight-regular);
+  --ds-body-sm-line-height: var(--typescale-body-small-line-height);
+  --ds-body-sm-font-size: var(--typescale-body-small-font-size);
+  --ds-body-sm-letter-spacing: var(--typescale-body-small-letter-spacing);
+
+  --ds-body-xs-font-weight: var(--font-weight-regular);
+  --ds-body-xs-line-height: 1.5;
+  --ds-body-xs-font-size: 0.875rem;
+  --ds-body-xs-letter-spacing: 0.15%;
+}

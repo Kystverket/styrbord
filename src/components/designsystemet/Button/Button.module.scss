@@ -1,0 +1,45 @@
+.href {
+  width: max-content;
+}
+
+.dashed {
+  border-style: dashed;
+  background: transparent;
+}
+.dashed:hover {
+  border-style: dashed;
+  background: var(--dsc-button-background--hover);
+}
+
+.subtle {
+  color: var(--color-accent-text-default);
+  background: var(--color-accent-surface-default);
+}
+.subtle:hover {
+  background: var(--color-accent-surface-hover);
+}
+.subtle:active {
+  background: var(--color-accent-surface-active);
+}
+
+.subtle[data-color='neutral'] {
+  color: var(--color-neutral-text-default);
+  background: var(--color-neutral-surface-default);
+}
+.subtle[data-color='neutral']:hover {
+  background: var(--color-neutral-surface-hover);
+}
+.subtle[data-color='neutral']:active {
+  background: var(--color-neutral-surface-active);
+}
+
+.subtle[data-color='danger'] {
+  color: var(--color-danger-text-default);
+  background: var(--color-danger-surface-default);
+}
+.subtle[data-color='danger']:hover {
+  background: var(--color-danger-surface-hover);
+}
+.subtle[data-color='danger']:active {
+  background: var(--color-danger-surface-active);
+}
