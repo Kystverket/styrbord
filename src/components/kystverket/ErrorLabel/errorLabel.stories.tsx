@@ -4,7 +4,7 @@ import { Textfield } from '@digdir/designsystemet-react';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Components/ErrorLabel',
+  title: 'Helpers/ErrorLabel',
   component: ErrorLabel,
   decorators: [StyrbordDecorator],
   tags: ['autodocs'],

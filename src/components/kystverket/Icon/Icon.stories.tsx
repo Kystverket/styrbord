@@ -3,7 +3,7 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import Icon, { MaterialIconProps } from '~/components/kystverket/Icon/icon';
 
 const meta = {
-  title: 'Components/Icon',
+  title: 'Helpers/Icon',
   component: Icon,
   decorators: [StyrbordDecorator],
   tags: ['autodocs'],
