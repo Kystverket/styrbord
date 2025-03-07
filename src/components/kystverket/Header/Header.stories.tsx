@@ -1,27 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { Header } from './Header';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
-import Icon, { MaterialIconProps } from '~/components/kystverket/Icon/icon';
 
 const meta = {
-  title: 'Helpers/Icon',
-  component: Icon,
+  title: 'Page/Header',
+  component: Header,
   decorators: [StyrbordDecorator],
   tags: ['autodocs'],
   argTypes: {},
-} satisfies Meta<typeof Icon>;
+} satisfies Meta<typeof Header>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const defaultProps: MaterialIconProps = {
-  material: 'chevron_left',
+const defaultProps: Story['args'] = {
+  language: 'nb-NO',
+  logo: { title: 'Styrbord', url: '/' },
 };
 
 export const Default: Story = {
   args: defaultProps,
-};
-
-export const Stylus: Story = {
-  args: { ...defaultProps, material: 'stylus' },
 };

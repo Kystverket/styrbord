@@ -1,0 +1,14 @@
+.footer a {
+  color: #a9c5ff;
+  text-decoration: underline;
+  text-underline-offset: var(--link-underline-offset);
+}
+.footer a:hover {
+  color: white;
+  text-decoration-color: white;
+}
+.footer a:focus {
+  background: black;
+  color: white;
+  text-decoration-color: white;
+}
