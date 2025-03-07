@@ -47,7 +47,6 @@ export type { FooterProps } from './components/kystverket/Footer/Footer';
 export { Header } from './components/kystverket/Header/Header';
 export type { HeaderProps } from './components/kystverket/Header/Header';
 
-;
 /*
     Komponenter fra Designsystemet
 */
