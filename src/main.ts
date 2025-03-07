@@ -45,3 +45,6 @@ export type { ButtonProps } from './components/designsystemet/Button/Button';
 
 export { Link } from '@digdir/designsystemet-react';
 export type { LinkProps } from '@digdir/designsystemet-react';
+
+export { SkipLink } from '@digdir/designsystemet-react';
+export type { SkipLinkProps } from '@digdir/designsystemet-react';
