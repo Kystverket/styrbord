@@ -10,7 +10,7 @@ const translations: Record<SupportedLanguage, Record<string, string>> = {
   'en-US': enUS,
 };
 
-export function getTranslation(languageTranslations: Record<string, string>, key: string): string | undefined {
+function getTranslation(languageTranslations: Record<string, string>, key: string): string | undefined {
   if (!languageTranslations) {
     return undefined;
   }
@@ -22,7 +22,7 @@ export function getTranslation(languageTranslations: Record<string, string>, key
   return undefined;
 }
 
-export function translate(language: SupportedLanguage, key: string): string {
+function translate(language: SupportedLanguage, key: string): string {
   const preferredTranslation = getTranslation(translations[language], key);
   if (preferredTranslation) {
     return preferredTranslation;
