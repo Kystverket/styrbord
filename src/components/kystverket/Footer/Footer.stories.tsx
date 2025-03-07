@@ -16,9 +16,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const defaultProps: FooterProps = {
-  t: (k) => {
-    return k;
-  },
+  language: 'nb-NO',
   links: [
     {
       text: 'Tilgjengelighetserklæring',
