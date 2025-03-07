@@ -1,27 +1,22 @@
 import { ReactNode } from 'react';
 import classes from './Footer.module.css';
 import { Logo, Body, Box, Link, Title } from '~/main';
-
-export type TranslationFunction = (key: string) => string;
+import { LanguageDependentComponent } from '~/utils/types';
+import { useTranslation } from '~/i18n/translations';
 
 interface LinkToSite {
   text: string;
   url: string;
 }
 
-export interface FooterProps {
-  t?: TranslationFunction;
+export interface FooterProps extends LanguageDependentComponent {
   links?: LinkToSite[];
   children?: ReactNode;
 }
 
-export function Footer({
-  t = (k) => {
-    return k;
-  },
-  links = [],
-  children,
-}: FooterProps) {
+export function Footer({ links = [], children, language }: FooterProps) {
+  const t = useTranslation(language);
+
   return (
     <Box color="navy" align="center" className={classes.footer}>
       <Box horizontal="screen-md" width="container" gap={64} justify="between" px={32} py={48}>
