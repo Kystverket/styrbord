@@ -1,0 +1,20 @@
+.headerContainer {
+  background-color: white;
+  height: 72px;
+  box-shadow: 0 1px 2px 0 #0006671a;
+}
+.logoLink {
+  line-height: 0;
+}
+.titleText {
+  display: inline-block;
+  margin-top: 2px;
+  color: var(--color-accent-base-default);
+}
+.logoLink {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none !important;
+}

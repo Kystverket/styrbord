@@ -1,10 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import InputLabel, { InputLabelProps } from './inputLabel';
-import { Textfield } from '@digdir/designsystemet-react';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Components/InputLabel',
+  title: 'Helpers/InputLabel',
   component: InputLabel,
   decorators: [StyrbordDecorator],
   tags: ['autodocs'],

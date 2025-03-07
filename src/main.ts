@@ -36,6 +36,12 @@ export type { BorderedRadioGroupProps } from './components/kystverket/BorderedRa
 export { Summary } from './components/kystverket/Summary/summary';
 export type { SummaryProps, SummaryRowProps } from './components/kystverket/Summary/summary.types';
 
+export { Logo } from './components/kystverket/Logo/Logo';
+export type { LogoProps } from './components/kystverket/Logo/Logo';
+
+export { Footer } from './components/kystverket/Footer/Footer';
+export type { FooterProps } from './components/kystverket/Footer/Footer';
+
 /*
     Komponenter fra Designsystemet
 */
