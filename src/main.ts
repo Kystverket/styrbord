@@ -1,5 +1,7 @@
 import './css/index.scss';
 
+export type { LanguageDependentComponent, SupportedLanguage, ScreenSize } from './utils/types';
+
 /*
     Egenproduserte komponenter
 */
@@ -45,6 +47,7 @@ export type { FooterProps } from './components/kystverket/Footer/Footer';
 export { Header } from './components/kystverket/Header/Header';
 export type { HeaderProps } from './components/kystverket/Header/Header';
 
+;
 /*
     Komponenter fra Designsystemet
 */
