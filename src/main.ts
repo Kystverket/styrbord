@@ -42,6 +42,9 @@ export type { LogoProps } from './components/kystverket/Logo/Logo';
 export { Footer } from './components/kystverket/Footer/Footer';
 export type { FooterProps } from './components/kystverket/Footer/Footer';
 
+export { Header } from './components/kystverket/Header/Header';
+export type { HeaderProps } from './components/kystverket/Header/Header';
+
 /*
     Komponenter fra Designsystemet
 */
