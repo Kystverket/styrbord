@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import classes from './Footer.module.css';
 import { Logo, Body, Box, Link, Title } from '~/main';
-import { LanguageDependentComponent } from '~/utils/types';
+import { SupportedLanguage } from '~/utils/types';
 import { useTranslation } from '~/i18n/translations';
 
 interface LinkToSite {
@@ -9,7 +9,8 @@ interface LinkToSite {
   url: string;
 }
 
-export interface FooterProps extends LanguageDependentComponent {
+export interface FooterProps {
+  language: SupportedLanguage;
   links?: LinkToSite[];
   children?: ReactNode;
 }

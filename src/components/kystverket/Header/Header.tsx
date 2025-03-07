@@ -1,9 +1,10 @@
-import { LanguageDependentComponent } from '~/utils/types';
+import { SupportedLanguage } from '~/utils/types';
 import classes from './Header.module.css';
 import { useTranslation } from '~/i18n/translations';
 import { Box, Label, Logo } from '~/main';
 
-export interface HeaderProps extends LanguageDependentComponent {
+export interface HeaderProps {
+  language: SupportedLanguage;
   logo: {
     title: string;
     url: string;

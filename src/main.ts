@@ -1,6 +1,6 @@
 import './css/index.scss';
 
-export type { LanguageDependentComponent, SupportedLanguage, ScreenSize } from './utils/types';
+export type { SupportedLanguage, ScreenSize } from './utils/types';
 
 /*
     Egenproduserte komponenter
