@@ -1,6 +1,5 @@
-import { ButtonProps as DsButtonProps, Button as DsButton } from '@digdir/designsystemet-react';
+import { Button as DsButton, ButtonProps as DsButtonProps } from '@digdir/designsystemet-react';
 import classes from './Button.module.scss';
-import { ReactNode } from 'react';
 
 export type ButtonProps = {
   variant?: 'filled' | 'subtle' | 'outline' | 'ghost' | 'dashed';
@@ -44,8 +43,6 @@ export const Button = ({
 
   propsToOverride['data-color'] = color;
   propsToOverride['data-size'] = size;
-
-  const hasContent = propsToOverride.children || text;
 
   if (href) {
     propsToOverride.className = [propsToOverride.className, classes.href].join(' ');

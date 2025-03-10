@@ -2,7 +2,6 @@ import { ReactNode } from 'react';
 import classes from './box.module.css';
 import { BorderRadiusProps, Spacing, SpacingKey, SpacingProps, SurfaceStyleProps } from './box.types';
 import { cssSpacingProperties, spacingKeys } from './box.constants';
-import { capitalizeFirstLetter, toLowerWithHyphens } from '~/utils/text';
 import { ScreenSize } from '~/utils/types';
 import { AllSizes, buildTypographyClasses, TypographyPrefix } from '../Typography/typography.util';
 
