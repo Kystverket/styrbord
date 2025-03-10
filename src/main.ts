@@ -54,4 +54,7 @@ export type { HeaderProps } from './components/kystverket/Header/Header';
 export { Button } from './components/designsystemet/Button/Button';
 export type { ButtonProps } from './components/designsystemet/Button/Button';
 
+export { Suggestion } from './components/designsystemet/Suggestion/Suggestion';
+export type { SuggestionProps } from './components/designsystemet/Suggestion/Suggestion';
+
 export * from '@digdir/designsystemet-react';
