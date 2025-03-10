@@ -15,6 +15,7 @@ export interface BorderedToggleGroupProps {
   values: ToggleValue[];
   onChanges?: (values: ToggleValue[]) => void;
   onChange?: (value: ToggleValue) => void;
+  onBlur?: () => void;
   error?: string | boolean;
 }
 
@@ -49,6 +50,9 @@ const BorderedRadioGroup = (props: BorderedToggleGroupProps) => {
             <button
               onClick={() => {
                 onClick(el.key, !el.value);
+              }}
+              onBlur={() => {
+                props.onBlur?.();
               }}
               className={
                 classes.toggleBox +
