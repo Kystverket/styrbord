@@ -21,6 +21,7 @@
   @include meta.load-css('styrbord');
   @include meta.load-css('../components/designsystemet/Link/Link.override.scss');
   @include meta.load-css('../components/designsystemet/Button/Button.override.scss');
+  @include meta.load-css('../components/designsystemet/Textfield/Textfield.override.scss');
 }
 
 @layer reset, dsno, kyvtokens, kyvtokenstodesignsystemet, styrbord;
