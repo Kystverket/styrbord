@@ -28,6 +28,10 @@ export const Default: Story = {
   args: defaultProps,
 };
 
+export const Small: Story = {
+  args: { ...defaultProps, size: 'sm' },
+};
+
 export const DefaultKort: Story = {
   args: { ...defaultProps, text: 'Kort melding', onDismiss: () => {} },
 };

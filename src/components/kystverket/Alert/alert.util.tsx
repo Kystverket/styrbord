@@ -1,6 +1,7 @@
 import Icon from '../Icon/icon';
 import classes from './alert.module.css';
-import { AlertLevel, Width } from './alert.types';
+import { AlertLevel, TextSize, Width } from './alert.types';
+import typography from '../Typography/typography.module.css';
 
 export const getIcon = (level: AlertLevel) => {
   switch (level) {
