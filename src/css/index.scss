@@ -2,6 +2,7 @@
 
 @layer reset {
   @include meta.load-css('reset');
+  @include meta.load-css('react-datepicker/dist/react-datepicker.css');
 }
 
 @layer dsno {

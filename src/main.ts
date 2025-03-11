@@ -47,6 +47,9 @@ export type { FooterProps } from './components/kystverket/Footer/Footer';
 export { Header } from './components/kystverket/Header/Header';
 export type { HeaderProps } from './components/kystverket/Header/Header';
 
+export { Datepicker } from './components/kystverket/Datepicker/Datepicker';
+export type { DatepickerProps } from './components/kystverket/Datepicker/Datepicker';
+
 /*
     Komponenter fra Designsystemet
 */
