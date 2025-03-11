@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { useArgs } from '@storybook/preview-api';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import BorderedRadioGroup, { BorderedRadioGroupProps, RadioGroupValueType } from './borderedRadioGroup';
-import { Box, Icon } from '~/main';
+import { Box } from '~/main';
 
 const meta = {
   title: 'Components/BorderedRadioGroup',

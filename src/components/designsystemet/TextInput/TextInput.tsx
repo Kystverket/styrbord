@@ -1,5 +1,4 @@
 import { Textfield as DsTextField } from '@digdir/designsystemet-react';
-import classes from './TextInput.module.scss';
 import { InputLabel, InputLabelFieldProps } from '~/main';
 
 export type TextInputMode = 'email' | 'tel' | 'search' | 'text' | 'none' | 'url' | 'numeric' | 'decimal' | undefined;
