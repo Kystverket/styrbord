@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Suggestion, SuggestionProps, SuggestionValue } from './Suggestion';
+import { Suggestion, SuggestionProps } from './Suggestion';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {

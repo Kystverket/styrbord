@@ -1,0 +1,7 @@
+.text {
+  color: var(--ds-color-danger-text-default);
+}
+.icon {
+  color: var(--ds-color-danger-base-default);
+  font-size: 20px;
+}

@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import ErrorLabel, { ErrorLabelProps } from './errorLabel';
-import { Textfield } from '@digdir/designsystemet-react';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {

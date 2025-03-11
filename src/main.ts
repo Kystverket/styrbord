@@ -47,6 +47,9 @@ export type { FooterProps } from './components/kystverket/Footer/Footer';
 export { Header } from './components/kystverket/Header/Header';
 export type { HeaderProps } from './components/kystverket/Header/Header';
 
+export { Datepicker } from './components/kystverket/Datepicker/Datepicker';
+export type { DatepickerProps } from './components/kystverket/Datepicker/Datepicker';
+
 /*
     Komponenter fra Designsystemet
 */
@@ -60,5 +63,17 @@ export type {
   SuggestionValue,
   SuggestionValueType,
 } from './components/designsystemet/Suggestion/Suggestion';
+
+export { TextInput, Textfield } from './components/designsystemet/TextInput/TextInput';
+export type { TextInputProps, TextInputMode } from './components/designsystemet/TextInput/TextInput';
+
+export { NumberInput } from './components/designsystemet/NumberInput/NumberInput';
+export type { NumberInputProps, NumberInputMode } from './components/designsystemet/NumberInput/NumberInput';
+
+export { TextArea } from './components/designsystemet/TextArea/TextArea';
+export type { TextAreaProps, TextAreaMode } from './components/designsystemet/TextArea/TextArea';
+
+export { Select } from './components/designsystemet/Select/Select';
+export type { SelectProps, SelectOption } from './components/designsystemet/Select/Select';
 
 export * from '@digdir/designsystemet-react';

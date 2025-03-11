@@ -1,5 +1,4 @@
 import { EXPERIMENTAL_Suggestion as DsSuggestion } from '@digdir/designsystemet-react';
-import classes from './Suggestion.module.scss';
 import { ErrorLabel, InputLabel, InputLabelFieldProps } from '~/main';
 
 export type SuggestionValueType = string | number;
