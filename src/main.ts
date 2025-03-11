@@ -68,4 +68,7 @@ export type { TextInputProps, TextInputMode } from './components/designsystemet/
 export { NumberInput } from './components/designsystemet/NumberInput/NumberInput';
 export type { NumberInputProps, NumberInputMode } from './components/designsystemet/NumberInput/NumberInput';
 
+export { TextArea } from './components/designsystemet/TextArea/TextArea';
+export type { TextAreaProps, TextAreaMode } from './components/designsystemet/TextArea/TextArea';
+
 export * from '@digdir/designsystemet-react';
