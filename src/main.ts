@@ -71,6 +71,6 @@ export { TextArea } from './components/designsystemet/TextArea/TextArea';
 export type { TextAreaProps, TextAreaMode } from './components/designsystemet/TextArea/TextArea';
 
 export { Select } from './components/designsystemet/Select/Select';
-export type { SelectProps } from './components/designsystemet/Select/Select';
+export type { SelectProps, SelectOption } from './components/designsystemet/Select/Select';
 
 export * from '@digdir/designsystemet-react';
