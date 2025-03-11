@@ -14,9 +14,17 @@ export interface InputLabelProps extends InputLabelFieldProps {
   text?: string | null;
   subText?: ReactNode | string | null;
   children?: ReactNode;
+  embedded?: boolean;
 }
 
-const InputLabel = ({ text, subText, optional = false, required = false, children }: InputLabelProps) => {
+const InputLabel = ({
+  text,
+  subText,
+  optional = false,
+  required = false,
+  embedded = false,
+  children,
+}: InputLabelProps) => {
   if (!text && !children) return null;
 
   if (!text && children)
@@ -32,7 +40,7 @@ const InputLabel = ({ text, subText, optional = false, required = false, childre
   return (
     <label>
       <Box gap={8}>
-        <Box gap={0} mb={children ? 0 : 8}>
+        <Box gap={0} mb={children || embedded ? 0 : 8}>
           <Box horizontal align="start">
             <Label inline size="md" strong>
               {text}
