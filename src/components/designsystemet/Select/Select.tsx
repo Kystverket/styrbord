@@ -1,5 +1,4 @@
 import { Select as DsSelect } from '@digdir/designsystemet-react';
-import classes from './Select.module.scss';
 import { ErrorLabel, InputLabel, InputLabelFieldProps } from '~/main';
 
 export type SelectOption = {
@@ -18,7 +17,7 @@ export type SelectProps = InputLabelFieldProps & {
   options?: SelectOption[];
 };
 
-export const Select = ({ ...props }: SelectProps) => {
+export const Select = (props: SelectProps) => {
   const valueProps = props.value ? { value: props.value } : { defaultValue: '' };
   return (
     <InputLabel text={props.label} required={props.required} optional={props.optional}>

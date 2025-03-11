@@ -76,4 +76,16 @@ export type { TextAreaProps, TextAreaMode } from './components/designsystemet/Te
 export { Select } from './components/designsystemet/Select/Select';
 export type { SelectProps, SelectOption } from './components/designsystemet/Select/Select';
 
-export * from '@digdir/designsystemet-react';
+export { Link } from '@digdir/designsystemet-react';
+export type { LinkProps } from '@digdir/designsystemet-react';
+
+export { Tooltip } from '@digdir/designsystemet-react';
+export type { TooltipProps } from '@digdir/designsystemet-react';
+
+export { Dialog, DialogBlock, DialogTrigger, DialogTriggerContext } from '@digdir/designsystemet-react';
+export type {
+  DialogBlockProps,
+  DialogProps,
+  DialogTriggerContextProps,
+  DialogTriggerProps,
+} from '@digdir/designsystemet-react';
