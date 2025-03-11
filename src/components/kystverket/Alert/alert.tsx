@@ -1,7 +1,7 @@
 import classes from './alert.module.css';
 import React from 'react';
 import typography from '../Typography/typography.module.css';
-import { Title } from '../Typography/typography';
+import { Body, Title } from '../Typography/typography';
 import { getIcon, alertStyle } from './alert.util';
 import { AlertLevel, TextSize, Width } from './alert.types';
 import Icon from '../Icon/icon';
@@ -18,6 +18,17 @@ export interface AlertProps {
   role?: 'status';
   onDismiss?: () => void;
 }
+
+const textSize = (size: TextSize) => {
+  switch (size) {
+    case 'sm':
+      return typography['bodySm'];
+    case 'md':
+      return typography['bodySmStrong'];
+    case 'lg':
+      return typography['bodyLg'];
+  }
+};
 
 const Alert = ({
   level,
@@ -40,14 +51,8 @@ const Alert = ({
               <span role={props.role}>{title}</span>
             </Title>
           )}
-          {text && (
-            <p className={`${classes.textContent} ${size === 'lg' ? typography['body-lg'] : typography['body-md']}`}>
-              {text}
-            </p>
-          )}
-          {props.children && (
-            <div className={size === 'lg' ? typography['body-lg'] : typography['body-md']}>{props.children}</div>
-          )}
+          {text && <Body size={size}>{text}</Body>}
+          {props.children && <div className={textSize(size)}>{props.children}</div>}
         </Box>
       </Box>
       {props.onDismiss ? (
