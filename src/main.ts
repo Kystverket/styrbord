@@ -1,3 +1,4 @@
+import { Textfield } from '@digdir/designsystemet-react';
 import './css/index.scss';
 
 export type { SupportedLanguage, ScreenSize } from './utils/types';
@@ -60,5 +61,14 @@ export type {
   SuggestionValue,
   SuggestionValueType,
 } from './components/designsystemet/Suggestion/Suggestion';
+
+export { TextInput, Textfield } from './components/designsystemet/TextInput/TextInput';
+export type { TextInputProps, TextInputMode } from './components/designsystemet/TextInput/TextInput';
+
+export { NumberInput } from './components/designsystemet/NumberInput/NumberInput';
+export type { NumberInputProps, NumberInputMode } from './components/designsystemet/NumberInput/NumberInput';
+
+export { TextArea } from './components/designsystemet/TextArea/TextArea';
+export type { TextAreaProps, TextAreaMode } from './components/designsystemet/TextArea/TextArea';
 
 export * from '@digdir/designsystemet-react';
