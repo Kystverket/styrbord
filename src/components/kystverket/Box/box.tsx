@@ -38,6 +38,7 @@ export interface BaseBoxProps {
 
 type VerticalBoxProps = BaseBoxProps & {
   horizontal?: false;
+  justify?: 'start' | 'center' | 'end' | 'between' | 'stretch';
 };
 
 type HorizontalBoxProps = BaseBoxProps & {
@@ -98,6 +99,7 @@ const Box = ({
       classList.push(classes.horizontal);
     } else {
       classList.push(classes[`horizontal-${props.horizontal}`]);
+      classList.push(classes[`justify-${props.justify ?? 'start'}`]);
     }
     classList.push(classes[`justify-${props.justify ?? 'start'}`]);
   }

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import classes from './Footer.module.css';
-import { Logo, Body, Box, Link, Title } from '~/main';
+import { Logo, Box, Link, Select, Icon } from '~/main';
 import { SupportedLanguage } from '~/utils/types';
 import { useTranslation } from '~/i18n/translations';
 
@@ -11,47 +11,58 @@ interface LinkToSite {
 
 export interface FooterProps {
   language: SupportedLanguage;
+  contactLinks?: LinkToSite[];
   links?: LinkToSite[];
-  children?: ReactNode;
+  langLinks?: LinkToSite[];
 }
 
-export function Footer({ links = [], children, language }: FooterProps) {
+export function Footer({ links = [], langLinks = [], contactLinks = [], language }: FooterProps) {
   const t = useTranslation(language);
 
   return (
-    <Box color="navy" align="center" className={classes.footer}>
-      <Box horizontal="screen-md" width="container" gap={64} justify="between" px={32} py={48}>
-        <Box grow p={8} show="screen-md">
-          <Logo alt={t('kystverket')} variant="white-vertical" width={220} />
+    <Box color="navy" className={classes.footer} horizontal justify="center" px={32} py={48}>
+      <Box horizontal="screen-md" width="container" gap={32} justify="between">
+        <Box grow p={8} align="center" horizontal justify="center">
+          <Logo alt={t('kystverket')} variant="white-horizontal" width={220} />
         </Box>
-        <Box grow gap={12}>
-          <Title size="lg" level="3">
-            {t('kystverket')}
-          </Title>
-          <Body size="lg">
-            Postboks 1502, 6025 ÅLESUND
-            <br />
-            {t('sentralbord')}: 07847
-            <br />
-            post@kystverket.no
-            <br />
-            <br />
-            {t('organisasjonsnummer')}: 874783242
-            <br />© Kystverket
-          </Body>
-          <Box>
-            {links.map((link, index) => (
-              <Link key={index} href={link.url}>
-                {link.text}
-              </Link>
-            ))}
+
+        <Box horizontal="screen-sm" gap={32}>
+          <Box grow gap={24} justify="center">
+            <Select
+              className={classes.select}
+              width="full"
+              style={{ color: 'red' }}
+              onChange={(e) => {
+                e.preventDefault();
+                window.location.href = e.target.value;
+              }}
+            >
+              <Select.Option disabled>Kontakt oss</Select.Option>
+              {contactLinks.map((link, index) => (
+                <Select.Option key={index} value={link.url}>
+                  <div style={{ color: 'red' }}>{link.text}</div>
+                </Select.Option>
+              ))}
+            </Select>
+            © Kystverket
+          </Box>
+          <Box horizontal="screen-lg" gap={32}>
+            <Box>
+              {links.map((link, index) => (
+                <Link key={index} href={link.url} style={{ textDecoration: 'none' }} className={classes.link}>
+                  <Icon material="arrow_right_alt" aria-hidden className={classes.icon} /> &nbsp;{link.text}
+                </Link>
+              ))}
+            </Box>
+            <Box>
+              {langLinks.map((link, index) => (
+                <Link key={index} href={link.url} style={{ textDecoration: 'none' }} className={classes.link}>
+                  <Icon material="arrow_right_alt" aria-hidden className={classes.icon} /> &nbsp;{link.text}
+                </Link>
+              ))}
+            </Box>
           </Box>
         </Box>
-        {children && (
-          <Box grow gap={12}>
-            {children}
-          </Box>
-        )}
       </Box>
     </Box>
   );
