@@ -16,7 +16,7 @@ export interface DatepickerProps {
   error?: string;
   onBlur?: () => void;
   value: Date | undefined;
-  onChange: (date: Date | undefined) => void;
+  onChange?: (date: Date | undefined) => void;
 }
 
 const CustomInput = (props: HTMLProps<HTMLInputElement>) => {
@@ -31,7 +31,7 @@ export const Datepicker = ({ value, onChange, dateFormat = 'dd.MM.YYYY', ...prop
           locale={'nb'}
           selected={value}
           dateFormat={dateFormat}
-          onChange={(date) => onChange(date ?? undefined)}
+          onChange={(date) => onChange?.(date ?? undefined)}
           customInput={createElement(forwardRef(CustomInput))}
         />
       </ErrorLabel>

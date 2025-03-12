@@ -13,7 +13,7 @@ export interface BorderedRadioGroupProps {
     label: string;
     value: RadioGroupValueType;
   }[];
-  onChange: (value: RadioGroupValueType) => void;
+  onChange?: (value: RadioGroupValueType) => void;
   onBlur?: () => void;
   error?: string | boolean;
 }
@@ -30,7 +30,7 @@ const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
           {props.options.map(({ label, value }) => (
             <button
               onClick={() => {
-                props.onChange(value);
+                props.onChange?.(value);
               }}
               onBlur={() => {
                 props.onBlur?.();

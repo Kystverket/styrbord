@@ -12,7 +12,7 @@ export interface TextAreaProps {
   description?: string;
   value: string | null | undefined;
   onBlur?: () => void;
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
   error?: string | boolean | null;
   disabled?: boolean;
   readOnly?: boolean;

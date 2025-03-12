@@ -15,7 +15,7 @@ export interface SelectProps {
   error?: boolean | string;
   disabled?: boolean;
   onBlur?: () => void;
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
   options?: SelectOption[];
 }
 

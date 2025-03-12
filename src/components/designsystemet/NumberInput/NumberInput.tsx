@@ -11,7 +11,7 @@ export interface NumberInputProps {
   description?: string;
   value: number | null | undefined;
   onBlur?: () => void;
-  onChange: (number?: string) => void;
+  onChange?: (number?: string) => void;
   error?: string | boolean | null;
   disabled?: boolean;
   readOnly?: boolean;
