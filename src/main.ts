@@ -82,6 +82,9 @@ export type { LinkProps } from '@digdir/designsystemet-react';
 export { Tooltip } from '@digdir/designsystemet-react';
 export type { TooltipProps } from '@digdir/designsystemet-react';
 
+export { Checkbox } from '@digdir/designsystemet-react';
+export type { CheckboxProps } from '@digdir/designsystemet-react';
+
 export { Dialog, DialogBlock, DialogTrigger, DialogTriggerContext } from '@digdir/designsystemet-react';
 export type {
   DialogBlockProps,
