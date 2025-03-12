@@ -1,4 +1,5 @@
 import { Textfield as DsTextField } from '@digdir/designsystemet-react';
+import { FC } from 'react';
 import { InputLabel, InputLabelFieldProps } from '~/main';
 
 export type TextAreaMode = 'email' | 'tel' | 'search' | 'text' | 'none' | 'url' | 'numeric' | 'decimal' | undefined;
@@ -21,7 +22,7 @@ export type TextAreaProps = InputLabelFieldProps & {
   rows?: number;
 };
 
-export const TextArea = ({ className, ...props }: TextAreaProps) => {
+export const TextArea: FC<TextAreaProps> = ({ className, ...props }) => {
   return (
     <DsTextField
       className={className}

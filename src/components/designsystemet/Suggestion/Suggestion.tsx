@@ -1,4 +1,5 @@
 import { EXPERIMENTAL_Suggestion as DsSuggestion } from '@digdir/designsystemet-react';
+import { FC } from 'react';
 import { ErrorLabel, InputLabel, InputLabelFieldProps } from '~/main';
 
 export type SuggestionValueType = string | number;
@@ -27,7 +28,7 @@ export type SuggestionProps = InputLabelFieldProps & {
       }) => boolean);
 };
 
-export const Suggestion = ({ ...props }: SuggestionProps) => {
+export const Suggestion: FC = ({ ...props }: SuggestionProps) => {
   return (
     <InputLabel text={props.label} required={props.required} optional={props.optional}>
       <ErrorLabel text={typeof props.error === 'string' ? props.error : null}>
