@@ -1,5 +1,6 @@
 import { Button as DsButton, ButtonProps as DsButtonProps } from '@digdir/designsystemet-react';
 import classes from './Button.module.scss';
+import { FC } from 'react';
 
 export type ButtonProps = {
   variant?: 'filled' | 'subtle' | 'outline' | 'ghost' | 'dashed';
@@ -10,7 +11,7 @@ export type ButtonProps = {
   target?: string;
 } & Omit<DsButtonProps, 'variant' | 'data-color' | 'data-size'>;
 
-export const Button = ({
+export const Button: FC<ButtonProps> = ({
   variant = 'outline',
   color = 'accent',
   size = 'md',
@@ -18,7 +19,7 @@ export const Button = ({
   href = undefined,
   target = '_blank',
   ...props
-}: ButtonProps) => {
+}) => {
   const propsToOverride: DsButtonProps = { ...props };
 
   switch (variant) {

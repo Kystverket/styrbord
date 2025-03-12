@@ -1,25 +1,25 @@
 import { Textfield as DsTextField } from '@digdir/designsystemet-react';
-import { InputLabel, InputLabelFieldProps } from '~/main';
-
-export type TextAreaMode = 'email' | 'tel' | 'search' | 'text' | 'none' | 'url' | 'numeric' | 'decimal' | undefined;
+import { InputLabel } from '~/main';
 
 export const Textfield = null;
 
-export type TextAreaProps = InputLabelFieldProps & {
+export interface TextAreaProps {
+  optional?: boolean | string | undefined;
+  required?: boolean | string | undefined;
   className?: string;
   placeholder?: string;
   label?: string;
   description?: string;
   value: string | null | undefined;
   onBlur?: () => void;
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
   error?: string | boolean | null;
   disabled?: boolean;
   readOnly?: boolean;
-  inputMode?: TextAreaMode;
+  inputMode?: 'email' | 'tel' | 'search' | 'text' | 'none' | 'url' | 'numeric' | 'decimal';
   maxLength?: number;
   rows?: number;
-};
+}
 
 export const TextArea = ({ className, ...props }: TextAreaProps) => {
   return (

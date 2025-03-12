@@ -22,7 +22,7 @@ export type { ErrorLabelProps as ErrorLabelProps } from './components/kystverket
 export type { ErrorLabelProps as ErrorLabelWrapperProps } from './components/kystverket/ErrorLabel/errorLabel';
 
 export { default as InputLabel } from './components/kystverket/InputLabel/inputLabel';
-export type { InputLabelProps, InputLabelFieldProps } from './components/kystverket/InputLabel/inputLabel';
+export type { InputLabelProps } from './components/kystverket/InputLabel/inputLabel';
 
 export { default as Icon } from './components/kystverket/Icon/icon';
 
@@ -65,15 +65,30 @@ export type {
 } from './components/designsystemet/Suggestion/Suggestion';
 
 export { TextInput, Textfield } from './components/designsystemet/TextInput/TextInput';
-export type { TextInputProps, TextInputMode } from './components/designsystemet/TextInput/TextInput';
+export type { TextInputProps } from './components/designsystemet/TextInput/TextInput';
 
 export { NumberInput } from './components/designsystemet/NumberInput/NumberInput';
-export type { NumberInputProps, NumberInputMode } from './components/designsystemet/NumberInput/NumberInput';
+export type { NumberInputProps } from './components/designsystemet/NumberInput/NumberInput';
 
 export { TextArea } from './components/designsystemet/TextArea/TextArea';
-export type { TextAreaProps, TextAreaMode } from './components/designsystemet/TextArea/TextArea';
+export type { TextAreaProps } from './components/designsystemet/TextArea/TextArea';
 
 export { Select } from './components/designsystemet/Select/Select';
 export type { SelectProps, SelectOption } from './components/designsystemet/Select/Select';
 
-export * from '@digdir/designsystemet-react';
+export { Link } from '@digdir/designsystemet-react';
+export type { LinkProps } from '@digdir/designsystemet-react';
+
+export { Tooltip } from '@digdir/designsystemet-react';
+export type { TooltipProps } from '@digdir/designsystemet-react';
+
+export { Checkbox } from '@digdir/designsystemet-react';
+export type { CheckboxProps } from '@digdir/designsystemet-react';
+
+export { Dialog, DialogBlock, DialogTrigger, DialogTriggerContext } from '@digdir/designsystemet-react';
+export type {
+  DialogBlockProps,
+  DialogProps,
+  DialogTriggerContextProps,
+  DialogTriggerProps,
+} from '@digdir/designsystemet-react';

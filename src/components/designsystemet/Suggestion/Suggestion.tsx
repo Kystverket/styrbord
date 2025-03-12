@@ -1,5 +1,5 @@
 import { EXPERIMENTAL_Suggestion as DsSuggestion } from '@digdir/designsystemet-react';
-import { ErrorLabel, InputLabel, InputLabelFieldProps } from '~/main';
+import { ErrorLabel, InputLabel } from '~/main';
 
 export type SuggestionValueType = string | number;
 
@@ -8,12 +8,14 @@ export type SuggestionValue = {
   label?: string;
 };
 
-export type SuggestionProps = InputLabelFieldProps & {
+export interface SuggestionProps {
+  optional?: boolean | string | undefined;
+  required?: boolean | string | undefined;
   label?: string;
   value?: SuggestionValueType;
   error?: boolean | string;
   disabled?: boolean;
-  onBlur?: () => undefined;
+  onBlur?: () => void;
   onChange?: (value: SuggestionValueType) => undefined;
   options?: SuggestionValue[];
   filter?:
@@ -25,13 +27,18 @@ export type SuggestionProps = InputLabelFieldProps & {
         optionElement: HTMLOptionElement;
         input: HTMLInputElement;
       }) => boolean);
-};
+}
 
 export const Suggestion = ({ ...props }: SuggestionProps) => {
   return (
     <InputLabel text={props.label} required={props.required} optional={props.optional}>
       <ErrorLabel text={typeof props.error === 'string' ? props.error : null}>
-        <DsSuggestion filter={props.filter} onBlur={props.onBlur?.()}>
+        <DsSuggestion
+          filter={props.filter}
+          onBlur={() => {
+            props.onBlur?.();
+          }}
+        >
           <DsSuggestion.Input
             value={props.value}
             disabled={props.disabled}

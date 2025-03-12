@@ -1,27 +1,27 @@
 import { Textfield } from '@digdir/designsystemet-react';
 import classes from './NumberInput.module.scss';
-import { InputLabel, InputLabelFieldProps } from '~/main';
+import { InputLabel } from '~/main';
 
-export type NumberInputMode = 'tel' | 'numeric' | 'decimal' | undefined;
-
-export type NumberInputProps = InputLabelFieldProps & {
+export interface NumberInputProps {
+  optional?: boolean | string | undefined;
+  required?: boolean | string | undefined;
   className?: string;
   placeholder?: string;
   label?: string;
   description?: string;
   value: number | null | undefined;
   onBlur?: () => void;
-  onChange: (number?: string) => void;
+  onChange?: (value?: number) => void;
   error?: string | boolean | null;
   disabled?: boolean;
   readOnly?: boolean;
-  inputMode?: NumberInputMode;
+  inputMode?: 'tel' | 'numeric' | 'decimal';
   prefix?: string;
   suffix?: string;
   min?: number;
   max?: number;
   align?: 'left' | 'right';
-};
+}
 
 export const NumberInput = ({ className, align = 'left', ...props }: NumberInputProps) => {
   return (
@@ -42,7 +42,7 @@ export const NumberInput = ({ className, align = 'left', ...props }: NumberInput
       value={props.value ?? ''}
       onBlur={props.onBlur}
       onChange={(event) => {
-        props.onChange?.(event.target.value);
+        props.onChange?.(event.target.value ? parseFloat(event.target.value) : undefined);
       }}
       inputMode={props.inputMode}
       error={props.error}
