@@ -11,7 +11,7 @@ export interface NumberInputProps {
   description?: string;
   value: number | null | undefined;
   onBlur?: () => void;
-  onChange?: (number?: string) => void;
+  onChange?: (value?: number) => void;
   error?: string | boolean | null;
   disabled?: boolean;
   readOnly?: boolean;
@@ -42,7 +42,7 @@ export const NumberInput = ({ className, align = 'left', ...props }: NumberInput
       value={props.value ?? ''}
       onBlur={props.onBlur}
       onChange={(event) => {
-        props.onChange?.(event.target.value);
+        props.onChange?.(event.target.value ? parseFloat(event.target.value) : undefined);
       }}
       inputMode={props.inputMode}
       error={props.error}
