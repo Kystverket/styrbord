@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useArgs } from '@storybook/preview-api';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
-import BorderedToggleGroup, { BorderedToggleGroupProps, ToggleValue } from './borderedToggleGroup';
-import { Box } from '~/main';
+import BorderedToggleGroup, { BorderedToggleGroupProps } from './borderedToggleGroup';
 
 const meta = {
   title: 'Components/BorderedToggleGroup',

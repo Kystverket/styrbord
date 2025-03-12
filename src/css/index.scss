@@ -2,6 +2,7 @@
 
 @layer reset {
   @include meta.load-css('reset');
+  @include meta.load-css('react-datepicker/dist/react-datepicker.css');
 }
 
 @layer dsno {
@@ -21,7 +22,9 @@
   @include meta.load-css('styrbord');
   @include meta.load-css('../components/designsystemet/Link/Link.override.scss');
   @include meta.load-css('../components/designsystemet/Button/Button.override.scss');
-  @include meta.load-css('../components/designsystemet/Textfield/Textfield.override.scss');
+  @include meta.load-css('../components/designsystemet/TextInput/TextInput.override.scss');
+  @include meta.load-css('../components/designsystemet/NumberInput/NumberInput.override.scss');
+  @include meta.load-css('../components/designsystemet/TextArea/TextArea.override.scss');
 }
 
 @layer reset, dsno, kyvtokens, kyvtokenstodesignsystemet, styrbord;

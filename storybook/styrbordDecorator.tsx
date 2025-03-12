@@ -1,8 +1,7 @@
-/* eslint-disable import/extensions */
-import { StoryFn } from '@storybook/react';
+import { PartialStoryFn } from '@storybook/types';
 import 'material-symbols';
 
-const StyrbordDecorator = (Story: StoryFn) => (
+const StyrbordDecorator = (Story: PartialStoryFn) => (
   <div>
     <Story />
   </div>
