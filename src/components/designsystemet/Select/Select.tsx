@@ -1,6 +1,6 @@
 import { Select as DsSelect } from '@digdir/designsystemet-react';
 import { FC } from 'react';
-import { ErrorLabel, InputLabel, InputLabelFieldProps } from '~/main';
+import { InputLabelFieldProps, InputLabel, ErrorLabel } from '~/main';
 
 export type SelectOption = {
   value: string;

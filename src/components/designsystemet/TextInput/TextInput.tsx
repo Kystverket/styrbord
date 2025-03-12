@@ -2,8 +2,6 @@ import { Textfield as DsTextField } from '@digdir/designsystemet-react';
 import { FC } from 'react';
 import { InputLabel, InputLabelFieldProps } from '~/main';
 
-export type TextInputMode = 'email' | 'tel' | 'search' | 'text' | 'none' | 'url' | 'numeric' | 'decimal' | undefined;
-
 export const Textfield = null;
 
 export type TextInputProps = InputLabelFieldProps & {
@@ -17,7 +15,7 @@ export type TextInputProps = InputLabelFieldProps & {
   error?: string | boolean | null;
   disabled?: boolean;
   readOnly?: boolean;
-  inputMode?: TextInputMode;
+  inputMode?: 'email' | 'tel' | 'search' | 'text' | 'none' | 'url' | 'numeric' | 'decimal';
   prefix?: string;
   suffix?: string;
   type?: 'email' | 'hidden' | 'password' | 'tel' | 'text' | 'time' | 'url';

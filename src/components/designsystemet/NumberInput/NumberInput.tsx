@@ -3,8 +3,6 @@ import classes from './NumberInput.module.scss';
 import { InputLabel, InputLabelFieldProps } from '~/main';
 import { FC } from 'react';
 
-export type NumberInputMode = 'tel' | 'numeric' | 'decimal' | undefined;
-
 export type NumberInputProps = InputLabelFieldProps & {
   className?: string;
   placeholder?: string;
@@ -16,7 +14,7 @@ export type NumberInputProps = InputLabelFieldProps & {
   error?: string | boolean | null;
   disabled?: boolean;
   readOnly?: boolean;
-  inputMode?: NumberInputMode;
+  inputMode?: 'tel' | 'numeric' | 'decimal';
   prefix?: string;
   suffix?: string;
   min?: number;
