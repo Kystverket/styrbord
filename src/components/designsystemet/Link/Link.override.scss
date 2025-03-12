@@ -3,6 +3,7 @@
   --dsc-link-color--active: var(--ds-color-accent-text-default);
   --dsc-link-color--focus: var(--ds-color-accent-text-default);
 
+
   --dsc-link-background--active: var(--ds-color-accent-surface-default);
   --dsc-link-background--focus: var(--ds-color-accent-surface-default);
 
@@ -12,3 +13,8 @@
   text-underline-offset: var(--link-underline-offset);
   border-radius: var(--ds-border-radius-base);
 }
+
+.ds-link:visited{
+  color: var(--ds-color-accent-text-subtle);
+}
+
