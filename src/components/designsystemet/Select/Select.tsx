@@ -11,7 +11,7 @@ export interface SelectProps {
   required?: boolean | string | undefined;
   label?: string;
   value?: string;
-  placeholder: string;
+  placeholder?: string;
   error?: boolean | string;
   disabled?: boolean;
   onBlur?: () => void;
