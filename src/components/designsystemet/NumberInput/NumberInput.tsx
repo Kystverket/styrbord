@@ -1,10 +1,8 @@
 import { Textfield } from '@digdir/designsystemet-react';
 import classes from './NumberInput.module.scss';
-import { InputLabel } from '~/main';
+import { InputLabel, InputLabelFieldProps } from '~/main';
 
-export interface NumberInputProps {
-  optional?: boolean | string | undefined;
-  required?: boolean | string | undefined;
+export interface NumberInputProps extends InputLabelFieldProps {
   className?: string;
   placeholder?: string;
   label?: string;
