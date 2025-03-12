@@ -1,5 +1,4 @@
 import { Select as DsSelect } from '@digdir/designsystemet-react';
-import { FC } from 'react';
 import { InputLabelFieldProps, InputLabel, ErrorLabel } from '~/main';
 
 export type SelectOption = {
@@ -7,7 +6,7 @@ export type SelectOption = {
   label?: string;
 };
 
-export type SelectProps = InputLabelFieldProps & {
+export interface SelectProps extends InputLabelFieldProps {
   label?: string;
   value?: string;
   placeholder: string;
@@ -16,9 +15,9 @@ export type SelectProps = InputLabelFieldProps & {
   onBlur?: () => undefined;
   onChange: (value: string) => void;
   options?: SelectOption[];
-};
+}
 
-export const Select: FC<SelectProps> = (props) => {
+export const Select = ({ ...props }: SelectProps) => {
   const valueProps = props.value ? { value: props.value } : { defaultValue: '' };
 
   return (

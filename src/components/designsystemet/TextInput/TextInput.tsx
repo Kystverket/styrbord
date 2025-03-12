@@ -3,7 +3,7 @@ import { InputLabel, InputLabelFieldProps } from '~/main';
 
 export const Textfield = null;
 
-export type TextInputProps = InputLabelFieldProps & {
+export interface TextInputProps extends InputLabelFieldProps {
   className?: string;
   placeholder?: string;
   label?: string;

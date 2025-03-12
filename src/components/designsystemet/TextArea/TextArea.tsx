@@ -1,10 +1,9 @@
 import { Textfield as DsTextField } from '@digdir/designsystemet-react';
-import { FC } from 'react';
 import { InputLabel, InputLabelFieldProps } from '~/main';
 
 export const Textfield = null;
 
-export type TextAreaProps = InputLabelFieldProps & {
+export interface TextAreaProps extends InputLabelFieldProps {
   className?: string;
   placeholder?: string;
   label?: string;
@@ -18,9 +17,9 @@ export type TextAreaProps = InputLabelFieldProps & {
   inputMode?: 'email' | 'tel' | 'search' | 'text' | 'none' | 'url' | 'numeric' | 'decimal';
   maxLength?: number;
   rows?: number;
-};
+}
 
-export const TextArea: FC<TextAreaProps> = ({ className, ...props }): React.JSX.Element => {
+export const TextArea = ({ className, ...props }: TextAreaProps) => {
   return (
     <DsTextField
       className={className}
