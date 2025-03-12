@@ -12,7 +12,7 @@ export interface SelectProps extends InputLabelFieldProps {
   placeholder: string;
   error?: boolean | string;
   disabled?: boolean;
-  onBlur?: () => undefined;
+  onBlur?: () => void;
   onChange: (value: string) => void;
   options?: SelectOption[];
 }
@@ -26,7 +26,9 @@ export const Select = ({ ...props }: SelectProps) => {
         <DsSelect
           width="full"
           onChange={(event) => props.onChange?.(event.target.value)}
-          onBlur={props.onBlur?.()}
+          onBlur={() => {
+            props.onBlur?.();
+          }}
           {...valueProps}
         >
           {props.placeholder && (

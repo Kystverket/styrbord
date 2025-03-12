@@ -13,7 +13,7 @@ export interface SuggestionProps extends InputLabelFieldProps {
   value?: SuggestionValueType;
   error?: boolean | string;
   disabled?: boolean;
-  onBlur?: () => undefined;
+  onBlur?: () => void;
   onChange?: (value: SuggestionValueType) => undefined;
   options?: SuggestionValue[];
   filter?:
@@ -31,7 +31,12 @@ export const Suggestion = ({ ...props }: SuggestionProps) => {
   return (
     <InputLabel text={props.label} required={props.required} optional={props.optional}>
       <ErrorLabel text={typeof props.error === 'string' ? props.error : null}>
-        <DsSuggestion filter={props.filter} onBlur={props.onBlur?.()}>
+        <DsSuggestion
+          filter={props.filter}
+          onBlur={() => {
+            props.onBlur?.();
+          }}
+        >
           <DsSuggestion.Input
             value={props.value}
             disabled={props.disabled}
