@@ -20,7 +20,7 @@ export type TextAreaProps = InputLabelFieldProps & {
   rows?: number;
 };
 
-export const TextArea: FC<TextAreaProps> = ({ className, ...props }) => {
+export const TextArea: FC<TextAreaProps> = ({ className, ...props }): React.JSX.Element => {
   return (
     <DsTextField
       className={className}

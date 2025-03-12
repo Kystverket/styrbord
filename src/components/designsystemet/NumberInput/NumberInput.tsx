@@ -22,7 +22,7 @@ export type NumberInputProps = InputLabelFieldProps & {
   align?: 'left' | 'right';
 };
 
-export const NumberInput: FC<NumberInputProps> = ({ className, align = 'left', ...props }) => {
+export const NumberInput = ({ className, align = 'left', ...props }: NumberInputProps) => {
   return (
     <Textfield
       className={[className, classes['align-' + align]].join(' ')}
