@@ -1,9 +1,10 @@
 import { Textfield } from '@digdir/designsystemet-react';
 import classes from './NumberInput.module.scss';
-import { InputLabel, InputLabelFieldProps } from '~/main';
-import { FC } from 'react';
+import { InputLabel } from '~/main';
 
-export type NumberInputProps = InputLabelFieldProps & {
+export interface NumberInputProps {
+  optional?: boolean | string | undefined;
+  required?: boolean | string | undefined;
   className?: string;
   placeholder?: string;
   label?: string;
@@ -20,7 +21,7 @@ export type NumberInputProps = InputLabelFieldProps & {
   min?: number;
   max?: number;
   align?: 'left' | 'right';
-};
+}
 
 export const NumberInput = ({ className, align = 'left', ...props }: NumberInputProps) => {
   return (
