@@ -1,49 +1,40 @@
 .footer a {
   color: white;
-
 }
 .footer a:hover {
   color: var(--color-accent-text-subtle);
-
 }
 
-.link{
-display: flex;
-align-items: center;
-
+.link {
+  display: flex;
+  align-items: center;
 }
 
-.icon{
-  color: #FF7255 !important;
+.icon {
+  color: #ff7255 !important;
 }
 
-.select{
+.select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-          
-  background-color: transparent ;
+
+  background-color: transparent;
   border-color: var(--color-accent-border-default);
-  color: white!important;
+  color: white !important;
   min-width: 208px;
-   background: url(keyboard_arrow_down.svg) right 8px center no-repeat;
+  background: url(keyboard_arrow_down.svg) right 8px center no-repeat;
 }
 
-select:hover{
+select:hover {
   border-color: var(--color-accent-border-hover);
 }
 
-.selectOption{
-  color: var(--color-accent-text-default)!important;
+.selectOption {
+  color: var(--color-accent-text-default) !important;
 }
 
-
-.logo{
+.logo {
   min-width: 276px;
   max-width: 332px;
 }
-
-
-
-
-

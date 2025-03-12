@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Footer, FooterProps } from '~/components/kystverket/Footer/Footer';
-import { Box, Link, Title } from '~/main';
 
 const meta = {
   title: 'Page/Footer',
@@ -66,4 +65,3 @@ export const WithContactLinks: Story = {
     ],
   },
 };
-

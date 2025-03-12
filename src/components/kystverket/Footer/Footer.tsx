@@ -1,8 +1,8 @@
-import { ReactNode } from 'react';
 import classes from './Footer.module.css';
-import { Logo, Box, Link, Select, Icon } from '~/main';
+import { Logo, Box, Link, Icon } from '~/main';
 import { SupportedLanguage } from '~/utils/types';
 import { useTranslation } from '~/i18n/translations';
+import { Select } from '@digdir/designsystemet-react';
 
 interface LinkToSite {
   text: string;
