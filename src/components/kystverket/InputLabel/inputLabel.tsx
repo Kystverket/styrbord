@@ -3,14 +3,9 @@ import style from './inputLabel.module.css';
 import { Body, Label } from '../Typography/typography';
 import Box from '../Box/box';
 
-type InputLabelFieldTag = boolean | string | undefined;
-
-export interface InputLabelFieldProps {
-  optional?: InputLabelFieldTag;
-  required?: InputLabelFieldTag;
-}
-
-export interface InputLabelProps extends InputLabelFieldProps {
+export interface InputLabelProps {
+  optional?: boolean | string | undefined;
+  required?: boolean | string | undefined;
   text?: string | null;
   subText?: ReactNode | string | null;
   children?: ReactNode;

@@ -1,13 +1,15 @@
 import { createElement, forwardRef, HTMLProps } from 'react';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import { Input } from '@digdir/designsystemet-react';
-import { ErrorLabel, InputLabel, InputLabelFieldProps } from '~/main';
+import { ErrorLabel, InputLabel } from '~/main';
 
 import { nb } from 'date-fns/locale/nb';
 
 registerLocale('nb', nb);
 
-export interface DatepickerProps extends InputLabelFieldProps {
+export interface DatepickerProps {
+  optional?: boolean | string | undefined;
+  required?: boolean | string | undefined;
   label: string;
   dateFormat?: string;
   description?: string;

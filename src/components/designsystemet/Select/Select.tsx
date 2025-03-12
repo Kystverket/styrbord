@@ -1,12 +1,14 @@
 import { Select as DsSelect } from '@digdir/designsystemet-react';
-import { InputLabelFieldProps, InputLabel, ErrorLabel } from '~/main';
+import { InputLabel, ErrorLabel } from '~/main';
 
 export type SelectOption = {
   value: string;
   label?: string;
 };
 
-export interface SelectProps extends InputLabelFieldProps {
+export interface SelectProps {
+  optional?: boolean | string | undefined;
+  required?: boolean | string | undefined;
   label?: string;
   value?: string;
   placeholder: string;

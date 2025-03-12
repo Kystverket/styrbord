@@ -22,7 +22,7 @@ export type { ErrorLabelProps as ErrorLabelProps } from './components/kystverket
 export type { ErrorLabelProps as ErrorLabelWrapperProps } from './components/kystverket/ErrorLabel/errorLabel';
 
 export { default as InputLabel } from './components/kystverket/InputLabel/inputLabel';
-export type { InputLabelProps, InputLabelFieldProps } from './components/kystverket/InputLabel/inputLabel';
+export type { InputLabelProps } from './components/kystverket/InputLabel/inputLabel';
 
 export { default as Icon } from './components/kystverket/Icon/icon';
 

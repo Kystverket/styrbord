@@ -1,5 +1,5 @@
 import { EXPERIMENTAL_Suggestion as DsSuggestion } from '@digdir/designsystemet-react';
-import { ErrorLabel, InputLabel, InputLabelFieldProps } from '~/main';
+import { ErrorLabel, InputLabel } from '~/main';
 
 export type SuggestionValueType = string | number;
 
@@ -8,7 +8,9 @@ export type SuggestionValue = {
   label?: string;
 };
 
-export interface SuggestionProps extends InputLabelFieldProps {
+export interface SuggestionProps {
+  optional?: boolean | string | undefined;
+  required?: boolean | string | undefined;
   label?: string;
   value?: SuggestionValueType;
   error?: boolean | string;

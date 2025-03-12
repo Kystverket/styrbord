@@ -1,9 +1,11 @@
 import { Textfield as DsTextField } from '@digdir/designsystemet-react';
-import { InputLabel, InputLabelFieldProps } from '~/main';
+import { InputLabel } from '~/main';
 
 export const Textfield = null;
 
-export interface TextInputProps extends InputLabelFieldProps {
+export interface TextInputProps {
+  optional?: boolean | string | undefined;
+  required?: boolean | string | undefined;
   className?: string;
   placeholder?: string;
   label?: string;
