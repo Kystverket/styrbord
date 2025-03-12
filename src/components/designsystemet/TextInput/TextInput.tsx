@@ -20,7 +20,7 @@ export interface TextInputProps {
   prefix?: string;
   suffix?: string;
   type?: 'email' | 'hidden' | 'password' | 'tel' | 'text' | 'time' | 'url';
-};
+}
 
 export const TextInput = ({ type = 'text', className, ...props }: TextInputProps) => {
   return (

@@ -6,9 +6,9 @@ import { useState } from 'react';
 const Wrapper = (props: DatepickerProps) => {
   const [value, setValue] = useState<Date | undefined>(props.value);
 
-  const onChange = (value: Date | undefined) => {
-    setValue(value);
-    props.onChange(value);
+  const onChange = (v: Date | undefined) => {
+    setValue(v);
+    props.onChange?.(v);
   };
 
   return <Datepicker {...props} value={value} onChange={onChange} />;
