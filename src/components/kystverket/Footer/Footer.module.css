@@ -6,11 +6,6 @@
   color: var(--color-accent-text-subtle);
 
 }
-.footer a:focus {
-  background: black;
-  color: white;
-
-}
 
 .link{
 display: flex;
@@ -19,20 +14,36 @@ align-items: center;
 }
 
 .icon{
-  color: var(--color-brand2-text-subtle) !important;
+  color: #FF7255 !important;
 }
 
 .select{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+          
   background-color: transparent ;
   border-color: var(--color-accent-border-default);
-color: white !important;
-min-width: 208px;
+  color: white!important;
+  min-width: 208px;
+   background: url(keyboard_arrow_down.svg) right 8px center no-repeat;
 }
+
+select:hover{
+  border-color: var(--color-accent-border-hover);
+}
+
+.selectOption{
+  color: var(--color-accent-text-default)!important;
+}
+
 
 .logo{
   min-width: 276px;
   max-width: 332px;
 }
+
+
 
 
 

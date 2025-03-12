@@ -27,14 +27,6 @@ const defaultProps: FooterProps = {
     { text: 'Personvernerklæring', url: 'https://www.kystverket.no/om-kystverket/kystverkets-personvernerklaring/' },
     { text: 'Lisenserklæring', url: '#' },
   ],
-  contactLinks: [
-    {
-      text: 'Tilgjengelighetserklæring',
-      url: 'https://uustatus.no/nb/erklaringer/publisert/5e6d4b9f-7e58-407d-aee1-9d949ef46b16',
-    },
-    { text: 'Personvernerklæring', url: 'https://www.kystverket.no/om-kystverket/kystverkets-personvernerklaring/' },
-    { text: 'Lisenserklæring', url: '#' },
-  ],
 };
 
 export const Default: Story = {
@@ -53,3 +45,25 @@ export const WithLanguageLinks: Story = {
     ],
   },
 };
+
+export const WithContactLinks: Story = {
+  args: {
+    ...defaultProps,
+    langLinks: [
+      {
+        text: 'Nynorsk',
+        url: 'https://uustatus.no/nb/erklaringer/publisert/5e6d4b9f-7e58-407d-aee1-9d949ef46b16',
+      },
+      { text: 'Engelsk', url: 'https://www.kystverket.no/om-kystverket/kystverkets-personvernerklaring/' },
+    ],
+    contactLinks: [
+      {
+        text: 'Tilgjengelighetserklæring',
+        url: 'https://uustatus.no/nb/erklaringer/publisert/5e6d4b9f-7e58-407d-aee1-9d949ef46b16',
+      },
+      { text: 'Personvernerklæring', url: 'https://www.kystverket.no/om-kystverket/kystverkets-personvernerklaring/' },
+      { text: 'Lisenserklæring', url: '#' },
+    ],
+  },
+};
+

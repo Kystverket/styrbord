@@ -9,6 +9,18 @@ interface LinkToSite {
   url: string;
 }
 
+const defaultContactLinks: LinkToSite[] = [
+  {
+    text: 'Kontakt Kystverket',
+    url: 'https://www.kystverket.no/kontakt-oss/',
+  },
+  { text: 'Lostjenesten', url: 'https://www.kystverket.no/kontakt-oss/los/' },
+  { text: 'Kontakt farledsbevistjenesten', url: 'https://www.kystverket.no/kontakt-oss/farledsbevistjenesten/' },
+  { text: 'Sjøtrafikksentralen', url: 'https://www.kystverket.no/kontakt-oss/sjotrafikksentralene/' },
+  { text: 'Presse', url: 'https://www.kystverket.no/kontakt-oss/presse/' },
+  { text: 'Arealplanlegging', url: 'https://www.kystverket.no/kontakt-oss/arealplan/' },
+];
+
 export interface FooterProps {
   language: SupportedLanguage;
   contactLinks?: LinkToSite[];
@@ -16,7 +28,7 @@ export interface FooterProps {
   langLinks?: LinkToSite[];
 }
 
-export function Footer({ links = [], langLinks = [], contactLinks = [], language }: FooterProps) {
+export function Footer({ links = [], langLinks = [], language, contactLinks }: FooterProps) {
   const t = useTranslation(language);
 
   return (
@@ -29,6 +41,7 @@ export function Footer({ links = [], langLinks = [], contactLinks = [], language
         <Box horizontal="screen-sm" gap={32}>
           <Box grow gap={24} justify="center">
             <Select
+              defaultValue=""
               className={classes.select}
               width="full"
               style={{ color: 'red' }}
@@ -37,24 +50,32 @@ export function Footer({ links = [], langLinks = [], contactLinks = [], language
                 window.location.href = e.target.value;
               }}
             >
-              <Select.Option disabled>Kontakt oss</Select.Option>
-              {contactLinks.map((link, index) => (
-                <Select.Option key={index} value={link.url}>
-                  <div style={{ color: 'red' }}>{link.text}</div>
-                </Select.Option>
-              ))}
+              <Select.Option disabled value="" className={classes.defaultSelectOption}>
+                Kontakt oss
+              </Select.Option>
+              {contactLinks
+                ? contactLinks.map((link: LinkToSite, index: number) => (
+                    <Select.Option key={index} value={link.url} className={classes.selectOption}>
+                      <Box> {link.text}</Box>
+                    </Select.Option>
+                  ))
+                : defaultContactLinks.map((link: LinkToSite, index: number) => (
+                    <Select.Option key={index} value={link.url} className={classes.selectOption}>
+                      <Box> {link.text}</Box>
+                    </Select.Option>
+                  ))}
             </Select>
             © Kystverket
           </Box>
           <Box horizontal="screen-lg" gap={32}>
-            <Box>
+            <Box gap={8}>
               {links.map((link, index) => (
                 <Link key={index} href={link.url} style={{ textDecoration: 'none' }} className={classes.link}>
                   <Icon material="arrow_right_alt" aria-hidden className={classes.icon} /> &nbsp;{link.text}
                 </Link>
               ))}
             </Box>
-            <Box>
+            <Box gap={8}>
               {langLinks.map((link, index) => (
                 <Link key={index} href={link.url} style={{ textDecoration: 'none' }} className={classes.link}>
                   <Icon material="arrow_right_alt" aria-hidden className={classes.icon} /> &nbsp;{link.text}
