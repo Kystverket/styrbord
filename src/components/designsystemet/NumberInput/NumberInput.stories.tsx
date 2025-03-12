@@ -16,7 +16,7 @@ type Story = StoryObj<typeof meta>;
 
 const defaultArgs: NumberInputProps = {
   onBlur: () => console.log('onBlur'),
-  onChange: (value?: string) => console.log(`onChange value: ${value}`),
+  onChange: (value?: number) => console.log(`onChange value: ${value}`),
   value: 0,
   label: 'This is a label',
 };
