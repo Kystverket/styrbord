@@ -1,14 +1,40 @@
 .footer a {
-  color: #a9c5ff;
-  text-decoration: underline;
-  text-underline-offset: var(--link-underline-offset);
+  color: white;
 }
 .footer a:hover {
-  color: white;
-  text-decoration-color: white;
+  color: var(--color-accent-text-subtle);
 }
-.footer a:focus {
-  background: black;
-  color: white;
-  text-decoration-color: white;
+
+.link {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  color: #ff7255 !important;
+}
+
+.select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  background-color: transparent;
+  border-color: var(--color-accent-border-default);
+  color: white !important;
+  min-width: 208px;
+  background: url(keyboard_arrow_down.svg) right 8px center no-repeat;
+}
+
+select:hover {
+  border-color: var(--color-accent-border-hover);
+}
+
+.selectOption {
+  color: var(--color-accent-text-default) !important;
+}
+
+.logo {
+  min-width: 276px;
+  max-width: 332px;
 }
