@@ -12,3 +12,7 @@
   text-underline-offset: var(--link-underline-offset);
   border-radius: var(--ds-border-radius-base);
 }
+
+.ds-link:visited {
+  color: var(--ds-color-accent-text-subtle);
+}
