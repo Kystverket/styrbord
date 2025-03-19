@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Select, SelectProps, SelectOption } from './Select';
+import { Select, SelectProps } from './Select';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
