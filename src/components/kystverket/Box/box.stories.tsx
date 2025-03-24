@@ -189,6 +189,10 @@ export const Colors: Story = {
         <Box color="navy" p={32} radius="lg">
           navy
         </Box>
+
+        <Box color="neutral" border="lg" subtle p={32} radius="lg">
+          neutral subtle
+        </Box>
       </Box>
     ),
   },

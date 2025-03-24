@@ -33,41 +33,48 @@ export function Footer({ links = [], langLinks = [], language, contactLinks }: F
 
   return (
     <Box color="navy" className={classes.footer} horizontal justify="center" px={32} py={48}>
-      <Box horizontal="screen-md" width="container" gap={32} justify="between">
-        <Box grow p={8} align="center" horizontal justify="center">
+      <Box horizontal="screen-lg" width="full" gap={32} justify="between" className={classes.footerContainer}>
+        <Box grow align="center" horizontal justify="center" className={classes.logo}>
           <Logo alt={t('kystverket')} variant="white-horizontal" width={220} />
         </Box>
 
-        <Box horizontal="screen-sm" gap={32}>
-          <Box grow gap={24} justify="center">
+        <Box
+          grow
+          horizontal="screen-sm"
+          gap={32}
+          width="full"
+          justify="center"
+          align="center"
+          className={classes.footerContent}
+        >
+          <Box gap={24} justify="center">
             <Select
               defaultValue=""
               className={classes.select}
               width="full"
-              style={{ color: 'red' }}
               onChange={(e) => {
                 e.preventDefault();
                 window.location.href = e.target.value;
               }}
             >
               <Select.Option disabled value="" className={classes.defaultSelectOption}>
-                Kontakt oss
+                test
               </Select.Option>
               {contactLinks
                 ? contactLinks.map((link: LinkToSite, index: number) => (
-                    <Select.Option key={index} value={link.url} className={classes.selectOption}>
-                      <Box> {link.text}</Box>
-                    </Select.Option>
+                  <Select.Option key={index} value={link.url} className={classes.selectOption}>
+                    {link.text}
+                  </Select.Option>
                   ))
                 : defaultContactLinks.map((link: LinkToSite, index: number) => (
-                    <Select.Option key={index} value={link.url} className={classes.selectOption}>
-                      <Box> {link.text}</Box>
-                    </Select.Option>
+                  <Select.Option key={index} value={link.url} className={classes.selectOption}>
+                    {link.text}
+                  </Select.Option>
                   ))}
             </Select>
             © Kystverket
           </Box>
-          <Box horizontal="screen-lg" gap={32}>
+          <Box horizontal="screen-lg" gap={32} className={classes.links} width="full">
             <Box gap={8}>
               {links.map((link, index) => (
                 <Link key={index} href={link.url} style={{ textDecoration: 'none' }} className={classes.link}>
