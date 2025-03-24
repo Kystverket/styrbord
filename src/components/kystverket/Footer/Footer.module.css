@@ -10,6 +10,10 @@
   align-items: center;
 }
 
+.links {
+  flex-wrap: wrap !important;
+}
+
 .icon {
   color: #ff7255 !important;
 }
@@ -23,6 +27,7 @@
   border-color: var(--color-accent-border-default);
   color: white !important;
   min-width: 208px;
+  max-width: 304px;
   background: url(keyboard_arrow_down.svg) right 8px center no-repeat;
 }
 
@@ -37,4 +42,33 @@ select:hover {
 .logo {
   min-width: 276px;
   max-width: 332px;
+  margin: 0 55.5px !important;
+}
+
+.footerContainer {
+  max-width: 1024px;
+}
+
+.footerContent {
+  flex-wrap: wrap;
+}
+@media screen and (max-width: 1024px) {
+  .logo {
+    min-width: none !important ;
+    max-width: none !important;
+  }
+  .footerContainer {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .footerContent {
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .links {
+    width: auto !important;
+  }
 }
