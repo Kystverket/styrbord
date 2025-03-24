@@ -92,3 +92,6 @@ export type {
   DialogTriggerContextProps,
   DialogTriggerProps,
 } from '@digdir/designsystemet-react';
+
+export { SkipLink } from '@digdir/designsystemet-react';
+export type { SkipLinkProps } from '@digdir/designsystemet-react';
