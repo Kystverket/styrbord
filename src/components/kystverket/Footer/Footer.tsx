@@ -74,7 +74,7 @@ export function Footer({ links = [], langLinks = [], language, contactLinks }: F
             </Select>
             © Kystverket
           </Box>
-          <Box horizontal="screen-lg" gap={32} className={classes.links} width="full">
+          <Box horizontal="screen-lg" gap={32} className={classes.links} wrap width="full">
             <Box gap={8}>
               {links.map((link, index) => (
                 <Link key={index} href={link.url} style={{ textDecoration: 'none' }} className={classes.link}>

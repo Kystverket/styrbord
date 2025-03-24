@@ -10,10 +10,6 @@
   align-items: center;
 }
 
-.links {
-  flex-wrap: wrap !important;
-}
-
 .icon {
   color: #ff7255 !important;
 }
@@ -47,11 +43,19 @@ select:hover {
 
 .footerContainer {
   max-width: 1024px;
+  flex-wrap: wrap;
 }
 
 .footerContent {
   flex-wrap: wrap;
 }
+
+.links {
+  display: flex;
+  text-wrap: wrap;
+  /*width: 100%;*/
+}
+
 @media screen and (max-width: 1024px) {
   .logo {
     min-width: none !important ;
