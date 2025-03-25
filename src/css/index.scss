@@ -2,12 +2,12 @@
 
 @layer reset {
   @include meta.load-css('reset');
-  @include meta.load-css('../../node_modules/react-datepicker/dist/react-datepicker.css');
+  @include meta.load-css('react-datepicker/dist/react-datepicker.css');
 }
 
 @layer dsno {
-  @include meta.load-css('../../node_modules/@digdir/designsystemet-css/dist/src/index.css');
-  @include meta.load-css('../../node_modules/@digdir/designsystemet-theme/brand/altinn.css');
+  @include meta.load-css('@digdir/designsystemet-css/dist/src/index.css');
+  @include meta.load-css('@digdir/designsystemet-theme/brand/altinn.css');
 }
 
 @layer kyvtokens {
