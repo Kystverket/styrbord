@@ -1,5 +1,3 @@
-import './css/index.scss';
-
 export type { SupportedLanguage, ScreenSize } from './utils/types';
 
 /*

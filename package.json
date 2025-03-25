@@ -1,6 +1,6 @@
 {
   "name": "@kystverket/styrbord",
-  "version": "0.200.23",
+  "version": "0.200.24",
   "description": "",
   "type": "module",
   "exports": {
@@ -20,7 +20,7 @@
     "dist/**/*"
   ],
   "scripts": {
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && sass src/css/index.scss dist/index.css --style=compressed",
     "build:watch": "tsc && vite build --watch",
     "dev": "vite",
     "test": "echo \"Warning: no test specified\" && exit 0",
