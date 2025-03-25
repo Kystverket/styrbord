@@ -71,9 +71,6 @@ export type { NumberInputProps } from './components/designsystemet/NumberInput/N
 export { TextArea } from './components/designsystemet/TextArea/TextArea';
 export type { TextAreaProps } from './components/designsystemet/TextArea/TextArea';
 
-export { Select } from './components/designsystemet/Select/Select';
-export type { SelectProps, SelectOption } from './components/designsystemet/Select/Select';
-
 export { Link } from '@digdir/designsystemet-react';
 export type { LinkProps } from '@digdir/designsystemet-react';
 
