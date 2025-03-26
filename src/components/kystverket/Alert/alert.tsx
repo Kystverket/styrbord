@@ -45,7 +45,7 @@ const Alert = ({
     <Box horizontal justify="between" p={12} className={`${alertStyle(width, level)} ${className}`}>
       <Box horizontal>
         {icon}
-        <Box m={8} mt={0} gap={4} className={classes.content}>
+        <Box mx={8} my={0} gap={4} className={classes.content}>
           {title && (
             <Title size={size}>
               <span role={props.role}>{title}</span>
