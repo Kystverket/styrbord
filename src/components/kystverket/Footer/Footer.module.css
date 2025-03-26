@@ -3,19 +3,13 @@
   max-width: 332px;
   margin: 0 55.5px !important;
 }
-.footer a:hover {
-  color: #a9c5ff;
-}
-.footer a:active {
-  background-color: white;
-  color: black;
-}
 
-.link {
+.footer {
+  background-color: var(--color-accent-base-default);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: 500;
+  padding: var(--spacing-48) var(--spacing-32);
 }
 
 .footerContainer {
@@ -95,8 +89,14 @@ select:hover {
 .footer a {
   color: white;
 }
+
 .footer a:hover {
-  color: var(--color-accent-text-subtle);
+  color: #a9c5ff;
+}
+
+.footer a:active {
+  color: black;
+  background-color: white;
 }
 
 @media screen and (max-width: 868px) {
