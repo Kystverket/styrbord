@@ -40,6 +40,7 @@ export function Footer({ links = [], langLinks = [], language, contactLinks }: F
         <div className={classes.footerContent}>
           <div className={classes.footerSelect}>
             <Select
+              aria-label={t('kontakt')}
               defaultValue=""
               className={classes.select}
               width="full"
@@ -48,7 +49,7 @@ export function Footer({ links = [], langLinks = [], language, contactLinks }: F
                 window.location.href = e.target.value;
               }}
             >
-              <Select.Option disabled value="" className={classes.defaultSelectOption}>
+              <Select.Option disabled value="" className={classes.defaultSelectOption} aria-hidden="true" hidden>
                 {t('kontakt')}
               </Select.Option>
               {contactLinks
