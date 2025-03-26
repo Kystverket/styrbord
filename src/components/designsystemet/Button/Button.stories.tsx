@@ -60,11 +60,16 @@ export const Large: Story = {
 };
 
 export const Loading: Story = {
+
   args: { ...defaultProps, variant: 'filled', loading: true },
 };
 
 export const Disabled: Story = {
   args: { ...defaultProps, variant: 'filled', disabled: true },
+};
+
+export const Error: Story = {
+  args: { ...defaultProps, variant: 'dashed', error: 'Feil' },
 };
 
 export const WithIcon: Story = {

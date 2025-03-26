@@ -11,6 +11,10 @@
   background: var(--dsc-button-background--hover);
 }
 
+.error {
+  border: 1px dashed var(--color-danger-border-strong);
+}
+
 .subtle {
   color: var(--color-accent-text-default);
   background: var(--color-accent-surface-default);
