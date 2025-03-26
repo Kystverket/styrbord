@@ -1,5 +1,5 @@
 import classes from './Footer.module.css';
-import { Logo, Box, Link, Icon } from '~/main';
+import { Logo, Link, Icon } from '~/main';
 import { SupportedLanguage } from '~/utils/types';
 import { useTranslation } from '~/i18n/translations';
 import { Select } from '@digdir/designsystemet-react';
@@ -32,22 +32,13 @@ export function Footer({ links = [], langLinks = [], language, contactLinks }: F
   const t = useTranslation(language);
 
   return (
-    <Box color="navy" className={classes.footer} horizontal justify="center" px={32} py={48}>
-      <Box horizontal="screen-lg" width="full" gap={32} justify="between" className={classes.footerContainer}>
-        <Box grow align="center" horizontal justify="center" className={classes.logo}>
-          <Logo alt={t('kystverket')} variant="white-horizontal" width={220} />
-        </Box>
-
-        <Box
-          grow
-          horizontal="screen-sm"
-          gap={32}
-          width="full"
-          justify="center"
-          align="center"
-          className={classes.footerContent}
-        >
-          <Box gap={24} justify="center">
+    <div className={classes.footer}>
+      <div className={classes.footerContainer}>
+        <div className={classes.footerLogo}>
+          <Logo alt={t('kystverket')} variant="white-horizontal" width={220} height={55.25} />
+        </div>
+        <div className={classes.footerContent}>
+          <div className={classes.footerSelect}>
             <Select
               defaultValue=""
               className={classes.select}
@@ -73,25 +64,25 @@ export function Footer({ links = [], langLinks = [], language, contactLinks }: F
                   ))}
             </Select>
             © Kystverket
-          </Box>
-          <Box horizontal="screen-lg" gap={32} className={classes.links} wrap width="full">
-            <Box gap={8}>
+          </div>
+          <div className={classes.footerLinks}>
+            <div className={classes.links}>
               {links.map((link, index) => (
                 <Link key={index} href={link.url} style={{ textDecoration: 'none' }} className={classes.link}>
                   <Icon material="arrow_right_alt" aria-hidden className={classes.icon} /> &nbsp;{link.text}
                 </Link>
               ))}
-            </Box>
-            <Box gap={8}>
+            </div>
+            <div className={classes.links}>
               {langLinks.map((link, index) => (
                 <Link key={index} href={link.url} style={{ textDecoration: 'none' }} className={classes.link}>
                   <Icon material="arrow_right_alt" aria-hidden className={classes.icon} /> &nbsp;{link.text}
                 </Link>
               ))}
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-    </Box>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
