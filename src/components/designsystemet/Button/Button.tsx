@@ -1,7 +1,6 @@
 import { Button as DsButton, ButtonProps as DsButtonProps } from '@digdir/designsystemet-react';
 import classes from './Button.module.scss';
 import { FC } from 'react';
-import { ErrorLabel } from '~/main';
 
 export type ButtonProps = {
   variant?: 'filled' | 'subtle' | 'outline' | 'ghost' | 'dashed';
@@ -10,7 +9,6 @@ export type ButtonProps = {
   text?: string;
   href?: string;
   target?: string;
-  error?: string | boolean;
 } & Omit<DsButtonProps, 'variant' | 'data-color' | 'data-size'>;
 
 export const Button: FC<ButtonProps> = ({
@@ -23,8 +21,6 @@ export const Button: FC<ButtonProps> = ({
   ...props
 }) => {
   const propsToOverride: DsButtonProps = { ...props };
-  const errorText = typeof props.error === 'string' && props.error.length > 0 ? props.error : undefined;
-  const hasError = !!props.error;
 
   switch (variant) {
     case 'filled':
@@ -71,11 +67,7 @@ export const Button: FC<ButtonProps> = ({
     propsToOverride.asChild = true;
   }
 
-  return (
-    <ErrorLabel text={errorText}>
-      <DsButton {...propsToOverride} className={hasError && variant === 'dashed' ? classes.error : ''} />
-    </ErrorLabel>
-  );
+  return <DsButton {...propsToOverride} />;
 };
 
 /*
