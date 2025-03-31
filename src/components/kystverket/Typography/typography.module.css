@@ -120,6 +120,15 @@
   font-weight: var(--font-weight-regular);
 }
 
+.body-xl-strong {
+  composes: body-xl;
+  font-weight: var(--font-weight-bold);
+}
+.body-xxl-strong {
+  composes: body-xxl;
+  font-weight: var(--font-weight-bold);
+}
+
 .body-lg-strong {
   composes: body-lg;
   font-weight: var(--font-weight-bold);
