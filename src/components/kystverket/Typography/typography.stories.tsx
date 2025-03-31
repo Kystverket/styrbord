@@ -39,6 +39,20 @@ const defaultProps: BoxProps = {
       <Body size="lg">Body Large</Body>
       <Body size="md">Body Medium</Body>
       <Body size="sm">Body Small</Body>
+      <Body size="xxl">Body XXLarge</Body>
+      <Body size="xl">Body XLarge</Body>
+      <Body size="lg">Body Large</Body>
+      <Body size="lg" margin>
+        Body Large margin
+      </Body>
+      <Body size="lg" strong>
+        Body Large medium weight
+      </Body>
+      <Body size="lg" color="accent">
+        Body Large accent
+      </Body>
+      <Body size="md">Body Medium</Body>
+      <Body size="sm">Body Small</Body>
       <Label size="xl" strong>
         Label XL Strong
       </Label>
