@@ -88,9 +88,16 @@ select:hover {
 
 .footer a {
   color: white;
+  font-weight: 500;
 }
+
 .footer a:hover {
-  color: var(--color-accent-text-subtle);
+  color: #a9c5ff;
+}
+
+.footer a:active {
+  color: black;
+  background-color: white;
 }
 
 @media screen and (max-width: 868px) {
