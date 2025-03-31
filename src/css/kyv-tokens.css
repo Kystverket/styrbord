@@ -291,6 +291,12 @@
   --typescale-title-small-font-size: 1rem;
   --typescale-title-small-line-height: 1.5rem;
   --typescale-title-small-letter-spacing: 0.009999999776482582rem;
+  --typescale-body-XXlarge-font-size: 1.375rem;
+  --typescale-body-XXlarge-line-height: 2rem;
+  --typescale-body-XXlarge-letter-spacing: 0rem;
+  --typescale-body-Xlarge-font-size: 1.25rem;
+  --typescale-body-Xlarge-line-height: 2rem;
+  --typescale-body-Xlarge-letter-spacing: 0rem;
   --typescale-body-large-font-size: 1.125rem;
   --typescale-body-large-line-height: 1.75rem;
   --typescale-body-large-letter-spacing: 0rem;
