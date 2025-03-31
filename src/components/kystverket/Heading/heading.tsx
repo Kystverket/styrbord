@@ -16,11 +16,7 @@ const HeaderTag = ({ level = '1', children, ...props }: HeadingProps) => {
 
 export const Heading = ({ level, size, className, children, margin }: HeadingProps) => {
   return (
-    <HeaderTag
-      level={level}
-      className={buildHeadingClasses({ size, className, margin })}
-      style={{ margin: margin ? '1em 0' : undefined }}
-    >
+    <HeaderTag level={level} className={buildHeadingClasses({ size, className, margin })}>
       {children}
     </HeaderTag>
   );
