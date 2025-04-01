@@ -16,7 +16,7 @@
 .heading-md,
 .heading-lg,
 .heading-xl {
-  font-weight: 400;
+  font-weight: var(--font-weight-bold);
 }
 
 .heading-xxs {

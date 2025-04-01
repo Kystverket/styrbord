@@ -18,6 +18,12 @@ type Story = StoryObj<typeof meta>;
 const defaultProps: BoxProps = {
   children: (
     <Box gap={16}>
+      <Body size="md">
+        Ved endringer av typografi er det viktig å merke seg at Figma rapporterer feil font-weight for medium-bold
+        tekst. Den får font-weight: 400 i Figma men det korrekte skal være 500. Gyldige font-vekter for kystinn er 300,
+        500 og 700
+      </Body>
+
       <Display size="lg">Display Large</Display>
       <Display size="md">Display Medium</Display>
       <Display size="sm">Display Small</Display>
