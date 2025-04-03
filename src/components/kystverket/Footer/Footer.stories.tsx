@@ -65,3 +65,34 @@ export const WithContactLinks: Story = {
     ],
   },
 };
+
+export const WithMaritimSikringLinks: Story = {
+  args: {
+    ...defaultProps,
+    contactLinks: [
+      {
+        text: 'Send e-post til support',
+        url: 'mailto:selvbetjening.maritimsikring@kystverket.no',
+      },
+      {
+        text: 'Kontakt kystverket',
+        url: 'https://www.kystverket.no/kontakt-oss/',
+      },
+    ],
+    links: [
+      { text: 'Data- og Lisenserklæring', url: '#' },
+      { text: 'Personvernerklæring', url: 'https://www.kystverket.no/om-kystverket/kystverkets-personvernerklaring/' },
+      {
+        text: 'Tilgjengelighetserklæring',
+        url: 'https://uustatus.no/nb/erklaringer/publisert/5e6d4b9f-7e58-407d-aee1-9d949ef46b16',
+      },
+    ],
+    langLinks: [
+      {
+        text: 'Nynorsk',
+        url: 'https://uustatus.no/nb/erklaringer/publisert/5e6d4b9f-7e58-407d-aee1-9d949ef46b16',
+      },
+    ],
+    linkSelect: false,
+  },
+};
