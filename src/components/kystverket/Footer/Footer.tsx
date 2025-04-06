@@ -29,7 +29,13 @@ export interface FooterProps {
   langLinks?: LinkToSite[];
 }
 
-export function Footer({ links = [], langLinks = [], language, contactLinks, contactLinksAsSelect = true }: FooterProps) {
+export function Footer({
+  links = [],
+  langLinks = [],
+  language,
+  contactLinks,
+  contactLinksAsSelect = true,
+}: FooterProps) {
   const t = useTranslation(language);
 
   return (
