@@ -24,11 +24,18 @@ const defaultContactLinks: LinkToSite[] = [
 export interface FooterProps {
   language: SupportedLanguage;
   contactLinks?: LinkToSite[];
+  contactLinksAsSelect?: boolean;
   links?: LinkToSite[];
   langLinks?: LinkToSite[];
 }
 
-export function Footer({ links = [], langLinks = [], language, contactLinks }: FooterProps) {
+export function Footer({
+  links = [],
+  langLinks = [],
+  language,
+  contactLinks,
+  contactLinksAsSelect = true,
+}: FooterProps) {
   const t = useTranslation(language);
 
   return (
@@ -39,31 +46,42 @@ export function Footer({ links = [], langLinks = [], language, contactLinks }: F
         </div>
         <div className={classes.footerContent}>
           <div className={classes.footerSelect}>
-            <Select
-              aria-label={t('kontakt')}
-              defaultValue=""
-              className={classes.select}
-              width="full"
-              onChange={(e) => {
-                e.preventDefault();
-                window.location.href = e.target.value;
-              }}
-            >
-              <Select.Option disabled value="" className={classes.defaultSelectOption} aria-hidden="true" hidden>
-                {t('kontakt')}
-              </Select.Option>
-              {contactLinks
-                ? contactLinks.map((link: LinkToSite, index: number) => (
-                    <Select.Option key={index} value={link.url} className={classes.selectOption}>
-                      {link.text}
-                    </Select.Option>
-                  ))
-                : defaultContactLinks.map((link: LinkToSite, index: number) => (
-                    <Select.Option key={index} value={link.url} className={classes.selectOption}>
-                      {link.text}
-                    </Select.Option>
-                  ))}
-            </Select>
+            {contactLinksAsSelect && (
+              <Select
+                aria-label={t('kontakt')}
+                defaultValue=""
+                className={classes.select}
+                width="full"
+                onChange={(e) => {
+                  e.preventDefault();
+                  window.location.href = e.target.value;
+                }}
+              >
+                <Select.Option disabled value="" className={classes.defaultSelectOption} aria-hidden="true" hidden>
+                  {t('kontakt')}
+                </Select.Option>
+                {contactLinks
+                  ? contactLinks.map((link: LinkToSite, index: number) => (
+                      <Select.Option key={index} value={link.url} className={classes.selectOption}>
+                        {link.text}
+                      </Select.Option>
+                    ))
+                  : defaultContactLinks.map((link: LinkToSite, index: number) => (
+                      <Select.Option key={index} value={link.url} className={classes.selectOption}>
+                        {link.text}
+                      </Select.Option>
+                    ))}
+              </Select>
+            )}
+            {!contactLinksAsSelect && (
+              <div className={classes.links}>
+                {(contactLinks ?? defaultContactLinks).map((link, index) => (
+                  <Link key={index} href={link.url} style={{ textDecoration: 'none' }} className={classes.link}>
+                    <Icon material="arrow_right_alt" aria-hidden className={classes.icon} /> &nbsp;{link.text}
+                  </Link>
+                ))}
+              </div>
+            )}
             © Kystverket
           </div>
           <div className={classes.footerLinks}>
