@@ -24,12 +24,12 @@ const defaultContactLinks: LinkToSite[] = [
 export interface FooterProps {
   language: SupportedLanguage;
   contactLinks?: LinkToSite[];
+  contactLinksAsSelect?: boolean;
   links?: LinkToSite[];
   langLinks?: LinkToSite[];
-  linkSelect?: boolean;
 }
 
-export function Footer({ links = [], langLinks = [], language, contactLinks, linkSelect = true }: FooterProps) {
+export function Footer({ links = [], langLinks = [], language, contactLinks, contactLinksAsSelect = true }: FooterProps) {
   const t = useTranslation(language);
 
   return (
@@ -40,7 +40,7 @@ export function Footer({ links = [], langLinks = [], language, contactLinks, lin
         </div>
         <div className={classes.footerContent}>
           <div className={classes.footerSelect}>
-            {linkSelect && (
+            {contactLinksAsSelect && (
               <Select
                 aria-label={t('kontakt')}
                 defaultValue=""
@@ -67,7 +67,7 @@ export function Footer({ links = [], langLinks = [], language, contactLinks, lin
                     ))}
               </Select>
             )}
-            {!linkSelect && (
+            {!contactLinksAsSelect && (
               <div className={classes.links}>
                 {(contactLinks ?? defaultContactLinks).map((link, index) => (
                   <Link key={index} href={link.url} style={{ textDecoration: 'none' }} className={classes.link}>

@@ -93,6 +93,6 @@ export const WithMaritimSikringLinks: Story = {
         url: 'https://uustatus.no/nb/erklaringer/publisert/5e6d4b9f-7e58-407d-aee1-9d949ef46b16',
       },
     ],
-    linkSelect: false,
+    contactLinksAsSelect: false,
   },
 };
