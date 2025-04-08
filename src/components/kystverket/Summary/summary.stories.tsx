@@ -17,7 +17,10 @@ type Story = StoryObj<typeof meta>;
 
 const defaultProps: SummaryProps = {
   rows: [
-    { title: 'Oppsummeringstittel', editButton: { label: 'Rediger', onClick: () => {} } },
+    {
+      title: 'Oppsummeringstittel',
+      editButton: { label: 'Rediger', ariaLabel: 'Rediger oppsummeringstittel', onClick: () => {} },
+    },
     { title: 'Tittel' },
     { label: 'Label', value: 'Verdi' },
     { label: 'Label', content: 'Innhold' },
@@ -30,7 +33,10 @@ const defaultProps: SummaryProps = {
     { title: 'Tittel 3' },
     { label: 'Label', value: 'Verdi' },
     { label: 'Label', content: 'Innhold' },
-    { title: 'Oppsummeringstittel 2', editButton: { label: 'Rediger', onClick: () => {} } },
+    {
+      title: 'Oppsummeringstittel 2',
+      editButton: { label: 'Rediger', ariaLabel: 'Rediger oppsummeringstittel 2', onClick: () => {} },
+    },
     { title: 'Tittel' },
     { label: 'Label', value: 'Verdi' },
     { label: 'Label', content: 'Innhold' },
