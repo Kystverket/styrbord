@@ -4,6 +4,7 @@ export interface HeadingRowProps {
   title: string;
   editButton: {
     label: string;
+    ariaLabel: string;
     onClick: () => void;
   };
 }

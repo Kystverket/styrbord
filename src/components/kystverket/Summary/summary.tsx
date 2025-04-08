@@ -6,7 +6,7 @@ const SummaryHeading = ({ title, editButton }: HeadingRowProps) => {
   return (
     <Box className={classes.heading} horizontal justify="between" align="center">
       <Title>{title}</Title>
-      <button className={classes.editButton} onClick={editButton.onClick}>
+      <button className={classes.editButton} onClick={editButton.onClick} aria-label={editButton.ariaLabel}>
         {editButton.label}
       </button>
     </Box>
