@@ -24,7 +24,12 @@ jobs:
         with:
           node-version: '22.x'
       - run: git pull
-      - run: npm ci
+      - name: npm ci
+        run: |
+          printf "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN\n@kystverket:registry=https://npm.pkg.github.com/" > .npmrc
+          npm ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npm run build
       - id: build-publish
         uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3

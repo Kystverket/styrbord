@@ -29,7 +29,12 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '22.x'
-      - run: npm ci
+      - name: npm ci
+        run: |
+          printf "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN\n@kystverket:registry=https://npm.pkg.github.com/" > .npmrc
+          npm ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npm run lint
       - run: npm run pretty:check
       - run: npm run build
