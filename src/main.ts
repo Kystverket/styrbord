@@ -53,6 +53,8 @@ export type { HeaderProps } from './components/kystverket/Header/Header';
 export { Datepicker } from './components/kystverket/Datepicker/Datepicker';
 export type { DatepickerProps } from './components/kystverket/Datepicker/Datepicker';
 
+
+
 /*
     Komponenter fra Designsystemet
 */
@@ -78,6 +80,9 @@ export type { TextAreaProps } from './components/designsystemet/TextArea/TextAre
 
 export { Select } from './components/designsystemet/Select/Select';
 export type { SelectProps, SelectOption } from './components/designsystemet/Select/Select';
+
+export { Details } from './components/designsystemet/Details/Details';
+export type { DetailsProps } from './components/designsystemet/Details/Details';
 
 export { Link } from '@digdir/designsystemet-react';
 export type { LinkProps } from '@digdir/designsystemet-react';
