@@ -19,7 +19,7 @@ export const Details = ({
   defaultOpen = false,
   ...props
 }: DetailsProps) => {
-  const dteails = (
+  const details = (
     <DsDetails defaultOpen={defaultOpen} onToggle={props.onToggle} variant={variant}>
       <DsDetails.Summary>{summary}</DsDetails.Summary>
       <DsDetails.Content>{children}</DsDetails.Content>
@@ -27,8 +27,8 @@ export const Details = ({
   );
 
   if (wrapped) {
-    return <Card>{dteails}</Card>;
+    return <Card>{details}</Card>;
   } else {
-    return dteails;
+    return details;
   }
 };
