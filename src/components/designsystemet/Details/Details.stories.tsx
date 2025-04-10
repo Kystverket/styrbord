@@ -1,0 +1,33 @@
+import type { Meta, StoryObj } from '@storybook/react';
+
+import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
+import { Details, DetailsProps } from './Details';
+
+const meta = {
+  title: 'Designsystemet/Details',
+  component: Details,
+  decorators: [StyrbordDecorator],
+  tags: ['autodocs'],
+  argTypes: {},
+} satisfies Meta<typeof Details>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+const defaultArgs: DetailsProps = {
+  wrapped: false,
+  summary: 'Details header',
+  children: 'Details content',
+};
+
+export const Default: Story = {
+  args: defaultArgs,
+};
+
+export const WrappedInCard: Story = {
+  args: {
+    ...defaultArgs,
+    wrapped: true,
+  },
+};
