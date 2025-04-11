@@ -46,6 +46,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@kystverket/styrbord-tokens": "^0.0.8",
     "@chromatic-com/storybook": "^1.9.0",
     "@eslint/js": "^9.22.0",
     "@rollup/plugin-typescript": "^11.1.6",
@@ -95,7 +96,6 @@
     ]
   },
   "dependencies": {
-    "@kystverket/styrbord-tokens": "^0.0.1",
     "date-fns": "^4.1.0",
     "esbuild": "^0.24.2",
     "material-symbols": "^0.23.0",

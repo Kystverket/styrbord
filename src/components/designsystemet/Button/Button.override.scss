@@ -1,28 +1,3 @@
 .ds-button {
   text-transform: uppercase;
-
-  --ds-border-radius-default: var(--border-radius-medium);
-
-  --ds-font-weight-medium: var(--ds-font-weight-bold);
-
-  &[data-size='sm'] {
-    font-size: var(--typescale-button-small-font-size);
-    letter-spacing: var(--typescale-button-small-letter-spacing);
-    line-height: var(--typescale-button-small-line-height);
-  }
-
-  &[data-size='md'] {
-    letter-spacing: var(--typescale-button-medium-letter-spacing);
-    font-size: var(--typescale-button-medium-font-size);
-    line-height: var(--typescale-button-medium-line-height);
-    padding-left: var(--spacing-12);
-    padding-right: var(--spacing-12);
-  }
-
-  &[data-size='lg'] {
-    font-size: var(--typescale-button-large-font-size);
-    letter-spacing: var(--typescale-button-large-letter-spacing);
-    line-height: var(--typescale-button-large-line-height);
-    padding: var(--spacing-12) var(--spacing-20);
-  }
 }
