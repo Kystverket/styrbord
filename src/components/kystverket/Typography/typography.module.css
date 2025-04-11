@@ -85,13 +85,6 @@
   font-weight: var(--font-weight-bold);
 }
 
-.body-xxl {
-  font-size: var(--typescale-body-XXlarge-font-size);
-  line-height: var(--typescale-body-XXlarge-line-height);
-  letter-spacing: var(--typescale-body-XXlarge-letter-spacing);
-  font-weight: var(--font-weight-regular);
-}
-
 .body-xl {
   font-size: var(--body-xl-font-size);
   line-height: var(--body-xl-line-height);
@@ -122,10 +115,6 @@
 
 .body-xl-strong {
   composes: body-xl;
-  font-weight: var(--font-weight-bold);
-}
-.body-xxl-strong {
-  composes: body-xxl;
   font-weight: var(--font-weight-bold);
 }
 
@@ -221,12 +210,4 @@
 .accent-sm-strong {
   composes: accent-sm;
   font-weight: var(--font-weight-bold);
-}
-
-.accentColor {
-  color: var(--color-accent-text-default);
-}
-
-.margin {
-  margin-bottom: var(--spacing-20);
 }
