@@ -75,14 +75,14 @@
   font-size: var(--typescale-title-medium-font-size);
   line-height: var(--typescale-title-medium-line-height);
   letter-spacing: var(--typescale-title-medium-letter-spacing);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-medium);
 }
 
 .title-sm {
   font-size: var(--typescale-title-small-font-size);
   line-height: var(--typescale-title-small-line-height);
   letter-spacing: var(--typescale-title-small-letter-spacing);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-medium);
 }
 
 .body-xl {
@@ -115,22 +115,22 @@
 
 .body-xl-strong {
   composes: body-xl;
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-medium);
 }
 
 .body-lg-strong {
   composes: body-lg;
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-medium);
 }
 
 .body-md-strong {
   composes: body-md;
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-medium);
 }
 
 .body-sm-strong {
   composes: body-sm;
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-medium);
 }
 
 .label-xl {
@@ -163,22 +163,22 @@
 
 .label-xl-strong {
   composes: label-xl;
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-medium);
 }
 
 .label-lg-strong {
   composes: label-lg;
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-medium);
 }
 
 .label-md-strong {
   composes: label-md;
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-medium);
 }
 
 .label-sm-strong {
   composes: label-sm;
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-medium);
 }
 
 .accent {
@@ -204,10 +204,10 @@
 
 .accent-md-strong {
   composes: accent-md;
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-medium);
 }
 
 .accent-sm-strong {
   composes: accent-sm;
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-medium);
 }
