@@ -36,36 +36,13 @@
 
 :root {
   font-family: var(--font-family);
-  --spacing-0: 0;
+
   --link-underline-offset: var(--spacing-6);
   --ds-global-purple-12: var(--color-link-visited);
 
-  --ds-border-radius-base: 0.125rem;
-
-  --ds-body-xl-font-weight: var(--font-weight-regular);
-  --ds-body-xl-line-height: 1.5;
-  --ds-body-xl-font-size: 1.5rem;
-  --ds-body-xl-letter-spacing: 0.5%;
-
-  --ds-body-lg-font-weight: var(--font-weight-regular);
-  --ds-body-lg-line-height: var(--typescale-body-large-line-height);
-  --ds-body-lg-font-size: var(--typescale-body-large-font-size);
-  --ds-body-lg-letter-spacing: var(--typescale-body-large-letter-spacing);
-
-  --ds-body-md-font-weight: var(--font-weight-regular);
-  --ds-body-md-line-height: var(--typescale-body-medium-line-height);
-  --ds-body-md-font-size: var(--typescale-body-medium-font-size);
-  --ds-body-md-letter-spacing: var(--typescale-body-medium-letter-spacing);
-
-  --ds-body-sm-font-weight: var(--font-weight-regular);
-  --ds-body-sm-line-height: var(--typescale-body-small-line-height);
-  --ds-body-sm-font-size: var(--typescale-body-small-font-size);
-  --ds-body-sm-letter-spacing: var(--typescale-body-small-letter-spacing);
-
-  --ds-body-xs-font-weight: var(--font-weight-regular);
-  --ds-body-xs-line-height: 1.5;
-  --ds-body-xs-font-size: 0.875rem;
-  --ds-body-xs-letter-spacing: 0.15%;
+  --border-width-default: 0.0625rem;
+  --border-width-lg: 0.125rem;
+  --border-width-xl: 0.25rem;
 }
 
 .ds-validation-message {

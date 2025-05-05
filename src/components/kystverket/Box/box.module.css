@@ -141,7 +141,7 @@
 }
 
 .border-radius-lg {
-  border-radius: var(--ds-border-radius-large);
+  border-radius: var(--ds-border-radius-lg);
 }
 
 .border-radius-full {
@@ -228,15 +228,15 @@
 }
 
 .border-width-sm {
-  border: var(--ds-border-width-thin) solid var(--border-color);
+  border: var(--border-width-default) solid var(--border-color);
 }
 
 .border-width-md {
-  border: var(--ds-border-width-thick) solid var(--border-color);
+  border: var(--border-width-lg) solid var(--border-color);
 }
 
 .border-width-lg {
-  border: var(--ds-border-width-thicker) solid var(--border-color);
+  border: var(--border-width-xl) solid var(--border-color);
 }
 
 .width-fit {
