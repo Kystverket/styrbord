@@ -80,3 +80,12 @@ export { Details } from './components/designsystemet/Details/Details';
 export type { DetailsProps } from './components/designsystemet/Details/Details';
 
 export * from '@digdir/designsystemet-react';
+
+export { ErrorSummary } from '@digdir/designsystemet-react';
+export type {
+  ErrorSummaryProps,
+  ErrorSummaryItemProps,
+  ErrorSummaryHeadingProps,
+  ErrorSummaryListProps,
+  ErrorSummaryLinkProps,
+} from '@digdir/designsystemet-react';
