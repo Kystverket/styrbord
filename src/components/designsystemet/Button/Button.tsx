@@ -4,7 +4,7 @@ import { FC } from 'react';
 
 export type ButtonProps = {
   variant?: 'filled' | 'subtle' | 'outline' | 'ghost' | 'dashed';
-  color?: 'accent' | 'neutral' | 'danger';
+  color?: 'neutral' | 'danger';
   size?: 'sm' | 'md' | 'lg';
   text?: string;
   href?: string;

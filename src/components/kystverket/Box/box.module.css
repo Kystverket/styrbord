@@ -167,9 +167,9 @@
 }
 
 .color-neutral.is-subtle {
-  background: var(--color-neutral-background-subtle, #f9f6f3);
+  background: var(--color-neutral-background-tinted);
   color: #161616;
-  --border-color: var(--color-neutral-border-subtle, #bcbcbc);
+  --border-color: var(--color-neutral-border-subtle);
 }
 
 .color-danger {
