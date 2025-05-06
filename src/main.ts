@@ -42,7 +42,7 @@ export { Summary } from './components/kystverket/Summary/summary';
 export type { SummaryProps, SummaryRowProps } from './components/kystverket/Summary/summary.types';
 
 export { Logo } from './components/kystverket/Logo/Logo';
-export type { LogoProps } from './components/kystverket/Logo/Logo';
+export type { LogoProps, LogoVariant } from './components/kystverket/Logo/Logo';
 
 export { Footer } from './components/kystverket/Footer/Footer';
 export type { FooterProps } from './components/kystverket/Footer/Footer';

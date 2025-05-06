@@ -33,3 +33,27 @@ export const OnlyHeight: Story = {
 export const White: Story = {
   args: { ...defaultProps, variant: 'white-vertical' },
 };
+
+export const Datakatalog: Story = {
+  args: { ...defaultProps, variant: 'datakatalog' },
+};
+
+export const Fyr: Story = {
+  args: { ...defaultProps, variant: 'fyr' },
+};
+
+export const Hais: Story = {
+  args: { ...defaultProps, variant: 'hais' },
+};
+
+export const Pfsa: Story = {
+  args: { ...defaultProps, variant: 'pfsa' },
+};
+
+export const Saksbehandling: Story = {
+  args: { ...defaultProps, variant: 'saksbehandling' },
+};
+
+export const Selvbetjening: Story = {
+  args: { ...defaultProps, variant: 'selvbetjening' },
+};
