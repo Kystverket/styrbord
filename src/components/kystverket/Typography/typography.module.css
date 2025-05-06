@@ -188,17 +188,17 @@
 
 .accent-md {
   composes: accent;
-  font-size: var(--body-sm-font-size);
-  line-height: var(--body-sm-line-height);
-  letter-spacing: var(--body-sm-letter-spacing);
+  font-size: var(--body-md-font-size);
+  line-height: var(--body-md-line-height);
+  letter-spacing: var(--body-md-letter-spacing);
   font-weight: var(--font-weight-regular);
 }
 
 .accent-sm {
   composes: accent;
-  font-size: var(--body-xs-font-size);
-  line-height: var(--body-xs-line-height);
-  letter-spacing: var(--body-xs-letter-spacing);
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  letter-spacing: var(--body-sm-letter-spacing);
   font-weight: var(--font-weight-regular);
 }
 

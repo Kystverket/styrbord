@@ -9,7 +9,7 @@
 .titleText {
   display: inline-block;
   margin-top: 2px;
-  color: var(--color-accent-base-default);
+  color: var(--color-primary-base-default);
 }
 .logoLink {
   display: flex;

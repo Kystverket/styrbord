@@ -222,9 +222,9 @@
 
 .color-navy,
 .color-navy.is-subtle {
-  background: var(--color-accent-base-default);
+  background: var(--color-primary-base-default);
   color: white;
-  --border-color: var(--color-accent-base-default);
+  --border-color: var(--color-primary-base-default);
 }
 
 .border-width-sm {

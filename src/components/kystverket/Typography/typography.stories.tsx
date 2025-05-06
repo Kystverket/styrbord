@@ -52,7 +52,6 @@ const defaultProps: BoxProps = {
       <Body size="lg">Body Large</Body>
       <Body size="md">Body Medium</Body>
       <Body size="sm">Body Small</Body>
-      <Body size="lg">Body Large margin</Body>
       <Body size="lg">Body Large accent</Body>
       <Body size="md">Body Medium</Body>
       <Body size="sm">Body Small</Body>
