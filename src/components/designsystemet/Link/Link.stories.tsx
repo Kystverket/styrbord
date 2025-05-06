@@ -33,7 +33,6 @@ export const Visited: Story = {
   args: {
     children: 'Besøk linken for å se visited state',
     href: 'https://arngren.net/',
-    color: 'accent',
   },
 };
 
