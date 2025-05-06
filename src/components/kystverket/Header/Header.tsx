@@ -1,27 +1,60 @@
-import { SupportedLanguage } from '~/utils/types';
+import { Box, Label, Logo, LogoVariant, SupportedLanguage } from '~/main';
 import classes from './Header.module.css';
-import { Box, Label, Logo } from '~/main';
+import { useTranslation } from '~/i18n/translations';
+import { ReactNode } from 'react';
 
 export interface HeaderProps {
+  /**
+   * Utvidelse for å legge til ekstra innhold i headeren.
+   * @default undefined
+   */
+  children?: ReactNode;
+  /**
+   * Spesifiserer språk for headeren.
+   */
   language: SupportedLanguage;
+  /**
+   * Spesifiserer logovarianten som brukes (standard: Kystverket) med en eventuell ekstra undertittel og navigeringslenke ved klikk
+   */
   logo: {
-    title: string;
+    /**
+     * Undertittel for logoen.
+     * @default undefined
+     */
+    title?: string;
+    /**
+     * URL for logoen.
+     */
     url: string;
+    /**
+     * Logovariant.
+     * @default 'blue-horizontal'
+     */
+    variant?: LogoVariant;
   };
 }
 
-export function Header({ logo: title }: HeaderProps) {
+export function Header({
+  children = undefined,
+  language,
+  logo: { title = undefined, variant = 'blue-horizontal', url },
+}: HeaderProps) {
+  const t = useTranslation(language);
+
   return (
     <Box horizontal justify="center" align="center" className={classes.headerContainer}>
       <Box horizontal justify="between" align="center" px={16} width="container">
         <Box horizontal align="center" gap={16}>
-          <a className={classes.logoLink} href={title.url}>
-            <Logo />
-            <Label className={classes.titleText} size="lg">
-              {title.title}
-            </Label>
+          <a className={classes.logoLink} href={url}>
+            <Logo variant={variant} height={47} alt={t('header-alt-text')} />
+            {title && (
+              <Label className={classes.titleText} size="lg">
+                {title}
+              </Label>
+            )}
           </a>
         </Box>
+        {children}
       </Box>
     </Box>
   );
