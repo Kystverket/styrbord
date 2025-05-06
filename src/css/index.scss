@@ -11,11 +11,7 @@
 }
 
 @layer kyvtokens {
-  @include meta.load-css('kyv-tokens');
-}
-
-@layer kyvtokenstodesignsystemet {
-  @include meta.load-css('kyv-tokens-to-designsystemet');
+  @include meta.load-css('@kystverket/styrbord-tokens/dist/kystverket.css');
 }
 
 @layer styrbord {

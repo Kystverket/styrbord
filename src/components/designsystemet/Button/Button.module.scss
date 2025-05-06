@@ -12,14 +12,14 @@
 }
 
 .subtle {
-  color: var(--color-accent-text-default);
-  background: var(--color-accent-surface-default);
+  color: var(--color-primary-text-default);
+  background: var(--color-primary-surface-tinted);
 }
 .subtle:hover {
-  background: var(--color-accent-surface-hover);
+  background: var(--color-primary-surface-hover);
 }
 .subtle:active {
-  background: var(--color-accent-surface-active);
+  background: var(--color-primary-surface-active);
 }
 
 .subtle[data-color='neutral'] {

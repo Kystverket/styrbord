@@ -21,16 +21,12 @@ export const buildTypographyClasses = ({
   size = 'md',
   strong = false,
   inline = false,
-  color = 'neutral',
-  margin = false,
   className,
 }: BuildTypographyProps): string => {
   return [
     typography[type],
     typography[`${type}-${size}${strong ? '-strong' : ''}`],
     inline ? typography.inline : '',
-    color === 'accent' ? typography.accentColor : '',
-    margin ? typography.margin : '',
     className ?? '',
   ].join(' ');
 };

@@ -5,7 +5,7 @@
 }
 
 .footer {
-  background-color: var(--color-accent-base-default);
+  background-color: var(--color-primary-base-default);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,7 +47,7 @@
   -moz-appearance: none;
   appearance: none;
   background-color: transparent;
-  border-color: var(--color-accent-border-default);
+  border-color: var(--color-primary-border-default);
   color: white !important;
   min-width: 208px;
   max-width: 304px;
@@ -55,11 +55,11 @@
 }
 
 select:hover {
-  border-color: var(--color-accent-border-hover);
+  border-color: var(--color-primary-border-hover);
 }
 
 .selectOption {
-  color: var(--color-accent-text-default) !important;
+  color: var(--color-primary-text-default) !important;
 }
 
 .footerLinks {

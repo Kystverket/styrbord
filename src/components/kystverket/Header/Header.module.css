@@ -8,7 +8,8 @@
 }
 .titleText {
   display: inline-block;
-  color: var(--color-accent-base-default);
+  margin-top: 2px;
+  color: var(--color-primary-base-default);
   text-transform: uppercase;
   letter-spacing: 0.05em !important;
 }

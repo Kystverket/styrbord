@@ -29,9 +29,6 @@ export { default as Icon } from './components/kystverket/Icon/icon';
 export { Display, Headline, Title, Body, Label, Accent } from './components/kystverket/Typography/typography';
 export type { TypographyProps, HeaderTypographyProps } from './components/kystverket/Typography/typography';
 
-export { Heading } from './components/kystverket/Heading/heading';
-export type { HeadingProps } from './components/kystverket/Heading/heading';
-
 export { default as BorderedToggleGroup } from './components/kystverket/BorderedToggleGroup/borderedToggleGroup';
 export type { BorderedToggleGroupProps } from './components/kystverket/BorderedToggleGroup/borderedToggleGroup';
 
