@@ -79,22 +79,4 @@ export type { SelectProps, SelectOption } from './components/designsystemet/Sele
 export { Details } from './components/designsystemet/Details/Details';
 export type { DetailsProps } from './components/designsystemet/Details/Details';
 
-export { Link } from '@digdir/designsystemet-react';
-export type { LinkProps } from '@digdir/designsystemet-react';
-
-export { Tooltip } from '@digdir/designsystemet-react';
-export type { TooltipProps } from '@digdir/designsystemet-react';
-
-export { Checkbox } from '@digdir/designsystemet-react';
-export type { CheckboxProps } from '@digdir/designsystemet-react';
-
-export { Dialog, DialogBlock, DialogTrigger, DialogTriggerContext } from '@digdir/designsystemet-react';
-export type {
-  DialogBlockProps,
-  DialogProps,
-  DialogTriggerContextProps,
-  DialogTriggerProps,
-} from '@digdir/designsystemet-react';
-
-export { SkipLink } from '@digdir/designsystemet-react';
-export type { SkipLinkProps } from '@digdir/designsystemet-react';
+export * from '@digdir/designsystemet-react';

@@ -16,18 +16,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const defaultArgs: DetailsProps = {
-  wrapped: false,
   summary: 'Details header',
   children: 'Details content',
 };
 
 export const Default: Story = {
   args: defaultArgs,
-};
-
-export const WrappedInCard: Story = {
-  args: {
-    ...defaultArgs,
-    wrapped: true,
-  },
 };
