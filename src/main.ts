@@ -25,6 +25,7 @@ export { default as InputLabel } from './components/kystverket/InputLabel/inputL
 export type { InputLabelProps } from './components/kystverket/InputLabel/inputLabel';
 
 export { default as Icon } from './components/kystverket/Icon/icon';
+export type { IconId } from './components/kystverket/Icon/icon.types';
 
 export { Display, Headline, Title, Body, Label, Accent } from './components/kystverket/Typography/typography';
 export type { TypographyProps, HeaderTypographyProps } from './components/kystverket/Typography/typography';

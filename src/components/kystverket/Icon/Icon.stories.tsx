@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
-import Icon, { MaterialIconProps } from '~/components/kystverket/Icon/icon';
+import Icon from '~/components/kystverket/Icon/icon';
+import { iconIdList } from './icon.types';
 
 const meta = {
   title: 'Helpers/Icon',
@@ -12,16 +13,17 @@ const meta = {
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
-
-const defaultProps: MaterialIconProps = {
-  material: 'chevron_left',
-};
-
-export const Default: Story = {
-  args: defaultProps,
-};
-
-export const Stylus: Story = {
-  args: { ...defaultProps, material: 'stylus' },
+export const IconShowcase: StoryFn = () => {
+  return (
+    <table>
+      {iconIdList.map((iconId) => (
+        <tr key={iconId}>
+          <td style={{ padding: '0.5rem' }}>
+            <Icon material={iconId} />
+          </td>
+          <td style={{ padding: '0.5rem' }}>{iconId}</td>
+        </tr>
+      ))}
+    </table>
+  );
 };
