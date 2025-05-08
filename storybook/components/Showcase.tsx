@@ -148,33 +148,57 @@ export function Showcase({ className, ...props }: ShowcaseProps) {
       <div className={cl(classes.card, classes.help)}>
         <Heading className={classes.helpHeading}>Hva kan vi hjelpe deg med?</Heading>
         <div className={classes.helpCards}>
-          <Card data-color="primary">
-            <Heading>Sikkerhet og drift</Heading>
+          <Card variant="tinted" data-color="primary">
+            <Heading>Sikkerhet og primary</Heading>
             <Paragraph>Most provide as with carried business are much better more the.</Paragraph>
           </Card>
-          <Card data-color="neutral">
-            <Heading>Skole og utdanning</Heading>
+          <Card variant="tinted" data-color="neutral">
+            <Heading>Skole og neutral</Heading>
             <Paragraph>Most provide as with carried business are much better more the.</Paragraph>
           </Card>
-          <Card data-color="brand3">
+          <Card variant="tinted" data-color="support">
             <Heading>
-              <a href="#preview">Mat og helse</a>
+              <a href="#preview">Mat og support</a>
             </Heading>
             <Paragraph>Lenke til artikkel om mat og helse, der du kan lese mer om alt.</Paragraph>
           </Card>
-          <Card data-color="primary">
+          <Card variant="tinted" data-color="accent">
             <Heading>
-              <a href="#preview">Mat og helse</a>
+              <a href="#preview">Mat og accent</a>
             </Heading>
             <Paragraph>Most provide as with carried business are much better more the.</Paragraph>
           </Card>
-          <Card data-color="neutral">
-            <Heading>Skole og utdanning</Heading>
+          <Card variant="tinted" data-color="neutral">
+            <Heading>Skole og neutral</Heading>
             <Paragraph>Most provide as with carried business are much better more the.</Paragraph>
           </Card>
-          <Card data-color="brand3">
+          <Card variant="tinted" data-color="brand1">
             <Heading>
-              <a href="#preview">Mat og helse</a>
+              <a href="#preview">Mat og brand1</a>
+            </Heading>
+            <Paragraph>Lenke til artikkel om mat og helse, der du kan lese mer om alt.</Paragraph>
+          </Card>
+          <Card variant="tinted" data-color="brand2">
+            <Heading>
+              <a href="#preview">Mat og brand2</a>
+            </Heading>
+            <Paragraph>Lenke til artikkel om mat og helse, der du kan lese mer om alt.</Paragraph>
+          </Card>
+          <Card variant="tinted" data-color="brand3">
+            <Heading>
+              <a href="#preview">Mat og brand3</a>
+            </Heading>
+            <Paragraph>Lenke til artikkel om mat og helse, der du kan lese mer om alt.</Paragraph>
+          </Card>
+          <Card variant="tinted" data-color="extra1">
+            <Heading>
+              <a href="#preview">Mat og extra1</a>
+            </Heading>
+            <Paragraph>Lenke til artikkel om mat og helse, der du kan lese mer om alt.</Paragraph>
+          </Card>
+          <Card variant="tinted" data-color="extra2">
+            <Heading>
+              <a href="#preview">Mat og extra2</a>
             </Heading>
             <Paragraph>Lenke til artikkel om mat og helse, der du kan lese mer om alt.</Paragraph>
           </Card>
