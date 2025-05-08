@@ -1,0 +1,31 @@
+.sizeXxs {
+  width: 75px;
+  max-width: 100%;
+}
+
+.sizeXs {
+  width: 130px;
+  max-width: 100%;
+}
+
+.sizeSm {
+  width: 185px;
+  max-width: 100%;
+}
+.sizeMd {
+  width: 350px;
+  max-width: 100%;
+}
+
+.sizeLg {
+  width: 31.25rem;
+  max-width: 100%;
+}
+
+.sizeFull {
+  width: 100%;
+}
+
+.sizeFit {
+  width: fit-content;
+}

@@ -1,6 +1,7 @@
 import { Textfield } from '@digdir/designsystemet-react';
 import classes from './NumberInput.module.scss';
 import { InputLabel } from '~/main';
+import { InputSize, inputSizeClass } from '~/utils/input/input';
 
 export interface NumberInputProps {
   optional?: boolean | string | undefined;
@@ -21,12 +22,13 @@ export interface NumberInputProps {
   min?: number;
   max?: number;
   align?: 'left' | 'right';
+  size?: InputSize;
 }
 
-export const NumberInput = ({ className, align = 'left', ...props }: NumberInputProps) => {
+export const NumberInput = ({ size = 'full', className, align = 'left', ...props }: NumberInputProps) => {
   return (
     <Textfield
-      className={[className, classes['align-' + align]].join(' ')}
+      className={[className, inputSizeClass(size), classes['align-' + align]].join(' ')}
       label={
         <InputLabel
           text={props.label}

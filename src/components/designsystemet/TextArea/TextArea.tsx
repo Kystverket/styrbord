@@ -1,5 +1,6 @@
 import { Textfield as DsTextField } from '@digdir/designsystemet-react';
 import { InputLabel } from '~/main';
+import { InputSize, inputSizeClass } from '~/utils/input/input';
 
 export const Textfield = null;
 
@@ -19,12 +20,13 @@ export interface TextAreaProps {
   inputMode?: 'email' | 'tel' | 'search' | 'text' | 'none' | 'url' | 'numeric' | 'decimal';
   maxLength?: number;
   rows?: number;
+  size?: InputSize;
 }
 
-export const TextArea = ({ className, ...props }: TextAreaProps) => {
+export const TextArea = ({ size = 'full', className, ...props }: TextAreaProps) => {
   return (
     <DsTextField
-      className={className}
+      className={`${className} ${inputSizeClass(size)}`}
       label={
         <InputLabel
           text={props.label}

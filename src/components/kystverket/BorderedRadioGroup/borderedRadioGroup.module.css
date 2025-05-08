@@ -30,7 +30,7 @@
   grid-template-columns: 1fr;
   gap: var(--spacing-8);
 }
-@container (min-width: 500px) {
+@container (min-width: 400px) {
   .radioGroup {
     grid-template-columns: 1fr 1fr;
   }
