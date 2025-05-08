@@ -1,7 +1,7 @@
 .text {
-  color: var(--ds-color-danger-text-default);
+  color: var(--ds-color-danger-text-subtle);
 }
 .icon {
-  color: var(--ds-color-danger-base-default);
-  font-size: 20px;
+  color: var(--ds-color-danger-text-subtle);
+  font-size: 24px;
 }
