@@ -23,7 +23,7 @@ const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
   const hasError = !!props.error;
 
   return (
-    <Box>
+    <Box container="inline-size">
       <InputLabel text={props.label} subText={props.description} />
       <ErrorLabel text={errorText}>
         <div className={classes.radioGroup}>

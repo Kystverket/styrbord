@@ -42,7 +42,7 @@ const BorderedRadioGroup = (props: BorderedToggleGroupProps) => {
   }
 
   return (
-    <Box>
+    <Box container="inline-size">
       <InputLabel text={props.label} subText={props.description} />
       <ErrorLabel text={errorText}>
         <div className={classes.toggleGroup}>
