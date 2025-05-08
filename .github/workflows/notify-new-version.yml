@@ -1,4 +1,4 @@
-name: Ny versjon av @kystverket/styrbord-tokens
+name: Bruker nyeste versjon av @kystverket/styrbord-tokens
 
 on:
   pull_request:
