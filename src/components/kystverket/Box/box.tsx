@@ -33,6 +33,7 @@ export interface BaseBoxProps {
     size?: AllSizes;
     strong?: boolean;
   };
+  container?: 'size' | 'inline-size';
 }
 
 type VerticalBoxProps = BaseBoxProps & {
@@ -70,6 +71,7 @@ const Box = ({
   basis = 'auto',
   show = undefined,
   hide = undefined,
+  container = undefined,
   children,
   ...props
 }: BoxProps) => {
@@ -92,6 +94,10 @@ const Box = ({
   }
 
   styles['--box-wrap'] = wrapTypeToCssValue(wrap);
+
+  if (container) {
+    styles['container-type'] = container;
+  }
 
   if (props.horizontal) {
     if (props.horizontal === true) {
