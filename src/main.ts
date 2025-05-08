@@ -29,9 +29,6 @@ export { default as Icon } from './components/kystverket/Icon/icon';
 export { Display, Headline, Title, Body, Label, Accent } from './components/kystverket/Typography/typography';
 export type { TypographyProps, HeaderTypographyProps } from './components/kystverket/Typography/typography';
 
-export { Heading } from './components/kystverket/Heading/heading';
-export type { HeadingProps } from './components/kystverket/Heading/heading';
-
 export { default as BorderedToggleGroup } from './components/kystverket/BorderedToggleGroup/borderedToggleGroup';
 export type { BorderedToggleGroupProps } from './components/kystverket/BorderedToggleGroup/borderedToggleGroup';
 
@@ -42,7 +39,7 @@ export { Summary } from './components/kystverket/Summary/summary';
 export type { SummaryProps, SummaryRowProps } from './components/kystverket/Summary/summary.types';
 
 export { Logo } from './components/kystverket/Logo/Logo';
-export type { LogoProps } from './components/kystverket/Logo/Logo';
+export type { LogoProps, LogoVariant } from './components/kystverket/Logo/Logo';
 
 export { Footer } from './components/kystverket/Footer/Footer';
 export type { FooterProps } from './components/kystverket/Footer/Footer';
@@ -82,22 +79,4 @@ export type { SelectProps, SelectOption } from './components/designsystemet/Sele
 export { Details } from './components/designsystemet/Details/Details';
 export type { DetailsProps } from './components/designsystemet/Details/Details';
 
-export { Link } from '@digdir/designsystemet-react';
-export type { LinkProps } from '@digdir/designsystemet-react';
-
-export { Tooltip } from '@digdir/designsystemet-react';
-export type { TooltipProps } from '@digdir/designsystemet-react';
-
-export { Checkbox } from '@digdir/designsystemet-react';
-export type { CheckboxProps } from '@digdir/designsystemet-react';
-
-export { Dialog, DialogBlock, DialogTrigger, DialogTriggerContext } from '@digdir/designsystemet-react';
-export type {
-  DialogBlockProps,
-  DialogProps,
-  DialogTriggerContextProps,
-  DialogTriggerProps,
-} from '@digdir/designsystemet-react';
-
-export { SkipLink } from '@digdir/designsystemet-react';
-export type { SkipLinkProps } from '@digdir/designsystemet-react';
+export * from '@digdir/designsystemet-react';

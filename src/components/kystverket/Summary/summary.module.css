@@ -85,11 +85,11 @@
 }
 
 .editButton {
-  font-size: var(--typescale-body-small-font-size);
-  line-height: var(--typescale-body-small-line-height);
-  letter-spacing: var(--typescale-body-small-letter-spacing);
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  letter-spacing: var(--body-sm-letter-spacing);
   font-weight: var(--font-weight-regular);
-  color: var(--ds-color-accent-12);
+  color: var(--ds-color-primary-12);
   text-decoration: underline;
   text-underline-offset: var(--spacing-6);
   background: transparent;
@@ -98,7 +98,7 @@
 }
 
 .editButton:hover {
-  color: var(--ds-color-accent-7);
+  color: var(--ds-color-primary-11);
 }
 
 @media screen and (max-width: 640px) {

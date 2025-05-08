@@ -4,7 +4,7 @@ import { FC } from 'react';
 
 export type ButtonProps = {
   variant?: 'filled' | 'subtle' | 'outline' | 'ghost' | 'dashed';
-  color?: 'accent' | 'neutral' | 'danger';
+  color?: 'neutral' | 'danger';
   size?: 'sm' | 'md' | 'lg';
   text?: string;
   href?: string;
@@ -13,7 +13,7 @@ export type ButtonProps = {
 
 export const Button: FC<ButtonProps> = ({
   variant = 'outline',
-  color = 'accent',
+  color = undefined,
   size = 'md',
   text = undefined,
   href = undefined,

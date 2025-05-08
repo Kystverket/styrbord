@@ -1,6 +1,6 @@
 .radioBox {
-  border: var(--ds-border-width-thin) solid var(--color-neutral-border-subtle) !important;
-  border-radius: var(--ds-border-radius-large);
+  border: var(--border-width-default) solid var(--color-neutral-border-subtle) !important;
+  border-radius: var(--ds-border-radius-lg);
   padding: var(--spacing-12);
   background-color: var(--ds-color-neutral-background-default);
   flex: 1 1 auto;
@@ -12,15 +12,18 @@
   transition: all 0.1s;
 }
 .radioBoxActive {
-  border: var(--ds-border-width-thin) solid var(--ds-color-accent-text-subtle) !important;
-  background-color: var(--ds-color-accent-background-subtle);
+  border: var(--border-width-default) solid var(--ds-color-info-border-strong) !important;
+  background-color: var(--ds-color-info-background-tinted);
 }
 .radioBox:hover {
-  background-color: var(--ds-color-accent-background-subtle);
+  background-color: var(--ds-color-info-background-tinted);
 }
 .radioBoxError {
-  border: var(--ds-border-width-thin) solid var(--ds-color-danger-border-strong) !important;
+  border: var(--border-width-default) solid var(--ds-color-danger-border-strong) !important;
   color: var(--ds-color-danger-border-strong) !important;
+}
+.radioBoxError .radioBoxIndicator {
+  border-color: var(--ds-color-danger-border-strong);
 }
 .radioGroup {
   display: grid;

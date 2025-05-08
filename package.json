@@ -1,6 +1,6 @@
 {
   "name": "@kystverket/styrbord",
-  "version": "0.200.40",
+  "version": "0.300.1",
   "description": "",
   "type": "module",
   "exports": {
@@ -31,8 +31,7 @@
     "pretty:fix": "npx prettier . --write",
     "lint": "npx eslint .",
     "lint:fix": "npx eslint --fix .",
-    "lint:pkg": "npm exec -- publint",
-    "kyv-to-ds": "sed 's/--/--ds-/g' < node_modules/kyv-tokens/dist/kystverket/styles.css > src/css/kyv-tokens-to-designsystemet.css && cat node_modules/kyv-tokens/dist/kystverket/styles.css > src/css/kyv-tokens.css"
+    "lint:pkg": "npm exec -- publint"
   },
   "author": "",
   "license": "ISC",
@@ -46,6 +45,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@kystverket/styrbord-tokens": "^0.2.26",
     "@chromatic-com/storybook": "^1.9.0",
     "@eslint/js": "^9.22.0",
     "@rollup/plugin-typescript": "^11.1.6",
@@ -74,7 +74,6 @@
     "eslint-plugin-storybook": "^0.11.4",
     "globals": "^13.24.0",
     "jiti": "^2.4.2",
-    "kyv-tokens": "^2.13.0",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
     "publint": "^0.2.12",
@@ -95,7 +94,6 @@
     ]
   },
   "dependencies": {
-    "@kystverket/styrbord-tokens": "^0.0.1",
     "date-fns": "^4.1.0",
     "esbuild": "^0.24.2",
     "material-symbols": "^0.23.0",

@@ -13,11 +13,9 @@ export type HeaderTypographyProps = TypographyProps & {
 };
 
 export type BodyTypographyProps = TypographyProps & {
-  size?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   strong?: boolean;
   inline?: boolean;
-  margin?: boolean;
-  color?: 'accent' | 'neutral';
 };
 
 export type LabelTypographyProps = TypographyProps & {
@@ -62,14 +60,12 @@ export const Title = ({ level, size, className, children }: HeaderTypographyProp
   );
 };
 
-export const Body = ({ inline, strong, size, color, margin, className, children }: BodyTypographyProps) => {
+export const Body = ({ inline, strong, size, className, children }: BodyTypographyProps) => {
   const classes = buildTypographyClasses({
     type: 'body',
     size,
     strong,
     inline,
-    color,
-    margin,
     className,
   });
 

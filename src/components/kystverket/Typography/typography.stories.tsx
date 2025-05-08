@@ -34,9 +34,6 @@ const defaultProps: BoxProps = {
       <Title size="md">Title Medium</Title>
       <Title size="sm">Title Small</Title>
 
-      <Body size="xxl" strong>
-        Body Strong XXLarge
-      </Body>
       <Body size="xl" strong>
         Body Strong XLarge
       </Body>
@@ -50,17 +47,12 @@ const defaultProps: BoxProps = {
       <Body size="sm" strong>
         Body Strong Small
       </Body>
-      <Body size="xxl">Body XXLarge</Body>
+
       <Body size="xl">Body XLarge</Body>
       <Body size="lg">Body Large</Body>
       <Body size="md">Body Medium</Body>
       <Body size="sm">Body Small</Body>
-      <Body size="lg" margin>
-        Body Large margin
-      </Body>
-      <Body size="lg" color="accent">
-        Body Large accent
-      </Body>
+      <Body size="lg">Body Large accent</Body>
       <Body size="md">Body Medium</Body>
       <Body size="sm">Body Small</Body>
       <Label size="xl" strong>

@@ -29,6 +29,13 @@ export const Normal: Story = {
   },
 };
 
+export const Visited: Story = {
+  args: {
+    children: 'Besøk linken for å se visited state',
+    href: 'https://arngren.net/',
+  },
+};
+
 export const InText: StoryFn<typeof Link> = () => (
   <>
     <Body>
@@ -60,7 +67,7 @@ LongLink.decorators = [
 export const Neutral: StoryFn<typeof Link> = () => (
   <>
     <Body>
-      <Link color="neutral" href={designsystemetLink}>
+      <Link data-color="neutral" href={designsystemetLink}>
         Neutral
       </Link>
     </Body>
