@@ -96,7 +96,7 @@ const Box = ({
   styles['--box-wrap'] = wrapTypeToCssValue(wrap);
 
   if (container) {
-    styles['container-type'] = container;
+    classList.push(classes[`container-type-${container}`]);
   }
 
   if (props.horizontal) {
