@@ -36,9 +36,12 @@ const sizes: Size[] = ['sm', 'md', 'lg'];
 const colorModes = ['light', 'dark', 'auto'];
 const typography = ['primary', 'secondary'];
 
+const colorSchemes = ['primary', 'accent', 'extra1', 'extra2', 'neutral'];
+
 export const DesignsystemetShowcase: StoryFn = () => {
   const [size, setSize] = useState<Size>('md');
   const [colorMode, setColorMode] = useState('light');
+  const [colorScheme, setColorScheme] = useState('primary');
   const [typographyMode, setTypographyMode] = useState('primary');
 
   return (
@@ -83,8 +86,26 @@ export const DesignsystemetShowcase: StoryFn = () => {
             ))}
           </ToggleGroup>
         </Fieldset>
+        <Fieldset>
+          <Fieldset.Legend>
+            Farger
+            <code data-size="xs">(data-color)</code>
+          </Fieldset.Legend>
+          <ToggleGroup value={colorScheme} onChange={setColorScheme}>
+            {colorSchemes.map((tm) => (
+              <ToggleGroup.Item key={tm} value={tm}>
+                {tm}
+              </ToggleGroup.Item>
+            ))}
+          </ToggleGroup>
+        </Fieldset>
       </div>
-      <Showcase data-size={size} data-color-scheme={colorMode} data-typography={typographyMode} />
+      <Showcase
+        data-size={size}
+        data-color={colorScheme}
+        data-color-scheme={colorMode}
+        data-typography={typographyMode}
+      />
     </div>
   );
 };
