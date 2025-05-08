@@ -1,0 +1,9 @@
+/*
+Dette skal være unødvendig ihht. designsystemet da det gjøres et poeng ut av at uordnede lister bruker kulepunkt
+som standard (https://storybook.designsystemet.no/?path=/docs/komponenter-list--docs).
+d.d blir listen i ErrorSummaryList generert uten kulepunkt (bruker List.Unordered som implementasjon) som er grunnen
+til denne overstyringen.
+*/
+ul.ds-list {
+  list-style: disc;
+}
