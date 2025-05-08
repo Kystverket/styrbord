@@ -14,7 +14,6 @@
   gap: var(--box-gap);
   flex-wrap: var(--box-wrap);
   flex: var(--box-flex-grow) var(--box-flex-shrink) var(--box-flex-basis);
-  container-type: inline-size;
 }
 
 .horizontal {
