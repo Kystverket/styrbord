@@ -27,8 +27,13 @@
 }
 .radioGroup {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: var(--spacing-8);
+}
+@container (min-width: 500px) {
+  .radioGroup {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 .radioBoxIndicator {
   display: block;
@@ -45,4 +50,5 @@
 }
 .radioBoxText {
   text-align: left;
+  text-wrap: break-word;
 }
