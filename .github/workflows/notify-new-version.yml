@@ -1,4 +1,4 @@
-name: Notify New Version of @kystverket/styrbord-tokens
+name: Ny versjon av @kystverket/styrbord-tokens
 
 on:
   pull_request:
@@ -55,33 +55,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Step 5: Notify in pull request if a new version is available
-      - name: Notify in pull request
+      - name: Finnes ny versjon, oppdater
+        run: exit 1
         if: env.NEW_TOKENS_VERSION_AVAILABLE == 'true'
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.payload.pull_request.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `🚀 A new version of \`@kystverket/styrbord-tokens\` is available: **${process.env.LATEST_VERSION}**. Please update your dependencies!`
-            })
-      - name: Remove comment if version updated
-        if: env.NEW_TOKENS_VERSION_AVAILABLE == 'false'
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const comments = await github.rest.issues.listComments({
-              issue_number: context.payload.pull_request.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-            });
-
-            const comment = comments.data.find(c => c.body.includes('A new version of `@kystverket/styrbord-tokens` is available'));
-            if (comment) {
-              await github.rest.issues.deleteComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: comment.id,
-              });
-            }
