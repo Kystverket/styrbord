@@ -34,7 +34,7 @@
   gap: var(--spacing-8);
 }
 
-@container (min-width: 500px) {
+@container (min-width: 400px) {
   .toggleGroup {
     grid-template-columns: 1fr 1fr;
   }
