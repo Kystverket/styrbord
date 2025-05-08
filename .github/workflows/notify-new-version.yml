@@ -7,6 +7,8 @@ on:
 jobs:
   check-new-version:
     runs-on: ubuntu-latest
+    permissions:
+      packages: read
 
     steps:
       # Step 1: Checkout the repository
@@ -23,15 +25,19 @@ jobs:
       - name: Get latest version of @kystverket/styrbord-tokens
         id: get_latest_version
         run: |
+          printf "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN\n@kystverket:registry=https://npm.pkg.github.com/" > .npmrc
           echo "Fetching latest version of @kystverket/styrbord-tokens..."
           LATEST_VERSION=$(npm show @kystverket/styrbord-tokens version)
           echo "Latest version: $LATEST_VERSION"
           echo "LATEST_VERSION=$LATEST_VERSION" >> $GITHUB_ENV
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Step 4: Check if the package is used in the repository and compare versions
       - name: Check package version
         id: check_version
         run: |
+          printf "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN\n@kystverket:registry=https://npm.pkg.github.com/" > .npmrc
           echo "Checking if @kystverket/styrbord-tokens is used in the repository..."
           CURRENT_VERSION=$(jq -r '.dependencies["@kystverket/styrbord-tokens"] // .devDependencies["@kystverket/styrbord-tokens"]' package.json | sed 's/[^0-9.]*//g')
           echo "Current version: $CURRENT_VERSION"
@@ -41,6 +47,8 @@ jobs:
           else
             echo "No new version available."
             echo "NEW_TOKENS_VERSION_AVAILABLE=false" >> $GITHUB_ENV
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Step 5: Notify in pull request if a new version is available
       - name: Notify in pull request
