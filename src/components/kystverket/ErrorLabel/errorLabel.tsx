@@ -20,7 +20,7 @@ const ErrorLabel = ({ align = 'center', ...props }: ErrorLabelProps) => {
       {errorHasText && (
         <Box horizontal align={align} gap={4} className={style.error}>
           <Icon material="error" filled className={style.icon} />
-          <Label size="sm" strong className={style.text}>
+          <Label size="md" strong className={style.text}>
             {errorText}
           </Label>
         </Box>
