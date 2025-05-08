@@ -1,5 +1,6 @@
 import { Textfield as DsTextField } from '@digdir/designsystemet-react';
 import { InputLabel } from '~/main';
+import { InputSize, inputSizeClass } from '~/utils/input/input';
 
 export const Textfield = null;
 
@@ -20,12 +21,13 @@ export interface TextInputProps {
   prefix?: string;
   suffix?: string;
   type?: 'email' | 'hidden' | 'password' | 'tel' | 'text' | 'time' | 'url';
+  size?: InputSize;
 }
 
-export const TextInput = ({ type = 'text', className, ...props }: TextInputProps) => {
+export const TextInput = ({ size = 'full', type = 'text', className, ...props }: TextInputProps) => {
   return (
     <DsTextField
-      className={className}
+      className={`${className} ${inputSizeClass(size)}`}
       label={
         <InputLabel
           text={props.label}
