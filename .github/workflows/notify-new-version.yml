@@ -43,12 +43,14 @@ jobs:
           echo "Checking if @kystverket/styrbord-tokens is used in the repository..."
           CURRENT_VERSION=$(jq -r '.dependencies["@kystverket/styrbord-tokens"] // .devDependencies["@kystverket/styrbord-tokens"]' package.json | sed 's/[^0-9.]*//g')
           echo "Current version: $CURRENT_VERSION"
-          if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]; then
+          if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]
+          then
             echo "New version available: $LATEST_VERSION"
             echo "NEW_TOKENS_VERSION_AVAILABLE=true" >> $GITHUB_ENV
           else
             echo "No new version available."
             echo "NEW_TOKENS_VERSION_AVAILABLE=false" >> $GITHUB_ENV
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
