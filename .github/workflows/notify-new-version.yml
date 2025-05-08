@@ -1,4 +1,4 @@
-name: Notify New Version of @kystverket/styrbord-tokens
+name: Bruker nyeste versjon av @kystverket/styrbord-tokens
 
 on:
   pull_request:
@@ -7,6 +7,10 @@ on:
 jobs:
   check-new-version:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      issues: write
 
     steps:
       # Step 1: Checkout the repository
@@ -23,53 +27,34 @@ jobs:
       - name: Get latest version of @kystverket/styrbord-tokens
         id: get_latest_version
         run: |
+          printf "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN\n@kystverket:registry=https://npm.pkg.github.com/" > .npmrc
           echo "Fetching latest version of @kystverket/styrbord-tokens..."
           LATEST_VERSION=$(npm show @kystverket/styrbord-tokens version)
           echo "Latest version: $LATEST_VERSION"
           echo "LATEST_VERSION=$LATEST_VERSION" >> $GITHUB_ENV
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Step 4: Check if the package is used in the repository and compare versions
       - name: Check package version
         id: check_version
         run: |
+          printf "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN\n@kystverket:registry=https://npm.pkg.github.com/" > .npmrc
           echo "Checking if @kystverket/styrbord-tokens is used in the repository..."
           CURRENT_VERSION=$(jq -r '.dependencies["@kystverket/styrbord-tokens"] // .devDependencies["@kystverket/styrbord-tokens"]' package.json | sed 's/[^0-9.]*//g')
           echo "Current version: $CURRENT_VERSION"
-          if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]; then
+          if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]
+          then
             echo "New version available: $LATEST_VERSION"
             echo "NEW_TOKENS_VERSION_AVAILABLE=true" >> $GITHUB_ENV
           else
             echo "No new version available."
             echo "NEW_TOKENS_VERSION_AVAILABLE=false" >> $GITHUB_ENV
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Step 5: Notify in pull request if a new version is available
-      - name: Notify in pull request
+      - name: Finnes ny versjon, oppdater
+        run: exit 1
         if: env.NEW_TOKENS_VERSION_AVAILABLE == 'true'
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.payload.pull_request.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `🚀 A new version of \`@kystverket/styrbord-tokens\` is available: **${process.env.LATEST_VERSION}**. Please update your dependencies!`
-            })
-      - name: Remove comment if version updated
-        if: env.NEW_TOKENS_VERSION_AVAILABLE == 'false'
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const comments = await github.rest.issues.listComments({
-              issue_number: context.payload.pull_request.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-            });
-
-            const comment = comments.data.find(c => c.body.includes('A new version of `@kystverket/styrbord-tokens` is available'));
-            if (comment) {
-              await github.rest.issues.deleteComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: comment.id,
-              });
-            }
