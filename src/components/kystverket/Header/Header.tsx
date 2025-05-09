@@ -1,7 +1,8 @@
-import { Box, Label, Logo, LogoVariant, SupportedLanguage } from '~/main';
+import { Box, Logo, LogoVariant, SupportedLanguage } from '~/main';
 import classes from './Header.module.css';
 import { useTranslation } from '~/i18n/translations';
 import { ReactNode } from 'react';
+import { Label } from '@digdir/designsystemet-react';
 
 export interface HeaderProps {
   /**
@@ -47,11 +48,7 @@ export function Header({
         <Box horizontal align="center" gap={16}>
           <a className={classes.logoLink} href={url}>
             <Logo variant={variant} height={47} alt={t('header-alt-text')} />
-            {title && (
-              <Label className={classes.titleText} size="lg">
-                {title}
-              </Label>
-            )}
+            {title && <Label className={classes.titleText}>{title}</Label>}
           </a>
         </Box>
         {children}

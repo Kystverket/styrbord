@@ -1,6 +1,6 @@
 {
   "name": "@kystverket/styrbord",
-  "version": "0.300.8",
+  "version": "0.300.10",
   "description": "",
   "type": "module",
   "exports": {
@@ -45,7 +45,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@kystverket/styrbord-tokens": "^0.2.28",
+    "@kystverket/styrbord-tokens": "^0.2.29",
     "@chromatic-com/storybook": "^1.9.0",
     "@eslint/js": "^9.22.0",
     "@rollup/plugin-typescript": "^11.1.6",
