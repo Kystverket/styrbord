@@ -16,7 +16,7 @@ export interface NumberInputProps {
   error?: string | boolean | null;
   disabled?: boolean;
   readOnly?: boolean;
-  inputMode?: 'tel' | 'numeric' | 'decimal';
+  inputMode?: 'numeric' | 'decimal';
   prefix?: string;
   suffix?: string;
   min?: number;
@@ -50,7 +50,7 @@ export const NumberInput = ({ size = 'full', className, align = 'left', ...props
       error={props.error}
       prefix={props.prefix}
       suffix={props.suffix}
-      type="numeric"
+      type="number"
       min={props.min}
       max={props.max}
     />
