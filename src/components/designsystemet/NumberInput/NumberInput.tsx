@@ -25,7 +25,13 @@ export interface NumberInputProps {
   size?: InputSize;
 }
 
-export const NumberInput = ({ size = 'full', className, align = 'left', ...props }: NumberInputProps) => {
+export const NumberInput = ({
+  size = 'full',
+  inputMode = 'numeric',
+  className,
+  align = 'left',
+  ...props
+}: NumberInputProps) => {
   return (
     <Textfield
       className={[className, inputSizeClass(size), classes['align-' + align]].join(' ')}
@@ -46,7 +52,7 @@ export const NumberInput = ({ size = 'full', className, align = 'left', ...props
       onChange={(event) => {
         props.onChange?.(event.target.value ? parseFloat(event.target.value) : undefined);
       }}
-      inputMode={props.inputMode}
+      inputMode={inputMode}
       error={props.error}
       prefix={props.prefix}
       suffix={props.suffix}
