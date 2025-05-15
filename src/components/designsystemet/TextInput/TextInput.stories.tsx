@@ -70,7 +70,7 @@ export const WithBoolError: Story = {
 export const Disabled: Story = {
   args: {
     ...defaultArgs,
-    error: true,
+    error: false,
     disabled: true,
   },
 };
@@ -78,7 +78,7 @@ export const Disabled: Story = {
 export const ReadOnly: Story = {
   args: {
     ...defaultArgs,
-    error: true,
+    error: false,
     readOnly: true,
   },
 };

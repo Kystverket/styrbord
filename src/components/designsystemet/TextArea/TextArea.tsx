@@ -25,7 +25,7 @@ export interface TextAreaProps {
 export const TextArea = ({ size = 'full', className, ...props }: TextAreaProps) => {
   return (
     <DsTextField
-      className={`${className} ${inputSizeClass(size)}`}
+      className={`${className} ${inputSizeClass(size)}  ${props.readOnly ? 'is-readonly' : ''}`}
       label={
         <InputLabel
           text={props.label}

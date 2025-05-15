@@ -61,6 +61,22 @@ export const WithError: Story = {
   },
 };
 
+export const ReadOnly: Story = {
+  args: {
+    ...defaultArgs,
+    error: false,
+    readOnly: true,
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    ...defaultArgs,
+    error: false,
+    disabled: true,
+  },
+};
+
 export const AlignRight: Story = {
   args: {
     ...defaultArgs,

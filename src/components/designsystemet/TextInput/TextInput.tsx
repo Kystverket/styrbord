@@ -30,7 +30,7 @@ export interface TextInputProps {
 export const TextInput = ({ autoComplete, size = 'full', type = 'text', className, ...props }: TextInputProps) => {
   return (
     <DsTextField
-      className={`${className} ${inputSizeClass(size)}`}
+      className={`${className} ${inputSizeClass(size)} ${props.readOnly ? 'is-readonly' : ''}`}
       label={
         <InputLabel
           text={props.label}

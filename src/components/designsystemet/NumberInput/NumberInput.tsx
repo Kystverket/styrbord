@@ -34,17 +34,19 @@ export const NumberInput = ({
 }: NumberInputProps) => {
   return (
     <Textfield
-      className={[className, inputSizeClass(size), classes['align-' + align]].join(' ')}
+      className={[className, inputSizeClass(size), classes['align-' + align], props.readOnly ? 'is-readonly' : ''].join(
+        ' ',
+      )}
       label={
         <InputLabel
           text={props.label}
           subText={props.description}
           required={props.required}
           optional={props.optional}
+          readonly={props.readOnly}
           embedded
         />
       }
-      readOnly={props.readOnly}
       placeholder={props.placeholder}
       disabled={props.disabled}
       value={props.value ?? ''}

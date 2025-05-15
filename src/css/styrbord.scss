@@ -49,3 +49,7 @@
   --dsc-validation-message-icon-url: url('data:image/svg+xml;charset=utf-8,%0A%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2220px%22%20viewBox%3D%220%20-960%20960%20960%22%20width%3D%2220px%22%20fill%3D%22%23e8eaed%22%3E%3Cpath%20d%3D%22M479.79-288q15.21%200%2025.71-10.29t10.5-25.5q0-15.21-10.29-25.71t-25.5-10.5q-15.21%200-25.71%2010.29t-10.5%2025.5q0%2015.21%2010.29%2025.71t25.5%2010.5ZM444-432h72v-240h-72v240Zm36.28%20336Q401-96%20331-126t-122.5-82.5Q156-261%20126-330.96t-30-149.5Q96-560%20126-629.5q30-69.5%2082.5-122T330.96-834q69.96-30%20149.5-30t149.04%2030q69.5%2030%20122%2082.5T834-629.28q30%2069.73%2030%20149Q864-401%20834-331t-82.5%20122.5Q699-156%20629.28-126q-69.73%2030-149%2030Z%22%2F%3E%3C%2Fsvg%3E') !important;
   font-weight: var(--ds-font-weight-medium);
 }
+
+.is-readonly .ds-input {
+  background-color: var(--color-neutral-surface-tinted);
+}
