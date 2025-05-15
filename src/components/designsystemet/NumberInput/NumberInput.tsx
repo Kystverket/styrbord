@@ -50,7 +50,7 @@ export const NumberInput = ({ size = 'full', className, align = 'left', ...props
       error={props.error}
       prefix={props.prefix}
       suffix={props.suffix}
-      type="number"
+      type="text"
       min={props.min}
       max={props.max}
     />
