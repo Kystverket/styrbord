@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import style from './inputLabel.module.css';
 import { Body, Label } from '../Typography/typography';
 import Box from '../Box/box';
+import { Icon, Spinner } from '~/main';
 
 export interface InputLabelProps {
   optional?: boolean | string | undefined;
@@ -10,11 +11,15 @@ export interface InputLabelProps {
   subText?: ReactNode | string | null;
   children?: ReactNode;
   embedded?: boolean;
+  readonly?: boolean;
+  loading?: boolean;
 }
 
 const InputLabel = ({
   text,
   subText,
+  readonly = false,
+  loading = false,
   optional = false,
   required = false,
   embedded = false,
@@ -36,7 +41,9 @@ const InputLabel = ({
     <label>
       <Box gap={8}>
         <Box gap={0} mb={children || embedded ? 0 : 8}>
-          <Box horizontal align="start">
+          <Box horizontal align="center">
+            {readonly && !loading && <Icon material="lock" filled className={style.readOnly} />}
+            {loading && <Spinner aria-label="spinning" data-size="xs" className={style.loading} />}
             <Label inline size="md" strong>
               {text}
               {required && requiredText && (
