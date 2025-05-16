@@ -3,7 +3,7 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Logo, LogoProps } from '~/components/kystverket/Logo/Logo';
 
 const meta = {
-  title: 'Page/Logo',
+  title: 'KYV - Side/Logo',
   component: Logo,
   decorators: [StyrbordDecorator],
   tags: ['autodocs'],

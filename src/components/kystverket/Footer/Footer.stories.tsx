@@ -3,7 +3,7 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Footer, FooterProps } from '~/components/kystverket/Footer/Footer';
 
 const meta = {
-  title: 'Page/Footer',
+  title: 'KYV - Side/Footer',
   component: Footer,
 
   decorators: [StyrbordDecorator],

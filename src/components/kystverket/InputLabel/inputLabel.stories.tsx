@@ -3,7 +3,7 @@ import InputLabel, { InputLabelProps } from './inputLabel';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Helpers/InputLabel',
+  title: 'KYV - Helpers/InputLabel',
   component: InputLabel,
   decorators: [StyrbordDecorator],
   tags: ['autodocs'],

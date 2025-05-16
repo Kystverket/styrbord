@@ -5,7 +5,7 @@ import BorderedRadioGroup, { BorderedRadioGroupProps, RadioGroupValueType } from
 import { Box } from '~/main';
 
 const meta = {
-  title: 'Components/BorderedRadioGroup',
+  title: 'KYV - Komponenter/BorderedRadioGroup',
   component: BorderedRadioGroup,
   decorators: [StyrbordDecorator],
   tags: ['autodocs'],

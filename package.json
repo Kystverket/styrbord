@@ -45,9 +45,9 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@kystverket/styrbord-tokens": "^0.2.29",
     "@chromatic-com/storybook": "^1.9.0",
     "@eslint/js": "^9.22.0",
+    "@kystverket/styrbord-tokens": "^0.2.29",
     "@rollup/plugin-typescript": "^11.1.6",
     "@storybook/addon-essentials": "^8.6.4",
     "@storybook/addon-interactions": "^8.6.4",

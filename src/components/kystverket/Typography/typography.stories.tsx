@@ -4,7 +4,7 @@ import Box, { BoxProps } from '../Box/box';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Helpers/Typography',
+  title: 'KYV - Helpers/Typography',
   component: Box,
   decorators: [StyrbordDecorator],
   tags: ['autodocs'],
