@@ -21,14 +21,10 @@ Styrbord blir publisert til Github Packages. Du kan lese en [guide om installeri
 - Lag et `Personal Access Token` (PAT) med lesetilgang på packages. Dette gjøres her: [https://github.com/settings/tokens](https://github.com/settings/tokens)
 - Lag en fil som heter `.npmrc` i din hjemmemappe (`cd ~`) med følgende:
 
-      ```.env
-
+```.env
   //npm.pkg.github.com/:\_authToken=MITT_TOKEN
   @kystverket:registry=https://npm.pkg.github.com/
-
-  ```
-
-  ```
+```
 
 - Bytt ut `MITT_TOKEN` i `.npmrc` med PAT du lagde i første steg
 - Kjør `npm i @kystverket/styrbord` for å installere Styrbord i ditt prosjekt
