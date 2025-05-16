@@ -9,6 +9,7 @@ const config: StorybookConfig = {
     '@storybook/addon-essentials',
     '@chromatic-com/storybook',
     '@storybook/addon-interactions',
+    'storybook-addon-tag-badges',
   ],
 
   core: {
@@ -26,7 +27,7 @@ const config: StorybookConfig = {
   docs: {},
 
   viteFinal: (viteConfig) => {
-    viteConfig.base = process.env.PUBLIC_DIR || viteConfig.base;
+    viteConfig.base = process.env.BASE_PATH || viteConfig.base;
 
     return viteConfig;
   },

@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: '22.x'
       - run: git pull
-      - name: npm ci
+      - name: setup github token
         run: |
           printf "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN\n@kystverket:registry=https://npm.pkg.github.com/" > .npmrc
         env:
@@ -36,4 +36,4 @@ jobs:
         with:
           checkout: false
           path: storybook-static
-          build_command: PUBLIC_DIR=/styrbord/ npm run build-storybook
+          build_command: BASE_PATH=/styrbord/ npm run build-storybook
