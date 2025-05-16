@@ -66,3 +66,19 @@ export const WithBoolError: Story = {
     error: true,
   },
 };
+
+export const Disabled: Story = {
+  args: {
+    ...defaultArgs,
+    error: true,
+    disabled: true,
+  },
+};
+
+export const ReadOnly: Story = {
+  args: {
+    ...defaultArgs,
+    error: true,
+    readOnly: true,
+  },
+};

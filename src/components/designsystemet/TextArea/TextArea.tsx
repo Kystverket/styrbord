@@ -19,7 +19,6 @@ export interface TextAreaProps {
   readOnly?: boolean;
   inputMode?: 'email' | 'tel' | 'search' | 'text' | 'none' | 'url' | 'numeric' | 'decimal';
   maxLength?: number;
-  rows?: number;
   size?: InputSize;
 }
 
@@ -33,10 +32,10 @@ export const TextArea = ({ size = 'full', className, ...props }: TextAreaProps) 
           subText={props.description}
           required={props.required}
           optional={props.optional}
+          readonly={props.readOnly}
           embedded
         />
       }
-      readOnly={props.readOnly}
       placeholder={props.placeholder}
       disabled={props.disabled}
       value={props.value ?? ''}
@@ -46,7 +45,6 @@ export const TextArea = ({ size = 'full', className, ...props }: TextAreaProps) 
       }}
       inputMode={props.inputMode}
       error={props.error}
-      rows={props.rows}
       multiline
       counter={props.maxLength}
     />

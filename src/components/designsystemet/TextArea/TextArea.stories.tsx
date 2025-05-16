@@ -60,10 +60,19 @@ export const WithError: Story = {
   },
 };
 
-export const ManyRows: Story = {
+export const ReadOnly: Story = {
   args: {
     ...defaultArgs,
-    rows: 10,
+    error: false,
+    readOnly: true,
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    ...defaultArgs,
+    error: false,
+    disabled: true,
   },
 };
 
