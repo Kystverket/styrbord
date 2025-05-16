@@ -3,7 +3,7 @@ import { create } from '@storybook/theming';
 export default create({
   base: 'light',
   brandTitle: 'Styrbord | Kystverket',
-  brandUrl: '/',
+  brandUrl: process.env.BASE_PATH || '/',
   brandImage: 'https://www.kystverket.no/UI/Icons/logo.svg',
   brandTarget: '_self',
   colorPrimary: '#000067',
