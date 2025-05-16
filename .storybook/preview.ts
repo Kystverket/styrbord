@@ -16,7 +16,8 @@ const preview: Preview = {
     },
     options: {
       storySort: {
-        order: ['Intro', 'Components', 'Form'],
+        method: 'alphabetical',
+        order: ['Intro', 'Komponenter', 'Side', 'Helpers', 'Form'],
       },
     },
   },

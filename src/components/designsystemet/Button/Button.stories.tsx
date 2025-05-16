@@ -4,10 +4,10 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Icon } from '~/main';
 
 const meta = {
-  title: 'Designsystemet/Button',
+  title: 'Komponenter/Button',
   component: Button,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'kyv-ds-hybrid'],
   argTypes: {},
 } satisfies Meta<typeof Button>;
 

@@ -6,7 +6,7 @@ const meta = {
   title: 'Helpers/InputLabel',
   component: InputLabel,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'kyv'],
   argTypes: {},
 } satisfies Meta<typeof InputLabel>;
 

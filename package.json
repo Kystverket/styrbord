@@ -1,6 +1,6 @@
 {
   "name": "@kystverket/styrbord",
-  "version": "0.300.12",
+  "version": "0.300.13",
   "description": "",
   "type": "module",
   "exports": {
@@ -83,6 +83,7 @@
     "rollup-plugin-typescript-paths": "^1.5.0",
     "sass": "^1.85.1",
     "storybook": "^8.6.4",
+    "storybook-addon-tag-badges": "^1.4.0",
     "tslib": "^2.8.1",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.26.1",

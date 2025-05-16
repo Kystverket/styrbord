@@ -6,7 +6,7 @@ const meta = {
   title: 'Helpers/ErrorLabel',
   component: ErrorLabel,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'kyv'],
   argTypes: {},
 } satisfies Meta<typeof ErrorLabel>;
 

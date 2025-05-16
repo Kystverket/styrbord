@@ -15,10 +15,10 @@ const Wrapper = (props: DatepickerProps) => {
 };
 
 const meta = {
-  title: 'Components/Datepicker',
+  title: 'Komponenter/Datepicker',
   component: Wrapper,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'kyv'],
   argTypes: {},
 } satisfies Meta<typeof Wrapper>;
 

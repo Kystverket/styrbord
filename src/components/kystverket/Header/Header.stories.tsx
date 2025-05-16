@@ -4,10 +4,10 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { SupportedLanguage } from '~/main';
 
 const meta = {
-  title: 'Page/Header',
+  title: 'Side/Header',
   component: Header,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'kyv'],
   argTypes: {
     children: {
       control: {

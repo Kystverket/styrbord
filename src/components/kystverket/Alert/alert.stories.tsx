@@ -4,10 +4,10 @@ import style from './alert.module.css';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Components/Alert',
+  title: 'Komponenter/Alert',
   component: Alert,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'kyv-ds-hybrid'],
   argTypes: {},
 } satisfies Meta<typeof Alert>;
 
