@@ -25,5 +25,11 @@ const config: StorybookConfig = {
   staticDirs: ['../assets'],
 
   docs: {},
+
+  viteFinal: (viteConfig) => {
+    viteConfig.base = process.env.PUBLIC_DIR || viteConfig.base;
+
+    return viteConfig;
+  },
 };
 export default config;

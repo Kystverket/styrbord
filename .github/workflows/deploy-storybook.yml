@@ -27,12 +27,11 @@ jobs:
       - name: npm ci
         run: |
           printf "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN\n@kystverket:registry=https://npm.pkg.github.com/" > .npmrc
-          npm ci
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: npm run build
       - id: build-publish
         uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
         with:
+          checkout: false
           path: storybook-static
-          build_command: npm run build-storybook
+          build_command: PUBLIC_DIR=/styrbord/ npm run build-storybook
