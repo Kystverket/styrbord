@@ -3,12 +3,12 @@ import { useState } from 'react';
 
 import { Fieldset, type Size, ToggleGroup } from '@digdir/designsystemet-react';
 
-import classes from './Intro.module.css';
-import { Showcase } from '../../../components/Showcase';
+import classes from './Showcase.module.css';
+import { Showcase } from './Showcase';
 import StyrbordDecorator from '../../../styrbordDecorator';
 
 export default {
-  title: 'Intro',
+  title: 'Designsystemet Showcase',
   decorators: [StyrbordDecorator],
   parameters: {
     chromatic: {

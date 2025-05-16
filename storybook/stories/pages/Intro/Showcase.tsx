@@ -27,8 +27,8 @@ import {
 import cl from 'clsx/lite';
 import { type HTMLAttributes, useState } from 'react';
 import classes from './Showcase.module.css';
-import { Details } from '../../src/components/designsystemet/Details/Details';
-import { Button } from '../../src/components/designsystemet/Button/Button';
+import { Details } from '../../../../src/components/designsystemet/Details/Details';
+import { Button } from '../../../../src/components/designsystemet/Button/Button';
 
 const DATA_PLACES = ['Sogndal', 'Oslo', 'Brønnøysund', 'Stavanger', 'Trondheim', 'Bergen', 'Lillestrøm'];
 
