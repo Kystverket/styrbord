@@ -3,10 +3,10 @@ import InputLabel, { InputLabelProps } from './inputLabel';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'KYV - Helpers/InputLabel',
+  title: 'Helpers/InputLabel',
   component: InputLabel,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'kyv'],
   argTypes: {},
 } satisfies Meta<typeof InputLabel>;
 

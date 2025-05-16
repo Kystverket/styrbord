@@ -16,7 +16,8 @@ const preview: Preview = {
     },
     options: {
       storySort: {
-        order: ['Intro', 'KYV - Komponenter', 'KYV - Side', 'KYV - Helpers', 'Form'],
+        method: 'alphabetical',
+        order: ['Intro', 'Komponenter', 'Side', 'Helpers', 'Form'],
       },
     },
   },

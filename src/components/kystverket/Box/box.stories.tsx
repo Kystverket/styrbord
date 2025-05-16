@@ -4,10 +4,10 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Title } from '~/main';
 
 const meta = {
-  title: 'KYV - Helpers/Box',
+  title: 'Helpers/Box',
   component: Box,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'kyv'],
   argTypes: {},
 } satisfies Meta<typeof Box>;
 

@@ -3,10 +3,10 @@ import { Select, SelectProps } from './Select';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Designsystemet/Select',
+  title: 'Komponenter/Select',
   component: Select,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'ds'],
   argTypes: {},
 } satisfies Meta<typeof Select>;
 

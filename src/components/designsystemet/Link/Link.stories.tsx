@@ -11,7 +11,7 @@ const randomNum = Math.floor(Math.random() * 1000);
 const designsystemetLink = 'https://designsystemet.no/?=' + randomNum;
 
 export default {
-  title: 'Designsystemet/Link',
+  title: 'Komponenter/Link',
   component: Link,
   parameters: {
     status: {
@@ -19,6 +19,7 @@ export default {
       url: 'http://www.url.com/status',
     },
   },
+  tags: ['ds'],
 } as Meta;
 
 export const Normal: Story = {

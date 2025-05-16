@@ -3,10 +3,10 @@ import { Suggestion, SuggestionProps } from './Suggestion';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Designsystemet/Suggestion',
+  title: 'Komponenter/Suggestion',
   component: Suggestion,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'ds'],
   argTypes: {},
 } satisfies Meta<typeof Suggestion>;
 

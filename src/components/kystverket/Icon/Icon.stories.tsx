@@ -4,10 +4,10 @@ import Icon from '~/components/kystverket/Icon/icon';
 import { iconIdList } from './icon.types';
 
 const meta = {
-  title: 'KYV - Helpers/Icon',
+  title: 'Helpers/Icon',
   component: Icon,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'kyv'],
   argTypes: {},
 } satisfies Meta<typeof Icon>;
 

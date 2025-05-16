@@ -3,10 +3,10 @@ import ErrorLabel, { ErrorLabelProps } from './errorLabel';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'KYV - Helpers/ErrorLabel',
+  title: 'Helpers/ErrorLabel',
   component: ErrorLabel,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'kyv'],
   argTypes: {},
 } satisfies Meta<typeof ErrorLabel>;
 

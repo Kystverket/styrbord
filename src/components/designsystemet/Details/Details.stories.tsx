@@ -4,10 +4,10 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Details, DetailsProps } from './Details';
 
 const meta = {
-  title: 'Designsystemet/Details',
+  title: 'Komponenter/Details',
   component: Details,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'ds'],
   argTypes: {},
 } satisfies Meta<typeof Details>;
 

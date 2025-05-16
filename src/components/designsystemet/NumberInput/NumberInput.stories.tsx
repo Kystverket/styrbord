@@ -3,10 +3,10 @@ import { NumberInput, NumberInputProps } from './NumberInput';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Designsystemet/NumberInput',
+  title: 'Komponenter/NumberInput',
   component: NumberInput,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'ds'],
   argTypes: {},
 } satisfies Meta<typeof NumberInput>;
 
