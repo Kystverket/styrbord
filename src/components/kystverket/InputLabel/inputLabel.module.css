@@ -6,14 +6,14 @@
   font-size: 20px;
 }
 .optional {
-  margin-left: 8px !important;
+  margin-left: var(--spacing-8) !important;
   border: 1px solid #94c1e3;
   background: #d3e5f4;
   padding: 1px 4px 0px 4px !important;
   border-radius: 2px;
 }
 .required {
-  margin-left: 8px !important;
+  margin-left: var(--spacing-8) !important;
   border: 1px solid #ffe099;
   background: #fff0cc;
   padding: 1px 4px 0px 4px !important;
@@ -22,14 +22,10 @@
 .requiredStar {
   color: var(--ds-color-danger-base-default);
   user-select: none;
-  margin-left: 8px;
-}
-
-.readOnly {
-  margin-right: var(--spacing-2);
-  font-size: 20px !important;
+  margin-left: var(--spacing-8);
 }
 
 .loading {
-  margin-right: var(--spacing-2);
+  margin-left: var(--spacing-8) !important;
+  display: inline;
 }
