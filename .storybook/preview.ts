@@ -1,7 +1,7 @@
 import type { Preview } from '@storybook/react';
 import { themes } from '@storybook/theming';
 
-import '../storybook/style.scss';
+import '../storybook/storybook-style.scss';
 import 'material-symbols';
 
 const preview: Preview = {

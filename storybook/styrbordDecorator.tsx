@@ -1,6 +1,6 @@
 import { PartialStoryFn } from '@storybook/types';
 
-import './style.scss';
+import './storybook-style.scss';
 import 'material-symbols';
 
 const StyrbordDecorator = (Story: PartialStoryFn) => (
