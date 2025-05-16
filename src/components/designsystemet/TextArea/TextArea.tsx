@@ -10,7 +10,7 @@ export interface TextAreaProps {
   className?: string;
   placeholder?: string;
   label?: string;
-  description?: string;
+  description?: string | React.ReactNode;
   value: string | null | undefined;
   onBlur?: () => void;
   onChange?: (value: string) => void;
@@ -32,10 +32,10 @@ export const TextArea = ({ size = 'full', className, ...props }: TextAreaProps) 
           subText={props.description}
           required={props.required}
           optional={props.optional}
-          readonly={props.readOnly}
           embedded
         />
       }
+      readOnly={props.readOnly}
       placeholder={props.placeholder}
       disabled={props.disabled}
       value={props.value ?? ''}
