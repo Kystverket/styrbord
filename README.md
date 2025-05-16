@@ -1,7 +1,7 @@
 # Styrbord
 
 Styrbord er et komponentbibliotek som vi kan ta i bruk i Kystverkets interne og eksterne
-applikasjoner. Det er *ikke* en profilguide, men en teknisk ressurs om kan trekkes inn for å la
+applikasjoner. Det er _ikke_ en profilguide, men en teknisk ressurs om kan trekkes inn for å la
 applikasjonen ha et Kystverket uttrykk samtidig som det følger moderne prinsipper for design.
 
 Styrbord tar i bruk [designsystemetet.no](https://www.designsystemet.no/) sine komponenter og prinsipper.
@@ -21,10 +21,11 @@ Styrbord blir publisert til Github Packages. Du kan lese en [guide om installeri
 - Lag et `Personal Access Token` (PAT) med lesetilgang på packages. Dette gjøres her: [https://github.com/settings/tokens](https://github.com/settings/tokens)
 - Lag en fil som heter `.npmrc` i din hjemmemappe (`cd ~`) med følgende:
 
-    ```.env
-//npm.pkg.github.com/:_authToken=MITT_TOKEN
-@kystverket:registry=https://npm.pkg.github.com/
-    ```
+      ```.env
+
+  //npm.pkg.github.com/:\_authToken=MITT_TOKEN
+  @kystverket:registry=https://npm.pkg.github.com/
+  ```
 
 - Bytt ut `MITT_TOKEN` i `.npmrc` med PAT du lagde i første steg
 - Kjør `npm i @kystverket/styrbord` for å installere Styrbord i ditt prosjekt
