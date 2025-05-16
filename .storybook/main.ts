@@ -25,11 +25,5 @@ const config: StorybookConfig = {
   staticDirs: ['../assets'],
 
   docs: {},
-
-  viteFinal: (viteConfig) => {
-    viteConfig.base = process.env.BASE_PATH || viteConfig.base;
-
-    return viteConfig;
-  },
 };
 export default config;

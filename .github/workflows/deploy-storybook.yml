@@ -37,5 +37,3 @@ jobs:
           checkout: false
           path: storybook-static
           build_command: npm run build-storybook
-        env:
-          BASE_PATH: /styrbord
