@@ -10,7 +10,7 @@ export interface TextAreaProps {
   className?: string;
   placeholder?: string;
   label?: string;
-  description?: string;
+  description?: string | React.ReactNode;
   value: string | null | undefined;
   onBlur?: () => void;
   onChange?: (value: string) => void;
