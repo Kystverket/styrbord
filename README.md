@@ -25,6 +25,9 @@ Styrbord blir publisert til Github Packages. Du kan lese en [guide om installeri
 
   //npm.pkg.github.com/:\_authToken=MITT_TOKEN
   @kystverket:registry=https://npm.pkg.github.com/
+
+  ```
+
   ```
 
 - Bytt ut `MITT_TOKEN` i `.npmrc` med PAT du lagde i første steg
@@ -43,3 +46,7 @@ Importering av enkeltkomponenter.
 ```js
 import { Heading, Ingress, Tabs } from '@kystverket/styrbord';
 ```
+
+## Design Tokens
+
+Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.com/Kystverket/styrbord-tokens).
