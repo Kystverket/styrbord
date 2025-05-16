@@ -50,6 +50,6 @@
   font-weight: var(--ds-font-weight-medium);
 }
 
-.is-readonly .ds-input {
-  background-color: var(--color-neutral-surface-tinted);
+.ds-label label {
+  display: inline-block;
 }

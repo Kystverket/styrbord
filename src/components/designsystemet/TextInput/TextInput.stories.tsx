@@ -82,3 +82,11 @@ export const ReadOnly: Story = {
     readOnly: true,
   },
 };
+
+export const Loading: Story = {
+  args: {
+    ...defaultArgs,
+    error: false,
+    loading: true,
+  },
+};
