@@ -95,6 +95,7 @@
     ]
   },
   "dependencies": {
+    "@esbuild/darwin-arm64": "^0.25.4",
     "date-fns": "^4.1.0",
     "esbuild": "^0.24.2",
     "material-symbols": "^0.23.0",
