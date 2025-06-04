@@ -13,6 +13,8 @@ export const iconIdList = [
   'chevron_right',
   'circle',
   'close',
+  'cloud_done',
+  'cloud_alert',
   'content_copy',
   'delete',
   'download',
@@ -25,6 +27,7 @@ export const iconIdList = [
   'keyboard_arrow_up',
   'link',
   'lock',
+  'login',
   'logout',
   'more_vert',
   'pending_actions',
@@ -37,6 +40,7 @@ export const iconIdList = [
   'source_environment',
   'stylus',
   'timeline',
+  'video_library',
   'warning',
 ] as const;
 export type IconId = (typeof iconIdList)[number];
