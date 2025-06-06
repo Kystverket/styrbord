@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const iconIdList = [
   'add',
   'adjust',
@@ -13,8 +12,8 @@ export const iconIdList = [
   'chevron_right',
   'circle',
   'close',
-  'cloud_done',
   'cloud_alert',
+  'cloud_done',
   'content_copy',
   'delete',
   'download',
@@ -43,4 +42,5 @@ export const iconIdList = [
   'video_library',
   'warning',
 ] as const;
+
 export type IconId = (typeof iconIdList)[number];
