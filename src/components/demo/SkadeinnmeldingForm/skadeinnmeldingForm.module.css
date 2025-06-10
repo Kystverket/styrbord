@@ -1,0 +1,8 @@
+.formArea {
+  display: flex;
+  flex-direction: column;
+  padding: 3rem 0rem;
+  background: #fff;
+  box-shadow: 0px 1px 2px 0px #1616161a;
+  flex: 1 1 100%;
+}
