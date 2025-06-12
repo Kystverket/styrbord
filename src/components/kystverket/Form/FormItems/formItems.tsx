@@ -7,7 +7,7 @@ export interface FormItemsProps {
   children?: React.ReactNode;
 }
 
-export default function FormItems({ className, children }: FormItemsProps) {
+export function FormItems({ className, children }: FormItemsProps) {
   return (
     <Box gap={24} className={className}>
       {children}

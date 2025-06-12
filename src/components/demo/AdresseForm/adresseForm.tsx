@@ -2,7 +2,7 @@ import { Box, TextInput } from '~/main';
 import { AdresseData } from '../skadeinnmelding.types';
 import { useContext } from 'react';
 import { FormContext } from '../form.context';
-import FormItems from '~/components/kystverket/Form/FormItems/formItems';
+import { FormItems } from '~/components/kystverket/Form/FormItems/formItems';
 
 export interface AdresseFormProps {
   data: AdresseData;
@@ -11,6 +11,10 @@ export interface AdresseFormProps {
 
 export function AdresseForm({ data, onChange }: AdresseFormProps) {
   const formContext = useContext(FormContext);
+
+  if (!formContext?.lookupPoststed) {
+    throw new Error('FormContext submit function is not provided.');
+  }
 
   const onPostnummerChanged = async (postnummer: string) => {
     const cleanedPostnummer = postnummer.replace(/\D/g, '');
@@ -22,7 +26,7 @@ export function AdresseForm({ data, onChange }: AdresseFormProps) {
     }
 
     try {
-      const poststedLookupValue = await formContext.lookupPoststed(postnummer);
+      const poststedLookupValue = (await formContext.lookupPoststed?.(postnummer)) || '';
       onChange?.({
         ...data,
         postnummer,

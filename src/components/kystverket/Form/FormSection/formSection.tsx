@@ -3,7 +3,7 @@
 import { Accent, Body, Box, Headline } from '~/main';
 
 import classes from './formSection.module.css';
-import FormItems from '../FormItems/formItems';
+import { FormItems } from '../FormItems/formItems';
 
 export interface FormSectionProps {
   title?: string;

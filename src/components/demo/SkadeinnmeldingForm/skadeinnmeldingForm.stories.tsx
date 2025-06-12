@@ -3,6 +3,7 @@ import { SkadeinnmeldingForm, SkadeinnmeldingFormProps } from './skadeinnmelding
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { defaultSkadeinnmeldingData } from '../skadeinnmelding.data';
 import { useState } from 'react';
+import { ContentContainer } from '~/components/kystverket/Form/ContentContainer/contentContainer';
 
 const meta = {
   title: 'Demo/SkadeinnmeldingSkjema',
@@ -13,7 +14,9 @@ const meta = {
       const [data, setData] = useState(args.data);
       return (
         <div style={{ backgroundColor: '#f0f0f0' }}>
-          <Story args={{ ...args, data, onChange: setData }} />
+          <ContentContainer>
+            <Story args={{ ...args, data, onChange: setData }} />
+          </ContentContainer>
         </div>
       );
     },

@@ -6,6 +6,7 @@ import { defaultSkadeinnmeldingData } from '../skadeinnmelding.data';
 import { Alert } from '@digdir/designsystemet-react';
 import { Box, Footer, Header } from '~/main';
 import { FullpageLoader } from '../FullpageLoader/fullpageLoader';
+import { ContentContainer } from '~/components/kystverket/Form/ContentContainer/contentContainer';
 
 export function SkadeinnmeldingFlow() {
   const formContext = useContext(FormContext);
@@ -14,9 +15,13 @@ export function SkadeinnmeldingFlow() {
   const [submitting, setSubmitting] = useState(false);
   const [completed, setCompleted] = useState(false);
 
+  if (!formContext?.submit) {
+    throw new Error('FormContext submit function is not provided.');
+  }
+
   const onSubmit = async () => {
     setSubmitting(true);
-    await formContext.submit(JSON.stringify(data));
+    await formContext.submit?.(JSON.stringify(data));
     setSubmitting(false);
     setCompleted(true);
   };
@@ -25,8 +30,15 @@ export function SkadeinnmeldingFlow() {
     <Box gap={32}>
       <Header language="nb-NO" logo={{ url: '/', variant: 'selvbetjening' }} />
       {submitting && <FullpageLoader />}
-      {completed && <Alert data-color="success">Takk for at du meldte inn en skade. Sammen fikser vi byen.</Alert>}
-      {!completed && <SkadeinnmeldingForm data={data} onChange={setData} onSubmit={onSubmit} />}
+      <ContentContainer>
+        {completed && (
+          <Alert data-color="success">
+            Takk for at du meldte inn en skade. Sammen utvikler vi kysten og havområdene til verdens sikreste og
+            reineste.
+          </Alert>
+        )}
+        {!completed && <SkadeinnmeldingForm data={data} onChange={setData} onSubmit={onSubmit} />}
+      </ContentContainer>
       <Footer language="nb-NO" />
     </Box>
   );
