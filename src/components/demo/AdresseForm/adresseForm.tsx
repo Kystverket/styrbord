@@ -2,6 +2,7 @@ import { Box, TextInput } from '~/main';
 import { AdresseData } from '../skadeinnmelding.types';
 import { useContext } from 'react';
 import { FormContext } from '../form.context';
+import FormItems from '~/components/kystverket/Form/FormItems/formItems';
 
 export interface AdresseFormProps {
   data: AdresseData;
@@ -38,7 +39,7 @@ export function AdresseForm({ data, onChange }: AdresseFormProps) {
   };
 
   return (
-    <>
+    <FormItems>
       <TextInput
         label="Vegadresse"
         value={data.vegadresse}
@@ -57,6 +58,6 @@ export function AdresseForm({ data, onChange }: AdresseFormProps) {
           <TextInput label="Poststed" readOnly value={data.poststed} />
         </Box>
       </Box>
-    </>
+    </FormItems>
   );
 }

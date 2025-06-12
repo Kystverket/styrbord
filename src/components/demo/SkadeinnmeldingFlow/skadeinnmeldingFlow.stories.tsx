@@ -5,7 +5,16 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 const meta = {
   title: 'Demo/SkadeinnmeldingFlow',
   component: SkadeinnmeldingFlow,
-  decorators: [StyrbordDecorator],
+  decorators: [
+    StyrbordDecorator,
+    (Story) => {
+      return (
+        <div style={{ backgroundColor: '#f0f0f0' }}>
+          <Story />
+        </div>
+      );
+    },
+  ],
   tags: ['autodocs', 'kyv'],
 } satisfies Meta<typeof SkadeinnmeldingFlow>;
 

@@ -3,6 +3,7 @@
 import { Accent, Body, Box, Headline } from '~/main';
 
 import classes from './formSection.module.css';
+import FormItems from '../FormItems/formItems';
 
 export interface FormSectionProps {
   title?: string;
@@ -26,9 +27,7 @@ export default function FormSection({ title, description, children, titleType = 
           {description && <Body size="sm">{description}</Body>}
         </Box>
       )}
-      <Box gap={24} className={classes.spacing}>
-        {children}
-      </Box>
+      <FormItems className={classes.spacing}>{children}</FormItems>
     </div>
   );
 }

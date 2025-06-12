@@ -11,7 +11,11 @@ const meta = {
     StyrbordDecorator,
     (Story, { args }) => {
       const [data, setData] = useState(args.data);
-      return <Story args={{ ...args, data, onChange: setData }} />;
+      return (
+        <div style={{ backgroundColor: '#f0f0f0' }}>
+          <Story args={{ ...args, data, onChange: setData }} />
+        </div>
+      );
     },
   ],
   tags: ['autodocs', 'kyv'],
