@@ -22,18 +22,18 @@ export const defaultSkadeinnmeldingData: SkadeinnmeldingData = {
 export const mockSkadeinnmeldingData: SkadeinnmeldingData = {
   skade: {
     hvor: {
-      postnummer: '',
-      poststed: '',
-      vegadresse: '',
+      postnummer: '6057',
+      poststed: 'Ellingsøy',
+      vegadresse: 'Storfarvegen 270',
     },
-    hva: '',
-    alvorlighetsgrad: undefined,
-    kommentar: '',
+    hva: 'Ankring forbudt skilt er ødelagt',
+    alvorlighetsgrad: 'uteAvDrift',
+    kommentar: 'Dette kan være farlig hvis båter ankrer her.',
   },
   kontakt: {
-    navn: '',
-    epost: '',
-    telefon: '',
-    kommentar: '',
+    navn: 'Magnus Ekse',
+    epost: 'mfekse@gmail.com',
+    telefon: '12341234',
+    kommentar: 'Call me maybe',
   },
 };

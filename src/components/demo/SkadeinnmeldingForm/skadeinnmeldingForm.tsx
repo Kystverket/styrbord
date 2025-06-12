@@ -2,7 +2,7 @@ import { Box, Button, Fieldset, Headline, Radio, TextArea, TextInput, useRadioGr
 import { SkadeinnmeldingData } from '../skadeinnmelding.types';
 import FormSection from '~/components/kystverket/Form/FormSection/formSection';
 import classes from './skadeinnmeldingForm.module.css';
-import { AdresseForm } from '../AdresseForm/adresseForm';
+import { AdresseFormPart } from '../AdresseFormPart/adresseFormPart';
 
 export interface SkadeinnmeldingFormProps {
   data: SkadeinnmeldingData;
@@ -59,7 +59,7 @@ export function SkadeinnmeldingForm({ data, onChange, onSubmit }: Skadeinnmeldin
         />
       </FormSection>
       <FormSection title="Hvor er skaden" description="Oppgi hvor skaden er oppstått.">
-        <AdresseForm
+        <AdresseFormPart
           data={data.skade.hvor}
           onChange={(adresseData) => onChange?.({ ...data, skade: { ...data?.skade, hvor: adresseData } })}
         />

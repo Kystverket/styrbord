@@ -1,16 +1,17 @@
 import { Box, TextInput } from '~/main';
 import { AdresseData } from '../skadeinnmelding.types';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { FormContext } from '../form.context';
 import { FormItems } from '~/components/kystverket/Form/FormItems/formItems';
 
-export interface AdresseFormProps {
+export interface AdresseFormPartProps {
   data: AdresseData;
   onChange?: (data: AdresseData) => void;
 }
 
-export function AdresseForm({ data, onChange }: AdresseFormProps) {
+export function AdresseFormPart({ data, onChange }: AdresseFormPartProps) {
   const formContext = useContext(FormContext);
+  const [loading, setLoading] = useState(false);
 
   if (!formContext?.lookupPoststed) {
     throw new Error('FormContext submit function is not provided.');
@@ -26,6 +27,7 @@ export function AdresseForm({ data, onChange }: AdresseFormProps) {
     }
 
     try {
+      setLoading(true);
       const poststedLookupValue = (await formContext.lookupPoststed?.(postnummer)) || '';
       onChange?.({
         ...data,
@@ -40,6 +42,7 @@ export function AdresseForm({ data, onChange }: AdresseFormProps) {
         poststed: '',
       });
     }
+    setLoading(false);
   };
 
   return (
@@ -59,7 +62,7 @@ export function AdresseForm({ data, onChange }: AdresseFormProps) {
           />
         </Box>
         <Box grow={4}>
-          <TextInput label="Poststed" readOnly value={data.poststed} />
+          <TextInput label="Poststed" readOnly value={loading ? '...' : data.poststed} />
         </Box>
       </Box>
     </FormItems>

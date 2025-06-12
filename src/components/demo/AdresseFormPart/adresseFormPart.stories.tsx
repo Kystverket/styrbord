@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { AdresseForm, AdresseFormProps } from './adresseForm';
+import { AdresseFormPart, AdresseFormPartProps } from './adresseFormPart';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { useState } from 'react';
 
 const meta = {
-  title: 'Demo/AdresseSkjema',
-  component: AdresseForm,
+  title: 'Demo/AdresseFormPart',
+  component: AdresseFormPart,
   decorators: [
     StyrbordDecorator,
     (Story, { args }) => {
@@ -14,13 +14,13 @@ const meta = {
     },
   ],
   tags: ['autodocs', 'kyv'],
-} satisfies Meta<typeof AdresseForm>;
+} satisfies Meta<typeof AdresseFormPart>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const defaultProps: AdresseFormProps = {
+const defaultProps: AdresseFormPartProps = {
   data: {
     vegadresse: '',
     postnummer: '',

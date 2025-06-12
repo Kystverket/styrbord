@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { SkadeinnmeldingForm, SkadeinnmeldingFormProps } from './skadeinnmeldingForm';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
-import { defaultSkadeinnmeldingData } from '../skadeinnmelding.data';
+import { defaultSkadeinnmeldingData, mockSkadeinnmeldingData } from '../skadeinnmelding.data';
 import { useState } from 'react';
 import { ContentContainer } from '~/components/kystverket/Form/ContentContainer/contentContainer';
 
 const meta = {
-  title: 'Demo/SkadeinnmeldingSkjema',
+  title: 'Demo/SkadeinnmeldingForm',
   component: SkadeinnmeldingForm,
   decorators: [
     StyrbordDecorator,
@@ -34,4 +34,9 @@ const defaultProps: SkadeinnmeldingFormProps = {
 
 export const Default: Story = {
   args: defaultProps,
+};
+
+
+export const MockData: Story = {
+  args: { ...defaultProps, data: mockSkadeinnmeldingData },
 };

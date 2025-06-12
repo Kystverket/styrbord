@@ -4,7 +4,7 @@ import './storybook-style.scss';
 import 'material-symbols';
 import { FormContext } from '~/components/demo/form.context';
 
-const lookupPoststedDummy = async (postnummer: string): Promise<string> => {
+const lookupPoststed = async (postnummer: string): Promise<string> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       const dummies = [
@@ -24,7 +24,7 @@ const lookupPoststedDummy = async (postnummer: string): Promise<string> => {
   });
 };
 
-const submitDummy = async (data: string): Promise<string> => {
+const submit = async (data: string): Promise<string> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(data);
@@ -32,12 +32,11 @@ const submitDummy = async (data: string): Promise<string> => {
   });
 };
 
-
 const StyrbordDecorator = (Story: PartialStoryFn) => (
   <FormContext.Provider
     value={{
-      lookupPoststed: lookupPoststedDummy,
-      submit: submitDummy,
+      lookupPoststed,
+      submit,
     }}
   >
     <Story />
