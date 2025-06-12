@@ -5,11 +5,12 @@ import { FormContext } from '../form.context';
 import { FormItems } from '~/components/kystverket/Form/FormItems/formItems';
 
 export interface AdresseFormPartProps {
+  validationErrors?: Record<string, string | undefined>;
   data: AdresseData;
   onChange?: (data: AdresseData) => void;
 }
 
-export function AdresseFormPart({ data, onChange }: AdresseFormPartProps) {
+export function AdresseFormPart({ data, validationErrors, onChange }: AdresseFormPartProps) {
   const formContext = useContext(FormContext);
   const [loading, setLoading] = useState(false);
 
@@ -49,6 +50,7 @@ export function AdresseFormPart({ data, onChange }: AdresseFormPartProps) {
     <FormItems>
       <TextInput
         label="Vegadresse"
+        error={validationErrors?.vegadresse}
         value={data.vegadresse}
         onChange={(text) => onChange?.({ ...data, vegadresse: text })}
       />
@@ -56,6 +58,7 @@ export function AdresseFormPart({ data, onChange }: AdresseFormPartProps) {
         <Box grow={1}>
           <TextInput
             label="Postnummer"
+            error={validationErrors?.postnummer}
             inputMode="numeric"
             value={data.postnummer}
             onChange={(text) => onPostnummerChanged(text)}
