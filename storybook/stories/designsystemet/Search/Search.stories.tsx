@@ -1,6 +1,7 @@
-import { Search, Divider, Paragraph, Button, Field, Label } from '~/main';
+import { Search, Divider, Paragraph, Button, Field } from '~/main';
 import type { Meta, StoryFn } from '@storybook/react';
 import { useState } from 'react';
+import { Label } from '@digdir/designsystemet-react';
 
 export default {
   title: 'Designsystemet/Search',
@@ -53,7 +54,7 @@ export const Variants: StoryFn<typeof Search> = () => (
     <Search>
       <Search.Input aria-label="Søk" />
       <Search.Clear />
-      <Search.Button variant="secondary" />
+      <Search.Button variant="primary" />
     </Search>
   </>
 );

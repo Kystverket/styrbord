@@ -1,6 +1,7 @@
-import { Textarea, Label, Divider, Paragraph, Button } from '~/main';
+import { Textarea, Divider, Paragraph, Button } from '~/main';
 import type { Meta, StoryFn, StoryObj } from '@storybook/react';
 import { useState } from 'react';
+import { Label } from '@digdir/designsystemet-react';
 
 type Story = StoryObj<typeof Textarea>;
 

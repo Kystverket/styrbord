@@ -1,6 +1,7 @@
-import { Button, Divider, Field, Heading, Input, Label, Paragraph, Size, ValidationMessage } from '~/main';
+import { Button, Divider, Field, Heading, Input, Paragraph, Size, ValidationMessage } from '~/main';
 import type { Meta, StoryFn, StoryObj } from '@storybook/react';
 import { useEffect, useState } from 'react';
+import { Label } from '@digdir/designsystemet-react';
 
 type Story = StoryObj<typeof Input>;
 

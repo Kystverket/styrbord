@@ -7,7 +7,6 @@ import {
   Field,
   Fieldset,
   Heading,
-  Label,
   Link,
   Pagination,
   Paragraph,
@@ -19,16 +18,16 @@ import {
   Table,
   Tabs,
   Tag,
-  Textfield,
   ToggleGroup,
   Tooltip,
   usePagination,
 } from '~/main';
-import cl from 'clsx/lite';
+import cl from 'clsx';
 import { type HTMLAttributes, useState } from 'react';
 import classes from './Showcase.module.css';
 import { Details } from '../../../../src/components/designsystemet/Details/Details';
 import { Button } from '../../../../src/components/designsystemet/Button/Button';
+import { Label, Textfield } from '@digdir/designsystemet-react';
 
 const DATA_PLACES = ['Sogndal', 'Oslo', 'Brønnøysund', 'Stavanger', 'Trondheim', 'Bergen', 'Lillestrøm'];
 
@@ -75,12 +74,16 @@ export function Showcase({ className, ...props }: ShowcaseProps) {
         <Heading className={classes.cardTitle}>Alle brukere</Heading>
         <div className={classes.tableHeader}>
           <div className={classes.tableAction}>
-            <Select aria-label="Velg handling">
-              <Select.Option value="blank">Velg handling</Select.Option>
-              <Select.Option value="everest">Dupliser</Select.Option>
-              <Select.Option value="aconcagua">Slett</Select.Option>
-              <Select.Option value="denali">Oppdater</Select.Option>
-            </Select>
+            <Select
+              aria-label="Velg handling"
+              options={[
+                { label: 'Velg handling', value: 'blank' },
+                { label: 'Dupliser', value: 'everest' },
+                { label: 'Slett', value: 'aconcagua' },
+                { label: 'Oppdater', value: 'denali' },
+              ]}
+              className={classes.tableSelect}
+            />
             <Button variant="filled" className={classes.tableBtn}>
               Utfør
             </Button>

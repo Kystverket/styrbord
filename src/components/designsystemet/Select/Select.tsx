@@ -7,6 +7,7 @@ export type SelectOption = {
 };
 
 export interface SelectProps {
+  className?: string;
   optional?: boolean | string | undefined;
   required?: boolean | string | undefined;
   label?: string;
@@ -26,6 +27,7 @@ export const Select = ({ ...props }: SelectProps) => {
     <InputLabel text={props.label} required={props.required} optional={props.optional}>
       <ErrorLabel text={typeof props.error === 'string' ? props.error : null}>
         <DsSelect
+          className={props.className}
           width="full"
           onChange={(event) => props.onChange?.(event.target.value)}
           onBlur={() => {

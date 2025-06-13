@@ -1,6 +1,5 @@
 import {
   Field,
-  Label,
   Divider,
   Paragraph,
   Button,
@@ -11,6 +10,7 @@ import {
 import type { Meta, StoryFn } from '@storybook/react';
 import { userEvent, within } from '@storybook/test';
 import { type ChangeEvent, useState } from 'react';
+import { Label } from '@digdir/designsystemet-react';
 
 export default {
   title: 'Designsystemet/Suggestion',

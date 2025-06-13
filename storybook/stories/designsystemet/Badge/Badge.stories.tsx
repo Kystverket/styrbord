@@ -159,19 +159,19 @@ export const InTabs: Story = () => (
 
 export const InButton: Story = () => (
   <>
-    <Button icon variant="tertiary">
+    <Button icon variant="dashed">
       <Badge.Position>
         <Badge data-color="danger" count={1000} maxCount={99} />
         <InboxIcon title="Innboks" />
       </Badge.Position>
     </Button>
-    <Button icon variant="tertiary">
+    <Button icon variant="dashed">
       <Badge.Position>
         <Badge data-color="danger" count={10} />
         <ChatIcon title="Meldinger" />
       </Badge.Position>
     </Button>
-    <Button icon variant="tertiary">
+    <Button icon variant="dashed">
       <Badge.Position>
         <Badge data-color="danger"></Badge>
         <VideoIcon title="Skru på video" />

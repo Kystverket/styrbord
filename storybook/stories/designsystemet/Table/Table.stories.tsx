@@ -1,6 +1,7 @@
-import { Table, TableHeaderCellProps, useCheckboxGroup, Checkbox, Textfield } from '~/main';
+import { Table, TableHeaderCellProps, useCheckboxGroup, Checkbox } from '~/main';
 import type { Meta, StoryFn } from '@storybook/react';
 import { useState } from 'react';
+import { Textfield } from '@digdir/designsystemet-react';
 
 type Story = StoryFn<typeof Table>;
 

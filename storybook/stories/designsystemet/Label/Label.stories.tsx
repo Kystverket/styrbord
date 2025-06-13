@@ -1,4 +1,4 @@
-import { Label } from '~/main';
+import { Label } from '@digdir/designsystemet-react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Label> = {

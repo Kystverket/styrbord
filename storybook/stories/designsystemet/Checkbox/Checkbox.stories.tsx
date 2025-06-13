@@ -125,7 +125,7 @@ export const Controlled: StoryFn<UseCheckboxGroupProps> = (args, context) => {
           ))}
       </div>
       {isFiltered && (
-        <Button style={{ width: 'fit-content' }} variant="secondary" onClick={() => setValue([])}>
+        <Button style={{ width: 'fit-content' }} variant="outline" onClick={() => setValue([])}>
           Tøm filtre
         </Button>
       )}
@@ -259,7 +259,7 @@ export const Conditional: StoryFn<UseCheckboxGroupProps> = (args) => {
           </Fieldset>
         </>
       ) : (
-        <Button onClick={() => setOpen(true)} variant="secondary">
+        <Button onClick={() => setOpen(true)} variant="outline">
           <PencilIcon aria-hidden /> Rediger
         </Button>
       )}

@@ -1,8 +1,9 @@
+import { Textfield } from '@digdir/designsystemet-react';
 import type { Meta, StoryFn } from '@storybook/react';
 import { expect, userEvent, within } from '@storybook/test';
 import { useEffect, useRef, useState } from 'react';
 
-import { Textfield, Button, ErrorSummary } from '~/main';
+import { Button, ErrorSummary } from '~/main';
 
 type Story = StoryFn<typeof ErrorSummary>;
 

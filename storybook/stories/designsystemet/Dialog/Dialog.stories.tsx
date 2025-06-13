@@ -1,16 +1,8 @@
-import {
-  Dialog,
-  Heading,
-  Paragraph,
-  Button,
-  Textfield,
-  Field,
-  Label,
-  EXPERIMENTAL_Suggestion as Suggestion,
-} from '~/main';
+import { Dialog, Heading, Paragraph, Button, Field, EXPERIMENTAL_Suggestion as Suggestion } from '~/main';
 import type { Meta, StoryFn } from '@storybook/react';
 import { expect, userEvent, within } from '@storybook/test';
 import { useRef, useState } from 'react';
+import { Label, Textfield } from '@digdir/designsystemet-react';
 
 export default {
   title: 'Designsystemet/Dialog',
@@ -194,7 +186,7 @@ export const DialogWithForm: StoryFn<typeof Dialog> = () => {
           >
             Send inn skjema
           </Button>
-          <Button variant="secondary" onClick={() => dialogRef.current?.close()}>
+          <Button variant="outline" onClick={() => dialogRef.current?.close()}>
             Avbryt
           </Button>
         </div>
@@ -248,7 +240,7 @@ export const DialogWithSuggestion: StoryFn<typeof Dialog> = () => {
             </Field>
           </Dialog.Block>
           <Dialog.Block>
-            <Button variant="secondary" onClick={() => dialogRef.current?.close()}>
+            <Button variant="outline" onClick={() => dialogRef.current?.close()}>
               Avbryt
             </Button>
           </Dialog.Block>

@@ -1,6 +1,7 @@
+import { Label } from '@digdir/designsystemet-react';
 import type { Meta, StoryFn } from '@storybook/react';
 
-import { Divider, Field, Input, Label, Textarea, ValidationMessage } from '~/main';
+import { Divider, Field, Input, Textarea, ValidationMessage } from '~/main';
 
 type Story = StoryFn<typeof Field>;
 

@@ -13,16 +13,10 @@ export default defineConfig({
     }),
   ],
   resolve: {
-    alias: [
-      {
-        find: '~',
-        replacement: path.resolve(__dirname, './src'),
-      },
-      {
-        find: '@assets',
-        replacement: path.resolve(__dirname, './assets'),
-      },
-    ],
+    alias: {
+      '~': path.resolve(__dirname, 'src'),
+      '@assets': path.resolve(__dirname, 'assets'),
+    },
   },
   server: {
     port: 3000,

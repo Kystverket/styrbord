@@ -1,3 +1,4 @@
+import { Label } from '@digdir/designsystemet-react';
 import type { Meta, StoryFn } from '@storybook/react';
 import { userEvent, within } from '@storybook/test';
 import { type ChangeEvent, useState } from 'react';
@@ -6,7 +7,6 @@ import {
   Button,
   Divider,
   Field,
-  Label,
   Paragraph,
   Spinner,
   useDebounceCallback,

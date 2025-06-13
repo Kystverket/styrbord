@@ -64,7 +64,7 @@ export const Interactive: StoryFn<typeof Popover> = () => {
           }}
         >
           <Button data-size="sm">Ja, slett den</Button>
-          <Button data-size="sm" variant="tertiary">
+          <Button data-size="sm" variant="outline">
             Avbryt
           </Button>
         </div>
