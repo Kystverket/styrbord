@@ -78,6 +78,9 @@ export type { TextAreaProps } from './components/designsystemet/TextArea/TextAre
 
 export type { InputSize } from './utils/input/input';
 
+export { default as Card } from './components/designsystemet/Card/Card';
+export type { CardProps } from './components/designsystemet/Card/Card';
+
 export { Select } from './components/designsystemet/Select/Select';
 export type { SelectProps, SelectOption } from './components/designsystemet/Select/Select';
 
