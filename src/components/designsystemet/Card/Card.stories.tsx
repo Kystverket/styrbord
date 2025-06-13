@@ -151,4 +151,3 @@ export const Video: Story = {
     </Card>
   ),
 };
-
