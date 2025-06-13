@@ -1,9 +1,7 @@
+import { SkipLink, Paragraph } from '~/main';
 import type { Meta, StoryFn } from '@storybook/react';
 import { expect, userEvent, within } from '@storybook/test';
 
-import { Paragraph } from '../';
-
-import { SkipLink } from '.';
 type Story = StoryFn<typeof SkipLink>;
 
 export default {

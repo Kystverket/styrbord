@@ -3,7 +3,7 @@ import { expect, userEvent, within } from '@storybook/test';
 import { useEffect, useState } from 'react';
 
 import { TrashIcon } from '@navikt/aksel-icons';
-import { Popover, Paragraph, Button } from '~/main';
+import { Popover, Paragraph, Button, Box } from '~/main';
 
 export default {
   title: 'Designsystemet/Popover',
@@ -146,7 +146,7 @@ export const Variants: StoryFn<typeof Popover> = () => {
   useEffect(() => setOpen(true), []);
 
   return (
-    <>
+    <Box gap={64} align="start" px={64}>
       {Object.entries(VariantsMap).map(([key, props], index) => (
         <Popover.TriggerContext key={key}>
           <Popover.Trigger>popover</Popover.Trigger>
@@ -155,7 +155,7 @@ export const Variants: StoryFn<typeof Popover> = () => {
           </Popover>
         </Popover.TriggerContext>
       ))}
-    </>
+    </Box>
   );
 };
 Variants.parameters = {
