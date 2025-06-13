@@ -62,14 +62,14 @@ export function Footer({
                 </Select.Option>
                 {contactLinks
                   ? contactLinks.map((link: LinkToSite, index: number) => (
-                    <Select.Option key={index} value={link.url} className={classes.selectOption}>
-                      {link.text}
-                    </Select.Option>
+                      <Select.Option key={index} value={link.url} className={classes.selectOption}>
+                        {link.text}
+                      </Select.Option>
                     ))
                   : defaultContactLinks.map((link: LinkToSite, index: number) => (
-                    <Select.Option key={index} value={link.url} className={classes.selectOption}>
-                      {link.text}
-                    </Select.Option>
+                      <Select.Option key={index} value={link.url} className={classes.selectOption}>
+                        {link.text}
+                      </Select.Option>
                     ))}
               </Select>
             )}
