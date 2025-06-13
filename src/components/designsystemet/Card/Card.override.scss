@@ -1,0 +1,21 @@
+.ds-card[data-variant='tinted'] {
+  --dsc-card-border-style: none;
+}
+
+.ds-card {
+  --dsc-card-border-width: 2px;
+  --dsc-card-border-radius: var(--border-radius-default);
+}
+
+.ds-card :is(h1, h2, h3, h4, h5, h6) a:any-link {
+  text-decoration: none;
+}
+
+.ds-card:hover :is(h1, h2, h3, h4, h5, h6) a:any-link {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.ds-card[data-variant='tinted'] {
+  color: var(--ds-color-primary-text-default);
+}

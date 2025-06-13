@@ -23,6 +23,7 @@
   @include meta.load-css('../components/designsystemet/TextArea/TextArea.override.scss');
   @include meta.load-css('../components/designsystemet/Details/Details.override.scss');
   @include meta.load-css('../components/designsystemet/List/Lists.override.scss');
+  @include meta.load-css('../components/designsystemet/Card/Card.override.scss');
 }
 
 @layer reset, dsno, kyvtokens, kyvtokenstodesignsystemet, styrbord;
