@@ -18,7 +18,8 @@
     "jsx": "preserve",
     "baseUrl": "./",
     "paths": {
-      "~/*": ["src/*", "storybook/*"]
+      "~/*": ["src/*", "storybook/*"],
+      "@assets/*": ["assets/*"]
     }
   },
   "include": ["./src"],
