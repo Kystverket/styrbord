@@ -1,5 +1,5 @@
 .ds-card[data-variant='tinted'] {
-  --dsc-card-border-style: none;
+  --dsc-card-border-style: none !important;
 }
 
 .ds-card {
@@ -8,12 +8,12 @@
 }
 
 .ds-card :is(h1, h2, h3, h4, h5, h6) a:any-link {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .ds-card:hover :is(h1, h2, h3, h4, h5, h6) a:any-link {
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
+  text-decoration: underline !important;
+  text-decoration-thickness: 2px !important;
 }
 
 .ds-card[data-variant='tinted'] {
