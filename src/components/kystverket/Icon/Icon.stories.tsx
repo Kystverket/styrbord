@@ -40,6 +40,7 @@ const iconDescriptions: Record<IconId, string> = {
   info: '',
   keyboard_arrow_down: '',
   keyboard_arrow_up: '',
+  lightbulb: '',
   link: '',
   lock: '',
   login: '',
