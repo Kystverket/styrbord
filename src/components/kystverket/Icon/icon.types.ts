@@ -24,6 +24,7 @@ export const iconIdList = [
   'info',
   'keyboard_arrow_down',
   'keyboard_arrow_up',
+  'lightbulb',
   'link',
   'lock',
   'login',
