@@ -8,12 +8,12 @@
 }
 
 .ds-card :is(h1, h2, h3, h4, h5, h6) a:any-link {
-  text-decoration: none !important;
+  text-decoration: none;
 }
 
 .ds-card:hover :is(h1, h2, h3, h4, h5, h6) a:any-link {
-  text-decoration: underline !important;
-  text-decoration-thickness: 2px !important;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
 }
 
 .ds-card[data-variant='tinted'] {
