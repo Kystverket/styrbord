@@ -48,3 +48,19 @@ import { Heading, Ingress, Tabs } from '@kystverket/styrbord';
 ## Design Tokens
 
 Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.com/Kystverket/styrbord-tokens).
+
+## Endringslogg
+
+### 2025-06-17
+
+Vi har fjernet alle egne tittelkomponenter og henviser istedet til Designsystemets `Heading`-komponent.
+
+- `Display size="lg"` ➡️ `Heading data-size="2xl"`
+- `Display size="md"` ➡️ `Heading data-size="xl"`
+- `Display size="sm"` ➡️ `Heading data-size="lg"`
+- `Headline size="lg"` ➡️ `Heading data-size="md"`
+- `Headline size="md"` ➡️ `Heading data-size="sm"`
+- `Headline size="sm"` ➡️ `Heading data-size="xs"`
+- `Title size="lg"` ➡️ `Heading data-size="sm"`
+- `Title size="md"` ➡️ `Heading data-size="xs"`
+- `Title size="sm"` ➡️ `Heading data-size="2xs"`
