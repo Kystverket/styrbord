@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Display, Body, Headline, Label, Title, Accent } from './typography';
+import { Body, Label, Accent } from './typography';
 import Box, { BoxProps } from '../Box/box';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
+import { Heading } from '@digdir/designsystemet-react';
 
 const meta = {
   title: 'Helpers/Typography',
@@ -15,6 +16,8 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+const headerSizes = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const;
+
 const defaultProps: BoxProps = {
   children: (
     <Box gap={16}>
@@ -23,21 +26,14 @@ const defaultProps: BoxProps = {
         tekst. Den får font-weight: 400 i Figma men det korrekte skal være 500. Gyldige font-vekter for kystinn er 300,
         500 og 700
       </Body>
-
-      <Display size="lg">Display Large</Display>
-      <Display size="md">Display Medium</Display>
-      <Display size="sm">Display Small</Display>
-      <Headline size="lg">Headline Large</Headline>
-      <Headline size="md">Headline Medium</Headline>
-      <Headline size="sm">Headline Small</Headline>
-      <Title size="lg">Title Large</Title>
-      <Title size="md">Title Medium</Title>
-      <Title size="sm">Title Small</Title>
-
+      {headerSizes.toReversed().map((size) => (
+        <Heading key={size} data-size={size}>
+          Heading {size}
+        </Heading>
+      ))}
       <Body size="xl" strong>
         Body Strong XLarge
       </Body>
-
       <Body size="lg" strong>
         Body Strong Large
       </Body>
@@ -47,7 +43,6 @@ const defaultProps: BoxProps = {
       <Body size="sm" strong>
         Body Strong Small
       </Body>
-
       <Body size="xl">Body XLarge</Body>
       <Body size="lg">Body Large</Body>
       <Body size="md">Body Medium</Body>
@@ -108,5 +103,8 @@ export const Default: Story = {
 };
 
 export const LangTittel: Story = {
-  args: { ...defaultProps, children: <Title size="lg">Søke om farvannsskilt og navigasjonsinnretninger</Title> },
+  args: {
+    ...defaultProps,
+    children: <Heading data-size="lg">Søke om farvannsskilt og navigasjonsinnretninger</Heading>,
+  },
 };

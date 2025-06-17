@@ -7,11 +7,6 @@ export interface TypographyProps {
   children?: ReactNode | undefined;
 }
 
-export type HeaderTypographyProps = TypographyProps & {
-  size?: 'sm' | 'md' | 'lg';
-  level?: '1' | '2' | '3' | '4' | '5' | '6';
-};
-
 export type BodyTypographyProps = TypographyProps & {
   size?: 'sm' | 'md' | 'lg' | 'xl';
   strong?: boolean;
@@ -27,37 +22,6 @@ export type LabelTypographyProps = TypographyProps & {
 export type AccentTypographyProps = TypographyProps & {
   size: 'sm' | 'md';
   strong?: boolean;
-};
-
-type HeadingProps = React.HTMLAttributes<HTMLHeadingElement>;
-
-const Heading = ({ level = '1', children, ...props }: HeadingProps & HeaderTypographyProps) => {
-  const HeaderTag = `h${level}`;
-  return <HeaderTag {...props}>{children}</HeaderTag>;
-};
-
-export const Display = ({ level, size, className, children }: HeaderTypographyProps) => {
-  return (
-    <Heading level={level} className={buildTypographyClasses({ type: 'display', size, className })}>
-      {children}
-    </Heading>
-  );
-};
-
-export const Headline = ({ level, size, className, children }: HeaderTypographyProps) => {
-  return (
-    <Heading level={level} className={buildTypographyClasses({ type: 'headline', size, className })}>
-      {children}
-    </Heading>
-  );
-};
-
-export const Title = ({ level, size, className, children }: HeaderTypographyProps) => {
-  return (
-    <Heading level={level} className={buildTypographyClasses({ type: 'title', size, className })}>
-      {children}
-    </Heading>
-  );
 };
 
 export const Body = ({ inline, strong, size, className, children }: BodyTypographyProps) => {

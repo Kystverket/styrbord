@@ -1,11 +1,12 @@
 import classes from './alert.module.css';
 import React from 'react';
 import typography from '../Typography/typography.module.css';
-import { Body, Title } from '../Typography/typography';
+import { Body } from '../Typography/typography';
 import { getIcon, alertStyle } from './alert.util';
 import { AlertLevel, TextSize, Width } from './alert.types';
 import Icon from '../Icon/icon';
-import { Box } from '~/main';
+import { Box, Heading } from '~/main';
+import { smaller } from '~/utils/sizing';
 
 export interface AlertProps {
   level: AlertLevel;
@@ -47,9 +48,9 @@ const Alert = ({
         {icon}
         <Box mx={8} my={0} gap={4} className={classes.content}>
           {title && (
-            <Title size={size}>
+            <Heading data-size={smaller(size)}>
               <span role={props.role}>{title}</span>
-            </Title>
+            </Heading>
           )}
           {text && <Body size={size}>{text}</Body>}
           {props.children && <div className={textSize(size)}>{props.children}</div>}

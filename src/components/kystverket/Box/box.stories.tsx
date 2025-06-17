@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Box, { BoxProps } from './box';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
-import { Title } from '~/main';
+import { Heading } from '~/main';
 
 const meta = {
   title: 'Helpers/Box',
@@ -202,7 +202,7 @@ export const WrapAndBasis: Story = {
   args: {
     children: (
       <Box gap={32}>
-        <Title>Horizontal</Title>
+        <Heading>Horizontal</Heading>
         <Box gap={32} horizontal>
           <Box color="action" p={32} radius="lg" grow={3}>
             1
@@ -214,7 +214,7 @@ export const WrapAndBasis: Story = {
             3
           </Box>
         </Box>
-        <Title>Wrap</Title>
+        <Heading>Wrap</Heading>
         <Box gap={32} horizontal wrap>
           <Box color="action" p={32} radius="lg" grow={1} basis="300px">
             1
@@ -226,7 +226,7 @@ export const WrapAndBasis: Story = {
             3
           </Box>
         </Box>
-        <Title>Reverse Wrap</Title>
+        <Heading>Reverse Wrap</Heading>
         <Box gap={32} horizontal wrap="reverse">
           <Box color="action" p={32} radius="lg" grow={1} basis="300px">
             1
