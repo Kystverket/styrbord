@@ -22,12 +22,14 @@ Styrbord blir publisert til Github Packages. Du kan lese en [guide om installeri
 - Lag en fil som heter `.npmrc` i din hjemmemappe (`cd ~`) med følgende:
 
 ```.env
-  //npm.pkg.github.com/:\_authToken=MITT_TOKEN
+  //npm.pkg.github.com/:_authToken=MITT_TOKEN
   @kystverket:registry=https://npm.pkg.github.com/
 ```
 
 - Bytt ut `MITT_TOKEN` i `.npmrc` med PAT du lagde i første steg
 - Kjør `npm i @kystverket/styrbord` for å installere Styrbord i ditt prosjekt
+
+OBS: `.npmrc` kan også ligge i prosjektets mappe. Da må du huske å legge `.npmrc` til i `.gitignore` slik at du ikke committer en hemmelighet!
 
 ## Bruk
 
