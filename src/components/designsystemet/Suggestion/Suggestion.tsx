@@ -16,7 +16,7 @@ export interface SuggestionProps {
   error?: boolean | string;
   disabled?: boolean;
   onBlur?: () => void;
-  onChange?: (value: SuggestionValueType) => undefined;
+  onChange?: (value: SuggestionValueType, isTyping: boolean) => undefined;
   options?: SuggestionValue[];
   filter?:
     | boolean
@@ -42,7 +42,10 @@ export const Suggestion = ({ ...props }: SuggestionProps) => {
           <DsSuggestion.Input
             value={props.value}
             disabled={props.disabled}
-            onChange={(event) => props.onChange?.(event.target.value as SuggestionValueType)}
+            onChange={(event) => {
+              const isTyping = (event.nativeEvent as InputEvent).inputType;
+              props.onChange?.(event.target.value as SuggestionValueType, !isTyping);
+            }}
           />
           <DsSuggestion.Clear />
           <DsSuggestion.List>
