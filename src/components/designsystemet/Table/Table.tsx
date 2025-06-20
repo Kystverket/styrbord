@@ -1,10 +1,19 @@
-import { Table as DsTable, TableProps } from '@digdir/designsystemet-react';
+import { Table as DsTable, TableProps as DsTableProps } from '@digdir/designsystemet-react';
+import classes from './Table.module.scss';
 
-const Table = ({ ...props }: TableProps) => {
+export type TableProps = DsTableProps & {
+  header?: true | 'transparent' | 'opaque';
+};
+
+const Table = ({ header = 'transparent', className = '', ...props }: TableProps) => {
   if (!props['data-color']) {
     props['data-color'] = 'neutral';
   }
-  return <DsTable {...props} />;
+  const classNames = [className, classes.table];
+  if (header && header !== 'transparent') {
+    classNames.push(classes.opaqueHeader);
+  }
+  return <DsTable className={classNames.join(' ')} {...props} />;
 };
 
 Table.Cell = DsTable.Cell;
