@@ -384,3 +384,47 @@ WithBorder.args = {
 WithBorder.parameters = {
   customStyles: { display: 'grid', gap: '1rem' },
 };
+
+export const ColorPrimary: Story = (args) => {
+  const rows = Array.from({ length: 10 }, (_, i) => i + 1);
+  return (
+    <Table {...args} data-color="primary">
+      <Table.Head>
+        <Table.Row>
+          <Table.HeaderCell>Header 1</Table.HeaderCell>
+          <Table.HeaderCell colSpan={2}>Header 2</Table.HeaderCell>
+        </Table.Row>
+      </Table.Head>
+      <Table.Body>
+        {rows.map((row) => (
+          <Table.Row key={row}>
+            <Table.Cell>{`Cell ${row}1`}</Table.Cell>
+            <Table.Cell>{`Cell ${row}2`}</Table.Cell>
+          </Table.Row>
+        ))}
+      </Table.Body>
+    </Table>
+  );
+};
+
+export const ColorAccent: Story = (args) => {
+  const rows = Array.from({ length: 10 }, (_, i) => i + 1);
+  return (
+    <Table {...args} data-color="accent">
+      <Table.Head>
+        <Table.Row>
+          <Table.HeaderCell>Header 1</Table.HeaderCell>
+          <Table.HeaderCell colSpan={2}>Header 2</Table.HeaderCell>
+        </Table.Row>
+      </Table.Head>
+      <Table.Body>
+        {rows.map((row) => (
+          <Table.Row key={row}>
+            <Table.Cell>{`Cell ${row}1`}</Table.Cell>
+            <Table.Cell>{`Cell ${row}2`}</Table.Cell>
+          </Table.Row>
+        ))}
+      </Table.Body>
+    </Table>
+  );
+};

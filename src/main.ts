@@ -87,4 +87,6 @@ export type { SelectProps, SelectOption } from './components/designsystemet/Sele
 export { Details } from './components/designsystemet/Details/Details';
 export type { DetailsProps } from './components/designsystemet/Details/Details';
 
+export { default as Table } from './components/designsystemet/Table/Table';
+
 export * from '@digdir/designsystemet-react';
