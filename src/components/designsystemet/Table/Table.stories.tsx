@@ -1,4 +1,4 @@
-import { Table, TableHeaderCellProps, useCheckboxGroup, Checkbox } from '~/main';
+import { Table, TableHeaderCellProps, useCheckboxGroup, Checkbox, Box } from '~/main';
 import type { Meta, StoryFn } from '@storybook/react';
 import { useState } from 'react';
 import { Textfield } from '@digdir/designsystemet-react';
@@ -6,8 +6,9 @@ import { Textfield } from '@digdir/designsystemet-react';
 type Story = StoryFn<typeof Table>;
 
 export default {
-  title: 'Designsystemet/Table',
+  title: 'Komponenter/Table',
   component: Table,
+  tags: ['autodocs', 'ds'],
 } as Meta;
 
 export const Preview: Story = (args) => {
@@ -383,4 +384,126 @@ WithBorder.args = {
 
 WithBorder.parameters = {
   customStyles: { display: 'grid', gap: '1rem' },
+};
+
+export const OpaqueHeader: Story = (args) => {
+  const rows = Array.from({ length: 4 }, (_, i) => i + 1);
+  return (
+    <Box gap={16}>
+      <Table {...args} header="opaque">
+        <Table.Head>
+          <Table.Row>
+            <Table.HeaderCell>Neutral</Table.HeaderCell>
+            <Table.HeaderCell colSpan={2}>Header 2</Table.HeaderCell>
+          </Table.Row>
+        </Table.Head>
+        <Table.Body>
+          {rows.map((row) => (
+            <Table.Row key={row}>
+              <Table.Cell>{`Cell ${row}1`}</Table.Cell>
+              <Table.Cell>{`Cell ${row}2`}</Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table>
+      <Table {...args} border header="opaque" data-color="primary">
+        <Table.Head>
+          <Table.Row>
+            <Table.HeaderCell>Primary with Border</Table.HeaderCell>
+            <Table.HeaderCell colSpan={2}>Header 2</Table.HeaderCell>
+          </Table.Row>
+        </Table.Head>
+        <Table.Body>
+          {rows.map((row) => (
+            <Table.Row key={row}>
+              <Table.Cell>{`Cell ${row}1`}</Table.Cell>
+              <Table.Cell>{`Cell ${row}2`}</Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table>
+      <Table {...args} header="opaque" data-color="accent">
+        <Table.Head>
+          <Table.Row>
+            <Table.HeaderCell>Accent</Table.HeaderCell>
+            <Table.HeaderCell colSpan={2}>Header 2</Table.HeaderCell>
+          </Table.Row>
+        </Table.Head>
+        <Table.Body>
+          {rows.map((row) => (
+            <Table.Row key={row}>
+              <Table.Cell>{`Cell ${row}1`}</Table.Cell>
+              <Table.Cell>{`Cell ${row}2`}</Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table>
+    </Box>
+  );
+};
+
+export const Zebra: Story = (args) => {
+  const rows = Array.from({ length: 20 }, (_, i) => i + 1);
+  return (
+    <Table {...args} data-color="primary" zebra>
+      <Table.Head>
+        <Table.Row>
+          <Table.HeaderCell>Zebra 1</Table.HeaderCell>
+          <Table.HeaderCell colSpan={2}>Header 2</Table.HeaderCell>
+        </Table.Row>
+      </Table.Head>
+      <Table.Body>
+        {rows.map((row) => (
+          <Table.Row key={row}>
+            <Table.Cell>{`Cell ${row}1`}</Table.Cell>
+            <Table.Cell>{`Cell ${row}2`}</Table.Cell>
+          </Table.Row>
+        ))}
+      </Table.Body>
+    </Table>
+  );
+};
+
+export const ColorPrimary: Story = (args) => {
+  const rows = Array.from({ length: 10 }, (_, i) => i + 1);
+  return (
+    <Table {...args} data-color="primary">
+      <Table.Head>
+        <Table.Row>
+          <Table.HeaderCell>Header 1</Table.HeaderCell>
+          <Table.HeaderCell colSpan={2}>Header 2</Table.HeaderCell>
+        </Table.Row>
+      </Table.Head>
+      <Table.Body>
+        {rows.map((row) => (
+          <Table.Row key={row}>
+            <Table.Cell>{`Cell ${row}1`}</Table.Cell>
+            <Table.Cell>{`Cell ${row}2`}</Table.Cell>
+          </Table.Row>
+        ))}
+      </Table.Body>
+    </Table>
+  );
+};
+
+export const ColorAccent: Story = (args) => {
+  const rows = Array.from({ length: 10 }, (_, i) => i + 1);
+  return (
+    <Table {...args} data-color="accent">
+      <Table.Head>
+        <Table.Row>
+          <Table.HeaderCell>Header 1</Table.HeaderCell>
+          <Table.HeaderCell colSpan={2}>Header 2</Table.HeaderCell>
+        </Table.Row>
+      </Table.Head>
+      <Table.Body>
+        {rows.map((row) => (
+          <Table.Row key={row}>
+            <Table.Cell>{`Cell ${row}1`}</Table.Cell>
+            <Table.Cell>{`Cell ${row}2`}</Table.Cell>
+          </Table.Row>
+        ))}
+      </Table.Body>
+    </Table>
+  );
 };
