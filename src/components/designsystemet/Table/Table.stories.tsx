@@ -48,8 +48,10 @@ export const Preview: Story = (args) => {
 Preview.args = {
   zebra: false,
   stickyHeader: false,
-  border: false,
+  header: 'opaque',
+  border: true,
   hover: false,
+  body: 'white',
 };
 
 export const Numbers: Story = (args) => (

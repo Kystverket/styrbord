@@ -3,15 +3,19 @@ import classes from './Table.module.scss';
 
 export type TableProps = DsTableProps & {
   header?: true | 'transparent' | 'opaque';
+  body?: 'transparent' | 'white';
 };
 
-const Table = ({ header = 'transparent', className = '', ...props }: TableProps) => {
+const Table = ({ header = 'transparent', body = 'transparent', className = '', ...props }: TableProps) => {
   if (!props['data-color']) {
     props['data-color'] = 'neutral';
   }
   const classNames = [className, classes.table];
   if (header && header !== 'transparent') {
     classNames.push(classes.opaqueHeader);
+  }
+  if (body && body === 'white') {
+    classNames.push(classes.body);
   }
   return <DsTable className={classNames.join(' ')} {...props} />;
 };
