@@ -1,6 +1,10 @@
-:is(.ds-tabs) button {
+:is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) button {
   font-weight: 500;
   padding: 9px 0px 9px 0px;
   margin-right: 21px;
+
+  &:last-child {
+    margin-right: 0;
+  }
   gap: 7px;
 }

@@ -1,11 +1,12 @@
-import { Tabs, Tooltip, Button } from '~/main';
+import { Tabs, Tooltip, Button, Icon, Box } from '~/main';
 import { BackpackIcon, BellIcon, BicycleIcon, CarIcon, MotorcycleIcon, NewspaperIcon } from '@navikt/aksel-icons';
 import type { Meta, StoryFn } from '@storybook/react';
 import { useState } from 'react';
 
 export default {
-  title: 'Designsystemet/Tabs',
+  title: 'Komponenter/Tabs',
   component: Tabs,
+  tags: ['autodocs', 'ds'],
 } as Meta;
 
 export const Preview: StoryFn<typeof Tabs> = (args) => (
@@ -15,6 +16,7 @@ export const Preview: StoryFn<typeof Tabs> = (args) => (
       <Tabs.Tab value="value2">Tab 2</Tabs.Tab>
       <Tabs.Tab value="value3">Tab 3</Tabs.Tab>
     </Tabs.List>
+
     <Tabs.Panel value="value1">content 1</Tabs.Panel>
     <Tabs.Panel value="value2">content 2</Tabs.Panel>
     <Tabs.Panel value="value3">content 3</Tabs.Panel>
@@ -25,6 +27,49 @@ Preview.args = {
   defaultValue: 'value1',
 };
 
+export const withButton: StoryFn<typeof Tabs> = (args) => (
+  <Tabs {...args}>
+    <Box horizontal justify="between" align="center" width="full" mb={20}>
+      <Tabs.List>
+        <Tabs.Tab value="value1">Tab 1</Tabs.Tab>
+        <Tabs.Tab value="value2">Tab 2</Tabs.Tab>
+        <Tabs.Tab value="value3">Tab 3</Tabs.Tab>
+      </Tabs.List>
+      <Button variant="filled">
+        <Icon material="add" />
+        Ny sak
+      </Button>
+    </Box>
+
+    <Tabs.Panel value="value1">content 1</Tabs.Panel>
+    <Tabs.Panel value="value2">content 2</Tabs.Panel>
+    <Tabs.Panel value="value3">content 3</Tabs.Panel>
+  </Tabs>
+);
+
+export const withoutUnderline: StoryFn<typeof Tabs> = (args) => (
+  <Tabs {...args}>
+    <Box horizontal justify="between" align="center" width="full" mb={20}>
+      <Tabs.List>
+        <Tabs.Tab value="value1">Tab 1</Tabs.Tab>
+        <Tabs.Tab value="value2">Tab 2</Tabs.Tab>
+        <Tabs.Tab value="value3">Tab 3</Tabs.Tab>
+      </Tabs.List>
+      <Button variant="filled">
+        <Icon material="add" />
+        Ny sak
+      </Button>
+    </Box>
+
+    <Tabs.Panel value="value1">content 1</Tabs.Panel>
+    <Tabs.Panel value="value2">content 2</Tabs.Panel>
+    <Tabs.Panel value="value3">content 3</Tabs.Panel>
+  </Tabs>
+);
+withoutUnderline.args = {
+  defaultValue: 'value1',
+  underlined: false,
+};
 export const IconsOnly: StoryFn<typeof Tabs> = () => (
   <Tabs defaultValue="car">
     <Tabs.List>
