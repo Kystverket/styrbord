@@ -15,7 +15,7 @@ const Table = ({ header = 'transparent', body = 'transparent', className = '', .
     classNames.push(classes.opaqueHeader);
   }
   if (body && body === 'white') {
-    classNames.push(classes.body);
+    classNames.push(classes.whiteBody);
   }
   return <DsTable className={classNames.join(' ')} {...props} />;
 };
