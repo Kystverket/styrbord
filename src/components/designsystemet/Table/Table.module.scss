@@ -2,6 +2,14 @@
   --dsc-table-header-background: var(--ds-color-background-tinted);
   --dsc-table-divider-border-width: 1px;
 }
-.table {
+.table[data-color='neutral'] {
+  --dsc-table-border-color: var(--ds-color-neutral-border-subtle);
+}
+
+.table[data-color='main'] {
   --dsc-table-border-color: var(--ds-color-border-strong);
+}
+
+.whiteBody {
+  --dsc-table-background: white;
 }
