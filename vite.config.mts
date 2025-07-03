@@ -1,11 +1,10 @@
 // vite.config.ts
-import { defineConfig, type Plugin } from 'vite';
+import { defineConfig } from 'vite';
 
 import typescript from '@rollup/plugin-typescript';
 import path from 'path';
 import { typescriptPaths } from 'rollup-plugin-typescript-paths';
 import react from '@vitejs/plugin-react';
-import preserveDirectives from 'rollup-preserve-directives';
 
 export default defineConfig({
   plugins: [
@@ -50,7 +49,6 @@ export default defineConfig({
           declaration: true,
           outDir: 'dist',
         }),
-        preserveDirectives() as Plugin,
       ],
     },
   },
