@@ -13,7 +13,7 @@ export type DetailsProps = DsDetailsProps & {
 export const Details = ({ summary, children, ...props }: DetailsProps) => {
   return (
     <DsDetails {...props}>
-      <DsDetailsSummary>{summary}</DsDetailsSummary>
+      <DsDetailsSummary suppressHydrationWarning={true}>{summary}</DsDetailsSummary>
       <DsDetailsContent>{children}</DsDetailsContent>
     </DsDetails>
   );
