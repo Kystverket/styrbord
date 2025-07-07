@@ -4,8 +4,7 @@
   --dsc-details-summary-background--hover: var(--color-neutral-surface-tinted);
   --dsc-details-summary-background--open: var(--color-neutral-background-tinted);
   --dsc-details-border-color: var(--color-neutral-border-subtle);
-  border-color: var(--color-neutral-border-subtle);
-  background: var(--color-neutral-background-subtle);
+  --dsc-details-background: var(--color-neutral-background-subtle);
 }
 
 .ds-card {
