@@ -84,12 +84,15 @@ export const Controlled: StoryFn<typeof Input> = (args) => {
   );
 };
 
-const sizes: Size[] = ['sm', 'md', 'lg'];
 const sizenames = {
   sm: 'Small',
   md: 'Medium',
   lg: 'Large',
-};
+} as const;
+
+type Size = keyof typeof sizenames;
+
+const sizes: Size[] = ['sm', 'md', 'lg'];
 
 export const Text: StoryFn<typeof Input> = (args) => {
   const states = [
