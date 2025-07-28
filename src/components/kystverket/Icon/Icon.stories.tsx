@@ -45,6 +45,7 @@ const iconDescriptions: Record<IconId, string> = {
   lock: '',
   login: '',
   logout: '',
+  menu: '',
   more_vert: '',
   pending_actions: '',
   person_add: '',
