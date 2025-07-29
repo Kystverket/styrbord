@@ -1,10 +1,6 @@
 {
   "name": "@kystverket/styrbord",
-<<<<<<< HEAD
-  "version": "0.300.28",
-=======
-  "version": "0.300.32",
->>>>>>> main
+  "version": "0.300.33",
   "description": "",
   "type": "module",
   "exports": {
