@@ -44,6 +44,8 @@ export const iconIdList = [
   'warning',
   'domain',
   'distance',
+  'article',
+  'edit_square',
 ] as const;
 
 export type IconId = (typeof iconIdList)[number];

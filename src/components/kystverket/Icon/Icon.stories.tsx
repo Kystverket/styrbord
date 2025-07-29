@@ -60,6 +60,8 @@ const iconDescriptions: Record<IconId, string> = {
   warning: '',
   domain: '',
   distance: '',
+  article: '',
+  edit_square: '',
 };
 
 export const IconShowcase: StoryFn = () => {
