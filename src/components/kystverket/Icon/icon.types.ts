@@ -29,6 +29,7 @@ export const iconIdList = [
   'lock',
   'login',
   'logout',
+  'menu',
   'more_vert',
   'pending_actions',
   'person_add',

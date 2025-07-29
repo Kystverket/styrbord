@@ -45,6 +45,7 @@ const iconDescriptions: Record<IconId, string> = {
   lock: '',
   login: '',
   logout: '',
+  menu: '',
   more_vert: '',
   pending_actions: '',
   person_add: '',
@@ -64,6 +65,8 @@ const iconDescriptions: Record<IconId, string> = {
   edit_square: '',
 };
 
+const bodySizes = ['sm', 'md', 'lg', 'xl', '2xl'] as const;
+
 export const IconShowcase: StoryFn = () => {
   return (
     <table>
@@ -75,6 +78,23 @@ export const IconShowcase: StoryFn = () => {
           <td style={{ padding: '0.5rem' }}>
             <Body strong>{iconId}</Body>
             <Body size="sm">{iconDescriptions[iconId]}</Body>
+          </td>
+        </tr>
+      ))}
+    </table>
+  );
+};
+
+export const IconSizing: StoryFn = () => {
+  return (
+    <table>
+      {bodySizes.map((size) => (
+        <tr key={size}>
+          <td style={{ padding: '0.5rem', textAlign: 'center' }}>
+            <Icon size={size} material="anchor" />
+          </td>
+          <td style={{ padding: '0.5rem' }}>
+            size="{size}" {size === 'md' ? '(default)' : ''}
           </td>
         </tr>
       ))}

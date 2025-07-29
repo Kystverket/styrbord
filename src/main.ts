@@ -1,5 +1,3 @@
-'use client';
-
 import './css/index.scss';
 
 export type { SupportedLanguage, ScreenSize } from './utils/types';
@@ -85,6 +83,9 @@ export type { CardProps } from './components/designsystemet/Card/Card';
 
 export { Select } from './components/designsystemet/Select/Select';
 export type { SelectProps, SelectOption } from './components/designsystemet/Select/Select';
+
+export { default as Tabs } from './components/designsystemet/Tabs/Tabs';
+export type { TabsProps } from './components/designsystemet/Tabs/Tabs';
 
 export { Details } from './components/designsystemet/Details/Details';
 export type { DetailsProps } from './components/designsystemet/Details/Details';
