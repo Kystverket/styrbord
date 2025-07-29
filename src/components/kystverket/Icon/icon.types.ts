@@ -42,6 +42,8 @@ export const iconIdList = [
   'timeline',
   'video_library',
   'warning',
+  'domain',
+  'distance',
 ] as const;
 
 export type IconId = (typeof iconIdList)[number];

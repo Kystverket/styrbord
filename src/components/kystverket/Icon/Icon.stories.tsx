@@ -58,6 +58,8 @@ const iconDescriptions: Record<IconId, string> = {
   timeline: '',
   video_library: '',
   warning: '',
+  domain: '',
+  distance: '',
 };
 
 export const IconShowcase: StoryFn = () => {
