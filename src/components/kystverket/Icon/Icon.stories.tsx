@@ -59,6 +59,10 @@ const iconDescriptions: Record<IconId, string> = {
   timeline: '',
   video_library: '',
   warning: '',
+  domain: '',
+  distance: '',
+  article: '',
+  edit_square: '',
 };
 
 const bodySizes = ['sm', 'md', 'lg', 'xl', '2xl'] as const;
