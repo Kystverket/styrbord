@@ -1,14 +1,26 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { NumberInput, NumberInputProps } from './NumberInput';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
+import { useState } from 'react';
+
+const Wrapper = (props: NumberInputProps) => {
+  const [value, setValue] = useState<number | undefined | null>(props.value);
+
+  const onChange = (v: number | undefined) => {
+    setValue(v);
+    props.onChange?.(v);
+  };
+
+  return <NumberInput {...props} value={value} onChange={onChange} />;
+};
 
 const meta = {
   title: 'Komponenter/NumberInput',
-  component: NumberInput,
+  component: Wrapper,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'ds'],
   argTypes: {},
-} satisfies Meta<typeof NumberInput>;
+} satisfies Meta<typeof Wrapper>;
 
 export default meta;
 
@@ -23,6 +35,14 @@ const defaultArgs: NumberInputProps = {
 
 export const Default: Story = {
   args: defaultArgs,
+};
+
+export const Decimal: Story = {
+  args: {
+    ...defaultArgs,
+    inputMode: 'decimal',
+    suffix: 'm',
+  },
 };
 
 export const Required: Story = {
