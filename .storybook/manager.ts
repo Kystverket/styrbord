@@ -41,6 +41,18 @@ addons.setConfig({
         toolbar: false,
       },
     },
+    {
+      tags: 'beta',
+      badge: {
+        text: 'beta',
+        bgColor: '#ff0000',
+        fgColor: '#ffffff',
+      },
+      display: {
+        sidebar: ['component'],
+        toolbar: false,
+      },
+    },
     // Place the default config after your custom matchers.
     ...defaultConfig,
   ] satisfies TagBadgeParameters,
