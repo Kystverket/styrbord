@@ -19,7 +19,7 @@ const Card = ({ title, icon, link, children, titleLevel = 2, ...props }: CardPro
           <Box horizontal justify="between" mb={8}>
             {link ? (
               <Heading data-size="sm" level={titleLevel}>
-                <a className="ds-link" href={link}>
+                <a className="styrbord-card-link" href={link}>
                   {title}
                 </a>
               </Heading>

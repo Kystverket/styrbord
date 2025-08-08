@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import style from './inputLabel.module.css';
 import { Body, Label } from '../Typography/typography';
 import Box from '../Box/box';
-import { Spinner } from '~/main';
+import { Spinner, Tag } from '~/main';
 
 export interface InputLabelProps {
   optional?: boolean | string | undefined;
@@ -45,16 +45,12 @@ const InputLabel = ({
               {text}
               {loading && <Spinner aria-label="spinning" data-size="xs" className={style.loading} />}
               {required && requiredText && (
-                <Label inline size="sm" className={style.required}>
+                <Tag className={style.spacing} data-color="warning">
                   {requiredText ?? 'Må fylles ut'}
-                </Label>
+                </Tag>
               )}
               {required && !requiredText && <span className={style.requiredStar}>*</span>}
-              {optional && (
-                <Label inline size="sm" className={style.optional}>
-                  {optionalText ?? 'Valgfritt'}
-                </Label>
-              )}
+              {optional && <Tag className={style.spacing}>{optionalText ?? 'Valgfritt'}</Tag>}
             </Label>
           </Box>
           {subText && <Body size="sm">{subText}</Body>}
