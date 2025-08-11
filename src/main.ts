@@ -60,13 +60,6 @@ export type { DatepickerProps } from './components/kystverket/Datepicker/Datepic
 export { Button } from './components/designsystemet/Button/Button';
 export type { ButtonProps } from './components/designsystemet/Button/Button';
 
-export { Suggestion } from './components/designsystemet/Suggestion/Suggestion';
-export type {
-  SuggestionProps,
-  SuggestionValue,
-  SuggestionValueType,
-} from './components/designsystemet/Suggestion/Suggestion';
-
 export { TextInput, Textfield } from './components/designsystemet/TextInput/TextInput';
 export type { TextInputProps } from './components/designsystemet/TextInput/TextInput';
 

@@ -1,4 +1,4 @@
-import { Button, Divider, Field, Heading, Input, Paragraph, Size, ValidationMessage } from '~/main';
+import { Button, Divider, Field, Heading, Input, Paragraph, ValidationMessage } from '~/main';
 import type { Meta, StoryFn, StoryObj } from '@storybook/react';
 import { useEffect, useState } from 'react';
 import { Label } from '@digdir/designsystemet-react';
@@ -84,8 +84,10 @@ export const Controlled: StoryFn<typeof Input> = (args) => {
   );
 };
 
-const sizes: Size[] = ['sm', 'md', 'lg'];
-const sizenames = {
+const sizes: string[] = ['sm', 'md', 'lg'] as const;
+type Size = (typeof sizes)[number];
+
+const sizenames: Record<Size, string> = {
   sm: 'Small',
   md: 'Medium',
   lg: 'Large',

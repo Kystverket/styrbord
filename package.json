@@ -1,6 +1,6 @@
 {
   "name": "@kystverket/styrbord",
-  "version": "0.300.36",
+  "version": "0.300.37",
   "description": "",
   "type": "module",
   "exports": {
@@ -36,10 +36,10 @@
   "author": "",
   "license": "ISC",
   "peerDependencies": {
-    "@digdir/designsystemet": "^1.0.1",
-    "@digdir/designsystemet-css": "^1.0.1",
-    "@digdir/designsystemet-react": "^1.0.1",
-    "@digdir/designsystemet-theme": "^1.0.1",
+    "@digdir/designsystemet": "^1.1.10",
+    "@digdir/designsystemet-css": "^1.1.10",
+    "@digdir/designsystemet-react": "^1.1.10",
+    "@digdir/designsystemet-theme": "^1.1.10",
     "@navikt/aksel-icons": "^6.17.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
@@ -47,7 +47,7 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^1.9.0",
     "@eslint/js": "^9.22.0",
-    "@kystverket/styrbord-tokens": "^0.2.32",
+    "@kystverket/styrbord-tokens": "^0.2.34",
     "@rollup/plugin-typescript": "^11.1.6",
     "@storybook/addon-essentials": "^8.6.13",
     "@storybook/addon-interactions": "^8.6.13",
