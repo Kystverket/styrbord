@@ -1,12 +1,12 @@
 'use client';
 
 import { ReactNode, useContext, useRef } from 'react';
-import { Exif, FileInfo } from './fileUploader.types';
+import { Exif, FileInfo } from './FileUploader.types';
 import { Field, Label, Spinner, ValidationMessage } from '@digdir/designsystemet-react';
-import classes from './fileUploader.module.css';
+import classes from './FileUploader.module.css';
 import { Box, Icon } from '~/main';
 import exifr from 'exifr';
-import { FileUploaderContext } from './fileUploader.context';
+import { FileUploaderContext } from './FileUploader.context';
 import { v4 } from 'uuid';
 
 // Remove all exif data except latitude and longitude

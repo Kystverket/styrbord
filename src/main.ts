@@ -1,4 +1,6 @@
 import './css/index.scss';
+import { FileUploader } from './components/kystverket/FileUploader/FileUploader';
+import { FileUploaderContext } from './components/kystverket/FileUploader/FileUploader.context';
 
 export type { SupportedLanguage, ScreenSize } from './utils/types';
 
@@ -50,8 +52,14 @@ export type { FooterProps } from './components/kystverket/Footer/Footer';
 export { Header } from './components/kystverket/Header/Header';
 export type { HeaderProps } from './components/kystverket/Header/Header';
 
-export { Datepicker } from './components/kystverket/Datepicker/Datepicker';
-export type { DatepickerProps } from './components/kystverket/Datepicker/Datepicker';
+export { Datepicker, type DatepickerProps } from './components/kystverket/Datepicker/Datepicker';
+
+export { FileUploader, type FileUploaderProps } from './components/kystverket/FileUploader/FileUploader';
+export {
+  FileUploaderContext,
+  type FileUploaderContextProps,
+} from './components/kystverket/FileUploader/FileUploader.context';
+export type * from './components/kystverket/FileUploader/FileUploader.types';
 
 /*
     Komponenter fra Designsystemet

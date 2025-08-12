@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { FileUploader, FileUploaderProps } from './fileUploader';
+import { FileUploader, FileUploaderProps } from './FileUploader';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { useState } from 'react';
-import { FileInfo } from './fileUploader.types';
+import { FileInfo } from './FileUploader.types';
 
 const Wrapper = (props: FileUploaderProps) => {
   const [value, setValue] = useState<FileInfo[]>([...props.files]);

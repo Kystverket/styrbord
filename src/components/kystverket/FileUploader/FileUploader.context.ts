@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { FileInfo } from './fileUploader.types';
+import { FileInfo } from './FileUploader.types';
 import { v4 as uuidv4 } from 'uuid';
 
 export type FileChangeCallback = (files: FileInfo[]) => void;
