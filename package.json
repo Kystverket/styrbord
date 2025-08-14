@@ -1,6 +1,6 @@
 {
   "name": "@kystverket/styrbord",
-  "version": "0.300.39",
+  "version": "0.300.40",
   "description": "",
   "type": "module",
   "exports": {
@@ -99,7 +99,7 @@
     "esbuild": "^0.24.2",
     "exifr": "^7.1.3",
     "material-symbols": "^0.31.6",
-    "react-datepicker": "^8.2.0",
+    "react-datepicker": "^8.4.0",
     "uuid": "^11.1.0"
   },
   "//": "Override is a workaround until issue is resolved for typescript > 5.8.0 - https://github.com/storybookjs/eslint-plugin-storybook/issues/193",

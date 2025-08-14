@@ -1,4 +1,4 @@
-import { createElement, forwardRef, HTMLProps } from 'react';
+import { createElement, HTMLProps } from 'react';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import { Input } from '@digdir/designsystemet-react';
 import { ErrorLabel, InputLabel } from '~/main';
@@ -32,7 +32,7 @@ export const Datepicker = ({ value, onChange, dateFormat = 'dd.MM.YYYY', ...prop
           selected={value}
           dateFormat={dateFormat}
           onChange={(date) => onChange?.(date ?? undefined)}
-          customInput={createElement(forwardRef(CustomInput))}
+          customInput={createElement(CustomInput)}
         />
       </ErrorLabel>
     </InputLabel>
