@@ -1,6 +1,4 @@
 import './css/index.scss';
-import { FileUploader } from './components/kystverket/FileUploader/FileUploader';
-import { FileUploaderContext } from './components/kystverket/FileUploader/FileUploader.context';
 
 export type { SupportedLanguage, ScreenSize } from './utils/types';
 
