@@ -1,11 +1,23 @@
 import classes from './icon.module.css';
 import { IconId } from './icon.types';
 
+type IconSize = '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+
+const iconSizes: Record<IconSize, string> = {
+  '2xs': '14px',
+  xs: '16px',
+  sm: '18px',
+  md: '21px',
+  lg: '24px',
+  xl: '32px',
+  '2xl': '48px',
+};
+
 export interface MaterialIconProps {
   material: IconId;
   filled?: boolean;
   className?: string;
-  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+  size?: IconSize;
 }
 
 const Icon = ({ material, filled = false, className = '', size = 'md' }: MaterialIconProps) => {
@@ -16,23 +28,9 @@ const Icon = ({ material, filled = false, className = '', size = 'md' }: Materia
     classNames.push(classes.filled);
   }
 
-  switch (size) {
-    case 'sm':
-      style['fontSize'] = '18px';
-      break;
-    case 'md':
-      style['fontSize'] = '21px';
-      break;
-    case 'lg':
-      style['fontSize'] = '24px';
-      break;
-    case 'xl':
-      style['fontSize'] = '32px';
-      break;
-    case '2xl':
-      style['fontSize'] = '48px';
-      break;
-  }
+  style['fontSize'] = iconSizes[size];
+  style['height'] = iconSizes[size];
+
   return (
     <span aria-hidden style={style} className={classNames.join(' ')}>
       {material}

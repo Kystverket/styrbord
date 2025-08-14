@@ -65,7 +65,7 @@ const iconDescriptions: Record<IconId, string> = {
   edit_square: '',
 };
 
-const bodySizes = ['sm', 'md', 'lg', 'xl', '2xl'] as const;
+const sizes = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const;
 
 export const IconShowcase: StoryFn = () => {
   return (
@@ -88,7 +88,7 @@ export const IconShowcase: StoryFn = () => {
 export const IconSizing: StoryFn = () => {
   return (
     <table>
-      {bodySizes.map((size) => (
+      {sizes.map((size) => (
         <tr key={size}>
           <td style={{ padding: '0.5rem', textAlign: 'center' }}>
             <Icon size={size} material="anchor" />
