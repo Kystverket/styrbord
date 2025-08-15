@@ -25,9 +25,8 @@ import {
 import cl from 'clsx';
 import { type HTMLAttributes, useState } from 'react';
 import classes from './Showcase.module.css';
-import { Details } from '../../../../src/components/designsystemet/Details/Details';
 import { Button } from '../../../../src/components/designsystemet/Button/Button';
-import { Label, Textfield } from '@digdir/designsystemet-react';
+import { Details, Label, Textfield } from '@digdir/designsystemet-react';
 
 const DATA_PLACES = ['Sogndal', 'Oslo', 'Brønnøysund', 'Stavanger', 'Trondheim', 'Bergen', 'Lillestrøm'];
 
@@ -294,17 +293,24 @@ export function Showcase({ className, ...props }: ShowcaseProps) {
       <div className={cl(classes.card, classes.faq)}>
         <Heading className={classes.cardTitle}>Ofte stillte spørsmål</Heading>
         <Card data-color="neutral">
-          <Details summary="Hvem kan registrere seg i Frivillighetsregisteret?">
-            For å kunne bli registrert i Frivillighetsregisteret, må organisasjonen drive frivillig virksomhet. Det er
-            bare foreninger, stiftelser og aksjeselskap som kan registreres. Virksomheten kan ikke dele ut midler til
-            fysiske personer. Virksomheten må ha et styre.
+          <Details>
+            <Details.Summary>Hvem kan registrere seg i Frivillighetsregisteret?</Details.Summary>
+            <Details.Content>
+              For å kunne bli registrert i Frivillighetsregisteret, må organisasjonen drive frivillig virksomhet. Det er
+              bare foreninger, stiftelser og aksjeselskap som kan registreres. Virksomheten kan ikke dele ut midler til
+              fysiske personer. Virksomheten må ha et styre.
+            </Details.Content>
           </Details>
-          <Details summary="Hvordan går jeg fram for å registrere i Frivillighetsregisteret?">
-            Hvordan går jeg fram for å registrere i Frivillighetsregisteret?
+          <Details>
+            <Details.Summary>Hvordan går jeg fram for å registrere i Frivillighetsregisteret?</Details.Summary>
+            <Details.Content>Hvordan går jeg fram for å registrere i Frivillighetsregisteret?</Details.Content>
           </Details>
-          <Details summary="Hvordan går jeg fram for å registrere i Frivillighetsregisteret?">
-            Virksomheten må være registrert i Enhetsregisteret før den kan bli registrert i Frivillighetsregisteret. Du
-            kan registrere i begge registrene samtidig i Samordnet registermelding.
+          <Details>
+            <Details.Summary>Hvordan går jeg fram for å registrere i Frivillighetsregisteret?</Details.Summary>
+            <Details.Content>
+              Virksomheten må være registrert i Enhetsregisteret før den kan bli registrert i Frivillighetsregisteret.
+              Du kan registrere i begge registrene samtidig i Samordnet registermelding.
+            </Details.Content>
           </Details>
         </Card>
       </div>

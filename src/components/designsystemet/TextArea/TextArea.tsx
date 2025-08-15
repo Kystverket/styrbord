@@ -1,5 +1,5 @@
 import { Textfield as DsTextField } from '@digdir/designsystemet-react';
-import { InputLabel } from '~/main';
+import { LabelContent } from '~/main';
 import { InputSize, inputSizeClass } from '~/utils/input/input';
 
 export const Textfield = null;
@@ -26,15 +26,8 @@ export const TextArea = ({ size = 'full', className, ...props }: TextAreaProps) 
   return (
     <DsTextField
       className={`${className} ${inputSizeClass(size)}`}
-      label={
-        <InputLabel
-          text={props.label}
-          subText={props.description}
-          required={props.required}
-          optional={props.optional}
-          embedded
-        />
-      }
+      label={<LabelContent text={props.label} required={props.required} optional={props.optional} />}
+      description={props.description}
       readOnly={props.readOnly}
       placeholder={props.placeholder}
       disabled={props.disabled}

@@ -1,22 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import InputLabel, { InputLabelProps } from './inputLabel';
+import LabelContent, { LabelContentProps } from './labelContent';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Helpers/InputLabel',
-  component: InputLabel,
+  title: 'Form/Helpers/LabelContent',
+  component: LabelContent,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ['autodocs'],
   argTypes: {},
-} satisfies Meta<typeof InputLabel>;
+} satisfies Meta<typeof LabelContent>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const defaultProps: InputLabelProps = {
+const defaultProps: LabelContentProps = {
   text: 'Fyll inn ditt navn',
-  children: <input type="text" />,
 };
 
 export const Default: Story = {

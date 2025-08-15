@@ -19,7 +19,3 @@
   margin-left: var(--spacing-8) !important;
   display: inline;
 }
-
-.content::before {
-  content: none;
-}

@@ -3,10 +3,10 @@ import { TextArea, TextAreaProps } from './TextArea';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Komponenter/TextArea',
+  title: 'Form/TextArea',
   component: TextArea,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv-ds-hybrid'],
+  tags: ['autodocs', 'ds-override'],
   argTypes: {},
 } satisfies Meta<typeof TextArea>;
 

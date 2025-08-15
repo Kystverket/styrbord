@@ -3,10 +3,10 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import BorderedToggleGroup, { BorderedToggleGroupProps } from './borderedToggleGroup';
 
 const meta = {
-  title: 'Komponenter/BorderedToggleGroup',
+  title: 'Form/BorderedToggleGroup',
   component: BorderedToggleGroup,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ['autodocs'],
   argTypes: {},
 } satisfies Meta<typeof BorderedToggleGroup>;
 

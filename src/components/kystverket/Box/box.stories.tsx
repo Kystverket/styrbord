@@ -7,7 +7,7 @@ const meta = {
   title: 'Helpers/Box',
   component: Box,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ['autodocs'],
   argTypes: {},
 } satisfies Meta<typeof Box>;
 

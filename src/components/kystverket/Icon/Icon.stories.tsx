@@ -8,7 +8,7 @@ const meta = {
   title: 'Helpers/Icon',
   component: Icon,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ['autodocs'],
   argTypes: {},
 } satisfies Meta<typeof Icon>;
 

@@ -35,7 +35,7 @@ const meta = {
   title: 'Helpers/Images and Illustrations',
   component: Image,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ['autodocs'],
   argTypes: {},
 } satisfies Meta<typeof Image>;
 

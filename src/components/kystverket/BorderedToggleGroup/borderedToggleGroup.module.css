@@ -71,6 +71,8 @@
 }
 .toggleBoxText {
   text-align: left;
+  word-wrap: break-word;
+  font-weight: 500;
 }
 
 @media screen and (max-width: 600px) {

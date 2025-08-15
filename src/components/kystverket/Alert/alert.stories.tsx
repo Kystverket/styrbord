@@ -7,7 +7,7 @@ const meta = {
   title: 'Komponenter/Alert',
   component: Alert,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv-ds-hybrid'],
+  tags: ['autodocs', 'ds-override'],
   argTypes: {},
 } satisfies Meta<typeof Alert>;
 

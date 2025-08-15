@@ -6,35 +6,11 @@ addons.setConfig({
   theme: StyrbordTheme,
   tagBadges: [
     {
-      tags: 'kyv',
+      tags: 'ds-override',
       badge: {
-        text: '⚓',
-        bgColor: '#ffffff',
-        fgColor: '#000667',
-      },
-      display: {
-        sidebar: ['component'],
-        toolbar: false,
-      },
-    },
-    {
-      tags: 'kyv-ds-hybrid',
-      badge: {
-        text: '🤖',
-        bgColor: '#ffffff',
-        fgColor: '#653635',
-      },
-      display: {
-        sidebar: ['component'],
-        toolbar: false,
-      },
-    },
-    {
-      tags: 'ds',
-      badge: {
-        text: 'ds.no',
-        bgColor: '#ffffff',
-        fgColor: '#653635',
+        text: 'ds+kyv',
+        bgColor: '#4aa4e7',
+        fgColor: '#ffffff',
       },
       display: {
         sidebar: ['component'],
