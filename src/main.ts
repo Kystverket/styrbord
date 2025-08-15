@@ -16,8 +16,7 @@ export type { BoxProps } from './components/kystverket/Box/box';
 export { default as Stepper } from './components/kystverket/Stepper/stepper';
 export type { StepperProps } from './components/kystverket/Stepper/stepper';
 
-export { default as LabelContent } from './components/kystverket/LabelContent/labelContent';
-export type { LabelContentProps as InputLabelProps } from './components/kystverket/LabelContent/labelContent';
+export { default as LabelContent, type LabelContentProps } from './components/kystverket/LabelContent/labelContent';
 
 export { default as Icon } from './components/kystverket/Icon/icon';
 export type { IconId } from './components/kystverket/Icon/icon.types';
@@ -53,6 +52,8 @@ export {
   type FileUploaderContextProps,
 } from './components/kystverket/FileUploader/FileUploader.context';
 export type * from './components/kystverket/FileUploader/FileUploader.types';
+
+export { default as CardTitle, type CardTitleProps } from './components/designsystemet/CardTitle/CardTitle';
 
 /*
     Komponenter fra Designsystemet
