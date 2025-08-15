@@ -1,7 +1,7 @@
 import { createElement, HTMLProps } from 'react';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import { Field, Input, Label, ValidationMessage } from '@digdir/designsystemet-react';
-import { FieldLabelContent } from '~/main';
+import { LabelContent } from '~/main';
 
 import { nb } from 'date-fns/locale/nb';
 
@@ -27,7 +27,7 @@ export const Datepicker = ({ value, onChange, dateFormat = 'dd.MM.YYYY', ...prop
   return (
     <Field>
       <Label>
-        <FieldLabelContent text={props.label} required={props.required} optional={props.optional} />
+        <LabelContent text={props.label} required={props.required} optional={props.optional} />
       </Label>
       {props.description && <Field.Description>{props.description}</Field.Description>}
       <ReactDatePicker

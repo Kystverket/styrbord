@@ -1,14 +1,14 @@
-import style from './fieldLabelContent.module.css';
+import style from './labelContent.module.css';
 import { Spinner, Tag } from '~/main';
 
-export interface FieldLabelContentProps {
+export interface LabelContentProps {
   optional?: boolean | string | undefined;
   required?: boolean | string | undefined;
   text?: string | null;
   loading?: boolean;
 }
 
-const FieldLabelContent = ({ text, loading = false, optional = false, required = false }: FieldLabelContentProps) => {
+const LabelContent = ({ text, loading = false, optional = false, required = false }: LabelContentProps) => {
   if (!text) return null;
 
   const requiredText = typeof required === 'string' ? required : undefined;
@@ -29,4 +29,4 @@ const FieldLabelContent = ({ text, loading = false, optional = false, required =
   );
 };
 
-export default FieldLabelContent;
+export default LabelContent;

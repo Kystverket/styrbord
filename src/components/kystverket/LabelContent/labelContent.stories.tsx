@@ -1,20 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import FieldLabelContent, { FieldLabelContentProps } from './fieldLabelContent';
+import LabelContent, { LabelContentProps } from './labelContent';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Helpers/FieldLabelContent',
-  component: FieldLabelContent,
+  title: 'Helpers/LabelContent',
+  component: LabelContent,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],
   argTypes: {},
-} satisfies Meta<typeof FieldLabelContent>;
+} satisfies Meta<typeof LabelContent>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const defaultProps: FieldLabelContentProps = {
+const defaultProps: LabelContentProps = {
   text: 'Fyll inn ditt navn',
 };
 

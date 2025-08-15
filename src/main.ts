@@ -16,13 +16,8 @@ export type { BoxProps } from './components/kystverket/Box/box';
 export { default as Stepper } from './components/kystverket/Stepper/stepper';
 export type { StepperProps } from './components/kystverket/Stepper/stepper';
 
-export { default as ErrorLabel } from './components/kystverket/ErrorLabel/errorLabel';
-export { default as ErrorLabelWrapper } from './components/kystverket/ErrorLabel/errorLabel';
-export type { ErrorLabelProps as ErrorLabelProps } from './components/kystverket/ErrorLabel/errorLabel';
-export type { ErrorLabelProps as ErrorLabelWrapperProps } from './components/kystverket/ErrorLabel/errorLabel';
-
-export { default as FieldLabelContent } from './components/kystverket/FieldLabelContent/fieldLabelContent';
-export type { FieldLabelContentProps as InputLabelProps } from './components/kystverket/FieldLabelContent/fieldLabelContent';
+export { default as LabelContent } from './components/kystverket/LabelContent/labelContent';
+export type { LabelContentProps as InputLabelProps } from './components/kystverket/LabelContent/labelContent';
 
 export { default as Icon } from './components/kystverket/Icon/icon';
 export type { IconId } from './components/kystverket/Icon/icon.types';

@@ -1,5 +1,5 @@
 import { Select as DsSelect, Field, Label, ValidationMessage } from '@digdir/designsystemet-react';
-import { FieldLabelContent } from '~/main';
+import { LabelContent } from '~/main';
 
 export type SelectOption = {
   value: string;
@@ -27,7 +27,7 @@ export const Select = ({ ...props }: SelectProps) => {
   return (
     <Field>
       <Label>
-        <FieldLabelContent text={props.label} required={props.required} optional={props.optional} />
+        <LabelContent text={props.label} required={props.required} optional={props.optional} />
       </Label>
       {props.description && <Field.Description>{props.description}</Field.Description>}
       <DsSelect

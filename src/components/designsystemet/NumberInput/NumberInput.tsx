@@ -1,6 +1,6 @@
 import { Textfield } from '@digdir/designsystemet-react';
 import classes from './NumberInput.module.scss';
-import { FieldLabelContent } from '~/main';
+import { LabelContent } from '~/main';
 import { InputSize, inputSizeClass } from '~/utils/input/input';
 import { useState } from 'react';
 
@@ -38,7 +38,7 @@ export const NumberInput = ({
   return (
     <Textfield
       className={[className, inputSizeClass(size), classes['align-' + align]].join(' ')}
-      label={<FieldLabelContent text={props.label} required={props.required} optional={props.optional} />}
+      label={<LabelContent text={props.label} required={props.required} optional={props.optional} />}
       description={props.description}
       readOnly={props.readOnly}
       placeholder={props.placeholder}
