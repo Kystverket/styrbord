@@ -28,7 +28,7 @@ const InputLabel = ({
 
   if (!text && children)
     return (
-      <label>
+      <label className={style.content}>
         <div>{children}</div>
       </label>
     );
@@ -37,7 +37,7 @@ const InputLabel = ({
   const optionalText = typeof optional === 'string' ? optional : undefined;
 
   return (
-    <label>
+    <label className={style.content}>
       <Box gap={8}>
         <Box gap={0} mb={children || embedded ? 0 : 8}>
           <Box horizontal align="center">
