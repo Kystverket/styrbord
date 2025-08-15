@@ -15,7 +15,7 @@ export interface BorderedToggleGroupProps {
   onChanges?: (values: ToggleValue[]) => void;
   onChange?: (value: ToggleValue) => void;
   onBlur?: () => void;
-  error?: string | boolean;
+  error?: string;
 }
 
 const BorderedRadioGroup = (props: BorderedToggleGroupProps) => {

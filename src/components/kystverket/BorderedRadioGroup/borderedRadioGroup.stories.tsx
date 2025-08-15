@@ -5,7 +5,7 @@ import BorderedRadioGroup, { BorderedRadioGroupProps, RadioGroupValueType } from
 import { Box } from '~/main';
 
 const meta = {
-  title: 'Komponenter/BorderedRadioGroup',
+  title: 'Form/BorderedRadioGroup',
   component: BorderedRadioGroup,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],

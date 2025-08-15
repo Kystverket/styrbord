@@ -1,8 +1,0 @@
-.ds-input {
-  --dsc-input-padding: var(--spacing-4) var(--spacing-4) var(--spacing-4) var(--spacing-16);
-}
-
-.ds-input:is(textarea) {
-  min-height: 165px !important;
-  word-break: break-word;
-}

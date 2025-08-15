@@ -14,7 +14,7 @@ export interface BorderedRadioGroupProps {
   }[];
   onChange?: (value: RadioGroupValueType) => void;
   onBlur?: () => void;
-  error?: string | boolean;
+  error?: string;
 }
 
 const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {

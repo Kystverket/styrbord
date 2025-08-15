@@ -3,7 +3,7 @@ import { TextInput, TextInputProps } from './TextInput';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Komponenter/TextInput',
+  title: 'Form/TextInput',
   component: TextInput,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],

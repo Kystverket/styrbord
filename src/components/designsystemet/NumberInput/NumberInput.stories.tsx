@@ -15,7 +15,7 @@ const Wrapper = (props: NumberInputProps) => {
 };
 
 const meta = {
-  title: 'Komponenter/NumberInput',
+  title: 'Form/NumberInput',
   component: Wrapper,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'ds'],
