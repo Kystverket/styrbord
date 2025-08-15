@@ -6,7 +6,7 @@ const meta = {
   title: 'Form/Select',
   component: Select,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'ds'],
+  tags: ['autodocs', 'ds-override'],
   argTypes: {},
 } satisfies Meta<typeof Select>;
 

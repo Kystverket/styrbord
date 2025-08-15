@@ -1,6 +1,6 @@
 import React from 'react';
 import cls from './stepper.module.css';
-import { Icon, Label } from '~/main';
+import { Icon } from '~/main';
 
 export interface StepItem {
   identifier?: string;
@@ -25,9 +25,7 @@ const StepItem = ({ state, label, index }: StepItemProps) => {
         {state === 'completed' && <Icon material="check" />}
         {state !== 'completed' && <span>{index}</span>}
       </span>
-      <Label size="sm" strong className={cls.label}>
-        {label}
-      </Label>
+      <span className={cls.label}>{label}</span>
     </span>
   );
 };

@@ -6,7 +6,7 @@ const meta = {
   title: 'Form/Helpers/LabelContent',
   component: LabelContent,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ['autodocs'],
   argTypes: {},
 } satisfies Meta<typeof LabelContent>;
 

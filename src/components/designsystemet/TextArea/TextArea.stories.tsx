@@ -6,7 +6,7 @@ const meta = {
   title: 'Form/TextArea',
   component: TextArea,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv-ds-hybrid'],
+  tags: ['autodocs', 'ds-override'],
   argTypes: {},
 } satisfies Meta<typeof TextArea>;
 

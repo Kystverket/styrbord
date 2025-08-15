@@ -5,10 +5,10 @@ import { Card } from '@digdir/designsystemet-react';
 import CardTitle from '../CardTitle/CardTitle';
 
 const meta = {
-  title: 'Komponenter/Card',
+  title: 'Designsystemet/Card',
   component: Card,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'ds'],
+  tags: ['autodocs'],
   argTypes: {
     variant: {
       options: ['default', 'tinted'],

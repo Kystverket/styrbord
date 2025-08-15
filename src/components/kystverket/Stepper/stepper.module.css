@@ -62,6 +62,12 @@
   background-color: #bebbb8;
   flex: 1;
 }
+.label {
+  font-weight: var(--font-weight-medium);
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  letter-spacing: var(--body-sm-letter-spacing);
+}
 
 @container stepContainer (max-width: 600px) {
   .step-container {

@@ -7,7 +7,7 @@ const meta = {
   component: Footer,
 
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ['autodocs'],
 
   argTypes: {},
 } satisfies Meta<typeof Footer>;

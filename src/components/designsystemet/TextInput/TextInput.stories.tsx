@@ -6,7 +6,7 @@ const meta = {
   title: 'Form/TextInput',
   component: TextInput,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ['autodocs', 'ds-override'],
   argTypes: {},
 } satisfies Meta<typeof TextInput>;
 

@@ -6,7 +6,7 @@ const meta = {
   title: 'Form/BorderedToggleGroup',
   component: BorderedToggleGroup,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ['autodocs'],
   argTypes: {},
 } satisfies Meta<typeof BorderedToggleGroup>;
 

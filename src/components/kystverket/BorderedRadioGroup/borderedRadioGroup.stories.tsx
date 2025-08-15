@@ -8,7 +8,7 @@ const meta = {
   title: 'Form/BorderedRadioGroup',
   component: BorderedRadioGroup,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ['autodocs'],
   argTypes: {},
 } satisfies Meta<typeof BorderedRadioGroup>;
 

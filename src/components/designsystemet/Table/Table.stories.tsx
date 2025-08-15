@@ -6,9 +6,9 @@ import { Textfield } from '@digdir/designsystemet-react';
 type Story = StoryFn<typeof Table>;
 
 export default {
-  title: 'Komponenter/Table',
+  title: 'Designsystemet/Table',
   component: Table,
-  tags: ['autodocs', 'ds'],
+  tags: ['autodocs'],
 } as Meta;
 
 export const Preview: Story = (args) => {

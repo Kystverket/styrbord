@@ -18,7 +18,7 @@ const meta = {
   title: 'Form/NumberInput',
   component: Wrapper,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'ds'],
+  tags: ['autodocs', 'ds-override'],
   argTypes: {},
 } satisfies Meta<typeof Wrapper>;
 

@@ -18,7 +18,7 @@ const meta = {
   title: 'Form/Datepicker',
   component: Wrapper,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ['autodocs'],
   argTypes: {},
 } satisfies Meta<typeof Wrapper>;
 
