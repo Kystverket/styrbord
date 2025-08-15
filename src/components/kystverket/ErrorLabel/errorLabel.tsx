@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 import style from './errorLabel.module.css';
-import { Label } from '../Typography/typography';
 import Icon from '../Icon/icon';
 import Box from '../Box/box';
+import { Label } from '@digdir/designsystemet-react';
 
 export interface ErrorLabelProps {
   text?: string | null;
@@ -20,9 +20,7 @@ const ErrorLabel = ({ align = 'center', ...props }: ErrorLabelProps) => {
       {errorHasText && (
         <Box horizontal align={align} gap={4} className={style.error}>
           <Icon material="error" filled className={style.icon} />
-          <Label size="md" strong className={style.text}>
-            {errorText}
-          </Label>
+          <Label className={style.text}>{errorText}</Label>
         </Box>
       )}
     </Box>

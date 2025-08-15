@@ -1,7 +1,6 @@
-import { Box, ErrorLabel, Label } from '~/main';
+import { Box, Field, Label, ValidationMessage } from '~/main';
 import classes from './borderedRadioGroup.module.css';
 import { ReactNode } from 'react';
-import InputLabel from '../InputLabel/inputLabel';
 
 export type RadioGroupValueType = string | boolean | number;
 
@@ -24,8 +23,9 @@ const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
 
   return (
     <Box container="inline-size">
-      <InputLabel text={props.label} subText={props.description} />
-      <ErrorLabel text={errorText}>
+      <Field>
+        <Label>{props.label}</Label>
+        {props.description && <Field.Description>{props.description}</Field.Description>}
         <div className={classes.radioGroup}>
           {props.options.map(({ label, value }) => (
             <button
@@ -45,13 +45,12 @@ const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
               key={label}
             >
               <span className={classes.radioBoxIndicator}></span>
-              <Label size="md" className={classes.radioBoxText}>
-                {label}
-              </Label>
+              <span className={classes.radioBoxText}>{label}</span>
             </button>
           ))}
         </div>
-      </ErrorLabel>
+        {errorText && <ValidationMessage>{errorText}</ValidationMessage>}
+      </Field>
     </Box>
   );
 };

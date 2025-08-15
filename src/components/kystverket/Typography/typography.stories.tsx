@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Body, Label, Accent } from './typography';
+import { Body, Accent } from './typography';
 import Box, { BoxProps } from '../Box/box';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Heading } from '@digdir/designsystemet-react';
@@ -50,22 +50,6 @@ const defaultProps: BoxProps = {
       <Body size="lg">Body Large accent</Body>
       <Body size="md">Body Medium</Body>
       <Body size="sm">Body Small</Body>
-      <Label size="xl" strong>
-        Label XL Strong
-      </Label>
-      <Label size="lg" strong>
-        Label Large Strong
-      </Label>
-      <Label size="md" strong>
-        Label Medium Strong
-      </Label>
-      <Label size="sm" strong>
-        Label Small Strong
-      </Label>
-      <Label size="xl">Label XL Large</Label>
-      <Label size="lg">Label Large</Label>
-      <Label size="md">Label Medium</Label>
-      <Label size="sm">Label Small</Label>
       <p>
         <Body size="lg" strong inline>
           Body Large strong inline

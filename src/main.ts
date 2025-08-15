@@ -1,6 +1,4 @@
 import './css/index.scss';
-import { FileUploader } from './components/kystverket/FileUploader/FileUploader';
-import { FileUploaderContext } from './components/kystverket/FileUploader/FileUploader.context';
 
 export type { SupportedLanguage, ScreenSize } from './utils/types';
 
@@ -23,15 +21,15 @@ export { default as ErrorLabelWrapper } from './components/kystverket/ErrorLabel
 export type { ErrorLabelProps as ErrorLabelProps } from './components/kystverket/ErrorLabel/errorLabel';
 export type { ErrorLabelProps as ErrorLabelWrapperProps } from './components/kystverket/ErrorLabel/errorLabel';
 
-export { default as InputLabel } from './components/kystverket/InputLabel/inputLabel';
-export type { InputLabelProps } from './components/kystverket/InputLabel/inputLabel';
+export { default as FieldLabelContent } from './components/kystverket/FieldLabelContent/fieldLabelContent';
+export type { FieldLabelContentProps as InputLabelProps } from './components/kystverket/FieldLabelContent/fieldLabelContent';
 
 export { default as Icon } from './components/kystverket/Icon/icon';
 export type { IconId } from './components/kystverket/Icon/icon.types';
 
 export * from './components/kystverket/Image/image';
 
-export { Body, Label, Accent } from './components/kystverket/Typography/typography';
+export { Body, Accent } from './components/kystverket/Typography/typography';
 export type { TypographyProps } from './components/kystverket/Typography/typography';
 
 export { default as BorderedToggleGroup } from './components/kystverket/BorderedToggleGroup/borderedToggleGroup';
@@ -79,17 +77,11 @@ export type { TextAreaProps } from './components/designsystemet/TextArea/TextAre
 
 export type { InputSize } from './utils/input/input';
 
-export { default as Card } from './components/designsystemet/Card/Card';
-export type { CardProps } from './components/designsystemet/Card/Card';
-
 export { Select } from './components/designsystemet/Select/Select';
 export type { SelectProps, SelectOption } from './components/designsystemet/Select/Select';
 
 export { default as Tabs } from './components/designsystemet/Tabs/Tabs';
 export type { TabsProps } from './components/designsystemet/Tabs/Tabs';
-
-export { Details } from './components/designsystemet/Details/Details';
-export type { DetailsProps } from './components/designsystemet/Details/Details';
 
 export { default as Table } from './components/designsystemet/Table/Table';
 
