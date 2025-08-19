@@ -81,4 +81,6 @@ export type { TabsProps } from './components/designsystemet/Tabs/Tabs';
 
 export { default as Table } from './components/designsystemet/Table/Table';
 
+export { EXPERIMENTAL_Suggestion as Suggestion } from '@digdir/designsystemet-react';
+
 export * from '@digdir/designsystemet-react';
