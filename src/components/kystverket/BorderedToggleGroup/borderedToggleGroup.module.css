@@ -71,7 +71,7 @@
 }
 .toggleBoxText {
   text-align: left;
-  word-wrap: break-word;
+  overflow-wrap: break-word;
   font-weight: 500;
 }
 
