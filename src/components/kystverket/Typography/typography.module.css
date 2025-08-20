@@ -57,36 +57,6 @@
   font-weight: var(--font-weight-medium);
 }
 
-.accent {
-  color: var(--color-neutral-text-subtle);
-  text-transform: uppercase;
-}
-
-.accent-md {
-  composes: accent;
-  font-size: var(--body-md-font-size);
-  line-height: var(--body-md-line-height);
-  letter-spacing: var(--body-md-letter-spacing);
-  font-weight: var(--font-weight-regular);
-}
-
-.accent-sm {
-  composes: accent;
-  font-size: var(--body-sm-font-size);
-  line-height: var(--body-sm-line-height);
-  letter-spacing: var(--body-sm-letter-spacing);
-  font-weight: var(--font-weight-regular);
-}
-
-.accent-md-strong {
-  composes: accent-md;
-  font-weight: var(--font-weight-medium);
-}
-
-.accent-sm-strong {
-  composes: accent-sm;
-  font-weight: var(--font-weight-medium);
-}
 .label-xl {
   font-size: var(--body-xl-font-size);
   line-height: var(--body-xl-line-height);
@@ -132,5 +102,36 @@
 
 .label-sm-strong {
   composes: label-sm;
+  font-weight: var(--font-weight-medium);
+}
+
+.accent {
+  color: var(--color-neutral-text-subtle);
+  text-transform: uppercase;
+}
+
+.accent-md {
+  composes: accent;
+  font-size: var(--body-md-font-size);
+  line-height: var(--body-md-line-height);
+  letter-spacing: var(--body-md-letter-spacing);
+  font-weight: var(--font-weight-regular);
+}
+
+.accent-sm {
+  composes: accent;
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  letter-spacing: var(--body-sm-letter-spacing);
+  font-weight: var(--font-weight-regular);
+}
+
+.accent-md-strong {
+  composes: accent-md;
+  font-weight: var(--font-weight-medium);
+}
+
+.accent-sm-strong {
+  composes: accent-sm;
   font-weight: var(--font-weight-medium);
 }
