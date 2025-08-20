@@ -54,14 +54,14 @@ Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.
 
 Arbeid for å gjøre Styrbord mindre forskjellig fra Designsystemet. Dette gjør at det forhåpentligvis blir lettere å lære, og lettere å ta i bruk dokumentasjonen til Designsystemet.
 
-- InputLabel er fjernet. Man kan bruke Label med LabelContent (ny) for å oppnå samme visning.
-- ErrorLabel er fjernet. Man kan bruke ValidationMessage (fra Designsystemet) for å oppnå samme visning.
-- Label (fra typografi) er fjernet. Svært lite brukt, og blokkerer Label-komponenten fra Designsystemet.
-- Overskrivingen av Card er fjernet. For å oppnå samme stil kan man plassere CardTitle (ny) i et Card.
-- Overskrivingen av Details er fjernet. Dette gjør at man må gi innhold til Details som komponenter og ikke attributter slik vi gjorde det før.
+- `<InputLabel>` er fjernet. Man kan bruke `<Label>` med `<LabelContent>` (ny) for å oppnå samme visning.
+- `<ErrorLabel>` er fjernet. Man kan bruke `<ValidationMessage>` (fra Designsystemet) for å oppnå samme visning.
+- `<Label>` (fra typografi) er fjernet fra vanlig eksport. Svært lite brukt, og blokkerer `<Label>`-komponenten fra Designsystemet. Har man fortsatt behov for den er den tilgjengelig som `<Typography.Label>`.
+- Overskrivingen av `<Card>` er fjernet. For å oppnå samme stil kan man plassere `<CardTitle>` (ny) i et Card.
+- Overskrivingen av `<Details>` er fjernet. Dette gjør at man må gi innhold til `<Details>` som komponenter og ikke attributter slik vi gjorde det før.
 - Tillater ikke lenger å sende en boolsk verdi til error attributter i input-komponenter.
 
-Komponentene Button, Tabs, Select, NumberInput, TextInput og TextArea overskriver fortsatt noen Designsystem-komponenter med mer eller mindre inkompatible interface.
+Komponentene `<Button>`, `<Tabs>`, `<Select>`, `<NumberInput>`, `<TextInput>` og `<TextArea>` overskriver fortsatt noen Designsystem-komponenter med mer eller mindre inkompatible interface.
 
 ### 2025-06-17
 
