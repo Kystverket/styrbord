@@ -21,10 +21,7 @@ export {
   type DetailsProps as DeprecatedDetailsProps,
 } from './components/deprecated/Details/Details';
 
-export {
-  default as DeprecatedCard,
-  type CardProps as DeprecatedCardProps,
-} from './components/deprecated/Card/Card';
+export { default as DeprecatedCard, type CardProps as DeprecatedCardProps } from './components/deprecated/Card/Card';
 
 /*
     Egenproduserte komponenter
