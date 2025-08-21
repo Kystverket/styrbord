@@ -3,6 +3,30 @@ import './css/index.scss';
 export type { SupportedLanguage, ScreenSize } from './utils/types';
 
 /*
+    Komponenter som er på vei ut
+*/
+
+export {
+  default as DeprecatedErrorLabel,
+  type ErrorLabelProps as DeprecatedErrorLabelProps,
+} from './components/deprecated/ErrorLabel/errorLabel';
+
+export {
+  default as DeprecatedInputLabel,
+  type InputLabelProps as DeprecatedInputLabelProps,
+} from './components/deprecated/InputLabel/inputLabel';
+
+export {
+  Details as DeprecatedDetails,
+  type DetailsProps as DeprecatedDetailsProps,
+} from './components/deprecated/Details/Details';
+
+export {
+  default as DeprecatedCard,
+  type CardProps as DeprecatedCardProps,
+} from './components/deprecated/Card/Card';
+
+/*
     Egenproduserte komponenter
 */
 
