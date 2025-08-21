@@ -6,7 +6,7 @@ import { useState } from 'react';
 export default {
   title: 'Komponenter/Tabs',
   component: Tabs,
-  tags: ['autodocs', 'ds'],
+  tags: ['autodocs', 'ds-override'],
 } as Meta;
 
 export const Preview: StoryFn<typeof Tabs> = (args) => (

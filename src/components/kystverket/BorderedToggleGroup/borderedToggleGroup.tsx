@@ -1,7 +1,6 @@
-import { Box, ErrorLabel, Icon, Label } from '~/main';
+import { Box, Field, Icon, Label, ValidationMessage } from '~/main';
 import classes from './borderedToggleGroup.module.css';
 import { ReactNode } from 'react';
-import InputLabel from '../InputLabel/inputLabel';
 
 export interface ToggleValue {
   key: string;
@@ -16,7 +15,7 @@ export interface BorderedToggleGroupProps {
   onChanges?: (values: ToggleValue[]) => void;
   onChange?: (value: ToggleValue) => void;
   onBlur?: () => void;
-  error?: string | boolean;
+  error?: string;
 }
 
 const BorderedRadioGroup = (props: BorderedToggleGroupProps) => {
@@ -43,8 +42,9 @@ const BorderedRadioGroup = (props: BorderedToggleGroupProps) => {
 
   return (
     <Box container="inline-size">
-      <InputLabel text={props.label} subText={props.description} />
-      <ErrorLabel text={errorText}>
+      <Field>
+        <Label>{props.label}</Label>
+        {props.description && <Field.Description>{props.description}</Field.Description>}
         <div className={classes.toggleGroup}>
           {props.values.map((el) => (
             <button
@@ -66,13 +66,12 @@ const BorderedRadioGroup = (props: BorderedToggleGroupProps) => {
               <span className={classes.toggleBoxIndicator}>
                 <Icon className={classes.toggleBoxIndicatorIcon} material="check" />
               </span>
-              <Label size="md" className={classes.toggleBoxText}>
-                {el.label}
-              </Label>
+              <span className={classes.toggleBoxText}>{el.label}</span>
             </button>
           ))}
         </div>
-      </ErrorLabel>
+        {errorText && <ValidationMessage>{errorText}</ValidationMessage>}
+      </Field>
     </Box>
   );
 };

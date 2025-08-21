@@ -7,7 +7,7 @@ const meta = {
   title: 'Komponenter/Summary',
   component: Summary,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ['autodocs'],
   argTypes: {},
 } satisfies Meta<typeof Summary>;
 

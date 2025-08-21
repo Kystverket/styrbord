@@ -16,21 +16,20 @@ export type { BoxProps } from './components/kystverket/Box/box';
 export { default as Stepper } from './components/kystverket/Stepper/stepper';
 export type { StepperProps } from './components/kystverket/Stepper/stepper';
 
-export { default as ErrorLabel } from './components/kystverket/ErrorLabel/errorLabel';
-export { default as ErrorLabelWrapper } from './components/kystverket/ErrorLabel/errorLabel';
-export type { ErrorLabelProps as ErrorLabelProps } from './components/kystverket/ErrorLabel/errorLabel';
-export type { ErrorLabelProps as ErrorLabelWrapperProps } from './components/kystverket/ErrorLabel/errorLabel';
-
-export { default as InputLabel } from './components/kystverket/InputLabel/inputLabel';
-export type { InputLabelProps } from './components/kystverket/InputLabel/inputLabel';
+export { default as LabelContent, type LabelContentProps } from './components/kystverket/LabelContent/labelContent';
 
 export { default as Icon } from './components/kystverket/Icon/icon';
 export type { IconId } from './components/kystverket/Icon/icon.types';
 
 export * from './components/kystverket/Image/image';
 
-export { Body, Label, Accent } from './components/kystverket/Typography/typography';
-export type { TypographyProps } from './components/kystverket/Typography/typography';
+export { Body, Accent, Typography } from './components/kystverket/Typography/typography';
+export type {
+  TypographyProps,
+  BodyTypographyProps,
+  AccentTypographyProps,
+  LabelTypographyProps,
+} from './components/kystverket/Typography/typography';
 
 export { default as BorderedToggleGroup } from './components/kystverket/BorderedToggleGroup/borderedToggleGroup';
 export type { BorderedToggleGroupProps } from './components/kystverket/BorderedToggleGroup/borderedToggleGroup';
@@ -59,6 +58,8 @@ export {
 } from './components/kystverket/FileUploader/FileUploader.context';
 export type * from './components/kystverket/FileUploader/FileUploader.types';
 
+export { default as CardTitle, type CardTitleProps } from './components/designsystemet/CardTitle/CardTitle';
+
 /*
     Komponenter fra Designsystemet
 */
@@ -77,18 +78,14 @@ export type { TextAreaProps } from './components/designsystemet/TextArea/TextAre
 
 export type { InputSize } from './utils/input/input';
 
-export { default as Card } from './components/designsystemet/Card/Card';
-export type { CardProps } from './components/designsystemet/Card/Card';
-
 export { Select } from './components/designsystemet/Select/Select';
 export type { SelectProps, SelectOption } from './components/designsystemet/Select/Select';
 
 export { default as Tabs } from './components/designsystemet/Tabs/Tabs';
 export type { TabsProps } from './components/designsystemet/Tabs/Tabs';
 
-export { Details } from './components/designsystemet/Details/Details';
-export type { DetailsProps } from './components/designsystemet/Details/Details';
-
 export { default as Table } from './components/designsystemet/Table/Table';
+
+export { EXPERIMENTAL_Suggestion as Suggestion } from '@digdir/designsystemet-react';
 
 export * from '@digdir/designsystemet-react';

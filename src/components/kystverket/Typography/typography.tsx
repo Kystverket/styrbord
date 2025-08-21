@@ -13,15 +13,15 @@ export type BodyTypographyProps = TypographyProps & {
   inline?: boolean;
 };
 
-export type LabelTypographyProps = TypographyProps & {
-  size: 'sm' | 'md' | 'lg' | 'xl';
+export type AccentTypographyProps = TypographyProps & {
+  size?: 'sm' | 'md';
   strong?: boolean;
-  inline?: boolean;
 };
 
-export type AccentTypographyProps = TypographyProps & {
-  size: 'sm' | 'md';
+export type LabelTypographyProps = TypographyProps & {
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   strong?: boolean;
+  inline?: boolean;
 };
 
 export const Body = ({ inline, strong, size, className, children }: BodyTypographyProps) => {
@@ -39,7 +39,18 @@ export const Body = ({ inline, strong, size, className, children }: BodyTypograp
   return <p className={classes}>{children}</p>;
 };
 
-export const Label = ({ strong, size, className, children, inline = false }: LabelTypographyProps) => {
+export const Accent = ({ strong, size = 'md', className, children }: AccentTypographyProps) => {
+  const classes = buildTypographyClasses({
+    type: 'accent',
+    size,
+    strong,
+    className,
+  });
+
+  return <span className={classes}>{children}</span>;
+};
+
+const Label = ({ strong, size, className, children, inline = false }: LabelTypographyProps) => {
   let classes = buildTypographyClasses({
     type: 'label',
     size,
@@ -54,13 +65,8 @@ export const Label = ({ strong, size, className, children, inline = false }: Lab
   return <span className={classes}>{children}</span>;
 };
 
-export const Accent = ({ strong, size, className, children }: AccentTypographyProps) => {
-  const classes = buildTypographyClasses({
-    type: 'accent',
-    size,
-    strong,
-    className,
-  });
-
-  return <span className={classes}>{children}</span>;
+export const Typography = {
+  Body,
+  Accent,
+  Label,
 };

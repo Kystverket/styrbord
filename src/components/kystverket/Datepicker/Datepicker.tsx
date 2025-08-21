@@ -1,7 +1,7 @@
 import { createElement, HTMLProps } from 'react';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
-import { Input } from '@digdir/designsystemet-react';
-import { ErrorLabel, InputLabel } from '~/main';
+import { Field, Input, Label, ValidationMessage } from '@digdir/designsystemet-react';
+import { LabelContent } from '~/main';
 
 import { nb } from 'date-fns/locale/nb';
 
@@ -25,16 +25,19 @@ const CustomInput = (props: HTMLProps<HTMLInputElement>) => {
 
 export const Datepicker = ({ value, onChange, dateFormat = 'dd.MM.YYYY', ...props }: DatepickerProps) => {
   return (
-    <InputLabel text={props.label} subText={props.description} required={props.required} optional={props.optional}>
-      <ErrorLabel text={props.error}>
-        <ReactDatePicker
-          locale={'nb'}
-          selected={value}
-          dateFormat={dateFormat}
-          onChange={(date) => onChange?.(date ?? undefined)}
-          customInput={createElement(CustomInput)}
-        />
-      </ErrorLabel>
-    </InputLabel>
+    <Field>
+      <Label>
+        <LabelContent text={props.label} required={props.required} optional={props.optional} />
+      </Label>
+      {props.description && <Field.Description>{props.description}</Field.Description>}
+      <ReactDatePicker
+        locale={'nb'}
+        selected={value}
+        dateFormat={dateFormat}
+        onChange={(date) => onChange?.(date ?? undefined)}
+        customInput={createElement(CustomInput)}
+      />
+      {props.error && <ValidationMessage>{props.error}</ValidationMessage>}
+    </Field>
   );
 };

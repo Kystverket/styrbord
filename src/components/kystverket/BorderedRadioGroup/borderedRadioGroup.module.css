@@ -50,5 +50,6 @@
 }
 .radioBoxText {
   text-align: left;
-  text-wrap: break-word;
+  overflow-wrap: break-word;
+  font-weight: 500;
 }

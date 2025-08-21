@@ -1,6 +1,6 @@
 import typography from './typography.module.css';
 
-export type TypographyPrefix = 'display' | 'headline' | 'title' | 'body' | 'label' | 'accent' | 'paragraph';
+export type TypographyPrefix = 'body' | 'accent' | 'label';
 
 export type AllSizes = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 

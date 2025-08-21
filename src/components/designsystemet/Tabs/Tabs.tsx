@@ -8,7 +8,7 @@ export type TabsProps = DsTabsProps & {
 const Tabs = ({ underlined = true, className = '', ...props }: TabsProps) => {
   const classNames = [className];
   if (!underlined) {
-    classNames.push(classes.underlined);
+    classNames.push(classes.notUnderlined);
   }
   return <DsTabs className={classNames.join('')} {...props} />;
 };

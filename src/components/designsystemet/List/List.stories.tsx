@@ -4,7 +4,7 @@ import type { Meta, StoryFn } from '@storybook/react';
 type Story = StoryFn<typeof List.Unordered>;
 
 export default {
-  title: 'Komponenter/List',
+  title: 'Designsystemet/List',
   component: List.Unordered,
 } satisfies Meta;
 

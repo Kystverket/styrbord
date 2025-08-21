@@ -6,7 +6,7 @@ const meta = {
   title: 'Side/Logo',
   component: Logo,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ['autodocs'],
   argTypes: {},
 } satisfies Meta<typeof Logo>;
 

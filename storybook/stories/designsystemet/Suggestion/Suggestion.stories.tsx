@@ -12,8 +12,9 @@ import {
 } from '~/main';
 
 export default {
-  title: 'Komponenter/Suggestion',
+  title: 'Designsystemet/Suggestion',
   component: Suggestion,
+  tags: ['autodocs'],
   /* add height by default */
   decorators: [
     (Story) => (

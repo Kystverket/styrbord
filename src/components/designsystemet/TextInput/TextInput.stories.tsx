@@ -3,10 +3,10 @@ import { TextInput, TextInputProps } from './TextInput';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Komponenter/TextInput',
+  title: 'Form/TextInput',
   component: TextInput,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ['autodocs', 'ds-override'],
   argTypes: {},
 } satisfies Meta<typeof TextInput>;
 
@@ -19,6 +19,7 @@ const defaultArgs: TextInputProps = {
   onChange: (value: string) => console.log(`onChange value: ${value}`),
   value: '',
   label: 'This is a label',
+  description: 'This is a description',
 };
 
 export const Default: Story = {
@@ -60,17 +61,9 @@ export const WithError: Story = {
   },
 };
 
-export const WithBoolError: Story = {
-  args: {
-    ...defaultArgs,
-    error: true,
-  },
-};
-
 export const Disabled: Story = {
   args: {
     ...defaultArgs,
-    error: false,
     disabled: true,
   },
 };
@@ -78,7 +71,6 @@ export const Disabled: Story = {
 export const ReadOnly: Story = {
   args: {
     ...defaultArgs,
-    error: false,
     readOnly: true,
   },
 };
@@ -86,7 +78,6 @@ export const ReadOnly: Story = {
 export const Loading: Story = {
   args: {
     ...defaultArgs,
-    error: false,
     loading: true,
   },
 };
