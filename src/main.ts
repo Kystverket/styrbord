@@ -67,7 +67,7 @@ export { default as CardTitle, type CardTitleProps } from './components/designsy
 export { Button } from './components/designsystemet/Button/Button';
 export type { ButtonProps } from './components/designsystemet/Button/Button';
 
-export { TextInput, Textfield } from './components/designsystemet/TextInput/TextInput';
+export { TextInput } from './components/designsystemet/TextInput/TextInput';
 export type { TextInputProps } from './components/designsystemet/TextInput/TextInput';
 
 export { NumberInput } from './components/designsystemet/NumberInput/NumberInput';

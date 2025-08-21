@@ -2,7 +2,6 @@ import { Textfield as DsTextField } from '@digdir/designsystemet-react';
 import { HTMLInputAutoCompleteAttribute } from 'react';
 import { LabelContent } from '~/main';
 import { InputSize, inputSizeClass } from '~/utils/input/input';
-export const Textfield = null;
 
 export interface TextInputProps {
   optional?: boolean | string | undefined;
