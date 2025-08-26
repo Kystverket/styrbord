@@ -184,7 +184,7 @@ export function Header({
         </Box>
       </Box>
 
-      <Box className={classes.buttonsContainer} horizontal>
+      <Box className={classes.buttonsContainer}>
         {/*Logic: Hamburger menu for the links when header width is down to phone-size*/}
         {links && isMenuOpen && (
           <Box justify="start" className={`${classes.menuDropdown} ${classes.disappearAbovePhone}`}>
