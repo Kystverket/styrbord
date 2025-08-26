@@ -75,9 +75,13 @@ export const Selvbetjening: Story = {
   args: { ...defaultProps, logo: { ...defaultProps.logo, variant: 'selvbetjening' } },
 };
 
-export const medProfil: Story = {
+export const medProfilOgMenyItems: Story = {
   args: {
     ...defaultProps,
+    links: [
+      { icon: 'anchor', label: 'Kystverket', url: 'https://kystverket.no' },
+      { icon: 'settings', label: 'Settings', url: '#' },
+    ],
     profile: {
       name: 'Tore Larsen Øttergård',
       department: 'Hav- og kystforvaltning',
@@ -87,23 +91,19 @@ export const medProfil: Story = {
   },
 };
 
-export const MedMenyItems: Story = {
-  args: {
-    ...defaultProps,
-    links: [
-      { icon: 'data_table', label: 'Arbeidsliste', url: '/?path=/docs/side-header--docs' },
-      { icon: 'settings', label: 'Administrer roller', url: 'https://kystverket.no' },
-    ],
-  },
-};
-
-export const medProfilOgItems: Story = {
+export const medMenyItems: Story = {
   args: {
     ...defaultProps,
     links: [
       { icon: 'anchor', label: 'Kystverket', url: 'https://kystverket.no' },
-      { icon: 'settings', label: 'Administrer roller', url: 'https://kystverket.no' },
+      { icon: 'settings', label: 'Settings', url: '#' },
     ],
+  },
+};
+
+export const medProfil: Story = {
+  args: {
+    ...defaultProps,
     profile: {
       name: 'Tore Larsen Øttergård',
       department: 'Hav- og kystforvaltning',

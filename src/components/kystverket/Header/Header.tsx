@@ -110,7 +110,7 @@ export function Header({
         </Box>
         {/*End Of Logo */}
 
-        <Box horizontal gap={16} className="flexCenter">
+        <Box horizontal gap={16}>
           {/* Links */}
           {links && (
             <>

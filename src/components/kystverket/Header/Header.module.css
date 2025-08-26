@@ -2,63 +2,47 @@
 /* Header Container & Layout */
 /* ========================= */
 .headerContainer {
-  background-color: white;
-  border-bottom: none;
-  box-shadow: 0 1px 2px 0 #0006671a;
-  container: header / inline-size;
+  position: relative;
   height: fit-content;
   min-height: 72px;
-  position: relative;
+  container: header / inline-size;
+  background-color: white;
+  box-shadow: 0 1px 2px 0 #0006671a;
 }
 
 .headerFlex {
-  align-items: center;
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
 }
 
-.buttonsContainer {
-  gap: var(--spacing-16);
-  padding: 4px;
-}
-
-.flexCenter {
-  align-items: center;
-  display: flex;
-  height: 100%;
-  justify-content: center;
-}
-
-/* ========================= */
-/* Logo & Branding           */
-/* ========================= */
 .logoLink {
-  align-items: center;
   display: flex;
   flex-direction: row;
+  align-items: center;
   gap: 14px;
   line-height: 0;
   text-decoration: none !important;
 }
 
 .titleText {
-  color: var(--color-primary-base-default);
   display: inline-block;
   font-size: var(--ds-font-size-4);
   font-weight: lighter;
-  letter-spacing: 0.1em !important;
+  color: var(--color-primary-base-default);
   text-transform: uppercase;
+  letter-spacing: 0.1em !important;
 }
 
 /* ========================= */
 /* Avatar & Profile          */
 /* ========================= */
 .avatar {
-  font-size: 10px;
+  width: 27px;
   height: 27px;
   margin: 1px; /* Needed for alignment with other links */
-  width: 27px;
+  font-size: 10px;
 }
 
 .relativeUntilMobile {
@@ -66,6 +50,12 @@
 }
 
 .profileMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 250px;
+  z-index: 999;
+  padding: var(--size-3) var(--size-2);
   background-color: white;
   border-radius: var(--border-radius-default);
   box-shadow:
@@ -74,12 +64,6 @@
     0 4px 8px 0 rgba(0, 0, 0, 0.12);
   font-weight: 400;
   opacity: 1;
-  padding: var(--size-3) var(--size-2);
-  position: absolute;
-  right: 0;
-  top: 100%;
-  width: 250px;
-  z-index: 999;
 }
 
 .profileContainer {
@@ -94,13 +78,13 @@
 }
 
 .profileMenuDepartment {
-  color: var(--color-neutral-text-subtle);
   font-size: var(--font-size-3);
+  color: var(--color-neutral-text-subtle);
 }
 
 .profileName {
-  color: var(--ds-color-primary-text-default);
   font-weight: 800;
+  color: var(--ds-color-primary-text-default);
   text-align: center;
 }
 
@@ -114,13 +98,13 @@
 }
 
 .profileLogOutButton {
-  border: none;
-  align-items: center;
-  border-radius: var(--border-radius-md);
   display: flex;
   flex: 1;
-  font-weight: 500;
+  align-items: center;
   justify-content: flex-start;
+  border-radius: var(--border-radius-md);
+  border: none;
+  font-weight: 500;
   text-transform: none;
 }
 
@@ -135,30 +119,35 @@
 /* ========================= */
 /* Buttons & Menu            */
 /* ========================= */
+.buttonsContainer {
+  gap: var(--spacing-16);
+  padding: 4px;
+}
+
 .headerButton {
-  align-items: center;
-  border-radius: var(--border-radius-md);
   display: flex;
   flex-direction: row;
-  font-weight: 600;
-  gap: var(--size-1);
+  align-items: center;
   justify-content: flex-start;
+  gap: var(--size-1);
   padding: var(--size-3) var(--size-4);
+  border-radius: var(--border-radius-md);
+  font-weight: 600;
   text-decoration: none;
   text-transform: none;
   white-space: nowrap;
 }
 
 .menuButton {
-  align-items: center;
-  border-radius: var(--border-radius-md);
   display: flex;
-  font-weight: 400;
-  gap: var(--size-2);
+  align-items: center;
   justify-content: flex-start;
-  padding: var(--size-5) var(--size-4);
-  text-decoration: none;
   width: 100%;
+  gap: var(--size-2);
+  padding: var(--size-5) var(--size-4);
+  border-radius: var(--border-radius-md);
+  font-weight: 400;
+  text-decoration: none;
 }
 
 .headerButton:hover,
@@ -171,11 +160,11 @@
 }
 
 .menuDropdown {
-  background-color: #fff;
-  display: none;
-  left: 0;
   position: absolute;
   top: 100%;
+  left: 0;
+  display: none;
+  background-color: #fff;
 }
 
 /* ========================= */
@@ -186,9 +175,9 @@
     display: none;
   }
   .avatarShrink {
-    font-size: 8px;
-    height: 21px;
     width: 21px;
+    height: 21px;
+    font-size: 8px;
   }
   .profileNameShort {
     display: block;
@@ -207,16 +196,17 @@
     margin-bottom: 16px;
   }
   .menuDropdown {
+    display: flex;
+    flex-direction: column;
     align-items: flex-start;
+    justify-content: flex-start;
+    flex-grow: 1;
+    width: 100%;
+    padding: var(--size-3) var(--size-2);
     border-top: 1px solid var(--color-neutral-surface-hover);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12);
-    display: flex;
-    flex-grow: 1;
     font-size: var(--ds-font-size-4);
     font-weight: 200;
-    justify-content: flex-start;
-    padding: var(--size-3) var(--size-2);
-    width: 100%;
   }
   .headerFlex {
     flex-direction: column;
@@ -226,9 +216,9 @@
     position: static;
   }
   .profileMenu {
+    width: 100%;
     border-top: 1px solid var(--color-neutral-surface-hover);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12);
-    width: 100%;
   }
   .logoLink {
     margin-top: 10px;
