@@ -161,6 +161,7 @@
 
 .menuDropdown {
   position: absolute;
+  z-index: 999;
   top: 100%;
   left: 0;
   display: none;
