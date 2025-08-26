@@ -81,10 +81,10 @@ export const medProfilOgMenyItems: Story = {
       { icon: 'settings', label: 'Settings', url: '#' },
     ],
     profile: {
-      name: 'Tore Larsen Øttergård',
+      name: 'Ola Nordmann',
       department: 'Hav- og kystforvaltning',
       logoutHandler: () => alert('Logger ut'),
-      initials: 'TØ',
+      initials: 'ON',
     },
   },
 };
@@ -103,10 +103,10 @@ export const medProfil: Story = {
   args: {
     ...defaultProps,
     profile: {
-      name: 'Tore Larsen Øttergård',
+      name: 'Ola Nordmann',
       department: 'Hav- og kystforvaltning',
       logoutHandler: () => alert('Logger ut'),
-      initials: 'TØ',
+      initials: 'ON',
     },
   },
 };
