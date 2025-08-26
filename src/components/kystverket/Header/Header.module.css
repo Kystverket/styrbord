@@ -78,7 +78,7 @@
 }
 
 .profileMenuDepartment {
-  font-size: var(--font-size-3);
+  font-size: var(--ds-font-size-3);
   color: var(--color-neutral-text-subtle);
 }
 
