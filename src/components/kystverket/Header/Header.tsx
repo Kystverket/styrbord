@@ -141,11 +141,9 @@ export function Header({
                   data-color={'primary'}
                   initials={profile.initials}
                 />
-                <Paragraph className={`${classes.profileName} ${classes.disappearBelowTablet}`}>
-                  {profile.name}
-                </Paragraph>
-                <Paragraph className={`${classes.profileName} ${classes.profileNameShort}`}>
-                  {profile.name?.split(' ')[0]}
+                <Paragraph className={classes.profileName}>
+                  <span className={classes.disappearBelowTablet}>{profile.name}</span>
+                  <span className={classes.profileNameShort}>{profile.name?.split(' ')[0]}</span>
                 </Paragraph>
                 <Icon
                   material={isProfileOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}
