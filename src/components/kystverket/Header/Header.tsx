@@ -35,11 +35,41 @@ export interface HeaderProps {
     variant?: LogoVariant;
   };
   /**
-   * links.
+   * links - En kolleksjon av lenker
    * @default undefined
    */
-  links?: { icon: IconId; label: string; url: string }[];
-  profile?: { name: string; department: string; initials: string; logoutHandler: () => void };
+  links?: {
+    /**
+     * icon - Typed til IconId
+     */
+    icon: IconId;
+    /**
+     * label
+     */
+    label: string;
+    /**
+     * url
+     */
+    url: string;
+  }[];
+  profile?: {
+    /**
+     * name
+     */
+    name: string;
+    /**
+     * department
+     */
+    department: string;
+    /**
+     * initials. Keep it to `2` characters
+     */
+    initials: string;
+    /**
+     * logoutHandler
+     */
+    logoutHandler: () => void;
+  };
 }
 
 export function Header({
@@ -81,7 +111,7 @@ export function Header({
         {/*End Of Logo */}
 
         <Box horizontal gap={16} className="flexCenter">
-          {/* Start of Links */}
+          {/* Links */}
           {links && (
             <>
               {links.map((link, index) => (
