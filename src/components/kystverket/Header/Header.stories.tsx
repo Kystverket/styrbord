@@ -3,7 +3,6 @@ import { Header } from './Header';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { SupportedLanguage } from '~/main';
 
-
 const meta = {
   title: 'Side/Header',
   component: Header,
