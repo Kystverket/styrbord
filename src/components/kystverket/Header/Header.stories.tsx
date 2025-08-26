@@ -3,6 +3,8 @@ import { Header } from './Header';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { SupportedLanguage } from '~/main';
 
+// TODO mention something about container header
+
 const meta = {
   title: 'Side/Header',
   component: Header,
@@ -35,24 +37,6 @@ type Story = StoryObj<typeof meta>;
 const defaultProps: Story['args'] = {
   language: 'nb-NO',
   logo: { url: '/' },
-  //TODO REMOVE TEST CONTENT
-
-  links: [
-    // { icon: 'article', label: 'Knapp 1', url: 'https://kystverket.no' },
-    // { icon: 'calendar_month', label: 'Knapp 2', url: 'https://kystverket.no' },
-    // { icon: 'calendar_month', label: 'Knapp 3', url: 'https://kystverket.no' },
-    // { icon: 'calendar_month', label: 'Knapp 4', url: 'https://kystverket.no' },
-    // { icon: 'calendar_month', label: 'Knapp 5', url: 'https://kystverket.no' },
-
-    { icon: 'data_table', label: 'Arbeidsliste', url: 'https://kystverket.no' },
-    { icon: 'settings', label: 'Administrer roller', url: 'https://kystverket.no' },
-  ],
-  profile: {
-    name: 'Fornavn Etternavn',
-    department: 'Hav- og kystforvaltning',
-    logoutHandler: () => alert('Logger ut'),
-  },
-  // TEST CONTENT
 };
 
 export const Default: Story = {
@@ -89,4 +73,42 @@ export const Saksbehandling: Story = {
 
 export const Selvbetjening: Story = {
   args: { ...defaultProps, logo: { ...defaultProps.logo, variant: 'selvbetjening' } },
+};
+
+export const medProfil: Story = {
+  args: {
+    ...defaultProps,
+    profile: {
+      name: 'Tore Larsen Øttergård',
+      department: 'Hav- og kystforvaltning',
+      logoutHandler: () => alert('Logger ut'),
+      initials: 'TØ',
+    },
+  },
+};
+
+export const MedMenyItems: Story = {
+  args: {
+    ...defaultProps,
+    links: [
+      { icon: 'data_table', label: 'Arbeidsliste', url: '/?path=/docs/side-header--docs' },
+      { icon: 'settings', label: 'Administrer roller', url: 'https://kystverket.no' },
+    ],
+  },
+};
+
+export const medProfilOgItems: Story = {
+  args: {
+    ...defaultProps,
+    links: [
+      { icon: 'anchor', label: 'Kystverket', url: 'https://kystverket.no' },
+      { icon: 'settings', label: 'Administrer roller', url: 'https://kystverket.no' },
+    ],
+    profile: {
+      name: 'Tore Larsen Øttergård',
+      department: 'Hav- og kystforvaltning',
+      logoutHandler: () => alert('Logger ut'),
+      initials: 'TØ',
+    },
+  },
 };

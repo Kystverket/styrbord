@@ -1,201 +1,245 @@
+/* ========================= */
+/* Header Container & Layout */
+/* ========================= */
 .headerContainer {
-  position: relative;
   background-color: white;
-  min-height: 72px;
-  height: fit-content;
+  border-bottom: none;
   box-shadow: 0 1px 2px 0 #0006671a;
   container: header / inline-size;
-  border-bottom: none;
-}
-
-.logo{
-  container: logo / inline-size;
+  height: fit-content;
+  min-height: 72px;
+  position: relative;
 }
 
 .headerFlex {
+  align-items: center;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.buttonsContainer {
+  gap: var(--spacing-16);
+  padding: 4px;
+}
+
+.flexCenter {
   align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
 }
 
-.avatar {
-  width: 27px;
-  height: 27px;
-}
-
-
-
+/* ========================= */
+/* Logo & Branding           */
+/* ========================= */
 .logoLink {
-  line-height: 0;
-}
-.titleText {
-  display: inline-block;
-  color: var(--color-primary-base-default);
-  text-transform: uppercase;
-  letter-spacing: 0.1em !important;
-  font-weight: lighter;
-  font-size: var(--ds-font-size-4);
-}
-.logoLink {
+  align-items: center;
   display: flex;
   flex-direction: row;
-  align-items: center;
   gap: 14px;
+  line-height: 0;
   text-decoration: none !important;
 }
 
-/* Button Styles */
-.Button {
-  text-decoration: none;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: start;
-  gap: 4px;
-  white-space: nowrap;
-  text-transform: none;
+.titleText {
+  color: var(--color-primary-base-default);
+  display: inline-block;
+  font-size: var(--ds-font-size-4);
+  font-weight: lighter;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase;
 }
 
-.navButton {
-  font-weight: 900;
+/* ========================= */
+/* Avatar & Profile          */
+/* ========================= */
+.avatar {
+  font-size: 10px;
+  height: 27px;
+  margin: 1px; /* Needed for alignment with other links */
+  width: 27px;
 }
-/* End of Button Styles */
-
-
 
 .relativeUntilMobile {
   position: relative;
 }
 
-/* Dropdown Profile */
 .profileMenu {
   background-color: white;
-  z-index: 999;
-  position: absolute;
-  font-weight: 400;
-  width: 250px;
-  top: 100%;
-  right: 0px;
-  opacity: 100%;
-  padding: var(--size-3) var(--size-2);
+  border-radius: var(--border-radius-default);
   box-shadow:
     0 0 1px 0 rgba(0, 0, 0, 0.14),
     0 2px 4px 0 rgba(0, 0, 0, 0.12),
     0 4px 8px 0 rgba(0, 0, 0, 0.12);
-  border-radius: var(--border-radius-default);
+  font-weight: 400;
+  opacity: 1;
+  padding: var(--size-3) var(--size-2);
+  position: absolute;
+  right: 0;
+  top: 100%;
+  width: 250px;
+  z-index: 999;
 }
 
-.profileContainer { 
+.profileContainer {
   flex-grow: 1;
-  padding: var(--size-3) var(--size-4);
   gap: 4px;
-  
+  padding: var(--size-3) var(--size-4);
+}
+
+.profileMenuName {
+  font-weight: 800;
+  margin-top: 2px;
+}
+
+.profileMenuDepartment {
+  color: var(--color-neutral-text-subtle);
+  font-size: var(--font-size-3);
 }
 
 .profileName {
-  text-align: center;
   color: var(--ds-color-primary-text-default);
-  text-transform: none;
   font-weight: 800;
+  text-align: center;
 }
-
-.EllipsisOnOverflow {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 100%;
-  min-width: 0;
-}
-
-.maxWidth {
-  min-width: 0;
-  flex: 1;
-}
-
-.LogOut{
-  display: flex;
-  flex: 1;
-  align-items: start;
-  justify-content: start;
-}
-/* End of Dropdown Profile */
 
 .profileNameShort {
   display: none;
 }
 
+.profileTextContainer {
+  flex: 1;
+  min-width: 0;
+}
+
+.profileLogOutButton {
+  border: none;
+  align-items: center;
+  border-radius: var(--border-radius-md);
+  display: flex;
+  flex: 1;
+  font-weight: 500;
+  justify-content: flex-start;
+  text-transform: none;
+}
+
+.EllipsisOnOverflow {
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ========================= */
+/* Buttons & Menu            */
+/* ========================= */
+.headerButton {
+  align-items: center;
+  border-radius: var(--border-radius-md);
+  display: flex;
+  flex-direction: row;
+  font-weight: 600;
+  gap: var(--size-1);
+  justify-content: flex-start;
+  padding: var(--size-3) var(--size-4);
+  text-decoration: none;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.menuButton {
+  align-items: center;
+  border-radius: var(--border-radius-md);
+  display: flex;
+  font-weight: 400;
+  gap: var(--size-2);
+  justify-content: flex-start;
+  padding: var(--size-5) var(--size-4);
+  text-decoration: none;
+  width: 100%;
+}
+
+.headerButton:hover,
+.menuButton:hover {
+  background-color: var(--ds-color-surface-hover);
+}
+.headerButton:active,
+.menuButton:active {
+  background-color: var(--ds-color-surface-active);
+}
+
+.menuDropdown {
+  background-color: #fff;
+  display: none;
+  left: 0;
+  position: absolute;
+  top: 100%;
+}
+
+/* ========================= */
+/* Responsive Design         */
+/* ========================= */
 @container header (width < 1024px) {
   .disappearBelowTablet {
     display: none;
   }
-  .shrinkAvatar {
-    width: 21px;
+  .avatarShrink {
+    font-size: 8px;
     height: 21px;
-    font-size: 10px;
+    width: 21px;
   }
   .profileNameShort {
     display: block;
   }
-  .navButton {
+  .headerButton {
     flex-direction: column;
-    gap: 0px;
   }
-}
-
-.buttonsContainer{
-  padding: 4px;
-  gap: var(--spacing-16)
-}
-
-.phoneDropdownMenu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  background-color: #ffffff;
-  left: 0;
-
-  width: 100%;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.12);
-
-}
-.stretchButton {
-  flex: 1 1 0;
-  min-width: 0;
 }
 
 @container header (width < 600px) {
   .disappearBelowPhone {
     display: none;
   }
-  .phoneDropdownMenu {
+  /* Logic: If any buttons, makes the Header bigger to look better */
+  .headerButton {
+    margin-bottom: 16px;
+  }
+  .menuDropdown {
+    align-items: flex-start;
+    border-top: 1px solid var(--color-neutral-surface-hover);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12);
     display: flex;
-    align-items: start;
-    justify-content: start;
-    padding: var(--size-3)var(--size-2) ;
+    flex-grow: 1;
     font-size: var(--ds-font-size-4);
     font-weight: 200;
-    gap: 4px;
+    justify-content: flex-start;
+    padding: var(--size-3) var(--size-2);
+    width: 100%;
   }
-
   .headerFlex {
     flex-direction: column;
     gap: 12px;
-    padding-bottom: 16px;
   }
   .relativeUntilMobile {
     position: static;
   }
   .profileMenu {
+    border-top: 1px solid var(--color-neutral-surface-hover);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12);
     width: 100%;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.12);
+  }
+  .logoLink {
+    margin-top: 10px;
   }
 }
 
 @container header (width > 600px) {
+  .logo {
+    flex-shrink: 0;
+  }
   .disappearAbovePhone {
     display: none;
   }
 }
-
-
