@@ -35,6 +35,24 @@ type Story = StoryObj<typeof meta>;
 const defaultProps: Story['args'] = {
   language: 'nb-NO',
   logo: { url: '/' },
+  //TODO REMOVE TEST CONTENT
+
+  links: [
+    // { icon: 'article', label: 'Knapp 1', url: 'https://kystverket.no' },
+    // { icon: 'calendar_month', label: 'Knapp 2', url: 'https://kystverket.no' },
+    // { icon: 'calendar_month', label: 'Knapp 3', url: 'https://kystverket.no' },
+    // { icon: 'calendar_month', label: 'Knapp 4', url: 'https://kystverket.no' },
+    // { icon: 'calendar_month', label: 'Knapp 5', url: 'https://kystverket.no' },
+
+    { icon: 'data_table', label: 'Arbeidsliste', url: 'https://kystverket.no' },
+    { icon: 'settings', label: 'Administrer roller', url: 'https://kystverket.no' },
+  ],
+  profile: {
+    name: 'Fornavn Etternavn',
+    department: 'Hav- og kystforvaltning',
+    logoutHandler: () => alert('Logger ut'),
+  },
+  // TEST CONTENT
 };
 
 export const Default: Story = {

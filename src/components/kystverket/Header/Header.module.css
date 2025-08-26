@@ -1,8 +1,31 @@
 .headerContainer {
+  position: relative;
   background-color: white;
-  height: 72px;
+  min-height: 72px;
+  height: fit-content;
   box-shadow: 0 1px 2px 0 #0006671a;
+  container: header / inline-size;
+  border-bottom: none;
 }
+
+.logo{
+  container: logo / inline-size;
+}
+
+.headerFlex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.avatar {
+  width: 27px;
+  height: 27px;
+}
+
+
+
 .logoLink {
   line-height: 0;
 }
@@ -21,3 +44,158 @@
   gap: 14px;
   text-decoration: none !important;
 }
+
+/* Button Styles */
+.Button {
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  gap: 4px;
+  white-space: nowrap;
+  text-transform: none;
+}
+
+.navButton {
+  font-weight: 900;
+}
+/* End of Button Styles */
+
+
+
+.relativeUntilMobile {
+  position: relative;
+}
+
+/* Dropdown Profile */
+.profileMenu {
+  background-color: white;
+  z-index: 999;
+  position: absolute;
+  font-weight: 400;
+  width: 250px;
+  top: 100%;
+  right: 0px;
+  opacity: 100%;
+  padding: var(--size-3) var(--size-2);
+  box-shadow:
+    0 0 1px 0 rgba(0, 0, 0, 0.14),
+    0 2px 4px 0 rgba(0, 0, 0, 0.12),
+    0 4px 8px 0 rgba(0, 0, 0, 0.12);
+  border-radius: var(--border-radius-default);
+}
+
+.profileContainer { 
+  flex-grow: 1;
+  padding: var(--size-3) var(--size-4);
+  gap: 4px;
+  
+}
+
+.profileName {
+  text-align: center;
+  color: var(--ds-color-primary-text-default);
+  text-transform: none;
+  font-weight: 800;
+}
+
+.EllipsisOnOverflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.maxWidth {
+  min-width: 0;
+  flex: 1;
+}
+
+.LogOut{
+  display: flex;
+  flex: 1;
+  align-items: start;
+  justify-content: start;
+}
+/* End of Dropdown Profile */
+
+.profileNameShort {
+  display: none;
+}
+
+@container header (width < 1024px) {
+  .disappearBelowTablet {
+    display: none;
+  }
+  .shrinkAvatar {
+    width: 21px;
+    height: 21px;
+    font-size: 10px;
+  }
+  .profileNameShort {
+    display: block;
+  }
+  .navButton {
+    flex-direction: column;
+    gap: 0px;
+  }
+}
+
+.buttonsContainer{
+  padding: 4px;
+  gap: var(--spacing-16)
+}
+
+.phoneDropdownMenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  background-color: #ffffff;
+  left: 0;
+
+  width: 100%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.12);
+
+}
+.stretchButton {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+@container header (width < 600px) {
+  .disappearBelowPhone {
+    display: none;
+  }
+  .phoneDropdownMenu {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    padding: var(--size-3)var(--size-2) ;
+    font-size: var(--ds-font-size-4);
+    font-weight: 200;
+    gap: 4px;
+  }
+
+  .headerFlex {
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 16px;
+  }
+  .relativeUntilMobile {
+    position: static;
+  }
+  .profileMenu {
+    width: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.12);
+  }
+}
+
+@container header (width > 600px) {
+  .disappearAbovePhone {
+    display: none;
+  }
+}
+
+
