@@ -1,8 +1,9 @@
-import { Box, Logo, LogoVariant, SupportedLanguage } from '~/main';
+import { Avatar, Box, Button, Icon, Link, Logo, LogoVariant, SupportedLanguage } from '~/main';
 import classes from './Header.module.css';
 import { useTranslation } from '~/i18n/translations';
-import { ReactNode } from 'react';
-import { Label } from '@digdir/designsystemet-react';
+import { ReactNode, useCallback, useState } from 'react';
+import { Divider, Label, Paragraph } from '@digdir/designsystemet-react';
+import { IconId } from '../Icon/icon.types';
 
 export interface HeaderProps {
   /**
@@ -33,24 +34,169 @@ export interface HeaderProps {
      */
     variant?: LogoVariant;
   };
+  /**
+   * links - En kolleksjon av lenker
+   * @default undefined
+   */
+  links?: {
+    /**
+     * icon - Typed til IconId
+     */
+    icon: IconId;
+    /**
+     * label
+     */
+    label: string;
+    /**
+     * url
+     */
+    url: string;
+  }[];
+  profile?: {
+    /**
+     * name
+     */
+    name: string;
+    /**
+     * department
+     */
+    department: string;
+    /**
+     * initials. Keep it to `2` characters
+     */
+    initials: string;
+    /**
+     * logoutHandler
+     */
+    logoutHandler: () => void;
+  };
 }
 
 export function Header({
   children = undefined,
   language,
   logo: { title = undefined, variant = 'blue-horizontal', url },
+  links,
+  profile,
 }: HeaderProps) {
   const t = useTranslation(language);
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+  const toggleMenuOpen = useCallback(() => {
+    setIsMenuOpen((prev) => {
+      if (!prev) setIsProfileOpen(false); // Close profile if opening menu
+      return !prev;
+    });
+  }, [setIsMenuOpen, setIsProfileOpen]);
+
+  const toggleProfileOpen = useCallback(() => {
+    setIsProfileOpen((prev) => {
+      if (!prev) setIsMenuOpen(false); // Close menu if opening profile
+      return !prev;
+    });
+  }, [setIsProfileOpen, setIsMenuOpen]);
+
   return (
     <Box horizontal justify="center" align="center" className={classes.headerContainer}>
-      <Box horizontal justify="between" align="center" px={16} width="container">
+      <Box className={classes.headerFlex} px={16} width="container">
+        {/* Logo */}
         <Box horizontal align="center" gap={16}>
           <a className={classes.logoLink} href={url}>
-            <Logo variant={variant} height={47} alt={t('header-alt-text')} />
+            <Logo className={classes.logo} variant={variant} height={47} alt={t('header-alt-text')} />
             {title && <Label className={classes.titleText}>{title}</Label>}
           </a>
         </Box>
+        {/*End Of Logo */}
+
+        <Box horizontal gap={16}>
+          {/* Links */}
+          {links && (
+            <>
+              {links.map((link, index) => (
+                <Link key={index} href={link.url} className={`${classes.headerButton} ${classes.disappearBelowPhone}`}>
+                  <Icon material={link.icon} />
+                  <Paragraph>{link.label}</Paragraph>
+                </Link>
+              ))}
+              <Button
+                onClick={toggleMenuOpen}
+                variant="ghost"
+                className={`${classes.disappearAbovePhone} ${classes.headerButton}`}
+              >
+                <Icon material="menu"></Icon>
+                Meny
+              </Button>
+            </>
+          )}
+          {/* End of Links */}
+          {/* Profile */}
+          {profile?.name && (
+            <div className={classes.relativeUntilMobile}>
+              <Button variant="ghost" onClick={toggleProfileOpen} className={`${classes.headerButton}`}>
+                <Avatar
+                  className={`${classes.avatarShrink} ${classes.avatar}`}
+                  aria-label={`${profile.name} profile picture`}
+                  data-color={'primary'}
+                  initials={profile.initials}
+                />
+                <Paragraph className={classes.profileName}>
+                  <span className={classes.disappearBelowTablet}>{profile.name}</span>
+                  <span className={classes.profileNameShort}>{profile.name?.split(' ')[0]}</span>
+                </Paragraph>
+                <Icon
+                  material={isProfileOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}
+                  className={classes.disappearBelowTablet}
+                />
+              </Button>
+              {/* Profile Menu */}
+              {isProfileOpen && (
+                <Box className={classes.profileMenu}>
+                  <Box horizontal className={classes.profileContainer}>
+                    <Avatar
+                      className={classes.avatar}
+                      aria-label={`${profile.name} profile picture`}
+                      data-color={'primary'}
+                      data-size="xs"
+                      initials={profile.initials}
+                    />
+                    <Box className={classes.profileTextContainer}>
+                      <Paragraph className={`${classes.profileMenuName} ${classes.EllipsisOnOverflow}`}>
+                        {profile.name}
+                      </Paragraph>
+                      <Paragraph className={`${classes.profileMenuDepartment} ${classes.EllipsisOnOverflow}`}>
+                        {profile.department}
+                      </Paragraph>
+                    </Box>
+                  </Box>
+                  <Divider />
+                  <Button onClick={() => profile.logoutHandler()} className={`${classes.profileLogOutButton}`}>
+                    <Icon material="logout" />
+                    Logg ut
+                  </Button>
+                </Box>
+              )}
+              {/*End Of Profile Menu */}
+            </div>
+          )}
+          {/*End Of Profile */}
+        </Box>
+      </Box>
+
+      <Box className={classes.buttonsContainer}>
+        {/*Logic: Hamburger menu for the links when header width is down to phone-size*/}
+        {links && isMenuOpen && (
+          <Box justify="start" className={`${classes.menuDropdown} ${classes.disappearAbovePhone}`}>
+            {links.map((link, index) => (
+              <Link key={index} href={link.url} className={`${classes.menuButton}`}>
+                <Icon material={link.icon} />
+                {link.label}
+              </Link>
+            ))}
+          </Box>
+        )}
+
         {children}
       </Box>
     </Box>

@@ -63,6 +63,8 @@ const iconDescriptions: Record<IconId, string> = {
   distance: '',
   article: '',
   edit_square: '',
+  settings: '',
+  data_table: '',
 };
 
 const sizes = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const;

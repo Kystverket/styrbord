@@ -72,3 +72,41 @@ export const Saksbehandling: Story = {
 export const Selvbetjening: Story = {
   args: { ...defaultProps, logo: { ...defaultProps.logo, variant: 'selvbetjening' } },
 };
+
+export const medProfilOgMenyItems: Story = {
+  args: {
+    ...defaultProps,
+    links: [
+      { icon: 'anchor', label: 'Kystverket', url: 'https://kystverket.no' },
+      { icon: 'settings', label: 'Settings', url: '#' },
+    ],
+    profile: {
+      name: 'Ola Nordmann',
+      department: 'Hav- og kystforvaltning',
+      logoutHandler: () => alert('Logger ut'),
+      initials: 'ON',
+    },
+  },
+};
+
+export const medMenyItems: Story = {
+  args: {
+    ...defaultProps,
+    links: [
+      { icon: 'anchor', label: 'Kystverket', url: 'https://kystverket.no' },
+      { icon: 'settings', label: 'Settings', url: '#' },
+    ],
+  },
+};
+
+export const medProfil: Story = {
+  args: {
+    ...defaultProps,
+    profile: {
+      name: 'Ola Nordmann',
+      department: 'Hav- og kystforvaltning',
+      logoutHandler: () => alert('Logger ut'),
+      initials: 'ON',
+    },
+  },
+};

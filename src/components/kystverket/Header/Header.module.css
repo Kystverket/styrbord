@@ -1,23 +1,236 @@
+/* ========================= */
+/* Header Container & Layout */
+/* ========================= */
 .headerContainer {
+  position: relative;
+  height: fit-content;
+  min-height: 72px;
+  container: header / inline-size;
   background-color: white;
-  height: 72px;
   box-shadow: 0 1px 2px 0 #0006671a;
 }
-.logoLink {
-  line-height: 0;
+
+.headerFlex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
-.titleText {
-  display: inline-block;
-  color: var(--color-primary-base-default);
-  text-transform: uppercase;
-  letter-spacing: 0.1em !important;
-  font-weight: lighter;
-  font-size: var(--ds-font-size-4);
-}
+
 .logoLink {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 14px;
+  line-height: 0;
   text-decoration: none !important;
+}
+
+.titleText {
+  display: inline-block;
+  font-size: var(--ds-font-size-4);
+  font-weight: lighter;
+  color: var(--color-primary-base-default);
+  text-transform: uppercase;
+  letter-spacing: 0.1em !important;
+}
+
+/* ========================= */
+/* Avatar & Profile          */
+/* ========================= */
+.avatar {
+  width: 27px;
+  height: 27px;
+  margin: 1px; /* Needed for alignment with other links */
+  font-size: 10px;
+}
+
+.relativeUntilMobile {
+  position: relative;
+}
+
+.profileMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 250px;
+  z-index: 999;
+  padding: var(--size-3) var(--size-2);
+  background-color: white;
+  border-radius: var(--border-radius-default);
+  box-shadow:
+    0 0 1px 0 rgba(0, 0, 0, 0.14),
+    0 2px 4px 0 rgba(0, 0, 0, 0.12),
+    0 4px 8px 0 rgba(0, 0, 0, 0.12);
+  font-weight: var(--font-weight-medium);
+  opacity: 1;
+}
+
+.profileContainer {
+  flex-grow: 1;
+  gap: 4px;
+  padding: var(--size-3) var(--size-4);
+}
+
+.profileMenuName {
+  font-weight: var(--font-weight-medium);
+  margin-top: 2px;
+}
+
+.profileMenuDepartment {
+  font-size: var(--ds-font-size-3);
+  color: var(--color-neutral-text-subtle);
+}
+
+.profileName {
+  font-weight: var(--font-weight-medium);
+  color: var(--ds-color-primary-text-default);
+  text-align: center;
+}
+
+.profileNameShort {
+  display: none;
+}
+
+.profileTextContainer {
+  flex: 1;
+  min-width: 0;
+}
+
+.profileLogOutButton {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: var(--border-radius-md);
+  border: none;
+  font-weight: var(--font-weight-medium);
+  text-transform: none;
+}
+
+.EllipsisOnOverflow {
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ========================= */
+/* Buttons & Menu            */
+/* ========================= */
+.buttonsContainer {
+  gap: var(--spacing-16);
+  padding: 4px;
+}
+
+.headerButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--size-1);
+  padding: var(--size-3) var(--size-4);
+  border-radius: var(--border-radius-md);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.menuButton {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  gap: var(--size-2);
+  padding: var(--size-5) var(--size-4);
+  border-radius: var(--border-radius-md);
+  font-weight: var(--font-weight-regular);
+  text-decoration: none;
+}
+
+.headerButton:hover,
+.menuButton:hover {
+  background-color: var(--ds-color-surface-hover);
+}
+.headerButton:active,
+.menuButton:active {
+  background-color: var(--ds-color-surface-active);
+}
+
+.menuDropdown {
+  position: absolute;
+  z-index: 999;
+  top: 100%;
+  left: 0;
+  display: none;
+  background-color: #fff;
+}
+
+/* ========================= */
+/* Responsive Design         */
+/* ========================= */
+@container header (width < 1024px) {
+  .disappearBelowTablet {
+    display: none;
+  }
+  .avatarShrink {
+    width: 21px;
+    height: 21px;
+    font-size: 8px;
+  }
+  .profileNameShort {
+    display: block;
+  }
+  .headerButton {
+    flex-direction: column;
+  }
+}
+
+@container header (width < 600px) {
+  .disappearBelowPhone {
+    display: none;
+  }
+  /* Logic: If any buttons, makes the Header bigger to look better */
+  .headerButton {
+    margin-bottom: 16px;
+  }
+  .menuDropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-grow: 1;
+    width: 100%;
+    padding: var(--size-3) var(--size-2);
+    border-top: 1px solid var(--color-neutral-surface-hover);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12);
+    font-size: var(--ds-font-size-4);
+    font-weight: var(--font-weight-regular);
+  }
+  .headerFlex {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .relativeUntilMobile {
+    position: static;
+  }
+  .profileMenu {
+    width: 100%;
+    border-top: 1px solid var(--color-neutral-surface-hover);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12);
+  }
+  .logoLink {
+    margin-top: 10px;
+  }
+}
+
+@container header (width > 600px) {
+  .logo {
+    flex-shrink: 0;
+  }
+  .disappearAbovePhone {
+    display: none;
+  }
 }

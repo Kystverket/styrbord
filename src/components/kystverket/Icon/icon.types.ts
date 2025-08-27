@@ -47,6 +47,8 @@ export const iconIdList = [
   'distance',
   'article',
   'edit_square',
+  'settings',
+  'data_table',
 ] as const;
 
 export type IconId = (typeof iconIdList)[number];
