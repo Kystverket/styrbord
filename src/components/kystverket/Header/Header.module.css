@@ -173,7 +173,7 @@
 /* ========================= */
 @container header (width < 1024px) {
   .disappearBelowTablet {
-    display: none;
+    display: none !important;
   }
   .avatarShrink {
     width: 21px;
