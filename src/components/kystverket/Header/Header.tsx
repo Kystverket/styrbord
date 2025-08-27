@@ -1,7 +1,7 @@
 import { Avatar, Box, Button, Icon, Link, Logo, LogoVariant, SupportedLanguage } from '~/main';
 import classes from './Header.module.css';
 import { useTranslation } from '~/i18n/translations';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useCallback, useState } from 'react';
 import { Divider, Label, Paragraph } from '@digdir/designsystemet-react';
 import { IconId } from '../Icon/icon.types';
 
@@ -84,19 +84,19 @@ export function Header({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
-  const toggleMenuOpen = () => {
+  const toggleMenuOpen = useCallback(() => {
     setIsMenuOpen((prev) => {
       if (!prev) setIsProfileOpen(false); // Close profile if opening menu
       return !prev;
     });
-  };
+  }, [setIsMenuOpen, setIsProfileOpen]);
 
-  const toggleProfileOpen = () => {
+  const toggleProfileOpen = useCallback(() => {
     setIsProfileOpen((prev) => {
       if (!prev) setIsMenuOpen(false); // Close menu if opening profile
       return !prev;
     });
-  };
+  }, [setIsProfileOpen, setIsMenuOpen]);
 
   return (
     <Box horizontal justify="center" align="center" className={classes.headerContainer}>

@@ -62,7 +62,7 @@
     0 0 1px 0 rgba(0, 0, 0, 0.14),
     0 2px 4px 0 rgba(0, 0, 0, 0.12),
     0 4px 8px 0 rgba(0, 0, 0, 0.12);
-  font-weight: 400;
+   font-weight: var(--font-weight-medium); /* 300 */
   opacity: 1;
 }
 
@@ -73,7 +73,7 @@
 }
 
 .profileMenuName {
-  font-weight: 800;
+  font-weight: var(--font-weight-semibold); /* 700 */
   margin-top: 2px;
 }
 
@@ -83,7 +83,7 @@
 }
 
 .profileName {
-  font-weight: 800;
+  font-weight: var(--font-weight-medium); /* 700 */
   color: var(--ds-color-primary-text-default);
   text-align: center;
 }
@@ -104,7 +104,7 @@
   justify-content: flex-start;
   border-radius: var(--border-radius-md);
   border: none;
-  font-weight: 500;
+  font-weight: var(--font-weight-medium); /* 500 */
   text-transform: none;
 }
 
@@ -132,7 +132,7 @@
   gap: var(--size-1);
   padding: var(--size-3) var(--size-4);
   border-radius: var(--border-radius-md);
-  font-weight: 600;
+  font-weight: var(--font-weight-medium); /* 500 */
   text-decoration: none;
   text-transform: none;
   white-space: nowrap;
@@ -146,7 +146,7 @@
   gap: var(--size-2);
   padding: var(--size-5) var(--size-4);
   border-radius: var(--border-radius-md);
-  font-weight: 400;
+ font-weight: var(--font-weight-regular);
   text-decoration: none;
 }
 
@@ -207,7 +207,7 @@
     border-top: 1px solid var(--color-neutral-surface-hover);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12);
     font-size: var(--ds-font-size-4);
-    font-weight: 200;
+    font-weight: var(--font-weight-regular);
   }
   .headerFlex {
     flex-direction: column;
