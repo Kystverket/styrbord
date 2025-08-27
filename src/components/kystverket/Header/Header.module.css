@@ -62,7 +62,7 @@
     0 0 1px 0 rgba(0, 0, 0, 0.14),
     0 2px 4px 0 rgba(0, 0, 0, 0.12),
     0 4px 8px 0 rgba(0, 0, 0, 0.12);
-  font-weight: var(--font-weight-medium); /* 300 */
+  font-weight: var(--font-weight-medium);
   opacity: 1;
 }
 
@@ -73,7 +73,7 @@
 }
 
 .profileMenuName {
-  font-weight: var(--font-weight-semibold); /* 700 */
+  font-weight: var(--font-weight-medium);
   margin-top: 2px;
 }
 
@@ -83,7 +83,7 @@
 }
 
 .profileName {
-  font-weight: var(--font-weight-medium); /* 700 */
+  font-weight: var(--font-weight-medium);
   color: var(--ds-color-primary-text-default);
   text-align: center;
 }
@@ -104,7 +104,7 @@
   justify-content: flex-start;
   border-radius: var(--border-radius-md);
   border: none;
-  font-weight: var(--font-weight-medium); /* 500 */
+  font-weight: var(--font-weight-medium);
   text-transform: none;
 }
 
@@ -132,7 +132,7 @@
   gap: var(--size-1);
   padding: var(--size-3) var(--size-4);
   border-radius: var(--border-radius-md);
-  font-weight: var(--font-weight-medium); /* 500 */
+  font-weight: var(--font-weight-medium);
   text-decoration: none;
   text-transform: none;
   white-space: nowrap;
