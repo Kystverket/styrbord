@@ -1,9 +1,10 @@
 import { Avatar, Box, Button, Icon, Link, Logo, LogoVariant, SupportedLanguage } from '~/main';
 import classes from './Header.module.css';
 import { useTranslation } from '~/i18n/translations';
-import { ReactNode, useCallback, useState } from 'react';
+import { ReactNode, useCallback, useRef, useState } from 'react';
 import { Divider, Label, Paragraph } from '@digdir/designsystemet-react';
 import { IconId } from '../Icon/icon.types';
+import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
 
 export interface HeaderProps {
   /**
@@ -83,6 +84,7 @@ export function Header({
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
 
   const toggleMenuOpen = useCallback(() => {
     setIsMenuOpen((prev) => {
@@ -97,6 +99,10 @@ export function Header({
       return !prev;
     });
   }, [setIsProfileOpen, setIsMenuOpen]);
+
+  const closeProfile = () => setIsProfileOpen(false);
+
+  useOnClickOutsideAndEscape(profileRef, closeProfile);
 
   return (
     <Box horizontal justify="center" align="center" className={classes.headerContainer}>
@@ -133,7 +139,7 @@ export function Header({
           {/* End of Links */}
           {/* Profile */}
           {profile?.name && (
-            <div className={classes.relativeUntilMobile}>
+            <div className={classes.relativeUntilMobile} ref={profileRef}>
               <Button variant="ghost" onClick={toggleProfileOpen} className={`${classes.headerButton}`}>
                 <Avatar
                   className={`${classes.avatarShrink} ${classes.avatar}`}
@@ -196,7 +202,6 @@ export function Header({
             ))}
           </Box>
         )}
-
         {children}
       </Box>
     </Box>
