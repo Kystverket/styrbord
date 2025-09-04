@@ -375,7 +375,9 @@ export const FetchExternal: StoryFn<typeof Suggestion> = (args) => {
               )}
             </Suggestion.Empty>
           ) : null}
-          {options?.map((option) => <Suggestion.Option key={option}>{option}</Suggestion.Option>)}
+          {options?.map((option) => (
+            <Suggestion.Option key={option}>{option}</Suggestion.Option>
+          ))}
         </Suggestion.List>
       </Suggestion>
     </Field>
