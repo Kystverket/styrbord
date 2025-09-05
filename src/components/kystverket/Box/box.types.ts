@@ -9,11 +9,14 @@ export type SpacingProps = {
 };
 
 export type BorderRadiusProps = {
-  radius?: 'sm' | 'md' | 'lg' | 'full';
+  radius?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+};
+
+export type BorderWidthProps = {
+  border?: 'sm' | 'md' | 'lg';
 };
 
 export type SurfaceStyleProps = {
-  color?: 'action' | 'neutral' | 'danger' | 'success' | 'warning' | 'info' | 'navy';
-  subtle?: boolean;
-  border?: 'sm' | 'md' | 'lg';
+  color?: 'primary' | 'neutral' | 'danger' | 'success' | 'warning' | 'info' | 'navy';
+  background?: 'default' | 'tinted' | 'strong';
 };
