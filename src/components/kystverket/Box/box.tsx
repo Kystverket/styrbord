@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import classes from './box.module.css';
-import { BorderRadiusProps, Spacing, SpacingKey, SpacingProps, SurfaceStyleProps } from './box.types';
+import classesColor from './box.colors.module.css';
+import { BorderRadiusProps, BorderWidthProps, Spacing, SpacingKey, SpacingProps, SurfaceStyleProps } from './box.types';
 import { cssSpacingProperties, spacingKeys } from './box.constants';
 import { ScreenSize } from '~/utils/types';
 import { AllSizes, buildTypographyClasses, TypographyPrefix } from '../Typography/typography.util';
@@ -57,7 +58,11 @@ function growShrinkToCssValue(value?: boolean | number): string {
   return value === true ? '1' : !value ? '0' : value.toString();
 }
 
-export type BoxProps = (VerticalBoxProps | HorizontalBoxProps) & SpacingProps & BorderRadiusProps & SurfaceStyleProps;
+export type BoxProps = (VerticalBoxProps | HorizontalBoxProps) &
+  SpacingProps &
+  BorderRadiusProps &
+  BorderWidthProps &
+  SurfaceStyleProps;
 
 const Box = ({
   className = '',
@@ -128,11 +133,7 @@ const Box = ({
   }
 
   if (props.color) {
-    classList.push(classes[`color-${props.color}`]);
-
-    if (props.subtle) {
-      classList.push(classes['is-subtle']);
-    }
+    classList.push(classesColor[`color-${props.color}-${props.background ?? 'default'}`]);
 
     if (props.border) {
       classList.push(classes[`has-border`]);

@@ -122,77 +122,20 @@ export const Spacings: Story = {
   },
 };
 
+const colors = ['primary', 'info', 'success', 'warning', 'danger', 'navy', 'neutral'] as const;
+const backgrounds = ['default', 'tinted', 'strong'] as const;
+
 export const Colors: Story = {
   args: {
     children: (
       <Box gap={32}>
-        <Box color="action" p={32} radius="lg">
-          action
-        </Box>
-        <Box color="info" p={32} radius="lg">
-          info
-        </Box>
-        <Box color="success" p={32} radius="lg">
-          success
-        </Box>
-        <Box color="warning" p={32} radius="lg">
-          warning
-        </Box>
-        <Box color="danger" p={32} radius="lg">
-          danger
-        </Box>
-        <Box color="action" subtle p={32} radius="lg">
-          action subtle
-        </Box>
-        <Box color="info" subtle p={32} radius="lg">
-          info subtle
-        </Box>
-        <Box color="success" subtle p={32} radius="lg">
-          success subtle
-        </Box>
-        <Box color="warning" subtle p={32} radius="lg">
-          warning subtle
-        </Box>
-        <Box color="danger" subtle p={32} radius="lg">
-          danger subtle
-        </Box>
-        <Box color="action" border="md" p={32} radius="lg">
-          action
-        </Box>
-        <Box color="info" border="md" p={32} radius="lg">
-          info
-        </Box>
-        <Box color="success" border="md" p={32} radius="lg">
-          success
-        </Box>
-        <Box color="warning" border="md" p={32} radius="lg">
-          warning
-        </Box>
-        <Box color="danger" border="md" p={32} radius="lg">
-          danger
-        </Box>
-        <Box color="action" border="sm" subtle p={32} radius="lg">
-          action subtle
-        </Box>
-        <Box color="info" border="md" subtle p={32} radius="lg">
-          info subtle
-        </Box>
-        <Box color="success" border="md" subtle p={32} radius="lg">
-          success subtle
-        </Box>
-        <Box color="warning" border="lg" subtle p={32} radius="lg">
-          warning subtle
-        </Box>
-        <Box color="danger" border="lg" subtle p={32} radius="lg">
-          danger subtle
-        </Box>
-        <Box color="navy" p={32} radius="lg">
-          navy
-        </Box>
-
-        <Box color="neutral" border="lg" subtle p={32} radius="lg">
-          neutral subtle
-        </Box>
+        {colors.map((color) =>
+          backgrounds.map((background) => (
+            <Box key={`${color}-${background}`} color={color} background={background} p={32} radius="lg">
+              {`${color} ${background !== 'default' ? `background='${background}'` : ''}`}
+            </Box>
+          )),
+        )}
       </Box>
     ),
   },
@@ -204,7 +147,7 @@ export const WrapAndBasis: Story = {
       <Box gap={32}>
         <Heading>Horizontal</Heading>
         <Box gap={32} horizontal>
-          <Box color="action" p={32} radius="lg" grow={3}>
+          <Box color="primary" p={32} radius="lg" grow={3}>
             1
           </Box>
           <Box color="info" p={32} radius="lg" grow={2}>
@@ -216,7 +159,7 @@ export const WrapAndBasis: Story = {
         </Box>
         <Heading>Wrap</Heading>
         <Box gap={32} horizontal wrap>
-          <Box color="action" p={32} radius="lg" grow={1} basis="300px">
+          <Box color="primary" p={32} radius="lg" grow={1} basis="300px">
             1
           </Box>
           <Box color="info" p={32} radius="lg" grow={1} basis="300px">
@@ -228,7 +171,7 @@ export const WrapAndBasis: Story = {
         </Box>
         <Heading>Reverse Wrap</Heading>
         <Box gap={32} horizontal wrap="reverse">
-          <Box color="action" p={32} radius="lg" grow={1} basis="300px">
+          <Box color="primary" p={32} radius="lg" grow={1} basis="300px">
             1
           </Box>
           <Box color="info" p={32} radius="lg" grow={1} basis="300px">
@@ -248,7 +191,7 @@ export const HorizontalBreakpoints: Story = {
     children: (
       <Box gap={32}>
         <Box gap={32} horizontal>
-          <Box color="action" p={32} radius="lg" grow={1}>
+          <Box color="primary" p={32} radius="lg" grow={1}>
             1
           </Box>
           <Box color="info" p={32} radius="lg" grow={1}>
@@ -259,7 +202,7 @@ export const HorizontalBreakpoints: Story = {
           </Box>
         </Box>
         <Box gap={32} horizontal="screen-xxs">
-          <Box color="action" p={32} radius="lg" grow={1}>
+          <Box color="primary" p={32} radius="lg" grow={1}>
             Screen
           </Box>
           <Box color="info" p={32} radius="lg" grow={1}>
@@ -270,7 +213,7 @@ export const HorizontalBreakpoints: Story = {
           </Box>
         </Box>
         <Box gap={32} horizontal="screen-xs">
-          <Box color="action" p={32} radius="lg" grow={1}>
+          <Box color="primary" p={32} radius="lg" grow={1}>
             Screen
           </Box>
           <Box color="info" p={32} radius="lg" grow={1}>
@@ -281,7 +224,7 @@ export const HorizontalBreakpoints: Story = {
           </Box>
         </Box>
         <Box gap={32} horizontal="screen-sm">
-          <Box color="action" p={32} radius="lg" grow={1}>
+          <Box color="primary" p={32} radius="lg" grow={1}>
             Screen
           </Box>
           <Box color="info" p={32} radius="lg" grow={1}>
