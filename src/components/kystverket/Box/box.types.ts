@@ -16,7 +16,21 @@ export type BorderWidthProps = {
   border?: 'sm' | 'md' | 'lg';
 };
 
-export type SurfaceStyleProps = {
-  color?: 'primary' | 'neutral' | 'danger' | 'success' | 'warning' | 'info' | 'navy' | 'white';
-  background?: 'default' | 'tinted' | 'strong' | 'active';
+export const boxBackgroundColors = [
+  'primary',
+  'neutral',
+  'danger',
+  'success',
+  'warning',
+  'info',
+  'navy',
+  'white',
+] as const;
+export type BoxBackgroundColor = (typeof boxBackgroundColors)[number];
+
+export const boxBackgroundVariants = ['default', 'tinted', 'hover', 'active'] as const;
+export type BoxBackgroundVariant = (typeof boxBackgroundVariants)[number];
+
+export type BoxStyleProps = {
+  color?: `${BoxBackgroundColor}` | `${BoxBackgroundColor}/${BoxBackgroundVariant}`;
 };

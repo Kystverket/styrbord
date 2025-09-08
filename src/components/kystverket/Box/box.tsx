@@ -1,7 +1,15 @@
 import { ReactNode } from 'react';
 import classes from './box.module.css';
 import classesColor from './box.colors.module.css';
-import { BorderRadiusProps, BorderWidthProps, Spacing, SpacingKey, SpacingProps, SurfaceStyleProps } from './box.types';
+import {
+  BorderRadiusProps,
+  BorderWidthProps,
+  Spacing,
+  SpacingKey,
+  SpacingProps,
+  BoxStyleProps,
+  boxBackgroundVariants,
+} from './box.types';
 import { cssSpacingProperties, spacingKeys } from './box.constants';
 import { ScreenSize } from '~/utils/types';
 import { AllSizes, buildTypographyClasses, TypographyPrefix } from '../Typography/typography.util';
@@ -62,7 +70,7 @@ export type BoxProps = (VerticalBoxProps | HorizontalBoxProps) &
   SpacingProps &
   BorderRadiusProps &
   BorderWidthProps &
-  SurfaceStyleProps;
+  BoxStyleProps;
 
 const Box = ({
   className = '',
@@ -77,7 +85,6 @@ const Box = ({
   show = undefined,
   hide = undefined,
   container = undefined,
-  background = 'default',
   children,
   ...props
 }: BoxProps) => {
@@ -134,7 +141,10 @@ const Box = ({
   }
 
   if (props.color) {
-    classList.push(classesColor[`color-${props.color}-${background}`]);
+    const color = props.color.includes('/')
+      ? props.color.replace('/', '-')
+      : props.color + '-' + boxBackgroundVariants[0];
+    classList.push(classesColor[`color-${color}`]);
 
     if (props.border) {
       classList.push(classes[`has-border`]);

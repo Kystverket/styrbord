@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import Box, { BoxProps } from './box';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Heading } from '~/main';
+import { boxBackgroundColors, boxBackgroundVariants } from './box.types';
 
 const meta = {
   title: 'Helpers/Box',
@@ -122,26 +123,23 @@ export const Spacings: Story = {
   },
 };
 
-const colors = ['primary', 'info', 'success', 'warning', 'danger', 'navy', 'neutral', 'white'] as const;
-const backgrounds = ['default', 'tinted', 'strong', 'active'] as const;
 const borders = [undefined, 'sm', 'md', 'lg'] as const;
 
 export const Colors: Story = {
   args: {
     children: (
       <Box gap={32}>
-        {colors.map((color) =>
-          backgrounds.map((background) =>
+        {boxBackgroundColors.map((color) =>
+          boxBackgroundVariants.map((background) =>
             borders.map((border) => (
               <Box
                 key={`${color}-${background}-${border}`}
-                color={color}
-                background={background}
+                color={`${color}/${background}`}
                 p={32}
                 radius="lg"
                 border={border}
               >
-                {`${color} ${background !== 'default' ? `background='${background}'` : ''} ${border ? `border='${border}'` : ''}`}
+                {`color="${color}${background !== 'default' ? `/${background}` : ''}" ${border ? `border='${border}'` : ''}`}
               </Box>
             )),
           ),
