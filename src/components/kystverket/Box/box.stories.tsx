@@ -122,19 +122,29 @@ export const Spacings: Story = {
   },
 };
 
-const colors = ['primary', 'info', 'success', 'warning', 'danger', 'navy', 'neutral'] as const;
-const backgrounds = ['default', 'tinted', 'strong'] as const;
+const colors = ['primary', 'info', 'success', 'warning', 'danger', 'navy', 'neutral', 'white'] as const;
+const backgrounds = ['default', 'tinted', 'strong', 'active'] as const;
+const borders = [undefined, 'sm', 'md', 'lg'] as const;
 
 export const Colors: Story = {
   args: {
     children: (
       <Box gap={32}>
         {colors.map((color) =>
-          backgrounds.map((background) => (
-            <Box key={`${color}-${background}`} color={color} background={background} p={32} radius="lg">
-              {`${color} ${background !== 'default' ? `background='${background}'` : ''}`}
-            </Box>
-          )),
+          backgrounds.map((background) =>
+            borders.map((border) => (
+              <Box
+                key={`${color}-${background}-${border}`}
+                color={color}
+                background={background}
+                p={32}
+                radius="lg"
+                border={border}
+              >
+                {`${color} ${background !== 'default' ? `background='${background}'` : ''} ${border ? `border='${border}'` : ''}`}
+              </Box>
+            )),
+          ),
         )}
       </Box>
     ),

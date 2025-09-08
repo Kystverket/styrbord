@@ -17,6 +17,6 @@ export type BorderWidthProps = {
 };
 
 export type SurfaceStyleProps = {
-  color?: 'primary' | 'neutral' | 'danger' | 'success' | 'warning' | 'info' | 'navy';
-  background?: 'default' | 'tinted' | 'strong';
+  color?: 'primary' | 'neutral' | 'danger' | 'success' | 'warning' | 'info' | 'navy' | 'white';
+  background?: 'default' | 'tinted' | 'strong' | 'active';
 };

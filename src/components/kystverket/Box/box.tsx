@@ -77,6 +77,7 @@ const Box = ({
   show = undefined,
   hide = undefined,
   container = undefined,
+  background = 'default',
   children,
   ...props
 }: BoxProps) => {
@@ -133,7 +134,7 @@ const Box = ({
   }
 
   if (props.color) {
-    classList.push(classesColor[`color-${props.color}-${props.background ?? 'default'}`]);
+    classList.push(classesColor[`color-${props.color}-${background}`]);
 
     if (props.border) {
       classList.push(classes[`has-border`]);
