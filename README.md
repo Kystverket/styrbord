@@ -13,23 +13,6 @@ Alle komponentene og typene i Designsystemet er tilgjengelig i Styrbord med føl
 
 - Noen komponenter blir overskrevet av Styrbord og har ikke nødvendigvis samme interface som Designsystemet. De er merket med 'ds+kyv' i Storybook. De kan være basert på tilsvarende komponent i Designsystemet, men ikke nødvendigvis.
 
-## Installasjon
-
-Styrbord blir publisert til Github Packages. Du kan lese en [guide om installering av NPM-pakker fra Github packages](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#installing-a-package), eller følge en kort oppskrift under:
-
-- Lag et `Personal Access Token` (PAT) med lesetilgang på packages. Dette gjøres her: [https://github.com/settings/tokens](https://github.com/settings/tokens)
-- Lag en fil som heter `.npmrc` i din hjemmemappe (`cd ~`) med følgende:
-
-```.env
-  //npm.pkg.github.com/:_authToken=MITT_TOKEN
-  @kystverket:registry=https://npm.pkg.github.com/
-```
-
-- Bytt ut `MITT_TOKEN` i `.npmrc` med PAT du lagde i første steg
-- Kjør `npm i @kystverket/styrbord` for å installere Styrbord i ditt prosjekt
-
-OBS: `.npmrc` kan også ligge i prosjektets mappe. Da må du huske å legge `.npmrc` til i `.gitignore` slik at du ikke committer en hemmelighet!
-
 ## Bruk
 
 Det holder å importere CSS én gang globalt.
@@ -49,6 +32,16 @@ import { Heading, Ingress, Tabs } from '@kystverket/styrbord';
 Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.com/Kystverket/styrbord-tokens).
 
 ## Endringslogg
+
+### 2025-09-08
+
+Box har fått noen endringer på fargene og interfacet. Dette er gjort for å gjøre default-fargene
+mer attraktive og bruke, og samtidig endre fargenavn til å matche variabelnavn fra Designsystemet.
+
+- Fargen `action` er fjernet og endret til `primary`.
+- Attributten `subtle` er fjernet. Default-farge er nå mye likere `subtle`.
+- Fargevarianter kan velges ved å sette `color="farge/variant"`. For å matche den gamle `action`-fargen
+  kan man ha `color="primary/active"`. Se Box-storyen for alle variantene.
 
 ### 2025-08-15
 

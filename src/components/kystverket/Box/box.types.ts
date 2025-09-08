@@ -9,11 +9,28 @@ export type SpacingProps = {
 };
 
 export type BorderRadiusProps = {
-  radius?: 'sm' | 'md' | 'lg' | 'full';
+  radius?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
 };
 
-export type SurfaceStyleProps = {
-  color?: 'action' | 'neutral' | 'danger' | 'success' | 'warning' | 'info' | 'navy';
-  subtle?: boolean;
+export type BorderWidthProps = {
   border?: 'sm' | 'md' | 'lg';
+};
+
+export const boxBackgroundColors = [
+  'primary',
+  'neutral',
+  'danger',
+  'success',
+  'warning',
+  'info',
+  'navy',
+  'white',
+] as const;
+export type BoxBackgroundColor = (typeof boxBackgroundColors)[number];
+
+export const boxBackgroundVariants = ['default', 'tinted', 'hover', 'active'] as const;
+export type BoxBackgroundVariant = (typeof boxBackgroundVariants)[number];
+
+export type BoxStyleProps = {
+  color?: `${BoxBackgroundColor}` | `${BoxBackgroundColor}/${BoxBackgroundVariant}`;
 };
