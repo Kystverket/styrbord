@@ -15,6 +15,7 @@
 }
 
 @layer styrbord {
+  @include meta.load-css('material-symbols/index.css');
   @include meta.load-css('styrbord');
   @include meta.load-css('../components/designsystemet/Link/Link.override.scss');
   @include meta.load-css('../components/designsystemet/Button/Button.override.scss');
