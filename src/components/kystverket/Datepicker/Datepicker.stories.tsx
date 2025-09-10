@@ -37,6 +37,10 @@ export const Default: Story = {
   args: defaultProps,
 };
 
+export const WithoutDescription: Story = {
+  args: { ...defaultProps, description: '' },
+};
+
 export const WithValue: Story = {
   args: { ...defaultProps, value: new Date() },
 };
