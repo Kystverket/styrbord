@@ -26,7 +26,7 @@ const CustomInput = (props: HTMLProps<HTMLInputElement>) => {
 export const Datepicker = ({ value, onChange, dateFormat = 'dd.MM.YYYY', ...props }: DatepickerProps) => {
   return (
     <Field>
-      <Label>
+      <Label style={{ display: 'block' }}>
         <LabelContent text={props.label} required={props.required} optional={props.optional} />
       </Label>
       {props.description && <Field.Description>{props.description}</Field.Description>}
