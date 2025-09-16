@@ -49,6 +49,8 @@ export const iconIdList = [
   'edit_square',
   'settings',
   'data_table',
+  'open_in_new',
+  'view_list',
 ] as const;
 
 export type IconId = (typeof iconIdList)[number];

@@ -65,6 +65,8 @@ const iconDescriptions: Record<IconId, string> = {
   edit_square: '',
   settings: '',
   data_table: '',
+  open_in_new: '',
+  view_list: '',
 };
 
 const sizes = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const;
