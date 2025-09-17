@@ -55,6 +55,10 @@ export const Small: Story = {
   args: { ...defaultProps, variant: 'filled', size: 'sm' },
 };
 
+export const Medium: Story = {
+  args: { ...defaultProps, variant: 'filled', size: 'md' },
+};
+
 export const Large: Story = {
   args: { ...defaultProps, variant: 'filled', size: 'lg' },
 };
