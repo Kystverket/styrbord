@@ -142,9 +142,17 @@ export function Header({
             <div className={classes.relativeUntilMobile} ref={profileRef}>
               <Button variant="ghost" onClick={toggleProfileOpen} className={`${classes.headerButton}`}>
                 <Avatar
-                  className={`${classes.avatarShrink} ${classes.avatar}`}
+                  className={classes.avatarBig}
                   aria-label={`${profile.name} profile picture`}
                   data-color={'primary'}
+                  data-size="xxs"
+                  initials={profile.initials}
+                />
+                <Avatar
+                  className={classes.avatarSmall}
+                  aria-label={`${profile.name} profile picture`}
+                  data-color={'primary'}
+                  data-size="xxxs"
                   initials={profile.initials}
                 />
                 <Paragraph className={classes.profileName}>
@@ -161,10 +169,9 @@ export function Header({
                 <Box className={classes.profileMenu}>
                   <Box horizontal className={classes.profileContainer}>
                     <Avatar
-                      className={classes.avatar}
                       aria-label={`${profile.name} profile picture`}
                       data-color={'primary'}
-                      data-size="xs"
+                      data-size="xxs"
                       initials={profile.initials}
                     />
                     <Box className={classes.profileTextContainer}>

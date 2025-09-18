@@ -38,12 +38,6 @@
 /* ========================= */
 /* Avatar & Profile          */
 /* ========================= */
-.avatar {
-  width: 27px;
-  height: 27px;
-  margin: 1px; /* Needed for alignment with other links */
-  font-size: 10px;
-}
 
 .relativeUntilMobile {
   position: relative;
@@ -168,18 +162,30 @@
   background-color: #fff;
 }
 
+
+@container header (width > 1024px) {
+  .avatarSmall{
+    display: none;
+  }
+}
 /* ========================= */
 /* Responsive Design         */
 /* ========================= */
 @container header (width < 1024px) {
+  .avatarSmall{
+    display: flex;
+    margin: 0.5px; /*To make it line up with the other buttons. */
+  }
+
+  .avatarBig{
+    display: none;
+  }
+
+
   .disappearBelowTablet {
     display: none;
   }
-  .avatarShrink {
-    width: 21px;
-    height: 21px;
-    font-size: 8px;
-  }
+
   .profileNameShort {
     display: block;
   }
