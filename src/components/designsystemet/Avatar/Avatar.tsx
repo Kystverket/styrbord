@@ -7,7 +7,12 @@ export type AvatarProps = Omit<DsAvatarProps, 'data-size' | 'data-color'> & {
   'data-color'?: 'subtle-tinted' | DsAvatarProps['data-color'];
 };
 
-export const Avatar: FC<AvatarProps> = ({ 'data-size': size = 'md', 'data-color': color = '', className, ...rest }) => {
+export const Avatar: FC<AvatarProps> = ({
+  'data-size': size = 'md',
+  'data-color': color = 'primary',
+  className,
+  ...rest
+}) => {
   const classList = [className];
 
   if (size === 'xxs') {
