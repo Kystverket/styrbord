@@ -1,15 +1,15 @@
-import React from 'react';
+import { FC } from 'react';
 import { Avatar as DsAvatar, AvatarProps as DsAvatarProps } from '@digdir/designsystemet-react';
 import classes from './Avatar.module.scss';
 
-export type AvatarProps = DsAvatarProps & {
+export type AvatarProps = Omit<DsAvatarProps, 'data-size' | 'data-color'> & {
   'data-size'?: 'xxs' | 'xxxs' | DsAvatarProps['data-size'];
   'data-color'?: 'subtle-tinted' | DsAvatarProps['data-color'];
 };
 
-export const Avatar: React.FC<AvatarProps> = ({
+export const Avatar: FC<AvatarProps> = ({
   'data-size': size = 'md',
-  'data-color': color = '',
+  'data-color': color = 'primary',
   className,
   ...rest
 }) => {
