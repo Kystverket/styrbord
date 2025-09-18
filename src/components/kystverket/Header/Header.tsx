@@ -142,14 +142,14 @@ export function Header({
             <div className={classes.relativeUntilMobile} ref={profileRef}>
               <Button variant="ghost" onClick={toggleProfileOpen} className={`${classes.headerButton}`}>
                 <Avatar
-                  className={classes.avatarBig}
+                  className={classes.avatarShowOnWideHeader}
                   aria-label={`${profile.name} profile picture`}
                   data-color={'primary'}
                   data-size="xxs"
                   initials={profile.initials}
                 />
                 <Avatar
-                  className={classes.avatarSmall}
+                  className={classes.avatarShowOnSmallHeader}
                   aria-label={`${profile.name} profile picture`}
                   data-color={'primary'}
                   data-size="xxxs"

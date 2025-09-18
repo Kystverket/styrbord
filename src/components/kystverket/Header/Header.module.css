@@ -163,7 +163,7 @@
 }
 
 @container header (width > 1024px) {
-  .avatarSmall {
+  .avatarShowOnSmallHeader {
     display: none;
   }
 }
@@ -171,12 +171,12 @@
 /* Responsive Design         */
 /* ========================= */
 @container header (width < 1024px) {
-  .avatarSmall {
+  .avatarShowOnSmallHeader {
     display: flex;
     margin: 0.5px; /*To make it line up with the other buttons. */
   }
 
-  .avatarBig {
+  .avatarShowOnWideHeader {
     display: none;
   }
 
