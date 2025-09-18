@@ -1,0 +1,20 @@
+// Sizes
+.xxs {
+  height: 28px;
+  width: 28px;
+  font-size: 10px;
+  line-height: 10px;
+}
+
+.xxxs {
+  height: 22px;
+  width: 22px;
+  font-size: 8px;
+  line-height: 8px;
+}
+
+// Colors
+.subtleTinted {
+  background-color: var(--color-neutral-surface-tinted);
+  color: var(--color-neutral-text-default);
+}
