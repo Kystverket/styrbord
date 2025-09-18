@@ -162,9 +162,8 @@
   background-color: #fff;
 }
 
-
 @container header (width > 1024px) {
-  .avatarSmall{
+  .avatarSmall {
     display: none;
   }
 }
@@ -172,15 +171,14 @@
 /* Responsive Design         */
 /* ========================= */
 @container header (width < 1024px) {
-  .avatarSmall{
+  .avatarSmall {
     display: flex;
     margin: 0.5px; /*To make it line up with the other buttons. */
   }
 
-  .avatarBig{
+  .avatarBig {
     display: none;
   }
-
 
   .disappearBelowTablet {
     display: none;

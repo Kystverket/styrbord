@@ -3,7 +3,7 @@ import { Avatar as DsAvatar, AvatarProps as DsAvatarProps } from '@digdir/design
 import classes from './Avatar.module.scss';
 
 export type AvatarProps = DsAvatarProps & {
-  'data-size'?: 'xxs' | 'nano' | DsAvatarProps['data-size'];
+  'data-size'?: 'xxs' | 'xxxs' | DsAvatarProps['data-size'];
   'data-color'?: 'subtle-tinted' | DsAvatarProps['data-color'];
 };
 
@@ -14,6 +14,7 @@ export const Avatar: React.FC<AvatarProps> = ({
   ...rest
 }) => {
   const classList = [className];
+
   if (size === 'xxs') {
     classList.push(classes.xxs);
   } else if (size === 'xxxs') {
