@@ -1,5 +1,4 @@
 import type { Meta, StoryFn } from '@storybook/react';
-
 import { BriefcaseIcon } from '@navikt/aksel-icons';
 import { Avatar, AvatarProps, Badge, Dropdown } from '~/main';
 import cat1 from '@assets/img/cats/Cat 3.jpg';
@@ -20,7 +19,7 @@ const meta: Meta<typeof Avatar> = {
   },
 };
 
-const colorVariants = ['accent', 'extra1', 'neutral'];
+const colorVariants = ['accent', 'extra1', 'neutral', 'subtle-tinted'];
 
 export default meta;
 
@@ -36,6 +35,10 @@ export const NoName: Story = () => <Avatar aria-label="Ola" />;
 
 export const Sizes: Story = () => (
   <>
+    <Avatar data-size="xxxs" aria-label="xxxs" initials="3x" />
+    <Avatar data-size="xxxs" aria-label="xxxs" />
+    <Avatar data-size="xxs" aria-label="extra extra small" initials="2x" />
+    <Avatar data-size="xxs" aria-label="extra extra small" />
     <Avatar data-size="xs" aria-label="extra small" initials="xs" />
     <Avatar data-size="xs" aria-label="extra small" />
     <Avatar data-size="sm" aria-label="small" initials="sm" />
