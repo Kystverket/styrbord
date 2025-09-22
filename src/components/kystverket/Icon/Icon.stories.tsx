@@ -62,7 +62,7 @@ const iconDescriptions: Record<IconId, string> = {
   sailing: '',
   settings_input_antenna: '',
   settings: '',
-  severe_cold: ''
+  severe_cold: '',
   source_environment: '',
   stylus: '',
   timeline: '',
