@@ -6,6 +6,12 @@ import { Divider, Label, Paragraph } from '@digdir/designsystemet-react';
 import { IconId } from '../Icon/icon.types';
 import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
 
+export type HeaderLinkComponentProps = {
+  className?: string;
+  href?: string;
+  children: ReactNode;
+};
+
 export interface HeaderProps {
   /**
    * Utvidelse for å legge til ekstra innhold i headeren.
@@ -71,6 +77,7 @@ export interface HeaderProps {
      */
     logoutHandler: () => void;
   };
+  linkComponent?: React.FC<HeaderLinkComponentProps>;
 }
 
 export function Header({
@@ -79,6 +86,7 @@ export function Header({
   logo: { title = undefined, variant = 'blue-horizontal', url },
   links,
   profile,
+  linkComponent: LinkComponent = Link,
 }: HeaderProps) {
   const t = useTranslation(language);
 
@@ -109,10 +117,10 @@ export function Header({
       <Box className={classes.headerFlex} px={16} width="container">
         {/* Logo */}
         <Box horizontal align="center" gap={16}>
-          <a className={classes.logoLink} href={url}>
+          <LinkComponent className={classes.logoLink} href={url}>
             <Logo className={classes.logo} variant={variant} height={47} alt={t('header-alt-text')} />
             {title && <Label className={classes.titleText}>{title}</Label>}
-          </a>
+          </LinkComponent>
         </Box>
         {/*End Of Logo */}
 
@@ -121,10 +129,14 @@ export function Header({
           {links && (
             <>
               {links.map((link, index) => (
-                <Link key={index} href={link.url} className={`${classes.headerButton} ${classes.disappearBelowPhone}`}>
+                <LinkComponent
+                  key={index}
+                  href={link.url}
+                  className={`${classes.headerButton} ${classes.disappearBelowPhone}`}
+                >
                   <Icon material={link.icon} />
                   <Paragraph>{link.label}</Paragraph>
-                </Link>
+                </LinkComponent>
               ))}
               <Button
                 onClick={toggleMenuOpen}
@@ -202,10 +214,10 @@ export function Header({
         {links && isMenuOpen && (
           <Box justify="start" className={`${classes.menuDropdown} ${classes.disappearAbovePhone}`}>
             {links.map((link, index) => (
-              <Link key={index} href={link.url} className={`${classes.menuButton}`}>
+              <LinkComponent key={index} href={link.url} className={`${classes.menuButton}`}>
                 <Icon material={link.icon} />
                 {link.label}
-              </Link>
+              </LinkComponent>
             ))}
           </Box>
         )}
