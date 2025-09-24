@@ -17,7 +17,6 @@ export interface DateTimePickerProps {
   error?: string;
   value: Date | undefined;
   timeInputLabel?: string;
-  showTimeSelect?: boolean;
   onChange?: (date: Date | undefined) => void;
 }
 

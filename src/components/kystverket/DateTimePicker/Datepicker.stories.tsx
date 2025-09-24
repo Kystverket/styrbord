@@ -31,7 +31,6 @@ const defaultProps: DateTimePickerProps = {
   description: 'Description',
   value: undefined,
   onChange: (date) => console.log('onChange ', date),
-  showTimeSelect: false,
 };
 
 export const Default: Story = {
