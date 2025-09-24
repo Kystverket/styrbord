@@ -15,7 +15,7 @@ const Wrapper = (props: DateTimePickerProps) => {
 };
 
 const meta = {
-  title: 'Form/DateTimepicker',
+  title: 'Form/DateTimePicker',
   component: Wrapper,
   decorators: [StyrbordDecorator],
   tags: ['autodocs'],
@@ -27,7 +27,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const defaultProps: DateTimePickerProps = {
-  label: 'Datepicker',
+  label: 'DateTimePicker',
   description: 'Description',
   value: undefined,
   onChange: (date) => console.log('onChange ', date),
