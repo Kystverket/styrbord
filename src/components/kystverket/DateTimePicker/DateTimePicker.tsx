@@ -27,7 +27,7 @@ const CustomInput = (props: HTMLProps<HTMLInputElement>) => {
 export const DateTimePicker = ({
   value,
   onChange,
-  dateTimeFormat = 'dd.MM.YYYY, HH:mm',
+  dateTimeFormat = 'dd.MM.yyyy, HH:mm',
   timeInputLabel = 'Time: ',
   ...props
 }: DateTimePickerProps) => {

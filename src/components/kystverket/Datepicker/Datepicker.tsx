@@ -23,7 +23,7 @@ const CustomInput = (props: HTMLProps<HTMLInputElement>) => {
   return <Input {...props} inputMode="numeric" type="text" />;
 };
 
-export const Datepicker = ({ value, onChange, dateFormat = 'dd.MM.YYYY', ...props }: DatepickerProps) => {
+export const Datepicker = ({ value, onChange, dateFormat = 'dd.MM.yyyy', ...props }: DatepickerProps) => {
   return (
     <Field>
       <Label style={{ display: 'block' }}>
