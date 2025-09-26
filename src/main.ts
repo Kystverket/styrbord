@@ -72,6 +72,8 @@ export type { HeaderProps } from './components/kystverket/Header/Header';
 
 export { Datepicker, type DatepickerProps } from './components/kystverket/Datepicker/Datepicker';
 
+export { DateTimePicker, type DateTimePickerProps } from './components/kystverket/DateTimePicker/DateTimePicker';
+
 export { FileUploader, type FileUploaderProps } from './components/kystverket/FileUploader/FileUploader';
 export {
   FileUploaderContext,
