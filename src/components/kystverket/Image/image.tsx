@@ -42,6 +42,7 @@ import lrit from './svg/lrit.svg';
 import nasjonal_havneoversikt from './svg/nasjonal_havneoversikt.svg';
 import kikkert from './svg/kikkert.svg';
 import istjeneste from './svg/istjeneste.svg';
+import ismelding from './svg/ismelding.svg';
 
 export type ImageProps = ImgHTMLAttributes<HTMLImageElement>;
 
@@ -113,6 +114,10 @@ export const ImageHavnOgFarvannsloven = (props: ImageProps) => {
 
 export const ImageIstjeneste = (props: ImageProps) => {
   return <Image {...props} src={istjeneste} />;
+};
+
+export const ImageIsmelding = (props: ImageProps) => {
+  return <Image {...props} src={ismelding} />;
 };
 
 export const ImageKikkert = (props: ImageProps) => {
