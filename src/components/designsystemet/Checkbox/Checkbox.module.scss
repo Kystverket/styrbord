@@ -1,0 +1,39 @@
+.boxed {
+  padding: var(--size-4);
+  margin-top: var(--size-4);
+  border: 1px solid;
+  max-width: 400px;
+  border-radius: var(--border-radius-default);
+}
+
+.default:has(input[type='checkbox']:checked) {
+  border-color: var(--color-info-border-default);
+  background-color: var(--color-primary-surface-tinted);
+}
+
+.default {
+  border-color: var(--color-neutral-border-subtle);
+}
+
+.error {
+  border-color: var(--color-danger-text-subtle);
+}
+
+.error:has(input[type='checkbox']:checked) {
+  border-color: var(--color-danger-text-subtle);
+}
+
+.readOnly {
+  border-color: var(--color-neutral-border-subtle);
+  background-color: var(--color-neutral-background-tinted);
+  color: black;
+}
+
+// Set to hsla, because there was no option in tokens
+.disabled {
+  border-color: hsla(30, 3%, 73%, 0.3);
+}
+.disabled:has(input[type='checkbox']:checked) {
+  border-color: hsla(226, 94%, 25%, 0.3);
+  background-color: hsla(196, 91%, 91%, 0.3);
+}

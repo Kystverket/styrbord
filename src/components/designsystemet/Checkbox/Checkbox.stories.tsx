@@ -378,3 +378,36 @@ export const ContentEx3: StoryFn<typeof Fieldset> = () => (
     <Checkbox label="Kolleger" value="kolleger" />
   </Fieldset>
 );
+
+export const Boxed: StoryFn<typeof Fieldset> = () => (
+  <Fieldset>
+    <Fieldset.Legend>Hva liker du best med jobben din?</Fieldset.Legend>
+    <Checkbox disabled Boxed label="Selvstendige oppgaver" value="selvstendige" />
+    <Checkbox Boxed label="Møter" value="moter" />
+    <Checkbox Boxed label="Lunsj" value="lunsj" />
+    <Checkbox Boxed label="Kolleger" value="kolleger" />
+  </Fieldset>
+);
+
+export const BoxedError: StoryFn<UseCheckboxGroupProps> = (args) => {
+  const { getCheckboxProps, validationMessageProps } = useCheckboxGroup({
+    value: [],
+    ...args,
+  });
+
+  return (
+    <Fieldset>
+      <Fieldset.Legend>Hva liker du best med jobben din?</Fieldset.Legend>
+      <Checkbox Boxed label="Selvstendige oppgaver" {...getCheckboxProps('selvstendige')} />
+      <Checkbox Boxed label="Møter" {...getCheckboxProps('moter')} />
+      <Checkbox Boxed label="Lunsj" {...getCheckboxProps('lunsj')} />
+      <Checkbox Boxed label="Kolleger" {...getCheckboxProps('kolleger')} />
+      <ValidationMessage {...validationMessageProps} />
+    </Fieldset>
+  );
+};
+
+BoxedError.args = {
+  name: 'boxed-error',
+  error: 'Du må velge minst ett alternativ',
+};
