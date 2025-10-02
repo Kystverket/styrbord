@@ -34,6 +34,7 @@ export const Datepicker = ({ value, onChange, dateFormat = 'dd.MM.yyyy', ...prop
         locale={'nb'}
         selected={value}
         dateFormat={dateFormat}
+        placeholderText="dd.mm.åååå"
         onChange={(date) => onChange?.(date ?? undefined)}
         customInput={createElement(CustomInput)}
       />

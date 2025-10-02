@@ -44,6 +44,7 @@ export const DateTimePicker = ({
         onChange={(date) => onChange?.(date ?? undefined)}
         customInput={createElement(CustomInput)}
         showTimeInput
+        placeholderText="dd.mm.åååå, tt:mm"
         timeInputLabel={timeInputLabel}
       />
       {props.error && <ValidationMessage>{props.error}</ValidationMessage>}
