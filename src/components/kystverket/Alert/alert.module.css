@@ -1,84 +1,86 @@
-.widthMd {
-  width: 500px;
-}
-.widthFull {
-  width: 100%;
-}
+@layer styrbord-modules {
+  .widthMd {
+    width: 500px;
+  }
+  .widthFull {
+    width: 100%;
+  }
 
-.content {
-  flex-grow: 1;
-}
-.textContent {
-  margin: 0px;
-  padding: 0px;
-}
-.icon {
-  flex-shrink: 0;
-  margin: 0;
-}
-.closeButton {
-  flex-shrink: 0;
-  margin: var(--spacing-2);
-  margin-left: 0;
-  font-size: 16px;
-  padding: 0px;
-  line-height: 0px;
-  background: transparent;
-  border: 0px;
-  cursor: pointer;
-}
+  .content {
+    flex-grow: 1;
+  }
+  .textContent {
+    margin: 0px;
+    padding: 0px;
+  }
+  .icon {
+    flex-shrink: 0;
+    margin: 0;
+  }
+  .closeButton {
+    flex-shrink: 0;
+    margin: var(--spacing-2);
+    margin-left: 0;
+    font-size: 16px;
+    padding: 0px;
+    line-height: 0px;
+    background: transparent;
+    border: 0px;
+    cursor: pointer;
+  }
 
-.alertBox {
-  border-radius: var(--border-radius-medium);
-  border: 0px solid transparent;
-  border-left: 5px solid var(--alert-color-border);
-  background: var(--alert-color-background);
-  color: var(--alert-color-text);
-}
-.alertBox .icon {
-  color: var(--alert-color-icon);
-}
+  .alertBox {
+    border-radius: var(--border-radius-medium);
+    border: 0px solid transparent;
+    border-left: 5px solid var(--alert-color-border);
+    background: var(--alert-color-background);
+    color: var(--alert-color-text);
+  }
+  .alertBox .icon {
+    color: var(--alert-color-icon);
+  }
 
-.warning {
-  composes: alertBox;
-  --alert-color-border: var(--ds-color-warning-border-default);
-  --alert-color-background: var(--ds-color-warning-surface-tinted);
-  --alert-color-text: var(--color-warning-text-default);
-  --alert-color-icon: var(--color-warning-text-subtle);
-}
+  .warning {
+    composes: alertBox;
+    --alert-color-border: var(--ds-color-warning-border-default);
+    --alert-color-background: var(--ds-color-warning-surface-tinted);
+    --alert-color-text: var(--color-warning-text-default);
+    --alert-color-icon: var(--color-warning-text-subtle);
+  }
 
-.error {
-  composes: alertBox;
-  --alert-color-border: var(--ds-color-danger-border-default);
-  --alert-color-background: var(--ds-color-danger-surface-tinted);
-  --alert-color-text: var(--color-danger-text-default);
-  --alert-color-icon: var(--color-danger-text-subtle);
-}
+  .error {
+    composes: alertBox;
+    --alert-color-border: var(--ds-color-danger-border-default);
+    --alert-color-background: var(--ds-color-danger-surface-tinted);
+    --alert-color-text: var(--color-danger-text-default);
+    --alert-color-icon: var(--color-danger-text-subtle);
+  }
 
-.ghost {
-  composes: alertBox;
-  --alert-color-border: white;
-  --alert-color-background: white;
-  --alert-color-text: var(--color-neutral-text-default);
-  --alert-color-icon: var(--color-info-text-subtle);
-}
+  .ghost {
+    composes: alertBox;
+    --alert-color-border: white;
+    --alert-color-background: white;
+    --alert-color-text: var(--color-neutral-text-default);
+    --alert-color-icon: var(--color-info-text-subtle);
+  }
 
-.info {
-  composes: alertBox;
-  --alert-color-border: var(--ds-color-info-border-default);
-  --alert-color-background: var(--ds-color-info-surface-tinted);
-  --alert-color-text: var(--color-info-text-default);
-  --alert-color-icon: var(--color-info-text-subtle);
-}
+  .info {
+    composes: alertBox;
+    --alert-color-border: var(--ds-color-info-border-default);
+    --alert-color-background: var(--ds-color-info-surface-tinted);
+    --alert-color-text: var(--color-info-text-default);
+    --alert-color-icon: var(--color-info-text-subtle);
+  }
 
-.success {
-  composes: alertBox;
-  --alert-color-border: var(--ds-color-success-border-default);
-  --alert-color-background: var(--ds-color-success-surface-tinted);
-  --alert-color-text: var(--color-success-text-default);
-  --alert-color-icon: var(--color-success-text-subtle);
-}
+  .success {
+    composes: alertBox;
+    --alert-color-border: var(--ds-color-success-border-default);
+    --alert-color-background: var(--ds-color-success-surface-tinted);
+    --alert-color-text: var(--color-success-text-default);
+    --alert-color-icon: var(--color-success-text-subtle);
+  }
 
-.customWidth {
-  width: 700px;
+  .customWidth {
+    width: 700px;
+  }
 }
