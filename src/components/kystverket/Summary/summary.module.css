@@ -4,20 +4,20 @@
     grid-template-columns: 1fr 1fr;
     --span2: span 2;
   }
-  
+
   .heading {
     grid-column: var(--span2);
     padding: 8px 0px;
     margin-bottom: var(--spacing-12);
   }
-  
+
   .valueError + .heading,
   .valueText + .heading,
   .contentError + .heading,
   .contentArea + .heading {
     margin-top: var(--spacing-24);
   }
-  
+
   .title {
     grid-column: var(--span2);
     background-color: #f9f6f3;
@@ -25,7 +25,7 @@
     padding: 8px 12px;
     border-radius: var(--spacing-2);
   }
-  
+
   .valueError + .title,
   .valueText + .title,
   .contentError + .title,
@@ -34,17 +34,17 @@
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
   }
-  
+
   .title:has(+ .valueLabel) {
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
   }
-  
+
   *:has(+ .heading) {
     border-bottom-left-radius: var(--spacing-2);
     border-bottom-right-radius: var(--spacing-2);
   }
-  
+
   .valueLabel {
     border-left: 1px solid #d5d0cb;
     border-bottom: 1px solid #d5d0cb;
@@ -63,7 +63,7 @@
   .valueText:has(+ .valueError) {
     border-bottom: none;
   }
-  
+
   .contentLabel {
     grid-column: var(--span2);
     border-left: 1px solid #d5d0cb;
@@ -84,7 +84,7 @@
   .contentArea:has(+ .contentError) {
     border-bottom: none;
   }
-  
+
   .editButton {
     font-size: var(--body-sm-font-size);
     line-height: var(--body-sm-line-height);
@@ -97,11 +97,11 @@
     border: none;
     cursor: pointer;
   }
-  
+
   .editButton:hover {
     color: var(--ds-color-primary-11);
   }
-  
+
   @media screen and (max-width: 640px) {
     .grid {
       --span2: span 1;

@@ -10,14 +10,14 @@
     background-color: white;
     box-shadow: 0 1px 2px 0 #0006671a;
   }
-  
+
   .headerFlex {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
   }
-  
+
   .logoLink {
     display: flex;
     flex-direction: row;
@@ -26,7 +26,7 @@
     line-height: 0;
     text-decoration: none !important;
   }
-  
+
   .titleText {
     display: inline-block;
     font-size: var(--ds-font-size-4);
@@ -35,15 +35,15 @@
     text-transform: uppercase;
     letter-spacing: 0.1em !important;
   }
-  
+
   /* ========================= */
   /* Avatar & Profile          */
   /* ========================= */
-  
+
   .relativeUntilMobile {
     position: relative;
   }
-  
+
   .profileMenu {
     position: absolute;
     top: 100%;
@@ -60,38 +60,38 @@
     font-weight: var(--font-weight-medium);
     opacity: 1;
   }
-  
+
   .profileContainer {
     flex-grow: 1;
     gap: 4px;
     padding: var(--size-3) var(--size-4);
   }
-  
+
   .profileMenuName {
     font-weight: var(--font-weight-medium);
     margin-top: 2px;
   }
-  
+
   .profileMenuDepartment {
     font-size: var(--ds-font-size-3);
     color: var(--color-neutral-text-subtle);
   }
-  
+
   .profileName {
     font-weight: var(--font-weight-medium);
     color: var(--ds-color-primary-text-default);
     text-align: center;
   }
-  
+
   .profileNameShort {
     display: none;
   }
-  
+
   .profileTextContainer {
     flex: 1;
     min-width: 0;
   }
-  
+
   .profileLogOutButton {
     display: flex;
     flex: 1;
@@ -102,7 +102,7 @@
     font-weight: var(--font-weight-medium);
     text-transform: none;
   }
-  
+
   .EllipsisOnOverflow {
     max-width: 100%;
     min-width: 0;
@@ -110,7 +110,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  
+
   /* ========================= */
   /* Buttons & Menu            */
   /* ========================= */
@@ -118,7 +118,7 @@
     gap: var(--spacing-16);
     padding: 4px;
   }
-  
+
   .headerButton {
     display: flex;
     flex-direction: row;
@@ -132,7 +132,7 @@
     text-transform: none;
     white-space: nowrap;
   }
-  
+
   .menuButton {
     display: flex;
     align-items: center;
@@ -144,7 +144,7 @@
     font-weight: var(--font-weight-regular);
     text-decoration: none;
   }
-  
+
   .headerButton:hover,
   .menuButton:hover {
     background-color: var(--ds-color-surface-hover);
@@ -153,7 +153,7 @@
   .menuButton:active {
     background-color: var(--ds-color-surface-active);
   }
-  
+
   .menuDropdown {
     position: absolute;
     z-index: 999;
@@ -162,7 +162,7 @@
     display: none;
     background-color: #fff;
   }
-  
+
   @container header (width > 1024px) {
     .avatarShowOnSmallHeader {
       display: none;
@@ -176,15 +176,15 @@
       display: flex;
       margin: 0.5px; /*To make it line up with the other buttons. */
     }
-  
+
     .avatarShowOnWideHeader {
       display: none;
     }
-  
+
     .disappearBelowTablet {
       display: none;
     }
-  
+
     .profileNameShort {
       display: block;
     }
@@ -192,7 +192,7 @@
       flex-direction: column;
     }
   }
-  
+
   @container header (width < 600px) {
     .disappearBelowPhone {
       display: none;
@@ -230,7 +230,7 @@
       margin-top: 10px;
     }
   }
-  
+
   @container header (width > 600px) {
     .logo {
       flex-shrink: 0;

@@ -28,19 +28,19 @@
     background: var(--ds-color-danger-border-strong);
     color: white;
   }
-  
+
   .toggleGroup {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--spacing-8);
   }
-  
+
   @container (min-width: 400px) {
     .toggleGroup {
       grid-template-columns: 1fr 1fr;
     }
   }
-  
+
   .toggleBoxIndicator {
     display: block;
     width: 16px;
@@ -75,7 +75,7 @@
     overflow-wrap: break-word;
     font-weight: 500;
   }
-  
+
   @media screen and (max-width: 600px) {
     .toggleGroup {
       grid-template-columns: 1fr;

@@ -18,18 +18,18 @@
     gap: var(--spacing-8);
     padding-left: var(--spacing-8);
   }
-  
+
   .fileList {
     margin-top: var(--spacing-16);
     border: 1px solid var(--ds-color-neutral-border-subtle);
     border-radius: var(--ds-border-radius-lg);
     background: var(--ds-color-neutral-background-tinted);
   }
-  
+
   .fileList > .fileItem:not(:first-child) {
     border-top: 1px solid var(--ds-color-neutral-border-subtle);
   }
-  
+
   .fileItem {
     padding: var(--spacing-8) 0 var(--spacing-8) var(--spacing-16);
     color: var(--ds-color-neutral-text-default);
@@ -38,7 +38,7 @@
     justify-content: space-between;
     align-items: center;
   }
-  
+
   .removeButton {
     color: var(--ds-color-neutral-text-subtle);
     padding: var(--spacing-8) var(--spacing-16) var(--spacing-8) var(--spacing-8);
