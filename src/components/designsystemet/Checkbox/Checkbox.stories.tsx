@@ -379,14 +379,24 @@ export const ContentEx3: StoryFn<typeof Fieldset> = () => (
   </Fieldset>
 );
 
-export const Boxed: StoryFn<typeof Fieldset> = () => (
-  <Fieldset>
-    <Fieldset.Legend>Boxed checkbox eksempler</Fieldset.Legend>
-    <Checkbox disabled Boxed label="disabled" value="disabled" />
-    <Checkbox readOnly Boxed label="readOnly" value="readOnly" />
-    <Checkbox Boxed label="active" value="active" />
-  </Fieldset>
-);
+export const Boxed: StoryFn<UseCheckboxGroupProps> = (args) => {
+  const { getCheckboxProps } = useCheckboxGroup({
+    value: ['checked'],
+    ...args,
+  });
+
+  return (
+    <Fieldset>
+      <Fieldset.Legend>Boxed checkbox eksempler</Fieldset.Legend>
+      <Checkbox disabled Boxed label="disabled" value="disabled" />
+      <Checkbox {...getCheckboxProps('checked')} disabled Boxed label="disabled checked" value="disabled" />
+      <Checkbox readOnly Boxed label="readOnly" value="readOnly" />
+      <Checkbox {...getCheckboxProps('checked')} readOnly Boxed label="readOnly checked" value="readOnly" />
+      <Checkbox Boxed label="default " value="default" />
+      <Checkbox {...getCheckboxProps('checked')} Boxed label="default checked" value="default" />
+    </Fieldset>
+  );
+};
 
 export const BoxedError: StoryFn<UseCheckboxGroupProps> = (args) => {
   const { getCheckboxProps, validationMessageProps } = useCheckboxGroup({

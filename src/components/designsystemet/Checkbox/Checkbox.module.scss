@@ -1,9 +1,9 @@
 .boxed {
   padding: var(--size-4);
-  margin-top: var(--size-4);
   border: 1px solid;
   border-radius: var(--border-radius-default);
 }
+
 
 .default:has(input[type='checkbox']:checked) {
   border-color: var(--color-info-border-default);
@@ -22,11 +22,13 @@
   border-color: var(--color-danger-text-subtle);
 }
 
-.readOnly {
+.readOnly  {
   border-color: var(--color-neutral-border-subtle);
   background-color: var(--color-neutral-background-tinted);
-  color: black;
 }
+
+
+
 
 // Set to hsla, because there was no option in tokens
 .disabled {
@@ -39,7 +41,7 @@
 
 .boxedLabel {
   max-width: 400px;
-  display: block;
+  display: grid;
 }
 .pointer {
   cursor: pointer;
