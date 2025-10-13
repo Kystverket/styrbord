@@ -381,11 +381,10 @@ export const ContentEx3: StoryFn<typeof Fieldset> = () => (
 
 export const Boxed: StoryFn<typeof Fieldset> = () => (
   <Fieldset>
-    <Fieldset.Legend>Hva liker du best med jobben din?</Fieldset.Legend>
-    <Checkbox disabled Boxed label="Selvstendige oppgaver" value="selvstendige" />
-    <Checkbox Boxed label="Møter" value="moter" />
-    <Checkbox Boxed label="Lunsj" value="lunsj" />
-    <Checkbox Boxed label="Kolleger" value="kolleger" />
+    <Fieldset.Legend>Boxed checkbox eksempler</Fieldset.Legend>
+    <Checkbox disabled Boxed label="disabled" value="disabled" />
+    <Checkbox readOnly Boxed label="readOnly" value="readOnly" />
+    <Checkbox Boxed label="active" value="active" />
   </Fieldset>
 );
 

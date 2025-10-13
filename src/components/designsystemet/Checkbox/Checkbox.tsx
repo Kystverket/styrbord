@@ -24,11 +24,16 @@ export const Checkbox: FC<CheckboxProps> = ({ Boxed, disabled, readOnly, classNa
 
   const checkbox = <DSCheckbox readOnly={readOnly} disabled={disabled} {...rest} className={checkboxOverrideClasses} />;
 
+  const labelClasses = [classes.boxedLabel];
+  if (!readOnly && !disabled) labelClasses.push(classes.pointer);
+
   if (Boxed)
     return (
-      <Box className={classList.join(' ')} border="md">
-        {checkbox}
-      </Box>
+      <label className={labelClasses.join(' ')}>
+        <Box className={classList.join(' ')} border="md">
+          {checkbox}
+        </Box>
+      </label>
     );
   else return checkbox;
 };
