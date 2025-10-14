@@ -1,119 +1,121 @@
-.logo {
-  min-width: 276px;
-  max-width: 332px;
-  margin: 0 55.5px !important;
-}
+@layer styrbord-modules {
+  .logo {
+    min-width: 276px;
+    max-width: 332px;
+    margin: 0 55.5px !important;
+  }
 
-.footer {
-  background-color: var(--color-primary-base-default);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: var(--spacing-48) var(--spacing-32);
-}
-
-.footerContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 100%;
-  max-width: 80rem;
-  gap: var(--spacing-32);
-}
-
-.footerContent {
-  display: flex;
-  flex-direction: row;
-  gap: var(--spacing-32);
-}
-
-.footerLogo {
-  min-width: 276px;
-  max-width: 332px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.footerSelect {
-  color: white !important;
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-16);
-}
-
-.select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-color: transparent;
-  border-color: var(--color-primary-border-default);
-  color: white !important;
-  min-width: 208px;
-  max-width: 304px;
-  background: url(keyboard_arrow_down.svg) right 8px center no-repeat;
-}
-
-select:hover {
-  border-color: var(--color-primary-border-hover);
-}
-
-.selectOption {
-  color: var(--color-primary-text-default) !important;
-}
-
-.footerLinks {
-  display: flex;
-  flex-direction: row;
-  gap: var(--spacing-32);
-
-  flex-wrap: wrap;
-}
-
-.links {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-8);
-}
-
-.link {
-  display: flex;
-  align-items: center;
-  color: white;
-}
-
-.icon {
-  color: #ff7255 !important;
-}
-
-.footer a {
-  color: white;
-  font-weight: 500;
-}
-
-.footer a:hover {
-  color: #a9c5ff;
-}
-
-.footer a:active {
-  color: black;
-  background-color: white;
-}
-
-@media screen and (max-width: 868px) {
-  .footerContainer {
-    flex-direction: column;
+  .footer {
+    background-color: var(--color-primary-base-default);
+    display: flex;
     justify-content: center;
     align-items: center;
+    padding: var(--spacing-48) var(--spacing-32);
+  }
+
+  .footerContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    max-width: 80rem;
+    gap: var(--spacing-32);
+  }
+
+  .footerContent {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-32);
+  }
+
+  .footerLogo {
+    min-width: 276px;
+    max-width: 332px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .footerSelect {
+    color: white !important;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-16);
+  }
+
+  .select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    border-color: var(--color-primary-border-default);
+    color: white !important;
+    min-width: 208px;
+    max-width: 304px;
+    background: url(keyboard_arrow_down.svg) right 8px center no-repeat;
+  }
+
+  select:hover {
+    border-color: var(--color-primary-border-hover);
+  }
+
+  .selectOption {
+    color: var(--color-primary-text-default) !important;
   }
 
   .footerLinks {
-    flex-direction: column;
-  }
-}
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-32);
 
-@media screen and (max-width: 519px) {
-  .footerContent {
+    flex-wrap: wrap;
+  }
+
+  .links {
+    display: flex;
     flex-direction: column;
+    gap: var(--spacing-8);
+  }
+
+  .link {
+    display: flex;
+    align-items: center;
+    color: white;
+  }
+
+  .icon {
+    color: #ff7255 !important;
+  }
+
+  .footer a {
+    color: white;
+    font-weight: 500;
+  }
+
+  .footer a:hover {
+    color: #a9c5ff;
+  }
+
+  .footer a:active {
+    color: black;
+    background-color: white;
+  }
+
+  @media screen and (max-width: 868px) {
+    .footerContainer {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .footerLinks {
+      flex-direction: column;
+    }
+  }
+
+  @media screen and (max-width: 519px) {
+    .footerContent {
+      flex-direction: column;
+    }
   }
 }
