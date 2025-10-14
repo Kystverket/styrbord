@@ -71,4 +71,3 @@ export const Required: Story = {
 export const WithError: Story = {
   args: { ...defaultProps, error: 'Det oppstod en feil' },
 };
-

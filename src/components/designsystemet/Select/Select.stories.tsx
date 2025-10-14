@@ -47,4 +47,3 @@ export const OptionalText: Story = {
 export const Required: Story = {
   args: { ...defaultProps, value: defaultProps.options![1].value, required: true },
 };
-
