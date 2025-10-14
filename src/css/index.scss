@@ -26,4 +26,4 @@
   @include meta.load-css('../components/designsystemet/Tabs/Tabs.override.scss');
 }
 
-@layer reset, dsno, kyvtokens, kyvtokenstodesignsystemet, styrbord;
+@layer reset, dsno, kyvtokens, kyvtokenstodesignsystemet, styrbord, styrbord-modules;

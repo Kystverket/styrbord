@@ -1,21 +1,23 @@
-.text {
-  color: var(--ds-color-danger-text-default);
-}
-.icon {
-  color: var(--ds-color-danger-base-default);
-  font-size: 20px;
-}
-.spacing {
-  margin-left: var(--spacing-8) !important;
-}
+@layer styrbord-modules {
+  .text {
+    color: var(--ds-color-danger-text-default);
+  }
+  .icon {
+    color: var(--ds-color-danger-base-default);
+    font-size: 20px;
+  }
+  .spacing {
+    margin-left: var(--spacing-8) !important;
+  }
 
-.requiredStar {
-  color: var(--ds-color-danger-base-default);
-  user-select: none;
-  margin-left: var(--spacing-8);
-}
+  .requiredStar {
+    color: var(--ds-color-danger-base-default);
+    user-select: none;
+    margin-left: var(--spacing-8);
+  }
 
-.loading {
-  margin-left: var(--spacing-8) !important;
-  display: inline;
+  .loading {
+    margin-left: var(--spacing-8) !important;
+    display: inline;
+  }
 }
