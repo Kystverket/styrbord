@@ -37,6 +37,16 @@ export const Default: Story = {
   args: defaultProps,
 };
 
+export const Optional: Story = {
+  args: { ...defaultProps, value: new Date(), optional: true },
+};
+export const OptionalText: Story = {
+  args: { ...defaultProps, value: new Date(), optional: 'Spesialtilpasset Verdi' },
+};
+export const Required: Story = {
+  args: { ...defaultProps, value: new Date(), required: true },
+};
+
 export const WithoutDescription: Story = {
   args: { ...defaultProps, description: '' },
 };

@@ -4,7 +4,7 @@ import { ReactNode, useContext, useRef } from 'react';
 import { Exif, FileInfo } from './FileUploader.types';
 import { Field, Label, Spinner, ValidationMessage } from '@digdir/designsystemet-react';
 import classes from './FileUploader.module.css';
-import { Box, Icon } from '~/main';
+import { Box, Icon, LabelContent } from '~/main';
 import exifr from 'exifr';
 import { FileUploaderContext } from './FileUploader.context';
 import { v4 } from 'uuid';
@@ -35,12 +35,16 @@ export interface FileUploaderProps {
   maxFiles?: number;
   onChange: (files: FileInfo[]) => void;
   allowedFileTypes?: string[];
+  required?: boolean;
+  optional?: boolean | string;
 }
 
 const defaultAllowedFileTypes = ['.pdf', '.jpg', '.jpeg', '.png'];
 
 export const FileUploader = ({
   label,
+  required,
+  optional,
   buttonLabel,
 
   description = '',
@@ -79,7 +83,9 @@ export const FileUploader = ({
 
   return (
     <Field>
-      <Label>{label}</Label>
+      <Label style={{ pointerEvents: 'none' }}>
+        <LabelContent text={label} required={required} optional={optional} />
+      </Label>
       {description && <Field.Description>{description}</Field.Description>}
       <input
         type="file"

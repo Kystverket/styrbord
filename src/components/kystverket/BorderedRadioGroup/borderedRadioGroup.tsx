@@ -1,4 +1,4 @@
-import { Box, Field, Label, ValidationMessage } from '~/main';
+import { Box, Field, Label, LabelContent, ValidationMessage } from '~/main';
 import classes from './borderedRadioGroup.module.css';
 import { ReactNode } from 'react';
 
@@ -15,6 +15,8 @@ export interface BorderedRadioGroupProps {
   onChange?: (value: RadioGroupValueType) => void;
   onBlur?: () => void;
   error?: string;
+  required?: boolean;
+  optional?: boolean | string;
 }
 
 const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
@@ -24,7 +26,9 @@ const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
   return (
     <Box container="inline-size">
       <Field>
-        <Label>{props.label}</Label>
+        <Label>
+          <LabelContent text={props.label} required={props.required} optional={props.optional} />
+        </Label>
         {props.description && <Field.Description>{props.description}</Field.Description>}
         <div className={classes.radioGroup}>
           {props.options.map(({ label, value }) => (

@@ -37,3 +37,14 @@ export const WithValue: Story = {
     value: defaultProps.options![1].value,
   },
 };
+
+export const Optional: Story = {
+  args: { ...defaultProps, value: defaultProps.options![1].value, optional: true },
+};
+export const OptionalText: Story = {
+  args: { ...defaultProps, value: defaultProps.options![1].value, optional: 'Spesialtilpasset Verdi' },
+};
+export const Required: Story = {
+  args: { ...defaultProps, value: defaultProps.options![1].value, required: true },
+};
+
