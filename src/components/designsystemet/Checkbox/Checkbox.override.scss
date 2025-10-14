@@ -1,0 +1,30 @@
+.override .ds-input[type='checkbox']:checked {
+  background-image: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 90%;
+}
+
+.override .ds-input:is([type='radio'], [type='checkbox']):not([aria-label]) {
+  translate: 0 1px;
+}
+
+.override .ds-input[type='checkbox']:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  // Width and Height is based on the svg, needed for it to render
+  width: 14px;
+  height: 11px;
+  background-image: url("data:image/svg+xml,%3csvg width='14' height='11' viewBox='0 0 14 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M13.1543 1.48804L12.4854 2.2312L5.79492 9.6687L5.05078 10.4949L4.30762 9.6687L0.765625 5.7312L0.0966797 4.98804L1.58301 3.65015L2.25195 4.39331L5.05078 7.50366L10.998 0.893311L11.667 0.150146L13.1543 1.48804Z' fill='white'/%3e%3c/svg%3e");
+}
+
+.override .ds-input[type='checkbox']:checked[readonly]::after {
+  background-image: url("data:image/svg+xml,%3csvg width='14' height='11' viewBox='0 0 14 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M13.1543 1.48804L12.4854 2.2312L5.79492 9.6687L5.05078 10.4949L4.30762 9.6687L0.765625 5.7312L0.0966797 4.98804L1.58301 3.65015L2.25195 4.39331L5.05078 7.50366L10.998 0.893311L11.667 0.150146L13.1543 1.48804Z' fill='black'/%3e%3c/svg%3e");
+}
+
+.override {
+  border-radius: var(--border-radius-default);
+}
