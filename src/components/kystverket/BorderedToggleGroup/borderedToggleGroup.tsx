@@ -1,4 +1,4 @@
-import { Box, Field, Icon, Label, ValidationMessage } from '~/main';
+import { Box, Field, Icon, Label, LabelContent, ValidationMessage } from '~/main';
 import classes from './borderedToggleGroup.module.css';
 import { ReactNode } from 'react';
 
@@ -16,6 +16,8 @@ export interface BorderedToggleGroupProps {
   onChange?: (value: ToggleValue) => void;
   onBlur?: () => void;
   error?: string;
+  required?: boolean;
+  optional?: boolean | string;
 }
 
 const BorderedRadioGroup = (props: BorderedToggleGroupProps) => {
@@ -43,7 +45,9 @@ const BorderedRadioGroup = (props: BorderedToggleGroupProps) => {
   return (
     <Box container="inline-size">
       <Field>
-        <Label>{props.label}</Label>
+        <Label>
+          <LabelContent text={props.label} required={props.required} optional={props.optional} />
+        </Label>
         {props.description && <Field.Description>{props.description}</Field.Description>}
         <div className={classes.toggleGroup}>
           {props.values.map((el) => (

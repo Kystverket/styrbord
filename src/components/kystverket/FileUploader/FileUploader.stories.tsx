@@ -58,6 +58,16 @@ export const Default: Story = {
   args: defaultProps,
 };
 
+export const Optional: Story = {
+  args: { ...defaultProps, optional: true },
+};
+export const OptionalText: Story = {
+  args: { ...defaultProps, optional: 'Spesialtilpasset Verdi' },
+};
+export const Required: Story = {
+  args: { ...defaultProps, required: true },
+};
+
 export const WithError: Story = {
   args: { ...defaultProps, error: 'Det oppstod en feil' },
 };

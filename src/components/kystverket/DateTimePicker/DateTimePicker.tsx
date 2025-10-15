@@ -33,7 +33,7 @@ export const DateTimePicker = ({
 }: DateTimePickerProps) => {
   return (
     <Field className={classes.input}>
-      <Label style={{ display: 'block' }}>
+      <Label style={{ display: 'block', width: 'fit-content' }}>
         <LabelContent text={props.label} required={props.required} optional={props.optional} />
       </Label>
       {props.description && <Field.Description>{props.description}</Field.Description>}
