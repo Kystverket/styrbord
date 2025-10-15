@@ -43,10 +43,15 @@
     gap: 4px;
     align-items: start;
     color: white;
+    font-weight: var(--font-weight-medium);
+  }
+  .link:hover {
+    color: var(--ds-color-primary-base-contrast-subtle);
   }
   .link:focus-within {
     outline: 2px solid var(--ds-color-neutral-base-contrast-default);
     outline-offset: 2px;
+    color: var(--ds-color-primary-base-contrast-subtle);
   }
 
   .icon {
@@ -76,7 +81,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--spacing-32);
+    gap: var(--spacing-16);
     flex-shrink: 0;
     padding: 0px var(--spacing-64);
     border-right: 1px solid var(--ds-color-primary-base-active);
