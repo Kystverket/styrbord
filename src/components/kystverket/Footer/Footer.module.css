@@ -21,10 +21,10 @@
     display: flex;
     flex-direction: row;
     gap: var(--spacing-32);
-    flex-grow: 1;
   }
   .footerContentContainer {
     align-items: center;
+    justify-content: center;
   }
   .linksContainer:empty,
   .linksAndContactsContainer:empty,
@@ -57,7 +57,6 @@
     flex-direction: column;
     gap: var(--spacing-16);
     align-items: center;
-    flex-grow: 1;
   }
   .extraText {
     color: var(--ds-color-neutral-base-contrast-default);
