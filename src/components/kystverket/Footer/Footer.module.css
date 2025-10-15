@@ -1,10 +1,4 @@
 @layer styrbord-modules {
-  .logo {
-    min-width: 276px;
-    max-width: 332px;
-    margin: 0 55.5px !important;
-  }
-
   .footer {
     background-color: var(--color-primary-base-default);
     display: flex;
@@ -14,33 +8,85 @@
   }
 
   .footerContainer {
-    display: flex;
-    flex-direction: row;
+    container-type: inline-size;
+    container-name: footer;
     justify-content: center;
     width: 100%;
     max-width: 80rem;
-    gap: var(--spacing-32);
   }
 
-  .footerContent {
+  .linksContainer,
+  .linksAndContactsContainer,
+  .footerContentContainer {
     display: flex;
     flex-direction: row;
     gap: var(--spacing-32);
+    flex-grow: 1;
   }
-
-  .footerLogo {
-    min-width: 276px;
-    max-width: 332px;
-    width: 100%;
+  .footerContentContainer {
+    align-items: center;
+  }
+  .linksContainer:empty,
+  .linksAndContactsContainer:empty,
+  .footerContentContainer:empty {
+    display: none;
+  }
+  .linkList {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
+    padding-right: var(--spacing-16);
+  }
+  .link {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    align-items: start;
+    color: white;
+  }
+  .link:focus-within {
+    outline: 2px solid var(--ds-color-neutral-base-contrast-default);
+    outline-offset: 2px;
   }
 
-  .footerSelect {
-    color: white !important;
+  .icon {
+    color: var(--ds-color-accent-base-default);
+  }
+  .textContainer {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-16);
+    align-items: center;
+    flex-grow: 1;
+  }
+  .extraText {
+    color: var(--ds-color-neutral-base-contrast-default);
+    font-size: var(--body-sm-font-size);
+    line-height: var(--body-sm-line-height);
+    letter-spacing: var(--body-sm-letter-spacing);
+    font-weight: var(--font-weight-regular);
+  }
+  .copyrightText {
+    color: var(--ds-color-neutral-surface-active);
+    font-size: var(--body-xs-font-size);
+    line-height: var(--body-xs-line-height);
+    letter-spacing: var(--body-xs-letter-spacing);
+    font-weight: var(--font-weight-regular);
+  }
+  .logoContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-32);
+    flex-shrink: 0;
+    padding: 0px var(--spacing-64);
+    border-right: 1px solid var(--ds-color-primary-base-active);
+  }
+  .logoContainerInner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-48);
   }
 
   .select {
@@ -48,8 +94,9 @@
     -moz-appearance: none;
     appearance: none;
     background-color: transparent;
-    border-color: var(--color-primary-border-default);
-    color: white !important;
+    border-color: var(--ds-color-primary-base-contrast-subtle);
+    color: var(--ds-color-primary-base-contrast-default);
+    border-radius: var(--border-radius-default);
     min-width: 208px;
     max-width: 304px;
     background: url(keyboard_arrow_down.svg) right 8px center no-repeat;
@@ -63,59 +110,45 @@
     color: var(--color-primary-text-default) !important;
   }
 
-  .footerLinks {
-    display: flex;
-    flex-direction: row;
-    gap: var(--spacing-32);
-
-    flex-wrap: wrap;
-  }
-
-  .links {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-8);
-  }
-
-  .link {
-    display: flex;
-    align-items: center;
-    color: white;
-  }
-
-  .icon {
-    color: #ff7255 !important;
-  }
-
-  .footer a {
-    color: white;
-    font-weight: 500;
-  }
-
-  .footer a:hover {
-    color: #a9c5ff;
-  }
-
-  .footer a:active {
-    color: black;
-    background-color: white;
-  }
-
-  @media screen and (max-width: 868px) {
-    .footerContainer {
+  @container footer (width < 1024px) {
+    .linksContainer {
       flex-direction: column;
-      justify-content: center;
+    }
+  }
+
+  @container footer (width < 868px) {
+    .logoContainer {
+      border-right: none;
+    }
+    .footerContentContainer {
+      flex-direction: column;
       align-items: center;
     }
-
-    .footerLinks {
-      flex-direction: column;
+    .logoContainer {
+      padding: 0px;
     }
   }
 
-  @media screen and (max-width: 519px) {
-    .footerContent {
+  @container footer (width < 520px) {
+    .linksAndContactsContainer {
+      flex-direction: column-reverse;
+      align-items: start;
+    }
+    .footerContentContainer,
+    .logoContainer,
+    .linksAndContactsContainer {
+      align-items: stretch;
+    }
+    .logoContainerInner {
       flex-direction: column;
+      align-items: center;
+    }
+    select {
+      min-width: 100% !important;
+      max-width: 100% !important;
+    }
+    .footerContentContainer {
+      padding: 0px var(--spacing-16);
     }
   }
 }

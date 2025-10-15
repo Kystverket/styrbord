@@ -19,6 +19,7 @@ const iconDescriptions: Record<IconId, string> = {
   adjust: '',
   anchor: '',
   arrow_back: 'Navigerer tilbake',
+  arrow_forward: '',
   arrow_right_alt: 'Navigerer framover, indikere at handlingen vil føre til en annen side eller visning',
   article: '',
   calendar_month: '',

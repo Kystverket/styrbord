@@ -37,12 +37,13 @@
 :root {
   font-family: var(--font-family);
 
-  --link-underline-offset: var(--spacing-6);
-  --ds-global-purple-12: var(--color-link-visited);
-
   --border-width-default: 0.0625rem;
   --border-width-lg: 0.125rem;
   --border-width-xl: 0.25rem;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smooth: never;
 }
 
 .ds-validation-message {

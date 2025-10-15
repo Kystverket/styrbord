@@ -3,6 +3,7 @@ import { Logo, Link, Icon } from '~/main';
 import { SupportedLanguage } from '~/utils/types';
 import { useTranslation } from '~/i18n/translations';
 import { Select } from '@digdir/designsystemet-react';
+import { ReactNode } from 'react';
 
 interface LinkToSite {
   text: string;
@@ -21,32 +22,79 @@ const defaultContactLinks: LinkToSite[] = [
   { text: 'Arealplanlegging', url: 'https://www.kystverket.no/kontakt-oss/arealplan/' },
 ];
 
-export interface FooterProps {
+export type FooterProps = {
   language: SupportedLanguage;
-  contactLinks?: LinkToSite[];
-  contactLinksAsSelect?: boolean;
-  links?: LinkToSite[];
-  langLinks?: LinkToSite[];
+  additionalLogo?: ReactNode;
+  text?: string;
+  copyright?: string;
+  contacts?: LinkToSite[];
+  primary?: LinkToSite[];
+  secondary?: LinkToSite[];
+  tertiary?: LinkToSite[];
+};
+
+function LinkList({ links }: { links: LinkToSite[] }) {
+  if (!links || links.length === 0) {
+    return null;
+  }
+  return (
+    <div className={classes.linkList}>
+      {links.map((link, index) => (
+        <Link key={index} href={link.url} style={{ textDecoration: 'none' }} className={classes.link}>
+          <Icon material="arrow_forward" aria-hidden className={classes.icon} />
+          <span>{link.text}</span>
+        </Link>
+      ))}
+    </div>
+  );
 }
 
 export function Footer({
-  links = [],
-  langLinks = [],
   language,
-  contactLinks,
-  contactLinksAsSelect = true,
+  additionalLogo,
+  text = '',
+  copyright = '',
+  contacts = defaultContactLinks,
+  primary = [],
+  secondary = [],
+  tertiary = [],
 }: FooterProps) {
   const t = useTranslation(language);
+
+  const currentYear = new Date().getFullYear();
+
+  if (!copyright) {
+    copyright = `Opphavsrett Kystverket © ${currentYear}`;
+  }
 
   return (
     <div className={classes.footer}>
       <div className={classes.footerContainer}>
-        <div className={classes.footerLogo}>
-          <Logo alt={t('kystverket')} variant="white-horizontal" width={220} height={55.25} />
-        </div>
-        <div className={classes.footerContent}>
-          <div className={classes.footerSelect}>
-            {contactLinksAsSelect && (
+        <div className={classes.footerContentContainer}>
+          <div className={classes.logoContainer}>
+            <div className={classes.logoContainerInner}>
+              <Logo alt={t('kystverket')} variant="white-horizontal" width={220} height={55.25} />
+              {additionalLogo}
+            </div>
+            {!text && (
+              <div className={classes.textContainer}>
+                <span className={classes.copyrightText}>{copyright}</span>
+              </div>
+            )}
+          </div>
+          <div className={classes.linksAndContactsContainer}>
+            <div className={classes.linksContainer}>
+              {text && (
+                <div className={classes.linkList}>
+                  <span className={classes.extraText}>{text}</span>
+                  <span className={classes.copyrightText}>{copyright}</span>
+                </div>
+              )}
+              {primary && primary.length > 0 && <LinkList links={primary} />}
+              {secondary && secondary.length > 0 && <LinkList links={secondary} />}
+              {tertiary && tertiary.length > 0 && <LinkList links={tertiary} />}
+            </div>
+            {contacts.length > 0 && (
               <Select
                 aria-label={t('kontakt')}
                 defaultValue=""
@@ -57,48 +105,16 @@ export function Footer({
                   window.location.href = e.target.value;
                 }}
               >
-                <Select.Option disabled value="" className={classes.defaultSelectOption} aria-hidden="true" hidden>
+                <Select.Option disabled value="" aria-hidden="true" hidden>
                   {t('kontakt')}
                 </Select.Option>
-                {contactLinks
-                  ? contactLinks.map((link: LinkToSite, index: number) => (
-                      <Select.Option key={index} value={link.url} className={classes.selectOption}>
-                        {link.text}
-                      </Select.Option>
-                    ))
-                  : defaultContactLinks.map((link: LinkToSite, index: number) => (
-                      <Select.Option key={index} value={link.url} className={classes.selectOption}>
-                        {link.text}
-                      </Select.Option>
-                    ))}
+                {contacts.map((link: LinkToSite, index: number) => (
+                  <Select.Option key={index} value={link.url} className={classes.selectOption}>
+                    {link.text}
+                  </Select.Option>
+                ))}
               </Select>
             )}
-            {!contactLinksAsSelect && (
-              <div className={classes.links}>
-                {(contactLinks ?? defaultContactLinks).map((link, index) => (
-                  <Link key={index} href={link.url} style={{ textDecoration: 'none' }} className={classes.link}>
-                    <Icon material="arrow_right_alt" aria-hidden className={classes.icon} /> &nbsp;{link.text}
-                  </Link>
-                ))}
-              </div>
-            )}
-            © Kystverket
-          </div>
-          <div className={classes.footerLinks}>
-            <div className={classes.links}>
-              {links.map((link, index) => (
-                <Link key={index} href={link.url} style={{ textDecoration: 'none' }} className={classes.link}>
-                  <Icon material="arrow_right_alt" aria-hidden className={classes.icon} /> &nbsp;{link.text}
-                </Link>
-              ))}
-            </div>
-            <div className={classes.links}>
-              {langLinks.map((link, index) => (
-                <Link key={index} href={link.url} style={{ textDecoration: 'none' }} className={classes.link}>
-                  <Icon material="arrow_right_alt" aria-hidden className={classes.icon} /> &nbsp;{link.text}
-                </Link>
-              ))}
-            </div>
           </div>
         </div>
       </div>

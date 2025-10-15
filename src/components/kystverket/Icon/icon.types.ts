@@ -3,6 +3,7 @@ export const iconIdList = [
   'adjust',
   'anchor',
   'arrow_back',
+  'arrow_forward',
   'arrow_right_alt',
   'article',
   'calendar_month',
