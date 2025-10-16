@@ -30,20 +30,22 @@ export const Default: Story = {
 export const Selvbetjening: Story = {
   args: {
     ...defaultProps,
-    primary: [
-      { text: 'Data- og lisenserklæring', url: '#' },
-      {
-        text: 'Tilgjengelighetserklæring',
-        url: '#',
-      },
-      { text: 'Personvernerklæring', url: '#' },
-    ],
-    secondary: [
-      {
-        text: 'Nynorsk',
-        url: '#',
-      },
-      { text: 'Engelsk', url: '#' },
+    links: [
+      [
+        { text: 'Data- og lisenserklæring', url: '#' },
+        {
+          text: 'Tilgjengelighetserklæring',
+          url: '#',
+        },
+        { text: 'Personvernerklæring', url: '#' },
+      ],
+      [
+        {
+          text: 'Nynorsk',
+          url: '#',
+        },
+        { text: 'Engelsk', url: '#' },
+      ],
     ],
   },
 };
@@ -52,23 +54,25 @@ export const MaritimSikring: Story = {
   args: {
     ...defaultProps,
     contacts: [],
-    primary: [
-      { text: 'Data- og lisenserklæring', url: '#' },
-      {
-        text: 'Tilgjengelighetserklæring',
-        url: '#',
-      },
-      { text: 'Personvernerklæring', url: '#' },
-    ],
-    secondary: [
-      {
-        text: 'Send e-post til support',
-        url: 'mailto:selvbetjening.maritimsikring@kystverket.no',
-      },
-      {
-        text: 'Kontakt kystverket',
-        url: 'https://www.kystverket.no/kontakt-oss/',
-      },
+    links: [
+      [
+        { text: 'Data- og lisenserklæring', url: '#' },
+        {
+          text: 'Tilgjengelighetserklæring',
+          url: '#',
+        },
+        { text: 'Personvernerklæring', url: '#' },
+      ],
+      [
+        {
+          text: 'Send e-post til support',
+          url: 'mailto:selvbetjening.maritimsikring@kystverket.no',
+        },
+        {
+          text: 'Kontakt kystverket',
+          url: 'https://www.kystverket.no/kontakt-oss/',
+        },
+      ],
     ],
   },
 };
@@ -76,7 +80,7 @@ export const MaritimSikring: Story = {
 export const Hais: Story = {
   args: {
     ...defaultProps,
-    primary: [
+    links: [
       {
         text: 'Tilgjengelighetserklæring',
         url: '#',
@@ -90,7 +94,7 @@ export const Saksbehandling: Story = {
   args: {
     ...defaultProps,
     contacts: [],
-    primary: [
+    links: [
       {
         text: 'Personvernerklæring',
         url: '#',
@@ -103,32 +107,34 @@ export const Kystdatahuset: Story = {
   args: {
     ...defaultProps,
     contacts: [],
-    primary: [
-      {
-        text: 'Om Kystdatahuset',
-        url: '#',
-      },
-      {
-        text: 'Data i løsningen',
-        url: '#',
-      },
-      {
-        text: 'API-tilgang',
-        url: '#',
-      },
-      {
-        text: 'Hjelp',
-        url: '#',
-      },
-    ],
-    secondary: [
-      { text: 'Data- og lisenserklæring', url: '#' },
-      {
-        text: 'Tilgjengelighetserklæring',
-        url: '#',
-      },
-      { text: 'Personvernerklæring', url: '#' },
-      { text: 'Gi tilbakemelding', url: '#' },
+    links: [
+      [
+        {
+          text: 'Om Kystdatahuset',
+          url: '#',
+        },
+        {
+          text: 'Data i løsningen',
+          url: '#',
+        },
+        {
+          text: 'API-tilgang',
+          url: '#',
+        },
+        {
+          text: 'Hjelp',
+          url: '#',
+        },
+      ],
+      [
+        { text: 'Data- og lisenserklæring', url: '#' },
+        {
+          text: 'Tilgjengelighetserklæring',
+          url: '#',
+        },
+        { text: 'Personvernerklæring', url: '#' },
+        { text: 'Gi tilbakemelding', url: '#' },
+      ],
     ],
   },
 };
@@ -140,7 +146,7 @@ export const Fyr: Story = {
     contacts: [],
     text: 'Fyr er et samarbeid mellom\nKystverket og Kystverksmusea',
     copyright: 'Opphavsrett Kystverket og\nKystverksmusea © 2024',
-    primary: [
+    links: [
       {
         text: 'Kontakt Kystverket',
         url: '#',

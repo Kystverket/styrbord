@@ -28,9 +28,7 @@ export type FooterProps = {
   text?: string;
   copyright?: string;
   contacts?: LinkToSite[];
-  primary?: LinkToSite[];
-  secondary?: LinkToSite[];
-  tertiary?: LinkToSite[];
+  links?: LinkToSite[] | LinkToSite[][];
 };
 
 function LinkList({ links }: { links: LinkToSite[] }) {
@@ -55,9 +53,7 @@ export function Footer({
   text = '',
   copyright = '',
   contacts = defaultContactLinks,
-  primary = [],
-  secondary = [],
-  tertiary = [],
+  links = [],
 }: FooterProps) {
   const t = useTranslation(language);
 
@@ -90,9 +86,9 @@ export function Footer({
                   <span className={classes.copyrightText}>{copyright}</span>
                 </div>
               )}
-              {primary && primary.length > 0 && <LinkList links={primary} />}
-              {secondary && secondary.length > 0 && <LinkList links={secondary} />}
-              {tertiary && tertiary.length > 0 && <LinkList links={tertiary} />}
+              {links.map((linkGroup, index) => (
+                <LinkList key={index} links={Array.isArray(linkGroup) ? linkGroup : [linkGroup]} />
+              ))}
             </div>
             {contacts.length > 0 && (
               <Select
