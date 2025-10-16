@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Footer, FooterProps } from '~/components/kystverket/Footer/Footer';
+import { Image } from '../Image/image';
+
+import musea from './musea.svg';
 
 const meta = {
   title: 'Side/Footer',
@@ -18,81 +21,140 @@ type Story = StoryObj<typeof meta>;
 
 const defaultProps: FooterProps = {
   language: 'nb-NO',
-  links: [
-    {
-      text: 'Tilgjengelighetserklæring',
-      url: 'https://uustatus.no/nb/erklaringer/publisert/5e6d4b9f-7e58-407d-aee1-9d949ef46b16',
-    },
-    { text: 'Personvernerklæring', url: 'https://www.kystverket.no/om-kystverket/kystverkets-personvernerklaring/' },
-    { text: 'Lisenserklæring', url: '#' },
-  ],
 };
 
 export const Default: Story = {
   args: defaultProps,
 };
 
-export const WithLanguageLinks: Story = {
+export const Selvbetjening: Story = {
   args: {
     ...defaultProps,
-    langLinks: [
-      {
-        text: 'Nynorsk',
-        url: 'https://uustatus.no/nb/erklaringer/publisert/5e6d4b9f-7e58-407d-aee1-9d949ef46b16',
-      },
-      { text: 'Engelsk', url: 'https://www.kystverket.no/om-kystverket/kystverkets-personvernerklaring/' },
-    ],
-  },
-};
-
-export const WithContactLinks: Story = {
-  args: {
-    ...defaultProps,
-    langLinks: [
-      {
-        text: 'Nynorsk',
-        url: 'https://uustatus.no/nb/erklaringer/publisert/5e6d4b9f-7e58-407d-aee1-9d949ef46b16',
-      },
-      { text: 'Engelsk', url: 'https://www.kystverket.no/om-kystverket/kystverkets-personvernerklaring/' },
-    ],
-    contactLinks: [
-      {
-        text: 'Tilgjengelighetserklæring',
-        url: 'https://uustatus.no/nb/erklaringer/publisert/5e6d4b9f-7e58-407d-aee1-9d949ef46b16',
-      },
-      { text: 'Personvernerklæring', url: 'https://www.kystverket.no/om-kystverket/kystverkets-personvernerklaring/' },
-      { text: 'Lisenserklæring', url: '#' },
-    ],
-  },
-};
-
-export const WithMaritimSikringLinks: Story = {
-  args: {
-    ...defaultProps,
-    contactLinks: [
-      {
-        text: 'Send e-post til support',
-        url: 'mailto:selvbetjening.maritimsikring@kystverket.no',
-      },
-      {
-        text: 'Kontakt kystverket',
-        url: 'https://www.kystverket.no/kontakt-oss/',
-      },
-    ],
     links: [
-      { text: 'Data- og Lisenserklæring', url: '#' },
-      { text: 'Personvernerklæring', url: 'https://www.kystverket.no/om-kystverket/kystverkets-personvernerklaring/' },
+      [
+        { text: 'Data- og lisenserklæring', url: '#' },
+        {
+          text: 'Tilgjengelighetserklæring',
+          url: '#',
+        },
+        { text: 'Personvernerklæring', url: '#' },
+      ],
+      [
+        {
+          text: 'Nynorsk',
+          url: '#',
+        },
+        { text: 'Engelsk', url: '#' },
+      ],
+    ],
+  },
+};
+
+export const MaritimSikring: Story = {
+  args: {
+    ...defaultProps,
+    contacts: [],
+    links: [
+      [
+        { text: 'Data- og lisenserklæring', url: '#' },
+        {
+          text: 'Tilgjengelighetserklæring',
+          url: '#',
+        },
+        { text: 'Personvernerklæring', url: '#' },
+      ],
+      [
+        {
+          text: 'Send e-post til support',
+          url: 'mailto:selvbetjening.maritimsikring@kystverket.no',
+        },
+        {
+          text: 'Kontakt kystverket',
+          url: 'https://www.kystverket.no/kontakt-oss/',
+        },
+      ],
+    ],
+  },
+};
+
+export const Hais: Story = {
+  args: {
+    ...defaultProps,
+    links: [
       {
         text: 'Tilgjengelighetserklæring',
-        url: 'https://uustatus.no/nb/erklaringer/publisert/5e6d4b9f-7e58-407d-aee1-9d949ef46b16',
+        url: '#',
       },
+      { text: 'Om tjenesten', url: '#' },
     ],
-    langLinks: [
+  },
+};
+
+export const Saksbehandling: Story = {
+  args: {
+    ...defaultProps,
+    contacts: [],
+    links: [
       {
-        text: 'Nynorsk',
-        url: 'https://uustatus.no/nb/erklaringer/publisert/5e6d4b9f-7e58-407d-aee1-9d949ef46b16',
+        text: 'Personvernerklæring',
+        url: '#',
       },
     ],
-    contactLinksAsSelect: false,
+  },
+};
+
+export const Kystdatahuset: Story = {
+  args: {
+    ...defaultProps,
+    contacts: [],
+    links: [
+      [
+        {
+          text: 'Om Kystdatahuset',
+          url: '#',
+        },
+        {
+          text: 'Data i løsningen',
+          url: '#',
+        },
+        {
+          text: 'API-tilgang',
+          url: '#',
+        },
+        {
+          text: 'Hjelp',
+          url: '#',
+        },
+      ],
+      [
+        { text: 'Data- og lisenserklæring', url: '#' },
+        {
+          text: 'Tilgjengelighetserklæring',
+          url: '#',
+        },
+        { text: 'Personvernerklæring', url: '#' },
+        { text: 'Gi tilbakemelding', url: '#' },
+      ],
+    ],
+  },
+};
+
+export const Fyr: Story = {
+  args: {
+    ...defaultProps,
+    additionalLogo: <Image src={musea} />,
+    contacts: [],
+    text: 'Fyr er et samarbeid mellom\nKystverket og Kystverksmusea',
+    copyright: 'Opphavsrett Kystverket og\nKystverksmusea © 2024',
+    links: [
+      {
+        text: 'Kontakt Kystverket',
+        url: '#',
+      },
+      {
+        text: 'Kontakt Kystverksmusea',
+        url: '#',
+      },
+    ],
   },
 };

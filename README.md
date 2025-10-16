@@ -33,6 +33,11 @@ Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.
 
 ## Endringslogg
 
+### 2025-10-16
+
+Footer har blitt endret. Den er ikke bakoverkompatibel, men siden footer stort sett settes en gang bør
+dette gå bra. Se [Footer.stories.tsx](https://github.com/Kystverket/styrbord/blob/main/src/components/kystverket/Footer/Footer.stories.tsx) for hvordan den skal brukes i din applikasjon.
+
 ### 2025-09-08
 
 Box har fått noen endringer på fargene og interfacet. Dette er gjort for å gjøre default-fargene
