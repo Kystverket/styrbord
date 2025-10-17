@@ -3,11 +3,13 @@ import { Avatar as DsAvatar, AvatarProps as DsAvatarProps } from '@digdir/design
 import classes from './Avatar.module.scss';
 
 export type AvatarProps = Omit<DsAvatarProps, 'data-size' | 'data-color'> & {
-  'data-size'?: 'xxs' | 'xxxs' | DsAvatarProps['data-size'];
-  'data-color'?: 'subtle-tinted' | DsAvatarProps['data-color'];
+  'data-size'?: 'xxs' | 'xxxs' | 'xxxstest' | DsAvatarProps['data-size'];
+  'data-color'?: 'main' | 'support' | 'neutral' | 'warning' | 'danger' | 'brand2';
+  hover?: boolean;
 };
 
 export const Avatar: FC<AvatarProps> = ({
+  hover,
   'data-size': size = 'md',
   'data-color': color = 'primary',
   className,
@@ -19,11 +21,19 @@ export const Avatar: FC<AvatarProps> = ({
     classList.push(classes.xxs);
   } else if (size === 'xxxs') {
     classList.push(classes.xxxs);
+  } else if (size === 'xxxstest') {
+    classList.push(classes.xxxstest);
   }
 
-  if (color === 'subtle-tinted') {
-    classList.push(classes.subtleTinted);
-  }
+  if (color === 'subtle-tinted') classList.push(classes.subtleTinted);
+  if (color === 'main') classList.push(classes.main);
 
-  return <DsAvatar data-size={size} data-color={color} className={classList.join(' ')} {...rest} />;
+  return (
+    <DsAvatar
+      data-size={size}
+      data-color={color}
+      className={classList.join(' ') + ` ${hover ? classes.hover : ''}`}
+      {...rest}
+    />
+  );
 };

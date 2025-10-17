@@ -35,6 +35,8 @@ export const NoName: Story = () => <Avatar aria-label="Ola" />;
 
 export const Sizes: Story = () => (
   <>
+    <Avatar data-size="xxxstest" aria-label="xxxstest" initials="xt" />
+    <Avatar data-size="xxxstest" aria-label="xxxstest" />
     <Avatar data-size="xxxs" aria-label="xxxs" initials="3x" />
     <Avatar data-size="xxxs" aria-label="xxxs" />
     <Avatar data-size="xxs" aria-label="extra extra small" initials="2x" />
@@ -120,5 +122,6 @@ InDropdown.parameters = {
 export const AsLink: Story = () => (
   <a href="#">
     <Avatar aria-label="Ola Nordmann" />
+    <Avatar aria-label="Ola Nordmann" data-color="main" hover />
   </a>
 );

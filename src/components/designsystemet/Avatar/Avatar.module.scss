@@ -2,15 +2,39 @@
 .xxs {
   height: 28px;
   width: 28px;
-  font-size: 10px;
-  line-height: 10px;
+  font-size: var(--font-size-2);
+  line-height: var(--font-size-2);
 }
 
 .xxxs {
   height: 22px;
   width: 22px;
-  font-size: 8px;
-  line-height: 8px;
+    font-size: 17px;
+  line-height: 17px;
+  font-size: var(--font-size-1);
+  line-height: var(--font-size-1);
+}
+
+.xxxstest {
+  height: 22px;
+  width: 22px;
+  font-size: 9px;
+  line-height: 9px;
+  padding: 0;
+  padding-bottom: 0;
+}
+
+.main {
+  --color-main-base-default: #000667;
+  --color-neutral-base-contrast-default: #FFFFFF;
+  --color-main-surface-hover: #A9E5FB;
+  background-color: var(--color-main-base-default);
+  color: var(--color-neutral-base-contrast-default);
+}
+
+.main.hover:hover {
+  background-color: var(--color-main-surface-hover);
+  color: var(--color-main-text-default);
 }
 
 // Colors
