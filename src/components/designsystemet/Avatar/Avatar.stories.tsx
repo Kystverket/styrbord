@@ -19,7 +19,7 @@ const meta: Meta<typeof Avatar> = {
   },
 };
 
-const colorVariants = ['accent', 'extra1', 'neutral', 'subtle-tinted'];
+const colorVariants: AvatarProps['data-color'][] = ['main', 'neutral', 'support', 'warning', 'danger', 'brand2'];
 
 export default meta;
 
@@ -50,10 +50,10 @@ export const Sizes: Story = () => (
   </>
 );
 
-export const ColorVariants: Story = () => (
+export const ColorVariantsWithHoverEffect: Story = () => (
   <>
     {colorVariants.map((color) => (
-      <Avatar key={color} data-color={color as AvatarProps['data-color']} aria-label={`color ${color}`} />
+      <Avatar hover key={color} data-color={color} aria-label={`color ${color}`} />
     ))}
   </>
 );
@@ -120,6 +120,5 @@ InDropdown.parameters = {
 export const AsLink: Story = () => (
   <a href="#">
     <Avatar aria-label="Ola Nordmann" />
-    <Avatar aria-label="Ola Nordmann" data-color="main" hover />
   </a>
 );

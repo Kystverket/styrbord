@@ -1,3 +1,5 @@
+@use "sass:map";
+
 // Sizes
 .xxs {
   height: 28px;
@@ -15,33 +17,54 @@
   // line-height: var(--font-size-1);
 }
 
-.main {
-  --color-main-base-default: #000667;
-  --color-neutral-base-contrast-default: #FFFFFF;
-  --color-main-surface-hover: #A9E5FB;
-  background-color: var(--color-main-base-default);
-  color: var(--color-neutral-base-contrast-default);
-}
-.main.hover:hover {
-  background-color: var(--color-main-surface-hover);
-  color: var(--color-main-text-default);
-}
+// Color variants
+$color-variants: (
+  'main': (
+    'base': var(--color-main-base-default),
+    'contrast': var(--color-neutral-base-contrast-default),
+    'hover-bg': var(--color-main-surface-hover),
+    'hover-text': var(--color-main-text-default)
+  ),
+  'support': (
+    'base': var(--color-support-base-default),
+    'contrast': var(--color-support-base-contrast-default),
+    'hover-bg': var(--color-support-surface-hover),
+    'hover-text': var(--color-support-text-default)
+  ),
+  'neutral': (
+    'base': var(--color-neutral-base-default),
+    'contrast': var(--color-neutral-base-contrast-default),
+    'hover-bg': var(--color-neutral-surface-hover),
+    'hover-text': var(--color-neutral-text-default)
+  ),
+  'warning': (
+    'base': var(--color-warning-base-default),
+    'contrast': var(--color-warning-base-contrast-default),
+    'hover-bg': var(--color-warning-surface-hover),
+    'hover-text': var(--color-warning-text-default)
+  ),
+  'danger': (
+    'base': var(--color-danger-base-default),
+    'contrast': var(--color-danger-base-contrast-default),
+    'hover-bg': var(--color-danger-surface-hover),
+    'hover-text': var(--color-danger-text-default)
+  ),
+  'brand2': (
+    'base': var(--color-brand2-base-default),
+    'contrast': var(--color-brand2-base-contrast-default),
+    'hover-bg': var(--color-brand2-surface-hover),
+    'hover-text': var(--color-brand2-text-default)
+  )
+);
 
-.support {
-  --color-main-base-default: #000667;
-  --color-neutral-base-contrast-default: #FFFFFF;
-  --color-main-surface-hover: #A9E5FB;
-  background-color: var(--color-main-base-default);
-  color: var(--color-neutral-base-contrast-default);
-}
-.main.hover:hover {
-  background-color: var(--color-main-surface-hover);
-  color: var(--color-main-text-default);
-}
-
-
-// Colors
-.subtleTinted {
-  background-color: var(--color-neutral-surface-tinted);
-  color: var(--color-neutral-text-default);
+@each $color, $values in $color-variants {
+  .#{$color} {
+    background-color: map.get($values, 'base');
+    color: map.get($values, 'contrast');
+    
+    &.hover:hover {
+      background-color: map.get($values, 'hover-bg');
+      color: map.get($values, 'hover-text');
+    }
+  }
 }
