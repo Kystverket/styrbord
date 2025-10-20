@@ -7,15 +7,10 @@
     height: fit-content;
     min-height: 72px;
     container: header / inline-size;
-    background-color: white;
-    box-shadow: 0 1px 2px 0 #0006671a;
-  }
-
-  .headerContainer :global(.ds-link:focus-visible) {
-    background: none;
-    color: var(--dsc-link-color);
-    outline: 3px solid var(--color-focus-outer);
-    border-radius: var(--border-radius-default);
+    background-color: var(--color-neutral-background-default);
+    border-bottom: 1px solid var(--color-neutral-surface-tinted);
+    border-bottom-left-radius: var(--border-radius-small);
+    border-bottom-right-radius: var(--border-radius-small);
   }
 
   .headerFlex {
