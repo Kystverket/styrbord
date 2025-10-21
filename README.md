@@ -4,7 +4,7 @@ Styrbord er et komponentbibliotek som vi kan ta i bruk i Kystverkets interne og 
 applikasjoner. Det er _ikke_ en profilguide, men en teknisk ressurs om kan trekkes inn for å la
 applikasjonen ha et Kystverket uttrykk samtidig som det følger moderne prinsipper for design.
 
-Styrbord tar i bruk [designsystemetet.no](https://www.designsystemet.no/) sine komponenter og prinsipper.
+Styrbord tar i bruk [designsystemet.no](https://www.designsystemet.no/) sine komponenter og prinsipper.
 Komponentene til Designsystemet blir eksportert videre av Styrbord med Kystverkets farger og tekststil.
 Dette betyr at [dokumentasjonen til Designsystemet](https://storybook.designsystemet.no/) er vel så viktig
 som den du finner her.
