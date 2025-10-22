@@ -110,3 +110,19 @@ export const medProfil: Story = {
     },
   },
 };
+
+export const medProfilLenker: Story = {
+  args: {
+    ...defaultProps,
+    profile: {
+      name: 'Ola Nordmann',
+      department: 'Hav- og kystforvaltning',
+      logoutHandler: () => alert('Logger ut'),
+      initials: 'ON',
+      links: [
+        { icon: 'anchor', label: 'Kystverket', url: 'https://kystverket.no' },
+        { icon: 'settings', label: 'Settings', url: '#' },
+      ],
+    },
+  },
+};

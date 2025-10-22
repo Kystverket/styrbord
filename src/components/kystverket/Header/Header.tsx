@@ -75,6 +75,23 @@ export interface HeaderProps {
     /**
      * logoutHandler
      */
+    links?: {
+      /**
+       * icon - Typed til IconId
+       */
+      icon: IconId;
+      /**
+       * label
+       */
+      label: string;
+      /**
+       * url
+       */
+      url: string;
+    }[];
+    /**
+     * logoutHandler
+     */
     logoutHandler: () => void;
   };
   linkComponent?: React.FC<HeaderLinkComponentProps>;
@@ -196,6 +213,20 @@ export function Header({
                     </Box>
                   </Box>
                   <Divider />
+                  {/* Profile links */}
+                  {profile?.links &&
+                    profile?.links.map((link, index) => (
+                      <LinkComponent
+                        key={index}
+                        href={link.url}
+                        className={`${classes.headerButton} ${classes.disappearBelowPhone}`}
+                      >
+                        <Icon material={link.icon} />
+                        <Paragraph>{link.label}</Paragraph>
+                      </LinkComponent>
+                    ))}
+                  {profile?.links && <Divider />}
+                  {/* End of Profile links */}
                   <Button onClick={() => profile.logoutHandler()} className={`${classes.profileLogOutButton}`}>
                     <Icon material="logout" />
                     Logg ut
