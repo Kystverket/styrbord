@@ -5,9 +5,11 @@ import typescript from '@rollup/plugin-typescript';
 import path from 'path';
 import { typescriptPaths } from 'rollup-plugin-typescript-paths';
 import react from '@vitejs/plugin-react';
+import preserveUseClientDirective from 'rollup-plugin-preserve-use-client';
 
 export default defineConfig({
   plugins: [
+    preserveUseClientDirective(),
     react({
       jsxRuntime: 'automatic',
     }),
