@@ -10,6 +10,7 @@ export type HeaderLinkComponentProps = {
   className?: string;
   href?: string;
   children: ReactNode;
+  onClick?: () => void;
 };
 
 export interface HeaderProps {
@@ -220,6 +221,7 @@ export function Header({
                         key={index}
                         href={link.url}
                         className={`${classes.headerButton} ${classes.disappearBelowPhone}`}
+                        onClick={closeProfile}
                       >
                         <Icon material={link.icon} />
                         <Paragraph>{link.label}</Paragraph>
