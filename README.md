@@ -37,9 +37,7 @@ Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.
 
 Oppdatert til Designsystemet 1.6.1 fra 1.4.0.
 
-Endret Avatar.
-    - Størrelser er nå `2x` og `3x` fra `xxs` og `xxxs`.
-    - Endret fargevalg. `data-color` er nå kun vanlige farger, men man kan legge på `data-color-variant="surface-tinted"` for å få dusere farger.
+Endret Avatar. - Størrelser er nå `2x` og `3x` fra `xxs` og `xxxs`. - Endret fargevalg. `data-color` er nå kun vanlige farger, men man kan legge på `data-color-variant="surface-tinted"` for å få dusere farger.
 
 ### 2025-10-16
 

@@ -14,35 +14,35 @@
 }
 
 // Colors
-[data-color="primary"].surfaceTinted {
+[data-color='primary'].surfaceTinted {
   background-color: var(--color-primary-surface-tinted);
   color: var(--color-primary-text-default);
 }
-[data-color="accent"].surfaceTinted {
+[data-color='accent'].surfaceTinted {
   background-color: var(--color-accent-surface-tinted);
   color: var(--color-accent-text-default);
 }
-[data-color="success"].surfaceTinted {
+[data-color='success'].surfaceTinted {
   background-color: var(--color-success-surface-tinted);
   color: var(--color-success-text-default);
 }
-[data-color="warning"].surfaceTinted {
+[data-color='warning'].surfaceTinted {
   background-color: var(--color-warning-surface-tinted);
   color: var(--color-warning-text-default);
 }
-[data-color="danger"].surfaceTinted {
+[data-color='danger'].surfaceTinted {
   background-color: var(--color-danger-surface-tinted);
   color: var(--color-danger-text-default);
 }
-[data-color="neutral"].surfaceTinted {
+[data-color='neutral'].surfaceTinted {
   background-color: var(--color-neutral-surface-tinted);
   color: var(--color-neutral-text-default);
 }
-[data-color="extra1"].surfaceTinted {
+[data-color='extra1'].surfaceTinted {
   background-color: var(--color-extra1-surface-tinted);
   color: var(--color-extra1-text-default);
 }
-[data-color="extra2"].surfaceTinted {
+[data-color='extra2'].surfaceTinted {
   background-color: var(--color-extra2-surface-tinted);
   color: var(--color-extra2-text-default);
 }
