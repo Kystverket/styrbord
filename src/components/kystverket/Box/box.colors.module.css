@@ -132,7 +132,7 @@
   .color-navy-hover,
   .color-navy-active {
     background: var(--color-primary-base-default);
-    color: var(--color-primary-background-default);
+    color: var(--color-primary-base-contrast-default);
     --border-color: var(--color-primary-base-default);
   }
 
@@ -140,7 +140,7 @@
   .color-white-tinted,
   .color-white-hover,
   .color-white-active {
-    background: var(--color-primary-background-default);
+    background: var(--color-primary-surface-default);
     color: var(--color-primary-text-default);
     --border-color: var(--ds-color-primary-border-subtle);
   }
