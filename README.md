@@ -33,6 +33,10 @@ Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.
 
 ## Endringslogg
 
+### 2025-10-23
+
+Oppdatert til Designsystemet 1.6.1 fra 1.4.0.
+
 ### 2025-10-16
 
 Footer har blitt endret. Den er ikke bakoverkompatibel, men siden footer stort sett settes en gang bør
