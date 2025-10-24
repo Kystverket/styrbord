@@ -107,9 +107,6 @@ export type { SelectProps, SelectOption } from './components/designsystemet/Sele
 export { default as Tabs } from './components/designsystemet/Tabs/Tabs';
 export type { TabsProps } from './components/designsystemet/Tabs/Tabs';
 
-export { Checkbox } from './components/designsystemet/Checkbox/Checkbox';
-export type { CheckboxProps } from './components/designsystemet/Checkbox/Checkbox';
-
 export { default as Table } from './components/designsystemet/Table/Table';
 
 export { EXPERIMENTAL_Suggestion as Suggestion } from '@digdir/designsystemet-react';
