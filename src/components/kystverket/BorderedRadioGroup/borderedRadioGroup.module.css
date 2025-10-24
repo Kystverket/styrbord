@@ -45,7 +45,7 @@
     line-height: 0;
     flex-shrink: 0;
   }
-  .radioBoxIndicator {
+  .radioBoxActive .radioBoxIndicator {
     border-color: var(--ds-color-primary-border-default);
     box-shadow: inset 0 0 0 4px var(--ds-color-primary-border-default);
   }
