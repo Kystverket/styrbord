@@ -46,7 +46,7 @@
     width: 16px;
     height: 16px;
     border-radius: 2px;
-    border: var(--ds-border-width-default) solid #636363;
+    border: var(--ds-border-width-default) solid var(--ds-color-primary-border-default);
     line-height: 0;
     flex-shrink: 0;
     padding: 0;

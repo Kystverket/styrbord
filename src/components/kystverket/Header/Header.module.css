@@ -166,7 +166,7 @@
     top: 100%;
     left: 0;
     display: none;
-    background-color: #fff;
+    background-color: var(--ds-color-surface-default);
   }
 
   @container header (width > 1024px) {
