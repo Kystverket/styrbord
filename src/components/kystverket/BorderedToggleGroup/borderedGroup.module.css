@@ -8,17 +8,13 @@
   .toggleGroup > * {
     border: 2px solid var(--ds-color-border-subtle) !important;
     border-radius: var(--ds-border-radius-lg);
-    padding: var(--ds-size-3);
+    padding: var(--ds-size-4);
     background-color: var(--ds-color-background-default);
     width: 100%;
   }
 
   .is-readonly .toggleGroup > * {
     background-color: var(--ds-color-neutral-background-tinted);
-  }
-
-  .fieldset:not(.is-readonly):not(.is-disabled) .toggleGroup > * {
-    cursor: pointer;;
   }
 
   .toggleGroup :global(.ds-field) {
@@ -30,7 +26,7 @@
     background-color: var(--ds-color-primary-surface-tinted);
   }
 
-  [data-color="danger"] .is-on {
+  [data-color='danger'] .is-on {
     background-color: var(--ds-color-danger-surface-tinted);
   }
 

@@ -1,6 +1,6 @@
 import { Box, Checkbox, Fieldset, LabelContent, ValidationMessage } from '~/main';
-import classes from './borderedToggleGroup.module.css';
-import { ReactNode } from 'react';
+import classes from './borderedGroup.module.css';
+import { BorderedGroupProps } from './borderedGroup.types';
 
 export interface ToggleValue {
   key: string;
@@ -8,19 +8,11 @@ export interface ToggleValue {
   value: boolean;
 }
 
-export interface BorderedToggleGroupProps {
-  label?: string;
-  description?: ReactNode | string;
+export type BorderedToggleGroupProps = BorderedGroupProps & {
   values: ToggleValue[];
   onChanges?: (values: ToggleValue[]) => void;
   onChange?: (value: ToggleValue) => void;
-  onBlur?: () => void;
-  error?: string;
-  readonly?: boolean;
-  required?: boolean;
-  disabled?: boolean;
-  optional?: boolean | string;
-}
+};
 
 const BorderedRadioGroup = (props: BorderedToggleGroupProps) => {
   const errorText = typeof props.error === 'string' && props.error.length > 0 ? props.error : undefined;
@@ -61,28 +53,21 @@ const BorderedRadioGroup = (props: BorderedToggleGroupProps) => {
         {props.description && <Fieldset.Description>{props.description}</Fieldset.Description>}
         <div className={classes.toggleGroup} data-color={hasError ? 'danger' : 'neutral'}>
           {props.values.map((el) => (
-            <div
-              key={el.key}
+            <Checkbox
+              key={el.key ?? el.label}
               className={el.value ? classes['is-on'] : classes['is-off']}
-              onClick={(e) => {
-                onClick(el.key, !el.value);
-                e.preventDefault();
+              data-color={hasError ? 'danger' : 'primary'}
+              readOnly={props.readonly}
+              disabled={props.disabled}
+              checked={el.value}
+              label={el.label}
+              onChange={(e) => {
+                onClick(el.key ?? el.label, e.target.checked);
               }}
-            >
-              <Checkbox
-                data-color={hasError ? 'danger' : 'primary'}
-                readOnly={props.readonly}
-                disabled={props.disabled}
-                checked={el.value}
-                label={el.label}
-                onChange={(e) => {
-                  onClick(el.key, e.target.checked);
-                }}
-                onBlur={() => {
-                  props.onBlur?.();
-                }}
-              />
-            </div>
+              onBlur={() => {
+                props.onBlur?.();
+              }}
+            />
           ))}
         </div>
         {errorText && <ValidationMessage>{errorText}</ValidationMessage>}
