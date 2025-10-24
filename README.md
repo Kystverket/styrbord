@@ -39,7 +39,7 @@ Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.
 
 ## Endringslogg
 
-### 2025-10-24 1.0
+### 2025-10-24 -- v1.0
 
 Offisielt versjon 1.0.
 
