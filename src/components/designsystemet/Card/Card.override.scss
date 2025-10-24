@@ -3,7 +3,7 @@
 }
 
 .ds-card {
-  --dsc-card-border-width: 2px;
+  --dsc-card-border-width: 1px;
   --dsc-card-border-radius: var(--border-radius-default);
 }
 
@@ -16,6 +16,20 @@
   text-decoration-thickness: 2px;
 }
 
+.ds-card[data-variant='default'],
+.ds-card {
+  border-color: var(--ds-color-surface-hover);
+  color: var(--ds-color-text-default);
+}
+
 .ds-card[data-variant='tinted'] {
-  color: var(--ds-color-primary-text-default);
+  color: var(--ds-color-text-default);
+}
+
+.ds-card:not([data-color]) {
+  border-color: var(--ds-color-neutral-surface-hover);
+  color: var(--ds-color-neutral-text-default);
+}
+.ds-card:not([data-color])[data-variant='tinted'] {
+  background-color: var(--ds-color-neutral-surface-tinted);
 }

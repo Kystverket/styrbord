@@ -17,6 +17,9 @@
 @layer styrbord {
   @include meta.load-css('material-symbols/index.css');
   @include meta.load-css('styrbord');
+}
+
+@layer styrbord-modules {
   @include meta.load-css('../components/designsystemet/Link/Link.override.scss');
   @include meta.load-css('../components/designsystemet/NumberInput/NumberInput.override.scss');
   @include meta.load-css('../components/designsystemet/Details/Details.override.scss');
