@@ -1,4 +1,4 @@
-import { Box, Field, Icon, Label, LabelContent, ValidationMessage } from '~/main';
+import { Box, Checkbox, Fieldset, LabelContent, ValidationMessage } from '~/main';
 import classes from './borderedToggleGroup.module.css';
 import { ReactNode } from 'react';
 
@@ -16,7 +16,9 @@ export interface BorderedToggleGroupProps {
   onChange?: (value: ToggleValue) => void;
   onBlur?: () => void;
   error?: string;
+  readonly?: boolean;
   required?: boolean;
+  disabled?: boolean;
   optional?: boolean | string;
 }
 
@@ -25,6 +27,8 @@ const BorderedRadioGroup = (props: BorderedToggleGroupProps) => {
   const hasError = !!props.error;
 
   const onClick = (key: string, newValue: boolean) => {
+    if (props.readonly) return;
+
     if (props.onChanges && props.values) {
       const newValues = props.values.map((e) => (e.key === key ? { ...e, value: newValue } : e));
       props.onChanges(newValues);
@@ -44,38 +48,45 @@ const BorderedRadioGroup = (props: BorderedToggleGroupProps) => {
 
   return (
     <Box container="inline-size">
-      <Field>
-        <Label>
+      <Fieldset
+        disabled={props.disabled}
+        className={
+          classes['fieldset'] +
+          (props.disabled ? ' ' + classes['is-disabled'] : props.readonly ? ' ' + classes['is-readonly'] : '')
+        }
+      >
+        <Fieldset.Legend>
           <LabelContent text={props.label} required={props.required} optional={props.optional} />
-        </Label>
-        {props.description && <Field.Description>{props.description}</Field.Description>}
-        <div className={classes.toggleGroup}>
+        </Fieldset.Legend>
+        {props.description && <Fieldset.Description>{props.description}</Fieldset.Description>}
+        <div className={classes.toggleGroup} data-color={hasError ? 'danger' : 'neutral'}>
           {props.values.map((el) => (
-            <button
-              onClick={() => {
-                onClick(el.key, !el.value);
-              }}
-              onBlur={() => {
-                props.onBlur?.();
-              }}
-              className={
-                classes.toggleBox +
-                ' ' +
-                (el.value ? classes.toggledTrue : classes.toggledFalse) +
-                ' ' +
-                (hasError ? classes.toggleBoxError : '')
-              }
+            <div
               key={el.key}
+              className={el.value ? classes['is-on'] : classes['is-off']}
+              onClick={(e) => {
+                onClick(el.key, !el.value);
+                e.preventDefault();
+              }}
             >
-              <span className={classes.toggleBoxIndicator}>
-                <Icon className={classes.toggleBoxIndicatorIcon} material="check" />
-              </span>
-              <span className={classes.toggleBoxText}>{el.label}</span>
-            </button>
+              <Checkbox
+                data-color={hasError ? 'danger' : 'primary'}
+                readOnly={props.readonly}
+                disabled={props.disabled}
+                checked={el.value}
+                label={el.label}
+                onChange={(e) => {
+                  onClick(el.key, e.target.checked);
+                }}
+                onBlur={() => {
+                  props.onBlur?.();
+                }}
+              />
+            </div>
           ))}
         </div>
         {errorText && <ValidationMessage>{errorText}</ValidationMessage>}
-      </Field>
+      </Fieldset>
     </Box>
   );
 };

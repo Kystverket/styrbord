@@ -1,14 +1,26 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
-import BorderedToggleGroup, { BorderedToggleGroupProps } from './borderedToggleGroup';
+import BorderedToggleGroup, { BorderedToggleGroupProps, ToggleValue } from './borderedToggleGroup';
+import { useState } from 'react';
+
+const Wrapper = ({ values: propValues, ...props }: BorderedToggleGroupProps) => {
+  const [values, setValues] = useState<ToggleValue[]>(propValues);
+
+  const onChanges = (v: ToggleValue[]) => {
+    setValues(v);
+    props.onChanges?.(v);
+  };
+
+  return <BorderedToggleGroup {...props} values={values} onChanges={onChanges} />;
+};
 
 const meta = {
   title: 'Form/BorderedToggleGroup',
-  component: BorderedToggleGroup,
+  component: Wrapper,
   decorators: [StyrbordDecorator],
   tags: ['autodocs'],
   argTypes: {},
-} satisfies Meta<typeof BorderedToggleGroup>;
+} satisfies Meta<typeof Wrapper>;
 
 export default meta;
 
@@ -85,4 +97,12 @@ export const OptionalText: Story = {
 };
 export const Required: Story = {
   args: { ...defaultProps, required: true },
+};
+
+export const ReadOnly: Story = {
+  args: { ...defaultProps, readonly: true },
+};
+
+export const Disabled: Story = {
+  args: { ...defaultProps, disabled: true },
 };
