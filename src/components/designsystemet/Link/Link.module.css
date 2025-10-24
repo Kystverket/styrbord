@@ -1,0 +1,39 @@
+@layer styrbord-modules {
+  .with-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    text-decoration: none;
+  }
+  .link-icon {
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+  .with-underline .link-icon-text {
+    text-decoration: underline;
+  }
+
+  .without-underline {
+    text-decoration: none;
+  }
+
+  .without-underline.without-icon:hover,
+  .without-underline.without-icon:focus {
+    text-decoration: underline;
+  }
+
+  .with-underline.without-icon:hover,
+  .with-underline.without-icon:focus {
+    text-decoration: none;
+  }
+
+  .without-underline.with-icon:hover .link-icon-text,
+  .without-underline.with-icon:focus .link-icon-text {
+    text-decoration: underline;
+  }
+
+  .with-underline.with-icon:hover .link-icon-text,
+  .with-underline.with-icon:focus .link-icon-text {
+    text-decoration: none;
+  }
+}
