@@ -2,7 +2,7 @@ import { ValidationMessage } from '~/main';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof ValidationMessage> = {
-  title: 'Designsystemet/Typography/ValidationMessage',
+  title: 'Components/ValidationMessage',
   component: ValidationMessage,
 };
 

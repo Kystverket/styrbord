@@ -7,7 +7,7 @@ type Story = StoryObj<typeof Tooltip>;
 const defaultChildren = <Button>My trigger</Button>;
 
 export default {
-  title: 'Designsystemet/Tooltip',
+  title: 'Components/Tooltip',
   component: Tooltip,
   parameters: {
     customStyles: { margin: '2rem', padding: '4rem' },

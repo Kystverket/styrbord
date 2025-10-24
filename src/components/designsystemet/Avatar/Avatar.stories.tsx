@@ -5,8 +5,9 @@ import cat1 from '@assets/img/cats/Cat 3.jpg';
 type Story = StoryFn<typeof Avatar>;
 
 const meta: Meta<typeof Avatar> = {
-  title: 'Designsystemet/Avatar',
+  title: 'Components/Avatar',
   component: Avatar,
+  tags: ['autodocs', 'ds-override'],
   parameters: {
     layout: 'padded',
     customStyles: {

@@ -3,7 +3,7 @@ import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryFn } from '@storybook/react';
 
 export default {
-  title: 'Designsystemet/Pagination',
+  title: 'Components/Pagination',
   component: Pagination,
 } as Meta;
 

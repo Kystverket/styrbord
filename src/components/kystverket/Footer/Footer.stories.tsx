@@ -6,7 +6,7 @@ import { Image } from '../Image/image';
 import musea from './musea.svg';
 
 const meta = {
-  title: 'Side/Footer',
+  title: 'Page/Footer',
   component: Footer,
 
   decorators: [StyrbordDecorator],

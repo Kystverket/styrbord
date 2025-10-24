@@ -2,7 +2,7 @@ import { Breadcrumbs } from '~/main';
 import type { Meta, StoryFn } from '@storybook/react';
 
 export default {
-  title: 'Designsystemet/Breadcrumbs',
+  title: 'Components/Breadcrumbs',
   component: Breadcrumbs,
 } as Meta;
 

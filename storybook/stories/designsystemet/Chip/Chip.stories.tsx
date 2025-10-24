@@ -2,7 +2,7 @@ import { Chip } from '~/main';
 import type { Meta, StoryFn } from '@storybook/react';
 
 export default {
-  title: 'Designsystemet/Chip',
+  title: 'Components/Chip',
   component: Chip.Radio,
   parameters: {
     customStyles: { display: 'flex', gap: 'var(--ds-size-2)' },

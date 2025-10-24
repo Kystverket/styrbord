@@ -4,7 +4,7 @@ import type { Meta, StoryFn } from '@storybook/react';
 type Story = StoryFn<typeof Spinner>;
 
 export default {
-  title: 'Designsystemet/Loaders/Spinner',
+  title: 'Components/Loaders/Spinner',
   component: Spinner,
   parameters: {
     customStyles: {

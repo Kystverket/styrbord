@@ -8,7 +8,7 @@ import { Button, ErrorSummary } from '~/main';
 type Story = StoryFn<typeof ErrorSummary>;
 
 export default {
-  title: 'Designsystemet/ErrorSummary',
+  title: 'Components/ErrorSummary',
   component: ErrorSummary,
 } satisfies Meta;
 
