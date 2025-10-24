@@ -4,7 +4,7 @@ import type { Meta, StoryFn } from '@storybook/react';
 import { useState } from 'react';
 
 export default {
-  title: 'Komponenter/Tabs',
+  title: 'Components/Tabs',
   component: Tabs,
   tags: ['autodocs', 'ds-override'],
 } as Meta;

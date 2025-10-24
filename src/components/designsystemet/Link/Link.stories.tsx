@@ -11,7 +11,7 @@ const randomNum = Math.floor(Math.random() * 1000);
 const designsystemetLink = 'https://designsystemet.no/?=' + randomNum;
 
 export default {
-  title: 'Designsystemet/Link',
+  title: 'Components/Link',
   component: Link,
   parameters: {
     status: {

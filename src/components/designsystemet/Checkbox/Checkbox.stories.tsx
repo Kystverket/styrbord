@@ -19,8 +19,9 @@ import { useMemo, useState } from 'react';
 type Story = StoryObj<typeof Checkbox>;
 
 export default {
-  title: 'Designsystemet/Checkbox',
+  title: 'Form/Checkbox',
   component: Checkbox,
+  tags: ['autodocs', 'ds-override'],
 } as Meta;
 
 export const Preview: Story = {

@@ -1,6 +1,6 @@
 @layer styrbord-modules {
   .radioBox {
-    border: var(--border-width-default) solid var(--color-neutral-border-subtle) !important;
+    border: var(--ds-border-width-default) solid var(--ds-color-neutral-border-subtle) !important;
     border-radius: var(--ds-border-radius-lg);
     padding: var(--spacing-12);
     background-color: var(--ds-color-neutral-background-default);
@@ -13,14 +13,14 @@
     transition: all 0.1s;
   }
   .radioBoxActive {
-    border: var(--border-width-default) solid var(--ds-color-info-border-strong) !important;
-    background-color: var(--ds-color-info-background-tinted);
+    border: var(--ds-border-width-default) solid var(--ds-color-primary-border-strong) !important;
+    background-color: var(--ds-color-primary-background-tinted);
   }
   .radioBox:hover {
-    background-color: var(--ds-color-info-background-tinted);
+    background-color: var(--ds-color-primary-background-tinted);
   }
   .radioBoxError {
-    border: var(--border-width-default) solid var(--ds-color-danger-border-strong) !important;
+    border: var(--ds-border-width-default) solid var(--ds-color-danger-border-strong) !important;
     color: var(--ds-color-danger-border-strong) !important;
   }
   .radioBoxError .radioBoxIndicator {
@@ -41,13 +41,13 @@
     width: 18px;
     height: 18px;
     border-radius: 999px;
-    border: 1px solid #636363;
+    border: var(--ds-border-width-default) solid var(--ds-color-neutral-border-subtle);
     line-height: 0;
     flex-shrink: 0;
   }
   .radioBoxActive .radioBoxIndicator {
-    border-color: #2a57c0;
-    box-shadow: inset 0 0 0 4px #2a57c0;
+    border-color: var(--ds-color-primary-border-default);
+    box-shadow: inset 0 0 0 4px var(--ds-color-primary-border-default);
   }
   .radioBoxText {
     text-align: left;

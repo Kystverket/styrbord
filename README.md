@@ -13,6 +13,12 @@ Alle komponentene og typene i Designsystemet er tilgjengelig i Styrbord med føl
 
 - Noen komponenter blir overskrevet av Styrbord og har ikke nødvendigvis samme interface som Designsystemet. De er merket med 'ds+kyv' i Storybook. De kan være basert på tilsvarende komponent i Designsystemet, men ikke nødvendigvis.
 
+## Versjonering
+
+- Major følger major-versjon til Designsystemet.
+- Minor inkrementeres ved en eller flere knekkende endringer, eller ny versjon av Designsystemet.
+- Patch inkrementeres ved alle endringer, store eller små, som ikke knekker noe eksisterende.
+
 ## Bruk
 
 Det holder å importere CSS én gang globalt.
@@ -33,11 +39,21 @@ Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.
 
 ## Endringslogg
 
+### 2025-10-24 -- v1.0
+
+Offisielt versjon 1.0.
+
+- Fjernet all duplisering av CSS-variabler. Tidligere har vi for bakoverkompatibilitet duplisert alle Designsystemvariabler til en variabel uten `--ds-` foran. Disse variablene er nå ikke lenger tilstede. Versjon 1.0 var en god anledning til å rydde i dette.
+- `--spacing-#`-variablene er flyttet fra styrbord-tokens til styrbord. Skal ikke ha noen effekt. Oppfordrer til å bruke `--ds-size-#` over `--spacing-#`.
+
 ### 2025-10-23
 
 Oppdatert til Designsystemet 1.6.1 fra 1.4.0.
 
-Endret Avatar. - Størrelser er nå `2x` og `3x` fra `xxs` og `xxxs`. - Endret fargevalg. `data-color` er nå kun vanlige farger, men man kan legge på `data-color-variant="surface-tinted"` for å få dusere farger.
+Endret Avatar.
+
+- Størrelser er nå `2x` og `3x` fra `xxs` og `xxxs`.
+- Endret fargevalg. `data-color` er nå kun vanlige farger, men man kan legge på `data-color-variant="surface-tinted"` for å få dusere farger.
 
 ### 2025-10-16
 

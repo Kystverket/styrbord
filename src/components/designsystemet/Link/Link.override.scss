@@ -12,6 +12,6 @@
 .ds-link:focus-visible {
   background: none;
   color: var(--dsc-link-color);
-  outline: 3px solid var(--color-focus-outer);
-  border-radius: var(--border-radius-default);
+  outline: 3px solid var(--ds-color-focus-outer);
+  border-radius: var(--ds-border-radius-default);
 }

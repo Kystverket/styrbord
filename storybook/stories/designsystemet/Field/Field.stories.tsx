@@ -6,7 +6,7 @@ import { Divider, Field, Input, Textarea, ValidationMessage } from '~/main';
 type Story = StoryFn<typeof Field>;
 
 export default {
-  title: 'Designsystemet/Field',
+  title: 'Form/Field',
   component: Field,
   parameters: {
     customStyles: {

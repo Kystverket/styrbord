@@ -1,29 +1,29 @@
 .boxed {
-  padding: var(--size-4);
-  border: 1px solid;
-  border-radius: var(--border-radius-default);
+  padding: var(--ds-size-4);
+  border: var(--ds-border-width-default) solid;
+  border-radius: var(--ds-border-radius-default);
 }
 
 .default:has(input[type='checkbox']:checked) {
-  border-color: var(--color-info-border-default);
-  background-color: var(--color-primary-surface-tinted);
+  border-color: var(--ds-color-info-border-default);
+  background-color: var(--ds-color-primary-surface-tinted);
 }
 
 .default {
-  border-color: var(--color-neutral-border-subtle);
+  border-color: var(--ds-color-neutral-border-subtle);
 }
 
 .error {
-  border-color: var(--color-danger-text-subtle);
+  border-color: var(--ds-color-danger-text-subtle);
 }
 
 .error:has(input[type='checkbox']:checked) {
-  border-color: var(--color-danger-text-subtle);
+  border-color: var(--ds-color-danger-text-subtle);
 }
 
 .readOnly {
-  border-color: var(--color-neutral-border-subtle);
-  background-color: var(--color-neutral-background-tinted);
+  border-color: var(--ds-color-neutral-border-subtle);
+  background-color: var(--ds-color-neutral-background-tinted);
 }
 
 // Set to hsla, because there was no option in tokens

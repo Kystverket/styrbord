@@ -4,7 +4,7 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Card, Details, DetailsProps } from '@digdir/designsystemet-react';
 
 const meta = {
-  title: 'Designsystemet/Details',
+  title: 'Components/Details',
   component: Details,
   decorators: [StyrbordDecorator],
   tags: ['autodocs'],

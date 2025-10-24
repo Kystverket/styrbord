@@ -18,9 +18,9 @@
     flex-direction: row;
     align-items: center;
     gap: 0.5rem;
-    color: var(--color-grey-70);
+    color: var(--ds-color-grey-70);
     font-weight: 500;
-    font-size: var(--font-size-label-sm);
+    font-size: var(--ds-font-size-label-sm);
     flex: 0 0 auto;
   }
   .step .icon {
@@ -30,44 +30,44 @@
     width: 2rem;
     height: 2rem;
     border-radius: 999px;
-    background-color: white;
+    background-color: var(--ds-color-primary-surface-default);
     transition: all 0.3s;
   }
 
   .completed-step,
   .incomplete-step {
-    color: #636363;
+    color: var(--ds-color-neutral-border-default);
   }
   .completed-step .icon,
   .incomplete-step .icon {
-    border: 1px solid #bebbb8;
+    border: var(--ds-border-width-default) solid var(--ds-color-neutral-border-subtle);
     background-color: transparent;
-    color: #636363;
+    color: var(--ds-color-neutral-border-default);
   }
   .completed-step .icon > * {
     transform: scale(0.75);
   }
 
   .current-step {
-    color: #183a93;
+    color: var(--ds-color-primary-base-active);
   }
   .current-step .icon {
-    border: 1px solid #183a93;
-    background-color: #183a93;
-    color: white;
+    border: var(--ds-border-width-default) solid var(--ds-color-primary-base-active);
+    background-color: var(--ds-color-primary-base-active);
+    color: var(--ds-color-primary-base-contrast-default);
   }
 
   .divider {
     display: block;
     height: 1px;
-    background-color: #bebbb8;
+    background-color: var(--ds-color-neutral-border-subtle);
     flex: 1;
   }
   .label {
-    font-weight: var(--font-weight-medium);
-    font-size: var(--body-sm-font-size);
-    line-height: var(--body-sm-line-height);
-    letter-spacing: var(--body-sm-letter-spacing);
+    font-weight: var(--ds-font-weight-medium);
+    font-size: var(--ds-body-sm-font-size);
+    line-height: var(--ds-body-sm-line-height);
+    letter-spacing: var(--ds-body-sm-letter-spacing);
   }
 
   @container stepContainer (max-width: 600px) {
@@ -82,7 +82,7 @@
       width: 1px;
       height: 15px;
       flex: 0 0 15px;
-      background-color: #bebbb8;
+      background-color: var(--ds-color-neutral-border-subtle);
       margin-left: 15px;
     }
   }

@@ -1,6 +1,6 @@
 @layer styrbord-modules {
   .toggleBox {
-    border: var(--border-width-default) solid var(--color-neutral-border-subtle) !important;
+    border: var(--ds-border-width-default) solid var(--ds-color-neutral-border-subtle) !important;
     border-radius: var(--ds-border-radius-lg);
     padding: var(--spacing-12);
     background-color: var(--ds-color-neutral-background-default);
@@ -16,11 +16,11 @@
     background-color: var(--ds-color-primary-background-tinted);
   }
   .toggledTrue {
-    border: var(--border-width-default) solid var(--ds-color-info-border-strong) !important;
+    border: var(--ds-border-width-default) solid var(--ds-color-info-border-strong) !important;
     background-color: var(--ds-color-info-background-tinted);
   }
   .toggleBoxError {
-    border: var(--border-width-default) solid var(--ds-color-danger-border-strong) !important;
+    border: var(--ds-border-width-default) solid var(--ds-color-danger-border-strong) !important;
     color: var(--ds-color-danger-border-strong) !important;
   }
   .toggleBoxError.toggledTrue .toggleBoxIndicator {
@@ -46,7 +46,7 @@
     width: 16px;
     height: 16px;
     border-radius: 2px;
-    border: 1px solid #636363;
+    border: var(--ds-border-width-default) solid var(--ds-color-primary-border-default);
     line-height: 0;
     flex-shrink: 0;
     padding: 0;

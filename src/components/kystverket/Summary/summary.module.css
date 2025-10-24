@@ -20,8 +20,8 @@
 
   .title {
     grid-column: var(--span2);
-    background-color: #f9f6f3;
-    border: 1px solid #d5d0cb;
+    background-color: var(--ds-color-info-background-default);
+    border: var(--ds-border-width-default) solid var(--ds-color-neutral-surface-hover);
     padding: 8px 12px;
     border-radius: var(--spacing-2);
   }
@@ -46,18 +46,18 @@
   }
 
   .valueLabel {
-    border-left: 1px solid #d5d0cb;
-    border-bottom: 1px solid #d5d0cb;
+    border-left: 1px solid var(--ds-color-neutral-surface-hover);
+    border-bottom: 1px solid var(--ds-color-neutral-surface-hover);
     padding: var(--spacing-8) var(--spacing-12);
   }
   .valueText {
-    border-right: 1px solid #d5d0cb;
-    border-bottom: 1px solid #d5d0cb;
+    border-right: 1px solid var(--ds-color-neutral-surface-hover);
+    border-bottom: 1px solid var(--ds-color-neutral-surface-hover);
     padding: var(--spacing-8) var(--spacing-12);
   }
   .valueError {
     grid-column: var(--span2);
-    border-bottom: 1px solid #d5d0cb;
+    border-bottom: 1px solid var(--ds-color-neutral-surface-hover);
   }
   .valueLabel:has(+ .valueError),
   .valueText:has(+ .valueError) {
@@ -66,30 +66,30 @@
 
   .contentLabel {
     grid-column: var(--span2);
-    border-left: 1px solid #d5d0cb;
-    border-right: 1px solid #d5d0cb;
+    border-left: 1px solid var(--ds-color-neutral-surface-hover);
+    border-right: 1px solid var(--ds-color-neutral-surface-hover);
     padding: var(--spacing-8) var(--spacing-12);
   }
   .contentArea {
     grid-column: var(--span2);
-    border-left: 1px solid #d5d0cb;
-    border-right: 1px solid #d5d0cb;
-    border-bottom: 1px solid #d5d0cb;
+    border-left: 1px solid var(--ds-color-neutral-surface-hover);
+    border-right: 1px solid var(--ds-color-neutral-surface-hover);
+    border-bottom: 1px solid var(--ds-color-neutral-surface-hover);
     padding: var(--spacing-8) var(--spacing-12);
   }
   .contentError {
     grid-column: var(--span2);
-    border-bottom: 1px solid #d5d0cb;
+    border-bottom: 1px solid var(--ds-color-neutral-surface-hover);
   }
   .contentArea:has(+ .contentError) {
     border-bottom: none;
   }
 
   .editButton {
-    font-size: var(--body-sm-font-size);
-    line-height: var(--body-sm-line-height);
-    letter-spacing: var(--body-sm-letter-spacing);
-    font-weight: var(--font-weight-regular);
+    font-size: var(--ds-body-sm-font-size);
+    line-height: var(--ds-body-sm-line-height);
+    letter-spacing: var(--ds-body-sm-letter-spacing);
+    font-weight: var(--ds-font-weight-regular);
     color: var(--ds-color-primary-12);
     text-decoration: underline;
     text-underline-offset: var(--spacing-6);
@@ -108,14 +108,14 @@
       grid-template-columns: 1fr;
     }
     .valueLabel {
-      border-left: 1px solid #d5d0cb;
-      border-right: 1px solid #d5d0cb;
+      border-left: 1px solid var(--ds-color-neutral-surface-hover);
+      border-right: 1px solid var(--ds-color-neutral-surface-hover);
       border-bottom: none;
     }
     .valueText {
-      border-left: 1px solid #d5d0cb;
-      border-right: 1px solid #d5d0cb;
-      border-bottom: 1px solid #d5d0cb;
+      border-left: 1px solid var(--ds-color-neutral-surface-hover);
+      border-right: 1px solid var(--ds-color-neutral-surface-hover);
+      border-bottom: 1px solid var(--ds-color-neutral-surface-hover);
     }
   }
 }

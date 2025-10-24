@@ -1,13 +1,13 @@
 .ds-details {
-  --dsc-details-summary-background: var(--color-neutral-background-tinted);
-  --dsc-details-summary-color: var(--color-neutral-text-default);
-  --dsc-details-summary-background--hover: var(--color-neutral-surface-tinted);
-  --dsc-details-summary-background--open: var(--color-neutral-background-tinted);
-  --dsc-details-border-color: var(--color-neutral-border-subtle);
-  --dsc-details-background: var(--color-neutral-background-subtle);
+  --dsc-details-summary-background: var(--ds-color-neutral-background-tinted);
+  --dsc-details-summary-color: var(--ds-color-neutral-text-default);
+  --dsc-details-summary-background--hover: var(--ds-color-neutral-surface-tinted);
+  --dsc-details-summary-background--open: var(--ds-color-neutral-background-tinted);
+  --dsc-details-border-color: var(--ds-color-neutral-border-subtle);
+  --dsc-details-background: var(--ds-color-neutral-background-subtle);
 }
 
 .ds-card {
-  border-color: var(--color-neutral-border-subtle);
-  color: var(--color-neutral-text-default);
+  border-color: var(--ds-color-neutral-border-subtle);
+  color: var(--ds-color-neutral-text-default);
 }

@@ -4,7 +4,7 @@ import style from './alert.module.css';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Komponenter/Alert',
+  title: 'Components/Alert',
   component: Alert,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'ds-override'],

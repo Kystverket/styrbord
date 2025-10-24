@@ -6,7 +6,7 @@ import { Label } from '@digdir/designsystemet-react';
 type Story = StoryObj<typeof Textarea>;
 
 export default {
-  title: 'Designsystemet/Textarea',
+  title: 'Form/Textarea 2',
   component: Textarea,
   decorators: [
     (Story, { parameters }) => (

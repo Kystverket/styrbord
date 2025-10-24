@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 type Story = StoryObj<typeof Switch>;
 
 export default {
-  title: 'Designsystemet/Switch',
+  title: 'Components/Switch',
   component: Switch,
 } as Meta;
 

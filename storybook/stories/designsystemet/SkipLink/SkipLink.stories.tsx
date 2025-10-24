@@ -5,7 +5,7 @@ import { expect, userEvent, within } from '@storybook/test';
 type Story = StoryFn<typeof SkipLink>;
 
 export default {
-  title: 'Designsystemet/SkipLink',
+  title: 'Components/SkipLink',
   component: SkipLink,
 } satisfies Meta;
 

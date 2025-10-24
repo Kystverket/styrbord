@@ -175,14 +175,14 @@ export function Header({
                   className={classes.avatarShowOnWideHeader}
                   aria-label={`${profile.name} profile picture`}
                   data-color={'primary'}
-                  data-size="xxs"
+                  data-size="2xs"
                   initials={profile.initials}
                 />
                 <Avatar
                   className={classes.avatarShowOnSmallHeader}
                   aria-label={`${profile.name} profile picture`}
                   data-color={'primary'}
-                  data-size="xxxs"
+                  data-size="3xs"
                   initials={profile.initials}
                 />
                 <Paragraph className={classes.profileName}>
@@ -201,7 +201,7 @@ export function Header({
                     <Avatar
                       aria-label={`${profile.name} profile picture`}
                       data-color={'primary'}
-                      data-size="xxs"
+                      data-size="2xs"
                       initials={profile.initials}
                     />
                     <Box className={classes.profileTextContainer}>

@@ -17,7 +17,7 @@ const preview: Preview = {
     options: {
       storySort: {
         method: 'alphabetical',
-        order: ['Readme', 'Designsystemet Showcase', 'Komponenter', 'Form', 'Side', 'Helpers'],
+        order: ['Readme', 'Designsystemet Showcase', 'Typography', 'Page', 'Helpers', 'Form', 'Components'],
       },
     },
   },

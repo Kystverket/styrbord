@@ -1,22 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Body, Accent, Typography } from './typography';
+import { Body } from './typography';
 import Box, { BoxProps } from '../Box/box';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Heading } from '@digdir/designsystemet-react';
 
 const meta = {
-  title: 'Helpers/Typography',
-  component: Box,
+  title: 'Typography/Body',
+  component: Body,
   decorators: [StyrbordDecorator],
   tags: ['autodocs'],
   argTypes: {},
-} satisfies Meta<typeof Box>;
+} satisfies Meta<typeof Body>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
-
-const headerSizes = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const;
 
 const defaultProps: BoxProps = {
   children: (
@@ -26,11 +24,6 @@ const defaultProps: BoxProps = {
         tekst. Den får font-weight: 400 i Figma men det korrekte skal være 500. Gyldige font-vekter for kystinn er 300,
         500 og 700
       </Body>
-      {headerSizes.toReversed().map((size) => (
-        <Heading key={size} data-size={size}>
-          Heading {size}
-        </Heading>
-      ))}
       <Body size="xl" strong>
         Body Strong XLarge
       </Body>
@@ -70,30 +63,6 @@ const defaultProps: BoxProps = {
           Body Small inline
         </Body>
       </p>
-      <Accent size="md">Accent Medium</Accent>
-      <Accent size="sm">Accent Small</Accent>
-      <Accent size="md" strong>
-        Accent Medium strong
-      </Accent>
-      <Accent size="sm" strong>
-        Accent Small strong
-      </Accent>
-      <Typography.Label size="xl" strong>
-        Label XL Strong
-      </Typography.Label>
-      <Typography.Label size="lg" strong>
-        Label Large Strong
-      </Typography.Label>
-      <Typography.Label size="md" strong>
-        Label Medium Strong
-      </Typography.Label>
-      <Typography.Label size="sm" strong>
-        Label Small Strong
-      </Typography.Label>
-      <Typography.Label size="xl">Label XL Large</Typography.Label>
-      <Typography.Label size="lg">Label Large</Typography.Label>
-      <Typography.Label size="md">Label Medium</Typography.Label>
-      <Typography.Label size="sm">Label Small</Typography.Label>
     </Box>
   ),
 };

@@ -4,7 +4,7 @@ import type { Meta, StoryFn } from '@storybook/react';
 type Story = StoryFn<typeof Divider>;
 
 export default {
-  title: 'Designsystemet/Divider',
+  title: 'Components/Divider',
   component: Divider,
 } as Meta;
 

@@ -7,10 +7,10 @@
     height: fit-content;
     min-height: 72px;
     container: header / inline-size;
-    background-color: var(--color-neutral-background-default);
-    border-bottom: 1px solid var(--color-neutral-surface-tinted);
-    border-bottom-left-radius: var(--border-radius-small);
-    border-bottom-right-radius: var(--border-radius-small);
+    background-color: var(--ds-color-neutral-background-default);
+    border-bottom: 1px solid var(--ds-color-neutral-surface-tinted);
+    border-bottom-left-radius: var(--ds-border-radius-small);
+    border-bottom-right-radius: var(--ds-border-radius-small);
   }
 
   .headerFlex {
@@ -37,7 +37,7 @@
     display: inline-block;
     font-size: var(--ds-font-size-4);
     font-weight: lighter;
-    color: var(--color-primary-base-default);
+    color: var(--ds-color-primary-base-default);
     text-transform: uppercase;
     letter-spacing: 0.1em !important;
   }
@@ -56,35 +56,35 @@
     right: 0;
     width: 250px;
     z-index: 999;
-    padding: var(--size-3) var(--size-2);
+    padding: var(--ds-size-3) var(--ds-size-2);
     background-color: white;
-    border-radius: var(--border-radius-default);
+    border-radius: var(--ds-border-radius-default);
     box-shadow:
       0 0 1px 0 rgba(0, 0, 0, 0.14),
       0 2px 4px 0 rgba(0, 0, 0, 0.12),
       0 4px 8px 0 rgba(0, 0, 0, 0.12);
-    font-weight: var(--font-weight-medium);
+    font-weight: var(--ds-font-weight-medium);
     opacity: 1;
   }
 
   .profileContainer {
     flex-grow: 1;
-    gap: 4px;
-    padding: var(--size-3) var(--size-4);
+    gap: 8px;
+    padding: var(--ds-size-3) var(--ds-size-4);
   }
 
   .profileMenuName {
-    font-weight: var(--font-weight-medium);
+    font-weight: var(--ds-font-weight-medium);
     margin-top: 2px;
   }
 
   .profileMenuDepartment {
     font-size: var(--ds-font-size-3);
-    color: var(--color-neutral-text-subtle);
+    color: var(--ds-color-neutral-text-subtle);
   }
 
   .profileName {
-    font-weight: var(--font-weight-medium);
+    font-weight: var(--ds-font-weight-medium);
     color: var(--ds-color-primary-text-default);
     text-align: center;
   }
@@ -103,9 +103,9 @@
     flex: 1;
     align-items: center;
     justify-content: flex-start;
-    border-radius: var(--border-radius-md);
+    border-radius: var(--ds-border-radius-md);
     border: none;
-    font-weight: var(--font-weight-medium);
+    font-weight: var(--ds-font-weight-medium);
     text-transform: none;
   }
 
@@ -130,10 +130,10 @@
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    gap: var(--size-1);
-    padding: var(--size-3) var(--size-4);
-    border-radius: var(--border-radius-md);
-    font-weight: var(--font-weight-medium);
+    gap: var(--ds-size-1);
+    padding: var(--ds-size-3) var(--ds-size-4);
+    border-radius: var(--ds-border-radius-md);
+    font-weight: var(--ds-font-weight-medium);
     text-decoration: none;
     text-transform: none;
     white-space: nowrap;
@@ -144,10 +144,10 @@
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-    gap: var(--size-2);
-    padding: var(--size-5) var(--size-4);
-    border-radius: var(--border-radius-md);
-    font-weight: var(--font-weight-regular);
+    gap: var(--ds-size-2);
+    padding: var(--ds-size-5) var(--ds-size-4);
+    border-radius: var(--ds-border-radius-md);
+    font-weight: var(--ds-font-weight-regular);
     text-decoration: none;
   }
 
@@ -166,7 +166,7 @@
     top: 100%;
     left: 0;
     display: none;
-    background-color: #fff;
+    background-color: var(--ds-color-surface-default);
   }
 
   @container header (width > 1024px) {
@@ -214,11 +214,11 @@
       justify-content: flex-start;
       flex-grow: 1;
       width: 100%;
-      padding: var(--size-3) var(--size-2);
-      border-top: 1px solid var(--color-neutral-surface-hover);
+      padding: var(--ds-size-3) var(--ds-size-2);
+      border-top: 1px solid var(--ds-color-neutral-surface-hover);
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12);
       font-size: var(--ds-font-size-4);
-      font-weight: var(--font-weight-regular);
+      font-weight: var(--ds-font-weight-regular);
     }
     .headerFlex {
       flex-direction: column;
@@ -229,7 +229,7 @@
     }
     .profileMenu {
       width: 100%;
-      border-top: 1px solid var(--color-neutral-surface-hover);
+      border-top: 1px solid var(--ds-color-neutral-surface-hover);
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12);
     }
     .logoLink {

@@ -5,7 +5,7 @@ import { useRef, useState } from 'react';
 import { Label, Textfield } from '@digdir/designsystemet-react';
 
 export default {
-  title: 'Designsystemet/Dialog',
+  title: 'Components/Dialog',
   component: Dialog,
   parameters: {
     layout: 'fullscreen',

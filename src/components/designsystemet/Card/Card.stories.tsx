@@ -6,7 +6,7 @@ import CardTitle from '../CardTitle/CardTitle';
 import { Box } from '~/main';
 
 const meta = {
-  title: 'Designsystemet/Card',
+  title: 'Components/Card',
   component: Card,
   decorators: [StyrbordDecorator],
   tags: ['autodocs'],
