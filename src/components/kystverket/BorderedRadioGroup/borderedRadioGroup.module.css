@@ -1,6 +1,6 @@
 @layer styrbord-modules {
   .radioBox {
-    border: var(--border-width-default) solid var(--color-neutral-border-subtle) !important;
+    border: var(--ds-border-width-default) solid var(--ds-color-neutral-border-subtle) !important;
     border-radius: var(--ds-border-radius-lg);
     padding: var(--spacing-12);
     background-color: var(--ds-color-neutral-background-default);
@@ -13,14 +13,14 @@
     transition: all 0.1s;
   }
   .radioBoxActive {
-    border: var(--border-width-default) solid var(--ds-color-info-border-strong) !important;
+    border: var(--ds-border-width-default) solid var(--ds-color-info-border-strong) !important;
     background-color: var(--ds-color-info-background-tinted);
   }
   .radioBox:hover {
     background-color: var(--ds-color-info-background-tinted);
   }
   .radioBoxError {
-    border: var(--border-width-default) solid var(--ds-color-danger-border-strong) !important;
+    border: var(--ds-border-width-default) solid var(--ds-color-danger-border-strong) !important;
     color: var(--ds-color-danger-border-strong) !important;
   }
   .radioBoxError .radioBoxIndicator {

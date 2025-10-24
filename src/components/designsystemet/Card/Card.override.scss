@@ -3,8 +3,8 @@
 }
 
 .ds-card {
-  --dsc-card-border-width: 1px;
-  --dsc-card-border-radius: var(--border-radius-default);
+  --dsc-card-border-width: var(--ds-border-width-default);
+  --dsc-card-border-radius: var(--ds-border-radius-default);
 }
 
 .ds-card :is(h1, h2, h3, h4, h5, h6) a:any-link {

@@ -18,9 +18,9 @@
     flex-direction: row;
     align-items: center;
     gap: 0.5rem;
-    color: var(--color-grey-70);
+    color: var(--ds-color-grey-70);
     font-weight: 500;
-    font-size: var(--font-size-label-sm);
+    font-size: var(--ds-font-size-label-sm);
     flex: 0 0 auto;
   }
   .step .icon {
@@ -64,10 +64,10 @@
     flex: 1;
   }
   .label {
-    font-weight: var(--font-weight-medium);
-    font-size: var(--body-sm-font-size);
-    line-height: var(--body-sm-line-height);
-    letter-spacing: var(--body-sm-letter-spacing);
+    font-weight: var(--ds-font-weight-medium);
+    font-size: var(--ds-body-sm-font-size);
+    line-height: var(--ds-body-sm-line-height);
+    letter-spacing: var(--ds-body-sm-letter-spacing);
   }
 
   @container stepContainer (max-width: 600px) {

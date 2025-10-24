@@ -86,10 +86,10 @@
   }
 
   .editButton {
-    font-size: var(--body-sm-font-size);
-    line-height: var(--body-sm-line-height);
-    letter-spacing: var(--body-sm-letter-spacing);
-    font-weight: var(--font-weight-regular);
+    font-size: var(--ds-body-sm-font-size);
+    line-height: var(--ds-body-sm-line-height);
+    letter-spacing: var(--ds-body-sm-letter-spacing);
+    font-weight: var(--ds-font-weight-regular);
     color: var(--ds-color-primary-12);
     text-decoration: underline;
     text-underline-offset: var(--spacing-6);
