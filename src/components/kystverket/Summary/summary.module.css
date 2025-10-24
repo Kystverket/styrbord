@@ -21,7 +21,7 @@
   .title {
     grid-column: var(--span2);
     background-color: #f9f6f3;
-    border: 1px solid #d5d0cb;
+    border: var(--ds-border-width-default) solid #d5d0cb;
     padding: 8px 12px;
     border-radius: var(--spacing-2);
   }

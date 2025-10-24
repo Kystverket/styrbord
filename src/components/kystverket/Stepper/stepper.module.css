@@ -40,7 +40,7 @@
   }
   .completed-step .icon,
   .incomplete-step .icon {
-    border: 1px solid #bebbb8;
+    border: var(--ds-border-width-default) solid #bebbb8;
     background-color: transparent;
     color: #636363;
   }
@@ -52,7 +52,7 @@
     color: #183a93;
   }
   .current-step .icon {
-    border: 1px solid #183a93;
+    border: var(--ds-border-width-default) solid #183a93;
     background-color: #183a93;
     color: white;
   }
