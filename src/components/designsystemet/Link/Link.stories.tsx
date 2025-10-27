@@ -1,31 +1,53 @@
 import type { Meta, StoryFn, StoryObj } from '@storybook/react';
 import { EnvelopeClosedIcon } from '@navikt/aksel-icons';
 
-import { Link } from '@digdir/designsystemet-react';
 import React from 'react';
-import { Body } from '~/main';
+import { Link, Body, Box } from '~/main';
+import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
-type Story = StoryObj<typeof Link>;
+const meta = {
+  title: 'Components/Link',
+  component: Link,
+  decorators: [StyrbordDecorator],
+  tags: ['autodocs', 'ds-override'],
+  argTypes: {},
+} satisfies Meta<typeof Link>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
 
 const randomNum = Math.floor(Math.random() * 1000);
 const designsystemetLink = 'https://designsystemet.no/?=' + randomNum;
-
-export default {
-  title: 'Components/Link',
-  component: Link,
-  parameters: {
-    status: {
-      type: 'beta',
-      url: 'http://www.url.com/status',
-    },
-  },
-} as Meta;
 
 export const Normal: Story = {
   args: {
     children: 'Gå til designsystemet',
     href: designsystemetLink,
-    color: 'accent',
+  },
+};
+
+export const NormalSm: Story = {
+  args: {
+    children: 'Liten link',
+    href: designsystemetLink,
+    'data-size': 'sm',
+  },
+};
+
+export const NormalLg: Story = {
+  args: {
+    children: 'Større link',
+    href: designsystemetLink,
+    'data-size': 'lg',
+  },
+};
+
+export const UtenUnderline: Story = {
+  args: {
+    children: 'Link uten underline',
+    href: designsystemetLink,
+    underline: false,
   },
 };
 
@@ -36,17 +58,34 @@ export const Visited: Story = {
   },
 };
 
+export const WithIcon: Story = {
+  args: {
+    children: 'Legg til kai',
+    href: 'https://arngren.net/',
+    icon: 'anchor',
+  },
+};
+
+export const WithIconAndNoUnderline: Story = {
+  args: {
+    children: 'Legg til kai',
+    href: 'https://arngren.net/',
+    icon: 'anchor',
+    underline: false,
+  },
+};
+
 export const InText: StoryFn<typeof Link> = () => (
   <>
     <Body>
       Vi bruker komponenter fra <Link href={designsystemetLink}>et fantastisk designsystem</Link>.
     </Body>
-    <Body>
+    <Box gap={16}>
       <Link href="mailto:designsystem@digdir.no">
         <EnvelopeClosedIcon aria-hidden />
-        Kontakt oss
+        <span>Kontakt oss</span>
       </Link>
-    </Body>
+    </Box>
   </>
 );
 
@@ -69,6 +108,16 @@ export const Neutral: StoryFn<typeof Link> = () => (
     <Body>
       <Link data-color="neutral" href={designsystemetLink}>
         Neutral
+      </Link>
+    </Body>
+  </>
+);
+
+export const Accent: StoryFn<typeof Link> = () => (
+  <>
+    <Body>
+      <Link data-color="accent" href={designsystemetLink}>
+        Accent
       </Link>
     </Body>
   </>

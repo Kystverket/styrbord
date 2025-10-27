@@ -107,6 +107,9 @@ export type { SelectProps, SelectOption } from './components/designsystemet/Sele
 export { default as Tabs } from './components/designsystemet/Tabs/Tabs';
 export type { TabsProps } from './components/designsystemet/Tabs/Tabs';
 
+export { Link } from './components/designsystemet/Link/Link';
+export type { LinkProps } from './components/designsystemet/Link/Link';
+
 export { Checkbox } from './components/designsystemet/Checkbox/Checkbox';
 export type { CheckboxProps } from './components/designsystemet/Checkbox/Checkbox';
 
