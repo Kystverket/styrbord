@@ -118,9 +118,19 @@ export const WithError: Story = {
 export const Optional: Story = {
   args: { ...defaultProps, optional: true },
 };
+
 export const OptionalText: Story = {
   args: { ...defaultProps, optional: 'Spesialtilpasset Verdi' },
 };
+
 export const Required: Story = {
   args: { ...defaultProps, required: true },
+};
+
+export const ReadOnly: Story = {
+  args: { ...defaultProps, readonly: true },
+};
+
+export const Disabled: Story = {
+  args: { ...defaultProps, disabled: true },
 };

@@ -110,9 +110,6 @@ export type { TabsProps } from './components/designsystemet/Tabs/Tabs';
 export { Link } from './components/designsystemet/Link/Link';
 export type { LinkProps } from './components/designsystemet/Link/Link';
 
-export { Checkbox } from './components/designsystemet/Checkbox/Checkbox';
-export type { CheckboxProps } from './components/designsystemet/Checkbox/Checkbox';
-
 export { default as Table } from './components/designsystemet/Table/Table';
 
 export { EXPERIMENTAL_Suggestion as Suggestion } from '@digdir/designsystemet-react';

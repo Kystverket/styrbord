@@ -1,0 +1,44 @@
+@layer styrbord-modules {
+  .toggleGroup {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--ds-size-4);
+  }
+
+  .toggleGroup > * {
+    border: 2px solid var(--ds-color-border-subtle) !important;
+    border-radius: var(--ds-border-radius-lg);
+    padding: var(--ds-size-4);
+    background-color: var(--ds-color-background-default);
+    width: 100%;
+  }
+
+  .is-readonly .toggleGroup > * {
+    background-color: var(--ds-color-neutral-background-tinted);
+  }
+
+  .toggleGroup :global(.ds-field) {
+    width: 100%;
+  }
+
+  .is-on {
+    border-color: var(--ds-color-border-strong) !important;
+    background-color: var(--ds-color-primary-surface-tinted);
+  }
+
+  [data-color='danger'] .is-on {
+    background-color: var(--ds-color-danger-surface-tinted);
+  }
+
+  @container (min-width: 400px) {
+    .toggleGroup {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .toggleGroup {
+      grid-template-columns: 1fr;
+    }
+  }
+}

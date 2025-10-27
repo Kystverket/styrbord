@@ -73,3 +73,10 @@
   --spacing-112: 112px;
   --spacing-128: 128px;
 }
+
+@supports (width: round(down, 0.1em, 1px)) {
+  .ds-field:has(input:is([type='radio'], [type='checkbox']))
+    .ds-input:is([type='radio'], [type='checkbox']):not([aria-label]) {
+    translate: 0 round(down, calc(0.5lh - 50%), 1px);
+  }
+}
