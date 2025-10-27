@@ -4,6 +4,9 @@
 
   text-underline-offset: var(--spacing-6);
 }
+.ds-link > svg {
+  display: inline-block;
+}
 
 .ds-link:visited {
   color: var(--ds-color-primary-text-subtle);
