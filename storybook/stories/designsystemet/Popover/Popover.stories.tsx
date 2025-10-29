@@ -6,7 +6,7 @@ import { TrashIcon } from '@navikt/aksel-icons';
 import { Popover, Paragraph, Button, Box } from '~/main';
 
 export default {
-  title: 'Designsystemet/Popover',
+  title: 'Components/Popover',
   component: Popover,
   parameters: {
     layout: 'fullscreen',

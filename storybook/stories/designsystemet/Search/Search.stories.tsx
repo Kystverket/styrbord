@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Label } from '@digdir/designsystemet-react';
 
 export default {
-  title: 'Designsystemet/Search',
+  title: 'Components/Search',
   component: Search,
 } as Meta;
 

@@ -154,15 +154,15 @@
   }
 
   .border-width-sm {
-    border: var(--border-width-default) solid var(--border-color);
+    border: var(--ds-border-width-default) solid var(--border-color);
   }
 
   .border-width-md {
-    border: var(--border-width-lg) solid var(--border-color);
+    border: calc(var(--ds-border-width-default) * 2) solid var(--border-color);
   }
 
   .border-width-lg {
-    border: var(--border-width-xl) solid var(--border-color);
+    border: calc(var(--ds-border-width-default) * 3) solid var(--border-color);
   }
 
   .width-fit {

@@ -1,23 +1,17 @@
-import { Box, Field, Label, LabelContent, ValidationMessage } from '~/main';
-import classes from './borderedRadioGroup.module.css';
-import { ReactNode } from 'react';
+import { Box, Fieldset, LabelContent, Radio, ValidationMessage } from '~/main';
+import classes from '../BorderedToggleGroup/borderedGroup.module.css';
+import { BorderedGroupProps } from '../BorderedToggleGroup/borderedGroup.types';
 
 export type RadioGroupValueType = string | boolean | number;
 
-export interface BorderedRadioGroupProps {
-  label?: string;
-  description?: ReactNode | string;
+export type BorderedRadioGroupProps = BorderedGroupProps & {
   value?: RadioGroupValueType;
   options: {
     label: string;
     value: RadioGroupValueType;
   }[];
   onChange?: (value: RadioGroupValueType) => void;
-  onBlur?: () => void;
-  error?: string;
-  required?: boolean;
-  optional?: boolean | string;
-}
+};
 
 const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
   const errorText = typeof props.error === 'string' && props.error.length > 0 ? props.error : undefined;
@@ -25,36 +19,38 @@ const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
 
   return (
     <Box container="inline-size">
-      <Field>
-        <Label>
+      <Fieldset
+        disabled={props.disabled}
+        className={
+          classes['fieldset'] +
+          (props.disabled ? ' ' + classes['is-disabled'] : props.readonly ? ' ' + classes['is-readonly'] : '')
+        }
+      >
+        <Fieldset.Legend>
           <LabelContent text={props.label} required={props.required} optional={props.optional} />
-        </Label>
-        {props.description && <Field.Description>{props.description}</Field.Description>}
-        <div className={classes.radioGroup}>
-          {props.options.map(({ label, value }) => (
-            <button
-              onClick={() => {
-                props.onChange?.(value);
+        </Fieldset.Legend>
+        {props.description && <Fieldset.Description>{props.description}</Fieldset.Description>}
+        <div className={classes.toggleGroup} data-color={hasError ? 'danger' : 'neutral'}>
+          {props.options.map((el) => (
+            <Radio
+              key={el.label}
+              className={el.value === props.value ? classes['is-on'] : classes['is-off']}
+              data-color={hasError ? 'danger' : 'primary'}
+              readOnly={props.readonly}
+              disabled={props.disabled}
+              checked={el.value === props.value}
+              label={el.label}
+              onChange={() => {
+                props.onChange?.(el.value);
               }}
               onBlur={() => {
                 props.onBlur?.();
               }}
-              className={
-                classes.radioBox +
-                ' ' +
-                (props.value === value ? classes.radioBoxActive : '') +
-                ' ' +
-                (hasError ? classes.radioBoxError : '')
-              }
-              key={label}
-            >
-              <span className={classes.radioBoxIndicator}></span>
-              <span className={classes.radioBoxText}>{label}</span>
-            </button>
+            />
           ))}
         </div>
         {errorText && <ValidationMessage>{errorText}</ValidationMessage>}
-      </Field>
+      </Fieldset>
     </Box>
   );
 };

@@ -10,6 +10,7 @@ export type HeaderLinkComponentProps = {
   className?: string;
   href?: string;
   children: ReactNode;
+  onClick?: () => void;
 };
 
 export interface HeaderProps {
@@ -72,6 +73,23 @@ export interface HeaderProps {
      * initials. Keep it to `2` characters
      */
     initials: string;
+    /**
+     * logoutHandler
+     */
+    links?: {
+      /**
+       * icon - Typed til IconId
+       */
+      icon: IconId;
+      /**
+       * label
+       */
+      label: string;
+      /**
+       * url
+       */
+      url: string;
+    }[];
     /**
      * logoutHandler
      */
@@ -157,14 +175,14 @@ export function Header({
                   className={classes.avatarShowOnWideHeader}
                   aria-label={`${profile.name} profile picture`}
                   data-color={'primary'}
-                  data-size="xxs"
+                  data-size="2xs"
                   initials={profile.initials}
                 />
                 <Avatar
                   className={classes.avatarShowOnSmallHeader}
                   aria-label={`${profile.name} profile picture`}
                   data-color={'primary'}
-                  data-size="xxxs"
+                  data-size="3xs"
                   initials={profile.initials}
                 />
                 <Paragraph className={classes.profileName}>
@@ -183,7 +201,7 @@ export function Header({
                     <Avatar
                       aria-label={`${profile.name} profile picture`}
                       data-color={'primary'}
-                      data-size="xxs"
+                      data-size="2xs"
                       initials={profile.initials}
                     />
                     <Box className={classes.profileTextContainer}>
@@ -196,6 +214,21 @@ export function Header({
                     </Box>
                   </Box>
                   <Divider />
+                  {/* Profile links */}
+                  {profile?.links &&
+                    profile?.links.map((link, index) => (
+                      <LinkComponent
+                        key={index}
+                        href={link.url}
+                        className={`${classes.headerButton} ${classes.disappearBelowPhone}`}
+                        onClick={closeProfile}
+                      >
+                        <Icon material={link.icon} />
+                        <Paragraph>{link.label}</Paragraph>
+                      </LinkComponent>
+                    ))}
+                  {profile?.links && <Divider />}
+                  {/* End of Profile links */}
                   <Button onClick={() => profile.logoutHandler()} className={`${classes.profileLogOutButton}`}>
                     <Icon material="logout" />
                     Logg ut

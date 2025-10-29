@@ -4,7 +4,17 @@
 
   text-underline-offset: var(--spacing-6);
 }
+.ds-link > svg {
+  display: inline-block;
+}
 
 .ds-link:visited {
   color: var(--ds-color-primary-text-subtle);
+}
+
+.ds-link:focus-visible {
+  background: none;
+  color: var(--dsc-link-color);
+  outline: 3px solid var(--ds-color-focus-outer);
+  border-radius: var(--ds-border-radius-default);
 }

@@ -1,12 +1,13 @@
 import type { Meta, StoryFn } from '@storybook/react';
 import { BriefcaseIcon } from '@navikt/aksel-icons';
-import { Avatar, AvatarProps, Badge, Dropdown } from '~/main';
+import { Avatar, AvatarProps, Badge, Box, Dropdown } from '~/main';
 import cat1 from '@assets/img/cats/Cat 3.jpg';
 type Story = StoryFn<typeof Avatar>;
 
 const meta: Meta<typeof Avatar> = {
-  title: 'Designsystemet/Avatar',
+  title: 'Components/Avatar',
   component: Avatar,
+  tags: ['autodocs', 'ds-override'],
   parameters: {
     layout: 'padded',
     customStyles: {
@@ -19,7 +20,17 @@ const meta: Meta<typeof Avatar> = {
   },
 };
 
-const colorVariants = ['accent', 'extra1', 'neutral', 'subtle-tinted'];
+const colors: AvatarProps['data-color'][] = [
+  'primary',
+  'neutral',
+  'success',
+  'danger',
+  'warning',
+  'accent',
+  'extra1',
+  'extra2',
+];
+const colorVariants: AvatarProps['data-color-variant'][] = ['base', 'surface-tinted'];
 
 export default meta;
 
@@ -34,11 +45,11 @@ Preview.args = {
 export const NoName: Story = () => <Avatar aria-label="Ola" />;
 
 export const Sizes: Story = () => (
-  <>
-    <Avatar data-size="xxxs" aria-label="xxxs" initials="3x" />
-    <Avatar data-size="xxxs" aria-label="xxxs" />
-    <Avatar data-size="xxs" aria-label="extra extra small" initials="2x" />
-    <Avatar data-size="xxs" aria-label="extra extra small" />
+  <Box gap={16}>
+    <Avatar data-size="3xs" aria-label="xxxs" initials="3x" />
+    <Avatar data-size="3xs" aria-label="xxxs" />
+    <Avatar data-size="2xs" aria-label="extra extra small" initials="2x" />
+    <Avatar data-size="2xs" aria-label="extra extra small" />
     <Avatar data-size="xs" aria-label="extra small" initials="xs" />
     <Avatar data-size="xs" aria-label="extra small" />
     <Avatar data-size="sm" aria-label="small" initials="sm" />
@@ -47,15 +58,20 @@ export const Sizes: Story = () => (
     <Avatar data-size="md" aria-label="medium" />
     <Avatar data-size="lg" aria-label="large" initials="lg" />
     <Avatar data-size="lg" aria-label="large" />
-  </>
+  </Box>
 );
 
 export const ColorVariants: Story = () => (
-  <>
-    {colorVariants.map((color) => (
-      <Avatar key={color} data-color={color as AvatarProps['data-color']} aria-label={`color ${color}`} />
-    ))}
-  </>
+  <Box gap={16}>
+    {colorVariants.map((colorVariant) =>
+      colors.map((color) => (
+        <Box key={color + colorVariant} horizontal align="center" gap={8}>
+          <Avatar data-color={color} data-color-variant={colorVariant} aria-label={`color ${color}`} />
+          {color} {colorVariant}
+        </Box>
+      )),
+    )}
+  </Box>
 );
 
 export const ShapeVariants: Story = () => (

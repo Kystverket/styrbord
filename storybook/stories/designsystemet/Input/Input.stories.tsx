@@ -6,7 +6,7 @@ import { Label } from '@digdir/designsystemet-react';
 type Story = StoryObj<typeof Input>;
 
 export default {
-  title: 'Designsystemet/Input',
+  title: 'Form/Input',
   component: Input,
   argTypes: {
     role: {

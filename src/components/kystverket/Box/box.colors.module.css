@@ -131,17 +131,17 @@
   .color-navy-tinted,
   .color-navy-hover,
   .color-navy-active {
-    background: var(--color-primary-base-default);
-    color: var(--color-primary-background-default);
-    --border-color: var(--color-primary-base-default);
+    background: var(--ds-color-primary-base-default);
+    color: var(--ds-color-primary-base-contrast-default);
+    --border-color: var(--ds-color-primary-base-default);
   }
 
   .color-white-default,
   .color-white-tinted,
   .color-white-hover,
   .color-white-active {
-    background: var(--color-primary-background-default);
-    color: var(--color-primary-text-default);
+    background: var(--ds-color-primary-surface-default);
+    color: var(--ds-color-primary-text-default);
     --border-color: var(--ds-color-primary-border-subtle);
   }
 }

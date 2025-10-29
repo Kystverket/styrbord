@@ -14,7 +14,7 @@ import { Badge, Tabs, Button } from '~/main';
 type Story = StoryFn<typeof Badge>;
 
 const meta: Meta<typeof Badge> = {
-  title: 'Designsystemet/Badge',
+  title: 'Components/Badge',
   component: Badge,
   parameters: {
     customStyles: {

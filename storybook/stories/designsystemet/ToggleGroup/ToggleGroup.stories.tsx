@@ -12,7 +12,7 @@ import type { Meta, StoryFn } from '@storybook/react';
 import { useState } from 'react';
 
 export default {
-  title: 'Designsystemet/ToggleGroup',
+  title: 'Components/ToggleGroup',
   component: ToggleGroup,
   decorators: [
     (Story) => (

@@ -3,8 +3,8 @@
 }
 
 .ds-card {
-  --dsc-card-border-width: 2px;
-  --dsc-card-border-radius: var(--border-radius-default);
+  --dsc-card-border-width: var(--ds-border-width-default);
+  --dsc-card-border-radius: var(--ds-border-radius-default);
 }
 
 .ds-card :is(h1, h2, h3, h4, h5, h6) a:any-link {
@@ -16,6 +16,20 @@
   text-decoration-thickness: 2px;
 }
 
+.ds-card[data-variant='default'],
+.ds-card {
+  border-color: var(--ds-color-surface-hover);
+  color: var(--ds-color-text-default);
+}
+
 .ds-card[data-variant='tinted'] {
-  color: var(--ds-color-primary-text-default);
+  color: var(--ds-color-text-default);
+}
+
+.ds-card:not([data-color]) {
+  border-color: var(--ds-color-neutral-surface-hover);
+  color: var(--ds-color-neutral-text-default);
+}
+.ds-card:not([data-color])[data-variant='tinted'] {
+  background-color: var(--ds-color-neutral-surface-tinted);
 }

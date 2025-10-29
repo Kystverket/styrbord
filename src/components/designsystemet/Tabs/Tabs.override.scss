@@ -8,3 +8,23 @@
   }
   gap: 7px;
 }
+
+:is(
+  :is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) > [role='tab'][aria-selected='true'],
+  :is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) > u-tab[aria-selected='true']
+):after {
+  background: var(--ds-color-accent-base-default);
+  transform: translateY(1px);
+}
+
+:is(
+  :is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) > [role='tab']:hover:not([aria-selected='true']),
+  :is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) > u-tab:hover:not([aria-selected='true'])
+):after {
+  background: var(--color-neutral-surface-hover);
+  transform: translateY(1px);
+}
+
+:is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) {
+  overflow: initial !important;
+}

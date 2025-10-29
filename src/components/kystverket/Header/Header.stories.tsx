@@ -4,7 +4,7 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { SupportedLanguage } from '~/main';
 
 const meta = {
-  title: 'Side/Header',
+  title: 'Page/Header',
   component: Header,
   decorators: [StyrbordDecorator],
   tags: ['autodocs'],
@@ -107,6 +107,22 @@ export const medProfil: Story = {
       department: 'Hav- og kystforvaltning',
       logoutHandler: () => alert('Logger ut'),
       initials: 'ON',
+    },
+  },
+};
+
+export const medProfilLenker: Story = {
+  args: {
+    ...defaultProps,
+    profile: {
+      name: 'Ola Nordmann',
+      department: 'Hav- og kystforvaltning',
+      logoutHandler: () => alert('Logger ut'),
+      initials: 'ON',
+      links: [
+        { icon: 'anchor', label: 'Kystverket', url: 'https://kystverket.no' },
+        { icon: 'settings', label: 'Settings', url: '#' },
+      ],
     },
   },
 };

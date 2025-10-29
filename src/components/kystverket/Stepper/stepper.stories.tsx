@@ -4,7 +4,7 @@ import { Box } from '~/main';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Komponenter/Stepper',
+  title: 'Components/Stepper',
   component: Stepper,
   decorators: [StyrbordDecorator],
   tags: ['autodocs'],

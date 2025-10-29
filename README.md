@@ -4,7 +4,7 @@ Styrbord er et komponentbibliotek som vi kan ta i bruk i Kystverkets interne og 
 applikasjoner. Det er _ikke_ en profilguide, men en teknisk ressurs om kan trekkes inn for å la
 applikasjonen ha et Kystverket uttrykk samtidig som det følger moderne prinsipper for design.
 
-Styrbord tar i bruk [designsystemetet.no](https://www.designsystemet.no/) sine komponenter og prinsipper.
+Styrbord tar i bruk [designsystemet.no](https://www.designsystemet.no/) sine komponenter og prinsipper.
 Komponentene til Designsystemet blir eksportert videre av Styrbord med Kystverkets farger og tekststil.
 Dette betyr at [dokumentasjonen til Designsystemet](https://storybook.designsystemet.no/) er vel så viktig
 som den du finner her.
@@ -12,6 +12,12 @@ som den du finner her.
 Alle komponentene og typene i Designsystemet er tilgjengelig i Styrbord med følgende merknader:
 
 - Noen komponenter blir overskrevet av Styrbord og har ikke nødvendigvis samme interface som Designsystemet. De er merket med 'ds+kyv' i Storybook. De kan være basert på tilsvarende komponent i Designsystemet, men ikke nødvendigvis.
+
+## Versjonering
+
+- Major følger major-versjon til Designsystemet.
+- Minor inkrementeres ved en eller flere knekkende endringer, eller ny versjon av Designsystemet.
+- Patch inkrementeres ved alle endringer, store eller små, som ikke knekker noe eksisterende.
 
 ## Bruk
 
@@ -32,6 +38,22 @@ import { Heading, Ingress, Tabs } from '@kystverket/styrbord';
 Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.com/Kystverket/styrbord-tokens).
 
 ## Endringslogg
+
+### 2025-10-24 -- v1.0
+
+Offisielt versjon 1.0.
+
+- Fjernet all duplisering av CSS-variabler. Tidligere har vi for bakoverkompatibilitet duplisert alle Designsystemvariabler til en variabel uten `--ds-` foran. Disse variablene er nå ikke lenger tilstede. Versjon 1.0 var en god anledning til å rydde i dette.
+- `--spacing-#`-variablene er flyttet fra styrbord-tokens til styrbord. Skal ikke ha noen effekt. Oppfordrer til å bruke `--ds-size-#` over `--spacing-#`.
+
+### 2025-10-23
+
+Oppdatert til Designsystemet 1.6.1 fra 1.4.0.
+
+Endret Avatar.
+
+- Størrelser er nå `2x` og `3x` fra `xxs` og `xxxs`.
+- Endret fargevalg. `data-color` er nå kun vanlige farger, men man kan legge på `data-color-variant="surface-tinted"` for å få dusere farger.
 
 ### 2025-10-16
 

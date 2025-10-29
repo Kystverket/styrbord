@@ -1,6 +1,6 @@
 @layer styrbord-modules {
   .footer {
-    background-color: var(--color-primary-base-default);
+    background-color: var(--ds-color-primary-base-default);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -43,7 +43,7 @@
     gap: 4px;
     align-items: start;
     color: white;
-    font-weight: var(--font-weight-medium);
+    font-weight: var(--ds-font-weight-medium);
   }
   .link:hover {
     color: var(--ds-color-primary-base-contrast-subtle);
@@ -65,17 +65,17 @@
   }
   .extraText {
     color: var(--ds-color-neutral-base-contrast-default);
-    font-size: var(--body-sm-font-size);
-    line-height: var(--body-sm-line-height);
-    letter-spacing: var(--body-sm-letter-spacing);
-    font-weight: var(--font-weight-regular);
+    font-size: var(--ds-body-sm-font-size);
+    line-height: var(--ds-body-sm-line-height);
+    letter-spacing: var(--ds-body-sm-letter-spacing);
+    font-weight: var(--ds-font-weight-regular);
   }
   .copyrightText {
     color: var(--ds-color-neutral-surface-active);
-    font-size: var(--body-xs-font-size);
-    line-height: var(--body-xs-line-height);
-    letter-spacing: var(--body-xs-letter-spacing);
-    font-weight: var(--font-weight-regular);
+    font-size: var(--ds-body-xs-font-size);
+    line-height: var(--ds-body-xs-line-height);
+    letter-spacing: var(--ds-body-xs-letter-spacing);
+    font-weight: var(--ds-font-weight-regular);
   }
   .logoContainer {
     display: flex;
@@ -100,18 +100,18 @@
     background-color: transparent;
     border-color: var(--ds-color-primary-base-contrast-subtle);
     color: var(--ds-color-primary-base-contrast-default);
-    border-radius: var(--border-radius-default);
+    border-radius: var(--ds-border-radius-default);
     min-width: 208px;
     max-width: 304px;
     background: url(keyboard_arrow_down.svg) right 8px center no-repeat;
   }
 
   select:hover {
-    border-color: var(--color-primary-border-hover);
+    border-color: var(--ds-color-primary-border-hover);
   }
 
   .selectOption {
-    color: var(--color-primary-text-default) !important;
+    color: var(--ds-color-primary-text-default) !important;
   }
 
   @container footer (width < 1024px) {
