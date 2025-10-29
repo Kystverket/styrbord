@@ -36,6 +36,9 @@ const defaultProps: DateTimePickerProps = {
 export const Default: Story = {
   args: defaultProps,
 };
+export const WithoutCalendarIcon: Story = {
+  args: { ...defaultProps, showCalendarIcon: false },
+};
 
 export const Optional: Story = {
   args: { ...defaultProps, value: new Date(), optional: true },

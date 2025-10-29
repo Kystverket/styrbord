@@ -1,7 +1,7 @@
 import { createElement, HTMLProps } from 'react';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import { Field, Input, Label, ValidationMessage } from '@digdir/designsystemet-react';
-import { LabelContent } from '~/main';
+import { Icon, LabelContent } from '~/main';
 import classes from './DateTimePicker.module.css';
 
 import { nb } from 'date-fns/locale/nb';
@@ -18,10 +18,21 @@ export interface DateTimePickerProps {
   value: Date | undefined;
   timeInputLabel?: string;
   onChange?: (date: Date | undefined) => void;
+  showCalendarIcon?: boolean;
 }
 
-const CustomInput = (props: HTMLProps<HTMLInputElement>) => {
-  return <Input {...props} inputMode="numeric" type="text" />;
+const CustomInput = (props: HTMLProps<HTMLInputElement> & { showCalendarIcon: boolean }) => {
+  const { showCalendarIcon, ...inputProps } = props;
+
+  if (showCalendarIcon) {
+    return (
+      <div className={classes.inputWrapper}>
+        <Input {...inputProps} inputMode="numeric" type="text" />
+        <Icon className={classes.inputIcon} material="calendar_month" aria-hidden="true" />
+      </div>
+    );
+  }
+  return <Input {...inputProps} inputMode="numeric" type="text" />;
 };
 
 export const DateTimePicker = ({
@@ -29,6 +40,7 @@ export const DateTimePicker = ({
   onChange,
   dateTimeFormat = 'dd.MM.yyyy, HH:mm',
   timeInputLabel = 'Time: ',
+  showCalendarIcon = true,
   ...props
 }: DateTimePickerProps) => {
   return (
@@ -42,7 +54,7 @@ export const DateTimePicker = ({
         selected={value}
         dateFormat={dateTimeFormat}
         onChange={(date) => onChange?.(date ?? undefined)}
-        customInput={createElement(CustomInput)}
+        customInput={createElement(CustomInput, { showCalendarIcon })}
         showTimeInput
         placeholderText="dd.mm.åååå, tt:mm"
         timeInputLabel={timeInputLabel}
