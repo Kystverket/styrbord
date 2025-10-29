@@ -27,6 +27,7 @@
   @include meta.load-css('../components/designsystemet/Card/Card.override.scss');
   @include meta.load-css('../components/designsystemet/Tabs/Tabs.override.scss');
   @include meta.load-css('../components/designsystemet/Checkbox/Checkbox.override.scss');
+  @include meta.load-css('../components/designsystemet/Avatar/Avatar.override.scss');
 }
 
 @layer reset, dsno, kyvtokens, kyvtokenstodesignsystemet, styrbord, styrbord-modules;

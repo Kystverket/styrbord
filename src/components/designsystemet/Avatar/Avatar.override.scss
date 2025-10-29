@@ -1,0 +1,7 @@
+.ds-avatar {
+  --dsc-avatar-icon-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 0.5 24 24' width='24px' fill='currentColor'%3E%3Cpath d='M12 12q-1.65 0-2.825-1.175T8 8q0-1.65 1.175-2.825T12 4q1.65 0 2.825 1.175T16 8q0 1.65-1.175 2.825T12 12ZM4 20v-2.8q0-.85.425-1.563T5.6 14.55q1.55-.775 3.15-1.163T12 13q1.65 0 3.25.388t3.15 1.162q.75.375 1.175 1.088T20 17.2V20H4Zm2-2h12v-.8q0-.275-.138-.5T17.5 16.45q-1.35-.675-2.725-1.013T12 15.1q-1.4 0-2.775.338T6.5 16.45q-.125.125-.263.35T6 17.3V18Zm6-8q.825 0 1.413-.588T14 8q0-.825-.587-1.413T12 6q-.825 0-1.413.587T10 8q0 .825.587 1.412T12 10Zm0-2Zm0 10Z'/%3E%3C/svg%3E");
+}
+
+.ds-avatar[data-variant='square'] {
+  border-radius: var(--ds-border-radius-lg);
+}
