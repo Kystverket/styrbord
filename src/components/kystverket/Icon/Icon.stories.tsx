@@ -70,6 +70,7 @@ const iconDescriptions: Record<IconId, string> = {
   video_library: '',
   view_list: '',
   warning: '',
+  numbers: '',
 };
 
 const sizes = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const;
