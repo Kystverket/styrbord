@@ -15,7 +15,6 @@
 }
 
 @layer styrbord {
-  @include meta.load-css('material-symbols/index.css');
   @include meta.load-css('styrbord');
 }
 
