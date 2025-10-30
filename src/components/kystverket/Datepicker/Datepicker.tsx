@@ -1,7 +1,8 @@
 import { createElement, HTMLProps } from 'react';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import { Field, Input, Label, ValidationMessage } from '@digdir/designsystemet-react';
-import { LabelContent } from '~/main';
+import { Icon, LabelContent } from '~/main';
+import classes from './Datepicker.module.css';
 
 import { nb } from 'date-fns/locale/nb';
 
@@ -17,13 +18,30 @@ export interface DatepickerProps {
   onBlur?: () => void;
   value: Date | undefined;
   onChange?: (date: Date | undefined) => void;
+  showCalendarIcon?: boolean;
 }
 
-const CustomInput = (props: HTMLProps<HTMLInputElement>) => {
-  return <Input {...props} inputMode="numeric" type="text" />;
+const CustomInput = (props: HTMLProps<HTMLInputElement> & { showCalendarIcon: boolean }) => {
+  const { showCalendarIcon, ...inputProps } = props;
+
+  if (showCalendarIcon) {
+    return (
+      <div className={classes.inputWrapper}>
+        <Input {...inputProps} inputMode="numeric" type="text" />
+        <Icon className={classes.inputIcon} material="calendar_month" aria-hidden="true" />
+      </div>
+    );
+  }
+  return <Input {...inputProps} inputMode="numeric" type="text" />;
 };
 
-export const Datepicker = ({ value, onChange, dateFormat = 'dd.MM.yyyy', ...props }: DatepickerProps) => {
+export const Datepicker = ({
+  value,
+  onChange,
+  dateFormat = 'dd.MM.yyyy',
+  showCalendarIcon = true,
+  ...props
+}: DatepickerProps) => {
   return (
     <Field>
       <Label style={{ display: 'block', width: 'fit-content' }}>
@@ -36,7 +54,7 @@ export const Datepicker = ({ value, onChange, dateFormat = 'dd.MM.yyyy', ...prop
         dateFormat={dateFormat}
         placeholderText="dd.mm.åååå"
         onChange={(date) => onChange?.(date ?? undefined)}
-        customInput={createElement(CustomInput)}
+        customInput={createElement(CustomInput, { showCalendarIcon })}
       />
       {props.error && <ValidationMessage>{props.error}</ValidationMessage>}
     </Field>
