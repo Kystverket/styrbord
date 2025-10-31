@@ -1,5 +1,7 @@
 @use 'sass:meta';
 
+@layer reset, dsno, styrbord, styrbord-modules;
+
 @layer reset {
   @include meta.load-css('reset');
   @include meta.load-css('react-datepicker/dist/react-datepicker.css');
@@ -7,10 +9,6 @@
 
 @layer dsno {
   @include meta.load-css('@digdir/designsystemet-css/dist/src/index.css');
-  @include meta.load-css('@digdir/designsystemet-theme/brand/altinn.css');
-}
-
-@layer kyvtokens {
   @include meta.load-css('@kystverket/styrbord-tokens/dist/kystverket.css');
 }
 
@@ -28,5 +26,3 @@
   @include meta.load-css('../components/designsystemet/Checkbox/Checkbox.override.scss');
   @include meta.load-css('../components/designsystemet/Avatar/Avatar.override.scss');
 }
-
-@layer reset, dsno, kyvtokens, kyvtokenstodesignsystemet, styrbord, styrbord-modules;
