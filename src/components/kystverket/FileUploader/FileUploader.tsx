@@ -35,7 +35,7 @@ export interface FileUploaderProps {
   maxFiles?: number;
   onChange: (files: FileInfo[]) => void;
   allowedFileTypes?: string[];
-  required?: boolean;
+  required?: boolean | string;
   optional?: boolean | string;
 }
 
