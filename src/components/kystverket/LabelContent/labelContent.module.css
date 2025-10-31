@@ -21,7 +21,7 @@
     display: inline;
   }
 
-  .tag{
+  .tag {
     font-weight: var(--ds-font-weight-regular) !important;
   }
 }
