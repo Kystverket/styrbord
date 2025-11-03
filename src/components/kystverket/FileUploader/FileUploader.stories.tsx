@@ -68,6 +68,10 @@ export const Required: Story = {
   args: { ...defaultProps, required: true },
 };
 
+export const RequiredText: Story = {
+  args: { ...defaultProps, required: 'Påkrevd' },
+};
+
 export const WithError: Story = {
   args: { ...defaultProps, error: 'Det oppstod en feil' },
 };
