@@ -59,3 +59,31 @@ export const Required: Story = {
 export const WithError: Story = {
   args: { ...defaultProps, value: new Date(), error: 'Error message' },
 };
+
+export const WithMinDate: Story = {
+  args: {
+    ...defaultProps,
+    label: 'Date from today',
+    description: 'Only future dates are selectable',
+    minDate: new Date(),
+  },
+};
+
+export const WithMaxDate: Story = {
+  args: {
+    ...defaultProps,
+    label: 'Date until today',
+    description: 'Only past and current dates are selectable',
+    maxDate: new Date(),
+  },
+};
+
+export const WithMinAndMaxDate: Story = {
+  args: {
+    ...defaultProps,
+    label: 'Select date within 2 weeks',
+    description: 'You can select from today and 2 weeks ahead in time',
+    minDate: new Date(),
+    maxDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 2 weeks from today
+  },
+};
