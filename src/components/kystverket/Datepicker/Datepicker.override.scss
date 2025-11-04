@@ -2,6 +2,6 @@
   margin-top: 0px;
 }
 
-.ds-field:has([aria-disabled=true]:not(u-option, [role=option][aria-disabled=true]), :disabled:not(option)) > * {
+.ds-field:has([aria-disabled='true']:not(u-option, [role='option'][aria-disabled='true']), :disabled:not(option)) > * {
   opacity: 100%;
 }
