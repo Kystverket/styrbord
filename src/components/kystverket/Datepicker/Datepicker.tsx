@@ -19,6 +19,8 @@ export interface DatepickerProps {
   value: Date | undefined;
   onChange?: (date: Date | undefined) => void;
   showCalendarIcon?: boolean;
+  minDate?: Date; // Minimum selectable date. Dates before this will be greyed out and non-selectable.
+  maxDate?: Date; // Maximum selectable date. Dates after this will be greyed out and non-selectable.
 }
 
 const CustomInput = (props: HTMLProps<HTMLInputElement> & { showCalendarIcon: boolean }) => {
@@ -40,6 +42,8 @@ export const Datepicker = ({
   onChange,
   dateFormat = 'dd.MM.yyyy',
   showCalendarIcon = true,
+  minDate,
+  maxDate,
   ...props
 }: DatepickerProps) => {
   return (
@@ -55,6 +59,9 @@ export const Datepicker = ({
         placeholderText="dd.mm.åååå"
         onChange={(date) => onChange?.(date ?? undefined)}
         customInput={createElement(CustomInput, { showCalendarIcon })}
+        minDate={minDate}
+        maxDate={maxDate}
+        onBlur={props.onBlur}
       />
       {props.error && <ValidationMessage>{props.error}</ValidationMessage>}
     </Field>

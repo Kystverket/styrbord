@@ -59,3 +59,31 @@ export const Required: Story = {
 export const WithError: Story = {
   args: { ...defaultProps, value: new Date(), error: 'Error message' },
 };
+
+export const WithMinDate: Story = {
+  args: {
+    ...defaultProps,
+    label: 'Dato fra i dag',
+    description: 'Kun framtidige datoer kan velges',
+    minDate: new Date(),
+  },
+};
+
+export const WithMaxDate: Story = {
+  args: {
+    ...defaultProps,
+    label: 'Dato til i dag',
+    description: 'Kun tidligere og dagens dato kan velges',
+    maxDate: new Date(),
+  },
+};
+
+export const WithMinAndMaxDate: Story = {
+  args: {
+    ...defaultProps,
+    label: 'Velg dato innen 2 uker',
+    description: 'Du kan velge dato fra i dag og inntil 2 uker frem i tid',
+    minDate: new Date(),
+    maxDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 2 weeks from today
+  },
+};
