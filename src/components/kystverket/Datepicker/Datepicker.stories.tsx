@@ -63,8 +63,8 @@ export const WithError: Story = {
 export const WithMinDate: Story = {
   args: {
     ...defaultProps,
-    label: 'Date from today',
-    description: 'Only future dates are selectable',
+    label: 'Dato fra i dag',
+    description: 'Kun framtidige datoer kan velges',
     minDate: new Date(),
   },
 };
@@ -72,8 +72,8 @@ export const WithMinDate: Story = {
 export const WithMaxDate: Story = {
   args: {
     ...defaultProps,
-    label: 'Date until today',
-    description: 'Only past and current dates are selectable',
+    label: 'Dato til i dag',
+    description: 'Kun tidligere og dagens dato kan velges',
     maxDate: new Date(),
   },
 };
@@ -81,8 +81,8 @@ export const WithMaxDate: Story = {
 export const WithMinAndMaxDate: Story = {
   args: {
     ...defaultProps,
-    label: 'Select date within 2 weeks',
-    description: 'You can select from today and 2 weeks ahead in time',
+    label: 'Velg dato innen 2 uker',
+    description: 'Du kan velge dato fra i dag og inntil 2 uker frem i tid',
     minDate: new Date(),
     maxDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 2 weeks from today
   },
