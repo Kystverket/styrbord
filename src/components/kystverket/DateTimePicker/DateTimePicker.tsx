@@ -15,10 +15,13 @@ export interface DateTimePickerProps {
   dateTimeFormat?: string;
   description?: string;
   error?: string;
+  onBlur?: () => void;
   value: Date | undefined;
   timeInputLabel?: string;
   onChange?: (date: Date | undefined) => void;
   showCalendarIcon?: boolean;
+  minDate?: Date; // Minimum selectable date. Dates before this will be greyed out and non-selectable.
+  maxDate?: Date; // Maximum selectable date. Dates after this will be greyed out and non-selectable.
 }
 
 const CustomInput = (props: HTMLProps<HTMLInputElement> & { showCalendarIcon: boolean }) => {
@@ -41,6 +44,8 @@ export const DateTimePicker = ({
   dateTimeFormat = 'dd.MM.yyyy, HH:mm',
   timeInputLabel = 'Time: ',
   showCalendarIcon = true,
+  minDate,
+  maxDate,
   ...props
 }: DateTimePickerProps) => {
   return (
@@ -58,6 +63,9 @@ export const DateTimePicker = ({
         showTimeInput
         placeholderText="dd.mm.åååå, tt:mm"
         timeInputLabel={timeInputLabel}
+        minDate={minDate}
+        maxDate={maxDate}
+        onBlur={props.onBlur}
       />
       {props.error && <ValidationMessage>{props.error}</ValidationMessage>}
     </Field>
