@@ -108,6 +108,9 @@ export type { SelectProps, SelectOption } from './components/designsystemet/Sele
 export { default as Tabs } from './components/designsystemet/Tabs/Tabs';
 export type { TabsProps } from './components/designsystemet/Tabs/Tabs';
 
+export { default as Tag } from './components/designsystemet/Tag/Tag';
+export type { TagProps } from './components/designsystemet/Tag/Tag';
+
 export { Link } from './components/designsystemet/Link/Link';
 export type { LinkProps } from './components/designsystemet/Link/Link';
 
