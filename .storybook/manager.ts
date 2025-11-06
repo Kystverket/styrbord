@@ -29,6 +29,18 @@ addons.setConfig({
         toolbar: false,
       },
     },
+    {
+      tags: 'kyv',
+      badge: {
+        text: 'kyv',
+        bgColor: '#000667',
+        fgColor: '#ffffff',
+      },
+      display: {
+        sidebar: ['component'],
+        toolbar: false,
+      },
+    },
     // Place the default config after your custom matchers.
     ...defaultConfig,
   ] satisfies TagBadgeParameters,

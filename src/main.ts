@@ -28,6 +28,8 @@ export { default as DeprecatedCard, type CardProps as DeprecatedCardProps } from
     Egenproduserte komponenter
 */
 
+export { default as KyvDivider } from './components/kystverket/KyvDivider/kyvDivider';
+
 export { default as Alert } from './components/kystverket/Alert/alert';
 export type { AlertLevel } from './components/kystverket/Alert/alert.types';
 export type { AlertProps } from './components/kystverket/Alert/alert';
