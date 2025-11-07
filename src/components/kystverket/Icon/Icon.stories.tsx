@@ -71,6 +71,7 @@ const iconDescriptions: Record<IconId, string> = {
   view_list: '',
   warning: '',
   numbers: '',
+  description: '',
 };
 
 const sizes = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const;

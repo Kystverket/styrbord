@@ -55,6 +55,7 @@ export const iconIdList = [
   'view_list',
   'warning',
   'numbers',
+  'description',
 ] as const;
 
 export type IconId = (typeof iconIdList)[number];
