@@ -1,5 +1,7 @@
 import { Select as DsSelect, Field, Label, ValidationMessage } from '@digdir/designsystemet-react';
 import { LabelContent } from '~/main';
+import { useState } from 'react';
+import './Select.override.scss';
 
 export type SelectOption = {
   value: string;
@@ -23,6 +25,8 @@ export interface SelectProps {
 
 export const Select = ({ ...props }: SelectProps) => {
   const valueProps = props.value ? { value: props.value } : { defaultValue: '' };
+  const [isOpen, setIsOpen] = useState(false);
+  const classNames = [props.className, 'override', isOpen ? 'select-open' : ''].filter(Boolean).join(' ');
 
   return (
     <Field>
@@ -31,11 +35,23 @@ export const Select = ({ ...props }: SelectProps) => {
       </Label>
       {props.description && <Field.Description>{props.description}</Field.Description>}
       <DsSelect
-        className={props.className}
+        className={classNames}
         width="full"
-        onChange={(event) => props.onChange?.(event.target.value)}
+        onChange={(event) => {
+          props.onChange?.(event.target.value);
+          setIsOpen(false);
+        }}
         onBlur={() => {
           props.onBlur?.();
+          setIsOpen(false);
+        }}
+        onMouseDown={() => setIsOpen((prev) => !prev)}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ' || event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+            setIsOpen(true);
+          } else if (event.key === 'Escape') {
+            setIsOpen(false);
+          }
         }}
         {...valueProps}
       >

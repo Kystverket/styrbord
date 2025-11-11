@@ -1,3 +1,9 @@
-.ds-input {
+.override.ds-input {
   --dsc-input-padding: var(--spacing-4) var(--spacing-4) var(--spacing-4) var(--spacing-16);
+  background-image: url("data:image/svg+xml,%3csvg width='12' height='7' viewBox='0 0 12 7' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.65375 6.7075L0 1.05375L1.05375 0L5.65375 4.6L10.2537 0L11.3075 1.05375L5.65375 6.7075Z' fill='%235B5C6B'/%3e%3c/svg%3e") !important;
+  background-size: 1em 0.5em !important;
+}
+
+.override.ds-input.select-open {
+  background-image: url("data:image/svg+xml,%3csvg width='12' height='7' viewBox='0 0 12 7' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.65375 0.2925L11.3075 5.94625L10.2537 7L5.65375 2.4L1.05375 7L0 5.94625L5.65375 0.2925Z' fill='%235B5C6B'/%3e%3c/svg%3e") !important;
 }
