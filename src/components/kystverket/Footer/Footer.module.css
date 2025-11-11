@@ -37,7 +37,8 @@
     gap: 6px;
     padding-right: var(--spacing-16);
   }
-  .link, .link:visited {
+  .link,
+  .link:visited {
     display: flex;
     flex-direction: row;
     gap: 4px;
