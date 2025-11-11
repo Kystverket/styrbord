@@ -1,15 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react';
 
-import {
-  ChatIcon,
-  EnvelopeClosedFillIcon,
-  HeartFillIcon,
-  InboxIcon,
-  PencilIcon,
-  VideoFillIcon,
-  VideoIcon,
-} from '@navikt/aksel-icons';
-import { Badge, Tabs, Button } from '~/main';
+import { Badge, Tabs, Button, Icon } from '~/main';
 
 type Story = StoryFn<typeof Badge>;
 
@@ -35,19 +26,19 @@ export const Floating: Story = () => (
   <>
     <Badge.Position placement="top-right">
       <Badge data-color="accent"></Badge>
-      <EnvelopeClosedFillIcon title="Meldinger" />
+      <Icon material="mail" title="Meldinger" />
     </Badge.Position>
     <Badge.Position placement="top-left">
       <Badge data-color="accent"></Badge>
-      <EnvelopeClosedFillIcon title="Meldinger" />
+      <Icon material="mail" title="Meldinger" />
     </Badge.Position>
     <Badge.Position placement="bottom-right">
       <Badge data-color="accent"></Badge>
-      <EnvelopeClosedFillIcon title="Meldinger" />
+      <Icon material="mail" title="Meldinger" />
     </Badge.Position>
     <Badge.Position placement="bottom-left">
       <Badge data-color="accent"></Badge>
-      <EnvelopeClosedFillIcon title="Meldinger" />
+      <Icon material="mail" title="Meldinger" />
     </Badge.Position>
     <Badge.Position placement="top-right" overlap="circle">
       <Badge data-color="accent"></Badge>
@@ -114,7 +105,7 @@ export const CustomPlacement: Story = () => (
       }}
     >
       <Badge data-color="accent"></Badge>
-      <EnvelopeClosedFillIcon title="Meldinger" />
+      <Icon material="mail" title="Meldinger" />
     </Badge.Position>
   </>
 );
@@ -123,15 +114,15 @@ export const Status: Story = () => (
   <>
     <Badge.Position data-size="sm">
       <Badge data-color="danger" />
-      <VideoFillIcon title="Videokamera" />
+      <Icon material="videocam" title="Videokamera" />
     </Badge.Position>
     <Badge.Position data-size="md">
       <Badge data-color="danger" />
-      <VideoFillIcon title="Videokamera" />
+      <Icon material="videocam" title="Videokamera" />
     </Badge.Position>
     <Badge.Position data-size="lg">
       <Badge data-color="danger" />
-      <VideoFillIcon title="Videokamera" />
+      <Icon material="videocam" title="Videokamera" />
     </Badge.Position>
   </>
 );
@@ -140,13 +131,13 @@ export const InTabs: Story = () => (
   <Tabs defaultValue="value1">
     <Tabs.List>
       <Tabs.Tab value="value1">
-        <HeartFillIcon aria-hidden />
+        <Icon material="favorite" aria-hidden />
         Favoritter
         <Badge count={64} maxCount={10} data-color="neutral" />
       </Tabs.Tab>
       <Tabs.Tab value="value2">Tab 2</Tabs.Tab>
       <Tabs.Tab value="value3">
-        <PencilIcon aria-hidden />
+        <Icon material="edit" aria-hidden />
         Nylige
         <Badge count={2} data-color="neutral" />
       </Tabs.Tab>
@@ -162,19 +153,19 @@ export const InButton: Story = () => (
     <Button icon variant="dashed">
       <Badge.Position>
         <Badge data-color="danger" count={1000} maxCount={99} />
-        <InboxIcon title="Innboks" />
+        <Icon material="favorite" title="Innboks" />
       </Badge.Position>
     </Button>
     <Button icon variant="dashed">
       <Badge.Position>
         <Badge data-color="danger" count={10} />
-        <ChatIcon title="Meldinger" />
+        <Icon material="chat" title="Meldinger" />
       </Badge.Position>
     </Button>
     <Button icon variant="dashed">
       <Badge.Position>
         <Badge data-color="danger"></Badge>
-        <VideoIcon title="Skru på video" />
+        <Icon material="videocam" title="Skru på video" />
       </Badge.Position>
     </Button>
   </>

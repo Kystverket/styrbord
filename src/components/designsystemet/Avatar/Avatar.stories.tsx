@@ -1,6 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/react';
-import { BriefcaseIcon } from '@navikt/aksel-icons';
-import { Avatar, AvatarProps, Badge, Box, Dropdown } from '~/main';
+import { Avatar, AvatarProps, Badge, Box, Dropdown, Icon } from '~/main';
 import cat1 from '@assets/img/cats/Cat 3.jpg';
 type Story = StoryFn<typeof Avatar>;
 
@@ -117,7 +116,7 @@ export const InDropdown: Story = () => (
         <Dropdown.Item>
           <Dropdown.Button>
             <Avatar data-size="xs" aria-label="Sogndal Kommune">
-              <BriefcaseIcon aria-hidden />
+              <Icon material="download" />
             </Avatar>
             Sogndal kommune
           </Dropdown.Button>

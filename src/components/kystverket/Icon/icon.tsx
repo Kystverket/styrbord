@@ -18,9 +18,10 @@ export interface MaterialIconProps {
   filled?: boolean;
   className?: string;
   size?: IconSize;
+  title?: string;
 }
 
-const Icon = ({ material, filled = false, className = '', size = 'md' }: MaterialIconProps) => {
+const Icon = ({ material, filled = false, className = '', size = 'md', title }: MaterialIconProps) => {
   const classNames = [classes.icon, className, 'material-symbols-outlined'];
   const style: Record<string, string> = {};
 
@@ -32,7 +33,7 @@ const Icon = ({ material, filled = false, className = '', size = 'md' }: Materia
   style['height'] = iconSizes[size];
 
   return (
-    <span aria-hidden style={style} className={classNames.join(' ')}>
+    <span title={title} aria-hidden style={style} className={classNames.join(' ')}>
       {material}
     </span>
   );

@@ -2,8 +2,7 @@ import type { Meta, StoryFn } from '@storybook/react';
 import { expect, userEvent, within } from '@storybook/test';
 import { useEffect, useState } from 'react';
 
-import { TrashIcon } from '@navikt/aksel-icons';
-import { Popover, Paragraph, Button, Box } from '~/main';
+import { Popover, Paragraph, Button, Box, Icon } from '~/main';
 
 export default {
   title: 'Components/Popover',
@@ -52,7 +51,7 @@ export const Interactive: StoryFn<typeof Popover> = () => {
   return (
     <Popover.TriggerContext>
       <Popover.Trigger data-color="danger" aria-label="Slett rad">
-        <TrashIcon title="Slett rad" />
+        <Icon material="delete" title="Slett rad" />
       </Popover.Trigger>
       <Popover data-color="danger">
         <Paragraph>Er du sikker på at du vil slette raden? Handlingen kan ikke angres.</Paragraph>

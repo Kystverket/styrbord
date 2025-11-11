@@ -1,13 +1,5 @@
-import { ToggleGroup, Tooltip, Divider, Paragraph, Button } from '~/main';
-import {
-  AlignCenterIcon,
-  AlignLeftIcon,
-  AlignRightIcon,
-  ArchiveIcon,
-  DocPencilIcon,
-  EnvelopeClosedIcon,
-  PaperplaneIcon,
-} from '@navikt/aksel-icons';
+import { ToggleGroup, Tooltip, Divider, Paragraph, Button, Icon } from '~/main';
+
 import type { Meta, StoryFn } from '@storybook/react';
 import { useState } from 'react';
 
@@ -45,17 +37,17 @@ export const OnlyIcons: StoryFn<typeof ToggleGroup> = () => {
     <ToggleGroup defaultValue={'option-1'}>
       <Tooltip content="Venstrestilt">
         <ToggleGroup.Item value="option-1" icon>
-          <AlignLeftIcon title="AlignLeftIcon" />
+          <Icon material="format_align_left" title="AlignLeftIcon" />
         </ToggleGroup.Item>
       </Tooltip>
       <Tooltip content="Midtstilt">
         <ToggleGroup.Item value="option-2" icon>
-          <AlignCenterIcon title="AlignCenterIcon" />
+          <Icon material="format_align_center" title="AlignCenterIcon" />
         </ToggleGroup.Item>
       </Tooltip>
       <Tooltip content="Høyrestilt">
         <ToggleGroup.Item value="option-3" icon>
-          <AlignRightIcon title="AlignRightIcon" />
+          <Icon material="format_align_right" title="AlignRightIcon" />
         </ToggleGroup.Item>
       </Tooltip>
     </ToggleGroup>
@@ -68,19 +60,19 @@ export const Kontrollert: StoryFn<typeof ToggleGroup> = () => {
     <>
       <ToggleGroup value={value} onChange={setValue}>
         <ToggleGroup.Item value="innboks">
-          <EnvelopeClosedIcon aria-hidden />
+          <Icon material="mail" aria-hidden />
           Innboks
         </ToggleGroup.Item>
         <ToggleGroup.Item value="utkast">
-          <DocPencilIcon aria-hidden />
+          <Icon material="edit_document" aria-hidden />
           Utkast
         </ToggleGroup.Item>
         <ToggleGroup.Item value="arkiv">
-          <ArchiveIcon aria-hidden />
+          <Icon material="archive" aria-hidden />
           Arkiv
         </ToggleGroup.Item>
         <ToggleGroup.Item value="sendt">
-          <PaperplaneIcon aria-hidden />
+          <Icon material="send" aria-hidden />
           Sendt
         </ToggleGroup.Item>
       </ToggleGroup>
