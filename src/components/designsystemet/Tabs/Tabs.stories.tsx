@@ -1,5 +1,4 @@
 import { Tabs, Tooltip, Button, Icon, Box } from '~/main';
-import { BackpackIcon, BellIcon, BicycleIcon, CarIcon, MotorcycleIcon, NewspaperIcon } from '@navikt/aksel-icons';
 import type { Meta, StoryFn } from '@storybook/react';
 import { useState } from 'react';
 
@@ -75,17 +74,17 @@ export const IconsOnly: StoryFn<typeof Tabs> = () => (
     <Tabs.List>
       <Tooltip content="Dine biler">
         <Tabs.Tab value="car">
-          <CarIcon title="car" />
+          <Icon material="calendar_month" aria-hidden />
         </Tabs.Tab>
       </Tooltip>
       <Tooltip content="Dine sykler">
         <Tabs.Tab value="bicycle">
-          <BicycleIcon title="Bicycle" />
+          <Icon material="error" aria-hidden />
         </Tabs.Tab>
       </Tooltip>
       <Tooltip content="Dine motorsykler">
         <Tabs.Tab value="motorcycle">
-          <MotorcycleIcon title="Motorcycle" />
+          <Icon material="lightbulb" aria-hidden />
         </Tabs.Tab>
       </Tooltip>
     </Tabs.List>
@@ -99,17 +98,17 @@ export const IconsWithText: StoryFn<typeof Tabs> = () => (
   <Tabs defaultValue="car">
     <Tabs.List>
       <Tabs.Tab value="car">
-        <CarIcon aria-hidden="true" />
+        <Icon material="person_add" aria-hidden />
         Biler
       </Tabs.Tab>
 
       <Tabs.Tab value="bicycle">
-        <BicycleIcon aria-hidden="true" />
+        <Icon material="error" aria-hidden />
         Sykler
       </Tabs.Tab>
 
       <Tabs.Tab value="motorcycle">
-        <MotorcycleIcon aria-hidden="true" />
+        <Icon material="lightbulb" aria-hidden />
         Motorsykler
       </Tabs.Tab>
     </Tabs.List>
@@ -131,15 +130,15 @@ export const Controlled: StoryFn<typeof Tabs> = () => {
       <Tabs value={value} onChange={setValue}>
         <Tabs.List>
           <Tabs.Tab value="value1">
-            <BellIcon aria-hidden />
+            <Icon material="person" aria-hidden />
             Tab 1
           </Tabs.Tab>
           <Tabs.Tab value="value2">
-            <NewspaperIcon aria-hidden />
+            <Icon material="chevron_left" aria-hidden />
             Tab 2
           </Tabs.Tab>
           <Tabs.Tab value="value3">
-            <BackpackIcon aria-hidden />
+            <Icon material="pending_actions" aria-hidden />
             Tab 3
           </Tabs.Tab>
         </Tabs.List>

@@ -1,8 +1,7 @@
 import type { Meta, StoryFn, StoryObj } from '@storybook/react';
-import { EnvelopeClosedIcon } from '@navikt/aksel-icons';
 
 import React from 'react';
-import { Link, Body, Box } from '~/main';
+import { Link, Body, Box, Icon } from '~/main';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
@@ -82,7 +81,7 @@ export const InText: StoryFn<typeof Link> = () => (
     </Body>
     <Box gap={16}>
       <Link href="mailto:designsystem@digdir.no">
-        <EnvelopeClosedIcon aria-hidden />
+        <Icon material="person" aria-hidden />
         <span>Kontakt oss</span>
       </Link>
     </Box>
