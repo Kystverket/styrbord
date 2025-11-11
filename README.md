@@ -39,6 +39,11 @@ Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.
 
 ## Endringslogg
 
+### 2025-11-11 -- v1.1.0
+
+- Oppdatert til Designsystemet versjon 1.7.2 fra 1.6.1.
+- Fjernet unødvendig dependency til @navikt/aksel-icons.
+
 ### 2025-10-24 -- v1.0
 
 Offisielt versjon 1.0.
