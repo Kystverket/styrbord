@@ -1,5 +1,5 @@
 import './css/index.scss';
-import '@material-symbols/font-300/outlined.css';
+import '@material-symbols/font-400/outlined.css';
 
 export type { SupportedLanguage, ScreenSize } from './utils/types';
 
