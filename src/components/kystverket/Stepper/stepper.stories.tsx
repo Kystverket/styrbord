@@ -47,3 +47,20 @@ export const Vertical: Story = {
     ),
   ],
 };
+
+export const ForceHorizontalMobile: Story = {
+  args: {
+    ...defaultProps,
+    forceHorizontal: true,
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ width: '320px', border: '1px dashed #ccc', padding: '16px' }}>
+        <p style={{ fontSize: '12px', marginBottom: '8px', color: '#666' }}>
+          Mobilbredde-simulering (320px) med forceHorizontal=true
+        </p>
+        <Story />
+      </div>
+    ),
+  ],
+};
