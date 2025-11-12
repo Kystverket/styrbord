@@ -1,5 +1,5 @@
-.opaqueHeader th {
-  --dsc-table-header-background: var(--ds-color-background-tinted);
+.opaqueHeader thead th {
+  background: var(--ds-color-background-tinted);
   --dsc-table-divider-border-width: 1px;
 }
 
@@ -23,8 +23,7 @@
 }
 
 .table th:has(button) {
-  padding-left: 0px;
-  padding-right: 0px;
+  padding: 0px;
 }
 
 .table tr td:first-child,
