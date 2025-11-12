@@ -509,3 +509,30 @@ export const ColorAccent: Story = (args) => {
     </Table>
   );
 };
+
+export const Datatable: Story = (args) => {
+  const rows = Array.from({ length: 30 }, (_, i) => i + 1);
+  return (
+    <Table {...args} data-color="neutral" cell-padding="md" border header radius="md" body="white">
+      <Table.Head>
+        <Table.Row>
+          <Table.HeaderCell>Saksnr.</Table.HeaderCell>
+          <Table.HeaderCell>Tittel</Table.HeaderCell>
+          <Table.HeaderCell sort="ascending">Opprettet</Table.HeaderCell>
+        </Table.Row>
+      </Table.Head>
+      <Table.Body>
+        {rows.map((row) => (
+          <Table.Row key={row} data-unread={row % 5 === 0 ? true : undefined} data-clickable>
+            <Table.Cell>{`Cell ${row}1`}</Table.Cell>
+            <Table.Cell>
+              {`Cell ${row}2`} lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem
+              ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet
+            </Table.Cell>
+            <Table.Cell data-nowrap>{`Cell ${row}3`}</Table.Cell>
+          </Table.Row>
+        ))}
+      </Table.Body>
+    </Table>
+  );
+};
