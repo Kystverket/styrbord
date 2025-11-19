@@ -57,61 +57,57 @@ const meta = {
 
 export default meta;
 
-const images = [
-  ImageAisSat,
-  ImageArcticInfo,
-  ImageAvgiftskalkulator,
-  ImageBaatfartMarine,
-  ImageBestilleLos,
-  ImageBoelgevarsel,
-  ImageBwArcticinfo,
-  ImageBwBoelgevarsel,
-  ImageBwNais,
-  ImageBwOhoi,
-  ImageDatakatalog,
-  ImageDgps,
-  ImageDigitaleFyrbesoek,
-  ImageDigitaleReferanseruter,
-  ImageEDialog,
-  ImageForespoerselSendt,
-  ImageHais,
-  ImageHavbase,
-  ImageHavnOgFarvannsloven,
-  ImageIsmelding,
-  ImageIstjeneste,
-  ImageKikkert,
-  ImageKystdatahuset,
-  ImageKystinfoKart,
-  ImageKystreise,
-  ImageKystvaer,
-  ImageLavutslipp,
-  ImageLrit,
-  ImageMarU,
-  ImageMegafon,
-  ImageNais,
-  ImageNasjonalHavneoversikt,
-  ImageNavarea,
-  ImageNavigasjonsvarsler,
-  ImageOhoi,
-  ImageRegistrerteSeilaser,
-  ImageSafeSeaNet,
-  ImageSeLosbestilling,
-  ImageSelvbetjening,
-  ImageSelvbetjeningRso,
-  ImageSlukkedeFyrlys,
-  ImageSoeknadOmFarledsbevis,
+const images: [string, React.FC][] = [
+  ['ImageAisSat', ImageAisSat],
+  ['ImageArcticInfo', ImageArcticInfo],
+  ['ImageAvgiftskalkulator', ImageAvgiftskalkulator],
+  ['ImageBaatfartMarine', ImageBaatfartMarine],
+  ['ImageBestilleLos', ImageBestilleLos],
+  ['ImageBoelgevarsel', ImageBoelgevarsel],
+  ['ImageBwArcticinfo', ImageBwArcticinfo],
+  ['ImageBwBoelgevarsel', ImageBwBoelgevarsel],
+  ['ImageBwNais', ImageBwNais],
+  ['ImageBwOhoi', ImageBwOhoi],
+  ['ImageDatakatalog', ImageDatakatalog],
+  ['ImageDgps', ImageDgps],
+  ['ImageDigitaleFyrbesoek', ImageDigitaleFyrbesoek],
+  ['ImageDigitaleReferanseruter', ImageDigitaleReferanseruter],
+  ['ImageEDialog', ImageEDialog],
+  ['ImageForespoerselSendt', ImageForespoerselSendt],
+  ['ImageHais', ImageHais],
+  ['ImageHavbase', ImageHavbase],
+  ['ImageHavnOgFarvannsloven', ImageHavnOgFarvannsloven],
+  ['ImageIsmelding', ImageIsmelding],
+  ['ImageIstjeneste', ImageIstjeneste],
+  ['ImageKikkert', ImageKikkert],
+  ['ImageKystdatahuset', ImageKystdatahuset],
+  ['ImageKystinfoKart', ImageKystinfoKart],
+  ['ImageKystreise', ImageKystreise],
+  ['ImageKystvaer', ImageKystvaer],
+  ['ImageLavutslipp', ImageLavutslipp],
+  ['ImageLrit', ImageLrit],
+  ['ImageMarU', ImageMarU],
+  ['ImageMegafon', ImageMegafon],
+  ['ImageNais', ImageNais],
+  ['ImageNasjonalHavneoversikt', ImageNasjonalHavneoversikt],
+  ['ImageNavarea', ImageNavarea],
+  ['ImageNavigasjonsvarsler', ImageNavigasjonsvarsler],
+  ['ImageOhoi', ImageOhoi],
+  ['ImageRegistrerteSeilaser', ImageRegistrerteSeilaser],
+  ['ImageSafeSeaNet', ImageSafeSeaNet],
+  ['ImageSeLosbestilling', ImageSeLosbestilling],
+  ['ImageSelvbetjening', ImageSelvbetjening],
+  ['ImageSelvbetjeningRso', ImageSelvbetjeningRso],
+  ['ImageSlukkedeFyrlys', ImageSlukkedeFyrlys],
+  ['ImageSoeknadOmFarledsbevis', ImageSoeknadOmFarledsbevis],
 ];
-const imagesMapped: [string, React.JSX.Element][] = images.map((ImageComponent) => [
-  String(ImageComponent.name),
-  ImageComponent({}),
-]);
 
 export const Showcase: StoryFn = () => {
   return (
     <table>
-      {imagesMapped.map(([elementName, Element]) => (
+      {images.map(([elementName, Element]) => (
         <tr key={elementName}>
-          <td style={{ padding: '0.5rem' }}>{Element}</td>
+          <td style={{ padding: '0.5rem' }}>{<Element />}</td>
           <td style={{ padding: '0.5rem' }}>
             <Body strong>&lt;{elementName} /&gt;</Body>
           </td>
