@@ -10,22 +10,25 @@ export interface StepItem {
 export interface StepperProps {
   steps: StepItem[];
   step: number;
+  forceHorizontal?: boolean;
 }
 
 interface StepItemProps {
   state: 'completed' | 'incomplete' | 'current';
   label: string;
   index: number;
+  forceHorizontal?: boolean;
+  showLabel?: boolean;
 }
 
-const StepItem = ({ state, label, index }: StepItemProps) => {
+const StepItem = ({ state, label, index, forceHorizontal, showLabel }: StepItemProps) => {
   return (
-    <span className={cls.step + ' ' + cls[`${state}-step`]}>
+    <span className={cls.step + ' ' + cls[`${state}-step`] + (forceHorizontal ? ` ${cls['force-horizontal']}` : '')}>
       <span className={cls.icon}>
         {state === 'completed' && <Icon material="check" />}
         {state !== 'completed' && <span>{index}</span>}
       </span>
-      <span className={cls.label}>{label}</span>
+      {showLabel && <span className={cls.label}>{label}</span>}
     </span>
   );
 };
@@ -36,16 +39,19 @@ const stateFromStep = (currentStep: number, currentStepItemIndex: number) => {
   return 'current';
 };
 
-const Stepper = ({ steps, step }: StepperProps) => {
+const Stepper = ({ steps, step, forceHorizontal = false }: StepperProps) => {
   return (
-    <div className={cls['step-outer-container']}>
+    <div className={cls['step-outer-container'] + (forceHorizontal ? ` ${cls['force-horizontal-container']}` : '')}>
       <div className={cls['step-container']}>
         {steps
           .map<StepItemProps>((item, index) => {
+            const state = stateFromStep(step, index);
             return {
               ...item,
               index: index + 1,
-              state: stateFromStep(step, index),
+              state,
+              forceHorizontal,
+              showLabel: !forceHorizontal || state === 'current',
             };
           })
           .map((item, index) => (
