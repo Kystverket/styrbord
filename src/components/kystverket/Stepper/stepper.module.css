@@ -5,13 +5,14 @@
   }
   .step-container {
     display: flex;
-    flex-direction: row;
     width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
+    gap: 0.25rem;
     overflow-x: auto;
     flex-wrap: wrap;
+
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
   }
   .step {
     display: flex;
@@ -19,71 +20,107 @@
     align-items: center;
     gap: 0.5rem;
     color: var(--ds-color-grey-70);
-    font-weight: 500;
-    font-size: var(--ds-font-size-label-sm);
     flex: 0 0 auto;
+    padding: 0.5rem;
   }
   .step .icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2rem;
-    height: 2rem;
+    width: calc(var(--ds-body-md-font-size) * 2);
+    height: calc(var(--ds-body-md-font-size) * 2);
     border-radius: 999px;
-    background-color: var(--ds-color-primary-surface-default);
-    transition: all 0.3s;
+    transition: all 0.1s;
+    border: var(--ds-border-width-default) solid var(--ds-color-base-default);
+    background-color: var(--ds-color-base-default);
+    color: var(--ds-color-base-contrast-default);
   }
-
-  .completed-step,
-  .incomplete-step {
-    color: var(--ds-color-neutral-border-default);
-  }
-  .completed-step .icon,
-  .incomplete-step .icon {
-    border: var(--ds-border-width-default) solid var(--ds-color-neutral-border-subtle);
-    background-color: transparent;
-    color: var(--ds-color-neutral-border-default);
-  }
-  .completed-step .icon > * {
-    transform: scale(0.75);
-  }
-
-  .current-step {
-    color: var(--ds-color-primary-base-active);
-  }
-  .current-step .icon {
-    border: var(--ds-border-width-default) solid var(--ds-color-primary-base-active);
-    background-color: var(--ds-color-primary-base-active);
-    color: var(--ds-color-primary-base-contrast-default);
-  }
-
-  .divider {
-    display: block;
-    height: 1px;
-    background-color: var(--ds-color-neutral-border-subtle);
-    flex: 1;
-  }
-  .label {
+  .step .icon > * {
     font-weight: var(--ds-font-weight-medium);
     font-size: var(--ds-body-sm-font-size);
     line-height: var(--ds-body-sm-line-height);
     letter-spacing: var(--ds-body-sm-letter-spacing);
   }
+  .step.has-style-subtle .icon {
+    border: var(--ds-border-width-default) solid var(--ds-color-surface-tinted);
+    background-color: var(--ds-color-surface-tinted);
+    color: var(--ds-color-text-default);
+  }
+  .step.has-style-outline .icon {
+    border: var(--ds-border-width-default) solid var(--ds-color-border-default);
+    background-color: transparent;
+    color: var(--ds-color-text-default);
+  }
+  .divider {
+    display: block;
+    width: 1px;
+    height: 15px;
+    flex: 0 0 15px;
+    margin-left: 1.5rem;
+    background-color: var(--ds-color-primary-border-default);
+  }
+  .label {
+    font-weight: var(--ds-font-weight-medium);
+    font-size: var(--ds-body-md-font-size);
+    line-height: var(--ds-body-md-line-height);
+    letter-spacing: var(--ds-body-md-letter-spacing);
+    color: var(--ds-color-neutral-text-subtle);
+  }
+  .step.clickable .label,
+  .step.is-current .label {
+    color: var(--ds-color-primary-text-default);
+  }
+  .step.clickable {
+    cursor: pointer;
+  }
+  .step.clickable:hover:not(.is-current) .icon,
+  .step.clickable:focus-visible:not(.is-current) .icon {
+    background-color: var(--ds-color-surface-hover);
+    color: var(--ds-color-text-default);
+    cursor: pointer;
+  }
+  .step.clickable:hover:not(.is-current) .label,
+  .step.clickable:focus-visible:not(.is-current) .label {
+    text-decoration: underline;
+  }
+  .step {
+    padding: 0.1rem 0.5rem;
+  }
 
-  @container stepContainer (max-width: 600px) {
-    .step-container {
-      flex-direction: column;
-      justify-content: start;
-      align-items: start;
-      gap: 4px;
+  @container stepContainer (min-width: 600px) {
+    .step-container:not(.orientation-vertical) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      row-gap: 0.5rem;
     }
-    .divider {
+
+    .step-container:not(.orientation-vertical) .divider {
       display: block;
-      width: 1px;
-      height: 15px;
-      flex: 0 0 15px;
-      background-color: var(--ds-color-neutral-border-subtle);
-      margin-left: 15px;
+      height: 1px;
+      flex: 1;
+      margin-left: 0;
     }
+  }
+  .step-container.orientation-horizontal.orientation-forced {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    row-gap: 0.5rem;
+  }
+
+  .step-container.orientation-horizontal.orientation-forced .divider {
+    display: block;
+    height: 1px;
+    flex: 1;
+    margin-left: 0;
+  }
+
+  .step-container.orientation-horizontal.orientation-forced .step .label {
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 10ch;
   }
 }
