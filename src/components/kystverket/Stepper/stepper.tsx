@@ -1,11 +1,15 @@
 import React from 'react';
 import cls from './stepper.module.css';
 import { Icon, IconId } from '~/main';
+
+export const stepItemColorOptions = ['auto', 'primary', 'accent', 'neutral', 'success', 'danger', 'error', 'info'];
+export type StepItemColor = (typeof stepItemColorOptions)[number];
+
 export interface StepItem {
   identifier?: string;
   label: string;
   icon?: IconId | 'index' | 'auto';
-  'data-color'?: 'auto' | 'primary' | 'accent' | 'neutral' | 'success' | 'warning' | 'error' | 'info';
+  'data-color'?: StepItemColor;
   style?: 'auto' | 'filled' | 'subtle' | 'outline';
   onClick?: (item: StepItem) => void;
 }

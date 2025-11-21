@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import Stepper, { StepItem, StepperProps } from './stepper';
+import Stepper, { StepItem, StepItemColor, StepperProps } from './stepper';
 import { Box } from '~/main';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
@@ -148,6 +148,27 @@ export const Larger: Story = {
         <div data-size="lg">
           <Story />
         </div>
+      </Box>
+    ),
+  ],
+};
+
+const colors: StepItemColor[] = ['accent', 'success', 'warning', 'danger', 'neutral'];
+
+export const Colors: Story = {
+  args: {
+    step: 5,
+    steps: steps.map((step, index) => ({
+      ...step,
+      onClick: () => {},
+      style: 'filled',
+      'data-color': colors[index % colors.length],
+    })),
+  },
+  decorators: [
+    (Story) => (
+      <Box p={16}>
+        <Story />
       </Box>
     ),
   ],
