@@ -32,21 +32,30 @@ const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
         {props.description && <Fieldset.Description>{props.description}</Fieldset.Description>}
         <div className={classes.toggleGroup} data-color={hasError ? 'danger' : 'neutral'}>
           {props.options.map((el) => (
-            <Radio
+            <div
               key={el.label}
               className={el.value === props.value ? classes['is-on'] : classes['is-off']}
-              data-color={hasError ? 'danger' : 'primary'}
-              readOnly={props.readonly}
-              disabled={props.disabled}
-              checked={el.value === props.value}
-              label={el.label}
-              onChange={() => {
-                props.onChange?.(el.value);
+              onClick={() => {
+                if (!props.disabled && !props.readonly) {
+                  props.onChange?.(el.value);
+                }
               }}
-              onBlur={() => {
-                props.onBlur?.();
-              }}
-            />
+              style={{ cursor: props.disabled || props.readonly ? 'default' : 'pointer' }}
+            >
+              <Radio
+                data-color={hasError ? 'danger' : 'primary'}
+                readOnly={props.readonly}
+                disabled={props.disabled}
+                checked={el.value === props.value}
+                label={el.label}
+                onChange={() => {
+                  props.onChange?.(el.value);
+                }}
+                onBlur={() => {
+                  props.onBlur?.();
+                }}
+              />
+            </div>
           ))}
         </div>
         {errorText && <ValidationMessage>{errorText}</ValidationMessage>}
