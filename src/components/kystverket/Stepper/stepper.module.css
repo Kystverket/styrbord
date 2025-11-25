@@ -1,4 +1,10 @@
 @layer styrbord-modules {
+  :global([data-size="lg"]) .stepperIcon {
+    transform: scale(calc(24px/21px));
+  }
+  :global([data-size="sm"]) .stepperIcon {
+    transform: scale(calc(18px/21px));
+  }
   .step-outer-container {
     container-type: inline-size;
     container-name: stepContainer;
@@ -34,12 +40,15 @@
     border: var(--ds-border-width-default) solid var(--ds-color-base-default);
     background-color: var(--ds-color-base-default);
     color: var(--ds-color-base-contrast-default);
+    line-height: 0;
+    user-select: none;
   }
   .step .icon > * {
     font-weight: var(--ds-font-weight-medium);
     font-size: var(--ds-body-sm-font-size);
     line-height: var(--ds-body-sm-line-height);
     letter-spacing: var(--ds-body-sm-letter-spacing);
+    line-height: 0;
   }
   .step.has-style-subtle .icon {
     border: var(--ds-border-width-default) solid var(--ds-color-surface-tinted);

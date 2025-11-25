@@ -128,26 +128,22 @@ export const Clickable: Story = {
 };
 
 export const Smaller: Story = {
-  args: { step: 5, steps: steps.map((step) => ({ ...step, onClick: () => {} })) },
+  args: { 'data-size': 'sm', step: 5, steps: steps.map((step) => ({ ...step, onClick: () => {} })) },
   decorators: [
     (Story) => (
       <Box p={16}>
-        <div data-size="sm">
-          <Story />
-        </div>
+        <Story />
       </Box>
     ),
   ],
 };
 
 export const Larger: Story = {
-  args: { step: 5, steps: steps.map((step) => ({ ...step, onClick: () => {} })) },
+  args: { 'data-size': 'lg', step: 5, steps: steps.map((step) => ({ ...step, onClick: () => {} })) },
   decorators: [
     (Story) => (
       <Box p={16}>
-        <div data-size="lg">
-          <Story />
-        </div>
+        <Story />
       </Box>
     ),
   ],

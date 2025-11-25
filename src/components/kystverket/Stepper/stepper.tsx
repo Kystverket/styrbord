@@ -23,6 +23,7 @@ interface StepItemProps extends StepItem {
 export interface StepperProps {
   steps: StepItem[];
   step: number;
+  'data-size'?: 'sm' | 'md' | 'lg';
   labels?: 'always' | 'current' | 'never';
   orientation?: 'horizontal' | 'vertical';
   forceOrientation?: boolean;
@@ -47,11 +48,11 @@ const StepItem = ({
 
   let iconContent = <span>{index}</span>;
   if (icon === 'auto') {
-    iconContent = placement === 'before' ? <Icon material="check" /> : <span>{index}</span>;
+    iconContent = placement === 'before' ? <Icon material="check" className={cls.stepperIcon} /> : <span>{index}</span>;
   } else if (icon === 'index') {
     iconContent = <span>{index}</span>;
   } else {
-    iconContent = <Icon material={icon} />;
+    iconContent = <Icon material={icon} className={cls.stepperIcon} />;
   }
 
   const content = (
@@ -103,9 +104,10 @@ const Stepper = ({
   labels = 'always',
   orientation = 'horizontal',
   forceOrientation = false,
+  'data-size': dataSize,
 }: StepperProps) => {
   return (
-    <div className={[cls['step-outer-container']].join(' ')}>
+    <div className={[cls['step-outer-container']].join(' ')} data-size={dataSize}>
       <div
         className={[
           cls['step-container'],
