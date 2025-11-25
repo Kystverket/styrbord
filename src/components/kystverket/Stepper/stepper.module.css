@@ -1,9 +1,9 @@
 @layer styrbord-modules {
-  :global([data-size="lg"]) .stepperIcon {
-    transform: scale(calc(24px/21px));
+  :global([data-size='lg']) .stepperIcon {
+    transform: scale(calc(24px / 21px));
   }
-  :global([data-size="sm"]) .stepperIcon {
-    transform: scale(calc(18px/21px));
+  :global([data-size='sm']) .stepperIcon {
+    transform: scale(calc(18px / 21px));
   }
   .step-outer-container {
     container-type: inline-size;
