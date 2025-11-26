@@ -1,56 +1,137 @@
 import React from 'react';
 import cls from './stepper.module.css';
-import { Icon } from '~/main';
+import { Icon, IconId } from '~/main';
+
+export const stepItemColorOptions = ['auto', 'primary', 'accent', 'neutral', 'success', 'danger', 'error', 'info'];
+export type StepItemColor = (typeof stepItemColorOptions)[number];
 
 export interface StepItem {
   identifier?: string;
   label: string;
+  icon?: IconId | 'index' | 'auto';
+  'data-color'?: StepItemColor;
+  style?: 'auto' | 'filled' | 'subtle' | 'outline';
+  onClick?: (item: StepItem) => void;
+}
+
+interface StepItemProps extends StepItem {
+  placement: 'before' | 'current' | 'after';
+  index: number;
+  labels: 'always' | 'never';
 }
 
 export interface StepperProps {
   steps: StepItem[];
   step: number;
+  'data-size'?: 'sm' | 'md' | 'lg';
+  labels?: 'always' | 'current' | 'never';
+  orientation?: 'horizontal' | 'vertical';
+  forceOrientation?: boolean;
 }
 
-interface StepItemProps {
-  state: 'completed' | 'incomplete' | 'current';
-  label: string;
-  index: number;
-}
+const StepItem = ({
+  identifier,
+  placement,
+  icon = 'auto',
+  'data-color': dataColor = 'auto',
+  style = 'auto',
+  label,
+  labels,
+  onClick,
+  index,
+}: StepItemProps) => {
+  const autoColor = placement === 'current' || onClick ? 'primary' : 'neutral';
+  if (dataColor === 'auto') dataColor = autoColor;
 
-const StepItem = ({ state, label, index }: StepItemProps) => {
+  const autoStyle = placement === 'before' ? 'outline' : placement === 'current' ? 'filled' : 'outline';
+  if (style === 'auto') style = autoStyle;
+
+  let iconContent = <span>{index}</span>;
+  if (icon === 'auto') {
+    iconContent = placement === 'before' ? <Icon material="check" className={cls.stepperIcon} /> : <span>{index}</span>;
+  } else if (icon === 'index') {
+    iconContent = <span>{index}</span>;
+  } else {
+    iconContent = <Icon material={icon} className={cls.stepperIcon} />;
+  }
+
+  const content = (
+    <>
+      <span className={cls.icon}>{iconContent}</span>
+      {labels === 'always' && <span className={cls.label}>{label}</span>}
+    </>
+  );
+
+  const classNames = [cls.step, cls[`is-${placement}`], cls[`has-style-${style}`], onClick ? cls.clickable : ''].join(
+    ' ',
+  );
+
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        title={label}
+        data-color={dataColor}
+        className={classNames}
+        onClick={() =>
+          onClick({
+            identifier,
+            label,
+          })
+        }
+      >
+        {content}
+      </button>
+    );
+  }
+
   return (
-    <span className={cls.step + ' ' + cls[`${state}-step`]}>
-      <span className={cls.icon}>
-        {state === 'completed' && <Icon material="check" />}
-        {state !== 'completed' && <span>{index}</span>}
-      </span>
-      <span className={cls.label}>{label}</span>
+    <span data-color={dataColor} className={classNames} title={label}>
+      {content}
     </span>
   );
 };
 
-const stateFromStep = (currentStep: number, currentStepItemIndex: number) => {
-  if (currentStepItemIndex < currentStep) return 'completed';
-  if (currentStepItemIndex > currentStep) return 'incomplete';
+const calcPlacement = (currentStep: number, currentStepItemIndex: number) => {
+  if (currentStepItemIndex < currentStep) return 'before';
+  if (currentStepItemIndex > currentStep) return 'after';
   return 'current';
 };
 
-const Stepper = ({ steps, step }: StepperProps) => {
+const Stepper = ({
+  steps,
+  step,
+  labels = 'always',
+  orientation = 'horizontal',
+  forceOrientation = false,
+  'data-size': dataSize,
+}: StepperProps) => {
   return (
-    <div className={cls['step-outer-container']}>
-      <div className={cls['step-container']}>
+    <div className={[cls['step-outer-container']].join(' ')} data-size={dataSize}>
+      <div
+        className={[
+          cls['step-container'],
+          cls[`orientation-${orientation}`],
+          cls[`orientation-${forceOrientation ? 'forced' : 'auto'}`],
+        ].join(' ')}
+      >
         {steps
-          .map<StepItemProps>((item, index) => {
+          .map<Omit<StepItemProps, 'labels'>>((item, index) => {
             return {
               ...item,
               index: index + 1,
-              state: stateFromStep(step, index),
+              placement: calcPlacement(step, index),
+            };
+          })
+          .map<StepItemProps>((item) => {
+            return {
+              ...item,
+              labels: labels === 'current' ? (item.placement === 'current' ? 'always' : 'never') : labels,
             };
           })
           .map((item, index) => (
             <React.Fragment key={item.label}>
-              {index > 0 && <span className={[cls.divider, cls[`${item.state}-divider`]].join(' ')} />}
+              {index > 0 && <span className={[cls.divider].join(' ')} />}
               <StepItem {...item} />
             </React.Fragment>
           ))}
