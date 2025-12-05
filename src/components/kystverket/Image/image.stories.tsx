@@ -12,6 +12,7 @@ import {
   ImageBwBoelgevarsel,
   ImageBwNais,
   ImageBwOhoi,
+  imageColors,
   ImageDatakatalog,
   ImageDgps,
   ImageDigitaleFyrbesoek,
@@ -37,6 +38,7 @@ import {
   ImageNavarea,
   ImageNavigasjonsvarsler,
   ImageOhoi,
+  ImageProps,
   ImageRegistrerteSeilaser,
   ImageSafeSeaNet,
   ImageSeLosbestilling,
@@ -57,7 +59,7 @@ const meta = {
 
 export default meta;
 
-const images: [string, React.FC][] = [
+const images: [string, React.FC<ImageProps>][] = [
   ['ImageAisSat', ImageAisSat],
   ['ImageArcticInfo', ImageArcticInfo],
   ['ImageAvgiftskalkulator', ImageAvgiftskalkulator],
@@ -102,15 +104,27 @@ const images: [string, React.FC][] = [
   ['ImageSoeknadOmFarledsbevis', ImageSoeknadOmFarledsbevis],
 ];
 
+const variants = [...imageColors] as const;
+
 export const Showcase: StoryFn = () => {
   return (
     <table>
+      <thead>
+        <tr>
+          <th></th>
+          {variants.map((variant) => (
+            <th style={{ padding: '0.5rem' }}>{variant}</th>
+          ))}
+        </tr>
+      </thead>
       {images.map(([elementName, Element]) => (
         <tr key={elementName}>
-          <td style={{ padding: '0.5rem' }}>{<Element />}</td>
           <td style={{ padding: '0.5rem' }}>
             <Body strong>&lt;{elementName} /&gt;</Body>
           </td>
+          {variants.map((variant) => (
+            <td style={{ padding: '0.5rem' }}>{<Element data-color={variant} />}</td>
+          ))}
         </tr>
       ))}
     </table>
@@ -118,9 +132,9 @@ export const Showcase: StoryFn = () => {
 };
 
 export const Big: StoryFn = () => {
-  return <ImageArcticInfo width={256} />;
+  return <ImageSlukkedeFyrlys size={60} />;
 };
 
 export const Small: StoryFn = () => {
-  return <ImageArcticInfo width={32} />;
+  return <ImageArcticInfo size={8} />;
 };

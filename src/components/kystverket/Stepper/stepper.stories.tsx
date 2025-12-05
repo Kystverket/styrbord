@@ -169,3 +169,21 @@ export const Colors: Story = {
     ),
   ],
 };
+
+export const Icons: Story = {
+  args: {
+    step: 5,
+    steps: steps.map((step, index) => ({
+      ...step,
+      onClick: () => {},
+      icon: index % 3 === 0 ? 'anchor' : index % 3 === 1 ? 'archive' : 'chat',
+    })),
+  },
+  decorators: [
+    (Story) => (
+      <Box p={16}>
+        <Story />
+      </Box>
+    ),
+  ],
+};
