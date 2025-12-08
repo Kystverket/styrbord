@@ -29,6 +29,9 @@ export function FilePreviewer({ ref, files, onClose, startIndex, navigation = tr
   const selectedFileIndexRef = useRef(selectedFileIndex);
   const previewButtonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
+  // logic: In case default behaviour is overriden
+  const buttonConfig = getButtonConfig(selectedFile);
+
   useImperativeHandle(ref, () => {
     return {
       close() {
@@ -41,7 +44,6 @@ export function FilePreviewer({ ref, files, onClose, startIndex, navigation = tr
       },
     };
   }, []);
-
 
   useEffect(() => {
     setSelectedFile(files[selectedFileIndex]);
@@ -56,6 +58,21 @@ export function FilePreviewer({ ref, files, onClose, startIndex, navigation = tr
       });
     }
   }, [selectedFileIndex]);
+
+  //logic: Attach eventlistener for swapping between items
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowRight') {
+        handleNext();
+      } else if (event.key === 'ArrowLeft') {
+        handlePrev();
+      } else if (event.key === 'Escape') {
+        handleClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const handleClose = () => {
     if (typeof dialogRef !== 'function' && dialogRef?.current) {
@@ -106,7 +123,12 @@ export function FilePreviewer({ ref, files, onClose, startIndex, navigation = tr
   const handleOpenInNew = () => {
     if (selectedFile.contentType == 'image') window.open(selectedFile.src, '_blank');
     else if (selectedFile.contentType == 'pdf') window.open(selectedFile.src, '_blank');
-    else if (selectedFile.contentType == 'json') {
+    else if (selectedFile.contentType == 'json') openSelectedJsonFileAsBlob();
+  };
+
+  const openSelectedJsonFileAsBlob = () => {
+    if (selectedFile.contentType !== 'json') return;
+    {
       const jsonString = JSON.stringify(selectedFile.data, null, 2);
       const blob = new Blob([jsonString], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
@@ -115,28 +137,12 @@ export function FilePreviewer({ ref, files, onClose, startIndex, navigation = tr
     }
   };
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'ArrowRight') {
-        handleNext();
-      } else if (event.key === 'ArrowLeft') {
-        handlePrev();
-      } else if (event.key === 'Escape') {
-        handleClose();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
-
   const handleNext = () => {
     if (selectedFileIndexRef.current < files.length - 1) setSelectedFileIndex((index) => index + 1);
   };
   const handlePrev = () => {
     if (selectedFileIndexRef.current > 0) setSelectedFileIndex((index) => index - 1);
   };
-
-  const buttonConfig = getButtonConfig(selectedFile);
 
   // Drag to scroll functionality
   const scrollRef = useRef<HTMLDivElement>(null);

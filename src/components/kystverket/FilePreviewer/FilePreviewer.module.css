@@ -35,7 +35,6 @@
   flex-direction: row;
   gap: 12px;
   display: flex;
-  /* overflow-x: scroll; */
 }
 
 .previewButton {
