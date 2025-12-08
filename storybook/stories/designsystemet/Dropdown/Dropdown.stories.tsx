@@ -1,5 +1,4 @@
-import { Dropdown, Button } from '~/main';
-import { ChevronDownIcon, ChevronUpIcon, LinkIcon } from '@navikt/aksel-icons';
+import { Dropdown, Button, Icon } from '~/main';
 import type { Meta, StoryFn } from '@storybook/react';
 import { expect, userEvent, within } from '@storybook/test';
 import { useState } from 'react';
@@ -75,7 +74,7 @@ export const Icons: StoryFn<typeof Dropdown> = (args) => {
           <Dropdown.Item>
             <Dropdown.Button asChild>
               <a href="https://github.com/digdir/designsystemet" target="_blank" rel="noreferrer">
-                <LinkIcon aria-hidden />
+                <Icon material="link" aria-hidden />
                 Github
               </a>
             </Dropdown.Button>
@@ -83,7 +82,7 @@ export const Icons: StoryFn<typeof Dropdown> = (args) => {
           <Dropdown.Item>
             <Dropdown.Button asChild>
               <a href="https://designsystemet.no" target="_blank" rel="noreferrer">
-                <LinkIcon aria-hidden />
+                <Icon material="link" aria-hidden />
                 Designsystemet.no
               </a>
             </Dropdown.Button>
@@ -101,7 +100,7 @@ export const Controlled: StoryFn<typeof Dropdown> = () => {
     <Dropdown.TriggerContext>
       <Dropdown.Trigger onClick={() => setOpen(!open)}>
         Dropdown
-        {open ? <ChevronDownIcon aria-hidden /> : <ChevronUpIcon aria-hidden />}
+        {open ? <Icon material="keyboard_arrow_down" aria-hidden /> : <Icon material="keyboard_arrow_up" aria-hidden />}
       </Dropdown.Trigger>
       <Dropdown open={open} onClose={() => setOpen(false)}>
         <Dropdown.List>

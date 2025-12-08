@@ -1,0 +1,7 @@
+.kyvDivider {
+  width: 4rem;
+  height: 0.1875rem;
+  background-color: var(--ds-color-accent-base-default);
+  border: none;
+  margin: 0;
+}

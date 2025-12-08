@@ -11,8 +11,8 @@ import {
   Table,
   usePagination,
   Pagination,
+  Icon,
 } from '~/main';
-import { FloppydiskIcon, PencilIcon } from '@navikt/aksel-icons';
 import type { Meta, StoryFn, StoryObj } from '@storybook/react';
 import { useMemo, useState } from 'react';
 
@@ -248,7 +248,7 @@ export const Conditional: StoryFn<UseCheckboxGroupProps> = (args) => {
       {open ? (
         <>
           <Button onClick={() => setOpen(false)}>
-            <FloppydiskIcon aria-hidden /> Lagre
+            <Icon material="download" aria-hidden /> Lagre
           </Button>
           <Fieldset>
             <Fieldset.Legend>Hvordan vil du helst at vi skal kontakte deg?</Fieldset.Legend>
@@ -261,7 +261,7 @@ export const Conditional: StoryFn<UseCheckboxGroupProps> = (args) => {
         </>
       ) : (
         <Button onClick={() => setOpen(true)} variant="outline">
-          <PencilIcon aria-hidden /> Rediger
+          <Icon material="edit" aria-hidden /> Rediger
         </Button>
       )}
     </>

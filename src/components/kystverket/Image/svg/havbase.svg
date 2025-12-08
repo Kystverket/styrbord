@@ -1,12 +1,13 @@
 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M22.5 56L15 47H57V50.7059L54 56H22.5Z" stroke="#000667" stroke-width="2" stroke-linejoin="round"/>
-<path d="M19 47L26.8904 37H50.0685L55 47" stroke="#000667" stroke-width="2" stroke-linejoin="round"/>
-<path d="M31 37L34.2941 32H45.1176L47 37" stroke="#000667" stroke-width="2" stroke-linejoin="round"/>
-<path d="M17.5 13.5H16" stroke="#000667" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M22.5 13.5H21" stroke="#000667" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M44.5 42H43" stroke="#000667" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M38.5 42H37" stroke="#000667" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M35.5 17H7V19.5L9 23H30L35.5 17Z" stroke="#000667" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M8 17L11.5714 10H27.898L33 17" stroke="#000667" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M24 10L21.7805 7H15.0301L14 10" stroke="#000667" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22.5 56L15 47H57V50.7059L54 56H22.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+<path d="M19 47L26.8904 37H50.0685L55 47" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+<path d="M31 37L34.2941 32H45.1176L47 37" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+<path d="M17.5 13.5H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22.5 13.5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M44.5 42H43" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M38.5 42H37" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M35.5 17H7V19.5L9 23H30L35.5 17Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8 17L11.5714 10H27.898L33 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M24 10L21.7805 7H15.0301L14 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
 </svg>

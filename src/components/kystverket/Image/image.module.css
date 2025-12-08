@@ -1,9 +1,0 @@
-@layer styrbord-modules {
-  .icon {
-    user-select: none;
-  }
-
-  .filled {
-    font-variation-settings: 'FILL' 1;
-  }
-}

@@ -1,0 +1,32 @@
+@layer styrbord-modules {
+  .bordered {
+    border: 1px solid var(--tag-border-color, var(--ds-color-neutral-border-default));
+    border-radius: var(--ds-border-radius-sm);
+  }
+
+  .bordered[data-color='accent'] {
+    --tag-border-color: var(--ds-color-accent-border-subtle);
+  }
+
+  .bordered[data-color='extra1'] {
+    --tag-border-color: var(--ds-color-extra1-border-subtle);
+  }
+
+  .bordered[data-color='neutral'] {
+    --tag-border-color: var(--ds-color-neutral-border-subtle);
+  }
+
+  .bordered[data-color='success'] {
+    --tag-border-color: var(--ds-color-success-border-subtle);
+  }
+
+  .bordered[data-color='warning'] {
+    --tag-border-color: var(--ds-color-warning-border-subtle);
+  }
+  .bordered[data-color='danger'] {
+    --tag-border-color: var(--ds-color-danger-border-subtle);
+  }
+  .bordered[data-color='info'] {
+    --tag-border-color: var(--ds-color-info-border-subtle);
+  }
+}
