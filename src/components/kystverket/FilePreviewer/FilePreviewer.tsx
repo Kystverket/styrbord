@@ -42,30 +42,6 @@ export function FilePreviewer({ ref, files, onClose, startIndex, navigation = tr
     };
   }, []);
 
-  // Disable body scroll when dialog is open
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-
-    const handleOpen = () => {
-      document.body.style.overflow = 'hidden';
-    };
-
-    const handleCloseDialog = () => {
-      document.body.style.overflow = '';
-    };
-
-    dialog.addEventListener('close', handleCloseDialog);
-    // Check if already open on mount
-    if (dialog.open) {
-      handleOpen();
-    }
-
-    return () => {
-      dialog.removeEventListener('close', handleCloseDialog);
-      document.body.style.overflow = '';
-    };
-  }, []);
 
   useEffect(() => {
     setSelectedFile(files[selectedFileIndex]);
