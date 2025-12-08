@@ -134,8 +134,26 @@ export type { AvatarProps } from './components/designsystemet/Avatar/Avatar';
 
 export { EXPERIMENTAL_Suggestion as Suggestion } from '@digdir/designsystemet-react';
 
-export { usePagination, useCheckboxGroup } from '@digdir/designsystemet-react';
-export type { Size, UseRadioGroupProps, UseCheckboxGroupProps, UsePaginationProps } from '@digdir/designsystemet-react';
+export {
+  RovingFocusItem,
+  RovingFocusRoot,
+  omit,
+  useCheckboxGroup,
+  useDebounceCallback,
+  useIsomorphicLayoutEffect,
+  useMediaQuery,
+  usePagination,
+  useRadioGroup,
+  useSynchronizedAnimation,
+} from '@digdir/designsystemet-react';
+export type {
+  Size,
+  UseRadioGroupProps,
+  UseCheckboxGroupProps,
+  UsePaginationProps,
+  MergeRight,
+  LabelRequired,
+} from '@digdir/designsystemet-react';
 
 export type { BadgePositionProps, BadgeProps } from '@digdir/designsystemet-react';
 export { Badge, BadgePosition } from '@digdir/designsystemet-react';
