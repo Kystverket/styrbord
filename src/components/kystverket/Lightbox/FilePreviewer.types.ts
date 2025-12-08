@@ -29,7 +29,7 @@ export type jsonFile = {
 
 // Default button configurations by file type
 export const defaultButtonsByType = {
-  pdf: { showDownload: false, showOpenInNew: true } as buttonOptions,
+  pdf: { showDownload: true, showOpenInNew: true } as buttonOptions,
   image: { showDownload: true, showOpenInNew: true } as buttonOptions,
-  json: { showDownload: true, showOpenInNew: false } as buttonOptions,
+  json: { showDownload: true, showOpenInNew: true } as buttonOptions,
 };

@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/react';
-import { FilePreview, FilePreviewProps } from './Lightbox';
+import { FilePreviewRef, FilePreview, FilePreviewProps } from './Lightbox';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 import { Button } from '~/main';
@@ -10,7 +10,7 @@ import pikekyst from '@assets/documents/Pikekyst Oppskrift.pdf';
 import geojson from '@assets/documents/geojson.json';
 
 const meta = {
-  title: 'Components/Lightbox',
+  title: 'Components/FilePreviewer',
   component: FilePreview,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'experimental'],
@@ -37,22 +37,42 @@ const defaultProps: FilePreviewProps = {
     },
     {
       contentType: 'json',
-      data: geojson,
       fileName: 'Kartdata.json',
-      fileSize: '20KB',
+      fileSize: '1kB',
+      data: geojson,
     },
   ],
 };
 
-export const Default: StoryFn = () => {
-  const filePreviewRef = useRef<HTMLDialogElement | null>(null);
+export const withRef: StoryFn = () => {
+  const filePreviewRef = useRef<FilePreviewRef>(null);
 
-  const openPreview = () => filePreviewRef?.current?.showModal();
+  const openPreview = () => {
+    filePreviewRef.current?.showModal();
+  };
 
   return (
     <>
-      <Button onClick={openPreview}>Open Preview</Button>
-      <FilePreview ref={filePreviewRef} popovertarget="filePreviewOpen" {...defaultProps} />
+      <p>Click the button below to open the file preview dialog.</p>
+      <Button onClick={openPreview}>Open with Ref</Button>
+      <FilePreview files={defaultProps.files} ref={filePreviewRef} />
     </>
   );
 };
+
+export const withRefAndStartIndex: StoryFn = () => {
+  const filePreviewRef = useRef<FilePreviewRef>(null);
+
+  const openPreview = () => {
+    filePreviewRef.current?.showModal(1);
+  };
+
+  return (
+    <>
+      <p>Click the button below to open on the 2nd file.</p>
+      <Button onClick={openPreview}>Open</Button>
+      <FilePreview files={defaultProps.files} ref={filePreviewRef} />
+    </>
+  );
+};
+
