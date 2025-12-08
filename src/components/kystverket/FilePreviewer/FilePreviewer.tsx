@@ -1,9 +1,9 @@
 import { forwardRef, Ref, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import classes from './FilePreviewer.module.css';
 import { Box, Button, Icon, Paragraph } from '~/main';
-import { imageFile, jsonFile, pdfFile, defaultButtonsByType } from './FilePreviewer.types';
+import { ImageFile, JsonFile, PdfFile, defaultButtonsByType } from './FilePreviewer.types';
 
-type FileInfo = pdfFile | jsonFile | imageFile;
+type FileInfo = PdfFile | JsonFile | ImageFile;
 
 const getButtonConfig = (file: FileInfo) => {
   const defaults = defaultButtonsByType[file.contentType];
@@ -121,9 +121,9 @@ export function FilePreviewer({ ref, files, onClose, startIndex, navigation = tr
   };
 
   const handleOpenInNew = () => {
-    if (selectedFile.contentType == 'image') window.open(selectedFile.src, '_blank');
-    else if (selectedFile.contentType == 'pdf') window.open(selectedFile.src, '_blank');
-    else if (selectedFile.contentType == 'json') openSelectedJsonFileAsBlob();
+    if (selectedFile.contentType === 'image') window.open(selectedFile.src, '_blank');
+    else if (selectedFile.contentType === 'pdf') window.open(selectedFile.src, '_blank');
+    else if (selectedFile.contentType === 'json') openSelectedJsonFileAsBlob();
   };
 
   const openSelectedJsonFileAsBlob = () => {
@@ -268,9 +268,10 @@ export function FilePreviewer({ ref, files, onClose, startIndex, navigation = tr
           onMouseLeave={handleMouseUpOrLeave}
           style={{ cursor: 'grab' }}
         >
-          {files.map((f, idx) => {
+          {files.map((file, idx) => {
             return (
               <PreviewButton
+                key={idx}
                 ref={(el) => {
                   previewButtonRefs.current[idx] = el;
                 }}
@@ -281,7 +282,7 @@ export function FilePreviewer({ ref, files, onClose, startIndex, navigation = tr
                   }
                 }}
                 ariaSelected={selectedFileIndex === idx}
-                file={f}
+                file={file}
               ></PreviewButton>
             );
           })}
