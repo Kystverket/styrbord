@@ -1,5 +1,5 @@
 import { forwardRef, Ref, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import classes from './Lightbox.module.css';
+import classes from './FilePreviewer.module.css';
 import { Box, Button, Icon, Paragraph } from '~/main';
 import { imageFile, jsonFile, pdfFile, defaultButtonsByType } from './FilePreviewer.types';
 
@@ -14,7 +14,7 @@ export type FilePreviewRef = {
   close: () => void;
   showModal: (idx?: number) => void;
 };
-export interface FilePreviewProps {
+export interface FilePreviewerProps {
   files: FileInfo[];
   navigation?: boolean;
   startIndex?: number;
@@ -22,7 +22,7 @@ export interface FilePreviewProps {
   onClose?: () => void;
   ref?: Ref<FilePreviewRef>;
 }
-export function FilePreview({ ref, files, onClose, startIndex, navigation = true }: FilePreviewProps) {
+export function FilePreviewer({ ref, files, onClose, startIndex, navigation = true }: FilePreviewerProps) {
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const [selectedFile, setSelectedFile] = useState<FileInfo>(files[startIndex ?? 0]);
   const [selectedFileIndex, setSelectedFileIndex] = useState(startIndex ?? 0);
@@ -272,7 +272,11 @@ export function FilePreview({ ref, files, onClose, startIndex, navigation = true
 
       {navigation && (
         <div
-          onKeyDown={(e) => e.preventDefault()}
+          onKeyDown={(e) => {
+            if (e.key !== 'Tab' && e.key !== 'Shift') {
+              e.preventDefault();
+            }
+          }}
           ref={scrollRef}
           tabIndex={0}
           className={classes.selectArea}

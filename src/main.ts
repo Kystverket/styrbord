@@ -38,10 +38,7 @@ export type { BoxProps } from './components/kystverket/Box/box';
 export { default as Stepper } from './components/kystverket/Stepper/stepper';
 export type { StepperProps } from './components/kystverket/Stepper/stepper';
 
-export {
-  FilePreview as Lightbox,
-  type FilePreviewProps as LightboxProps,
-} from './components/kystverket/Lightbox/Lightbox';
+export { FilePreviewer, type FilePreviewerProps } from './components/kystverket/FilePreviewer/FilePreviewer';
 
 export { default as LabelContent, type LabelContentProps } from './components/kystverket/LabelContent/labelContent';
 

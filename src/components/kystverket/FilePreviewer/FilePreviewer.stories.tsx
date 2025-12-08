@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/react';
-import { FilePreviewRef, FilePreview, FilePreviewProps } from './Lightbox';
+import { FilePreviewRef, FilePreviewer, FilePreviewerProps } from './FilePreviewer';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 import { Button } from '~/main';
@@ -11,17 +11,17 @@ import geojson from '@assets/documents/geojson.json';
 
 const meta = {
   title: 'Components/FilePreviewer',
-  component: FilePreview,
+  component: FilePreviewer,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'experimental'],
   argTypes: {},
-} satisfies Meta<typeof FilePreview>;
+} satisfies Meta<typeof FilePreviewer>;
 
 export default meta;
 
 // type Story = StoryObj<typeof meta>;
 
-const defaultProps: FilePreviewProps = {
+const defaultProps: FilePreviewerProps = {
   files: [
     {
       contentType: 'image',
@@ -55,7 +55,7 @@ export const withRef: StoryFn = () => {
     <>
       <p>Click the button below to open the file preview dialog.</p>
       <Button onClick={openPreview}>Open with Ref</Button>
-      <FilePreview files={defaultProps.files} ref={filePreviewRef} />
+      <FilePreviewer files={defaultProps.files} ref={filePreviewRef} />
     </>
   );
 };
@@ -71,8 +71,7 @@ export const withRefAndStartIndex: StoryFn = () => {
     <>
       <p>Click the button below to open on the 2nd file.</p>
       <Button onClick={openPreview}>Open</Button>
-      <FilePreview files={defaultProps.files} ref={filePreviewRef} />
+      <FilePreviewer files={defaultProps.files} ref={filePreviewRef} />
     </>
   );
 };
-
