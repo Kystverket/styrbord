@@ -1,7 +1,7 @@
 import type { Meta, StoryFn } from '@storybook/react';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import {
-  Image,
+  SvgImage,
   ImageAisSat,
   ImageArcticInfo,
   ImageAvgiftskalkulator,
@@ -12,7 +12,7 @@ import {
   ImageBwBoelgevarsel,
   ImageBwNais,
   ImageBwOhoi,
-  imageColors,
+  svgImageColors,
   ImageDatakatalog,
   ImageDgps,
   ImageDigitaleFyrbesoek,
@@ -38,7 +38,7 @@ import {
   ImageNavarea,
   ImageNavigasjonsvarsler,
   ImageOhoi,
-  ImageProps,
+  SvgImageProps,
   ImageRegistrerteSeilaser,
   ImageSafeSeaNet,
   ImageSeLosbestilling,
@@ -46,20 +46,20 @@ import {
   ImageSelvbetjeningRso,
   ImageSlukkedeFyrlys,
   ImageSoeknadOmFarledsbevis,
-} from './image';
+} from './svgImage';
 import { Body } from '~/main';
 
 const meta = {
   title: 'Helpers/Images and Illustrations',
-  component: Image,
+  component: SvgImage,
   decorators: [StyrbordDecorator],
   tags: ['autodocs'],
   argTypes: {},
-} satisfies Meta<typeof Image>;
+} satisfies Meta<typeof SvgImage>;
 
 export default meta;
 
-const images: [string, React.FC<ImageProps>][] = [
+const images: [string, React.FC<SvgImageProps>][] = [
   ['ImageAisSat', ImageAisSat],
   ['ImageArcticInfo', ImageArcticInfo],
   ['ImageAvgiftskalkulator', ImageAvgiftskalkulator],
@@ -104,7 +104,7 @@ const images: [string, React.FC<ImageProps>][] = [
   ['ImageSoeknadOmFarledsbevis', ImageSoeknadOmFarledsbevis],
 ];
 
-const variants = [...imageColors] as const;
+const variants = [...svgImageColors] as const;
 
 export const Showcase: StoryFn = () => {
   return (

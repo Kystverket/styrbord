@@ -45,7 +45,7 @@ export { default as LabelContent, type LabelContentProps } from './components/ky
 export { default as Icon } from './components/kystverket/Icon/icon';
 export type { IconId } from './components/kystverket/Icon/icon.types';
 
-export * from './components/kystverket/Image/image';
+export * from './components/kystverket/Image/svgImage';
 
 export { Body, Accent, Typography } from './components/kystverket/Typography/typography';
 export type {

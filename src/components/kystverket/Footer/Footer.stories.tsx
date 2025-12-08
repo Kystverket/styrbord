@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Footer, FooterProps } from '~/components/kystverket/Footer/Footer';
-import { Image } from '../Image/image';
+import { SvgImage } from '../Image/svgImage';
 
 import musea from './musea.svg';
 
@@ -142,7 +142,7 @@ export const Kystdatahuset: Story = {
 export const Fyr: Story = {
   args: {
     ...defaultProps,
-    additionalLogo: <Image src={musea} />,
+    additionalLogo: <SvgImage src={musea} size={44} />,
     contacts: [],
     text: 'Fyr er et samarbeid mellom\nKystverket og Kystverksmusea',
     copyright: 'Opphavsrett Kystverket og\nKystverksmusea © 2024',
