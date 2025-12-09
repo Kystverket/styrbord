@@ -40,7 +40,6 @@ export function FilePreviewer({ ref, files, onClose, startIndex, navigation = tr
       showModal(idx?: number) {
         setSelectedFileIndex(idx ?? startIndex ?? 0);
         dialogRef.current?.showModal();
-        document.body.style.overflow = 'hidden';
       },
     };
   }, []);
