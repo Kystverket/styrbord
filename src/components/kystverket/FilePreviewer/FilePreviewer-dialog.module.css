@@ -1,0 +1,79 @@
+.frame[open] {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100vw;
+  height: 100svh;
+  max-height: none;
+  padding: 20px;
+  overflow: hidden;
+  gap: 20px;
+  border: none;
+  outline: none;
+  background-color: #13181f;
+}
+
+.content {
+  position: relative;
+  min-height: 0;
+  padding: 0 96px;
+}
+
+.switchButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.selectArea {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  max-width: 80%;
+  margin: auto;
+  padding: 0px 10px;
+  overflow-x: auto;
+  gap: 12px;
+}
+
+.previewButton {
+  position: relative;
+  flex-shrink: 0;
+  align-self: center;
+  aspect-ratio: 1.4/1;
+  height: 100px;
+  margin: 10px 0;
+  overflow: hidden;
+  outline-offset: 2px;
+  background-color: var(--ds-color-neutral-surface-tinted);
+  hyphens: manual;
+  overflow-wrap: break-word;
+}
+
+.previewButton img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.previewButton::before {
+  position: absolute;
+  inset: 0;
+  background-color: transparent;
+  content: '';
+  transition: background-color 0.2s;
+}
+
+.previewButton:hover::before {
+  background-color: rgba(var(--ds-color-neutral-base-active), 0.3);
+}
+
+.previewButton[aria-selected='true'] {
+  outline: white solid;
+}
+
+.none {
+  display: none;
+}

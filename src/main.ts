@@ -24,6 +24,8 @@ export {
 
 export { default as DeprecatedCard, type CardProps as DeprecatedCardProps } from './components/deprecated/Card/Card';
 
+export { FilePreviewer, type FilePreviewerProps } from './components/kystverket/FilePreviewer';
+
 //^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\
 //  Egenproduserte komponenter
 //^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\
