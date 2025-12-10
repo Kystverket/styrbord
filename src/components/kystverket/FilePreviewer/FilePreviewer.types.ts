@@ -33,3 +33,5 @@ export const defaultButtonsByType = {
   image: { showDownload: true, showOpenInNew: true } as ButtonOptions,
   json: { showDownload: true, showOpenInNew: true } as ButtonOptions,
 };
+
+export type FileInfo = PdfFile | ImageFile | JsonFile;

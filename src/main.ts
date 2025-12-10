@@ -24,6 +24,8 @@ export {
 
 export { default as DeprecatedCard, type CardProps as DeprecatedCardProps } from './components/deprecated/Card/Card';
 
+export { FilePreviewer, type FilePreviewerProps } from './components/kystverket/FilePreviewer';
+
 //^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\
 //  Egenproduserte komponenter
 //^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\
@@ -39,8 +41,6 @@ export type { BoxProps } from './components/kystverket/Box/box';
 
 export { default as Stepper } from './components/kystverket/Stepper/stepper';
 export type { StepperProps } from './components/kystverket/Stepper/stepper';
-
-export { FilePreviewer, type FilePreviewerProps } from './components/kystverket/FilePreviewer/FilePreviewer';
 
 export { default as LabelContent, type LabelContentProps } from './components/kystverket/LabelContent/labelContent';
 

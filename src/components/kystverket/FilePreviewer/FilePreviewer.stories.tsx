@@ -1,13 +1,14 @@
 import type { Meta, StoryFn } from '@storybook/react';
-import { FilePreviewRef, FilePreviewer, FilePreviewerProps } from './FilePreviewer';
+import { FilePreviewRef, FilePreviewerProps } from './FilePreviewer-dialog';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
-import { Button } from '~/main';
+import { Box, Button } from '~/main';
 import { useRef } from 'react';
 
 import atlas from '@assets/img/atlas/atlas 1.jpeg';
 import pikekyst from '@assets/documents/Pikekyst Oppskrift.pdf';
 import geojson from '@assets/documents/geojson.json';
+import { FilePreviewer } from '~/main';
 
 const meta = {
   title: 'Components/FilePreviewer',
@@ -44,7 +45,32 @@ const defaultProps: FilePreviewerProps = {
   ],
 };
 
-export const withRef: StoryFn = () => {
+export const withCustomAlignment: StoryFn = () => {
+  return (
+    <>
+      <FilePreviewer>
+        <Box align="start" horizontal gap={8}>
+          {defaultProps.files.map((file, idx) => (
+            <FilePreviewer.Thumbnail file={file} key={idx} index={idx} />
+          ))}
+        </Box>
+      </FilePreviewer>
+    </>
+  );
+};
+export const withContextAndThumbnails: StoryFn = () => {
+  return (
+    <>
+      <FilePreviewer>
+        {defaultProps.files?.map((file, idx) => (
+          <FilePreviewer.Thumbnail file={file} key={idx} index={idx} />
+        ))}
+      </FilePreviewer>
+    </>
+  );
+};
+
+export const customWithRef: StoryFn = () => {
   const filePreviewRef = useRef<FilePreviewRef>(null);
 
   const openPreview = () => {
@@ -53,25 +79,11 @@ export const withRef: StoryFn = () => {
 
   return (
     <>
-      <p>Click the button below to open the file preview dialog.</p>
-      <Button onClick={openPreview}>Open with Ref</Button>
-      <FilePreviewer files={defaultProps.files} ref={filePreviewRef} />
-    </>
-  );
-};
-
-export const withRefAndStartIndex: StoryFn = () => {
-  const filePreviewRef = useRef<FilePreviewRef>(null);
-
-  const openPreview = () => {
-    filePreviewRef.current?.showModal(1);
-  };
-
-  return (
-    <>
-      <p>Click the button below to open on the 2nd file.</p>
-      <Button onClick={openPreview}>Open</Button>
-      <FilePreviewer files={defaultProps.files} ref={filePreviewRef} />
+      <Box gap={8} width="form-sidebar">
+        <p>Click the button below to open the file preview dialog.</p>
+        <Button onClick={openPreview}>Open with Ref</Button>
+        <FilePreviewer files={defaultProps.files} ref={filePreviewRef} />
+      </Box>
     </>
   );
 };
