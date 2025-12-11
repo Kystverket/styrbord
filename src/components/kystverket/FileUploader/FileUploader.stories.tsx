@@ -75,3 +75,57 @@ export const RequiredText: Story = {
 export const WithError: Story = {
   args: { ...defaultProps, error: 'Det oppstod en feil' },
 };
+
+export const WithExistingFiles: Story = {
+  args: {
+    ...defaultProps,
+    files: [],
+    existingFilesConfig: {
+      files: [
+        {
+          contextId: 'existing-1',
+          fileName: 'document1.pdf',
+          storageId: 'storage-id-1',
+          contentType: 'application/pdf',
+          status: 'uploaded',
+        },
+        {
+          contextId: 'existing-2',
+          fileName: 'image1.jpg',
+          storageId: 'storage-id-2',
+          contentType: 'image/jpeg',
+          status: 'uploaded',
+        },
+        {
+          contextId: 'existing-3',
+          fileName: 'screenshot.png',
+          storageId: 'storage-id-3',
+          contentType: 'image/png',
+          status: 'uploaded',
+        },
+      ],
+      label: 'Velg fra eksisterende filer',
+      cancelLabel: 'Avbryt',
+      selectLabel: 'Velg',
+      onLoadPreview: async (storageIds: string[]) => {
+        return storageIds.map((id) => {
+          if (id === 'storage-id-2') {
+            return {
+              uri: '/assets/img/cats/Cat 1.jpg',
+              type: 'image/jpeg',
+            };
+          }
+          if (id === 'storage-id-3') {
+            return {
+              uri: '/assets/img/cats/Cat 2.jpg',
+              type: 'image/png',
+            };
+          }
+          return {
+            type: 'application/pdf',
+          };
+        });
+      },
+    },
+  },
+};
