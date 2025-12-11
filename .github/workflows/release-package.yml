@@ -8,7 +8,6 @@ on:
 jobs:
   tag-version:
     permissions:
-      id-token: write
       packages: read
       contents: write
     runs-on: ubuntu-latest
@@ -26,6 +25,8 @@ jobs:
       - run: git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
   publish-to-github-packages:
     runs-on: ubuntu-latest
+    needs:
+      - tag-version
     permissions:
       packages: write
       contents: read
@@ -46,8 +47,25 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
       - run: npm run build
       - run: npm publish
-      - run: rm .npmrc
-      - uses: JS-DevTools/npm-publish@v3
+  publish-to-npmjs:
+    runs-on: ubuntu-latest
+    needs:
+      - tag-version
+    permissions:
+      id-token: write
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          token: ${{ secrets.NPM_TOKEN }}
-          access: 'public'
+          node-version: '22.x'
+          registry-url: 'https://registry.npmjs.org'
+          # Defaults to the user or organization that owns the workflow file
+          scope: '@kystverket'
+      - run: git pull
+      - name: Install dependencies
+        run: |
+          npm ci --ignore-scripts
+      - run: npm run build
+      - run: npm publish
