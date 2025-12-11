@@ -63,6 +63,9 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           # Defaults to the user or organization that owns the workflow file
           scope: '@kystverket'
+      - run: npm install -g npm@latest
+      - name: Clear auth token for OIDC
+        run: echo "NODE_AUTH_TOKEN=" >> $GITHUB_ENV
       - run: git pull
       - name: Install dependencies
         run: |
