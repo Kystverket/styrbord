@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import classes from './FilePreviewer-dialog.module.css';
 import { Box, Button, Icon, Paragraph } from '~/main';
 import { FileInfo, defaultButtonsByType } from './FilePreviewer.types';
@@ -20,7 +20,8 @@ export interface FilePreviewerProps {
   startIndex?: number;
   onClose?: () => void;
 }
-export const FilePreviewerDialog = forwardRef<FilePreviewRef, FilePreviewerProps>(({ onClose, files, startIndex }) => {
+
+export const FilePreviewerDialog = ({ onClose, files, startIndex }: FilePreviewerProps) => {
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const [selectedFile, setSelectedFile] = useState<FileInfo>(files[startIndex ?? 0]);
   const [selectedFileIndex, setSelectedFileIndex] = useState(startIndex ?? 0);
@@ -92,7 +93,6 @@ export const FilePreviewerDialog = forwardRef<FilePreviewRef, FilePreviewerProps
   };
 
   useEffect(() => dialogRef.current?.showModal(), []);
-  console.log('Rendered FilePreviewer');
   return (
     <dialog ref={dialogRef} className={classes.frame} onClose={handleClose}>
       {/* NAVIGATION */}
@@ -195,4 +195,4 @@ export const FilePreviewerDialog = forwardRef<FilePreviewRef, FilePreviewerProps
       </div>
     </dialog>
   );
-});
+};

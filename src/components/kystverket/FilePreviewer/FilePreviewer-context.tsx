@@ -44,17 +44,10 @@ export const FilePreviewerContext = ({ children, ref, files }: FilePreviewerCont
     throw new Error('No ref set, either pass one or set <FilePreviewer.Thumbnail/>');
   }
 
-  console.log('Rendered FilePreviewer Context');
-
   return (
     <FPContext.Provider value={{ setFiles: setContextFiles, files: contextFiles, ref: dialogRef }}>
       {showPreviewer && (
-        <FilePreviewerDialog
-          ref={dialogRef}
-          files={contextFiles}
-          startIndex={startIndex}
-          onClose={() => setShowPreviewer(false)}
-        />
+        <FilePreviewerDialog files={contextFiles} startIndex={startIndex} onClose={() => setShowPreviewer(false)} />
       )}
       {children}
     </FPContext.Provider>
