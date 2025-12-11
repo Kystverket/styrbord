@@ -8,6 +8,7 @@ on:
 jobs:
   tag-version:
     permissions:
+      id-token: write
       packages: read
       contents: write
     runs-on: ubuntu-latest
