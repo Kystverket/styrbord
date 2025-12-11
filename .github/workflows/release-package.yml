@@ -68,4 +68,4 @@ jobs:
         run: |
           npm ci --ignore-scripts
       - run: npm run build
-      - run: npm publish
+      - run: npm publish --access public
