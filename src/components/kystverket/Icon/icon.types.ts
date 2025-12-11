@@ -86,6 +86,8 @@ export const iconIdList = [
   'warning',
   'zoom_in_map',
   'zoom_out_map',
+  'picture_as_pdf',
+  'pan_zoom',
 ] as const;
 
 export type IconId = (typeof iconIdList)[number];

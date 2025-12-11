@@ -37,19 +37,21 @@
     gap: 6px;
     padding-right: var(--spacing-16);
   }
-  .link,
-  .link:visited {
+  .footer .link,
+  .footer .link:visited,
+  .footer .link:active {
     display: flex;
     flex-direction: row;
     gap: 4px;
     align-items: start;
     color: white;
+    background-color: transparent;
     font-weight: var(--ds-font-weight-medium);
   }
-  .link:hover {
+  .footer .link:hover {
     color: var(--ds-color-primary-base-contrast-subtle);
   }
-  .link:focus-within {
+  .footer .link:focus-within {
     outline: 2px solid var(--ds-color-neutral-base-contrast-default);
     outline-offset: 2px;
     color: var(--ds-color-primary-base-contrast-subtle);
