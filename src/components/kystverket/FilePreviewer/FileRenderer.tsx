@@ -18,7 +18,8 @@ export const FileRenderer = ({
     if (file.contentType === 'json') return <JsonThumbnail file={file} className={className} />;
     if (file.contentType === 'pdf') return <PdfThumbnail file={file} className={className} />;
   }
-  if (file.contentType === 'image') return <ImageDisplay file={file} className={className} />;
+
+  if (file.contentType === 'image') return <ImageDisplay file={file} className={className} />; //No tabindex because there's no interactive elements in the img
   if (file.contentType === 'pdf') return <PdfDisplay tabIndex={tabIndex} file={file} className={className} />;
   if (file.contentType === 'json') return <JsonDisplay tabIndex={tabIndex} file={file} className={className} />;
 };

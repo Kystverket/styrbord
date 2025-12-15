@@ -25,7 +25,7 @@
   transition: none;
 }
 
-.prev,
+.previous,
 .next {
   opacity: 0;
 }
@@ -38,18 +38,18 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .slide {
-    transition: transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 350ms cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
     opacity: 1;
   }
   .next.slide {
-    transform: translateX(100vw);
+    transform: translateX(100%);
   }
   .selected.slide {
     transform: translateX(0);
   }
   .previous.slide {
-    transform: translateX(-100vw);
+    transform: translateX(-100%);
   }
 }
 
