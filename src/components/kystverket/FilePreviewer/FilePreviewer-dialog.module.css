@@ -25,11 +25,12 @@
   transition: none;
 }
 
-.prev, .next{
+.prev,
+.next {
   opacity: 0;
 }
 
-.fileInnerContainer{
+.fileInnerContainer {
   position: absolute;
   inset: 0 64px;
   overflow: hidden;
@@ -44,15 +45,13 @@
   .next.slide {
     transform: translateX(100vw);
   }
-  .selected.slide  {
+  .selected.slide {
     transform: translateX(0);
   }
   .previous.slide {
     transform: translateX(-100vw);
   }
 }
-
-
 
 .switchButton {
   z-index: 100;
