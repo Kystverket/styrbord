@@ -31,7 +31,7 @@ const ImageThumbnail = ({ file, className }: { file: ImageFile; className?: stri
   return <img src={file.src} className={`${classes.image} ${className || ''}`}></img>;
 };
 
-const ImageDisplay = ({ file, className }: { file: ImageFile; className?: string; tabIndex?: number }) => {
+const ImageDisplay = ({ file, className }: { file: ImageFile; className?: string }) => {
   return <img className={`${classes.previewFile} ${className || ''}`} src={file.src}></img>;
 };
 

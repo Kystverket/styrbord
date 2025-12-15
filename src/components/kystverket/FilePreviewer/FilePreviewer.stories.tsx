@@ -88,7 +88,7 @@ export const withFlex: StoryFn<FilePreviewerDialogProps> = (args) => {
   return (
     <>
       <FilePreviewer animation={args.animation}>
-        <Box key={JSON.stringify(args)} align="start" horizontal gap={8}>
+        <Box align="start" horizontal gap={8}>
           {args.files.map((file, idx) => (
             <FilePreviewer.Thumbnail file={file} key={idx} index={idx} />
           ))}
@@ -107,7 +107,7 @@ export const openWithRef: StoryFn<FilePreviewerDialogProps> = (args) => {
 
   return (
     <>
-      <Box key={JSON.stringify(args)} gap={8} width="form-sidebar">
+      <Box gap={8} width="form-sidebar">
         <p>Click the button below to open the file preview dialog.</p>
         <Button onClick={openPreview}>Open with Ref</Button>
         <FilePreviewer animation={args.animation} files={args.files} ref={filePreviewRef} />
@@ -120,7 +120,7 @@ export const withNoneAnimation: StoryFn<FilePreviewerDialogProps> = (args) => {
   return (
     <>
       <Box gap={8} width="form-sidebar">
-        <FilePreviewer key={JSON.stringify(args)} animation={args.animation} files={args.files}>
+        <FilePreviewer animation={args.animation} files={args.files}>
           <Box align="start" horizontal gap={8}>
             {args.files.map((file, idx) => (
               <FilePreviewer.Thumbnail file={file} key={idx} index={idx} />
