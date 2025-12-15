@@ -27,6 +27,7 @@
 
 .previous,
 .next {
+  /* Hidden by default (no animation mode) */
   opacity: 0;
 }
 
@@ -40,6 +41,7 @@
   .slide {
     transition: transform 350ms cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
+    /* Show adjacent slides for smooth transitions */
     opacity: 1;
   }
   .next.slide {

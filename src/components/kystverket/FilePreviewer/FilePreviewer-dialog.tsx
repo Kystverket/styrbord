@@ -92,6 +92,11 @@ export const FilePreviewerDialog = ({ animation = 'slide', onClose, files, start
   const handlePrev = () => {
     if (selectedFileIndexRef.current > 0) setSelectedFileIndex((index) => index - 1);
   };
+  const getPositionClass = (idx: number) => {
+    if (idx === selectedFileIndex) return classes.selected;
+    else if (idx < selectedFileIndex) return classes.previous;
+    else return classes.next;
+  };
 
   useEffect(() => dialogRef.current?.showModal(), []);
   return (
@@ -158,9 +163,7 @@ export const FilePreviewerDialog = ({ animation = 'slide', onClose, files, start
         )}
         <Box className={classes.fileInnerContainer}>
           {files.map((e, idx) => (
-            <Box
-              className={`${classes.file} ${classes[animation]} ${idx === selectedFileIndex ? classes.selected : idx < selectedFileIndex ? classes.previous : classes.next}`}
-            >
+            <Box className={`${classes.file} ${classes[animation]} ${getPositionClass(idx)}`}>
               <FileRenderer tabIndex={idx === selectedFileIndex ? 0 : -1} mode="full" key={idx} file={e} />
             </Box>
           ))}
