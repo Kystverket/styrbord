@@ -16,11 +16,46 @@
 
 .content {
   position: relative;
-  min-height: 0;
-  padding: 0 96px;
+  overflow: hidden;
 }
 
+.file {
+  position: absolute;
+  inset: 0;
+  transition: none;
+}
+
+.prev, .next{
+  opacity: 0;
+}
+
+.fileInnerContainer{
+  position: absolute;
+  inset: 0 64px;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .slide {
+    transition: transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    opacity: 1;
+  }
+  .next.slide {
+    transform: translateX(100vw);
+  }
+  .selected.slide  {
+    transform: translateX(0);
+  }
+  .previous.slide {
+    transform: translateX(-100vw);
+  }
+}
+
+
+
 .switchButton {
+  z-index: 100;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -72,8 +107,4 @@
 
 .previewButton[aria-selected='true'] {
   outline: white solid;
-}
-
-.none {
-  display: none;
 }

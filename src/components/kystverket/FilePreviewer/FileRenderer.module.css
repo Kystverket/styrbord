@@ -4,9 +4,10 @@
   height: 100%;
 }
 
-.fullSize {
+.thumbnail {
   height: 100%;
   width: 100%;
+  word-break: break-all;
 }
 
 .flexCenter {
