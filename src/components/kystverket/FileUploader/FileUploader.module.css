@@ -43,4 +43,86 @@
     color: var(--ds-color-neutral-text-subtle);
     padding: var(--spacing-8) var(--spacing-16) var(--spacing-8) var(--spacing-8);
   }
+
+  .existingFilesButton {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 75px;
+    flex-shrink: 0;
+  }
+
+  .existingFileItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid var(--ds-color-neutral-border-subtle);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .existingFileItem:hover {
+    background-color: var(--ds-color-neutral-background-subtle);
+  }
+
+  .existingFileItem.selected {
+    background-color: var(--ds-color-primary-background-tinted);
+  }
+
+  .thumbnailContainer {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .thumbnailImage {
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 1px solid var(--ds-color-neutral-border-subtle);
+  }
+
+  .fileIcon {
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+    background-color: var(--ds-color-primary-background-default);
+    border: 1px solid var(--ds-color-neutral-border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .fileIconText {
+    font-size: 20px;
+    margin: 0;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .existingFileInfo {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .fileName {
+    font-weight: 500;
+    margin: 0;
+    color: var(--ds-color-neutral-text-default);
+    word-break: break-word;
+  }
+
+  .mimeType {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    margin: 0;
+  }
 }
