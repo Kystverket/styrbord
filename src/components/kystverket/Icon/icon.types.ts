@@ -73,6 +73,7 @@ export const iconIdList = [
   'radio_button_checked',
   'radio_button_unchecked',
   'sailing',
+  'save',
   'send',
   'settings_input_antenna',
   'settings',

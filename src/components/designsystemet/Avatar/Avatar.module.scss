@@ -15,34 +15,88 @@
 
 // Colors
 [data-color='primary'].surfaceTinted {
-  background-color: var(--ds-color-primary-surface-tinted);
-  color: var(--ds-color-primary-text-default);
+  --surface-bg: var(--ds-color-primary-surface-tinted);
+  --surface-text: var(--ds-color-primary-text-default);
+  --border-color: var(--ds-color-primary-border-subtle);
+  background-color: var(--surface-bg);
+  color: var(--surface-text);
 }
 [data-color='accent'].surfaceTinted {
-  background-color: var(--ds-color-accent-surface-tinted);
-  color: var(--ds-color-accent-text-default);
+  --surface-bg: var(--ds-color-accent-surface-tinted);
+  --surface-text: var(--ds-color-accent-text-default);
+  --border-color: var(--ds-color-accent-border-subtle);
+  background-color: var(--surface-bg);
+  color: var(--surface-text);
 }
 [data-color='success'].surfaceTinted {
-  background-color: var(--ds-color-success-surface-tinted);
-  color: var(--ds-color-success-text-default);
+  --surface-bg: var(--ds-color-success-surface-tinted);
+  --surface-text: var(--ds-color-success-text-default);
+  --border-color: var(--ds-color-success-border-subtle);
+  background-color: var(--surface-bg);
+  color: var(--surface-text);
 }
 [data-color='warning'].surfaceTinted {
-  background-color: var(--ds-color-warning-surface-tinted);
-  color: var(--ds-color-warning-text-default);
+  --surface-bg: var(--ds-color-warning-surface-tinted);
+  --surface-text: var(--ds-color-warning-text-default);
+  --border-color: var(--ds-color-warning-border-subtle);
+  background-color: var(--surface-bg);
+  color: var(--surface-text);
 }
 [data-color='danger'].surfaceTinted {
-  background-color: var(--ds-color-danger-surface-tinted);
-  color: var(--ds-color-danger-text-default);
+  --surface-bg: var(--ds-color-danger-surface-tinted);
+  --surface-text: var(--ds-color-danger-text-default);
+  --border-color: var(--ds-color-danger-border-subtle);
+  background-color: var(--surface-bg);
+  color: var(--surface-text);
 }
 [data-color='neutral'].surfaceTinted {
-  background-color: var(--ds-color-neutral-surface-tinted);
-  color: var(--ds-color-neutral-text-default);
+  --surface-bg: var(--ds-color-neutral-surface-tinted);
+  --surface-text: var(--ds-color-neutral-text-default);
+  --border-color: var(--ds-color-neutral-border-subtle);
+  background-color: var(--surface-bg);
+  color: var(--surface-text);
 }
 [data-color='extra1'].surfaceTinted {
-  background-color: var(--ds-color-extra1-surface-tinted);
-  color: var(--ds-color-extra1-text-default);
+  --surface-bg: var(--ds-color-extra1-surface-tinted);
+  --surface-text: var(--ds-color-extra1-text-default);
+  --border-color: var(--ds-color-extra1-border-subtle);
+  background-color: var(--surface-bg);
+  color: var(--surface-text);
 }
 [data-color='extra2'].surfaceTinted {
-  background-color: var(--ds-color-extra2-surface-tinted);
-  color: var(--ds-color-extra2-text-default);
+  --surface-bg: var(--ds-color-extra2-surface-tinted);
+  --surface-text: var(--ds-color-extra2-text-default);
+  --border-color: var(--ds-color-extra2-border-subtle);
+  background-color: var(--surface-bg);
+  color: var(--surface-text);
+}
+[data-color='muted'].surfaceTinted {
+  --surface-bg: var(--ds-color-neutral-background-tinted);
+  --surface-text: var(--ds-color-neutral-border-strong);
+  --border-color: var(--ds-color-neutral-border-subtle);
+  background-color: var(--surface-bg);
+  color: var(--surface-text);
+}
+
+// Muted base variant
+[data-color='muted']:not(.surfaceTinted) {
+  background-color: var(--ds-color-neutral-border-default);
+  color: var(--ds-color-neutral-background-tinted);
+}
+
+// Border combinations
+.surfaceTinted.border-solid {
+  border: 1px solid var(--border-color);
+}
+
+.surfaceTinted.border-dashed {
+  border: 1px dashed var(--border-color);
+}
+
+.surfaceTinted.border-dotted {
+  border: 1px dotted var(--border-color);
+}
+
+.surfaceTinted.border-double {
+  border: 3px double var(--border-color);
 }
