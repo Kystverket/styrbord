@@ -17,12 +17,14 @@ export type AvatarProps = MergeRight<
   (AriaLabel | AriaHidden) & {
     'data-size'?: '2xs' | '3xs' | DsAvatarProps['data-size'];
     'data-color-variant'?: 'base' | 'surface-tinted';
+    border?: 'solid' | 'dashed' | 'dotted' | 'double' | 'none';
   }
 >;
 
 export const Avatar: FC<AvatarProps> = ({
   'data-size': size = 'md',
   'data-color-variant': colorVariant = 'base',
+  border: borderStyle,
   className,
   ...rest
 }) => {
@@ -36,6 +38,10 @@ export const Avatar: FC<AvatarProps> = ({
 
   if (colorVariant === 'surface-tinted') {
     classList.push(classes.surfaceTinted);
+  }
+
+  if (borderStyle) {
+    classList.push(classes[`border-${borderStyle}`]);
   }
 
   return <DsAvatar data-size={size} className={classList.join(' ')} {...rest} />;
