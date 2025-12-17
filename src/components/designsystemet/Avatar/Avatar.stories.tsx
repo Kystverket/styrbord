@@ -22,6 +22,7 @@ const meta: Meta<typeof Avatar> = {
 const colors: AvatarProps['data-color'][] = [
   'primary',
   'neutral',
+  'muted',
   'success',
   'danger',
   'warning',
@@ -70,6 +71,58 @@ export const ColorVariants: Story = () => (
         </Box>
       )),
     )}
+  </Box>
+);
+
+export const BorderVariants: Story = () => (
+  <Box gap={16}>
+    <Box horizontal align="center" gap={8}>
+      <Avatar data-color="neutral" data-color-variant="surface-tinted" border="solid" aria-label="solid border" />
+      solid
+    </Box>
+    <Box horizontal align="center" gap={8}>
+      <Avatar data-color="neutral" data-color-variant="surface-tinted" border="dashed" aria-label="dashed border" />
+      dashed
+    </Box>
+    <Box horizontal align="center" gap={8}>
+      <Avatar data-color="neutral" data-color-variant="surface-tinted" border="dotted" aria-label="dotted border" />
+      dotted
+    </Box>
+    <Box horizontal align="center" gap={8}>
+      <Avatar data-color="neutral" data-color-variant="surface-tinted" border="double" aria-label="double border" />
+      double
+    </Box>
+    <Box horizontal align="center" gap={8}>
+      <Avatar data-color="neutral" data-color-variant="surface-tinted" border="none" aria-label="no border" />
+      none
+    </Box>
+  </Box>
+);
+
+export const CombinedVariants: Story = () => (
+  <Box gap={16}>
+    <Box horizontal align="center" gap={8}>
+      <Avatar
+        border="dashed"
+        data-color="muted"
+        data-color-variant="surface-tinted"
+        aria-label="muted surface-tinted dashed"
+      />
+      muted + surface-tinted + dashed
+    </Box>
+    <Box horizontal align="center" gap={8}>
+      <Avatar
+        data-color="success"
+        data-color-variant="surface-tinted"
+        border="solid"
+        aria-label="success surface-tinted solid"
+      />
+      success + surface-tinted + solid
+    </Box>
+    <Box horizontal align="center" gap={8}>
+      <Avatar data-color="warning" data-color-variant="base" border="dotted" aria-label="warning base dotted" />
+      warning + base + dotted
+    </Box>
   </Box>
 );
 
