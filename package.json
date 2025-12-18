@@ -1,6 +1,6 @@
 {
   "name": "@kystverket/styrbord",
-  "version": "1.1.27",
+  "version": "1.1.28",
   "description": "",
   "type": "module",
   "repository": {
@@ -48,7 +48,7 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^1.9.0",
     "@eslint/js": "^9.22.0",
-    "@kystverket/styrbord-tokens": "^0.3.9",
+    "@kystverket/styrbord-tokens": "^0.3.10",
     "@rollup/plugin-typescript": "^11.1.6",
     "@storybook/addon-essentials": "^8.6.13",
     "@storybook/addon-interactions": "^8.6.13",
