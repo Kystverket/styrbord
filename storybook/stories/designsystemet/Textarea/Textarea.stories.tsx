@@ -25,6 +25,13 @@ export default {
       </div>
     ),
   ],
+  parameters: {
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/textarea)',
+      },
+    },
+  },
 } satisfies Meta;
 
 export const Preview: Story = {

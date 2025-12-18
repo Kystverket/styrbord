@@ -14,6 +14,11 @@ export default {
       justifyContent: 'center',
       alignItems: 'center',
     },
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/spinner)',
+      },
+    },
   },
 } as Meta;
 

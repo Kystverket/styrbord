@@ -6,6 +6,13 @@ type Story = StoryFn<typeof Fieldset>;
 export default {
   title: 'Form/Fieldset',
   component: Fieldset,
+  parameters: {
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/fieldset)',
+      },
+    },
+  },
 } as Meta;
 
 export const Preview: Story = (args) => (

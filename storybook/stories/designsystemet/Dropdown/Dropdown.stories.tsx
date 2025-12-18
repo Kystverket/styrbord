@@ -23,6 +23,11 @@ export default {
     chromatic: {
       disableSnapshot: false,
     },
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/select)',
+      },
+    },
   },
   play: async (ctx) => {
     // When not in Docs mode, automatically open the dropdown

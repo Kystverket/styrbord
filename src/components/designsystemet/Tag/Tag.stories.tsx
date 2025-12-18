@@ -8,6 +8,11 @@ export default {
   component: Tag,
   parameters: {
     customStyles: { justifyContent: 'start' },
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/tag)',
+      },
+    },
   },
 } satisfies Meta;
 

@@ -13,6 +13,11 @@ export default {
       maxWidth: 600,
       width: '90vw',
     },
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/field)',
+      },
+    },
   },
 } as Meta;
 

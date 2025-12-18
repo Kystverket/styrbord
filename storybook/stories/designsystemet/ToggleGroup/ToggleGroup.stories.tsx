@@ -14,6 +14,13 @@ export default {
       </div>
     ),
   ],
+  parameters: {
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/toggle-group)',
+      },
+    },
+  },
 } as Meta;
 
 export const Preview: StoryFn<typeof ToggleGroup> = (args) => {

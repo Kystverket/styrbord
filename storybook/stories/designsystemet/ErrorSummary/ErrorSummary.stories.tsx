@@ -10,6 +10,13 @@ type Story = StoryFn<typeof ErrorSummary>;
 export default {
   title: 'Components/ErrorSummary',
   component: ErrorSummary,
+  parameters: {
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/error-summary)',
+      },
+    },
+  },
 } satisfies Meta;
 
 export const Preview: Story = (args) => (

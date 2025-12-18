@@ -11,6 +11,11 @@ const meta: Meta<typeof Badge> = {
     customStyles: {
       flexWrap: 'wrap',
     },
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/badge)',
+      },
+    },
   },
 };
 

@@ -4,6 +4,13 @@ import type { Meta, StoryFn } from '@storybook/react';
 export default {
   title: 'Components/Breadcrumbs',
   component: Breadcrumbs,
+  parameters: {
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/breadcrumbs)',
+      },
+    },
+  },
 } as Meta;
 
 export const Preview: StoryFn<typeof Breadcrumbs> = (args) => (

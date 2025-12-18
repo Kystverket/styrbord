@@ -31,6 +31,11 @@ export default {
         },
       },
     },
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/modal)',
+      },
+    },
   },
   play: async (ctx) => {
     // When not in Docs mode, automatically open the dialog

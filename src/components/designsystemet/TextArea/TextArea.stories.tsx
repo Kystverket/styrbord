@@ -8,6 +8,13 @@ const meta = {
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'ds-override'],
   argTypes: {},
+  parameters: {
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/textarea)',
+      },
+    },
+  },
 } satisfies Meta<typeof TextArea>;
 
 export default meta;

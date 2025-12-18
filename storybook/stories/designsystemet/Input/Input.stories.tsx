@@ -35,6 +35,11 @@ export default {
         rules: [{ id: 'color-contrast', selector: ':read-only' }],
       },
     },
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/textfield)',
+      },
+    },
   },
 } as Meta;
 
