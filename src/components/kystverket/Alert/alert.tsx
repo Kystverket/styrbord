@@ -26,7 +26,7 @@ const Alert = ({
   className = '',
   ...props
 }: AlertProps) => {
-  const dataColor = (level === 'error' ? 'danger' : level) ?? props['data-color'] ?? 'info';
+  const dataColor = props['data-color'] ?? (level === 'error' ? 'danger' : level) ?? 'info';
   const classNames = [classes.alert, className, classes['width-' + width]];
 
   return (
