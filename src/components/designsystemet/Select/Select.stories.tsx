@@ -11,7 +11,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/select)',
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/select/overview)',
       },
     },
   },

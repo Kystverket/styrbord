@@ -12,7 +12,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/button)',
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/button/overview)',
       },
     },
   },

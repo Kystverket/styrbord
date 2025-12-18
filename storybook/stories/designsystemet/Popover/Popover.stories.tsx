@@ -20,7 +20,7 @@ export default {
     },
     docs: {
       description: {
-        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/popover)',
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/popover/overview)',
       },
     },
   },

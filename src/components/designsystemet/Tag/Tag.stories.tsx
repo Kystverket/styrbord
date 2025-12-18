@@ -10,7 +10,7 @@ export default {
     customStyles: { justifyContent: 'start' },
     docs: {
       description: {
-        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/tag)',
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/tag/overview)',
       },
     },
   },

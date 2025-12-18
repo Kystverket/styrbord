@@ -8,7 +8,7 @@ export default {
     customStyles: { display: 'flex', gap: 'var(--ds-size-2)' },
     docs: {
       description: {
-        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/chip)',
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/chip/overview)',
       },
     },
   },

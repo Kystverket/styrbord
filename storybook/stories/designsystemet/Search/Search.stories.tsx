@@ -9,7 +9,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/search)',
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/search/overview)',
       },
     },
   },

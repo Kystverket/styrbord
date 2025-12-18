@@ -16,7 +16,7 @@ export default {
     },
     docs: {
       description: {
-        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/spinner)',
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/spinner/overview)',
       },
     },
   },

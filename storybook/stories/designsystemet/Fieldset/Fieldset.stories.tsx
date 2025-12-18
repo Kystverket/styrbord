@@ -9,7 +9,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/fieldset)',
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/fieldset/overview)',
       },
     },
   },

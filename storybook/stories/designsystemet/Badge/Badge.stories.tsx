@@ -13,7 +13,7 @@ const meta: Meta<typeof Badge> = {
     },
     docs: {
       description: {
-        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/badge)',
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/badge/overview)',
       },
     },
   },

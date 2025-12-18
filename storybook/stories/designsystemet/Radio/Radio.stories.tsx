@@ -8,7 +8,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/radio)',
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/radio/overview)',
       },
     },
   },

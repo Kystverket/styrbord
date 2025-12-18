@@ -33,7 +33,7 @@ export default {
     },
     docs: {
       description: {
-        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/modal)',
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/modal/overview)',
       },
     },
   },

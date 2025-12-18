@@ -10,7 +10,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/skiplinks)',
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/skiplinks/overview)',
       },
     },
   },

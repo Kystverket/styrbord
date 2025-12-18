@@ -9,7 +9,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/divider)',
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/divider/overview)',
       },
     },
   },

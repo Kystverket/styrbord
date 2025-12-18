@@ -25,7 +25,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/checkbox)',
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/checkbox/overview)',
       },
     },
   },

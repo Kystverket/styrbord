@@ -7,7 +7,7 @@ const meta: Meta<typeof Label> = {
   parameters: {
     docs: {
       description: {
-        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/label)',
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/label/overview)',
       },
     },
   },
