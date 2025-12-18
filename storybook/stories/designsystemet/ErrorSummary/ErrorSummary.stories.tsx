@@ -13,7 +13,8 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/error-summary/overview)',
+        component:
+          '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/error-summary/overview)',
       },
     },
   },

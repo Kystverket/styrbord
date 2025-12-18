@@ -17,7 +17,8 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/toggle-group/overview)',
+        component:
+          '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/toggle-group/overview)',
       },
     },
   },

@@ -37,7 +37,8 @@ export default {
     },
     docs: {
       description: {
-        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/textfield/overview)',
+        component:
+          '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/textfield/overview)',
       },
     },
   },

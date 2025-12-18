@@ -7,7 +7,8 @@ const meta: Meta<typeof ValidationMessage> = {
   parameters: {
     docs: {
       description: {
-        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/validation-message/overview)',
+        component:
+          '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/validation-message/overview)',
       },
     },
   },
