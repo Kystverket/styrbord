@@ -22,6 +22,13 @@ export default {
   title: 'Form/Checkbox',
   component: Checkbox,
   tags: ['autodocs', 'ds-override'],
+  parameters: {
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/checkbox/overview)',
+      },
+    },
+  },
 } as Meta;
 
 export const Preview: Story = {

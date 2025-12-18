@@ -7,6 +7,14 @@ type Story = StoryFn<typeof SkipLink>;
 export default {
   title: 'Components/SkipLink',
   component: SkipLink,
+  parameters: {
+    docs: {
+      description: {
+        component:
+          '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/skiplinks/overview)',
+      },
+    },
+  },
 } satisfies Meta;
 
 export const Preview: Story = (args) => (

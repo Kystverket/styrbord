@@ -6,6 +6,13 @@ type Story = StoryObj<typeof Switch>;
 export default {
   title: 'Components/Switch',
   component: Switch,
+  parameters: {
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/switch/overview)',
+      },
+    },
+  },
 } as Meta;
 
 export const Preview: Story = {

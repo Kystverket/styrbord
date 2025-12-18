@@ -13,6 +13,11 @@ export default {
         rules: [{ id: 'empty-heading', selector: ':has(.ds-skeleton)' }],
       },
     },
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/skeleton/overview)',
+      },
+    },
   },
 } as Meta;
 

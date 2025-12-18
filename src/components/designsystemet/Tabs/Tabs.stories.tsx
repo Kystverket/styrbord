@@ -6,6 +6,13 @@ export default {
   title: 'Components/Tabs',
   component: Tabs,
   tags: ['autodocs', 'ds-override'],
+  parameters: {
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/tabs/overview)',
+      },
+    },
+  },
 } as Meta;
 
 export const Preview: StoryFn<typeof Tabs> = (args) => (

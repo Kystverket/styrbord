@@ -6,6 +6,13 @@ type Story = StoryFn<typeof Divider>;
 export default {
   title: 'Components/Divider',
   component: Divider,
+  parameters: {
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/divider/overview)',
+      },
+    },
+  },
 } as Meta;
 
 export const Preview: Story = (args) => (

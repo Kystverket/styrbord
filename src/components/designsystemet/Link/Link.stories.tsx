@@ -10,6 +10,13 @@ const meta = {
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'ds-override'],
   argTypes: {},
+  parameters: {
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/link/overview)',
+      },
+    },
+  },
 } satisfies Meta<typeof Link>;
 
 export default meta;

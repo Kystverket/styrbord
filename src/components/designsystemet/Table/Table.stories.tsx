@@ -9,6 +9,13 @@ export default {
   title: 'Components/Table',
   component: Table,
   tags: ['autodocs', 'ds-override'],
+  parameters: {
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/table/overview)',
+      },
+    },
+  },
 } as Meta;
 
 export const Preview: Story = (args) => {

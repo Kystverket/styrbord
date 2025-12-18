@@ -8,6 +8,13 @@ const meta = {
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'ds-override'],
   argTypes: {},
+  parameters: {
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/alert/overview)',
+      },
+    },
+  },
 } satisfies Meta<typeof Alert>;
 
 export default meta;
