@@ -1,67 +1,57 @@
 import classes from './alert.module.css';
 import React from 'react';
-import typography from '../Typography/typography.module.css';
-import { Body } from '../Typography/typography';
-import { getIcon, alertStyle } from './alert.util';
-import { AlertLevel, TextSize, Width } from './alert.types';
 import Icon from '../Icon/icon';
 import { Box, Heading } from '~/main';
-import { smaller } from '~/utils/sizing';
+import { Alert as DsAlert, AlertProps as DsAlertProps } from '@digdir/designsystemet-react';
+import { smaller } from '../../../utils/sizing';
 
-export interface AlertProps {
-  level: AlertLevel;
-  size?: TextSize;
+export type AlertProps = DsAlertProps & {
+  level?: 'info' | 'success' | 'warning' | 'error';
   title?: string;
   text?: string;
   children?: React.ReactNode;
-  width?: Width;
+  width?: 'content' | 'md' | 'full';
+  'data-size'?: 'sm' | 'md' | 'lg';
   className?: string;
   role?: 'status';
   onDismiss?: () => void;
-}
-
-const textSize = (size: TextSize) => {
-  switch (size) {
-    case 'sm':
-      return typography['bodySm'];
-    case 'md':
-      return typography['bodySmStrong'];
-    case 'lg':
-      return typography['bodyLg'];
-  }
 };
 
 const Alert = ({
   level,
-  size = 'md',
-  width = 'md',
   title = undefined,
-  text = undefined,
+  'data-size': dataSize = 'md',
+  text,
+  width = 'content',
   className = '',
   ...props
 }: AlertProps) => {
-  const icon = getIcon(level);
+  const dataColor = props['data-color'] ?? (level === 'error' ? 'danger' : level) ?? 'info';
+  const classNames = [classes.alert, className, classes['width-' + width]];
 
   return (
-    <Box horizontal justify="between" p={12} className={`${alertStyle(width, level)} ${className}`}>
-      <Box horizontal>
-        {icon}
-        <Box mx={8} my={0} gap={4} className={classes.content}>
-          {title && (
-            <Heading data-size={smaller(size)}>
-              <span role={props.role}>{title}</span>
-            </Heading>
-          )}
-          {text && <Body size={size}>{text}</Body>}
-          {props.children && <div className={textSize(size)}>{props.children}</div>}
+    <DsAlert className={classNames.join(' ')} data-color={dataColor}>
+      <Box horizontal justify="between" align="start" gap={8}>
+        <Box horizontal align="start" gap={8}>
+          <Box gap={4}>
+            {title && (
+              <Heading data-size={smaller(smaller(dataSize))}>
+                <span role={props.role}>{title}</span>
+              </Heading>
+            )}
+            <div data-size={dataSize}>
+              {text}
+              {props.children}
+            </div>
+          </Box>
         </Box>
+        {props.onDismiss ? (
+          <button className={classes.closeButton} onClick={props.onDismiss}>
+            <Icon material="close" />
+          </button>
+        ) : null}
       </Box>
-      {props.onDismiss ? (
-        <button className={classes.closeButton} onClick={props.onDismiss}>
-          <Icon material="close" />
-        </button>
-      ) : null}
-    </Box>
+    </DsAlert>
   );
 };
 

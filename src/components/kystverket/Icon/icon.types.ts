@@ -46,6 +46,7 @@ export const iconIdList = [
   'globe_uk',
   'inbox',
   'info',
+  'info_i',
   'keyboard_arrow_down',
   'keyboard_arrow_up',
   'layers',
