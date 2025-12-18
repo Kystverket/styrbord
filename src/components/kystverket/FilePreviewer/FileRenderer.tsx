@@ -6,19 +6,22 @@ export const FileRenderer = ({
   file,
   className,
   mode = 'thumbnail',
+  tabIndex,
 }: {
   file: FileInfo;
   mode?: 'thumbnail' | 'full';
   className?: string;
+  tabIndex?: number;
 }) => {
   if (mode === 'thumbnail') {
     if (file.contentType === 'image') return <ImageThumbnail file={file} className={className} />;
     if (file.contentType === 'json') return <JsonThumbnail file={file} className={className} />;
     if (file.contentType === 'pdf') return <PdfThumbnail file={file} className={className} />;
   }
-  if (file.contentType === 'image') return <ImageDisplay file={file} className={className} />;
-  if (file.contentType === 'pdf') return <PdfDisplay file={file} className={className} />;
-  if (file.contentType === 'json') return <JsonDisplay file={file} className={className} />;
+
+  if (file.contentType === 'image') return <ImageDisplay file={file} className={className} />; //No tabindex because there's no interactive elements in the img
+  if (file.contentType === 'pdf') return <PdfDisplay tabIndex={tabIndex} file={file} className={className} />;
+  if (file.contentType === 'json') return <JsonDisplay tabIndex={tabIndex} file={file} className={className} />;
 };
 
 /**
@@ -39,13 +42,13 @@ const ImageDisplay = ({ file, className }: { file: ImageFile; className?: string
 
 const JsonThumbnail = ({ file, className }: { file: JsonFile; className?: string }) => {
   return (
-    <Box align="center" justify="center" className={`${classes.fullSize} ${classes.flexCenter} ${className || ''}`}>
+    <Box align="center" justify="center" className={`${classes.thumbnail} ${classes.flexCenter} ${className || ''}`}>
       <p>{file.fileName}</p>
     </Box>
   );
 };
 
-function JsonDisplay({ file, className }: { file: JsonFile; className?: string }) {
+function JsonDisplay({ file, className, tabIndex }: { file: JsonFile; className?: string; tabIndex?: number }) {
   const selectAllText = (element: HTMLPreElement) => {
     const selection = window.getSelection();
     const range = document.createRange();
@@ -70,7 +73,7 @@ function JsonDisplay({ file, className }: { file: JsonFile; className?: string }
       onDoubleClick={handleOnDoubleClick}
       onKeyDown={handleKeyDown}
       className={`${classes.previewFile} ${classes.JsonPreview} ${className || ''}`}
-      tabIndex={0}
+      tabIndex={tabIndex ?? 0}
     >
       {JSON.stringify(file.data, null, 2)}
     </pre>
@@ -83,12 +86,12 @@ function JsonDisplay({ file, className }: { file: JsonFile; className?: string }
 
 const PdfThumbnail = ({ file, className }: { file: PdfFile; className?: string }) => {
   return (
-    <Box className={`${classes.fullSize} ${classes.flexCenter} ${className || ''}`}>
+    <Box className={`${classes.thumbnail} ${classes.flexCenter} ${className || ''}`}>
       <p>{file.fileName}</p>
     </Box>
   );
 };
 
-const PdfDisplay = ({ file, className }: { file: PdfFile; className?: string }) => {
-  return <embed className={`${classes.previewFile} ${className || ''}`} src={file.src}></embed>;
+const PdfDisplay = ({ file, className, tabIndex }: { file: PdfFile; className?: string; tabIndex?: number }) => {
+  return <embed tabIndex={tabIndex} className={`${classes.previewFile} ${className || ''}`} src={file.src}></embed>;
 };
