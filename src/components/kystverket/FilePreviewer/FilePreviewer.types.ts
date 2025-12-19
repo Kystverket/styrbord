@@ -3,35 +3,34 @@ type ButtonOptions = {
   showOpenInNew?: boolean;
 };
 
-export type PdfFile = {
+export type FileInfo = {
+  fileName: string;
+  fileSize?: string;
+  buttons?: ButtonOptions;
+} & (PdfFile | ImageFile | JsonFile);
+
+type PdfFile = {
   contentType: 'pdf';
   src: string;
-  fileName: string;
-  fileSize?: string;
-  buttons?: ButtonOptions;
 };
 
-export type ImageFile = {
+type ImageFile = {
   contentType: 'image';
   src: string;
-  fileName: string;
-  fileSize?: string;
-  buttons?: ButtonOptions;
 };
 
-export type JsonFile = {
+type JsonFile = {
   contentType: 'json';
   data: Record<string, unknown>;
-  fileName: string;
-  fileSize?: string;
-  buttons?: ButtonOptions;
 };
+
+//Get File type filtered by the value of contentType
+export type FileInfoByContentType<T extends FileInfo['contentType']> = Extract<FileInfo, { contentType: T }>;
 
 // Default button configurations by file type
-export const defaultButtonsByType = {
-  pdf: { showDownload: true, showOpenInNew: true } as ButtonOptions,
-  image: { showDownload: true, showOpenInNew: true } as ButtonOptions,
-  json: { showDownload: true, showOpenInNew: true } as ButtonOptions,
+export const defaultButtonsByType: Record<FileInfo['contentType'], ButtonOptions> = {
+  pdf: { showDownload: true, showOpenInNew: true },
+  image: { showDownload: true, showOpenInNew: true },
+  json: { showDownload: true, showOpenInNew: true },
 };
 
-export type FileInfo = PdfFile | ImageFile | JsonFile;
