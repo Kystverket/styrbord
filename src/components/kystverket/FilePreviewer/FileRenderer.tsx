@@ -1,5 +1,5 @@
 import { Box } from '~/main';
-import { FileInfo, ImageFile, JsonFile, PdfFile } from './FilePreviewer.types';
+import { FileInfoByContentType, FileInfo } from './FilePreviewer.types';
 import classes from './FileRenderer.module.css';
 
 export const FileRenderer = ({
@@ -28,11 +28,11 @@ export const FileRenderer = ({
  * Image
  */
 
-const ImageThumbnail = ({ file, className }: { file: ImageFile; className?: string }) => {
+const ImageThumbnail = ({ file, className }: { file: FileInfoByContentType<'image'>; className?: string }) => {
   return <img src={file.src} className={`${classes.image} ${className || ''}`}></img>;
 };
 
-const ImageDisplay = ({ file, className }: { file: ImageFile; className?: string }) => {
+const ImageDisplay = ({ file, className }: { file: FileInfoByContentType<'image'>; className?: string }) => {
   return <img className={`${classes.previewFile} ${className || ''}`} src={file.src}></img>;
 };
 
@@ -40,7 +40,7 @@ const ImageDisplay = ({ file, className }: { file: ImageFile; className?: string
  * JSON
  */
 
-const JsonThumbnail = ({ file, className }: { file: JsonFile; className?: string }) => {
+const JsonThumbnail = ({ file, className }: { file: FileInfoByContentType<'json'>; className?: string }) => {
   return (
     <Box align="center" justify="center" className={`${classes.thumbnail} ${classes.flexCenter} ${className || ''}`}>
       <p>{file.fileName}</p>
@@ -48,7 +48,15 @@ const JsonThumbnail = ({ file, className }: { file: JsonFile; className?: string
   );
 };
 
-function JsonDisplay({ file, className, tabIndex }: { file: JsonFile; className?: string; tabIndex?: number }) {
+function JsonDisplay({
+  file,
+  className,
+  tabIndex,
+}: {
+  file: FileInfoByContentType<'json'>;
+  className?: string;
+  tabIndex?: number;
+}) {
   const selectAllText = (element: HTMLPreElement) => {
     const selection = window.getSelection();
     const range = document.createRange();
@@ -84,7 +92,7 @@ function JsonDisplay({ file, className, tabIndex }: { file: JsonFile; className?
  * PDF
  */
 
-const PdfThumbnail = ({ file, className }: { file: PdfFile; className?: string }) => {
+const PdfThumbnail = ({ file, className }: { file: FileInfoByContentType<'pdf'>; className?: string }) => {
   return (
     <Box className={`${classes.thumbnail} ${classes.flexCenter} ${className || ''}`}>
       <p>{file.fileName}</p>
@@ -92,6 +100,14 @@ const PdfThumbnail = ({ file, className }: { file: PdfFile; className?: string }
   );
 };
 
-const PdfDisplay = ({ file, className, tabIndex }: { file: PdfFile; className?: string; tabIndex?: number }) => {
+const PdfDisplay = ({
+  file,
+  className,
+  tabIndex,
+}: {
+  file: FileInfoByContentType<'pdf'>;
+  className?: string;
+  tabIndex?: number;
+}) => {
   return <embed tabIndex={tabIndex} className={`${classes.previewFile} ${className || ''}`} src={file.src}></embed>;
 };
