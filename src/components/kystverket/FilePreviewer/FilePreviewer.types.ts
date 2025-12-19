@@ -33,4 +33,3 @@ export const defaultButtonsByType: Record<FileInfo['contentType'], ButtonOptions
   image: { showDownload: true, showOpenInNew: true },
   json: { showDownload: true, showOpenInNew: true },
 };
-
