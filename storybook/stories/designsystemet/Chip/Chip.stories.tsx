@@ -6,6 +6,11 @@ export default {
   component: Chip.Radio,
   parameters: {
     customStyles: { display: 'flex', gap: 'var(--ds-size-2)' },
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/chip/overview)',
+      },
+    },
   },
 } satisfies Meta;
 

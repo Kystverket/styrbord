@@ -6,6 +6,13 @@ import { Label } from '@digdir/designsystemet-react';
 export default {
   title: 'Components/Search',
   component: Search,
+  parameters: {
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/search/overview)',
+      },
+    },
+  },
 } as Meta;
 
 export const Preview: StoryFn<typeof Search> = (args) => (

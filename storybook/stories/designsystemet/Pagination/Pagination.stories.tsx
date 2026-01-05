@@ -5,6 +5,14 @@ import type { Meta, StoryFn } from '@storybook/react';
 export default {
   title: 'Components/Pagination',
   component: Pagination,
+  parameters: {
+    docs: {
+      description: {
+        component:
+          '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/pagination/overview)',
+      },
+    },
+  },
 } as Meta;
 
 export const Preview: StoryFn<typeof Pagination> = () => {
