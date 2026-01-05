@@ -4,6 +4,14 @@ import type { Meta, StoryObj } from '@storybook/react';
 const meta: Meta<typeof ValidationMessage> = {
   title: 'Components/ValidationMessage',
   component: ValidationMessage,
+  parameters: {
+    docs: {
+      description: {
+        component:
+          '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/validation-message/overview)',
+      },
+    },
+  },
 };
 
 export default meta;

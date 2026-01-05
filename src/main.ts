@@ -48,6 +48,8 @@ export type { IconId } from './components/kystverket/Icon/icon.types';
 
 export * from './components/kystverket/Image/svgImage';
 
+export { default as Skillingsbuoye } from './components/kystverket/Skillingsbuoye/skillingsbuoye';
+
 export { Body, Accent, Typography } from './components/kystverket/Typography/typography';
 export type {
   TypographyProps,
