@@ -16,6 +16,7 @@
   }
   .alert {
     --dsc-alert-border-color: var(--ds-color-border-subtle);
+    --dsc-alert-border-radius: var(--ds-border-radius-lg);
   }
   .alert[data-color],
   .alert[data-color='info'] {
