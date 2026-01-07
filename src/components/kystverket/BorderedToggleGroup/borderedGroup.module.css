@@ -2,13 +2,13 @@
   .toggleGroup {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--ds-size-4);
+    gap: var(--ds-size-2);
   }
 
   .toggleGroup > * {
-    border: 2px solid var(--ds-color-border-subtle) !important;
-    border-radius: var(--ds-border-radius-lg);
-    padding: var(--ds-size-4);
+    border: 2px solid var(--ds-color-neutral-surface-hover) !important;
+    border-radius: var(--ds-border-radius-md);
+    padding: var(--ds-size-7);
     background-color: var(--ds-color-background-default);
     width: 100%;
   }
@@ -21,13 +21,24 @@
     width: 100%;
   }
 
+  .input-container:focus-visible, .input-container:has(:focus-visible) {
+    box-shadow: var(--_ds--focus, var(--dsc-focus-boxShadow));
+    outline: var(--_ds--focus, var(--dsc-focus-outline));
+    outline-offset: var(--_ds--focus, var(--ds-border-width-focus));
+  }
+
   .is-on {
-    border-color: var(--ds-color-border-strong) !important;
-    background-color: var(--ds-color-primary-surface-tinted);
+    border-color: var(--ds-color-primary-border-default) !important;
   }
 
   [data-color='danger'] .is-on {
     background-color: var(--ds-color-danger-surface-tinted);
+  }
+
+  .radio:focus, .checkbox:focus, .radio:focus-visible, .checkbox:focus-visible, .radio:focus-within, .checkbox:focus-within {
+    outline: none;
+    outline-color: transparent;
+    box-shadow: none;
   }
 
   @container (min-width: 400px) {

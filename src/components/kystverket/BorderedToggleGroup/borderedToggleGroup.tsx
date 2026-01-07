@@ -55,7 +55,7 @@ const BorderedRadioGroup = (props: BorderedToggleGroupProps) => {
           {props.values.map((el) => (
             <div
               key={el.key ?? el.label}
-              className={el.value ? classes['is-on'] : classes['is-off']}
+              className={classes['input-container'] + ' ' + (el.value ? classes['is-on'] : classes['is-off'])}
               onClick={(e) => {
                 if (e.target === e.currentTarget && !props.disabled && !props.readonly) {
                   onClick(el.key ?? el.label, !el.value);
@@ -64,6 +64,7 @@ const BorderedRadioGroup = (props: BorderedToggleGroupProps) => {
               style={{ cursor: props.disabled || props.readonly ? 'default' : 'pointer' }}
             >
               <Checkbox
+                className={classes.checkbox}
                 data-color={hasError ? 'danger' : 'primary'}
                 readOnly={props.readonly}
                 disabled={props.disabled}

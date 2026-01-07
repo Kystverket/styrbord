@@ -34,7 +34,9 @@ const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
           {props.options.map((el) => (
             <div
               key={el.label}
-              className={el.value === props.value ? classes['is-on'] : classes['is-off']}
+              className={
+                classes['input-container'] + ' ' + (el.value === props.value ? classes['is-on'] : classes['is-off'])
+              }
               onClick={() => {
                 if (!props.disabled && !props.readonly) {
                   props.onChange?.(el.value);
@@ -43,6 +45,7 @@ const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
               style={{ cursor: props.disabled || props.readonly ? 'default' : 'pointer' }}
             >
               <Radio
+                className={classes.radio}
                 data-color={hasError ? 'danger' : 'primary'}
                 readOnly={props.readonly}
                 disabled={props.disabled}
