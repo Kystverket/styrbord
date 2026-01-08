@@ -7,7 +7,7 @@ const meta = {
   title: 'Deprecated/Details',
   component: Details,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'deprecated'],
   argTypes: {},
 } satisfies Meta<typeof Details>;
 

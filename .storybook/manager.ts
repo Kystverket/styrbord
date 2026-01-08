@@ -41,6 +41,18 @@ addons.setConfig({
         toolbar: false,
       },
     },
+    {
+      tags: 'deprecated',
+      badge: {
+        text: 'Deprecated',
+        bgColor: '#ff00ff',
+        fgColor: '#ffffff',
+      },
+      display: {
+        sidebar: ['component'],
+        toolbar: false,
+      },
+    },
     // Place the default config after your custom matchers.
     ...defaultConfig,
   ] satisfies TagBadgeParameters,
