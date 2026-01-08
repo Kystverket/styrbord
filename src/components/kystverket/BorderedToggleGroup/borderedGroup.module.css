@@ -36,15 +36,12 @@
     background-color: var(--ds-color-danger-surface-tinted);
   }
 
-  .radio:focus,
-  .checkbox:focus,
-  .radio:focus-visible,
-  .checkbox:focus-visible,
-  .radio:focus-within,
-  .checkbox:focus-within {
+  .input:focus,
+  .input:focus-visible,
+  .input:focus-within {
+    box-shadow: none;
     outline: none;
     outline-color: transparent;
-    box-shadow: none;
   }
 
   @container (min-width: 400px) {
