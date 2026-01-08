@@ -5,16 +5,20 @@
     gap: var(--ds-size-2);
   }
 
-  .toggleGroup > * {
-    border: 2px solid var(--ds-color-neutral-surface-hover) !important;
+  .input-container {
+    border: 2px solid var(--ds-color-neutral-surface-hover);
     border-radius: var(--ds-border-radius-md);
     padding: var(--ds-size-7);
     background-color: var(--ds-color-background-default);
     width: 100%;
   }
 
-  .is-readonly .toggleGroup > * {
+  .is-readonly .input-container {
     background-color: var(--ds-color-neutral-background-tinted);
+  }
+
+  .is-disabled .input-container {
+    cursor: not-allowed !important;
   }
 
   .toggleGroup :global(.ds-field) {
@@ -29,7 +33,7 @@
   }
 
   .is-on {
-    border-color: var(--ds-color-primary-border-default) !important;
+    border-color: var(--ds-color-primary-border-default);
   }
 
   [data-color='danger'] .is-on {
