@@ -21,7 +21,8 @@
     width: 100%;
   }
 
-  .input-container:focus-visible, .input-container:has(:focus-visible) {
+  .input-container:focus-visible,
+  .input-container:has(:focus-visible) {
     box-shadow: var(--_ds--focus, var(--dsc-focus-boxShadow));
     outline: var(--_ds--focus, var(--dsc-focus-outline));
     outline-offset: var(--_ds--focus, var(--ds-border-width-focus));
@@ -35,7 +36,12 @@
     background-color: var(--ds-color-danger-surface-tinted);
   }
 
-  .radio:focus, .checkbox:focus, .radio:focus-visible, .checkbox:focus-visible, .radio:focus-within, .checkbox:focus-within {
+  .radio:focus,
+  .checkbox:focus,
+  .radio:focus-visible,
+  .checkbox:focus-visible,
+  .radio:focus-within,
+  .checkbox:focus-within {
     outline: none;
     outline-color: transparent;
     box-shadow: none;
