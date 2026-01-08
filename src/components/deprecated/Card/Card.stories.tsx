@@ -9,7 +9,7 @@ const meta = {
   title: 'Deprecated/Card',
   component: Card,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv-ds-hybrid'],
+  tags: ['autodocs', 'deprecated'],
   argTypes: {
     variant: {
       options: ['default', 'tinted'],

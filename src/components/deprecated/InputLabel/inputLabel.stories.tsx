@@ -6,7 +6,7 @@ const meta = {
   title: 'Deprecated/InputLabel',
   component: InputLabel,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ['autodocs', 'deprecated'],
   argTypes: {},
 } satisfies Meta<typeof InputLabel>;
 

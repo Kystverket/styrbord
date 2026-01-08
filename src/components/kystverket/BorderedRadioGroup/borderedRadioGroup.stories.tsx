@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useArgs } from '@storybook/preview-api';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import BorderedRadioGroup, { BorderedRadioGroupProps, RadioGroupValueType } from './borderedRadioGroup';
 import { Box } from '~/main';
+import { useState } from 'react';
 
 const meta = {
   title: 'Form/BorderedRadioGroup',
@@ -38,13 +38,12 @@ const defaultProps: Omit<BorderedRadioGroupProps, 'onChange'> = {
 export const Default: Story = {
   args: {
     ...defaultProps,
-    onChange: (value: RadioGroupValueType) => console.log(value),
   },
   render: (args) => {
-    const [{ value }, updateArgs] = useArgs();
+    const [value, setValue] = useState<RadioGroupValueType | undefined>(undefined);
     return (
       <Box width="full">
-        <BorderedRadioGroup {...args} value={value} onChange={(v) => updateArgs({ value: v })} />
+        <BorderedRadioGroup {...args} value={value} onChange={(v) => setValue(v)} />
       </Box>
     );
   },
@@ -67,13 +66,12 @@ export const WithLongOptionText: Story = {
         value: 'option-c',
       },
     ],
-    onChange: (value: RadioGroupValueType) => console.log(value),
   },
   render: (args) => {
-    const [{ value }, updateArgs] = useArgs();
+    const [value, setValue] = useState<RadioGroupValueType | undefined>(undefined);
     return (
       <Box width="full">
-        <BorderedRadioGroup {...args} value={value} onChange={(v) => updateArgs({ value: v })} />
+        <BorderedRadioGroup {...args} value={value} onChange={(v) => setValue(v)} />
       </Box>
     );
   },
@@ -87,13 +85,12 @@ export const WithReactElementDescription: Story = {
         Description containing a <a href="#">link</a>
       </>
     ),
-    onChange: (value: RadioGroupValueType) => console.log(value),
   },
   render: (args) => {
-    const [{ value }, updateArgs] = useArgs();
+    const [value, setValue] = useState<RadioGroupValueType | undefined>(undefined);
     return (
       <Box width="full">
-        <BorderedRadioGroup {...args} value={value} onChange={(v) => updateArgs({ value: v })} />
+        <BorderedRadioGroup {...args} value={value} onChange={(v) => setValue(v)} />
       </Box>
     );
   },
@@ -102,14 +99,13 @@ export const WithReactElementDescription: Story = {
 export const WithError: Story = {
   args: {
     ...defaultProps,
-    onChange: (value: RadioGroupValueType) => console.log(value),
     error: 'This is an error message',
   },
   render: (args) => {
-    const [{ value }, updateArgs] = useArgs();
+    const [value, setValue] = useState<RadioGroupValueType | undefined>(undefined);
     return (
       <Box width="full">
-        <BorderedRadioGroup {...args} value={value} onChange={(v) => updateArgs({ value: v })} />
+        <BorderedRadioGroup {...args} value={value} onChange={(v) => setValue(v)} />
       </Box>
     );
   },
@@ -117,20 +113,60 @@ export const WithError: Story = {
 
 export const Optional: Story = {
   args: { ...defaultProps, optional: true },
+  render: (args) => {
+    const [value, setValue] = useState<RadioGroupValueType | undefined>(undefined);
+    return (
+      <Box width="full">
+        <BorderedRadioGroup {...args} value={value} onChange={(v) => setValue(v)} />
+      </Box>
+    );
+  },
 };
 
 export const OptionalText: Story = {
   args: { ...defaultProps, optional: 'Spesialtilpasset Verdi' },
+  render: (args) => {
+    const [value, setValue] = useState<RadioGroupValueType | undefined>(undefined);
+    return (
+      <Box width="full">
+        <BorderedRadioGroup {...args} value={value} onChange={(v) => setValue(v)} />
+      </Box>
+    );
+  },
 };
 
 export const Required: Story = {
   args: { ...defaultProps, required: true },
+  render: (args) => {
+    const [value, setValue] = useState<RadioGroupValueType | undefined>(undefined);
+    return (
+      <Box width="full">
+        <BorderedRadioGroup {...args} value={value} onChange={(v) => setValue(v)} />
+      </Box>
+    );
+  },
 };
 
 export const ReadOnly: Story = {
   args: { ...defaultProps, readonly: true },
+  render: (args) => {
+    const [value, setValue] = useState<RadioGroupValueType | undefined>(undefined);
+    return (
+      <Box width="full">
+        <BorderedRadioGroup {...args} value={value} onChange={(v) => setValue(v)} />
+      </Box>
+    );
+  },
 };
 
 export const Disabled: Story = {
   args: { ...defaultProps, disabled: true },
+  render: (args) => {
+    const [value, setValue] = useState<RadioGroupValueType | undefined>(undefined);
+    return (
+      <Box width="full">
+        <BorderedRadioGroup {...args} value={value} onChange={(v) => setValue(v)} />
+      </Box>
+    );
+  },
 };
