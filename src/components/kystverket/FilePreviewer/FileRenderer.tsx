@@ -29,11 +29,11 @@ export const FileRenderer = ({
  */
 
 const ImageThumbnail = ({ file, className }: { file: FileInfoByContentType<'image'>; className?: string }) => {
-  return <img src={file.src} className={`${classes.image} ${className || ''}`}></img>;
+  return <img src={file.src} className={`${classes.image} ${className || ''}`} />;
 };
 
 const ImageDisplay = ({ file, className }: { file: FileInfoByContentType<'image'>; className?: string }) => {
-  return <img className={`${classes.previewFile} ${className || ''}`} src={file.src}></img>;
+  return <img className={`${classes.previewFile} ${className || ''}`} src={file.src} />;
 };
 
 /**
@@ -109,5 +109,12 @@ const PdfDisplay = ({
   className?: string;
   tabIndex?: number;
 }) => {
-  return <embed tabIndex={tabIndex} className={`${classes.previewFile} ${className || ''}`} src={file.src}></embed>;
+  return (
+    <iframe
+      tabIndex={tabIndex}
+      title={file.fileName}
+      className={`${classes.previewFile} ${className || ''}`}
+      src={file.src}
+    />
+  );
 };

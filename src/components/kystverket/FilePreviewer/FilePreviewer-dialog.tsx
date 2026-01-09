@@ -162,9 +162,12 @@ export const FilePreviewerDialog = ({ animation = 'slide', onClose, files, start
           </Button>
         )}
         <Box className={classes.fileInnerContainer}>
-          {files.map((e, idx) => (
-            <Box className={`${classes.file} ${classes[animation]} ${getPositionClass(idx)}`}>
-              <FileRenderer tabIndex={idx === selectedFileIndex ? 0 : -1} mode="full" key={idx} file={e} />
+          {files.map((file, idx) => (
+            <Box
+              key={`${file.fileName}-${idx}-display`}
+              className={`${classes.file} ${classes[animation]} ${getPositionClass(idx)}`}
+            >
+              <FileRenderer tabIndex={idx === selectedFileIndex ? 0 : -1} mode="full" key={idx} file={file} />
             </Box>
           ))}
         </Box>
@@ -184,7 +187,7 @@ export const FilePreviewerDialog = ({ animation = 'slide', onClose, files, start
         {files.map((file, idx) => {
           return (
             <button
-              key={idx}
+              key={`${file.fileName}-${idx}-display`}
               ref={(el) => {
                 previewButtonRefs.current[idx] = el;
               }}
