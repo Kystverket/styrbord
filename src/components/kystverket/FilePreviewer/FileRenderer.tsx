@@ -109,12 +109,5 @@ const PdfDisplay = ({
   className?: string;
   tabIndex?: number;
 }) => {
-  return (
-    <iframe
-      tabIndex={tabIndex}
-      title={file.fileName}
-      className={`${classes.previewFile} ${className || ''}`}
-      src={file.src}
-    />
-  );
+  return <embed tabIndex={tabIndex} className={`${classes.previewFile} ${className || ''}`} src={file.src} />;
 };
