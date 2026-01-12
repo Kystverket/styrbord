@@ -1,7 +1,8 @@
 export const iconIdList = [
-  'add_location_alt',
-  'add_location',
   'add',
+  'add_box',
+  'add_location',
+  'add_location_alt',
   'adjust',
   'anchor',
   'archive',
@@ -37,6 +38,7 @@ export const iconIdList = [
   'event',
   'explore_nearby',
   'explore',
+  'export_notes',
   'favorite',
   'file_map',
   'file_save',
