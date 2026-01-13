@@ -5,6 +5,13 @@ import type { Meta, StoryFn, StoryObj } from '@storybook/react';
 export default {
   title: 'Form/Radio',
   component: Radio,
+  parameters: {
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/radio/overview)',
+      },
+    },
+  },
 } as Meta;
 
 export const Preview: StoryObj<typeof Radio> = {

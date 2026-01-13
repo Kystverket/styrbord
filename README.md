@@ -39,6 +39,10 @@ Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.
 
 ## Endringslogg
 
+### 2025-11-11 -- v1.2.1
+
+- Oppdatert Alert til å ikke være egenprodusert, men istedet være en variant av Alert fra Designsystemet. Deler av interfacet endres til å være likere Designsystemet (size).
+
 ### 2025-11-11 -- v1.1.0
 
 - Oppdatert til Designsystemet versjon 1.7.2 fra 1.6.1.

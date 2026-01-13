@@ -1,6 +1,7 @@
 import { Box, Fieldset, LabelContent, Radio, ValidationMessage } from '~/main';
 import classes from '../BorderedToggleGroup/borderedGroup.module.css';
 import { BorderedGroupProps } from '../BorderedToggleGroup/borderedGroup.types';
+import { inputContainerClass } from '../BorderedToggleGroup/borderedToggleGroup';
 
 export type RadioGroupValueType = string | boolean | number;
 
@@ -34,7 +35,7 @@ const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
           {props.options.map((el) => (
             <div
               key={el.label}
-              className={el.value === props.value ? classes['is-on'] : classes['is-off']}
+              className={inputContainerClass(el.value === props.value)}
               onClick={() => {
                 if (!props.disabled && !props.readonly) {
                   props.onChange?.(el.value);
@@ -43,6 +44,7 @@ const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
               style={{ cursor: props.disabled || props.readonly ? 'default' : 'pointer' }}
             >
               <Radio
+                className={classes.input}
                 data-color={hasError ? 'danger' : 'primary'}
                 readOnly={props.readonly}
                 disabled={props.disabled}

@@ -2,32 +2,50 @@
   .toggleGroup {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--ds-size-4);
+    gap: var(--ds-size-2);
   }
 
-  .toggleGroup > * {
-    border: 2px solid var(--ds-color-border-subtle) !important;
-    border-radius: var(--ds-border-radius-lg);
-    padding: var(--ds-size-4);
+  .input-container {
+    border: 2px solid var(--ds-color-neutral-surface-hover);
+    border-radius: var(--ds-border-radius-md);
+    padding: var(--ds-size-7);
     background-color: var(--ds-color-background-default);
     width: 100%;
   }
 
-  .is-readonly .toggleGroup > * {
+  .is-readonly .input-container {
     background-color: var(--ds-color-neutral-background-tinted);
+  }
+
+  .is-disabled .input-container {
+    cursor: not-allowed !important;
   }
 
   .toggleGroup :global(.ds-field) {
     width: 100%;
   }
 
+  .input-container:focus-visible,
+  .input-container:has(:focus-visible) {
+    box-shadow: var(--_ds--focus, var(--dsc-focus-boxShadow));
+    outline: var(--_ds--focus, var(--dsc-focus-outline));
+    outline-offset: var(--_ds--focus, var(--ds-border-width-focus));
+  }
+
   .is-on {
-    border-color: var(--ds-color-border-strong) !important;
-    background-color: var(--ds-color-primary-surface-tinted);
+    border-color: var(--ds-color-primary-border-default);
   }
 
   [data-color='danger'] .is-on {
     background-color: var(--ds-color-danger-surface-tinted);
+  }
+
+  .input:focus,
+  .input:focus-visible,
+  .input:focus-within {
+    box-shadow: none;
+    outline: none;
+    outline-color: transparent;
   }
 
   @container (min-width: 400px) {

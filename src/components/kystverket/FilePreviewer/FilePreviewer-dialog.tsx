@@ -15,13 +15,14 @@ export type FilePreviewRef = {
   close: () => void;
   showModal: (idx?: number) => void;
 };
-export interface FilePreviewerProps {
+export interface FilePreviewerDialogProps {
+  animation?: 'none' | 'slide';
   files: FileInfo[];
   startIndex?: number;
   onClose?: () => void;
 }
 
-export const FilePreviewerDialog = ({ onClose, files, startIndex }: FilePreviewerProps) => {
+export const FilePreviewerDialog = ({ animation = 'slide', onClose, files, startIndex }: FilePreviewerDialogProps) => {
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const [selectedFile, setSelectedFile] = useState<FileInfo>(files[startIndex ?? 0]);
   const [selectedFileIndex, setSelectedFileIndex] = useState(startIndex ?? 0);
@@ -91,6 +92,11 @@ export const FilePreviewerDialog = ({ onClose, files, startIndex }: FilePreviewe
   const handlePrev = () => {
     if (selectedFileIndexRef.current > 0) setSelectedFileIndex((index) => index - 1);
   };
+  const getPositionClass = (idx: number) => {
+    if (idx === selectedFileIndex) return classes.selected;
+    else if (idx < selectedFileIndex) return classes.previous;
+    else return classes.next;
+  };
 
   useEffect(() => dialogRef.current?.showModal(), []);
   return (
@@ -155,9 +161,13 @@ export const FilePreviewerDialog = ({ onClose, files, startIndex }: FilePreviewe
             <Icon material="arrow_forward" size="xl"></Icon>
           </Button>
         )}
-        {files.map((e, idx) => (
-          <FileRenderer mode="full" key={idx} file={e} className={idx !== selectedFileIndex ? classes.none : ''} />
-        ))}
+        <Box className={classes.fileInnerContainer}>
+          {files.map((file, idx) => (
+            <Box key={`${idx}-display`} className={`${classes.file} ${classes[animation]} ${getPositionClass(idx)}`}>
+              <FileRenderer tabIndex={idx === selectedFileIndex ? 0 : -1} mode="full" file={file} />
+            </Box>
+          ))}
+        </Box>
       </Box>
 
       <div
@@ -174,7 +184,7 @@ export const FilePreviewerDialog = ({ onClose, files, startIndex }: FilePreviewe
         {files.map((file, idx) => {
           return (
             <button
-              key={idx}
+              key={`${idx}-preview`}
               ref={(el) => {
                 previewButtonRefs.current[idx] = el;
               }}

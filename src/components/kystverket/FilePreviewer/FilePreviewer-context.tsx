@@ -1,5 +1,5 @@
 import { createContext, ReactNode, Ref, useImperativeHandle, useRef, useState } from 'react';
-import { FilePreviewerDialog, FilePreviewRef } from './FilePreviewer-dialog';
+import { FilePreviewerDialog, FilePreviewerDialogProps, FilePreviewRef } from './FilePreviewer-dialog';
 import { FileInfo } from './FilePreviewer.types';
 
 export const FPContext = createContext<{
@@ -16,9 +16,10 @@ export interface FilePreviewerContextProps {
   children?: ReactNode;
   ref?: Ref<FilePreviewRef>;
   files?: FileInfo[];
+  animation?: FilePreviewerDialogProps['animation'];
 }
 
-export const FilePreviewerContext = ({ children, ref, files }: FilePreviewerContextProps) => {
+export const FilePreviewerContext = ({ animation, children, ref, files }: FilePreviewerContextProps) => {
   const internalRef = useRef<FilePreviewRef>(null);
   const dialogRef = ref || internalRef;
   const [contextFiles, setContextFiles] = useState<FileInfo[]>(files ?? []);
@@ -47,7 +48,12 @@ export const FilePreviewerContext = ({ children, ref, files }: FilePreviewerCont
   return (
     <FPContext.Provider value={{ setFiles: setContextFiles, files: contextFiles, ref: dialogRef }}>
       {showPreviewer && (
-        <FilePreviewerDialog files={contextFiles} startIndex={startIndex} onClose={() => setShowPreviewer(false)} />
+        <FilePreviewerDialog
+          animation={animation}
+          files={contextFiles}
+          startIndex={startIndex}
+          onClose={() => setShowPreviewer(false)}
+        />
       )}
       {children}
     </FPContext.Provider>

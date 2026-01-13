@@ -33,7 +33,6 @@ export { FilePreviewer, type FilePreviewerProps } from './components/kystverket/
 export { default as KyvDivider } from './components/kystverket/KyvDivider/kyvDivider';
 
 export { default as Alert } from './components/kystverket/Alert/alert';
-export type { AlertLevel } from './components/kystverket/Alert/alert.types';
 export type { AlertProps } from './components/kystverket/Alert/alert';
 
 export { default as Box } from './components/kystverket/Box/box';
@@ -48,6 +47,8 @@ export { default as Icon } from './components/kystverket/Icon/icon';
 export type { IconId } from './components/kystverket/Icon/icon.types';
 
 export * from './components/kystverket/Image/svgImage';
+
+export { default as Skillingsbuoye } from './components/kystverket/Skillingsbuoye/skillingsbuoye';
 
 export { Body, Accent, Typography } from './components/kystverket/Typography/typography';
 export type {

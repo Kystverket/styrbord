@@ -14,6 +14,11 @@ export default {
     chromatic: {
       disableSnapshot: false,
     },
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/tooltip/overview)',
+      },
+    },
   },
   play: async (ctx) => {
     // When not in Docs mode, automatically open the tooltip

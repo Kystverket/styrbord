@@ -1,7 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import {
-  SvgImage,
   ImageAisSat,
   ImageArcticInfo,
   ImageAvgiftskalkulator,
@@ -51,11 +50,11 @@ import { Body } from '~/main';
 
 const meta = {
   title: 'Helpers/Images and Illustrations',
-  component: SvgImage,
+  component: ImageSoeknadOmFarledsbevis,
   decorators: [StyrbordDecorator],
   tags: ['autodocs'],
   argTypes: {},
-} satisfies Meta<typeof SvgImage>;
+} satisfies Meta<typeof ImageSoeknadOmFarledsbevis>;
 
 export default meta;
 

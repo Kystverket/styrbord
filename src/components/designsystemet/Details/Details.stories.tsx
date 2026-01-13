@@ -9,6 +9,14 @@ const meta = {
   decorators: [StyrbordDecorator],
   tags: ['autodocs'],
   argTypes: {},
+  parameters: {
+    docs: {
+      description: {
+        component:
+          '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/accordion/overview)',
+      },
+    },
+  },
 } satisfies Meta<typeof Details>;
 
 export default meta;

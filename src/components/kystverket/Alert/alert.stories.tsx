@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Alert, { AlertProps } from './alert';
-import style from './alert.module.css';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
@@ -9,6 +8,13 @@ const meta = {
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'ds-override'],
   argTypes: {},
+  parameters: {
+    docs: {
+      description: {
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/alert/overview)',
+      },
+    },
+  },
 } satisfies Meta<typeof Alert>;
 
 export default meta;
@@ -16,9 +22,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const defaultProps: AlertProps = {
-  title: 'Informativ tittel',
-  level: 'info',
-  size: 'md',
   text:
     'Bruk dette tekstfeltet til å beskrive hva varslingen handler om. Du kan bruke så mange linjer du har' +
     ' behov for, men prøv likevel å være kort og konsis.',
@@ -28,20 +31,36 @@ export const Default: Story = {
   args: defaultProps,
 };
 
-export const Small: Story = {
-  args: { ...defaultProps, size: 'sm' },
+export const Warning: Story = {
+  args: { ...defaultProps, title: 'Informativ tittel', level: 'warning' },
+};
+
+export const Success: Story = {
+  args: { ...defaultProps, level: 'success' },
+};
+
+export const Danger: Story = {
+  args: { ...defaultProps, level: 'error' },
+};
+
+export const DangerAlt: Story = {
+  args: { ...defaultProps, 'data-color': 'danger' },
+};
+
+export const SmallSize: Story = {
+  args: { ...defaultProps, title: 'Informativ tittel', 'data-size': 'sm' },
+};
+
+export const NormalSize: Story = {
+  args: { ...defaultProps, title: 'Informativ tittel', 'data-size': 'md' },
+};
+
+export const LargeSizeWithDismiss: Story = {
+  args: { ...defaultProps, title: 'Informativ tittel', 'data-size': 'lg', onDismiss: () => {} },
 };
 
 export const DefaultKort: Story = {
   args: { ...defaultProps, text: 'Kort melding', onDismiss: () => {} },
-};
-
-export const LargeWithDismiss: Story = {
-  args: { ...defaultProps, size: 'lg', onDismiss: () => {} },
-};
-
-export const ClassNameCustomWidth: Story = {
-  args: { ...defaultProps, className: style.customWidth },
 };
 
 export const WithErrorDismiss: Story = {

@@ -8,6 +8,14 @@ const meta = {
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'ds-override'],
   argTypes: {},
+  parameters: {
+    docs: {
+      description: {
+        component:
+          '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/textfield/overview)',
+      },
+    },
+  },
 } satisfies Meta<typeof TextInput>;
 
 export default meta;
