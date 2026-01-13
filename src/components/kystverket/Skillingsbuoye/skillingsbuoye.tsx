@@ -1,7 +1,9 @@
 import React from 'react';
 
+import boeyeRef from '/assets/img/skillingsbuoye/Skillingsbuoye.png';
+
 const Skillingsbuoye = () => {
-  return <img src="/assets/img/skillingsbuoye/Skillingsbuoye.png" alt="skillingsbuoye" />;
+  return <img src={boeyeRef} alt="skillingsbuoye" />;
 };
 
 export default Skillingsbuoye;

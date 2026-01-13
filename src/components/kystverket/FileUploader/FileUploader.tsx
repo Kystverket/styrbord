@@ -14,10 +14,11 @@ import {
   Heading,
 } from '@digdir/designsystemet-react';
 import classes from './FileUploader.module.css';
-import { Box, Icon, LabelContent } from '~/main';
+import { Box, Icon, LabelContent, Tag } from '~/main';
 import exifr from 'exifr';
 import { FileUploaderContext } from './FileUploader.context';
 import { v4 } from 'uuid';
+import { useStyrbordTranslation } from '~/i18n/translations';
 
 // Remove all exif data except latitude and longitude
 const pruneUnwantedExifData = (exif: Exif): Exif | undefined => {
@@ -51,10 +52,13 @@ export interface FileUploaderProps {
   // Existing files functionality
   existingFilesConfig?: {
     files: FileInfo[];
-    label?: string;
-    onLoadPreview?: (storageIds: string[]) => Promise<{ uri?: string; type?: string }[]>;
-    cancelLabel?: string;
-    selectLabel?: string;
+    translations?: {
+      buttonOpen?: string;
+      dialogTitle?: string;
+      dialogCancel?: string;
+      dialogConfirm?: string;
+      noFilesAvailable?: string;
+    };
   };
 }
 
@@ -74,21 +78,15 @@ export const FileUploader = ({
   allowedFileTypes = defaultAllowedFileTypes,
   existingFilesConfig,
 }: FileUploaderProps) => {
+  const { at } = useStyrbordTranslation();
+  const t = at.bind(null, 'fileUploader', { existingFiles: existingFilesConfig?.translations });
+
   const fileUploaderContext = useContext(FileUploaderContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  const existingFiles = existingFilesConfig?.files ?? [];
-  const existingFilesLabel = existingFilesConfig?.label ?? 'Velg fra eksisterende filer';
-  const onLoadExistingFilePreview = existingFilesConfig?.onLoadPreview;
-  const existingFilesCancelLabel = existingFilesConfig?.cancelLabel ?? 'Avbryt';
-  const existingFilesSelectLabel = existingFilesConfig?.selectLabel ?? 'Velg';
-
-  const [selectedExistingFiles, setSelectedExistingFiles] = useState<{ [key: string]: boolean }>({});
-  const [existingFilesWithPreviews, setExistingFilesWithPreviews] = useState<
-    (FileInfo & { previewUrl?: string; mimeType?: string })[]
-  >([]);
-  const [loadingExistingFiles, setLoadingExistingFiles] = useState(false);
+  const allExistingFiles = existingFilesConfig?.files ?? [];
+  const [selectedExistingFiles, setSelectedExistingFiles] = useState<Record<string, boolean>>({});
 
   const onUploadFile = (uploadedFiles: File[]) => {
     Promise.all(
@@ -109,50 +107,19 @@ export const FileUploader = ({
     onChange(files.filter((f) => f.contextId !== file.contextId));
   };
 
-  const getAvailableExistingFiles = (): FileInfo[] => {
-    const currentFileIds = files.map((f) => f.storageId).filter(Boolean);
-    return existingFiles.filter((file) => !currentFileIds.includes(file.storageId));
-  };
-
-  const loadExistingFilePreviews = async (filesToLoad: FileInfo[]) => {
-    setLoadingExistingFiles(true);
-    try {
-      if (onLoadExistingFilePreview) {
-        const storageIds = filesToLoad.map((file) => file.storageId).filter(Boolean) as string[];
-
-        if (storageIds.length > 0) {
-          const previews = await onLoadExistingFilePreview(storageIds);
-
-          const withPreviews = filesToLoad.map((file, index) => {
-            const preview = previews[index];
-            return {
-              ...file,
-              previewUrl: preview?.uri,
-              mimeType: preview?.type || file.contentType,
-            };
-          });
-
-          setExistingFilesWithPreviews(withPreviews);
-        } else {
-          setExistingFilesWithPreviews(filesToLoad.map((file) => ({ ...file })));
-        }
-      } else {
-        setExistingFilesWithPreviews(filesToLoad.map((file) => ({ ...file })));
-      }
-    } catch (previewError) {
-      console.error('Failed to load existing file previews:', previewError);
-      setExistingFilesWithPreviews(filesToLoad.map((file) => ({ ...file })));
-    } finally {
-      setLoadingExistingFiles(false);
-    }
-  };
-
   const openExistingFilesModal = async () => {
-    setSelectedExistingFiles({});
+    setSelectedExistingFiles(
+      allExistingFiles.reduce(
+        (acc, file) => {
+          if (file.storageId) {
+            acc[file.storageId] = !!files.find((f) => f.storageId === file.storageId);
+          }
+          return acc;
+        },
+        {} as Record<string, boolean>,
+      ),
+    );
     dialogRef.current?.showModal();
-
-    const availableFiles = getAvailableExistingFiles();
-    await loadExistingFilePreviews(availableFiles);
   };
 
   const handleExistingFileCheckboxChange = (storageId: string, checked: boolean) => {
@@ -163,27 +130,36 @@ export const FileUploader = ({
   };
 
   const handleConfirmExistingFiles = () => {
-    const selectedFiles = existingFilesWithPreviews.filter(
-      (file) => file.storageId && selectedExistingFiles[file.storageId],
+    const newFileList = [
+      ...files.filter(
+        (file) =>
+          (file.storageId && selectedExistingFiles[file.storageId]) ||
+          !allExistingFiles.find((f) => f.storageId === file.storageId),
+      ),
+    ];
+
+    const newlySelectedFiles = allExistingFiles.filter(
+      (file) =>
+        file.storageId && selectedExistingFiles[file.storageId] && !files.find((f) => f.storageId === file.storageId),
     );
 
-    if (selectedFiles.length > 0) {
-      const newFiles = selectedFiles.map((file) => ({
+    if (newlySelectedFiles.length > 0) {
+      const newFiles = newlySelectedFiles.map((file) => ({
         ...file,
         contextId: v4(),
         status: 'uploaded' as const,
       }));
 
-      onChange([...files, ...newFiles]);
+      newFileList.push(...newFiles);
     }
 
+    onChange([...newFileList]);
+
     dialogRef.current?.close();
-    setSelectedExistingFiles({});
   };
 
   const handleCancelExistingFiles = () => {
     dialogRef.current?.close();
-    setSelectedExistingFiles({});
   };
 
   const showUploadingWarning = files.some((f) => f.status === 'uploading');
@@ -214,13 +190,13 @@ export const FileUploader = ({
           }}
         />
         {showUploadButton && (
-          <Box gap={8} horizontal={existingFilesConfig && existingFiles.length > 0}>
+          <Box gap={8} horizontal={existingFilesConfig && allExistingFiles.length > 0}>
             <button className={classes.uploadButton} onClick={() => fileInputRef.current?.click()}>
               {buttonLabel}
             </button>
-            {existingFilesConfig && existingFiles.length > 0 && (
+            {existingFilesConfig && allExistingFiles.length > 0 && (
               <button className={classes.uploadButton} onClick={openExistingFilesModal}>
-                {existingFilesLabel}
+                {t('existingFiles.buttonOpen')}
               </button>
             )}
           </Box>
@@ -228,15 +204,16 @@ export const FileUploader = ({
         {showMaxReachedWarning && (
           <div className={classes.uploadInformation}>
             <Icon material="info" />
-            <span>Maksimalt antall filer er lastet opp.</span>
+            <span>{t('maxFilesReached')}</span>
           </div>
         )}
         {showUploadingWarning && (
           <div className={classes.uploadInformation}>
-            <Spinner aria-label="Laster opp" data-size="2xs" data-color="neutral" />
-            <span>Vennligst vent med å velge flere filer før alle filene er lastet opp</span>
+            <Spinner aria-label={t('uploading')} data-size="2xs" data-color="neutral" />
+            <span>{t('uploadingPleaseWait')}</span>
           </div>
-        )}
+        )}{' '}
+        <span>{t('uploadingPleaseWait')}</span>
         {files && files.length > 0 && (
           <div className={classes.fileList}>
             {files.map((file) => (
@@ -245,7 +222,7 @@ export const FileUploader = ({
                   <Box horizontal align="center" gap={8}>
                     <span>{file.fileName}</span>
                     {file.status === 'uploading' && (
-                      <Spinner aria-label="Laster opp" data-size="2xs" data-color="neutral" />
+                      <Spinner aria-label={t('uploading')} data-size="2xs" data-color="neutral" />
                     )}
                   </Box>
                   {file.status === 'error' && <ValidationMessage>{file.error}</ValidationMessage>}
@@ -269,74 +246,65 @@ export const FileUploader = ({
       {/* Existing Files Dialog */}
       <Dialog ref={dialogRef}>
         <Box gap={16}>
-          <Heading data-size="sm">{existingFilesLabel}</Heading>
+          <Heading level={2} data-size="sm">
+            {t('existingFiles.dialogTitle')}
+          </Heading>
 
-          {loadingExistingFiles ? (
-            <Box gap={8} align="center">
-              <Spinner aria-label="Laster" data-size="xs" />
-              <Paragraph>Laster filer...</Paragraph>
-            </Box>
-          ) : existingFilesWithPreviews.length === 0 ? (
-            <Paragraph>Ingen eksisterende filer tilgjengelig.</Paragraph>
-          ) : (
-            <Box gap={12}>
-              {existingFilesWithPreviews.map((file) => (
-                <div
-                  key={file.storageId}
-                  className={`${classes.existingFileItem} ${file.storageId && selectedExistingFiles[file.storageId] ? classes.selected : ''}`}
-                  onClick={() => {
-                    if (file.storageId) {
-                      handleExistingFileCheckboxChange(file.storageId, !selectedExistingFiles[file.storageId]);
-                    }
-                  }}
-                >
-                  <Checkbox
-                    label=""
-                    checked={(file.storageId && selectedExistingFiles[file.storageId]) || false}
-                    onChange={(e) => {
+          {allExistingFiles.length === 0 && <Paragraph>{t('noExistingFilesAvailable')}</Paragraph>}
+          {allExistingFiles.length > 0 && (
+            <>
+              <Box gap={12} my={16}>
+                {allExistingFiles.map((file) => (
+                  <div
+                    key={file.storageId}
+                    className={`${classes.existingFileItem} ${file.storageId && selectedExistingFiles[file.storageId] ? classes.selected : ''}`}
+                    onClick={() => {
                       if (file.storageId) {
-                        handleExistingFileCheckboxChange(file.storageId, e.target.checked);
+                        handleExistingFileCheckboxChange(file.storageId, !selectedExistingFiles[file.storageId]);
                       }
                     }}
-                    onClick={(e) => e.stopPropagation()}
-                  />
-                  <Box className={classes.thumbnailContainer}>
-                    {file.previewUrl && file.mimeType?.startsWith('image/') ? (
-                      <img
-                        src={file.previewUrl}
-                        alt={file.fileName || 'Thumbnail'}
-                        className={classes.thumbnailImage}
-                      />
-                    ) : (
-                      <Box className={classes.fileIcon}>
-                        <Paragraph className={classes.fileIconText}>📄</Paragraph>
-                      </Box>
-                    )}
-                  </Box>
-                  <Box className={classes.existingFileInfo}>
-                    <Box gap={2}>
-                      <Paragraph className={classes.fileName}>{file.fileName || 'Unknown filename'}</Paragraph>
-                      {file.mimeType && <Paragraph className={classes.mimeType}>{file.mimeType}</Paragraph>}
+                  >
+                    <Checkbox
+                      label=""
+                      className={classes.checkbox}
+                      checked={(file.storageId && selectedExistingFiles[file.storageId]) || false}
+                      onChange={(e) => {
+                        if (file.storageId) {
+                          handleExistingFileCheckboxChange(file.storageId, e.target.checked);
+                        }
+                      }}
+                      onClick={(e) => e.stopPropagation()}
+                    />
+                    <div
+                      className={
+                        file.thumbnailUri && file.contentType?.startsWith('image/')
+                          ? classes.thumbnailContainer
+                          : classes.fileIconContainer
+                      }
+                      style={{ '--thumbnail-uri': `url(${file.thumbnailUri})` } as React.CSSProperties}
+                    >
+                      {!(file.thumbnailUri && file.contentType?.startsWith('image/')) ? '📄' : ''}
+                    </div>
+                    <Box gap={8} horizontal align="center" justify="between" grow>
+                      <Paragraph className={classes.fileName}>{file.fileName || t('unknownFilename')}</Paragraph>
+                      {file.contentType && (
+                        <Tag className={classes.mimeType}>{file.contentType?.split('/').findLast(() => true)}</Tag>
+                      )}
                     </Box>
-                  </Box>
-                </div>
-              ))}
-            </Box>
+                  </div>
+                ))}
+              </Box>
+
+              <Box horizontal gap={16}>
+                <Button onClick={handleConfirmExistingFiles} variant="primary">
+                  {t('existingFiles.dialogConfirm')}
+                </Button>
+                <Button variant="secondary" onClick={handleCancelExistingFiles}>
+                  {t('existingFiles.dialogCancel')}
+                </Button>
+              </Box>
+            </>
           )}
-          <Box align="end">
-            <Box horizontal gap={16}>
-              <Button variant="secondary" onClick={handleCancelExistingFiles}>
-                {existingFilesCancelLabel}
-              </Button>
-              <Button
-                disabled={Object.keys(selectedExistingFiles).every((key) => !selectedExistingFiles[key])}
-                onClick={handleConfirmExistingFiles}
-                variant="primary"
-              >
-                {existingFilesSelectLabel}
-              </Button>
-            </Box>
-          </Box>
         </Box>
       </Dialog>
     </>

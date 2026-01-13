@@ -4,6 +4,9 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { useState } from 'react';
 import { FileInfo } from './FileUploader.types';
 
+import cat1 from '/assets/img/cats/Cat 1.jpg';
+import cat2 from '/assets/img/cats/Cat 2.jpg';
+
 const Wrapper = (props: FileUploaderProps) => {
   const [value, setValue] = useState<FileInfo[]>([...props.files]);
 
@@ -94,6 +97,7 @@ export const WithExistingFiles: Story = {
           fileName: 'image1.jpg',
           storageId: 'storage-id-2',
           contentType: 'image/jpeg',
+          thumbnailUri: cat1,
           status: 'uploaded',
         },
         {
@@ -101,30 +105,16 @@ export const WithExistingFiles: Story = {
           fileName: 'screenshot.png',
           storageId: 'storage-id-3',
           contentType: 'image/png',
+          thumbnailUri: cat2,
           status: 'uploaded',
         },
       ],
-      label: 'Velg fra eksisterende filer',
-      cancelLabel: 'Avbryt',
-      selectLabel: 'Velg',
-      onLoadPreview: async (storageIds: string[]) => {
-        return storageIds.map((id) => {
-          if (id === 'storage-id-2') {
-            return {
-              uri: '/assets/img/cats/Cat 1.jpg',
-              type: 'image/jpeg',
-            };
-          }
-          if (id === 'storage-id-3') {
-            return {
-              uri: '/assets/img/cats/Cat 2.jpg',
-              type: 'image/png',
-            };
-          }
-          return {
-            type: 'application/pdf',
-          };
-        });
+      translations: {
+        buttonOpen: 'Velg eksisterende filer',
+        dialogTitle: 'Velg filer fra eksisterende',
+        dialogCancel: 'Avbryt',
+        dialogConfirm: 'Velg',
+        noFilesAvailable: 'Ingen eksisterende filer tilgjengelig',
       },
     },
   },
