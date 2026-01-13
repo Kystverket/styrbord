@@ -1,10 +1,10 @@
-import { Avatar, Box, Button, Icon, Link, Logo, LogoVariant, SupportedLanguage } from '~/main';
+import { Avatar, Box, Button, Icon, Link, Logo, LogoVariant } from '~/main';
 import classes from './Header.module.css';
-import { useTranslation } from '~/i18n/translations';
 import { ReactNode, useCallback, useRef, useState } from 'react';
 import { Divider, Label, Paragraph } from '@digdir/designsystemet-react';
 import { IconId } from '../Icon/icon.types';
 import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
+import { useStyrbordTranslation } from '~/i18n/translations';
 
 export type HeaderLinkComponentProps = {
   className?: string;
@@ -19,10 +19,6 @@ export interface HeaderProps {
    * @default undefined
    */
   children?: ReactNode;
-  /**
-   * Spesifiserer språk for headeren.
-   */
-  language: SupportedLanguage;
   /**
    * Spesifiserer logovarianten som brukes (standard: Kystverket) med en eventuell ekstra undertittel og navigeringslenke ved klikk
    */
@@ -100,13 +96,12 @@ export interface HeaderProps {
 
 export function Header({
   children = undefined,
-  language,
   logo: { title = undefined, variant = 'blue-horizontal', url },
   links,
   profile,
   linkComponent: LinkComponent = Link,
 }: HeaderProps) {
-  const t = useTranslation(language);
+  const { t } = useStyrbordTranslation();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);

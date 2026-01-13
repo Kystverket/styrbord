@@ -14,7 +14,7 @@ import {
   Heading,
 } from '@digdir/designsystemet-react';
 import classes from './FileUploader.module.css';
-import { Box, Icon, LabelContent, Image } from '~/main';
+import { Box, Icon, LabelContent } from '~/main';
 import exifr from 'exifr';
 import { FileUploaderContext } from './FileUploader.context';
 import { v4 } from 'uuid';
@@ -191,78 +191,80 @@ export const FileUploader = ({
   const showUploadButton = !showMaxReachedWarning && !showUploadingWarning;
 
   return (
-    <Field>
-      <Label style={{ pointerEvents: 'none' }}>
-        <LabelContent text={label} required={required} optional={optional} />
-      </Label>
-      {description && <Field.Description>{description}</Field.Description>}
-      <input
-        type="file"
-        style={{ display: 'none' }}
-        ref={fileInputRef}
-        id="fileUploadButton"
-        name="fileUploadButton"
-        accept={allowedFileTypes.join(',')}
-        multiple={multiple}
-        onChange={(e) => {
-          const target = e.target as HTMLInputElement;
-          if (target.files && target.files.length > 0) {
-            onUploadFile(Array.from(target.files));
-            target.value = ''; // Reset the input value to allow re-uploading the same file
-          }
-        }}
-      />
-      {showUploadButton && (
-        <Box gap={8} horizontal={existingFilesConfig && existingFiles.length > 0}>
-          <button className={classes.uploadButton} onClick={() => fileInputRef.current?.click()}>
-            {buttonLabel}
-          </button>
-          {existingFilesConfig && existingFiles.length > 0 && getAvailableExistingFiles().length > 0 && (
-            <Button variant="secondary" onClick={openExistingFilesModal} className={classes.existingFilesButton}>
-              {existingFilesLabel}
-            </Button>
-          )}
-        </Box>
-      )}
-      {showMaxReachedWarning && (
-        <div className={classes.uploadInformation}>
-          <Icon material="info" />
-          <span>Maksimalt antall filer er lastet opp.</span>
-        </div>
-      )}
-      {showUploadingWarning && (
-        <div className={classes.uploadInformation}>
-          <Spinner aria-label="Laster opp" data-size="2xs" data-color="neutral" />
-          <span>Vennligst vent med å velge flere filer før alle filene er lastet opp</span>
-        </div>
-      )}
-      {files && files.length > 0 && (
-        <div className={classes.fileList}>
-          {files.map((file) => (
-            <div key={file.contextId} className={classes.fileItem}>
-              <Box>
-                <Box horizontal align="center" gap={8}>
-                  <span>{file.fileName}</span>
-                  {file.status === 'uploading' && (
-                    <Spinner aria-label="Laster opp" data-size="2xs" data-color="neutral" />
-                  )}
-                </Box>
-                {file.status === 'error' && <ValidationMessage>{file.error}</ValidationMessage>}
-              </Box>
-              <button
-                className={classes.removeButton}
-                onClick={() => {
-                  onDeleteFile(file);
-                }}
-                aria-label="Remove file"
-              >
-                <Icon material="close" />
+    <>
+      <Field>
+        <Label style={{ pointerEvents: 'none' }}>
+          <LabelContent text={label} required={required} optional={optional} />
+        </Label>
+        {description && <Field.Description>{description}</Field.Description>}
+        <input
+          type="file"
+          style={{ display: 'none' }}
+          ref={fileInputRef}
+          id="fileUploadButton"
+          name="fileUploadButton"
+          accept={allowedFileTypes.join(',')}
+          multiple={multiple}
+          onChange={(e) => {
+            const target = e.target as HTMLInputElement;
+            if (target.files && target.files.length > 0) {
+              onUploadFile(Array.from(target.files));
+              target.value = ''; // Reset the input value to allow re-uploading the same file
+            }
+          }}
+        />
+        {showUploadButton && (
+          <Box gap={8} horizontal={existingFilesConfig && existingFiles.length > 0}>
+            <button className={classes.uploadButton} onClick={() => fileInputRef.current?.click()}>
+              {buttonLabel}
+            </button>
+            {existingFilesConfig && existingFiles.length > 0 && (
+              <button className={classes.uploadButton} onClick={openExistingFilesModal}>
+                {existingFilesLabel}
               </button>
-            </div>
-          ))}
-        </div>
-      )}
-      {error && <ValidationMessage>{error}</ValidationMessage>}
+            )}
+          </Box>
+        )}
+        {showMaxReachedWarning && (
+          <div className={classes.uploadInformation}>
+            <Icon material="info" />
+            <span>Maksimalt antall filer er lastet opp.</span>
+          </div>
+        )}
+        {showUploadingWarning && (
+          <div className={classes.uploadInformation}>
+            <Spinner aria-label="Laster opp" data-size="2xs" data-color="neutral" />
+            <span>Vennligst vent med å velge flere filer før alle filene er lastet opp</span>
+          </div>
+        )}
+        {files && files.length > 0 && (
+          <div className={classes.fileList}>
+            {files.map((file) => (
+              <div key={file.contextId} className={classes.fileItem}>
+                <Box>
+                  <Box horizontal align="center" gap={8}>
+                    <span>{file.fileName}</span>
+                    {file.status === 'uploading' && (
+                      <Spinner aria-label="Laster opp" data-size="2xs" data-color="neutral" />
+                    )}
+                  </Box>
+                  {file.status === 'error' && <ValidationMessage>{file.error}</ValidationMessage>}
+                </Box>
+                <button
+                  className={classes.removeButton}
+                  onClick={() => {
+                    onDeleteFile(file);
+                  }}
+                  aria-label="Remove file"
+                >
+                  <Icon material="close" />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+        {error && <ValidationMessage>{error}</ValidationMessage>}
+      </Field>
 
       {/* Existing Files Dialog */}
       <Dialog ref={dialogRef}>
@@ -300,7 +302,7 @@ export const FileUploader = ({
                   />
                   <Box className={classes.thumbnailContainer}>
                     {file.previewUrl && file.mimeType?.startsWith('image/') ? (
-                      <Image
+                      <img
                         src={file.previewUrl}
                         alt={file.fileName || 'Thumbnail'}
                         className={classes.thumbnailImage}
@@ -337,7 +339,7 @@ export const FileUploader = ({
           </Box>
         </Box>
       </Dialog>
-    </Field>
+    </>
   );
 };
 

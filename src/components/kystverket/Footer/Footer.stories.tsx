@@ -18,9 +18,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const defaultProps: FooterProps = {
-  language: 'nb-NO',
-};
+const defaultProps: FooterProps = {};
 
 export const Default: Story = {
   args: defaultProps,

@@ -39,6 +39,26 @@ Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.
 
 ## Endringslogg
 
+### 2026-01-13 -- v1.3.0
+
+#### Knekkende endring
+
+Fjernet parameteren language fra Header og Footer. For å endre språk i Styrbord-komponenter kan man nå bruke følgende context provider rundt hele applikasjonen.
+
+```jsx
+<StyrbordTranslationContext.Provider value={{ language: 'nb-NO' }}>
+...
+</StyrbordTranslationContext.Provider>
+```
+
+Internt i Styrbord-komponenter kan man bruke følgende for å hente oversettelsesfunksjonen.
+
+```ts
+import { useStyrbordTranslation } from '~/i18n/translations';
+...
+const { t } = useStyrbordTranslation();
+```
+
 ### 2025-11-11 -- v1.2.1
 
 - Oppdatert Alert til å ikke være egenprodusert, men istedet være en variant av Alert fra Designsystemet. Deler av interfacet endres til å være likere Designsystemet (size).
