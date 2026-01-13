@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Header } from './Header';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
-import { SupportedLanguage } from '~/main';
 
 const meta = {
   title: 'Page/Header',
@@ -12,12 +11,6 @@ const meta = {
     children: {
       control: {
         type: 'object',
-      },
-    },
-    language: {
-      control: {
-        type: 'select',
-        options: ['nb-NO', 'nn-NO', 'en-US'] as SupportedLanguage[],
       },
     },
     logo: {
@@ -33,7 +26,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const defaultProps: Story['args'] = {
-  language: 'nb-NO',
   logo: { url: '/' },
 };
 

@@ -5,6 +5,7 @@ export type FileInfo = {
   fileName: string;
   storageId?: string;
   contentType: string;
+  thumbnailUri?: string;
   status: FileStatus;
   exif?: Exif;
   error?: string;

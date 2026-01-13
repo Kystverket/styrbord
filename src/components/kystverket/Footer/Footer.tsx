@@ -1,7 +1,6 @@
 import classes from './Footer.module.css';
 import { Logo, Link, Icon } from '~/main';
-import { SupportedLanguage } from '~/utils/types';
-import { useTranslation } from '~/i18n/translations';
+import { useStyrbordTranslation } from '~/i18n/translations';
 import { Select } from '@digdir/designsystemet-react';
 import { ReactNode } from 'react';
 
@@ -23,7 +22,6 @@ const defaultContactLinks: LinkToSite[] = [
 ];
 
 export type FooterProps = {
-  language: SupportedLanguage;
   additionalLogo?: ReactNode;
   text?: string;
   copyright?: string;
@@ -48,14 +46,13 @@ function LinkList({ links }: { links: LinkToSite[] }) {
 }
 
 export function Footer({
-  language,
   additionalLogo,
   text = '',
   copyright = '',
   contacts = defaultContactLinks,
   links = [],
 }: FooterProps) {
-  const t = useTranslation(language);
+  const { t } = useStyrbordTranslation();
 
   const currentYear = new Date().getFullYear();
 

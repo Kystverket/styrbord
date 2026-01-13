@@ -1,13 +1,24 @@
 'use client';
 
-import { ReactNode, useContext, useRef } from 'react';
+import { ReactNode, useContext, useRef, useState } from 'react';
 import { Exif, FileInfo } from './FileUploader.types';
-import { Field, Label, Spinner, ValidationMessage } from '@digdir/designsystemet-react';
+import {
+  Field,
+  Label,
+  Spinner,
+  ValidationMessage,
+  Dialog,
+  Button,
+  Checkbox,
+  Paragraph,
+  Heading,
+} from '@digdir/designsystemet-react';
 import classes from './FileUploader.module.css';
-import { Box, Icon, LabelContent } from '~/main';
+import { Box, Icon, LabelContent, Tag } from '~/main';
 import exifr from 'exifr';
 import { FileUploaderContext } from './FileUploader.context';
 import { v4 } from 'uuid';
+import { useStyrbordTranslation } from '~/i18n/translations';
 
 // Remove all exif data except latitude and longitude
 const pruneUnwantedExifData = (exif: Exif): Exif | undefined => {
@@ -37,6 +48,18 @@ export interface FileUploaderProps {
   allowedFileTypes?: string[];
   required?: boolean | string;
   optional?: boolean | string;
+
+  // Existing files functionality
+  existingFilesConfig?: {
+    files: FileInfo[];
+    translations?: {
+      buttonOpen?: string;
+      dialogTitle?: string;
+      dialogCancel?: string;
+      dialogConfirm?: string;
+      noFilesAvailable?: string;
+    };
+  };
 }
 
 const defaultAllowedFileTypes = ['.pdf', '.jpg', '.jpeg', '.png'];
@@ -46,7 +69,6 @@ export const FileUploader = ({
   required,
   optional,
   buttonLabel,
-
   description = '',
   error = null,
   multiple = true,
@@ -54,9 +76,17 @@ export const FileUploader = ({
   maxFiles,
   onChange,
   allowedFileTypes = defaultAllowedFileTypes,
+  existingFilesConfig,
 }: FileUploaderProps) => {
+  const { at } = useStyrbordTranslation();
+  const t = at.bind(null, 'fileUploader', { existingFiles: existingFilesConfig?.translations });
+
   const fileUploaderContext = useContext(FileUploaderContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  const allExistingFiles = existingFilesConfig?.files ?? [];
+  const [selectedExistingFiles, setSelectedExistingFiles] = useState<Record<string, boolean>>({});
 
   const onUploadFile = (uploadedFiles: File[]) => {
     Promise.all(
@@ -77,77 +107,207 @@ export const FileUploader = ({
     onChange(files.filter((f) => f.contextId !== file.contextId));
   };
 
+  const openExistingFilesModal = async () => {
+    setSelectedExistingFiles(
+      allExistingFiles.reduce(
+        (acc, file) => {
+          if (file.storageId) {
+            acc[file.storageId] = !!files.find((f) => f.storageId === file.storageId);
+          }
+          return acc;
+        },
+        {} as Record<string, boolean>,
+      ),
+    );
+    dialogRef.current?.showModal();
+  };
+
+  const handleExistingFileCheckboxChange = (storageId: string, checked: boolean) => {
+    setSelectedExistingFiles((prev) => ({
+      ...prev,
+      [storageId]: checked,
+    }));
+  };
+
+  const handleConfirmExistingFiles = () => {
+    const newFileList = [
+      ...files.filter(
+        (file) =>
+          (file.storageId && selectedExistingFiles[file.storageId]) ||
+          !allExistingFiles.find((f) => f.storageId === file.storageId),
+      ),
+    ];
+
+    const newlySelectedFiles = allExistingFiles.filter(
+      (file) =>
+        file.storageId && selectedExistingFiles[file.storageId] && !files.find((f) => f.storageId === file.storageId),
+    );
+
+    if (newlySelectedFiles.length > 0) {
+      const newFiles = newlySelectedFiles.map((file) => ({
+        ...file,
+        contextId: v4(),
+        status: 'uploaded' as const,
+      }));
+
+      newFileList.push(...newFiles);
+    }
+
+    onChange([...newFileList]);
+
+    dialogRef.current?.close();
+  };
+
+  const handleCancelExistingFiles = () => {
+    dialogRef.current?.close();
+  };
+
   const showUploadingWarning = files.some((f) => f.status === 'uploading');
   const showMaxReachedWarning = !showUploadingWarning && maxFiles && files.length >= maxFiles;
   const showUploadButton = !showMaxReachedWarning && !showUploadingWarning;
 
   return (
-    <Field>
-      <Label style={{ pointerEvents: 'none' }}>
-        <LabelContent text={label} required={required} optional={optional} />
-      </Label>
-      {description && <Field.Description>{description}</Field.Description>}
-      <input
-        type="file"
-        style={{ display: 'none' }}
-        ref={fileInputRef}
-        id="fileUploadButton"
-        name="fileUploadButton"
-        accept={allowedFileTypes.join(',')}
-        multiple={multiple}
-        onChange={(e) => {
-          const target = e.target as HTMLInputElement;
-          if (target.files && target.files.length > 0) {
-            onUploadFile(Array.from(target.files));
-            target.value = ''; // Reset the input value to allow re-uploading the same file
-          }
-        }}
-      />
-      {showUploadButton && (
-        <button className={classes.uploadButton} onClick={() => fileInputRef.current?.click()}>
-          {buttonLabel}
-        </button>
-      )}
-      {showMaxReachedWarning && (
-        <div className={classes.uploadInformation}>
-          <Icon material="info" />
-          <span>Maksimalt antall filer er lastet opp.</span>
-        </div>
-      )}
-      {showUploadingWarning && (
-        <div className={classes.uploadInformation}>
-          <Spinner aria-label="Laster opp" data-size="2xs" data-color="neutral" />
-          <span>Vennligst vent med å velge flere filer før alle filene er lastet opp</span>
-        </div>
-      )}
-      {files && files.length > 0 && (
-        <div className={classes.fileList}>
-          {files.map((file) => (
-            <div key={file.contextId} className={classes.fileItem}>
-              <Box>
-                <Box horizontal align="center" gap={8}>
-                  <span>{file.fileName}</span>
-                  {file.status === 'uploading' && (
-                    <Spinner aria-label="Laster opp" data-size="2xs" data-color="neutral" />
-                  )}
-                </Box>
-                {file.status === 'error' && <ValidationMessage>{file.error}</ValidationMessage>}
-              </Box>
-              <button
-                className={classes.removeButton}
-                onClick={() => {
-                  onDeleteFile(file);
-                }}
-                aria-label="Remove file"
-              >
-                <Icon material="close" />
+    <>
+      <Field>
+        <Label style={{ pointerEvents: 'none' }}>
+          <LabelContent text={label} required={required} optional={optional} />
+        </Label>
+        {description && <Field.Description>{description}</Field.Description>}
+        <input
+          type="file"
+          style={{ display: 'none' }}
+          ref={fileInputRef}
+          id="fileUploadButton"
+          name="fileUploadButton"
+          accept={allowedFileTypes.join(',')}
+          multiple={multiple}
+          onChange={(e) => {
+            const target = e.target as HTMLInputElement;
+            if (target.files && target.files.length > 0) {
+              onUploadFile(Array.from(target.files));
+              target.value = ''; // Reset the input value to allow re-uploading the same file
+            }
+          }}
+        />
+        {showUploadButton && (
+          <Box gap={8} horizontal={existingFilesConfig && allExistingFiles.length > 0}>
+            <button className={classes.uploadButton} onClick={() => fileInputRef.current?.click()}>
+              {buttonLabel}
+            </button>
+            {existingFilesConfig && allExistingFiles.length > 0 && (
+              <button className={classes.uploadButton} onClick={openExistingFilesModal}>
+                {t('existingFiles.buttonOpen')}
               </button>
-            </div>
-          ))}
-        </div>
-      )}
-      {error && <ValidationMessage>{error}</ValidationMessage>}
-    </Field>
+            )}
+          </Box>
+        )}
+        {showMaxReachedWarning && (
+          <div className={classes.uploadInformation}>
+            <Icon material="info" />
+            <span>{t('maxFilesReached')}</span>
+          </div>
+        )}
+        {showUploadingWarning && (
+          <div className={classes.uploadInformation}>
+            <Spinner aria-label={t('uploading')} data-size="2xs" data-color="neutral" />
+            <span>{t('uploadingPleaseWait')}</span>
+          </div>
+        )}{' '}
+        <span>{t('uploadingPleaseWait')}</span>
+        {files && files.length > 0 && (
+          <div className={classes.fileList}>
+            {files.map((file) => (
+              <div key={file.contextId} className={classes.fileItem}>
+                <Box>
+                  <Box horizontal align="center" gap={8}>
+                    <span>{file.fileName}</span>
+                    {file.status === 'uploading' && (
+                      <Spinner aria-label={t('uploading')} data-size="2xs" data-color="neutral" />
+                    )}
+                  </Box>
+                  {file.status === 'error' && <ValidationMessage>{file.error}</ValidationMessage>}
+                </Box>
+                <button
+                  className={classes.removeButton}
+                  onClick={() => {
+                    onDeleteFile(file);
+                  }}
+                  aria-label="Remove file"
+                >
+                  <Icon material="close" />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+        {error && <ValidationMessage>{error}</ValidationMessage>}
+      </Field>
+
+      {/* Existing Files Dialog */}
+      <Dialog ref={dialogRef}>
+        <Box gap={16}>
+          <Heading level={2} data-size="sm">
+            {t('existingFiles.dialogTitle')}
+          </Heading>
+
+          {allExistingFiles.length === 0 && <Paragraph>{t('noExistingFilesAvailable')}</Paragraph>}
+          {allExistingFiles.length > 0 && (
+            <>
+              <Box gap={12} my={16}>
+                {allExistingFiles.map((file) => (
+                  <div
+                    key={file.storageId}
+                    className={`${classes.existingFileItem} ${file.storageId && selectedExistingFiles[file.storageId] ? classes.selected : ''}`}
+                    onClick={() => {
+                      if (file.storageId) {
+                        handleExistingFileCheckboxChange(file.storageId, !selectedExistingFiles[file.storageId]);
+                      }
+                    }}
+                  >
+                    <Checkbox
+                      label=""
+                      className={classes.checkbox}
+                      checked={(file.storageId && selectedExistingFiles[file.storageId]) || false}
+                      onChange={(e) => {
+                        if (file.storageId) {
+                          handleExistingFileCheckboxChange(file.storageId, e.target.checked);
+                        }
+                      }}
+                      onClick={(e) => e.stopPropagation()}
+                    />
+                    <div
+                      className={
+                        file.thumbnailUri && file.contentType?.startsWith('image/')
+                          ? classes.thumbnailContainer
+                          : classes.fileIconContainer
+                      }
+                      style={{ '--thumbnail-uri': `url(${file.thumbnailUri})` } as React.CSSProperties}
+                    >
+                      {!(file.thumbnailUri && file.contentType?.startsWith('image/')) ? '📄' : ''}
+                    </div>
+                    <Box gap={8} horizontal align="center" justify="between" grow>
+                      <Paragraph className={classes.fileName}>{file.fileName || t('unknownFilename')}</Paragraph>
+                      {file.contentType && (
+                        <Tag className={classes.mimeType}>{file.contentType?.split('/').findLast(() => true)}</Tag>
+                      )}
+                    </Box>
+                  </div>
+                ))}
+              </Box>
+
+              <Box horizontal gap={16}>
+                <Button onClick={handleConfirmExistingFiles} variant="primary">
+                  {t('existingFiles.dialogConfirm')}
+                </Button>
+                <Button variant="secondary" onClick={handleCancelExistingFiles}>
+                  {t('existingFiles.dialogCancel')}
+                </Button>
+              </Box>
+            </>
+          )}
+        </Box>
+      </Dialog>
+    </>
   );
 };
 

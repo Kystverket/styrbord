@@ -4,6 +4,9 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { useState } from 'react';
 import { FileInfo } from './FileUploader.types';
 
+import cat1 from '/assets/img/cats/Cat 1.jpg';
+import cat2 from '/assets/img/cats/Cat 2.jpg';
+
 const Wrapper = (props: FileUploaderProps) => {
   const [value, setValue] = useState<FileInfo[]>([...props.files]);
 
@@ -74,4 +77,45 @@ export const RequiredText: Story = {
 
 export const WithError: Story = {
   args: { ...defaultProps, error: 'Det oppstod en feil' },
+};
+
+export const WithExistingFiles: Story = {
+  args: {
+    ...defaultProps,
+    files: [],
+    existingFilesConfig: {
+      files: [
+        {
+          contextId: 'existing-1',
+          fileName: 'document1.pdf',
+          storageId: 'storage-id-1',
+          contentType: 'application/pdf',
+          status: 'uploaded',
+        },
+        {
+          contextId: 'existing-2',
+          fileName: 'image1.jpg',
+          storageId: 'storage-id-2',
+          contentType: 'image/jpeg',
+          thumbnailUri: cat1,
+          status: 'uploaded',
+        },
+        {
+          contextId: 'existing-3',
+          fileName: 'screenshot.png',
+          storageId: 'storage-id-3',
+          contentType: 'image/png',
+          thumbnailUri: cat2,
+          status: 'uploaded',
+        },
+      ],
+      translations: {
+        buttonOpen: 'Velg eksisterende filer',
+        dialogTitle: 'Velg filer fra eksisterende',
+        dialogCancel: 'Avbryt',
+        dialogConfirm: 'Velg',
+        noFilesAvailable: 'Ingen eksisterende filer tilgjengelig',
+      },
+    },
+  },
 };

@@ -1,7 +1,20 @@
 {
+  "fileUploader": {
+    "existingFiles": {
+      "buttonOpen": "Åpne eksisterende filer",
+      "dialogCancel": "Avbryt",
+      "dialogConfirm": "Velg",
+      "dialogTitle": "Eksisterende filer",
+      "noFilesAvailable": "Ingen eksisterende filer tilgjengelig."
+    },
+    "maxFilesReached": "Maksimalt antall filer er lastet opp.",
+    "unknownFilename": "Ukjent filnavn",
+    "uploading": "Laster opp",
+    "uploadingPleaseWait": "Vennligst vent med å velge flere filer før alle filene er lastet opp"
+  },
   "header-alt-text": "Til forsiden",
+  "kontakt": "Kontakt Kystverket",
   "kystverket": "Kystverket",
   "organisasjonsnummer": "Organisasjonsnummer",
-  "sentralbord": "Sentralbord",
-  "kontakt": "Kontakt Kystverket"
+  "sentralbord": "Sentralbord"
 }

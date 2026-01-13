@@ -1,7 +1,20 @@
 {
+  "fileUploader": {
+    "existingFiles": {
+      "buttonOpen": "Open existing files",
+      "dialogCancel": "Cancel",
+      "dialogConfirm": "Select",
+      "dialogTitle": "Existing files",
+      "noFilesAvailable": "No existing files available."
+    },
+    "maxFilesReached": "Maximum number of files uploaded.",
+    "unknownFilename": "Unknown filename",
+    "uploading": "Uploading",
+    "uploadingPleaseWait": "Please wait to select more files until all files are uploaded"
+  },
   "header-alt-text": "To the front page",
+  "kontakt": "Contact us",
   "kystverket": "Norwegian coastal administration",
   "organisasjonsnummer": "Organization number",
-  "sentralbord": "Switchboard",
-  "kontakt": "Contact us"
+  "sentralbord": "Switchboard"
 }
