@@ -46,9 +46,7 @@ Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.
 Fjernet parameteren language fra Header og Footer. For å endre språk i Styrbord-komponenter kan man nå bruke følgende context provider rundt hele applikasjonen.
 
 ```jsx
-<StyrbordTranslationContext.Provider value={{ language: 'nb-NO' }}>
-...
-</StyrbordTranslationContext.Provider>
+<StyrbordTranslationContext.Provider value={{ language: 'nb-NO' }}>...</StyrbordTranslationContext.Provider>
 ```
 
 Internt i Styrbord-komponenter kan man bruke følgende for å hente oversettelsesfunksjonen.
