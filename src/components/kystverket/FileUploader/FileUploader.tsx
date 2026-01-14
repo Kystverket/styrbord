@@ -213,7 +213,6 @@ export const FileUploader = ({
             <span>{t('uploadingPleaseWait')}</span>
           </div>
         )}{' '}
-        <span>{t('uploadingPleaseWait')}</span>
         {files && files.length > 0 && (
           <div className={classes.fileList}>
             {files.map((file) => (
