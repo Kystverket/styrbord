@@ -16,8 +16,12 @@ function getTranslation(languageTranslations: Record<string, unknown>, key: stri
     return undefined;
   }
 
+  if (!key) {
+    return undefined;
+  }
+
   if (key.includes('.')) {
-    const keys = key.split('.', 2);
+    const keys = [key.substring(0, key.indexOf('.')), key.substring(key.indexOf('.') + 1)];
     const deeperTranslations = languageTranslations[keys[0]];
 
     if (typeof deeperTranslations === 'string' || deeperTranslations instanceof String) {

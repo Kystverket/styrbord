@@ -109,6 +109,40 @@ export const WithExistingFiles: Story = {
           status: 'uploaded',
         },
       ],
+    },
+  },
+};
+
+export const WithExistingFilesWithTranslations: Story = {
+  args: {
+    ...defaultProps,
+    files: [],
+    existingFilesConfig: {
+      files: [
+        {
+          contextId: 'existing-1',
+          fileName: 'document1.pdf',
+          storageId: 'storage-id-1',
+          contentType: 'application/pdf',
+          status: 'uploaded',
+        },
+        {
+          contextId: 'existing-2',
+          fileName: 'image1.jpg',
+          storageId: 'storage-id-2',
+          contentType: 'image/jpeg',
+          thumbnailUri: cat1,
+          status: 'uploaded',
+        },
+        {
+          contextId: 'existing-3',
+          fileName: 'screenshot.png',
+          storageId: 'storage-id-3',
+          contentType: 'image/png',
+          thumbnailUri: cat2,
+          status: 'uploaded',
+        },
+      ],
       translations: {
         buttonOpen: 'Velg eksisterende filer',
         dialogTitle: 'Velg filer fra eksisterende',
