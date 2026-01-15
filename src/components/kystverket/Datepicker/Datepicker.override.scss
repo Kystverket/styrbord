@@ -7,7 +7,7 @@
 }
 
 .react-datepicker {
-  font-family: var(--kystverket-font-family, "Museo sans");
+  font-family: var(--kystverket-font-family, 'Museo sans');
   font-weight: 500;
 }
 
@@ -29,12 +29,12 @@
 }
 
 .react-datepicker .react-datepicker__day--today {
-    text-decoration: underline;
-    text-underline-offset: 8px;
-    text-decoration-color: var(--ds-color-accent-base-default);
-    text-decoration-thickness: 2px;
-    line-height: 34px !important;
-  }
+  text-decoration: underline;
+  text-underline-offset: 8px;
+  text-decoration-color: var(--ds-color-accent-base-default);
+  text-decoration-thickness: 2px;
+  line-height: 34px !important;
+}
 
 .react-datepicker .react-datepicker__day--disabled {
   text-decoration: line-through;
@@ -70,7 +70,7 @@
 
   h2 {
     color: var(--ds-color-neutral-text-default) !important;
-    font-family: var(--kystverket-font-family, "Museo sans");
+    font-family: var(--kystverket-font-family, 'Museo sans');
     font-style: normal;
     font-size: var(--ds-font-size-5);
     font-weight: 500;
