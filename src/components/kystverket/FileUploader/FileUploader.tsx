@@ -48,11 +48,8 @@ export interface FileUploaderProps {
   allowedFileTypes?: string[];
   required?: boolean | string;
   optional?: boolean | string;
-
-  // Existing files functionality
-  existingFilesConfig?: {
-    files: FileInfo[];
-    translations?: {
+  translations?: {
+    existingFiles?: {
       buttonOpen?: string;
       dialogTitle?: string;
       dialogCancel?: string;
@@ -60,6 +57,8 @@ export interface FileUploaderProps {
       noFilesAvailable?: string;
     };
   };
+
+  existingFilesProvider?: () => Promise<FileInfo[]>;
 }
 
 const defaultAllowedFileTypes = ['.pdf', '.jpg', '.jpeg', '.png'];
@@ -76,16 +75,19 @@ export const FileUploader = ({
   maxFiles,
   onChange,
   allowedFileTypes = defaultAllowedFileTypes,
-  existingFilesConfig,
+  translations,
+  existingFilesProvider,
 }: FileUploaderProps) => {
   const { at } = useStyrbordTranslation();
-  const t = at.bind(null, 'fileUploader', { existingFiles: existingFilesConfig?.translations });
+  const t = at.bind(null, 'fileUploader', translations);
 
   const fileUploaderContext = useContext(FileUploaderContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  const allExistingFiles = existingFilesConfig?.files ?? [];
+  const [allExistingFiles, setAllExistingFiles] = useState<FileInfo[]>([]);
+  const [loadingAllExistingFiles, setLoadingAllExistingFiles] = useState<boolean>(false);
+
   const [selectedExistingFiles, setSelectedExistingFiles] = useState<Record<string, boolean>>({});
 
   const onUploadFile = (uploadedFiles: File[]) => {
@@ -108,17 +110,25 @@ export const FileUploader = ({
   };
 
   const openExistingFilesModal = async () => {
-    setSelectedExistingFiles(
-      allExistingFiles.reduce(
-        (acc, file) => {
-          if (file.storageId) {
-            acc[file.storageId] = !!files.find((f) => f.storageId === file.storageId);
-          }
-          return acc;
-        },
-        {} as Record<string, boolean>,
-      ),
-    );
+    if (!existingFilesProvider) return;
+
+    setLoadingAllExistingFiles(true);
+    (async () => {
+      const existingFiles = await existingFilesProvider();
+      setAllExistingFiles(existingFiles);
+      setSelectedExistingFiles(
+        existingFiles.reduce(
+          (acc, file) => {
+            if (file.storageId) {
+              acc[file.storageId] = !!files.find((f) => f.storageId === file.storageId);
+            }
+            return acc;
+          },
+          {} as Record<string, boolean>,
+        ),
+      );
+      setLoadingAllExistingFiles(false);
+    })();
     dialogRef.current?.showModal();
   };
 
@@ -190,15 +200,15 @@ export const FileUploader = ({
           }}
         />
         {showUploadButton && (
-          <Box gap={8} horizontal={existingFilesConfig && allExistingFiles.length > 0}>
-            <button className={classes.uploadButton} onClick={() => fileInputRef.current?.click()}>
-              {buttonLabel}
-            </button>
-            {existingFilesConfig && allExistingFiles.length > 0 && (
+          <Box gap={8} horizontal>
+            {existingFilesProvider && (
               <button className={classes.uploadButton} onClick={openExistingFilesModal}>
                 {t('existingFiles.buttonOpen')}
               </button>
             )}
+            <button className={classes.uploadButton} onClick={() => fileInputRef.current?.click()}>
+              {buttonLabel}
+            </button>
           </Box>
         )}
         {showMaxReachedWarning && (
@@ -249,8 +259,13 @@ export const FileUploader = ({
             {t('existingFiles.dialogTitle')}
           </Heading>
 
-          {allExistingFiles.length === 0 && <Paragraph>{t('noExistingFilesAvailable')}</Paragraph>}
-          {allExistingFiles.length > 0 && (
+          {loadingAllExistingFiles && (
+            <Box horizontal align="center" justify="center">
+              <Spinner aria-label={t('loading')} />
+            </Box>
+          )}
+          {!loadingAllExistingFiles && allExistingFiles.length === 0 && <Paragraph>{t('noFilesAvailable')}</Paragraph>}
+          {!loadingAllExistingFiles && allExistingFiles.length > 0 && (
             <>
               <Box gap={12} my={16}>
                 {allExistingFiles.map((file) => (

@@ -1,11 +1,11 @@
 {
   "fileUploader": {
     "existingFiles": {
-      "buttonOpen": "Opne eksisterande filer",
+      "buttonOpen": "Bla gjennom filer",
       "dialogCancel": "Avbryt",
       "dialogConfirm": "Vel",
-      "dialogTitle": "Eksisterande filer",
-      "noFilesAvailable": "Ingen eksisterande filer tilgjengelege."
+      "dialogTitle": "Filer",
+      "noFilesAvailable": "Ingen filer tilgjengelege."
     },
     "maxFilesReached": "Maksimalt tal filer er lasta opp.",
     "unknownFilename": "Ukjent filnamn",
@@ -15,6 +15,7 @@
   "header-alt-text": "Til framsida",
   "kontakt": "Kontakt Kystverket",
   "kystverket": "Kystverket",
+  "loading": "Laster",
   "organisasjonsnummer": "Organisasjonsnummer",
   "sentralbord": "Sentralbord"
 }

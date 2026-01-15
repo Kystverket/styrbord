@@ -1,11 +1,11 @@
 {
   "fileUploader": {
     "existingFiles": {
-      "buttonOpen": "Open existing files",
+      "buttonOpen": "Browse files",
       "dialogCancel": "Cancel",
       "dialogConfirm": "Select",
-      "dialogTitle": "Existing files",
-      "noFilesAvailable": "No existing files available."
+      "dialogTitle": "Files",
+      "noFilesAvailable": "No files available."
     },
     "maxFilesReached": "Maximum number of files uploaded.",
     "unknownFilename": "Unknown filename",
@@ -15,6 +15,7 @@
   "header-alt-text": "To the front page",
   "kontakt": "Contact us",
   "kystverket": "Norwegian coastal administration",
+  "loading": "Loading",
   "organisasjonsnummer": "Organization number",
   "sentralbord": "Switchboard"
 }
