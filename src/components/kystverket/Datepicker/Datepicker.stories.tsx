@@ -47,19 +47,6 @@ const defaultProps: DatepickerProps = {
 
 export const Default: Story = {
   args: defaultProps,
-  decorators: [
-    (Story) => (
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          width: '100%',
-        }}
-      >
-        <Story />
-      </div>
-    ),
-  ],
 };
 export const WithoutCalendarIcon: Story = {
   args: { ...defaultProps, showCalendarIcon: false },
