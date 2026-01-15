@@ -83,8 +83,9 @@ export const WithExistingFiles: Story = {
   args: {
     ...defaultProps,
     files: [],
-    existingFilesConfig: {
-      files: [
+    existingFilesProvider: async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate loading delay
+      return [
         {
           contextId: 'existing-1',
           fileName: 'document1.pdf',
@@ -108,7 +109,7 @@ export const WithExistingFiles: Story = {
           thumbnailUri: cat2,
           status: 'uploaded',
         },
-      ],
+      ];
     },
   },
 };
@@ -117,8 +118,9 @@ export const WithExistingFilesWithTranslations: Story = {
   args: {
     ...defaultProps,
     files: [],
-    existingFilesConfig: {
-      files: [
+    existingFilesProvider: async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate loading delay
+      return [
         {
           contextId: 'existing-1',
           fileName: 'document1.pdf',
@@ -142,8 +144,10 @@ export const WithExistingFilesWithTranslations: Story = {
           thumbnailUri: cat2,
           status: 'uploaded',
         },
-      ],
-      translations: {
+      ];
+    },
+    translations: {
+      existingFiles: {
         buttonOpen: 'Velg eksisterende filer',
         dialogTitle: 'Velg filer fra eksisterende',
         dialogCancel: 'Avbryt',
