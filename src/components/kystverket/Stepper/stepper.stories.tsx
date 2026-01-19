@@ -7,7 +7,7 @@ const meta = {
   title: 'Components/Stepper',
   component: Stepper,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'kyv'],
   argTypes: {},
 } satisfies Meta<typeof Stepper>;
 

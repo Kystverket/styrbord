@@ -30,7 +30,7 @@ const meta = {
       </div>
     ),
   ],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'kyv'],
   argTypes: {},
 } satisfies Meta<typeof Wrapper>;
 

@@ -7,6 +7,7 @@ import { Popover, Paragraph, Button, Box, Icon } from '~/main';
 export default {
   title: 'Components/Popover',
   component: Popover,
+  tags: ['autodocs', 'ds'],
   parameters: {
     layout: 'fullscreen',
     customStyles: {

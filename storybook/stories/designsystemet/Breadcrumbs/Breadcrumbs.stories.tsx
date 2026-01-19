@@ -4,6 +4,7 @@ import type { Meta, StoryFn } from '@storybook/react';
 export default {
   title: 'Components/Breadcrumbs',
   component: Breadcrumbs,
+  tags: ['autodocs', 'ds'],
   parameters: {
     docs: {
       description: {

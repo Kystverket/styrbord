@@ -4,6 +4,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 const meta: Meta<typeof Label> = {
   title: 'Form/Label',
   component: Label,
+  tags: ['autodocs', 'ds'],
   parameters: {
     docs: {
       description: {

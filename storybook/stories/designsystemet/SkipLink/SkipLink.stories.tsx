@@ -7,6 +7,7 @@ type Story = StoryFn<typeof SkipLink>;
 export default {
   title: 'Components/SkipLink',
   component: SkipLink,
+  tags: ['autodocs', 'ds'],
   parameters: {
     docs: {
       description: {

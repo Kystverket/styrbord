@@ -6,6 +6,7 @@ import { useState } from 'react';
 export default {
   title: 'Components/Dropdown',
   component: Dropdown,
+  tags: ['autodocs', 'ds'],
   parameters: {
     layout: 'fullscreen',
     customStyles: {

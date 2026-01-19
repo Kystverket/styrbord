@@ -8,6 +8,7 @@ type Story = StoryObj<typeof Input>;
 export default {
   title: 'Form/Input',
   component: Input,
+  tags: ['autodocs', 'ds'],
   argTypes: {
     role: {
       control: 'radio',

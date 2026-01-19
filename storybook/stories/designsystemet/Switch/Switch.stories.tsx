@@ -6,6 +6,7 @@ type Story = StoryObj<typeof Switch>;
 export default {
   title: 'Components/Switch',
   component: Switch,
+  tags: ['autodocs', 'ds'],
   parameters: {
     docs: {
       description: {

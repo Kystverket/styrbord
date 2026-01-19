@@ -6,6 +6,7 @@ type Story = StoryFn<typeof Fieldset>;
 export default {
   title: 'Form/Fieldset',
   component: Fieldset,
+  tags: ['autodocs', 'ds'],
   parameters: {
     docs: {
       description: {

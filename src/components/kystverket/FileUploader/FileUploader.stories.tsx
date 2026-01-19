@@ -22,7 +22,7 @@ const meta = {
   title: 'Form/FileUploader',
   component: Wrapper,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'beta'],
+  tags: ['autodocs', 'kyv', 'beta'],
   argTypes: {},
 } satisfies Meta<typeof Wrapper>;
 

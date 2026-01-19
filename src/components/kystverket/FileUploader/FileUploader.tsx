@@ -264,7 +264,9 @@ export const FileUploader = ({
               <Spinner aria-label={t('loading')} />
             </Box>
           )}
-          {!loadingAllExistingFiles && allExistingFiles.length === 0 && <Paragraph>{t('noFilesAvailable')}</Paragraph>}
+          {!loadingAllExistingFiles && allExistingFiles.length === 0 && (
+            <Paragraph>{t('existingFiles.noFilesAvailable')}</Paragraph>
+          )}
           {!loadingAllExistingFiles && allExistingFiles.length > 0 && (
             <>
               <Box gap={12} my={16}>

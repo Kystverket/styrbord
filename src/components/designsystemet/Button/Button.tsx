@@ -69,18 +69,3 @@ export const Button: FC<ButtonProps> = ({
 
   return <DsButton {...propsToOverride} />;
 };
-
-/*
-export interface ButtonInputProps {
-  icon?: ReactNode;
-  iconPlacement?: 'left' | 'right';
-}
-
-<Button asChild>
-    <a target='_blank' rel='noreferrer' href='https://www.designsystemet.no'>
-      Gå til Designsystemet
-      <ExternalLinkIcon title='Ekstern lenke' />
-    </a>
-  </Button>
-
-*/

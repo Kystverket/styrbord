@@ -7,6 +7,7 @@ import { Label, Textfield } from '@digdir/designsystemet-react';
 export default {
   title: 'Components/Dialog',
   component: Dialog,
+  tags: ['autodocs', 'ds'],
   parameters: {
     layout: 'fullscreen',
     customStyles: {

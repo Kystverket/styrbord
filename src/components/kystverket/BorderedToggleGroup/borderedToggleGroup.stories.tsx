@@ -18,7 +18,7 @@ const meta = {
   title: 'Form/BorderedToggleGroup',
   component: Wrapper,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'kyv'],
   argTypes: {},
 } satisfies Meta<typeof Wrapper>;
 

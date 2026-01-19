@@ -6,6 +6,7 @@ type Story = StoryObj<typeof Skeleton>;
 export default {
   title: 'Components/Loaders/Skeleton',
   component: Skeleton,
+  tags: ['autodocs', 'ds'],
   parameters: {
     a11y: {
       config: {

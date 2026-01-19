@@ -6,6 +6,7 @@ import { Label } from '@digdir/designsystemet-react';
 export default {
   title: 'Components/Search',
   component: Search,
+  tags: ['autodocs', 'ds'],
   parameters: {
     docs: {
       description: {

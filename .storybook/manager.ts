@@ -8,9 +8,21 @@ addons.setConfig({
     {
       tags: 'ds-override',
       badge: {
-        text: 'ds+kyv',
-        bgColor: '#4aa4e7',
-        fgColor: '#ffffff',
+        text: '🌈+⚓',
+        bgColor: '#ffffff',
+        fgColor: '#4aa4e7',
+      },
+      display: {
+        sidebar: ['component'],
+        toolbar: false,
+      },
+    },
+    {
+      tags: 'ds',
+      badge: {
+        text: '🌈',
+        bgColor: '#ffffff',
+        fgColor: '#e7a44a',
       },
       display: {
         sidebar: ['component'],
@@ -20,9 +32,9 @@ addons.setConfig({
     {
       tags: 'beta',
       badge: {
-        text: 'beta',
-        bgColor: '#ff0000',
-        fgColor: '#ffffff',
+        text: '🔥 beta',
+        bgColor: '#FFBBBB',
+        fgColor: '#800000',
       },
       display: {
         sidebar: ['component'],
@@ -32,9 +44,9 @@ addons.setConfig({
     {
       tags: 'kyv',
       badge: {
-        text: 'kyv',
-        bgColor: '#000667',
-        fgColor: '#ffffff',
+        text: '⚓',
+        bgColor: 'transparent',
+        fgColor: '#000667',
       },
       display: {
         sidebar: ['component'],

@@ -3,10 +3,10 @@ import LabelContent, { LabelContentProps } from './labelContent';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Form/Helpers/LabelContent',
+  title: 'Helpers/LabelContent',
   component: LabelContent,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'kyv'],
   argTypes: {},
 } satisfies Meta<typeof LabelContent>;
 

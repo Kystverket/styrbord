@@ -11,7 +11,9 @@ som den du finner her.
 
 Alle komponentene og typene i Designsystemet er tilgjengelig i Styrbord med følgende merknader:
 
-- Noen komponenter blir overskrevet av Styrbord og har ikke nødvendigvis samme interface som Designsystemet. De er merket med 'ds+kyv' i Storybook. De kan være basert på tilsvarende komponent i Designsystemet, men ikke nødvendigvis.
+- Komponenter merket med ⚓ i menyen er utviklet av Kystverket og har ikke nødvendigvis noe til felles med Designsystemet. De kan riktignok bruke Designsystem-komponenter i implementasjonen.
+- Komponenter merket med 🌈 i menyen er uendret fra Designsystemet.
+- Komponenter merket med 🌈+⚓ i menyen er Designsystem-komponenter som er utvidet med Kystverkets behov. Bruk og egenskap skal i stor grad overlappe.
 
 ## Versjonering
 
