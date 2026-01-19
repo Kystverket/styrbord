@@ -17,7 +17,19 @@ const Wrapper = (props: DateTimePickerProps) => {
 const meta = {
   title: 'Form/DateTimePicker',
   component: Wrapper,
-  decorators: [StyrbordDecorator],
+  decorators: [
+    StyrbordDecorator,
+    (Story) => (
+      <div
+        style={{
+          margin: '0 auto',
+          width: 'fit-content',
+        }}
+      >
+        <Story />
+      </div>
+    ),
+  ],
   tags: ['autodocs', 'kyv'],
   argTypes: {},
 } satisfies Meta<typeof Wrapper>;
