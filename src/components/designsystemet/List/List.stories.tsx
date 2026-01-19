@@ -6,6 +6,7 @@ type Story = StoryFn<typeof List.Unordered>;
 export default {
   title: 'Components/List',
   component: List.Unordered,
+  tags: ['autodocs', 'ds'],
 } satisfies Meta;
 
 export const Preview: Story = (args) => (

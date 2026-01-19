@@ -8,7 +8,7 @@ const meta = {
   title: 'Typography/Heading',
   component: Heading,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'ds-override'],
   argTypes: {},
 } satisfies Meta<typeof Heading>;
 

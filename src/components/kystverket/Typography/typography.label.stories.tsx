@@ -7,7 +7,7 @@ const meta = {
   title: 'Typography/Label',
   component: Typography.Label,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'ds-override'],
   argTypes: {},
 } satisfies Meta<typeof Typography.Label>;
 

@@ -6,7 +6,7 @@ const meta = {
   title: 'Page/Header',
   component: Header,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'kyv'],
   argTypes: {
     children: {
       control: {

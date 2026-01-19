@@ -4,6 +4,7 @@ import type { Meta, StoryFn } from '@storybook/react';
 export default {
   title: 'Components/Chip',
   component: Chip.Radio,
+  tags: ['autodocs', 'ds'],
   parameters: {
     customStyles: { display: 'flex', gap: 'var(--ds-size-2)' },
     docs: {

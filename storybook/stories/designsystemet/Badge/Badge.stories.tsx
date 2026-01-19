@@ -7,6 +7,7 @@ type Story = StoryFn<typeof Badge>;
 const meta: Meta<typeof Badge> = {
   title: 'Components/Badge',
   component: Badge,
+  tags: ['autodocs', 'ds'],
   parameters: {
     customStyles: {
       flexWrap: 'wrap',

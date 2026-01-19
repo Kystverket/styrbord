@@ -9,6 +9,7 @@ const defaultChildren = <Button>My trigger</Button>;
 export default {
   title: 'Components/Tooltip',
   component: Tooltip,
+  tags: ['autodocs', 'ds'],
   parameters: {
     customStyles: { margin: '2rem', padding: '4rem' },
     chromatic: {

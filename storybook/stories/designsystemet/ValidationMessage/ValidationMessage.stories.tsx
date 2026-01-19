@@ -4,6 +4,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 const meta: Meta<typeof ValidationMessage> = {
   title: 'Components/ValidationMessage',
   component: ValidationMessage,
+  tags: ['autodocs', 'ds'],
   parameters: {
     docs: {
       description: {

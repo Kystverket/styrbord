@@ -5,6 +5,7 @@ import type { Meta, StoryFn, StoryObj } from '@storybook/react';
 export default {
   title: 'Form/Radio',
   component: Radio,
+  tags: ['autodocs', 'ds'],
   parameters: {
     docs: {
       description: {

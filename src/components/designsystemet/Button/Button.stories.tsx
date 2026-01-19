@@ -7,7 +7,7 @@ const meta = {
   title: 'Components/Button',
   component: Button,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'ds-override'],
+  tags: ['autodocs', 'kyv'],
   argTypes: {},
   parameters: {
     docs: {

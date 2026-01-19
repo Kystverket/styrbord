@@ -6,6 +6,7 @@ type Story = StoryFn<typeof Spinner>;
 export default {
   title: 'Components/Loaders/Spinner',
   component: Spinner,
+  tags: ['autodocs', 'ds'],
   parameters: {
     customStyles: {
       display: 'flex',

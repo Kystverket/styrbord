@@ -7,7 +7,7 @@ const meta = {
   title: 'Typography/Paragraph',
   component: Paragraph,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'ds-override'],
   argTypes: {},
 } satisfies Meta<typeof Paragraph>;
 

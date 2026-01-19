@@ -6,6 +6,7 @@ type Story = StoryObj<typeof Tag>;
 export default {
   title: 'Components/Tag',
   component: Tag,
+  tags: ['autodocs', 'ds'],
   parameters: {
     customStyles: { justifyContent: 'start' },
     docs: {

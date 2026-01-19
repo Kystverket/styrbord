@@ -9,7 +9,7 @@ const meta = {
   title: 'Components/Card',
   component: Card,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'ds-override'],
   argTypes: {
     variant: {
       options: ['default', 'tinted'],

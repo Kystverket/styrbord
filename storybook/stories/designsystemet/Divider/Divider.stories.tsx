@@ -6,6 +6,7 @@ type Story = StoryFn<typeof Divider>;
 export default {
   title: 'Components/Divider',
   component: Divider,
+  tags: ['autodocs', 'ds'],
   parameters: {
     docs: {
       description: {

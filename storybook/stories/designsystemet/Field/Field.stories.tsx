@@ -8,6 +8,7 @@ type Story = StoryFn<typeof Field>;
 export default {
   title: 'Form/Field',
   component: Field,
+  tags: ['autodocs', 'ds'],
   parameters: {
     customStyles: {
       maxWidth: 600,

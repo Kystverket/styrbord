@@ -38,7 +38,7 @@ const meta = {
   title: 'Components/FilePreviewer',
   component: FilePreviewer,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'experimental'],
+  tags: ['autodocs', 'kyv', 'beta'],
   parameters: {
     docs: {
       source: {

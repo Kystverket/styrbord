@@ -8,6 +8,7 @@ type Story = StoryObj<typeof Textarea>;
 export default {
   title: 'Form/Textarea 2',
   component: Textarea,
+  tags: ['autodocs', 'ds'],
   decorators: [
     (Story, { parameters }) => (
       <div

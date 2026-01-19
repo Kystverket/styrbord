@@ -6,6 +6,7 @@ import { useState } from 'react';
 export default {
   title: 'Components/ToggleGroup',
   component: ToggleGroup,
+  tags: ['autodocs', 'ds'],
   decorators: [
     (Story) => (
       /* 80vw since storybook has padding, and does not stop elements from overflowing the x-axis */

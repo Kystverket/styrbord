@@ -7,7 +7,7 @@ const meta = {
   title: 'Components/Details',
   component: Details,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'ds-override'],
   argTypes: {},
   parameters: {
     docs: {

@@ -10,6 +10,7 @@ type Story = StoryFn<typeof ErrorSummary>;
 export default {
   title: 'Components/ErrorSummary',
   component: ErrorSummary,
+  tags: ['autodocs', 'ds'],
   parameters: {
     docs: {
       description: {

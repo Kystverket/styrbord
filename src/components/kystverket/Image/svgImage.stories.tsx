@@ -52,7 +52,7 @@ const meta = {
   title: 'Helpers/Images and Illustrations',
   component: ImageSoeknadOmFarledsbevis,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'kyv'],
   argTypes: {},
 } satisfies Meta<typeof ImageSoeknadOmFarledsbevis>;
 

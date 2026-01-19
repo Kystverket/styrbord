@@ -7,7 +7,7 @@ const meta = {
   title: 'Typography/Accent',
   component: Accent,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'ds-override'],
   argTypes: {},
 } satisfies Meta<typeof Accent>;
 
