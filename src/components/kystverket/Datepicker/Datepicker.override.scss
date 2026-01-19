@@ -124,3 +124,16 @@
     display: none !important;
   }
 }
+
+.react-datepicker-time__input {
+  font-size: var(--ds-font-size-4) !important;
+  color: var(--ds-color-primary-text-default);
+}
+
+.react-datepicker-time__caption {
+    color: var(--ds-color-neutral-text-default) !important;
+    font-family: var(--kystverket-font-family, 'Museo sans');
+    font-style: normal;
+    font-size: var(--ds-font-size-5);
+    font-weight: 500;
+}
