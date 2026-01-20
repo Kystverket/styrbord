@@ -61,6 +61,10 @@ export const Select = ({ ...props }: SelectProps) => {
           </DsSelect.Option>
         )}
 
+        {!props.placeholder && (!props.value || !props.options?.find((o) => o.value === props.value)) && (
+          <DsSelect.Option disabled value=""></DsSelect.Option>
+        )}
+
         {props.options?.map((v) => (
           <DsSelect.Option key={v.value} value={v.value}>
             {v.label ?? v.value}

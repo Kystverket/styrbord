@@ -45,6 +45,22 @@ export const WithValue: Story = {
   },
 };
 
+export const WithoutPlaceholderWithoutValue: Story = {
+  args: {
+    ...defaultProps,
+    value: undefined,
+    placeholder: undefined,
+  },
+};
+
+export const WithoutPlaceholderWithValue: Story = {
+  args: {
+    ...defaultProps,
+    value: defaultProps.options![1].value,
+    placeholder: undefined,
+  },
+};
+
 export const Optional: Story = {
   args: { ...defaultProps, value: defaultProps.options![1].value, optional: true },
 };
