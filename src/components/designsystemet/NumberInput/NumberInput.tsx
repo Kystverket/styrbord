@@ -2,7 +2,7 @@ import { Textfield } from '@digdir/designsystemet-react';
 import classes from './NumberInput.module.scss';
 import { LabelContent } from '~/main';
 import { InputSize, inputSizeClass } from '~/utils/input/input';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export interface NumberInputProps {
   optional?: boolean | string | undefined;
@@ -35,9 +35,11 @@ export const NumberInput = ({
 }: NumberInputProps) => {
   const [internalValue, setInternalValue] = useState<string | undefined | null>(props.value?.toString());
 
-  if (String(props.value) !== String(internalValue)) {
-    setInternalValue(props.value?.toString());
-  }
+  useEffect(() => {
+    if (props.value?.toString() !== internalValue) {
+      setInternalValue(props.value?.toString());
+    }
+  }, [props.value]);
 
   return (
     <Textfield
@@ -50,15 +52,19 @@ export const NumberInput = ({
       value={internalValue ?? ''}
       onBlur={props.onBlur}
       onChange={(event) => {
-        const v = event.target.value.replace(',', '.').replace(/[^0-9.,-]/g, '');
-        if ([',', '.'].includes(v[v.length - 1])) {
+        let v = event.target.value.replace(',', '.').replace(/[^0-9.,-]/g, '');
+        while (v.split('.').length > 2) {
+          v = v.replace('.', '');
+        }
+        if ([',', '.'].includes(v[v.length - 1]) || v === '-' || isNaN(Number(v))) {
           setInternalValue(v);
         } else if (v.length > 0) {
-          setInternalValue(parseFloat(v).toString());
+          setInternalValue(v);
+          props.onChange?.(parseFloat(v));
         } else {
           setInternalValue('');
+          props.onChange?.(undefined);
         }
-        props.onChange?.(v ? parseFloat(v) : undefined);
       }}
       inputMode={inputMode}
       error={props.error}

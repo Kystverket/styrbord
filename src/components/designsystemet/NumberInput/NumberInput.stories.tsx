@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { NumberInput, NumberInputProps } from './NumberInput';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Wrapper = (props: NumberInputProps & { externallyChanging?: boolean }) => {
   const [value, setValue] = useState<number | undefined | null>(props.value);
@@ -9,10 +9,14 @@ const Wrapper = (props: NumberInputProps & { externallyChanging?: boolean }) => 
   const onChange = (v: number | undefined) => {
     setValue(v);
     props.onChange?.(v);
+    console.log('Wrapper onChange', v);
   };
 
   if (props.externallyChanging) {
-    setInterval(() => setValue((value ?? 0) + 1), 1000);
+    useEffect(() => {
+      const interval = setInterval(() => setValue((value ?? 0) + 1), 1000);
+      return () => clearInterval(interval);
+    }, [value, props.externallyChanging]);
   }
 
   return <NumberInput {...props} value={value} onChange={onChange} />;
@@ -53,6 +57,13 @@ export const Required: Story = {
   args: {
     ...defaultArgs,
     required: true,
+  },
+};
+
+export const NullValue: Story = {
+  args: {
+    ...defaultArgs,
+    value: null,
   },
 };
 
