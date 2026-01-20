@@ -3,13 +3,17 @@ import { NumberInput, NumberInputProps } from './NumberInput';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { useState } from 'react';
 
-const Wrapper = (props: NumberInputProps) => {
+const Wrapper = (props: NumberInputProps & { externallyChanging?: boolean }) => {
   const [value, setValue] = useState<number | undefined | null>(props.value);
 
   const onChange = (v: number | undefined) => {
     setValue(v);
     props.onChange?.(v);
   };
+
+  if (props.externallyChanging) {
+    setInterval(() => setValue((value ?? 0) + 1), 1000);
+  }
 
   return <NumberInput {...props} value={value} onChange={onChange} />;
 };
@@ -103,5 +107,13 @@ export const AlignRight: Story = {
     align: 'right',
     value: 123,
     suffix: 'kr',
+  },
+};
+
+export const ExternalChanges: Story = {
+  args: {
+    ...defaultArgs,
+    label: 'Value changes every second, wonky behavior is expected',
+    externallyChanging: true,
   },
 };

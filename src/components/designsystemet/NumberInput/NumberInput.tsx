@@ -35,6 +35,10 @@ export const NumberInput = ({
 }: NumberInputProps) => {
   const [internalValue, setInternalValue] = useState<string | undefined | null>(props.value?.toString());
 
+  if (String(props.value) !== String(internalValue)) {
+    setInternalValue(props.value?.toString());
+  }
+
   return (
     <Textfield
       className={[className, inputSizeClass(size), classes['align-' + align]].join(' ')}
