@@ -1,13 +1,16 @@
 import { createContext } from 'react';
-import { FileInfo } from './FileUploader.types';
+import { FileInfo, UploadFileResult } from './FileUploader.types';
 import { v4 as uuidv4 } from 'uuid';
 
 export type FileChangeCallback = (files: FileInfo[]) => void;
 
-const uploadFileDummy = async (): Promise<string> => {
+const uploadFileDummy = async (): Promise<UploadFileResult> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(uuidv4());
+      resolve({
+        storageId: uuidv4(),
+        success: true,
+      });
     }, 2500);
   });
 };
@@ -21,7 +24,7 @@ const deleteFileDummy = async (): Promise<void> => {
 };
 
 export interface FileUploaderContextProps {
-  uploadFile: (file: FormData) => Promise<string>;
+  uploadFile: (file: FormData) => Promise<UploadFileResult>;
   deleteFile: (fileId: string) => Promise<void>;
 }
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode, useContext, useRef, useState } from 'react';
-import { Exif, FileInfo } from './FileUploader.types';
+import { Exif, FileInfo, UploadFileError, UploadFileResult } from './FileUploader.types';
 import {
   Field,
   Label,
@@ -59,6 +59,29 @@ export interface FileUploaderProps {
   };
 
   existingFilesProvider?: () => Promise<FileInfo[]>;
+}
+
+function getUploadErrorMessage(error?: UploadFileError) {
+  switch (error) {
+    case 'network-error':
+      return 'Nettverksfeil. Vennligst sjekk tilkoblingen og prøv igjen.';
+
+    case 'invalid-file-type':
+      return 'Filtypen er ikke tillatt.';
+
+    case 'file-too-large':
+      return 'Filen er for stor. Vennligst velg en mindre fil.';
+
+    case 'file-scan-failed':
+      return 'Filen kunne ikke lastes opp fordi sikkerhetsskanningen feilet.';
+
+    case 'error':
+      return 'Noe gikk galt under opplastingen.';
+
+    case 'unknown-error':
+    default:
+      return 'En ukjent feil oppstod. Vennligst prøv igjen senere.';
+  }
 }
 
 const defaultAllowedFileTypes = ['.pdf', '.jpg', '.jpeg', '.png'];
@@ -234,7 +257,9 @@ export const FileUploader = ({
                       <Spinner aria-label={t('uploading')} data-size="2xs" data-color="neutral" />
                     )}
                   </Box>
-                  {file.status === 'error' && <ValidationMessage>{file.error}</ValidationMessage>}
+                  {file.status === 'error' && (
+                    <ValidationMessage>{getUploadErrorMessage(file.error as UploadFileError)}</ValidationMessage>
+                  )}
                 </Box>
                 <button
                   className={classes.removeButton}
@@ -330,7 +355,7 @@ export const FileUploader = ({
 const onFilesChanged = (
   files: FileAndExif[],
   state: FileInfo[],
-  uploadFile: (file: FormData) => Promise<string>,
+  uploadFile: (file: FormData) => Promise<UploadFileResult>,
   callback: (files: FileInfo[]) => void,
 ) => {
   console.log('onFilesChanged', files, state);
@@ -361,10 +386,15 @@ const onFilesChanged = (
       const formData = new FormData();
       formData.append('file', fileObjectsByContextId[contextId], uploadedFileState.fileName);
 
-      const storageId = await uploadFile(formData);
-      uploadedFileState.storageId = storageId;
-      uploadedFileState.status = 'uploaded';
-      delete uploadedFileState.error;
+      const result = await uploadFile(formData);
+      if (result.success) {
+        uploadedFileState.storageId = result.storageId;
+        uploadedFileState.status = 'uploaded';
+        delete uploadedFileState.error;
+      } else {
+        uploadedFileState.status = 'error';
+        uploadedFileState.error = result.error || 'Failed to upload file';
+      }
       callback([...newFilesState]);
     } catch (error) {
       console.error('Error when uploading', error);
@@ -374,7 +404,7 @@ const onFilesChanged = (
         return;
       }
       errorFileState.status = 'error';
-      errorFileState.error = 'Failed to upload file';
+      errorFileState.error = (error instanceof Error ? error.message : String(error)) || 'unknown-error';
       callback([...newFilesState]);
     }
   });
