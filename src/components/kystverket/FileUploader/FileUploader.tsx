@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode, useContext, useRef, useState } from 'react';
-import { Exif, FileInfo, UploadFileError, UploadFileResult } from './FileUploader.types';
+import { Exif, FileInfo, UploadFileResult } from './FileUploader.types';
 import {
   Field,
   Label,
@@ -101,7 +101,7 @@ export const FileUploader = ({
         }
       }),
     ).then((filesWithExif) => {
-      onFilesChanged(filesWithExif, files, fileUploaderContext.uploadFile, onChange);
+      onFilesChanged(filesWithExif, files, fileUploaderContext.uploadFile, onChange, t);
     });
   };
 
@@ -234,7 +234,7 @@ export const FileUploader = ({
                       <Spinner aria-label={t('uploading')} data-size="2xs" data-color="neutral" />
                     )}
                   </Box>
-{file.status === 'error' && <ValidationMessage>{file.error}</ValidationMessage>}
+                  {file.status === 'error' && <ValidationMessage>{file.error}</ValidationMessage>}
                 </Box>
                 <button
                   className={classes.removeButton}
@@ -332,6 +332,7 @@ const onFilesChanged = (
   state: FileInfo[],
   uploadFile: (file: FormData) => Promise<UploadFileResult>,
   callback: (files: FileInfo[]) => void,
+  t: (key: string) => string,
 ) => {
   console.log('onFilesChanged', files, state);
   const newFilesState = [...state];
@@ -368,7 +369,7 @@ const onFilesChanged = (
         delete uploadedFileState.error;
       } else {
         uploadedFileState.status = 'error';
-        uploadedFileState.error = result.error || 'Failed to upload file';
+        uploadedFileState.error = t(`errors.${result.error || 'unknown-error'}`);
       }
       callback([...newFilesState]);
     } catch (error) {
@@ -379,7 +380,7 @@ const onFilesChanged = (
         return;
       }
       errorFileState.status = 'error';
-      errorFileState.error = (error instanceof Error ? error.message : String(error)) || 'unknown-error';
+      errorFileState.error = t('errors.unknown-error');
       callback([...newFilesState]);
     }
   });

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { FileUploader, FileUploaderProps } from './FileUploader';
 import { FileUploaderContext } from './FileUploader.context';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
+import { StyrbordTranslationContext } from '~/main';
 import { useState } from 'react';
 import { FileInfo, UploadFileResult } from './FileUploader.types';
 import { v4 as uuidv4 } from 'uuid';
@@ -208,6 +209,30 @@ export const withFileSizeLimit: Story = {
   args: {
     ...defaultProps,
     description: 'Filer som er større enn 10MB vil bli avvist',
+    files: [],
+  },
+};
+
+export const WithFileSizeLimitEnglish: Story = {
+  decorators: [
+    (Story) => (
+      <StyrbordTranslationContext.Provider value={{ language: 'en-US' }}>
+        <FileUploaderContext.Provider
+          value={{
+            uploadFile: uploadFileWithSizeLimit,
+            deleteFile: deleteFile,
+          }}
+        >
+          <Story />
+        </FileUploaderContext.Provider>
+      </StyrbordTranslationContext.Provider>
+    ),
+  ],
+  args: {
+    ...defaultProps,
+    label: 'Upload files',
+    buttonLabel: 'Upload',
+    description: 'Files larger than 10MB will be rejected',
     files: [],
   },
 };
