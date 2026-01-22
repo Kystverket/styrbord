@@ -32,6 +32,9 @@ export { FilePreviewer, type FilePreviewerProps } from './components/kystverket/
 
 export { default as KyvDivider } from './components/kystverket/KyvDivider/kyvDivider';
 
+export { PageHeading } from './components/kystverket/PageHeading/PageHeading';
+export type { PageHeadingProps } from './components/kystverket/PageHeading/PageHeading';
+
 export { default as Alert } from './components/kystverket/Alert/alert';
 export type { AlertProps } from './components/kystverket/Alert/alert';
 
