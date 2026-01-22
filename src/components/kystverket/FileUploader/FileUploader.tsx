@@ -61,29 +61,6 @@ export interface FileUploaderProps {
   existingFilesProvider?: () => Promise<FileInfo[]>;
 }
 
-function getUploadErrorMessage(error?: UploadFileError) {
-  switch (error) {
-    case 'network-error':
-      return 'Nettverksfeil. Vennligst sjekk tilkoblingen og prøv igjen.';
-
-    case 'invalid-file-type':
-      return 'Filtypen er ikke tillatt.';
-
-    case 'file-too-large':
-      return 'Filen er for stor. Vennligst velg en mindre fil.';
-
-    case 'file-scan-failed':
-      return 'Filen kunne ikke lastes opp fordi sikkerhetsskanningen feilet.';
-
-    case 'error':
-      return 'Noe gikk galt under opplastingen.';
-
-    case 'unknown-error':
-    default:
-      return 'En ukjent feil oppstod. Vennligst prøv igjen senere.';
-  }
-}
-
 const defaultAllowedFileTypes = ['.pdf', '.jpg', '.jpeg', '.png'];
 
 export const FileUploader = ({
