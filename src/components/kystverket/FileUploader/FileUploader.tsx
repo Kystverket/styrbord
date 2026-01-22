@@ -234,9 +234,7 @@ export const FileUploader = ({
                       <Spinner aria-label={t('uploading')} data-size="2xs" data-color="neutral" />
                     )}
                   </Box>
-                  {file.status === 'error' && (
-                    <ValidationMessage>{getUploadErrorMessage(file.error as UploadFileError)}</ValidationMessage>
-                  )}
+{file.status === 'error' && <ValidationMessage>{file.error}</ValidationMessage>}
                 </Box>
                 <button
                   className={classes.removeButton}
