@@ -12,3 +12,9 @@
   color: var(--color-neutral-text-subtle);
   pointer-events: none;
 }
+
+/* Allow datepicker popup to escape dialog boundaries */
+:global(.react-datepicker-popper) {
+  z-index: 9999 !important;
+  position: fixed !important;
+}

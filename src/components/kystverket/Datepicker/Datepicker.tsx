@@ -1,4 +1,4 @@
-import { createElement, HTMLProps } from 'react';
+import { createElement, HTMLProps, useState, useEffect } from 'react';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import { Field, Input, Label, ValidationMessage } from '@digdir/designsystemet-react';
 import { Icon, LabelContent } from '~/main';
@@ -21,6 +21,8 @@ export interface DatepickerProps {
   showCalendarIcon?: boolean;
   minDate?: Date; // Minimum selectable date. Dates before this will be greyed out and non-selectable.
   maxDate?: Date; // Maximum selectable date. Dates after this will be greyed out and non-selectable.
+  popperPlacement?: 'top' | 'bottom' | 'left' | 'right'; // Controls where the calendar popup appears
+  withPortal?: boolean; // Use portal for calendar popup (good for dialogs and mobile)
 }
 
 const CustomInput = (props: HTMLProps<HTMLInputElement> & { showCalendarIcon: boolean }) => {
@@ -44,8 +46,25 @@ export const Datepicker = ({
   showCalendarIcon = true,
   minDate,
   maxDate,
+  popperPlacement = 'top',
+  withPortal,
   ...props
 }: DatepickerProps) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Sjekk om vi er på mobil
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || /Mobi|Android/i.test(navigator.userAgent));
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const usePortal = isMobile && (withPortal ?? false);
+
   return (
     <Field>
       <Label style={{ display: 'block', width: 'fit-content' }}>
@@ -62,6 +81,8 @@ export const Datepicker = ({
         minDate={minDate}
         maxDate={maxDate}
         onBlur={props.onBlur}
+        popperPlacement={popperPlacement}
+        {...(usePortal && { withPortal: true, fixedHeight: true })}
       />
       {props.error && <ValidationMessage>{props.error}</ValidationMessage>}
     </Field>
