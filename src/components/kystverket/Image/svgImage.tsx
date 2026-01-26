@@ -12,6 +12,7 @@ import Havbase from './svg/havbase.svg?react';
 import Edialog from './svg/Edialog.svg?react';
 import Ohoi from './svg/OHOI.svg?react';
 import HavnOgFarvannsloven from './svg/havn-_og_farvannsloven.svg?react';
+import HavnOgFarvannslovenFarget from './svg/havn-_og_farvannsloven_farget.svg?react';
 import DigitaleReferanseruter from './svg/digitale_referanseruter.svg?react';
 import Navigasjonsvarsler from './svg/navigasjonsvarsler.svg?react';
 import DigitaleFyrlykter from './svg/digitale_fyrlykter.svg?react';
@@ -28,6 +29,7 @@ import SafeSeaNet from './svg/SafeSeaNet.svg?react';
 import KystinfoKart from './svg/kystinfo_kart.svg?react';
 import Selvbetjening from './svg/selvbetjening.svg?react';
 import SelvbetjeningRso from './svg/selvbetjening_RSO.svg?react';
+import SelvbetjeningRsoFarget from './svg/selvbetjening_RSO_farget.svg?react';
 import Nais from './svg/Nais.svg?react';
 import Kystvaer from './svg/kystvær.svg?react';
 import ForespoerselSendt from './svg/illustrert_forespørsel_sendt.svg?react';
@@ -36,12 +38,17 @@ import BwOhoi from './svg/BWicons-navigation1.svg?react';
 import BwBoelgevarsel from './svg/BWicons-wave.svg?react';
 import BwArcticinfo from './svg/BWicons-polarbear.svg?react';
 
-import Dgps from './svg/dgps.svg?react';
-import Lrit from './svg/lrit.svg?react';
-import NasjonalHavneoversikt from './svg/nasjonal_havneoversikt.svg?react';
 import Kikkert from './svg/kikkert.svg?react';
-import Istjeneste from './svg/istjeneste.svg?react';
 import Ismelding from './svg/ismelding.svg?react';
+import IsmeldingFarget from './svg/ismelding_farget.svg?react';
+import FarvannsskiltOgNavinnretninger from './svg/farvannsskilt_og_navinnretninger.svg?react';
+import FarvannsskiltOgNavinnretningerFarget from './svg/farvannsskilt_og_navinnretninger_farget.svg?react';
+import SkadePaaInfrastruktur from './svg/skade_på_infrastruktur.svg?react';
+import SkadePaaInfrastrukturFarget from './svg/skade_på_infrastruktur_farget.svg?react';
+import TilskuddTilFiskerihavn from './svg/tilskudd_til_fiskerihavn.svg?react';
+import TilskuddTilFiskerihavnFarget from './svg/tilskudd_til_fiskerihavn_farget.svg?react';
+import UtfordringIFarvannet from './svg/utfordring_farvannet.svg?react';
+import UtfordringIFarvannetFarget from './svg/utfordring_farvannet_farget.svg?react';
 
 export const svgImageColors = ['primary', 'info', 'accent', 'sand', 'neutral', 'white'] as const;
 export type SvgImageColor = (typeof svgImageColors)[number];
@@ -105,10 +112,6 @@ export const ImageBoelgevarsel = (props: SvgImageProps) => {
   return <Boelgevarsel {...getImageProps({ name: 'boelgevarsel', ...props })} />;
 };
 
-export const ImageDgps = (props: SvgImageProps) => {
-  return <Dgps {...getImageProps({ name: 'dgps', ...props })} />;
-};
-
 export const ImageDigitaleReferanseruter = (props: SvgImageProps) => {
   return <DigitaleReferanseruter {...getImageProps({ name: 'digitale_referanseruter', ...props })} />;
 };
@@ -132,13 +135,16 @@ export const ImageHavbase = (props: SvgImageProps) => {
 export const ImageHavnOgFarvannsloven = (props: SvgImageProps) => {
   return <HavnOgFarvannsloven {...getImageProps({ name: 'havn_og_farvannsloven', ...props })} />;
 };
-
-export const ImageIstjeneste = (props: SvgImageProps) => {
-  return <Istjeneste {...getImageProps({ name: 'istjeneste', ...props })} />;
+export const ImageHavnOgFarvannslovenFarget = (props: SvgImageProps) => {
+  return <HavnOgFarvannslovenFarget {...getImageProps({ name: 'havn_og_farvannsloven_farget', ...props })} />;
 };
 
 export const ImageIsmelding = (props: SvgImageProps) => {
   return <Ismelding {...getImageProps({ name: 'ismelding', ...props })} />;
+};
+
+export const ImageIsmeldingFarget = (props: SvgImageProps) => {
+  return <IsmeldingFarget {...getImageProps({ name: 'ismelding_farget', ...props })} />;
 };
 
 export const ImageKikkert = (props: SvgImageProps) => {
@@ -155,14 +161,6 @@ export const ImageKystinfoKart = (props: SvgImageProps) => {
 
 export const ImageLavutslipp = (props: SvgImageProps) => {
   return <Lavutslipp {...getImageProps({ name: 'lavutslipp', ...props })} />;
-};
-
-export const ImageLrit = (props: SvgImageProps) => {
-  return <Lrit {...getImageProps({ name: 'lrit', ...props })} />;
-};
-
-export const ImageNasjonalHavneoversikt = (props: SvgImageProps) => {
-  return <NasjonalHavneoversikt {...getImageProps({ name: 'nasjonal_havneoversikt', ...props })} />;
 };
 
 export const ImageNavigasjonsvarsler = (props: SvgImageProps) => {
@@ -221,6 +219,10 @@ export const ImageSelvbetjeningRso = (props: SvgImageProps) => {
   return <SelvbetjeningRso {...getImageProps({ name: 'selvbetjeningRso', ...props })} />;
 };
 
+export const ImageSelvbetjeningRsoFarget = (props: SvgImageProps) => {
+  return <SelvbetjeningRsoFarget {...getImageProps({ name: 'selvbetjeningRsoFarget', ...props })} />;
+};
+
 export const ImageNais = (props: SvgImageProps) => {
   return <Nais {...getImageProps({ name: 'nais', ...props })} />;
 };
@@ -247,4 +249,40 @@ export const ImageBwBoelgevarsel = (props: SvgImageProps) => {
 
 export const ImageBwArcticinfo = (props: SvgImageProps) => {
   return <BwArcticinfo {...getImageProps({ name: 'bw_arcticinfo', ...props })} />;
+};
+
+export const ImageFarvannsskiltOgNavinnretninger = (props: SvgImageProps) => {
+  return <FarvannsskiltOgNavinnretninger {...getImageProps({ name: 'farvannsskilt_og_navinnretninger', ...props })} />;
+};
+
+export const ImageFarvannsskiltOgNavinnretningerFarget = (props: SvgImageProps) => {
+  return (
+    <FarvannsskiltOgNavinnretningerFarget
+      {...getImageProps({ name: 'farvannsskilt_og_navinnretninger_farget', ...props })}
+    />
+  );
+};
+
+export const ImageSkadePaaInfrastruktur = (props: SvgImageProps) => {
+  return <SkadePaaInfrastruktur {...getImageProps({ name: 'skade_på_infrastruktur', ...props })} />;
+};
+
+export const ImageSkadePaaInfrastrukturFarget = (props: SvgImageProps) => {
+  return <SkadePaaInfrastrukturFarget {...getImageProps({ name: 'skade_på_infrastruktur_farget', ...props })} />;
+};
+
+export const ImageTilskuddTilFiskerihavn = (props: SvgImageProps) => {
+  return <TilskuddTilFiskerihavn {...getImageProps({ name: 'tilskudd_til_fiskerihavn', ...props })} />;
+};
+
+export const ImageTilskuddTilFiskerihavnFarget = (props: SvgImageProps) => {
+  return <TilskuddTilFiskerihavnFarget {...getImageProps({ name: 'tilskudd_til_fiskerihavn_farget', ...props })} />;
+};
+
+export const ImageUtfordringIFarvannet = (props: SvgImageProps) => {
+  return <UtfordringIFarvannet {...getImageProps({ name: 'utfordring_i_farvannet', ...props })} />;
+};
+
+export const ImageUtfordringIFarvannetFarget = (props: SvgImageProps) => {
+  return <UtfordringIFarvannetFarget {...getImageProps({ name: 'utfordring_i_farvannet_farget', ...props })} />;
 };
