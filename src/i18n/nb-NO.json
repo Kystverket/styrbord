@@ -1,5 +1,13 @@
 {
   "fileUploader": {
+    "errors": {
+      "network-error": "Nettverksfeil. Vennligst sjekk tilkoblingen og prøv igjen.",
+      "invalid-file-type": "Filtypen er ikke tillatt.",
+      "file-too-large": "Filen er for stor. Vennligst velg en mindre fil.",
+      "file-scan-failed": "Filen kunne ikke lastes opp fordi sikkerhetsskanningen feilet.",
+      "error": "Noe gikk galt under opplastingen.",
+      "unknown-error": "En ukjent feil oppstod. Vennligst prøv igjen senere."
+    },
     "existingFiles": {
       "buttonOpen": "Bla igjennom filer",
       "dialogCancel": "Avbryt",
@@ -7,6 +15,7 @@
       "dialogTitle": "Filer",
       "noFilesAvailable": "Ingen filer tilgjengelig."
     },
+    "loading": "Laster",
     "maxFilesReached": "Maksimalt antall filer er lastet opp.",
     "unknownFilename": "Ukjent filnavn",
     "uploading": "Laster opp",
