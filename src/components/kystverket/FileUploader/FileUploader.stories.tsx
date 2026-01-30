@@ -1,8 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { FileUploader, FileUploaderProps } from './FileUploader';
+import { FileUploaderContext } from './FileUploader.context';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
+import { StyrbordTranslationContext } from '~/main';
 import { useState } from 'react';
-import { FileInfo } from './FileUploader.types';
+import { FileInfo, UploadFileResult } from './FileUploader.types';
+import { v4 as uuidv4 } from 'uuid';
 
 import cat1 from '/assets/img/cats/Cat 1.jpg';
 import cat2 from '/assets/img/cats/Cat 2.jpg';
@@ -155,5 +158,157 @@ export const WithExistingFilesWithTranslations: Story = {
         noFilesAvailable: 'Ingen eksisterende filer tilgjengelig',
       },
     },
+  },
+};
+
+const uploadFileWithSizeLimit = async (file: FormData): Promise<UploadFileResult> => {
+  return new Promise<UploadFileResult>((resolve) => {
+    const fileEntry = file.get('file') as File;
+    const maxSize = 10 * 1024 * 1024; // 10MB
+
+    // Simulate loading delay
+    setTimeout(() => {
+      if (fileEntry && fileEntry.size > maxSize) {
+        resolve({
+          storageId: '',
+          success: false,
+          error: 'file-too-large',
+        });
+      } else {
+        resolve({
+          storageId: uuidv4(),
+          success: true,
+        });
+      }
+    }, 1500);
+  });
+};
+
+const deleteFile = async (): Promise<void> => {
+  return new Promise((resolve) => {
+    // Simulate loading delay
+    setTimeout(() => {
+      resolve();
+    }, 1000);
+  });
+};
+
+export const withFileSizeLimit: Story = {
+  decorators: [
+    (Story) => (
+      <FileUploaderContext.Provider
+        value={{
+          uploadFile: uploadFileWithSizeLimit,
+          deleteFile: deleteFile,
+        }}
+      >
+        <Story />
+      </FileUploaderContext.Provider>
+    ),
+  ],
+  args: {
+    ...defaultProps,
+    description: 'Filer som er større enn 10MB vil bli avvist',
+    files: [],
+  },
+};
+
+export const WithFileSizeLimitEnglish: Story = {
+  decorators: [
+    (Story) => (
+      <StyrbordTranslationContext.Provider value={{ language: 'en-US' }}>
+        <FileUploaderContext.Provider
+          value={{
+            uploadFile: uploadFileWithSizeLimit,
+            deleteFile: deleteFile,
+          }}
+        >
+          <Story />
+        </FileUploaderContext.Provider>
+      </StyrbordTranslationContext.Provider>
+    ),
+  ],
+  args: {
+    ...defaultProps,
+    label: 'Upload files',
+    buttonLabel: 'Upload',
+    description: 'Files larger than 10MB will be rejected',
+    files: [],
+  },
+};
+
+const uploadFileWithTypeRestriction = async (file: FormData): Promise<UploadFileResult> => {
+  return new Promise<UploadFileResult>((resolve) => {
+    const fileEntry = file.get('file') as File;
+    const forbiddenTypes = ['.exe', '.bat', '.scr', '.com', '.zip'];
+
+    // Simulate loading delay
+    setTimeout(() => {
+      if (fileEntry && forbiddenTypes.some((type) => fileEntry.name.toLowerCase().endsWith(type))) {
+        resolve({
+          storageId: '',
+          success: false,
+          error: 'invalid-file-type',
+        });
+      } else {
+        resolve({
+          storageId: uuidv4(),
+          success: true,
+        });
+      }
+    }, 1500);
+  });
+};
+
+export const withFileTypeRestriction: Story = {
+  decorators: [
+    (Story) => (
+      <FileUploaderContext.Provider
+        value={{
+          uploadFile: uploadFileWithTypeRestriction,
+          deleteFile: deleteFile,
+        }}
+      >
+        <Story />
+      </FileUploaderContext.Provider>
+    ),
+  ],
+  args: {
+    ...defaultProps,
+    description: 'Filer med utvidelser .exe, .bat, .scr, .com, .zip vil bli avvist',
+    files: [],
+  },
+};
+
+const uploadFileWithFileScan = async (): Promise<UploadFileResult> => {
+  return new Promise<UploadFileResult>((resolve) => {
+    // Simulate loading delay
+    setTimeout(() => {
+      resolve({
+        storageId: '',
+        success: false,
+        error: 'file-scan-failed',
+      });
+    }, 1500);
+  });
+};
+
+export const withFileScanFailed: Story = {
+  decorators: [
+    (Story) => (
+      <FileUploaderContext.Provider
+        value={{
+          uploadFile: uploadFileWithFileScan,
+          deleteFile: deleteFile,
+        }}
+      >
+        <Story />
+      </FileUploaderContext.Provider>
+    ),
+  ],
+  args: {
+    ...defaultProps,
+    description: 'Opplastning av fil vil gi feil ved scanning av filen',
+    files: [],
   },
 };

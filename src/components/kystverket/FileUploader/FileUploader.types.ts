@@ -19,3 +19,17 @@ export type Exif = {
   latitude?: number;
   longitude?: number;
 };
+
+export type UploadFileResult = {
+  storageId: string;
+  success: boolean;
+  error?: UploadFileError;
+};
+
+export type UploadFileError =
+  | 'error'
+  | 'network-error'
+  | 'invalid-file-type'
+  | 'file-too-large'
+  | 'unknown-error'
+  | 'file-scan-failed';

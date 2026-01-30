@@ -1,5 +1,13 @@
 {
   "fileUploader": {
+    "errors": {
+      "network-error": "Network error. Please check your connection and try again.",
+      "invalid-file-type": "File type is not allowed.",
+      "file-too-large": "File is too large. Please select a smaller file.",
+      "file-scan-failed": "File could not be uploaded because security scan failed.",
+      "error": "Something went wrong during upload.",
+      "unknown-error": "An unknown error occurred. Please try again later."
+    },
     "existingFiles": {
       "buttonOpen": "Browse files",
       "dialogCancel": "Cancel",
@@ -7,6 +15,7 @@
       "dialogTitle": "Files",
       "noFilesAvailable": "No files available."
     },
+    "loading": "Loading",
     "maxFilesReached": "Maximum number of files uploaded.",
     "unknownFilename": "Unknown filename",
     "uploading": "Uploading",

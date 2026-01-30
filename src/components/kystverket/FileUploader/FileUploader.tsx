@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode, useContext, useRef, useState } from 'react';
-import { Exif, FileInfo } from './FileUploader.types';
+import { Exif, FileInfo, UploadFileResult } from './FileUploader.types';
 import {
   Field,
   Label,
@@ -101,7 +101,7 @@ export const FileUploader = ({
         }
       }),
     ).then((filesWithExif) => {
-      onFilesChanged(filesWithExif, files, fileUploaderContext.uploadFile, onChange);
+      onFilesChanged(filesWithExif, files, fileUploaderContext.uploadFile, onChange, t);
     });
   };
 
@@ -330,8 +330,9 @@ export const FileUploader = ({
 const onFilesChanged = (
   files: FileAndExif[],
   state: FileInfo[],
-  uploadFile: (file: FormData) => Promise<string>,
+  uploadFile: (file: FormData) => Promise<UploadFileResult>,
   callback: (files: FileInfo[]) => void,
+  t: (key: string) => string,
 ) => {
   console.log('onFilesChanged', files, state);
   const newFilesState = [...state];
@@ -361,10 +362,15 @@ const onFilesChanged = (
       const formData = new FormData();
       formData.append('file', fileObjectsByContextId[contextId], uploadedFileState.fileName);
 
-      const storageId = await uploadFile(formData);
-      uploadedFileState.storageId = storageId;
-      uploadedFileState.status = 'uploaded';
-      delete uploadedFileState.error;
+      const result = await uploadFile(formData);
+      if (result.success) {
+        uploadedFileState.storageId = result.storageId;
+        uploadedFileState.status = 'uploaded';
+        delete uploadedFileState.error;
+      } else {
+        uploadedFileState.status = 'error';
+        uploadedFileState.error = t(`errors.${result.error || 'unknown-error'}`);
+      }
       callback([...newFilesState]);
     } catch (error) {
       console.error('Error when uploading', error);
@@ -374,7 +380,7 @@ const onFilesChanged = (
         return;
       }
       errorFileState.status = 'error';
-      errorFileState.error = 'Failed to upload file';
+      errorFileState.error = t('errors.unknown-error');
       callback([...newFilesState]);
     }
   });
