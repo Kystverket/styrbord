@@ -15,6 +15,7 @@ import HavnOgFarvannsloven from './svg/havn-_og_farvannsloven.svg?react';
 import HavnOgFarvannslovenFarget from './svg/havn-_og_farvannsloven_farget.svg?react';
 import DigitaleReferanseruter from './svg/digitale_referanseruter.svg?react';
 import Navigasjonsvarsler from './svg/navigasjonsvarsler.svg?react';
+import NavigasjonsvarslerFarget from './svg/navigasjonsvarsler_farget.svg?react';
 import DigitaleFyrlykter from './svg/digitale_fyrlykter.svg?react';
 import SeLosbestilling from './svg/se_losbestilling.svg?react';
 import Lavutslipp from './svg/lavutslipp.svg?react';
@@ -165,6 +166,10 @@ export const ImageLavutslipp = (props: SvgImageProps) => {
 
 export const ImageNavigasjonsvarsler = (props: SvgImageProps) => {
   return <Navigasjonsvarsler {...getImageProps({ name: 'navigasjonsvarsler', ...props })} />;
+};
+
+export const ImageNavigasjonsvarslerFarget = (props: SvgImageProps) => {
+  return <NavigasjonsvarslerFarget {...getImageProps({ name: 'navigasjonsvarsler_farget', ...props })} />;
 };
 
 export const ImageOhoi = (props: SvgImageProps) => {
