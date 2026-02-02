@@ -11,6 +11,10 @@
   background: var(--dsc-button-background--hover);
 }
 
+.outline[data-color='neutral'] {
+  color: var(--ds-color-primary-text-default);
+}
+
 .subtle {
   color: var(--ds-color-primary-text-default);
   background: var(--ds-color-primary-surface-tinted);
