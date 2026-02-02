@@ -20,33 +20,34 @@ export interface TextInputProps {
   inputMode?: 'email' | 'tel' | 'search' | 'text' | 'none' | 'url' | 'numeric' | 'decimal';
   prefix?: string;
   suffix?: string;
+  id?: string;
   type?: 'email' | 'hidden' | 'password' | 'tel' | 'text' | 'time' | 'url';
   size?: InputSize;
   autoComplete?: HTMLInputAutoCompleteAttribute;
-}
+};
 
-export const TextInput = ({ autoComplete, size = 'full', type = 'text', className, ...props }: TextInputProps) => {
+export const TextInput = ({
+  size = 'full',
+  type = 'text',
+  className,
+  label,
+  loading,
+  required,
+  optional,
+  onChange,
+  value,
+  ...props
+}: TextInputProps) => {
   return (
     <DsTextField
       className={`${className} ${inputSizeClass(size)}`}
-      label={
-        <LabelContent text={props.label} loading={props.loading} required={props.required} optional={props.optional} />
-      }
-      description={props.description}
-      readOnly={props.readOnly}
-      autoComplete={autoComplete}
-      placeholder={props.placeholder}
-      disabled={props.disabled}
-      value={props.value ?? ''}
-      onBlur={props.onBlur}
+      label={<LabelContent text={label} loading={loading} required={required} optional={optional} />}
+      value={value ?? ''}
       onChange={(event) => {
-        props.onChange?.(event.target.value);
+        onChange?.(event.target.value);
       }}
-      inputMode={props.inputMode}
-      error={props.error}
-      prefix={props.prefix}
-      suffix={props.suffix}
       type={type}
+      {...props}
     />
   );
 };
