@@ -21,6 +21,7 @@ export interface SelectProps {
   onBlur?: () => void;
   onChange?: (value: string) => void;
   options?: SelectOption[];
+  id?: string;
 }
 
 export const Select = ({ ...props }: SelectProps) => {
@@ -35,6 +36,7 @@ export const Select = ({ ...props }: SelectProps) => {
       </Label>
       {props.description && <Field.Description>{props.description}</Field.Description>}
       <DsSelect
+        id={props.id}
         className={classNames}
         width="full"
         onChange={(event) => {
