@@ -24,7 +24,7 @@ export interface TextInputProps {
   type?: 'email' | 'hidden' | 'password' | 'tel' | 'text' | 'time' | 'url';
   size?: InputSize;
   autoComplete?: HTMLInputAutoCompleteAttribute;
-};
+}
 
 export const TextInput = ({
   size = 'full',
