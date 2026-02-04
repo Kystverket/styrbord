@@ -28,6 +28,7 @@ export const Button: FC<ButtonProps> = ({
       break;
     case 'outline':
       propsToOverride.variant = 'secondary';
+      propsToOverride.className = [propsToOverride.className, classes.outline].join(' ');
       break;
     case 'ghost':
       propsToOverride.variant = 'tertiary';
