@@ -20,26 +20,29 @@ export interface TextAreaProps {
   inputMode?: 'email' | 'tel' | 'search' | 'text' | 'none' | 'url' | 'numeric' | 'decimal';
   maxLength?: number;
   size?: InputSize;
+  id?: string;
 }
 
-export const TextArea = ({ size = 'full', className, ...props }: TextAreaProps) => {
+export const TextArea = ({
+  size = 'full',
+  className,
+  label,
+  required,
+  optional,
+  onChange,
+  value,
+  ...props
+}: TextAreaProps) => {
   return (
     <DsTextField
       className={`${className} ${inputSizeClass(size)}`}
-      label={<LabelContent text={props.label} required={props.required} optional={props.optional} />}
-      description={props.description}
-      readOnly={props.readOnly}
-      placeholder={props.placeholder}
-      disabled={props.disabled}
-      value={props.value ?? ''}
-      onBlur={props.onBlur}
+      label={<LabelContent text={label} required={required} optional={optional} />}
+      value={value ?? ''}
       onChange={(event) => {
-        props.onChange?.(event.target.value);
+        onChange?.(event.target.value);
       }}
-      inputMode={props.inputMode}
-      error={props.error}
       multiline
-      counter={props.maxLength}
+      {...props}
     />
   );
 };

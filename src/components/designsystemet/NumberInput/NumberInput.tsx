@@ -24,6 +24,7 @@ export interface NumberInputProps {
   max?: number;
   align?: 'left' | 'right';
   size?: InputSize;
+  id?: string;
 }
 
 export const NumberInput = ({
@@ -43,6 +44,7 @@ export const NumberInput = ({
 
   return (
     <Textfield
+      id={props.id}
       className={[className, inputSizeClass(size), classes['align-' + align]].join(' ')}
       label={<LabelContent text={props.label} required={props.required} optional={props.optional} />}
       description={props.description}
