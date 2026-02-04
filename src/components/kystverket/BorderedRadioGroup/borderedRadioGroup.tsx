@@ -31,7 +31,7 @@ const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
           <LabelContent text={props.label} required={props.required} optional={props.optional} />
         </Fieldset.Legend>
         {props.description && <Fieldset.Description>{props.description}</Fieldset.Description>}
-        <div className={classes.toggleGroup} data-color={hasError ? 'danger' : 'neutral'}>
+        <div id={props.id} className={classes.toggleGroup} data-color={hasError ? 'danger' : 'neutral'}>
           {props.options.map((el) => (
             <div
               key={el.label}
