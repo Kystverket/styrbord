@@ -9,4 +9,5 @@ export type BorderedGroupProps = {
   required?: boolean;
   disabled?: boolean;
   optional?: boolean | string;
+  id?: string;
 };
