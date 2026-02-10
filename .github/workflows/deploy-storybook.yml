@@ -8,6 +8,10 @@ on:
 
 jobs:
   deploy-storybook:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./base
     permissions:
       id-token: write
       pages: write
@@ -16,7 +20,6 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.build-publish.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
       # Manual Checkout
       - uses: actions/checkout@v4

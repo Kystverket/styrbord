@@ -7,6 +7,9 @@ jobs:
   check-version:
     name: Is NPM version untagged?
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./base
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -24,6 +27,9 @@ jobs:
   run-linters:
     name: Pretty / Lint / Build
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./base
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3

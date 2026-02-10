@@ -7,10 +7,13 @@ on:
 
 jobs:
   tag-version:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./base
     permissions:
       packages: read
       contents: write
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - run: git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
@@ -25,6 +28,9 @@ jobs:
       - run: git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
   publish-to-github-packages:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./base
     needs:
       - tag-version
     permissions:
@@ -49,6 +55,9 @@ jobs:
       - run: npm publish
   publish-to-npmjs:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./base
     needs:
       - tag-version
     permissions:
