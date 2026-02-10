@@ -30,7 +30,6 @@ export default tseslint.config(
 
       parserOptions: {
         tsconfigRootDir: import.meta.dirname,
-        project: true,
       },
     },
 

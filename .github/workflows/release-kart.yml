@@ -1,16 +1,15 @@
-name: Publish release to GitHub Packages
+name: Publish release KART to GitHub Packages
 
 on:
   push:
+    paths:
+      - kart/**
     branches:
       - main
 
 jobs:
   tag-version:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./base
     permissions:
       packages: read
       contents: write
@@ -20,17 +19,16 @@ jobs:
       - run: git config user.name "$GITHUB_ACTOR"
       - run: git pull "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
       - name: Hente STYRBORD_VERSION
-        run: echo "STYRBORD_VERSION=v$(node -p "require('./package.json').version")" >> $GITHUB_ENV
-      - run: echo $STYRBORD_VERSION
-      - run: echo ${STYRBORD_VERSION}
-      - run: git tag ${STYRBORD_VERSION}
-      - run: git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
-      - run: git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
+        run: |
+          cd kart
+          echo "STYRBORD_VERSION=v$(node -p "require('./package.json').version")-kart" >> $GITHUB_ENV
+          echo $STYRBORD_VERSION
+          echo ${STYRBORD_VERSION}
+          git tag ${STYRBORD_VERSION}
+          git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
+          git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
   publish-to-github-packages:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./base
     needs:
       - tag-version
     permissions:
@@ -51,13 +49,13 @@ jobs:
           npm ci --ignore-scripts
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - run: npm run build
-      - run: npm publish
+      - run: npm run build --workspace kart
+      - run: npm publish --workspace kart
   publish-to-npmjs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./base
+        working-directory: ./kart
     needs:
       - tag-version
     permissions:
@@ -79,5 +77,5 @@ jobs:
       - name: Install dependencies
         run: |
           npm ci --ignore-scripts
-      - run: npm run build
-      - run: npm publish --access public
+      - run: npm run build --workspace kart
+      - run: npm publish --workspace kart --access public
