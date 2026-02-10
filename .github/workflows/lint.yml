@@ -4,8 +4,8 @@ on:
   - pull_request
 
 jobs:
-  check-version:
-    name: Is NPM version untagged?
+  check-version-base:
+    name: Is Base NPM version untagged?
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -24,12 +24,29 @@ jobs:
           tag: ${{ env.STYRBORD_VERSION }}
       - run: exit 1
         if: steps.check-tag.outputs.exists == 'true'
-  run-linters:
-    name: Pretty / Lint / Build
+  check-version-kart:
+    name: Is Kart NPM version untagged?
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./base
+        working-directory: ./kart
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '22.x'
+      - name: Hente STYRBORD_VERSION
+        run: echo "STYRBORD_VERSION=v$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+      - run: echo $STYRBORD_VERSION
+      - uses: mukunku/tag-exists-action@v1.6.0
+        id: check-tag
+        with:
+          tag: ${{ env.STYRBORD_VERSION }}
+      - run: exit 1
+        if: steps.check-tag.outputs.exists == 'true'
+  run-linters:
+    name: Pretty / Lint / Build
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -41,7 +58,6 @@ jobs:
           npm ci --ignore-scripts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: npm run lint
+      - run: npm run lint:check
       - run: npm run pretty:check
       - run: npm run build
-      - run: npm run lint:pkg
