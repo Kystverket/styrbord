@@ -36,7 +36,7 @@ jobs:
         with:
           node-version: '22.x'
       - name: Hente STYRBORD_VERSION
-        run: echo "STYRBORD_VERSION=v$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+        run: echo "STYRBORD_VERSION=v$(node -p "require('./package.json').version")-kart" >> $GITHUB_ENV
       - run: echo $STYRBORD_VERSION
       - uses: mukunku/tag-exists-action@v1.6.0
         id: check-tag
