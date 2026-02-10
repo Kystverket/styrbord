@@ -7,9 +7,6 @@ on:
 jobs:
   check-new-version:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./base
     permissions:
       contents: read
       packages: read
