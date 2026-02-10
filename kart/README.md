@@ -26,13 +26,13 @@ Alle komponentene og typene i Designsystemet er tilgjengelig i Styrbord med føl
 Det holder å importere CSS én gang globalt.
 
 ```js
-import '@kystverket/styrbord/style.css';
+import "@kystverket/styrbord/style.css";
 ```
 
 Importering av enkeltkomponenter.
 
 ```js
-import { Heading, Ingress, Tabs } from '@kystverket/styrbord';
+import { Heading, Ingress, Tabs } from "@kystverket/styrbord";
 ```
 
 ## Design Tokens
@@ -48,7 +48,9 @@ Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.
 Fjernet parameteren language fra Header og Footer. For å endre språk i Styrbord-komponenter kan man nå bruke følgende context provider rundt hele applikasjonen.
 
 ```jsx
-<StyrbordTranslationContext.Provider value={{ language: 'nb-NO' }}>...</StyrbordTranslationContext.Provider>
+<StyrbordTranslationContext.Provider value={{ language: "nb-NO" }}>
+  ...
+</StyrbordTranslationContext.Provider>
 ```
 
 Internt i Styrbord-komponenter kan man bruke følgende for å hente oversettelsesfunksjonen.

@@ -1,3 +1,3 @@
-const kart = 'kart';
+const kart = "kart";
 
 export { kart };
