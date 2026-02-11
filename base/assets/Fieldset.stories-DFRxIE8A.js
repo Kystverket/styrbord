@@ -1,0 +1,14 @@
+import{j as e}from"./jsx-runtime-BjG_zV1W.js";import{F as s,aw as n,c as h}from"./Card-KeqL4nDM.js";import"./Details-8YZFjHTH.js";import"./kyvDivider-DSk0K4x1.js";import"./typography-9ubeq_Vx.js";import"./skillingsbuoye-mzpk6Jp8.js";import"./Logo-CEva0-QL.js";import"./index-BWu4c2F4.js";import"./index-B8jaNLVP.js";import"./index-DtgyEQ7Q.js";import"./lite-DaUVFjkg.js";import"./index-BtN5BFRV.js";import"./label-CT_xXrm7.js";import"./heading-B8SX_GYc.js";import"./index-eaWjzoNI.js";const E={title:"Form/Fieldset",component:s,tags:["autodocs","ds"],parameters:{docs:{description:{component:"[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/fieldset/overview)"}}}},o=r=>e.jsxs(s,{...r,children:[e.jsx(s.Legend,{children:"Hvilken fjordarm bor du ved?"}),e.jsx(s.Description,{children:"Valget vil hjelpe oss å forbedre innholdet vi viser deg."}),e.jsx(n,{label:"Barsnesfjorden",name:"radio",value:"barsnesfjorden"}),e.jsx(n,{label:"Eidsfjorden",name:"radio",value:"eidsfjorden"}),e.jsx(n,{label:"Ingen av de",name:"radio",value:"ingen-av-de"})]}),d=r=>e.jsxs(s,{...r,children:[e.jsx(s.Legend,{children:"Godtar du vilkårene?"}),e.jsx(h,{label:"Ja, jeg godtar"})]}),i=r=>e.jsx(s,{...r,children:e.jsx(s.Legend,{children:e.jsx("h1",{children:"Hvor skal du reise?"})})});o.__docgenInfo={description:"",methods:[],displayName:"Preview"};d.__docgenInfo={description:"",methods:[],displayName:"WithCheckbox"};i.__docgenInfo={description:"",methods:[],displayName:"LegendAsHeading"};var a,t,l;o.parameters={...o.parameters,docs:{...(a=o.parameters)==null?void 0:a.docs,source:{originalSource:`args => <Fieldset {...args}>
+    <Fieldset.Legend>Hvilken fjordarm bor du ved?</Fieldset.Legend>
+    <Fieldset.Description>Valget vil hjelpe oss å forbedre innholdet vi viser deg.</Fieldset.Description>
+    <Radio label="Barsnesfjorden" name="radio" value="barsnesfjorden" />
+    <Radio label="Eidsfjorden" name="radio" value="eidsfjorden" />
+    <Radio label="Ingen av de" name="radio" value="ingen-av-de" />
+  </Fieldset>`,...(l=(t=o.parameters)==null?void 0:t.docs)==null?void 0:l.source}}};var m,c,p;d.parameters={...d.parameters,docs:{...(m=d.parameters)==null?void 0:m.docs,source:{originalSource:`args => <Fieldset {...args}>
+    <Fieldset.Legend>Godtar du vilkårene?</Fieldset.Legend>
+    <Checkbox label="Ja, jeg godtar" />
+  </Fieldset>`,...(p=(c=d.parameters)==null?void 0:c.docs)==null?void 0:p.source}}};var g,j,v;i.parameters={...i.parameters,docs:{...(g=i.parameters)==null?void 0:g.docs,source:{originalSource:`args => <Fieldset {...args}>
+    <Fieldset.Legend>
+      <h1>Hvor skal du reise?</h1>
+    </Fieldset.Legend>
+  </Fieldset>`,...(v=(j=i.parameters)==null?void 0:j.docs)==null?void 0:v.source}}};const A=["Preview","WithCheckbox","LegendAsHeading"];export{i as LegendAsHeading,o as Preview,d as WithCheckbox,A as __namedExportsOrder,E as default};

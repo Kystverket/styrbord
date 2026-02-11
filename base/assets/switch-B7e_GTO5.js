@@ -1,0 +1,2 @@
+'use client';
+import{j as t}from"./jsx-runtime-BjG_zV1W.js";import{r as d}from"./index-BWu4c2F4.js";import{at as m,au as p}from"./Card-KeqL4nDM.js";import{L as f}from"./label-CT_xXrm7.js";const S=d.forwardRef(function({"data-size":s,children:l,className:a,description:r,label:e,position:i,style:o,...c},n){return t.jsxs(m,{className:a,"data-position":i,"data-size":s,style:o,children:[t.jsx(p,{type:"checkbox",role:"switch",ref:n,...c}),!!e&&t.jsx(f,{weight:"regular",children:e}),!!r&&t.jsx("div",{"data-field":"description",children:r})]})});export{S};

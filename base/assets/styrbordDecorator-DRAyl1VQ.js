@@ -1,0 +1,1 @@
+import{j as o}from"./jsx-runtime-BjG_zV1W.js";/* empty css                        */const t=r=>o.jsx("div",{children:o.jsx(r,{})});t.__docgenInfo={description:"",methods:[],displayName:"StyrbordDecorator"};export{t as S};

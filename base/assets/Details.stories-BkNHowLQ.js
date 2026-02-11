@@ -1,0 +1,3 @@
+import{S as o}from"./styrbordDecorator-DRAyl1VQ.js";import{D as s}from"./Details-8YZFjHTH.js";import"./jsx-runtime-BjG_zV1W.js";/* empty css                        */import"./index-BtN5BFRV.js";import"./lite-DaUVFjkg.js";import"./index-BWu4c2F4.js";const D={title:"Deprecated/Details",component:s,decorators:[o],tags:["autodocs","deprecated"],argTypes:{}},c={summary:"Details header",children:"Details content"},r={args:c};var e,t,a;r.parameters={...r.parameters,docs:{...(e=r.parameters)==null?void 0:e.docs,source:{originalSource:`{
+  args: defaultArgs
+}`,...(a=(t=r.parameters)==null?void 0:t.docs)==null?void 0:a.source}}};const f=["Default"];export{r as Default,f as __namedExportsOrder,D as default};

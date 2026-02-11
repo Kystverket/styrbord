@@ -1,0 +1,1 @@
+import{j as i}from"./jsx-runtime-BjG_zV1W.js";const s="_kyvDivider_ukpgq_1",e={kyvDivider:s},r=()=>i.jsx("hr",{className:e.kyvDivider});r.__docgenInfo={description:"",methods:[],displayName:"KyvDivider"};export{r as K};
