@@ -1,39 +1,40 @@
-name: Deploy storybook
+# Workflow name
+name: Storybook to GitHub Pages
 
 on:
   push:
     branches:
-      - main
+      - 'main'
   workflow_dispatch:
+
+permissions:
+  packages: read
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   deploy-storybook:
-    permissions:
-      id-token: write
-      pages: write
-      contents: read
-      packages: read
-    environment:
-      name: github-pages
-      url: ${{ steps.build-publish.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      # Manual Checkout
-      - uses: actions/checkout@v4
-
-      # Set up Node
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
-          node-version: '22.x'
-      - run: git pull
-      - name: setup github token
+          node-version: '23'
+      - name: Forberede GitHub Pages mappe
         run: |
-          printf "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN\n@kystverket:registry=https://npm.pkg.github.com/" > .npmrc
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - id: build-publish
-        uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+          mkdir temp-github-pages
+          printf "<html><body><ul><li><a href=\"base\">base</a></li></ul></body></html>" > ./temp-github-pages/index.html
+      - name: Installere dependencies
+        run: |
+          cd base
+          npm ci --ignore-scripts
+      - name: Bygge Storybook - BASE
+        run: |
+          cd base
+          npm run storybook:build
+          cp -r ./storybook-static ../temp-github-pages/base
+      - name: Laste opp til GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          checkout: false
-          path: storybook-static
-          build_command: npm run build-storybook
+          folder: ./temp-github-pages

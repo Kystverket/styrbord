@@ -1,0 +1,81 @@
+name: Publish release BASE to GitHub Packages
+
+on:
+  push:
+    paths:
+      - base/**
+    branches:
+      - main
+
+jobs:
+  tag-version:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: read
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - run: git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - run: git config user.name "$GITHUB_ACTOR"
+      - run: git pull "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
+      - name: Hente STYRBORD_VERSION
+        run: |
+          cd base
+          echo "STYRBORD_VERSION=v$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+          echo $STYRBORD_VERSION
+          echo ${STYRBORD_VERSION}
+          git tag ${STYRBORD_VERSION}
+          git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
+          git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
+  publish-to-github-packages:
+    runs-on: ubuntu-latest
+    needs:
+      - tag-version
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          registry-url: 'https://npm.pkg.github.com'
+          # Defaults to the user or organization that owns the workflow file
+          scope: '@kystverket'
+      - run: git pull
+      - name: Install dependencies
+        run: |
+          printf "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN\n@kystverket:registry=https://npm.pkg.github.com/" > .npmrc
+          npm ci --ignore-scripts
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - run: npm run build --workspace base
+      - run: npm publish --workspace base
+  publish-to-npmjs:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./base
+    needs:
+      - tag-version
+    permissions:
+      id-token: write
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          registry-url: 'https://registry.npmjs.org'
+          # Defaults to the user or organization that owns the workflow file
+          scope: '@kystverket'
+      - run: npm install -g npm@latest
+      - name: Clear auth token for OIDC
+        run: echo "NODE_AUTH_TOKEN=" >> $GITHUB_ENV
+      - run: git pull
+      - name: Install dependencies
+        run: |
+          npm ci --ignore-scripts
+      - run: npm run build --workspace base
+      - run: npm publish --workspace base --access public

@@ -8,8 +8,8 @@
 }
 
 @layer dsno {
-  @include meta.load-css('@digdir/designsystemet-css/dist/src/index.css');
-  @include meta.load-css('@kystverket/styrbord-tokens/dist/kystverket.css');
+  @include meta.load-css('../../../node_modules/@digdir/designsystemet-css/dist/src/index.css');
+  @include meta.load-css('../../../node_modules/@kystverket/styrbord-tokens/dist/kystverket.css');
 }
 
 @layer styrbord {
