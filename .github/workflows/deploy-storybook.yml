@@ -21,18 +21,14 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: '23'
-      - name: Forberede GitHub Pages mappe
-        run: |
-          mkdir temp-github-pages
-          printf "<html><body><ul><li><a href=\"base\">base</a></li></ul></body></html>" > ./temp-github-pages/index.html
       - name: Installere dependencies
         run: |
           npm ci --ignore-scripts
       - name: Bygge Storybooks
         run: |
           npm run storybook:build
-          cp -r ./base/storybook-static ./temp-github-pages/base
+          cp -r ./base/storybook-static ./github-pages-root/base
       - name: Laste opp til GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: ./temp-github-pages
+          folder: ./github-pages-root
