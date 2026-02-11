@@ -28,10 +28,10 @@ jobs:
       - name: Installere dependencies
         run: |
           npm ci --ignore-scripts
-      - name: Bygge Storybook - BASE
+      - name: Bygge Storybooks
         run: |
           npm run storybook:build
-          cp -r ./base/storybook-static ../temp-github-pages/base
+          cp -r ./base/storybook-static ./temp-github-pages/base
       - name: Laste opp til GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
