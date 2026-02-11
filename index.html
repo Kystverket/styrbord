@@ -1,1 +1,121 @@
-<html><body><ul><li><a href="base">base</a></li></ul></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Styrbord - Select Package</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: #f9f6f3;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 900px;
+        width: 100%;
+      }
+
+      h1 {
+        color: #000667;
+        text-align: center;
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .subtitle {
+        color: #666;
+        text-align: center;
+        font-size: 1.2rem;
+        margin-bottom: 3rem;
+      }
+
+      .options {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+
+      .option-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        text-align: center;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+        cursor: pointer;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .option-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+      }
+
+      .option-icon {
+        width: 80px;
+        height: 80px;
+        background: #e6f9ff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 2rem;
+        color: white;
+      }
+
+      .option-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #000667;
+        margin-bottom: 0.5rem;
+      }
+
+      .option-description {
+        color: #666;
+        line-height: 1.6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Styrbord</h1>
+      <p class="subtitle">Velg din pakke</p>
+
+      <div class="options">
+        <a href="base" class="option-card">
+          <div class="option-icon">📦</div>
+          <h2 class="option-title">@kystverket/styrbord</h2>
+          <p class="option-description">Kjernepakke med essensielle komponenter</p>
+        </a>
+
+        <a href="kart" class="option-card">
+          <div class="option-icon">🗺️</div>
+          <h2 class="option-title">@kystverket/styrbord-kart</h2>
+          <p class="option-description">Kartkomponenter og verktøy</p>
+        </a>
+
+        <a href="https://kystverket.github.io/styrbord-tokens" class="option-card">
+          <div class="option-icon">🎨</div>
+          <h2 class="option-title">@kystverket/styrbord-tokens</h2>
+          <p class="option-description">Designtokens og temaer</p>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>
