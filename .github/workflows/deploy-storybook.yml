@@ -28,6 +28,7 @@ jobs:
         run: |
           npm run storybook:build
           cp -r ./base/storybook-static ./github-pages-root/base
+          cp -r ./kart/storybook-static ./github-pages-root/kart
       - name: Laste opp til GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
