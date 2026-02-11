@@ -27,13 +27,11 @@ jobs:
           printf "<html><body><ul><li><a href=\"base\">base</a></li></ul></body></html>" > ./temp-github-pages/index.html
       - name: Installere dependencies
         run: |
-          cd base
           npm ci --ignore-scripts
       - name: Bygge Storybook - BASE
         run: |
-          cd base
           npm run storybook:build
-          cp -r ./storybook-static ../temp-github-pages/base
+          cp -r ./base/storybook-static ../temp-github-pages/base
       - name: Laste opp til GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:

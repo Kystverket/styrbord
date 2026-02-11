@@ -53,9 +53,6 @@ jobs:
       - run: npm publish --workspace kart
   publish-to-npmjs:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./kart
     needs:
       - tag-version
     permissions:
