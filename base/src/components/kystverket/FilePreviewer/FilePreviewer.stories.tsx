@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/react';
-import { FilePreviewRef, FilePreviewerDialogProps } from './FilePreviewer-dialog';
+import { FilePreviewRef, FilePreviewerDialogProps } from './dialog/FilePreviewer-dialog';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 import { Box, Button } from '~/main';

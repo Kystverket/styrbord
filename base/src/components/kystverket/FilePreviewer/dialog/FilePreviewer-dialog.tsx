@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import classes from './FilePreviewer-dialog.module.css';
 import { Box, Button, Icon, Paragraph } from '~/main';
-import { FileInfo, defaultButtonsByType } from './FilePreviewer.types';
-import { FileRenderer } from './FileRenderer';
+import { FileInfo, defaultButtonsByType } from '../FilePreviewer.types';
+import { FileRenderer } from '../renderer/FileRenderer';
 import { useHorizontalDragScroll } from '~/hooks/useHorizontalDragScroll';
 import { handleDownload } from '~/utils/handleFileDownload';
 

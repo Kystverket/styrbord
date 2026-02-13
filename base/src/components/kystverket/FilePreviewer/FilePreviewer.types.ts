@@ -19,11 +19,12 @@ type ImageFile = {
   src: string;
 };
 
-type JsonFile = {
-  contentType: 'json';
-  data: Record<string, unknown>;
-};
-
+// to force user to send in either data or src, not both. So it can display both "local" json
+// and accept a src
+type JsonFile =
+  | { contentType: 'json'; data: Record<string, unknown>; src?: never }
+  | { contentType: 'json'; src: string; data?: never };
+  
 //Get File type filtered by the value of contentType
 export type FileInfoByContentType<T extends FileInfo['contentType']> = Extract<FileInfo, { contentType: T }>;
 

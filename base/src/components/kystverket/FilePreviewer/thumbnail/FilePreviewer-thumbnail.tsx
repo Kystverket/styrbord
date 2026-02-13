@@ -1,9 +1,9 @@
 import { useContext, useEffect } from 'react';
-import { FPContext } from './FilePreviewer-context';
-import { FileInfo } from './FilePreviewer.types';
+import { FPContext } from '../FilePreviewer-context';
+import { FileInfo } from '../FilePreviewer.types';
 import { Box, Button, Icon, Paragraph, Tooltip } from '~/main';
 import classes from './FilePreviewer-thumbnail.module.css';
-import { FileRenderer } from './FileRenderer';
+import { FileRenderer } from '../renderer/FileRenderer';
 
 export interface FilePreviewerThumbnailProps {
   file: FileInfo;

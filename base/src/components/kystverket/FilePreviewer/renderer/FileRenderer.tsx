@@ -1,6 +1,7 @@
 import { Box } from '~/main';
-import { FileInfoByContentType, FileInfo } from './FilePreviewer.types';
+import { FileInfoByContentType, FileInfo } from '../FilePreviewer.types';
 import classes from './FileRenderer.module.css';
+import { useEffect, useState } from 'react';
 
 export const FileRenderer = ({
   file,
@@ -57,6 +58,7 @@ function JsonDisplay({
   className?: string;
   tabIndex?: number;
 }) {
+  const [jsonData, setJsonData] = useState<Record<string, unknown>>({});
   const selectAllText = (element: HTMLPreElement) => {
     const selection = window.getSelection();
     const range = document.createRange();
@@ -76,6 +78,14 @@ function JsonDisplay({
     }
   };
 
+  useEffect(() => {
+    if (file.src)
+      fetch(file.src)
+        .then((res) => res.json())
+        .then((data) => setJsonData(data));
+    else if (file.data) setJsonData(file.data);
+  }, [file.src]);
+
   return (
     <pre
       onDoubleClick={handleOnDoubleClick}
@@ -83,7 +93,7 @@ function JsonDisplay({
       className={`${classes.previewFile} ${classes.JsonPreview} ${className || ''}`}
       tabIndex={tabIndex ?? 0}
     >
-      {JSON.stringify(file.data, null, 2)}
+      {JSON.stringify(jsonData, null, 2)}
     </pre>
   );
 }
