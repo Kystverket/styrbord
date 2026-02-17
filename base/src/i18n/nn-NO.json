@@ -18,7 +18,7 @@
     "loading": "Laster",
     "maxFilesReached": "Maksimalt tal filer er lasta opp.",
     "unknownFilename": "Ukjent filnamn",
-    "uploading": "Lastar opp",
+    "uploading": "Lastar opp fil...",
     "uploadingPleaseWait": "Vennlegst vent med å velje fleire filer før alle filene er lasta opp"
   },
   "header-alt-text": "Til framsida",

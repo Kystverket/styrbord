@@ -18,7 +18,7 @@
     "loading": "Loading",
     "maxFilesReached": "Maximum number of files uploaded.",
     "unknownFilename": "Unknown filename",
-    "uploading": "Uploading",
+    "uploading": "Uploading file...",
     "uploadingPleaseWait": "Please wait to select more files until all files are uploaded"
   },
   "header-alt-text": "To the front page",
