@@ -1,12 +1,13 @@
 @layer styrbord-modules {
   .uploadButton,
   .uploadInformation {
-    flex-grow: 1;
-    border-radius: var(--ds-border-radius-default);
     padding: var(--spacing-8) var(--spacing-16);
-    text-align: left;
-    color: var(--ds-color-neutral-text-subtle);
+    /* flex-grow: 1; */
+    color: var(--ds-color-neutral-text-default);
+    border-radius: var(--ds-border-radius-default);
     background: var(--ds-color-neutral-surface-default);
+    color: var(--ds-color-neutral-text-subtle);
+    text-align: left;
   }
   .uploadButton {
     border: var(--ds-border-width-default) solid var(--ds-color-neutral-border-default);
@@ -15,83 +16,40 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: var(--spacing-8);
     padding-left: var(--spacing-8);
+    gap: var(--spacing-8);
   }
 
   .fileList {
+    display: flex;
+    flex-direction: column;
     margin-top: var(--spacing-16);
-    border: var(--ds-border-width-default) solid var(--ds-color-neutral-border-subtle);
-    border-radius: var(--ds-border-radius-lg);
-    background: var(--ds-color-neutral-background-tinted);
+    gap: var(--spacing-8);
   }
 
-  .fileList > .fileItem:not(:first-child) {
-    border-top: 1px solid var(--ds-color-neutral-border-subtle);
-  }
 
-  .fileItem {
-    padding: var(--spacing-8) 0 var(--spacing-8) var(--spacing-16);
-    color: var(--ds-color-neutral-text-default);
+  .dropzone{
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 12px;
+    border: 1px dashed var(--ds-color-neutral-border-default);
+    border-radius: var(--ds-border-radius-default);
+    &:hover{
+      cursor: pointer;
+      background-color: var(--ds-color-neutral-background-tinted);
+    }
   }
 
-  .removeButton {
-    color: var(--ds-color-neutral-text-subtle);
-    padding: var(--spacing-8) var(--spacing-16) var(--spacing-8) var(--spacing-8);
-  }
-
-  .existingFileItem {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: var(--spacing-20);
-    cursor: pointer;
-    border: 2px solid var(--ds-color-neutral-surface-hover);
-    border-radius: var(--ds-border-radius-md);
-    padding: var(--ds-size-7);
-  }
-
-  .existingFileItem:focus-visible,
-  .existingFileItem:has(:focus-visible) {
-    box-shadow: var(--_ds--focus, var(--dsc-focus-boxShadow));
-    outline: var(--_ds--focus, var(--dsc-focus-outline));
-    outline-offset: var(--_ds--focus, var(--ds-border-width-focus));
-  }
-
-  .selected {
-    border-color: var(--ds-color-primary-border-default);
-  }
-
-  .checkbox:focus,
-  .checkbox:focus-visible,
-  .checkbox:focus-within {
-    box-shadow: none;
-    outline: none;
-    outline-color: transparent;
-  }
-
-  .thumbnailContainer,
-  .fileIconContainer {
-    width: 64px;
-    height: 64px;
-    flex-shrink: 0;
+  .dropzoneIcon{
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--ds-border-radius-sm);
-    background-color: var(--ds-color-neutral-surface-default);
-    overflow: hidden;
-  }
-  .thumbnailContainer {
-    background-image: var(--thumbnail-uri);
-    background-size: cover;
-    background-position: center;
-  }
-  .fileIconContainer {
-    font-size: 24px;
+    width: var(--ds-size-12);
+    height: var(--ds-size-12);
+    border-radius: var(--ds-border-radius-full);
+    background-color: var(--ds-color-neutral-surface-tinted);
   }
 }

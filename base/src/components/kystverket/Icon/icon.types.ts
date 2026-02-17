@@ -92,6 +92,10 @@ export const iconIdList = [
   'zoom_out_map',
   'picture_as_pdf',
   'pan_zoom',
+  'image',
+  'code_blocks',
+  'upload',
+  'folder_open',
 ] as const;
 
 export type IconId = (typeof iconIdList)[number];

@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 import cat1 from '/assets/img/cats/Cat 1.jpg';
 import cat2 from '/assets/img/cats/Cat 2.jpg';
 
+
 const Wrapper = (props: FileUploaderProps) => {
   const [value, setValue] = useState<FileInfo[]>([...props.files]);
 
@@ -47,6 +48,7 @@ const defaultProps: FileUploaderProps = {
       contextId: '214b3c2e-1f4d-4f8a-9b6c-5d7e8f9a0b1c',
       storageId: '1',
     },
+
     {
       fileName: 'file2.txt',
       status: 'uploaded',
@@ -54,8 +56,17 @@ const defaultProps: FileUploaderProps = {
       contextId: '214b3c2e-1f4d-4f3a-9b6c-5d7e8f9a0b1c',
       storageId: '1',
     },
+    {
+      fileName: 'file3.jpeg',
+      status: 'uploaded',
+      contentType: 'image/jpeg',
+      thumbnailUri: cat1,
+      contextId: '214b3c2e-1f4d-4f8a-a127-5d7e8f9a0b1c',
+      storageId: '1',
+    },
   ],
   maxFiles: 5,
+  maxSizeInBytes: 10 * 1024 * 1024, // 10MB
   onChange: (files) => console.log('Files changed:', files),
   allowedFileTypes: ['.pdf', '.jpg', '.jpeg', '.png'],
 };
@@ -152,9 +163,9 @@ export const WithExistingFilesWithTranslations: Story = {
     translations: {
       existingFiles: {
         buttonOpen: 'Velg eksisterende filer',
-        dialogTitle: 'Velg filer fra eksisterende',
+        dialogTitle: 'Velg eksisterende filer',
         dialogCancel: 'Avbryt',
-        dialogConfirm: 'Velg',
+        dialogConfirm: 'Legg til',
         noFilesAvailable: 'Ingen eksisterende filer tilgjengelig',
       },
     },
