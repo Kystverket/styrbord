@@ -6,17 +6,26 @@
       "file-too-large": "Filen er for stor. Vennligst velg en mindre fil.",
       "file-scan-failed": "Filen kunne ikke lastes opp fordi sikkerhetsskanningen feilet.",
       "error": "Noe gikk galt under opplastingen.",
-      "unknown-error": "En ukjent feil oppstod. Vennligst prøv igjen senere."
+      "unknown-error": "En ukjent feil oppstod. Vennligst prøv igjen senere.",
+      "over-files-limit": "Filen er over grensen på antall filer tillatt"
     },
     "existingFiles": {
       "buttonOpen": "Bla igjennom filer",
       "dialogCancel": "Avbryt",
       "dialogConfirm": "Velg",
       "dialogTitle": "Filer",
-      "noFilesAvailable": "Ingen filer tilgjengelig."
+      "noFilesAvailable": "Ingen filer tilgjengelig.",
+      "searchAriaLabel": "Søk",
+      "searchPlaceholder": "Søk etter fil...",
+      "selectFilesLabel": "Velg filer",
+      "filesCounter": "{shown} av {total} filer"
     },
+    "attachmentsCount": "Vedlegg ({count})",
     "loading": "Laster",
     "maxFilesReached": "Maksimalt antall filer er lastet opp.",
+    "maxFileSizeDescription": "Maks filstørrelse er {maxFileSize}.",
+    "dropzoneText": "Klikk for å laste opp\neller dra og slipp filer her",
+    "removeFileAriaLabel": "Fjern fil",
     "unknownFilename": "Ukjent filnavn",
     "uploading": "Laster opp fil...",
     "uploadingPleaseWait": "Vennligst vent med å velge flere filer før alle filene er lastet opp"

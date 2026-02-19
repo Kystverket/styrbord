@@ -47,6 +47,7 @@ const defaultProps: FileUploaderProps = {
       contentType: 'text/plain',
       contextId: '214b3c2e-1f4d-4f8a-9b6c-5d7e8f9a0b1c',
       storageId: '1',
+      sizeInBytes: 92881,
     },
 
     {
@@ -55,6 +56,7 @@ const defaultProps: FileUploaderProps = {
       contentType: 'text/plain',
       contextId: '214b3c2e-1f4d-4f3a-9b6c-5d7e8f9a0b1c',
       storageId: '1',
+      sizeInBytes: 12122,
     },
     {
       fileName: 'file3.jpeg',
@@ -63,6 +65,7 @@ const defaultProps: FileUploaderProps = {
       thumbnailUri: cat1,
       contextId: '214b3c2e-1f4d-4f8a-a127-5d7e8f9a0b1c',
       storageId: '1',
+      sizeInBytes: 92882131231,
     },
   ],
   maxFiles: 5,
@@ -106,6 +109,7 @@ export const WithExistingFiles: Story = {
           storageId: 'storage-id-1',
           contentType: 'application/pdf',
           status: 'uploaded',
+          sizeInBytes: 5818,
         },
         {
           contextId: 'existing-2',
@@ -114,6 +118,7 @@ export const WithExistingFiles: Story = {
           contentType: 'image/jpeg',
           thumbnailUri: cat1,
           status: 'uploaded',
+          sizeInBytes: 17863,
         },
         {
           contextId: 'existing-3',
@@ -122,6 +127,7 @@ export const WithExistingFiles: Story = {
           contentType: 'image/png',
           thumbnailUri: cat2,
           status: 'uploaded',
+          sizeInBytes: 192811,
         },
       ];
     },
@@ -141,6 +147,7 @@ export const WithExistingFilesWithTranslations: Story = {
           storageId: 'storage-id-1',
           contentType: 'application/pdf',
           status: 'uploaded',
+          sizeInBytes: 1234,
         },
         {
           contextId: 'existing-2',
@@ -149,6 +156,7 @@ export const WithExistingFilesWithTranslations: Story = {
           contentType: 'image/jpeg',
           thumbnailUri: cat1,
           status: 'uploaded',
+          sizeInBytes: 32213,
         },
         {
           contextId: 'existing-3',
@@ -157,6 +165,7 @@ export const WithExistingFilesWithTranslations: Story = {
           contentType: 'image/png',
           thumbnailUri: cat2,
           status: 'uploaded',
+          sizeInBytes: 221123,
         },
       ];
     },

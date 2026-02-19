@@ -1,6 +1,8 @@
-import { FileAndExif } from '~/components/kystverket/FileUploader/FileUploader';
-import { FileInfo, UploadFileResult } from './FileUploader.types';
+import { FileAndExif, FileUploaderProps } from '~/components/kystverket/FileUploader/FileUploader';
+import { FileInfo, UploadFileError, UploadFileResult } from './FileUploader.types';
 import { v4 } from 'uuid';
+
+type fileUploaderFilters = Pick<FileUploaderProps, 'maxSizeInBytes' | 'allowedFileTypes' | 'maxFiles'>;
 
 export const onFilesChanged = (
   files: FileAndExif[],
@@ -8,26 +10,13 @@ export const onFilesChanged = (
   uploadFile: (file: FormData) => Promise<UploadFileResult>,
   onChange: (files: FileInfo[]) => void,
   t: (key: string) => string,
-  maxSizeInBytes?: number,
+  filters?: fileUploaderFilters,
 ) => {
   console.log('onFilesChanged', files, state);
   const newFilesState = [...state];
   const fileObjectsByContextId: Record<string, File> = {};
 
-  const { acceptedFiles, rejectedFiles } = validateFiles(files, maxSizeInBytes);
-
-  // Add rejected files with error status immediately
-  rejectedFiles.forEach((rejection) => {
-    const contextId = v4();
-    newFilesState.push({
-      contextId,
-      fileName: rejection.file.file.name,
-      status: 'error',
-      contentType: rejection.file.file.type,
-      exif: rejection.file.exif,
-      error: t(`errors.${rejection.reason}`),
-    });
-  });
+  const { acceptedFiles, rejectedFiles } = validateFiles(files, state.length, filters);
 
   // Add accepted files with uploading status
   acceptedFiles.forEach((fileAndExif) => {
@@ -38,8 +27,22 @@ export const onFilesChanged = (
       status: 'uploading',
       contentType: fileAndExif.file.type,
       exif: fileAndExif.exif,
+      sizeInBytes: fileAndExif.file.size,
     });
     fileObjectsByContextId[contextId] = fileAndExif.file;
+  });
+  // Add rejected files with error status
+  rejectedFiles.forEach((rejection) => {
+    const contextId = v4();
+    newFilesState.push({
+      contextId,
+      fileName: rejection.file.file.name,
+      status: 'error',
+      contentType: rejection.file.file.type,
+      exif: rejection.file.exif,
+      error: t(`errors.${rejection.reason}`),
+      sizeInBytes: rejection.file.file.size,
+    });
   });
 
   onChange(newFilesState);
@@ -76,27 +79,31 @@ export const onFilesChanged = (
       onChange([...newFilesState]);
     }
   });
-};
+};;
 
-//these are mapped with custom messages in i18n files
-type possibleErrors =
-  | 'network-error'
-  | 'invalid-file-type'
-  | 'file-too-large'
-  | 'file-scan-failed'
-  | 'error'
-  | 'unknown-error';
-
-const validateFiles = (files: FileAndExif[], maxSizeInBytes: number = -1) => {
+const validateFiles = (newFiles: FileAndExif[], currentLength: number, filters: fileUploaderFilters | undefined) => {
   const acceptedFiles: FileAndExif[] = [];
-  const rejectedFiles: Array<{ file: FileAndExif; reason: possibleErrors }> = [];
+  const rejectedFiles: Array<{ file: FileAndExif; reason: UploadFileError }> = [];
 
-  for (const file of files) {
-    const acceptedFileSize = isAcceptedSize(file.file, maxSizeInBytes);
+  for (const [idx, file] of newFiles.entries()) {
+    console.log('checking', idx);
+    if (filters === undefined) {
+      acceptedFiles.push(file);
+      continue;
+    }
+
+    const acceptedFileSize = isAcceptedSize(file.file, filters.maxSizeInBytes);
+    const acceptedFileType = isAcceptedFileType(file.file, filters.allowedFileTypes);
+    const isWithinMaxLimit = currentLength + idx <= (filters.maxFiles ?? 9999);
 
     if (!acceptedFileSize) {
       rejectedFiles.push({ file, reason: 'file-too-large' });
+    } else if (!acceptedFileType) {
+      rejectedFiles.push({ file, reason: 'invalid-file-type' });
+    } else if (!isWithinMaxLimit) {
+      rejectedFiles.push({ file, reason: 'over-files-limit' });
     } else {
+      console.log('File is accepted');
       acceptedFiles.push(file);
     }
   }
@@ -104,9 +111,13 @@ const validateFiles = (files: FileAndExif[], maxSizeInBytes: number = -1) => {
   return { acceptedFiles, rejectedFiles };
 };
 
-const isAcceptedSize = (file: File, maxSizeInBytes: number): boolean => {
-  if (maxSizeInBytes === -1) return true;
+const isAcceptedSize = (file: File, maxSizeInBytes: FileUploaderProps['maxSizeInBytes'] | undefined): boolean => {
+  if (maxSizeInBytes === undefined) return true;
   return file.size <= maxSizeInBytes;
 };
 
-
+//todo IMPLEMENT
+const isAcceptedFileType = (file: File, allowedFileTypes: FileUploaderProps['allowedFileTypes'] | undefined) => {
+  if (allowedFileTypes === undefined) return true;
+  return true;
+};

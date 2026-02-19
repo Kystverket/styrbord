@@ -1,7 +1,20 @@
-import { Button, Checkbox, Dialog, DialogBlock, Heading, Paragraph, Spinner } from '@digdir/designsystemet-react';
 import { forwardRef, useImperativeHandle, useState } from 'react';
-import { Box, FileInfo } from '~/main';
+import {
+  Box,
+  FileInfo,
+  Button,
+  Checkbox,
+  Dialog,
+  DialogBlock,
+  Heading,
+  Paragraph,
+  Search,
+  SearchClear,
+  SearchInput,
+  Spinner,
+} from '~/main';
 import classes from './ExistingFilesDialog.module.css';
+import { convertBytesToReadable } from '~/utils/convertBytesToReadable';
 
 type ExistingFilesDialogProps = {
   t: (key: string) => string;
@@ -21,6 +34,7 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
     const [allExistingFiles, setAllExistingFiles] = useState<FileInfo[]>([]);
     const [selectedExistingFiles, setSelectedExistingFiles] = useState<Record<string, boolean>>({});
     const [dialogElement, setDialogElement] = useState<HTMLDialogElement | null>(null);
+    const [searchText, setSearchText] = useState('');
 
     useImperativeHandle(
       ref,
@@ -76,6 +90,18 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
 
     const handleCancelExistingFiles = () => dialogElement?.close();
 
+    const filteredFiles = (): FileInfo[] => {
+      return allExistingFiles.filter((file) =>
+        file.fileName.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()),
+      );
+    };
+
+    const showSearchFileLimit = 3;
+    const filteredExistingFiles = filteredFiles();
+    const filteredFilesCounterText = t('existingFiles.filesCounter')
+      .replace('{shown}', String(filteredExistingFiles.length))
+      .replace('{total}', String(allExistingFiles.length));
+
     return (
       <Dialog ref={setDialogElement} closedby="any">
         <DialogBlock>
@@ -94,8 +120,23 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
           )}
           {!loadingAllExistingFiles && allExistingFiles.length > 0 && (
             <Box gap={12} my={4}>
-              <Paragraph className={classes.selectFilesLabel}>Velg filer</Paragraph>
-              {allExistingFiles.map((file) => (
+              {showSearchFileLimit <= allExistingFiles.length && (
+                // <TextInput value={searchText} onChange={setSearchText} />
+                <Search>
+                  <SearchInput
+                    aria-label={t('existingFiles.searchAriaLabel')}
+                    value={searchText}
+                    placeholder={t('existingFiles.searchPlaceholder')}
+                    onChange={(e) => setSearchText(e.currentTarget.value)}
+                  />
+                  <SearchClear />
+                </Search>
+              )}
+              <Paragraph className={classes.selectFilesLabel}>
+                {t('existingFiles.selectFilesLabel')}{' '}
+                {showSearchFileLimit <= allExistingFiles.length && filteredFilesCounterText}
+              </Paragraph>
+              {filteredExistingFiles.map((file) => (
                 <div
                   key={file.storageId}
                   className={classes.fileItem}
@@ -124,7 +165,9 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
                   />
                   <Box gap={2}>
                     <Paragraph className={classes.fileName}>{file.fileName || t('unknownFilename')}</Paragraph>
-                    <Paragraph className={classes.fileSize}>{'0.29 MB'}</Paragraph>
+                    {file.sizeInBytes && (
+                      <Paragraph className={classes.fileSize}>{convertBytesToReadable(file.sizeInBytes)}</Paragraph>
+                    )}
                   </Box>
                 </div>
               ))}
@@ -133,10 +176,10 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
         </DialogBlock>
         <DialogBlock>
           <Box horizontal gap={16}>
-            <Button onClick={handleConfirmExistingFiles} variant="primary">
+            <Button variant="filled" onClick={handleConfirmExistingFiles}>
               {t('existingFiles.dialogConfirm')}
             </Button>
-            <Button variant="secondary" onClick={handleCancelExistingFiles}>
+            <Button variant="outline" onClick={handleCancelExistingFiles}>
               {t('existingFiles.dialogCancel')}
             </Button>
           </Box>

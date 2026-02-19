@@ -2,9 +2,9 @@
 
 import { ReactNode, useContext, useRef } from 'react';
 import { Exif, FileInfo } from './FileUploader.types';
-import { Field, Label, Spinner, ValidationMessage, Button, Heading, Paragraph } from '@digdir/designsystemet-react';
+import { Field, Label, Spinner, ValidationMessage, Heading } from '@digdir/designsystemet-react';
 import classes from './FileUploader.module.css';
-import { Box, Icon, LabelContent } from '~/main';
+import { Icon, LabelContent } from '~/main';
 import exifr from 'exifr';
 import { FileUploaderContext } from './FileUploader.context';
 import { v4 } from 'uuid';
@@ -15,6 +15,8 @@ import {
   ExistingFilesDialog,
   ExistingFilesDialogHandle,
 } from '~/components/kystverket/FileUploader/existingFilesDialog/ExistingFilesDialog';
+import { FileUploadActions } from '~/components/kystverket/FileUploader/fileUploadActions/FileUploadActions';
+import { convertBytesToReadable } from '~/utils/convertBytesToReadable';
 
 // Remove all exif data except latitude and longitude
 const pruneUnwantedExifData = (exif: Exif): Exif | undefined => {
@@ -96,8 +98,11 @@ export const FileUploader = ({
         }
       }),
     ).then((filesWithExif) => {
-      console.log(files);
-      onFilesChanged(filesWithExif, files, fileUploaderContext.uploadFile, onChange, t, maxSizeInBytes);
+      onFilesChanged(filesWithExif, files, fileUploaderContext.uploadFile, onChange, t, {
+        allowedFileTypes: allowedFileTypes,
+        maxFiles: maxFiles,
+        maxSizeInBytes: maxSizeInBytes,
+      });
     });
   };
 
@@ -124,8 +129,12 @@ export const FileUploader = ({
   };
 
   const showUploadingWarning = files.some((f) => f.status === 'uploading');
-  const showMaxReachedWarning = !showUploadingWarning && maxFiles && files.length >= maxFiles;
+  const showMaxReachedWarning = !showUploadingWarning && maxFiles && files.length > maxFiles;
   const showUploadButton = !showMaxReachedWarning && !showUploadingWarning;
+  const maxFileSizeText = maxSizeInBytes
+    ? t('maxFileSizeDescription').replace('{maxFileSize}', convertBytesToReadable(maxSizeInBytes))
+    : null;
+  const attachmentsHeading = t('attachmentsCount').replace('{count}', String(files.length));
 
   return (
     <>
@@ -135,7 +144,8 @@ export const FileUploader = ({
         </Label>
         {description && (
           <Field.Description>
-            {description}.{!!maxSizeInBytes && ` Maks filstorrelse er ${Math.round(maxSizeInBytes / (1024 * 1024))}MB`}.
+            {description}
+            {maxFileSizeText ? ` ${maxFileSizeText}` : ''}
           </Field.Description>
         )}
         <input
@@ -155,39 +165,15 @@ export const FileUploader = ({
           }}
         />
         {showUploadButton && (
-          <Box gap={4} mt={8}>
-            {variant === 'dropzone' && (
-              <div
-                onClick={() => fileInputRef.current?.click()}
-                className={classes.dropzone}
-                onDragEnter={() => {
-                  console.log('entered');
-                }}
-                onDragLeave={(e) => console.log(e)}
-              >
-                <span className={classes.dropzoneIcon}>
-                  <Icon material="upload" />
-                </span>
-                <Paragraph style={{ whiteSpace: 'pre-wrap', textAlign: 'center' }}>
-                  {`Klikk for å laste opp\neller dra og slipp filer her`}
-                </Paragraph>
-              </div>
-            )}
-            <Box gap={8} horizontal>
-              {variant === 'buttons' && (
-                <Button className={classes.uploadButton} onClick={() => fileInputRef.current?.click()}>
-                  <Icon material="upload" />
-                  {buttonLabel}
-                </Button>
-              )}
-              {existingFilesProvider && (
-                <Button className={classes.uploadButton} onClick={() => dialogRef.current?.showModal()}>
-                  <Icon material="folder_open" />
-                  {t('existingFiles.buttonOpen')}
-                </Button>
-              )}
-            </Box>
-          </Box>
+          <FileUploadActions
+            onUploadFile={onUploadFile}
+            buttonLabel={buttonLabel}
+            dialogRef={dialogRef}
+            fileInputRef={fileInputRef}
+            t={t}
+            existingFilesProvider={existingFilesProvider}
+            variant={variant}
+          />
         )}
         {showMaxReachedWarning && (
           <div className={classes.uploadInformation}>
@@ -204,7 +190,7 @@ export const FileUploader = ({
         {files && files.length > 0 && (
           <div className={classes.fileList}>
             {/* <label >Vedlegg ({files.length})</label> */}
-            <Heading data-size="sm">Vedlegg ({files.length})</Heading>
+            <Heading data-size="sm">{attachmentsHeading}</Heading>
             {files.map((file) => (
               <FileUploaderItem key={file.contextId} file={file} t={t} onDeleteFile={onDeleteFile} />
             ))}

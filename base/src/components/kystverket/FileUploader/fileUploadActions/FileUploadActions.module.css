@@ -1,35 +1,16 @@
 @layer styrbord-modules {
-  .uploadButton,
-  .uploadInformation {
+  .uploadButton {
     padding: var(--spacing-8) var(--spacing-16);
-    /* flex-grow: 1; */
-    color: var(--ds-color-neutral-text-default);
+    border: var(--ds-border-width-default) solid var(--ds-color-neutral-border-default);
     border-radius: var(--ds-border-radius-default);
     background: var(--ds-color-neutral-surface-default);
+    /* flex-grow: 1; */
+    color: var(--ds-color-neutral-text-default);
     color: var(--ds-color-neutral-text-subtle);
     text-align: left;
   }
-  .uploadButton {
-    border: var(--ds-border-width-default) solid var(--ds-color-neutral-border-default);
-  }
-  
-  .uploadInformation {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding-left: var(--spacing-8);
-    gap: var(--spacing-8);
-  }
 
-  .fileList {
-    display: flex;
-    flex-direction: column;
-    margin-top: var(--spacing-16);
-    gap: var(--spacing-8);
-  }
-
-
-  .dropzone{
+  .dropzone {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -38,16 +19,21 @@
     gap: 12px;
     border: 1px dashed var(--ds-color-neutral-border-default);
     border-radius: var(--ds-border-radius-default);
-    &:hover{
-      cursor: pointer;
+    &:hover {
       background-color: var(--ds-color-neutral-background-tinted);
+      cursor: pointer;
     }
-    &.active{
-            background-color: var(--ds-color-neutral-background-tinted);
+    &.active {
+      background-color: var(--ds-color-neutral-background-tinted);
     }
   }
 
-  .dropzoneIcon{
+  .dropzoneText {
+    text-align: center;
+    white-space: pre-wrap;
+  }
+
+  .dropzoneIcon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -55,5 +41,9 @@
     height: var(--ds-size-12);
     border-radius: var(--ds-border-radius-full);
     background-color: var(--ds-color-neutral-surface-tinted);
+  }
+
+  .stretch {
+    width: 100%;
   }
 }
