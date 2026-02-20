@@ -64,11 +64,11 @@ const defaultProps: FileUploaderProps = {
       thumbnailUri: cat1,
       contextId: '214b3c2e-1f4d-4f8a-a127-5d7e8f9a0b1c',
       storageId: '1',
-      sizeInBytes: 92882131231,
+      sizeInBytes: 9281231,
     },
   ],
   maxFiles: 5,
-  maxSizeInBytes: 10 * 1024 * 1024, // 10MB
+  maxSizeInBytes: 10 * 1000 * 1000, // 10MB
   onChange: (files) => console.log('Files changed:', files),
   allowedFileTypes: ['.pdf', '.jpg', '.jpeg', '.png'],
 };

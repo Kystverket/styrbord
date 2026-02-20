@@ -12,9 +12,10 @@ type FileUploaderItemProps = {
 
 export function FileUploaderItem({ file, t, onDeleteFile }: FileUploaderItemProps) {
   const getPrefixIcon = (contentType: FileInfo['contentType']): MaterialIconProps['material'] => {
+    console.log(contentType);
     if (contentType.startsWith('text') || contentType.endsWith('pdf')) return 'description';
     if (contentType.startsWith('image')) return 'image';
-    if (contentType.startsWith('json')) return 'code_blocks';
+    if (contentType.endsWith('json')) return 'code_blocks';
     return 'anchor';
   };
 
