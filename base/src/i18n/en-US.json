@@ -1,11 +1,15 @@
 {
   "fileUploader": {
+    "attachmentsCount": "Attachments ({count})",
+    "buttonLabel": "Upload file",
+    "dropzoneText": "Click to upload\nor drag and drop files here",
     "errors": {
-      "network-error": "Network error. Please check your connection and try again.",
-      "invalid-file-type": "File type is not allowed.",
-      "file-too-large": "File is too large. Please select a smaller file.",
-      "file-scan-failed": "File could not be uploaded because security scan failed.",
       "error": "Something went wrong during upload.",
+      "file-scan-failed": "File could not be uploaded because security scan failed.",
+      "file-too-large": "File is too large. Please select a smaller file.",
+      "invalid-file-type": "File type is not allowed.",
+      "network-error": "Network error. Please check your connection and try again.",
+      "over-files-limit": "The file exceeds the allowed file count limit",
       "unknown-error": "An unknown error occurred. Please try again later."
     },
     "existingFiles": {
@@ -13,10 +17,16 @@
       "dialogCancel": "Cancel",
       "dialogConfirm": "Select",
       "dialogTitle": "Files",
+      "filesCounter": "{shown} of {total} files",
+      "searchAriaLabel": "Search",
+      "searchPlaceholder": "Search for file...",
+      "selectFilesLabel": "Select files",
       "noFilesAvailable": "No files available."
     },
     "loading": "Loading",
+    "maxFileSizeDescription": "Maximum file size is {maxFileSize}.",
     "maxFilesReached": "Maximum number of files uploaded.",
+    "removeFileAriaLabel": "Remove file",
     "unknownFilename": "Unknown filename",
     "uploading": "Uploading file...",
     "uploadingPleaseWait": "Please wait to select more files until all files are uploaded"

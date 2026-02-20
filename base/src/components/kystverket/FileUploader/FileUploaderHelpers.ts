@@ -25,6 +25,7 @@ export const onFilesChanged = (
       contextId,
       fileName: fileAndExif.file.name,
       status: 'uploading',
+      thumbnailUri: fileAndExif.file.type.startsWith('image/') ? URL.createObjectURL(fileAndExif.file) : undefined,
       contentType: fileAndExif.file.type,
       exif: fileAndExif.exif,
       sizeInBytes: fileAndExif.file.size,

@@ -36,7 +36,6 @@ type Story = StoryObj<typeof meta>;
 
 const defaultProps: FileUploaderProps = {
   label: 'Last opp filer',
-  buttonLabel: 'Last opp',
   description: 'Du kan laste opp flere filer samtidig',
   error: null,
   multiple: true,
@@ -90,6 +89,48 @@ export const Required: Story = {
 
 export const RequiredText: Story = {
   args: { ...defaultProps, required: 'Påkrevd' },
+};
+
+export const Dropzone: Story = {
+  args: { ...defaultProps, variant: 'dropzone' },
+};
+
+export const DropzoneWithExistingFiles: Story = {
+  args: {
+    ...defaultProps,
+    variant: 'dropzone',
+    existingFilesProvider: async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate loading delay
+      return [
+        {
+          contextId: 'existing-1',
+          fileName: 'document1.pdf',
+          storageId: 'storage-id-1',
+          contentType: 'application/pdf',
+          status: 'uploaded',
+          sizeInBytes: 5818,
+        },
+        {
+          contextId: 'existing-2',
+          fileName: 'image1.jpg',
+          storageId: 'storage-id-2',
+          contentType: 'image/jpeg',
+          thumbnailUri: cat1,
+          status: 'uploaded',
+          sizeInBytes: 17863,
+        },
+        {
+          contextId: 'existing-3',
+          fileName: 'screenshot.png',
+          storageId: 'storage-id-3',
+          contentType: 'image/png',
+          thumbnailUri: cat2,
+          status: 'uploaded',
+          sizeInBytes: 192811,
+        },
+      ];
+    },
+  },
 };
 
 export const WithError: Story = {
@@ -251,8 +292,7 @@ export const WithFileSizeLimitEnglish: Story = {
   args: {
     ...defaultProps,
     label: 'Upload files',
-    buttonLabel: 'Upload',
-    description: 'Files larger than 10MB will be rejected',
+    description: 'Upload files that are related to the case',
     files: [],
   },
 };

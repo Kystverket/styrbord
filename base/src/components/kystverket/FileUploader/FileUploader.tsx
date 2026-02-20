@@ -36,7 +36,6 @@ export interface FileAndExif {
 
 export interface FileUploaderProps {
   label: string;
-  buttonLabel: string;
   description?: string | string[] | ReactNode;
   error?: string | null;
   multiple?: boolean;
@@ -68,7 +67,6 @@ export const FileUploader = ({
   maxSizeInBytes,
   required,
   optional,
-  buttonLabel,
   description = '',
   error = null,
   multiple = true,
@@ -78,7 +76,7 @@ export const FileUploader = ({
   allowedFileTypes = defaultAllowedFileTypes,
   translations,
   existingFilesProvider,
-  variant = 'dropzone',
+  variant = 'buttons',
 }: FileUploaderProps) => {
   const { at } = useStyrbordTranslation();
   const t = at.bind(null, 'fileUploader', translations);
@@ -167,7 +165,6 @@ export const FileUploader = ({
         {showUploadButton && (
           <FileUploadActions
             onUploadFile={onUploadFile}
-            buttonLabel={buttonLabel}
             dialogRef={dialogRef}
             fileInputRef={fileInputRef}
             t={t}
