@@ -137,7 +137,7 @@
   font-family: var(--kystverket-font-family, 'Museo sans');
   font-style: normal;
   font-size: var(--ds-font-size-5);
-  font-weight: 500;
+  font-weight: var(--ds-font-weight-medium);
 }
 
 .react-datepicker__triangle {
