@@ -1,0 +1,1 @@
+import{_ as o}from"./index-pCsY5G5L.js";import"./index-BNURykns.js";const r={parameters:{docs:{theme:o.light},controls:{matchers:{color:/(background|color)$/i,date:/Date$/i}},options:{storySort:{method:"alphabetical",order:["Readme","Designsystemet Showcase","Typography","Page","Helpers","Form","Components"]}}},tags:["autodocs"]};export{r as default};
