@@ -5,7 +5,7 @@ type ButtonOptions = {
 
 export type FileInfo = {
   fileName: string;
-  fileSize?: string;
+  fileSizeInBytes?: number;
   buttons?: ButtonOptions;
 } & (PdfFile | ImageFile | JsonFile);
 
@@ -24,7 +24,7 @@ type ImageFile = {
 type JsonFile =
   | { contentType: 'json'; data: Record<string, unknown>; src?: never }
   | { contentType: 'json'; src: string; data?: never };
-  
+
 //Get File type filtered by the value of contentType
 export type FileInfoByContentType<T extends FileInfo['contentType']> = Extract<FileInfo, { contentType: T }>;
 
