@@ -35,7 +35,7 @@
 
 .react-datepicker .react-datepicker__day--today {
   line-height: 150%;
-  font-weight: 500;
+  font-weight: var(--ds-font-weight-medium);
   border-radius: var(--ds-border-radius-lg);
   border: 1.5px solid var(--ds-color-primary-border-strong) !important;
   &:hover:not(.react-datepicker__day--selected) {
