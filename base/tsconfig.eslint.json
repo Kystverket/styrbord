@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "./src/**/*",
+    "./storybook/**/*",
+    "./.storybook/**/*",
+    "./eslint.config.ts",
+    "./vite.config.mts",
+    "./vite-env.d.ts"
+  ]
+}

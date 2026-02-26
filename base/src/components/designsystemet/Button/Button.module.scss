@@ -1,0 +1,49 @@
+.href {
+  width: max-content;
+}
+
+.dashed {
+  border-style: dashed;
+  background: transparent;
+}
+.dashed:hover {
+  border-style: dashed;
+  background: var(--dsc-button-background--hover);
+}
+
+.outline[data-color='neutral'] {
+  color: var(--ds-color-primary-text-default);
+}
+
+.subtle {
+  color: var(--ds-color-primary-text-default);
+  background: var(--ds-color-primary-surface-tinted);
+}
+.subtle:hover {
+  background: var(--ds-color-primary-surface-hover);
+}
+.subtle:active {
+  background: var(--ds-color-primary-surface-active);
+}
+
+.subtle[data-color='neutral'] {
+  color: var(--ds-color-neutral-text-default);
+  background: var(--ds-color-neutral-surface-default);
+}
+.subtle[data-color='neutral']:hover {
+  background: var(--ds-color-neutral-surface-hover);
+}
+.subtle[data-color='neutral']:active {
+  background: var(--ds-color-neutral-surface-active);
+}
+
+.subtle[data-color='danger'] {
+  color: var(--ds-color-danger-text-default);
+  background: var(--ds-color-danger-surface-default);
+}
+.subtle[data-color='danger']:hover {
+  background: var(--ds-color-danger-surface-hover);
+}
+.subtle[data-color='danger']:active {
+  background: var(--ds-color-danger-surface-active);
+}
