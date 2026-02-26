@@ -21,10 +21,10 @@
       "noFilesAvailable": "Ingen filer tilgjengelig.",
       "searchAriaLabel": "Søk",
       "searchPlaceholder": "Søk etter fil...",
-      "selectFilesLabel": "Velg filer"
+      "selectFilesLabel": "Velg filer",
+      "inMenuTitle": "Filer i"
     },
     "loading": "Laster",
-    "maxFileSizeDescription": "Maks filstørrelse er {maxFileSize}.",
     "maxFilesReached": "Maksimalt antall filer er lastet opp.",
     "removeFileAriaLabel": "Fjern fil",
     "unknownFilename": "Ukjent filnavn",

@@ -22,10 +22,10 @@
   }
 
   .filePreview {
+    flex: 0 0 48px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
     height: 48px;
     overflow: hidden;
     border-radius: var(--ds-border-radius-default);
@@ -39,14 +39,26 @@
       object-position: center;
     }
   }
+  
+  .subtitle {
+    color: var(--ds-color-neutral-text-subtle);
+  }
 
   .fileData {
     flex: 1;
+    overflow: hidden;
+
+    & p {
+      min-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
 
   .buttonContainer {
+    flex: 0 0 42px;
     justify-content: center;
-    width: 42px;
     height: 42px;
 
     & button {

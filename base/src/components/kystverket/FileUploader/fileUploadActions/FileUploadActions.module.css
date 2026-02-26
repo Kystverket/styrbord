@@ -4,7 +4,6 @@
     border: var(--ds-border-width-default) solid var(--ds-color-neutral-border-default);
     border-radius: var(--ds-border-radius-default);
     background: var(--ds-color-neutral-surface-default);
-    /* flex-grow: 1; */
     color: var(--ds-color-neutral-text-default);
     color: var(--ds-color-neutral-text-subtle);
     text-align: left;
@@ -23,6 +22,8 @@
       background-color: var(--ds-color-neutral-background-tinted);
       cursor: pointer;
     }
+    
+    /* Applied onDragOver, normal :active only triggers on file drop */
     &.active {
       background-color: var(--ds-color-neutral-background-tinted);
     }
@@ -44,6 +45,6 @@
   }
 
   .stretch {
-    width: 100%;
+    flex-grow: 1; 
   }
 }

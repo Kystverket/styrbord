@@ -24,7 +24,6 @@
       "noFilesAvailable": "No files available."
     },
     "loading": "Loading",
-    "maxFileSizeDescription": "Maximum file size is {maxFileSize}.",
     "maxFilesReached": "Maximum number of files uploaded.",
     "removeFileAriaLabel": "Remove file",
     "unknownFilename": "Unknown filename",

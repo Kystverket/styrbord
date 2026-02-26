@@ -7,7 +7,6 @@ import classes from './FileUploader.module.css';
 import { Icon, LabelContent } from '~/main';
 import exifr from 'exifr';
 import { FileUploaderContext } from './FileUploader.context';
-import { v4 } from 'uuid';
 import { useStyrbordTranslation } from '~/i18n/translations';
 import { FileUploaderItem } from './item/FileUploaderItem';
 import { onFilesChanged } from '~/components/kystverket/FileUploader/FileUploaderHelpers';
@@ -16,7 +15,6 @@ import {
   ExistingFilesDialogHandle,
 } from '~/components/kystverket/FileUploader/existingFilesDialog/ExistingFilesDialog';
 import { FileUploadActions } from '~/components/kystverket/FileUploader/fileUploadActions/FileUploadActions';
-import { convertBytesToReadable } from '~/utils/convertBytesToReadable';
 
 // Remove all exif data except latitude and longitude
 const pruneUnwantedExifData = (exif: Exif): Exif | undefined => {
@@ -33,6 +31,8 @@ export interface FileAndExif {
   file: File;
   exif?: Exif;
 }
+
+export interface ExistingFilesProviderItem { title: string; label: string; files: FileInfo[] };
 
 export interface FileUploaderProps {
   label: string;
@@ -56,7 +56,7 @@ export interface FileUploaderProps {
     };
   };
 
-  existingFilesProvider?: () => Promise<FileInfo[]>;
+  existingFilesProvider?: () => Promise<ExistingFilesProviderItem[]>;
   variant?: 'dropzone' | 'buttons';
 }
 
@@ -108,30 +108,9 @@ export const FileUploader = ({
     onChange(files.filter((f) => f.contextId !== file.contextId));
   };
 
-  const handleConfirmExistingFiles = (selectedFiles: FileInfo[]) => {
-    const localFiles = files.filter((file) => !file.storageId);
-    const selectedWithContext = selectedFiles.map((file) => {
-      const existingFile = files.find((f) => f.storageId && f.storageId === file.storageId);
-      if (existingFile) {
-        return existingFile;
-      }
-
-      return {
-        ...file,
-        contextId: v4(),
-        status: 'uploaded' as const,
-      };
-    });
-
-    onChange([...localFiles, ...selectedWithContext]);
-  };
-
   const showUploadingWarning = files.some((f) => f.status === 'uploading');
   const showMaxReachedWarning = !showUploadingWarning && maxFiles && files.length > maxFiles;
   const showUploadButton = !showMaxReachedWarning && !showUploadingWarning;
-  const maxFileSizeText = maxSizeInBytes
-    ? t('maxFileSizeDescription').replace('{maxFileSize}', convertBytesToReadable(maxSizeInBytes))
-    : null;
   const attachmentsHeading = t('attachmentsCount').replace('{count}', String(files.length));
 
   return (
@@ -140,12 +119,7 @@ export const FileUploader = ({
         <Label style={{ pointerEvents: 'none' }}>
           <LabelContent text={label} required={required} optional={optional} />
         </Label>
-        {description && (
-          <Field.Description>
-            {description}
-            {maxFileSizeText ? ` ${maxFileSizeText}` : ''}
-          </Field.Description>
-        )}
+        {description && <Field.Description>{description}</Field.Description>}
         <input
           type="file"
           style={{ display: 'none' }}
@@ -199,9 +173,9 @@ export const FileUploader = ({
         <ExistingFilesDialog
           t={t}
           ref={dialogRef}
-          files={files}
+          existingFiles={files}
           existingFilesProvider={existingFilesProvider}
-          onConfirm={handleConfirmExistingFiles}
+          onConfirm={onChange}
         />
       )}
     </>

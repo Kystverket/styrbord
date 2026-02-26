@@ -24,7 +24,6 @@
       "noFilesAvailable": "Ingen filer tilgjengelege."
     },
     "loading": "Lastar",
-    "maxFileSizeDescription": "Maks filstorleik er {maxFileSize}.",
     "maxFilesReached": "Maksimalt tal filer er lasta opp.",
     "removeFileAriaLabel": "Fjern fil",
     "unknownFilename": "Ukjent filnamn",

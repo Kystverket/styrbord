@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { FileUploader, FileUploaderProps } from './FileUploader';
+import { ExistingFilesProviderItem, FileUploader, FileUploaderProps } from './FileUploader';
 import { FileUploaderContext } from './FileUploader.context';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { StyrbordTranslationContext } from '~/main';
@@ -73,6 +73,85 @@ const defaultProps: FileUploaderProps = {
   allowedFileTypes: ['.pdf', '.jpg', '.jpeg', '.png'],
 };
 
+
+const existingFilesProvider = async (): Promise<ExistingFilesProviderItem[]> => {
+  await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate loading delay
+  return [
+    {
+      title: 'Testfiler',
+      label: 'Dette er bare noen testfiler',
+      files: [
+        {
+          contextId: 'existing-1',
+          fileName: 'document1.pdf',
+          storageId: 'storage-id-1',
+          contentType: 'application/pdf',
+          status: 'uploaded',
+          sizeInBytes: 5818,
+        },
+        {
+          contextId: 'existing-2',
+          fileName: 'image1.jpg',
+          storageId: 'storage-id-2',
+          contentType: 'image/jpeg',
+          thumbnailUri: cat1,
+          status: 'uploaded',
+          sizeInBytes: 17863,
+        },
+        {
+          contextId: 'existing-3',
+          fileName: 'screenshot.png',
+          storageId: 'storage-id-3',
+          contentType: 'image/png',
+          thumbnailUri: cat2,
+          status: 'uploaded',
+          sizeInBytes: 192811,
+        },
+      ],
+    },
+    {
+      title: 'Flere testfiler',
+      label: 'Abrakadabra, this page now has more testfiles',
+      files: [
+        {
+          contextId: 'existing-test2-1',
+          fileName: 'document1.pdf',
+          storageId: 'storage-id-test2-1',
+          contentType: 'application/pdf',
+          status: 'uploaded',
+          sizeInBytes: 5818,
+        },
+        {
+          contextId: 'existing-test2-2',
+          fileName: 'image1.jpg',
+          storageId: 'storage-id-test2-2',
+          contentType: 'image/jpeg',
+          thumbnailUri: cat1,
+          status: 'uploaded',
+          sizeInBytes: 17863,
+        },
+        {
+          contextId: 'existing-test2-3',
+          fileName: 'aCoolDocument.pdf',
+          storageId: 'storage-id-3',
+          contentType: 'application/pdf',
+          status: 'uploaded',
+          sizeInBytes: 5818,
+        },
+        {
+          contextId: 'existing-test2-4',
+          fileName: 'screenshot.png',
+          storageId: 'storage-id-test2-4',
+          contentType: 'image/png',
+          thumbnailUri: cat2,
+          status: 'uploaded',
+          sizeInBytes: 192811,
+        },
+      ],
+    },
+  ];
+};
+
 export const Default: Story = {
   args: defaultProps,
 };
@@ -99,37 +178,7 @@ export const DropzoneWithExistingFiles: Story = {
   args: {
     ...defaultProps,
     variant: 'dropzone',
-    existingFilesProvider: async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate loading delay
-      return [
-        {
-          contextId: 'existing-1',
-          fileName: 'document1.pdf',
-          storageId: 'storage-id-1',
-          contentType: 'application/pdf',
-          status: 'uploaded',
-          sizeInBytes: 5818,
-        },
-        {
-          contextId: 'existing-2',
-          fileName: 'image1.jpg',
-          storageId: 'storage-id-2',
-          contentType: 'image/jpeg',
-          thumbnailUri: cat1,
-          status: 'uploaded',
-          sizeInBytes: 17863,
-        },
-        {
-          contextId: 'existing-3',
-          fileName: 'screenshot.png',
-          storageId: 'storage-id-3',
-          contentType: 'image/png',
-          thumbnailUri: cat2,
-          status: 'uploaded',
-          sizeInBytes: 192811,
-        },
-      ];
-    },
+    existingFilesProvider: existingFilesProvider,
   },
 };
 
@@ -141,37 +190,7 @@ export const WithExistingFiles: Story = {
   args: {
     ...defaultProps,
     files: [],
-    existingFilesProvider: async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate loading delay
-      return [
-        {
-          contextId: 'existing-1',
-          fileName: 'document1.pdf',
-          storageId: 'storage-id-1',
-          contentType: 'application/pdf',
-          status: 'uploaded',
-          sizeInBytes: 5818,
-        },
-        {
-          contextId: 'existing-2',
-          fileName: 'image1.jpg',
-          storageId: 'storage-id-2',
-          contentType: 'image/jpeg',
-          thumbnailUri: cat1,
-          status: 'uploaded',
-          sizeInBytes: 17863,
-        },
-        {
-          contextId: 'existing-3',
-          fileName: 'screenshot.png',
-          storageId: 'storage-id-3',
-          contentType: 'image/png',
-          thumbnailUri: cat2,
-          status: 'uploaded',
-          sizeInBytes: 192811,
-        },
-      ];
-    },
+    existingFilesProvider: existingFilesProvider,
   },
 };
 
@@ -179,37 +198,7 @@ export const WithExistingFilesWithTranslations: Story = {
   args: {
     ...defaultProps,
     files: [],
-    existingFilesProvider: async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate loading delay
-      return [
-        {
-          contextId: 'existing-1',
-          fileName: 'document1.pdf',
-          storageId: 'storage-id-1',
-          contentType: 'application/pdf',
-          status: 'uploaded',
-          sizeInBytes: 1234,
-        },
-        {
-          contextId: 'existing-2',
-          fileName: 'image1.jpg',
-          storageId: 'storage-id-2',
-          contentType: 'image/jpeg',
-          thumbnailUri: cat1,
-          status: 'uploaded',
-          sizeInBytes: 32213,
-        },
-        {
-          contextId: 'existing-3',
-          fileName: 'screenshot.png',
-          storageId: 'storage-id-3',
-          contentType: 'image/png',
-          thumbnailUri: cat2,
-          status: 'uploaded',
-          sizeInBytes: 221123,
-        },
-      ];
-    },
+    existingFilesProvider: existingFilesProvider,
     translations: {
       existingFiles: {
         buttonOpen: 'Velg eksisterende filer',
@@ -292,7 +281,7 @@ export const WithFileSizeLimitEnglish: Story = {
   args: {
     ...defaultProps,
     label: 'Upload files',
-    description: 'Upload files that are related to the case',
+    description: 'Files that are larger than 10MB will be denied',
     files: [],
   },
 };

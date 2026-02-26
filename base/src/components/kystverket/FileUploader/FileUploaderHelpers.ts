@@ -87,7 +87,6 @@ const validateFiles = (newFiles: FileAndExif[], currentLength: number, filters: 
   const rejectedFiles: Array<{ file: FileAndExif; reason: UploadFileError }> = [];
 
   for (const [idx, file] of newFiles.entries()) {
-    console.log('checking', idx);
     if (filters === undefined) {
       acceptedFiles.push(file);
       continue;
@@ -95,7 +94,7 @@ const validateFiles = (newFiles: FileAndExif[], currentLength: number, filters: 
 
     const acceptedFileSize = isAcceptedSize(file.file, filters.maxSizeInBytes);
     const acceptedFileType = isAcceptedFileType(file.file, filters.allowedFileTypes);
-    const isWithinMaxLimit = currentLength + idx <= (filters.maxFiles ?? 9999);
+    const isWithinMaxLimit = filters.maxFiles ? currentLength + idx <= filters.maxFiles : true;
 
     if (!acceptedFileSize) {
       rejectedFiles.push({ file, reason: 'file-too-large' });
@@ -104,7 +103,6 @@ const validateFiles = (newFiles: FileAndExif[], currentLength: number, filters: 
     } else if (!isWithinMaxLimit) {
       rejectedFiles.push({ file, reason: 'over-files-limit' });
     } else {
-      console.log('File is accepted');
       acceptedFiles.push(file);
     }
   }
@@ -117,8 +115,27 @@ const isAcceptedSize = (file: File, maxSizeInBytes: FileUploaderProps['maxSizeIn
   return file.size <= maxSizeInBytes;
 };
 
-//todo IMPLEMENT
 const isAcceptedFileType = (file: File, allowedFileTypes: FileUploaderProps['allowedFileTypes'] | undefined) => {
   if (allowedFileTypes === undefined) return true;
-  return true;
+  const normalizedAllowedTypes = allowedFileTypes.map((type) => type.trim().toLowerCase()).filter(Boolean);
+
+  if (normalizedAllowedTypes.length === 0) {
+    return true;
+  }
+
+  const fileName = file.name.toLowerCase();
+  const fileMimeType = file.type.toLowerCase();
+
+  return normalizedAllowedTypes.some((allowedType) => {
+    if (allowedType.startsWith('.')) {
+      return fileName.endsWith(allowedType);
+    }
+
+    if (allowedType.endsWith('/*')) {
+      const mimePrefix = allowedType.slice(0, -1);
+      return fileMimeType.startsWith(mimePrefix);
+    }
+
+    return fileMimeType === allowedType;
+  });
 };
