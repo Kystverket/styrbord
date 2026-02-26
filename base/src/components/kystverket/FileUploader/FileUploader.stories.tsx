@@ -286,45 +286,12 @@ export const WithFileSizeLimitEnglish: Story = {
   },
 };
 
-const uploadFileWithTypeRestriction = async (file: FormData): Promise<UploadFileResult> => {
-  return new Promise<UploadFileResult>((resolve) => {
-    const fileEntry = file.get('file') as File;
-    const forbiddenTypes = ['.exe', '.bat', '.scr', '.com', '.zip'];
 
-    // Simulate loading delay
-    setTimeout(() => {
-      if (fileEntry && forbiddenTypes.some((type) => fileEntry.name.toLowerCase().endsWith(type))) {
-        resolve({
-          storageId: '',
-          success: false,
-          error: 'invalid-file-type',
-        });
-      } else {
-        resolve({
-          storageId: uuidv4(),
-          success: true,
-        });
-      }
-    }, 1500);
-  });
-};
-
-export const withFileTypeRestriction: Story = {
-  decorators: [
-    (Story) => (
-      <FileUploaderContext.Provider
-        value={{
-          uploadFile: uploadFileWithTypeRestriction,
-          deleteFile: deleteFile,
-        }}
-      >
-        <Story />
-      </FileUploaderContext.Provider>
-    ),
-  ],
+export const withAllowedFileTypes: Story = {
   args: {
     ...defaultProps,
-    description: 'Filer med utvidelser .exe, .bat, .scr, .com, .zip vil bli avvist',
+    allowedFileTypes: ['.exe', '.bat', '.zip', 'image/*'],
+    description: 'Aksepterer kun filer med utvidelsene .exe, .bat, .zip og bildefiler',
     files: [],
   },
 };
