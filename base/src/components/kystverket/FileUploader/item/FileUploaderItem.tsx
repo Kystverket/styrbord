@@ -10,13 +10,12 @@ type FileUploaderItemProps = {
   onDeleteFile: (file: FileInfo) => void;
 };
 
-  export const getPrefixIcon = (contentType: FileInfo['contentType']): MaterialIconProps['material'] => {
-    if (contentType.startsWith('text') || contentType.endsWith('pdf')) return 'description';
-    if (contentType.startsWith('image')) return 'image';
-    if (contentType.endsWith('json')) return 'code_blocks';
-    return 'anchor';
-  };
-
+export const getPrefixIcon = (contentType: FileInfo['contentType']): MaterialIconProps['material'] => {
+  if (contentType.startsWith('text') || contentType.endsWith('pdf')) return 'description';
+  if (contentType.startsWith('image')) return 'image';
+  if (contentType.endsWith('json')) return 'code_blocks';
+  return 'anchor';
+};
 
 export function FileUploaderItem({ file, t, onDeleteFile }: FileUploaderItemProps) {
   return (

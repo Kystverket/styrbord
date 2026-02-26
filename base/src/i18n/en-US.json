@@ -18,10 +18,11 @@
       "dialogConfirm": "Select",
       "dialogTitle": "Files",
       "filesCounter": "{shown} of {total} files",
+      "inMenuTitle": "Files in",
+      "noFilesAvailable": "No files available.",
       "searchAriaLabel": "Search",
       "searchPlaceholder": "Search for file...",
-      "selectFilesLabel": "Select files",
-      "noFilesAvailable": "No files available."
+      "selectFilesLabel": "Select files"
     },
     "loading": "Loading",
     "maxFilesReached": "Maximum number of files uploaded.",

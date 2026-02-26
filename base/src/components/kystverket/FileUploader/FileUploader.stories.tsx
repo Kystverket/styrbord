@@ -10,7 +10,6 @@ import { v4 as uuidv4 } from 'uuid';
 import cat1 from '/assets/img/cats/Cat 1.jpg';
 import cat2 from '/assets/img/cats/Cat 2.jpg';
 
-
 const Wrapper = (props: FileUploaderProps) => {
   const [value, setValue] = useState<FileInfo[]>([...props.files]);
 
@@ -72,7 +71,6 @@ const defaultProps: FileUploaderProps = {
   onChange: (files) => console.log('Files changed:', files),
   allowedFileTypes: ['.pdf', '.jpg', '.jpeg', '.png'],
 };
-
 
 const existingFilesProvider = async (): Promise<ExistingFilesProviderItem[]> => {
   await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate loading delay
@@ -285,7 +283,6 @@ export const WithFileSizeLimitEnglish: Story = {
     files: [],
   },
 };
-
 
 export const withAllowedFileTypes: Story = {
   args: {

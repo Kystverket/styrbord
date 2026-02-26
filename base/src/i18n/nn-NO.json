@@ -18,10 +18,11 @@
       "dialogConfirm": "Vel",
       "dialogTitle": "Filer",
       "filesCounter": "{shown} av {total} filer",
+      "inMenuTitle": "Filer i",
+      "noFilesAvailable": "Ingen filer tilgjengelege.",
       "searchAriaLabel": "Søk",
       "searchPlaceholder": "Søk etter fil...",
-      "selectFilesLabel": "Vel filer",
-      "noFilesAvailable": "Ingen filer tilgjengelege."
+      "selectFilesLabel": "Vel filer"
     },
     "loading": "Lastar",
     "maxFilesReached": "Maksimalt tal filer er lasta opp.",

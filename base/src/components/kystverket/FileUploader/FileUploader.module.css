@@ -12,7 +12,7 @@
   .uploadButton {
     border: var(--ds-border-width-default) solid var(--ds-color-neutral-border-default);
   }
-  
+
   .uploadInformation {
     display: flex;
     flex-direction: row;
@@ -28,8 +28,7 @@
     gap: var(--spacing-8);
   }
 
-
-  .dropzone{
+  .dropzone {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -38,16 +37,16 @@
     gap: 12px;
     border: 1px dashed var(--ds-color-neutral-border-default);
     border-radius: var(--ds-border-radius-default);
-    &:hover{
+    &:hover {
       cursor: pointer;
       background-color: var(--ds-color-neutral-background-tinted);
     }
-    &.active{
-            background-color: var(--ds-color-neutral-background-tinted);
+    &.active {
+      background-color: var(--ds-color-neutral-background-tinted);
     }
   }
 
-  .dropzoneIcon{
+  .dropzoneIcon {
     display: flex;
     align-items: center;
     justify-content: center;

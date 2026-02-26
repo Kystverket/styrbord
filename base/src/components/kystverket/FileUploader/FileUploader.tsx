@@ -32,7 +32,11 @@ export interface FileAndExif {
   exif?: Exif;
 }
 
-export interface ExistingFilesProviderItem { title: string; label: string; files: FileInfo[] };
+export interface ExistingFilesProviderItem {
+  title: string;
+  label: string;
+  files: FileInfo[];
+}
 
 export interface FileUploaderProps {
   label: string;
@@ -181,4 +185,3 @@ export const FileUploader = ({
     </>
   );
 };
-

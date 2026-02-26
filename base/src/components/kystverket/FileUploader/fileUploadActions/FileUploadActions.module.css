@@ -22,7 +22,7 @@
       background-color: var(--ds-color-neutral-background-tinted);
       cursor: pointer;
     }
-    
+
     /* Applied onDragOver, normal :active only triggers on file drop */
     &.active {
       background-color: var(--ds-color-neutral-background-tinted);
@@ -45,6 +45,6 @@
   }
 
   .stretch {
-    flex-grow: 1; 
+    flex-grow: 1;
   }
 }

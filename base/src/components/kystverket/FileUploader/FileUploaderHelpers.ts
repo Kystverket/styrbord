@@ -80,7 +80,7 @@ export const onFilesChanged = (
       onChange([...newFilesState]);
     }
   });
-};;
+};
 
 const validateFiles = (newFiles: FileAndExif[], currentLength: number, filters: fileUploaderFilters | undefined) => {
   const acceptedFiles: FileAndExif[] = [];
