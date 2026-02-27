@@ -1,5 +1,5 @@
 import { Button, Divider, Field, Heading, Input, Paragraph, ValidationMessage } from '~/main';
-import type { Meta, StoryFn, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn, StoryObj } from '@storybook/react-vite';
 import { useEffect, useState } from 'react';
 import { Label } from '@digdir/designsystemet-react';
 

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import Alert, { AlertProps } from './alert';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 

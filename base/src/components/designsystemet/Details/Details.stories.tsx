@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Card, Details, DetailsProps } from '@digdir/designsystemet-react';

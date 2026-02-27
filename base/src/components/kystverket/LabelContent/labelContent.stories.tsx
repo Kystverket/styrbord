@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import LabelContent, { LabelContentProps } from './labelContent';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 

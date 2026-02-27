@@ -1,6 +1,6 @@
 import { Dialog, Heading, Paragraph, Button, Field, EXPERIMENTAL_Suggestion as Suggestion } from '~/main';
-import type { Meta, StoryFn } from '@storybook/react';
-import { expect, userEvent, within } from '@storybook/test';
+import type { Meta, StoryFn } from '@storybook/react-vite';
+import { expect, userEvent, within } from 'storybook/test';
 import { useRef, useState } from 'react';
 import { Label, Textfield } from '@digdir/designsystemet-react';
 

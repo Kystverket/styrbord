@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { NumberInput, NumberInputProps } from './NumberInput';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { useEffect, useState } from 'react';

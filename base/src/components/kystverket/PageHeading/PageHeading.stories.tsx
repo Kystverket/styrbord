@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { PageHeading } from './PageHeading';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Tag, Breadcrumbs, Button, Icon, Box } from '~/main';
