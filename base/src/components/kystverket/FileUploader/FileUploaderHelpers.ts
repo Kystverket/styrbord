@@ -2,7 +2,7 @@ import { FileAndExif, FileUploaderProps } from '~/components/kystverket/FileUplo
 import { FileInfo, UploadFileError, UploadFileResult } from './FileUploader.types';
 import { v4 } from 'uuid';
 
-type fileUploaderFilters = Pick<FileUploaderProps, 'maxSizeInBytes' | 'allowedFileTypes' | 'maxFiles'>;
+type FileUploaderFilters = Pick<FileUploaderProps, 'maxSizeInBytes' | 'allowedFileTypes' | 'maxFiles'>;
 
 export const onFilesChanged = (
   files: FileAndExif[],
@@ -10,9 +10,8 @@ export const onFilesChanged = (
   uploadFile: (file: FormData) => Promise<UploadFileResult>,
   onChange: (files: FileInfo[]) => void,
   t: (key: string) => string,
-  filters?: fileUploaderFilters,
+  filters?: FileUploaderFilters,
 ) => {
-  console.log('onFilesChanged', files, state);
   const newFilesState = [...state];
   const fileObjectsByContextId: Record<string, File> = {};
 
@@ -21,15 +20,17 @@ export const onFilesChanged = (
   // Add accepted files with uploading status
   acceptedFiles.forEach((fileAndExif) => {
     const contextId = v4();
+    const url = fileAndExif.file.type.startsWith('image/') ? URL.createObjectURL(fileAndExif.file) : undefined;
     newFilesState.push({
       contextId,
       fileName: fileAndExif.file.name,
       status: 'uploading',
-      thumbnailUri: fileAndExif.file.type.startsWith('image/') ? URL.createObjectURL(fileAndExif.file) : undefined,
+      thumbnailUri: url,
       contentType: fileAndExif.file.type,
       exif: fileAndExif.exif,
       sizeInBytes: fileAndExif.file.size,
     });
+
     fileObjectsByContextId[contextId] = fileAndExif.file;
   });
   // Add rejected files with error status
@@ -82,7 +83,7 @@ export const onFilesChanged = (
   });
 };
 
-const validateFiles = (newFiles: FileAndExif[], currentLength: number, filters: fileUploaderFilters | undefined) => {
+const validateFiles = (newFiles: FileAndExif[], currentLength: number, filters: FileUploaderFilters | undefined) => {
   const acceptedFiles: FileAndExif[] = [];
   const rejectedFiles: Array<{ file: FileAndExif; reason: UploadFileError }> = [];
 
@@ -94,7 +95,7 @@ const validateFiles = (newFiles: FileAndExif[], currentLength: number, filters: 
 
     const acceptedFileSize = isAcceptedSize(file.file, filters.maxSizeInBytes);
     const acceptedFileType = isAcceptedFileType(file.file, filters.allowedFileTypes);
-    const isWithinMaxLimit = filters.maxFiles ? currentLength + idx <= filters.maxFiles : true;
+    const isWithinMaxLimit = filters.maxFiles ? currentLength + idx < filters.maxFiles : true;
 
     if (!acceptedFileSize) {
       rejectedFiles.push({ file, reason: 'file-too-large' });

@@ -43,14 +43,13 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
           dialogElement?.close();
         },
       }),
-      [dialogElement, existingFilesProvider, existingFiles],
+      [dialogElement],
     );
 
     const loadInFilesProvider = async () => {
       try {
         const FilesProvider = await existingFilesProvider();
         setExistingFilesCollection(FilesProvider);
-        console.log(FilesProvider);
         const allFiles = FilesProvider.map((fp) => fp.files).flat();
         setSelectedExistingFiles(
           allFiles.reduce(
@@ -121,7 +120,13 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
               {selectedFileCollection !== undefined && (
                 <>
                   <Box horizontal align={'center'}>
-                    <Button onClick={() => setSelectedFileCollection(undefined)} icon color={'neutral'} variant="ghost">
+                    <Button
+                      onClick={() => setSelectedFileCollection(undefined)}
+                      aria-label={t('existingFiles.goBackToCollectionAriaLabel')}
+                      icon
+                      color={'neutral'}
+                      variant="ghost"
+                    >
                       <Icon size="xl" material="chevron_left" />
                     </Button>
                     <Heading>
@@ -143,9 +148,12 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
                 </>
               )}
               {selectedFileCollection === undefined &&
-                existingFilesCollection.map((fileCollection, idx) => (
+                existingFilesCollection.map((fileCollection) => (
                   <ExistingFilesListCard
-                    key={fileCollection.title + idx}
+                    key={`${fileCollection.title}-${fileCollection.files
+                      .map((file) => file.storageId)
+                      .sort()
+                      .join(',')}`}
                     existingFilesProviderItem={fileCollection}
                     onClick={() => setSelectedFileCollection(fileCollection)}
                   />
@@ -174,7 +182,17 @@ interface ExistingFilesListCardProps {
 }
 function ExistingFilesListCard({ existingFilesProviderItem, onClick }: ExistingFilesListCardProps) {
   return (
-    <Card className={classes.listCard} onClick={onClick}>
+    <Card
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          onClick();
+        }
+      }}
+      className={classes.listCard}
+      onClick={onClick}
+    >
       <Box horizontal justify="between" align="center">
         <Box gap={4}>
           <Heading>{existingFilesProviderItem.title}</Heading>
@@ -194,13 +212,15 @@ interface ExistingFileItemProps {
   t: (key: string) => string;
 }
 function ExistingFileItem({ file, handleExistingFileCheckboxChange, selectedExistingFiles, t }: ExistingFileItemProps) {
+  if (file.storageId === undefined) return;
+
   return (
     <div
-      key={file.storageId}
       className={classes.fileItem}
       onClick={() => {
-        if (!file.storageId) return;
-        handleExistingFileCheckboxChange(file.storageId, !selectedExistingFiles[file.storageId]);
+        if (file.storageId) {
+          handleExistingFileCheckboxChange(file.storageId, !selectedExistingFiles[file.storageId]);
+        }
       }}
     >
       <Checkbox
@@ -223,7 +243,7 @@ function ExistingFileItem({ file, handleExistingFileCheckboxChange, selectedExis
       <Box gap={12} horizontal>
         <Box className={classes.filePreview}>
           {file.thumbnailUri ? (
-            <img src={file.thumbnailUri} />
+            <img src={file.thumbnailUri} alt={file.fileName || t('unknownFilename')} />
           ) : (
             <Icon size="lg" material={getPrefixIcon(file.contentType)} />
           )}

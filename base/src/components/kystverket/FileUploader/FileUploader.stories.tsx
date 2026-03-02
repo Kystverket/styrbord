@@ -131,7 +131,7 @@ const existingFilesProvider = async (): Promise<ExistingFilesProviderItem[]> => 
         {
           contextId: 'existing-test2-3',
           fileName: 'aCoolDocument.pdf',
-          storageId: 'storage-id-3',
+          storageId: 'storage-id-test2-3',
           contentType: 'application/pdf',
           status: 'uploaded',
           sizeInBytes: 5818,

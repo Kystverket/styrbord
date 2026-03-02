@@ -5,7 +5,6 @@
     border-radius: var(--ds-border-radius-default);
     background: var(--ds-color-neutral-surface-default);
     color: var(--ds-color-neutral-text-default);
-    color: var(--ds-color-neutral-text-subtle);
     text-align: left;
   }
 

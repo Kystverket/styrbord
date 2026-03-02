@@ -20,9 +20,8 @@
       "filesCounter": "{shown} av {total} filer",
       "inMenuTitle": "Filer i",
       "noFilesAvailable": "Ingen filer tilgjengelig.",
-      "searchAriaLabel": "Søk",
-      "searchPlaceholder": "Søk etter fil...",
-      "selectFilesLabel": "Velg filer"
+      "selectFilesLabel": "Velg filer",
+      "goBackToCollectionAriaLabel": "Gå tilbake til alle filer"
     },
     "loading": "Laster",
     "maxFilesReached": "Maksimalt antall filer er lastet opp.",

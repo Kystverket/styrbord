@@ -24,10 +24,14 @@
     gap: var(--spacing-12);
     border: 2px solid var(--ds-color-neutral-surface-hover);
     border-radius: var(--ds-border-radius-md);
-    cursor: pointer;
+
+    &:hover {
+      cursor: pointer;
+    }
 
     &:has(input:checked) {
       border-color: var(--ds-color-primary-border-default);
+      background-color: #f5fcff;
     }
 
     &:focus-visible,
@@ -73,7 +77,8 @@
     color: var(--ds-color-neutral-text-subtle);
   }
   .listCard:hover {
-    background-color: aliceblue;
+    border: 1px solid var(--ds-color-primary-border-default);
+    background-color: #f5fcff;
     cursor: pointer;
   }
 }

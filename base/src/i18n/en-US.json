@@ -20,9 +20,8 @@
       "filesCounter": "{shown} of {total} files",
       "inMenuTitle": "Files in",
       "noFilesAvailable": "No files available.",
-      "searchAriaLabel": "Search",
-      "searchPlaceholder": "Search for file...",
-      "selectFilesLabel": "Select files"
+      "selectFilesLabel": "Select files",
+      "goBackToCollectionAriaLabel": "Go back to file collections list"
     },
     "loading": "Loading",
     "maxFilesReached": "Maximum number of files uploaded.",

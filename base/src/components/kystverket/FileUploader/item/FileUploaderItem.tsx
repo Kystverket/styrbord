@@ -22,7 +22,7 @@ export function FileUploaderItem({ file, t, onDeleteFile }: FileUploaderItemProp
     <Box className={classes.itemWrapper}>
       <Box className={classes.filePreview}>
         {file.thumbnailUri ? (
-          <img src={file.thumbnailUri} />
+          <img src={file.thumbnailUri} alt={file.fileName || t('unknownFilename')} />
         ) : (
           <Icon size="lg" material={getPrefixIcon(file.contentType)} />
         )}

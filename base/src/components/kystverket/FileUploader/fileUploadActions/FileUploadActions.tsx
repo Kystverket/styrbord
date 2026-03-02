@@ -25,9 +25,14 @@ export function FileUploadActions({
     <Box gap={4} mt={8}>
       {variant === 'dropzone' && (
         <div
+          role="button"
+          aria-label={t('dropzoneText')}
           tabIndex={0}
           onKeyDown={(e) => {
-            if (e.key === 'Enter') fileInputRef.current?.click();
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              fileInputRef.current?.click();
+            }
           }}
           onClick={() => fileInputRef.current?.click()}
           className={`${classes.dropzone} ${isDropzoneActive ? classes.active : ''}`}

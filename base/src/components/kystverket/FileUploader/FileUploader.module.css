@@ -1,18 +1,4 @@
 @layer styrbord-modules {
-  .uploadButton,
-  .uploadInformation {
-    padding: var(--spacing-8) var(--spacing-16);
-    /* flex-grow: 1; */
-    color: var(--ds-color-neutral-text-default);
-    border-radius: var(--ds-border-radius-default);
-    background: var(--ds-color-neutral-surface-default);
-    color: var(--ds-color-neutral-text-subtle);
-    text-align: left;
-  }
-  .uploadButton {
-    border: var(--ds-border-width-default) solid var(--ds-color-neutral-border-default);
-  }
-
   .uploadInformation {
     display: flex;
     flex-direction: row;

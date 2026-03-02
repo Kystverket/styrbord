@@ -113,7 +113,7 @@ export const FileUploader = ({
   };
 
   const showUploadingWarning = files.some((f) => f.status === 'uploading');
-  const showMaxReachedWarning = !showUploadingWarning && maxFiles && files.length > maxFiles;
+  const showMaxReachedWarning = !showUploadingWarning && maxFiles && files.length >= maxFiles;
   const showUploadButton = !showMaxReachedWarning && !showUploadingWarning;
   const attachmentsHeading = t('attachmentsCount').replace('{count}', String(files.length));
 
@@ -164,7 +164,6 @@ export const FileUploader = ({
         )}
         {files && files.length > 0 && (
           <div className={classes.fileList}>
-            {/* <label >Vedlegg ({files.length})</label> */}
             <Heading data-size="sm">{attachmentsHeading}</Heading>
             {files.map((file) => (
               <FileUploaderItem key={file.contextId} file={file} t={t} onDeleteFile={onDeleteFile} />
