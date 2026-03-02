@@ -48,6 +48,8 @@ export interface FileUploaderProps {
   maxSizeInBytes?: number;
   onChange: (files: FileInfo[]) => void;
   allowedFileTypes?: string[];
+  /** @deprecated Use translations instead. */
+  buttonLabel?: string;
   required?: boolean | string;
   optional?: boolean | string;
   translations?: {
@@ -58,6 +60,7 @@ export interface FileUploaderProps {
       dialogConfirm?: string;
       noFilesAvailable?: string;
     };
+    buttonLabel?: string;
   };
 
   existingFilesProvider?: () => Promise<ExistingFilesProviderItem[]>;
@@ -75,6 +78,7 @@ export const FileUploader = ({
   error = null,
   multiple = true,
   files = [],
+  buttonLabel,
   maxFiles,
   onChange,
   allowedFileTypes = defaultAllowedFileTypes,
@@ -142,6 +146,7 @@ export const FileUploader = ({
         />
         {showUploadButton && (
           <FileUploadActions
+            buttonLabel={buttonLabel}
             onUploadFile={onUploadFile}
             dialogRef={dialogRef}
             fileInputRef={fileInputRef}

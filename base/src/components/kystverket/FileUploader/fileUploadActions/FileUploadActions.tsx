@@ -8,11 +8,12 @@ type FileUploadActionsProps = {
   dialogRef: React.RefObject<ExistingFilesDialogHandle | null>;
   t: (key: string) => string;
   onUploadFile: (uploadedFiles: File[]) => void;
-} & Pick<FileUploaderProps, 'variant' | 'existingFilesProvider'>;
+} & Pick<FileUploaderProps, 'variant' | 'existingFilesProvider' | 'buttonLabel'>;
 
 export function FileUploadActions({
   variant,
   fileInputRef,
+  buttonLabel,
   onUploadFile,
   existingFilesProvider,
   dialogRef,
@@ -55,7 +56,7 @@ export function FileUploadActions({
         {variant === 'buttons' && (
           <Button className={`${classes.uploadButton}`} variant="outline" onClick={() => fileInputRef.current?.click()}>
             <Icon material="upload" />
-            {t('buttonLabel')}
+            {buttonLabel ?? t('buttonLabel')}
           </Button>
         )}
         {existingFilesProvider && (
