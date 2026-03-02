@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react-vite';
 import { Avatar, AvatarProps, Badge, Box, Dropdown, Icon } from '~/main';
 import cat1 from '@assets/img/cats/Cat 3.jpg';
 type Story = StoryFn<typeof Avatar>;
@@ -65,7 +65,7 @@ export const ColorVariants: Story = () => (
   <Box gap={16}>
     {colorVariants.map((colorVariant) =>
       colors.map((color) => (
-        <Box key={color + colorVariant} horizontal align="center" gap={8}>
+        <Box key={String(color) + String(colorVariant)} horizontal align="center" gap={8}>
           <Avatar data-color={color} data-color-variant={colorVariant} aria-label={`color ${color}`} />
           {color} {colorVariant}
         </Box>

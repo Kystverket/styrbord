@@ -1,5 +1,5 @@
 import { Textarea, Divider, Paragraph, Button } from '~/main';
-import type { Meta, StoryFn, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import { Label } from '@digdir/designsystemet-react';
 

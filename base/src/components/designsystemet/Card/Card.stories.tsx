@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Card, CardBlock, CardProps } from '@digdir/designsystemet-react';
@@ -47,7 +47,7 @@ export const ColorVariants: Story['render'] = () => (
   <Box gap={16}>
     {colors.map((color) =>
       colorVariants.map((colorVariant) => (
-        <Box key={color + colorVariant} horizontal align="center" gap={8}>
+        <Box key={String(color) + String(colorVariant)} horizontal align="center" gap={8}>
           <Card data-color={color} variant={colorVariant}>
             <CardBlock>
               <CardTitle>

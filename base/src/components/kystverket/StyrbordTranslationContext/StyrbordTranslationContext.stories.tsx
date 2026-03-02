@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Footer } from '~/components/kystverket/Footer/Footer';
 

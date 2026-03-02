@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Button, ButtonProps } from './Button';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Icon } from '~/main';

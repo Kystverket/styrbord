@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Datepicker, DatepickerProps } from './Datepicker';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { useState, useRef } from 'react';

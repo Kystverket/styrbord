@@ -1,5 +1,5 @@
 import { Table, TableHeaderCellProps, useCheckboxGroup, Checkbox, Box } from '~/main';
-import type { Meta, StoryFn } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react-vite';
 import { useState } from 'react';
 import { Textfield } from '@digdir/designsystemet-react';
 

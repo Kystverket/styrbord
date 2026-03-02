@@ -16,7 +16,5 @@
     "lint:check": "npm run lint:check --workspaces --if-present",
     "lint:fix": "npm run lint:fix --workspaces --if-present"
   },
-  "dependencies": {},
-  "devDependencies": {},
   "version": ""
 }

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import Stepper, { StepItem, StepItemColor, StepperProps } from './stepper';
 import { Box } from '~/main';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';

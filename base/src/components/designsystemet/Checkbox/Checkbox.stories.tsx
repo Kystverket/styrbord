@@ -13,7 +13,7 @@ import {
   Pagination,
   Icon,
 } from '~/main';
-import type { Meta, StoryFn, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn, StoryObj } from '@storybook/react-vite';
 import { useMemo, useState } from 'react';
 
 type Story = StoryObj<typeof Checkbox>;

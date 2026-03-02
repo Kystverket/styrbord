@@ -1,5 +1,5 @@
 import { Search, Divider, Paragraph, Button, Field } from '~/main';
-import type { Meta, StoryFn } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react-vite';
 import { useState } from 'react';
 import { Label } from '@digdir/designsystemet-react';
 
