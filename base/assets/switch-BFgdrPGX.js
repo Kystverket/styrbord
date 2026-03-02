@@ -1,0 +1,2 @@
+'use client';
+import{j as r}from"./jsx-runtime-D_zvdyIk.js";import{r as d}from"./iframe-os1x_34h.js";import{ae as m,af as p}from"./Avatar-dgi7irOL.js";import{L as f}from"./label-Bk6Vqqws.js";const S=d.forwardRef(function({"data-size":s,children:l,className:a,description:t,label:e,position:i,style:o,...c},n){return r.jsxs(m,{className:a,"data-position":i,"data-size":s,style:o,children:[r.jsx(p,{type:"checkbox",role:"switch",ref:n,...c}),!!e&&r.jsx(f,{weight:"regular",children:e}),!!t&&r.jsx("div",{"data-field":"description",children:t})]})});export{S};
