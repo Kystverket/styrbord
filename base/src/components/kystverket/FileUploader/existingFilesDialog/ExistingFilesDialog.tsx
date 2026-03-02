@@ -43,7 +43,7 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
           dialogElement?.close();
         },
       }),
-      [dialogElement],
+      [dialogElement, existingFilesProvider, existingFiles],
     );
 
     const loadInFilesProvider = async () => {
