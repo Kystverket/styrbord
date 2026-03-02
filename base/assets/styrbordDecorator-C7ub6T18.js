@@ -1,1 +1,0 @@
-import{j as o}from"./jsx-runtime-D_zvdyIk.js";import"./iframe-os1x_34h.js";const t=r=>o.jsx("div",{children:o.jsx(r,{})});t.__docgenInfo={description:"",methods:[],displayName:"StyrbordDecorator"};export{t as S};
