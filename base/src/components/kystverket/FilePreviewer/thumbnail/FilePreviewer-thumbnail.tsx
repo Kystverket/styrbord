@@ -58,7 +58,9 @@ export const FilePreviewerThumbnail = ({ file, index }: FilePreviewerThumbnailPr
             .{filename.extension}
           </Paragraph>
         </Box>
-        {file.fileSizeInBytes && <Paragraph data-size="xs">{convertBytesToReadable(file.fileSizeInBytes)}</Paragraph>}
+        {file.fileSizeInBytes && (
+          <Paragraph data-size="xs">{file.fileSize ?? convertBytesToReadable(file.fileSizeInBytes)}</Paragraph>
+        )}
       </Box>
     </Box>
   );

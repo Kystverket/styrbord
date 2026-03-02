@@ -108,7 +108,7 @@ export const FilePreviewerDialog = ({ animation = 'slide', onClose, files, start
           <Paragraph style={{ color: '#EBECED' }}>{selectedFile.fileName}</Paragraph>
           {selectedFile.fileSizeInBytes && (
             <Paragraph data-size="sm" style={{ color: 'var(--ds-color-neutral-text-subtle)' }}>
-              {convertBytesToReadable(selectedFile.fileSizeInBytes)}
+              {selectedFile.fileSize ?? convertBytesToReadable(selectedFile.fileSizeInBytes)}
             </Paragraph>
           )}
         </Box>

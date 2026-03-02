@@ -6,6 +6,8 @@ type ButtonOptions = {
 export type FileInfo = {
   fileName: string;
   fileSizeInBytes?: number;
+  /** @deprecated Use `fileSizeInBytes` instead. */
+  fileSize?: string;
   buttons?: ButtonOptions;
 } & (PdfFile | ImageFile | JsonFile);
 
