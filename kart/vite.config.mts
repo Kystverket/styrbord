@@ -13,13 +13,13 @@ export default defineConfig({
     preserveUseClientDirective(),
     svgrPlugin(),
     react({
-      jsxRuntime: "automatic",
+      jsxRuntime: 'automatic',
     }),
   ],
   resolve: {
     alias: {
-      "~": path.resolve(__dirname, "src"),
-      "@assets": path.resolve(__dirname, "assets"),
+      '~': path.resolve(__dirname, 'src'),
+      '@assets': path.resolve(__dirname, 'assets'),
     },
   },
   server: {
@@ -29,23 +29,19 @@ export default defineConfig({
     minify: true,
     reportCompressedSize: true,
     lib: {
-      entry: path.resolve(__dirname, "src/main.ts"),
-      fileName: "main",
-      name: "Styrbord",
+      entry: path.resolve(__dirname, 'src/main.ts'),
+      fileName: 'main',
+      name: 'Styrbord',
     },
     rollupOptions: {
-      external: [
-        "react",
-        "react-dom",
-        "@digdir/designsystemet-react",
-        new RegExp(".*storybook.*"),
-      ],
+      external: ['react', 'react-dom', '@digdir/designsystemet-react', 'maplibre-gl', new RegExp('.*storybook.*')],
       output: {
         // Provide global variables to use in the UMD build
         // for externalized deps
         globals: {
-          react: "React",
-          "@digdir/designsystemet-react": "@digdir/designsystemet-react",
+          react: 'React',
+          'maplibre-gl': 'maplibregl',
+          '@digdir/designsystemet-react': '@digdir/designsystemet-react',
         },
       },
       plugins: [
@@ -53,10 +49,10 @@ export default defineConfig({
           preserveExtensions: true,
         }),
         typescript({
-          exclude: ["**/storybook/**"],
+          exclude: ['**/storybook/**'],
           sourceMap: true,
           declaration: true,
-          outDir: "dist",
+          outDir: 'dist',
         }),
       ],
     },
