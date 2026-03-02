@@ -4,6 +4,7 @@ import { FileInfo } from '../FilePreviewer.types';
 import { Box, Button, Icon, Paragraph, Tooltip } from '~/main';
 import classes from './FilePreviewer-thumbnail.module.css';
 import { FileRenderer } from '../renderer/FileRenderer';
+import { convertBytesToReadable } from '~/utils/convertBytesToReadable';
 
 export interface FilePreviewerThumbnailProps {
   file: FileInfo;
@@ -57,7 +58,7 @@ export const FilePreviewerThumbnail = ({ file, index }: FilePreviewerThumbnailPr
             .{filename.extension}
           </Paragraph>
         </Box>
-        {file.fileSize && <Paragraph data-size="xs">{file.fileSize}</Paragraph>}
+        {file.fileSizeInBytes && <Paragraph data-size="xs">{convertBytesToReadable(file.fileSizeInBytes)}</Paragraph>}
       </Box>
     </Box>
   );
