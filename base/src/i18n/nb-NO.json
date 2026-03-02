@@ -1,11 +1,15 @@
 {
   "fileUploader": {
+    "attachmentsCount": "Vedlegg ({count})",
+    "buttonLabel": "Last opp fil",
+    "dropzoneText": "Klikk for å laste opp\neller dra og slipp filer her",
     "errors": {
-      "network-error": "Nettverksfeil. Vennligst sjekk tilkoblingen og prøv igjen.",
-      "invalid-file-type": "Filtypen er ikke tillatt.",
-      "file-too-large": "Filen er for stor. Vennligst velg en mindre fil.",
-      "file-scan-failed": "Filen kunne ikke lastes opp fordi sikkerhetsskanningen feilet.",
       "error": "Noe gikk galt under opplastingen.",
+      "file-scan-failed": "Filen kunne ikke lastes opp fordi sikkerhetsskanningen feilet.",
+      "file-too-large": "Filen er for stor. Vennligst velg en mindre fil.",
+      "invalid-file-type": "Filtypen er ikke tillatt.",
+      "network-error": "Nettverksfeil. Vennligst sjekk tilkoblingen og prøv igjen.",
+      "over-files-limit": "Filen er over grensen på antall filer tillatt",
       "unknown-error": "En ukjent feil oppstod. Vennligst prøv igjen senere."
     },
     "existingFiles": {
@@ -13,12 +17,17 @@
       "dialogCancel": "Avbryt",
       "dialogConfirm": "Velg",
       "dialogTitle": "Filer",
-      "noFilesAvailable": "Ingen filer tilgjengelig."
+      "filesCounter": "{shown} av {total} filer",
+      "inMenuTitle": "Filer i",
+      "noFilesAvailable": "Ingen filer tilgjengelig.",
+      "selectFilesLabel": "Velg filer",
+      "goBackToCollectionAriaLabel": "Gå tilbake til alle filer"
     },
     "loading": "Laster",
     "maxFilesReached": "Maksimalt antall filer er lastet opp.",
+    "removeFileAriaLabel": "Fjern fil",
     "unknownFilename": "Ukjent filnavn",
-    "uploading": "Laster opp",
+    "uploading": "Laster opp fil...",
     "uploadingPleaseWait": "Vennligst vent med å velge flere filer før alle filene er lastet opp"
   },
   "header-alt-text": "Til forsiden",

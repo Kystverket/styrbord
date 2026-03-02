@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import classes from './FilePreviewer-dialog.module.css';
 import { Box, Button, Icon, Paragraph } from '~/main';
-import { FileInfo, defaultButtonsByType } from './FilePreviewer.types';
-import { FileRenderer } from './FileRenderer';
+import { FileInfo, defaultButtonsByType } from '../FilePreviewer.types';
+import { FileRenderer } from '../renderer/FileRenderer';
 import { useHorizontalDragScroll } from '~/hooks/useHorizontalDragScroll';
 import { handleDownload } from '~/utils/handleFileDownload';
+import { convertBytesToReadable } from '~/utils/convertBytesToReadable';
 
 const getButtonConfig = (file: FileInfo) => {
   const defaults = defaultButtonsByType[file.contentType];
@@ -105,9 +106,9 @@ export const FilePreviewerDialog = ({ animation = 'slide', onClose, files, start
       <Box horizontal justify="between" className={classes.nav}>
         <Box>
           <Paragraph style={{ color: '#EBECED' }}>{selectedFile.fileName}</Paragraph>
-          {selectedFile.fileSize && (
+          {selectedFile.fileSizeInBytes && (
             <Paragraph data-size="sm" style={{ color: 'var(--ds-color-neutral-text-subtle)' }}>
-              {selectedFile.fileSize}
+              {selectedFile.fileSize ?? convertBytesToReadable(selectedFile.fileSizeInBytes)}
             </Paragraph>
           )}
         </Box>

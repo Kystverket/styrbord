@@ -1,5 +1,5 @@
 import { FilePreviewerContext } from './FilePreviewer-context';
-import { FilePreviewerThumbnail } from './FilePreviewer-thumbnail';
+import { FilePreviewerThumbnail } from './thumbnail/FilePreviewer-thumbnail';
 
 // Compound component pattern: FilePreviewer = Context wrapper
 // Usage: <FilePreviewer><FilePreviewer.Thumbnail /></FilePreviewer>
@@ -16,6 +16,6 @@ FilePreviewer.displayName = 'FilePreviewer';
 FilePreviewer.Thumbnail.displayName = 'FilePreviewer.Thumbnail';
 
 export type { FilePreviewerContextProps as FilePreviewerProps } from './FilePreviewer-context';
-export type { FilePreviewerThumbnailProps } from './FilePreviewer-thumbnail';
+export type { FilePreviewerThumbnailProps } from './thumbnail/FilePreviewer-thumbnail';
 
 export { FilePreviewer };

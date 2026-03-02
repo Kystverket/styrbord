@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/react-vite';
-import { FilePreviewRef, FilePreviewerDialogProps } from './FilePreviewer-dialog';
+import { FilePreviewRef, FilePreviewerDialogProps } from './dialog/FilePreviewer-dialog';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 import { Box, Button } from '~/main';
@@ -16,19 +16,19 @@ const defaultProps: FilePreviewerDialogProps = {
     {
       contentType: 'image',
       fileName: 'Atlas.png',
-      fileSize: '3.7 MB',
+      fileSizeInBytes: 3700000,
       src: atlas,
     },
     {
       contentType: 'pdf',
       fileName: 'PikekystOppskrift.pdf',
-      fileSize: '240kB',
+      fileSizeInBytes: 240000,
       src: pikekyst,
     },
     {
       contentType: 'json',
       fileName: 'Kartdata.json',
-      fileSize: '1kB',
+      fileSizeInBytes: 1000,
       data: geojson,
     },
   ],

@@ -1,5 +1,5 @@
 import { createContext, ReactNode, Ref, useImperativeHandle, useRef, useState } from 'react';
-import { FilePreviewerDialog, FilePreviewerDialogProps, FilePreviewRef } from './FilePreviewer-dialog';
+import { FilePreviewerDialog, FilePreviewerDialogProps, FilePreviewRef } from './dialog/FilePreviewer-dialog';
 import { FileInfo } from './FilePreviewer.types';
 
 export const FPContext = createContext<{

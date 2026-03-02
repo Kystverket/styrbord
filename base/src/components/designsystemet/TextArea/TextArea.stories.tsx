@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { TextArea, TextAreaProps } from './TextArea';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
@@ -28,8 +29,24 @@ const defaultArgs: TextAreaProps = {
   label: 'This is a label',
 };
 
+const renderInteractive: Story['render'] = (args) => {
+  const [value, setValue] = useState(args.value ?? '');
+
+  return (
+    <TextArea
+      {...args}
+      value={value}
+      onChange={(nextValue) => {
+        setValue(nextValue);
+        args.onChange?.(nextValue);
+      }}
+    />
+  );
+};
+
 export const Default: Story = {
   args: defaultArgs,
+  render: renderInteractive,
 };
 
 export const Required: Story = {
@@ -37,6 +54,7 @@ export const Required: Story = {
     ...defaultArgs,
     required: true,
   },
+  render: renderInteractive,
 };
 
 export const Optional: Story = {
@@ -44,6 +62,7 @@ export const Optional: Story = {
     ...defaultArgs,
     optional: true,
   },
+  render: renderInteractive,
 };
 
 export const OptionalText: Story = {
@@ -51,6 +70,7 @@ export const OptionalText: Story = {
     ...defaultArgs,
     optional: 'Spesialtilpasset verdi',
   },
+  render: renderInteractive,
 };
 
 export const WithPlaceholder: Story = {
@@ -58,6 +78,7 @@ export const WithPlaceholder: Story = {
     ...defaultArgs,
     placeholder: 'placeholder',
   },
+  render: renderInteractive,
 };
 
 export const WithError: Story = {
@@ -65,6 +86,7 @@ export const WithError: Story = {
     ...defaultArgs,
     error: 'error',
   },
+  render: renderInteractive,
 };
 
 export const ReadOnly: Story = {
@@ -73,6 +95,7 @@ export const ReadOnly: Story = {
     error: false,
     readOnly: true,
   },
+  render: renderInteractive,
 };
 
 export const Disabled: Story = {
@@ -81,6 +104,7 @@ export const Disabled: Story = {
     error: false,
     disabled: true,
   },
+  render: renderInteractive,
 };
 
 export const WithCounter: Story = {
@@ -88,4 +112,5 @@ export const WithCounter: Story = {
     ...defaultArgs,
     maxLength: 500,
   },
+  render: renderInteractive,
 };
