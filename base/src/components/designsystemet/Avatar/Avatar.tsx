@@ -44,5 +44,6 @@ export const Avatar: FC<AvatarProps> = ({
     classList.push(classes[`border-${borderStyle}`]);
   }
 
-  return <DsAvatar data-size={size} className={classList.join(' ')} {...rest} />;
+  const props = { 'data-size': size, className: classList.join(' '), ...rest } as DsAvatarProps;
+  return <DsAvatar {...props} />;
 };

@@ -1,6 +1,6 @@
 import { Textfield } from '@digdir/designsystemet-react';
-import type { Meta, StoryFn } from '@storybook/react';
-import { expect, userEvent, within } from '@storybook/test';
+import type { Meta, StoryFn } from '@storybook/react-vite';
+import { expect, userEvent, within } from 'storybook/test';
 import { useEffect, useRef, useState } from 'react';
 
 import { Button, ErrorSummary } from '~/main';

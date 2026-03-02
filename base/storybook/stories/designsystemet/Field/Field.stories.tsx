@@ -1,5 +1,5 @@
 import { Label } from '@digdir/designsystemet-react';
-import type { Meta, StoryFn } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react-vite';
 
 import { Divider, Field, Input, Textarea, ValidationMessage } from '~/main';
 

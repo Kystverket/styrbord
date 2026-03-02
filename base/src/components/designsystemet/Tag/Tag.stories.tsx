@@ -1,5 +1,5 @@
 import { Tag, TagProps } from '~/main';
-import type { Meta, StoryFn, StoryObj } from '@storybook/react';
+import type { Meta, StoryFn, StoryObj } from '@storybook/react-vite';
 
 type Story = StoryObj<typeof Tag>;
 
