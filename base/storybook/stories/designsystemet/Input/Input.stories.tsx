@@ -91,7 +91,6 @@ export const Controlled: StoryFn<typeof Input> = (args) => {
   );
 };
 
-
 const sizes: Size[] = ['sm', 'md', 'lg'] as const;
 const sizenames: Record<Size, string> = {
   sm: 'Small',
