@@ -1,7 +1,7 @@
 import type { Preview } from "@storybook/react-vite";
 import { themes } from "storybook/theming";
 
-import '@kystverket/styrbord/main.css';
+import '@kystverket/styrbord/style.css';
 
 const preview: Preview = {
   parameters: {
