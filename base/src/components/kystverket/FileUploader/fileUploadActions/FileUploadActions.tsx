@@ -1,7 +1,6 @@
-import { Paragraph, Button } from '@digdir/designsystemet-react';
 import { useState } from 'react';
 import { ExistingFilesDialogHandle } from '../existingFilesDialog/ExistingFilesDialog';
-import { Box, FileUploaderProps, Icon } from '~/main';
+import { Box, FileUploaderProps, Icon, Button, Paragraph } from '~/main';
 import classes from './FileUploadActions.module.css';
 
 type FileUploadActionsProps = {
@@ -54,13 +53,14 @@ export function FileUploadActions({
       )}
       <Box gap={8} horizontal>
         {variant === 'buttons' && (
-          <Button className={classes.uploadButton} onClick={() => fileInputRef.current?.click()}>
+          <Button className={`${classes.uploadButton}`} variant="outline" onClick={() => fileInputRef.current?.click()}>
             <Icon material="upload" />
             {t('buttonLabel')}
           </Button>
         )}
         {existingFilesProvider && (
           <Button
+            variant="outline"
             className={`${classes.uploadButton} ${variant !== 'buttons' && classes.stretch}`}
             onClick={() => dialogRef.current?.showModal()}
           >

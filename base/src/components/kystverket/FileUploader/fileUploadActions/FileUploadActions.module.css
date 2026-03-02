@@ -1,11 +1,10 @@
 @layer styrbord-modules {
   .uploadButton {
-    padding: var(--spacing-8) var(--spacing-16);
-    border: var(--ds-border-width-default) solid var(--ds-color-neutral-border-default);
-    border-radius: var(--ds-border-radius-default);
-    background: var(--ds-color-neutral-surface-default);
     color: var(--ds-color-neutral-text-default);
-    text-align: left;
+    border: 1px solid var(--ds-color-neutral-border-default);
+    &:hover {
+      background-color: var(--ds-color-neutral-surface-tinted);
+    }
   }
 
   .dropzone {
@@ -31,6 +30,7 @@
   .dropzoneText {
     text-align: center;
     white-space: pre-wrap;
+    pointer-events: none;
   }
 
   .dropzoneIcon {
@@ -41,6 +41,7 @@
     height: var(--ds-size-12);
     border-radius: var(--ds-border-radius-full);
     background-color: var(--ds-color-neutral-surface-tinted);
+    pointer-events: none;
   }
 
   .stretch {

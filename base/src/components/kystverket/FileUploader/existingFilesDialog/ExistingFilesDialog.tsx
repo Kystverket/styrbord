@@ -119,7 +119,7 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
             <Box gap={12} my={4}>
               {selectedFileCollection !== undefined && (
                 <>
-                  <Box horizontal align={'center'}>
+                  <Box gap={8} horizontal align={'center'}>
                     <Button
                       onClick={() => setSelectedFileCollection(undefined)}
                       aria-label={t('existingFiles.goBackToCollectionAriaLabel')}
