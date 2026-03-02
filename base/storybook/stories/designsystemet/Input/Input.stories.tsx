@@ -1,7 +1,7 @@
 import { Button, Divider, Field, Heading, Input, Paragraph, ValidationMessage } from '~/main';
 import type { Meta, StoryFn, StoryObj } from '@storybook/react-vite';
 import { useEffect, useState } from 'react';
-import { Label } from '@digdir/designsystemet-react';
+import { Label, Size } from '@digdir/designsystemet-react';
 
 type Story = StoryObj<typeof Input>;
 
@@ -91,9 +91,8 @@ export const Controlled: StoryFn<typeof Input> = (args) => {
   );
 };
 
-const sizes: string[] = ['sm', 'md', 'lg'] as const;
-type Size = (typeof sizes)[number];
 
+const sizes: Size[] = ['sm', 'md', 'lg'] as const;
 const sizenames: Record<Size, string> = {
   sm: 'Small',
   md: 'Medium',

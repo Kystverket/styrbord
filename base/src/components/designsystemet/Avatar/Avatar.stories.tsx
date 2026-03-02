@@ -65,7 +65,7 @@ export const ColorVariants: Story = () => (
   <Box gap={16}>
     {colorVariants.map((colorVariant) =>
       colors.map((color) => (
-        <Box key={color + colorVariant} horizontal align="center" gap={8}>
+        <Box key={String(color) + String(colorVariant)} horizontal align="center" gap={8}>
           <Avatar data-color={color} data-color-variant={colorVariant} aria-label={`color ${color}`} />
           {color} {colorVariant}
         </Box>
