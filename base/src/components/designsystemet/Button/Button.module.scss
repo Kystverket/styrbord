@@ -2,48 +2,76 @@
   width: max-content;
 }
 
+/* DASHED */
 .dashed {
   border-style: dashed;
   background: transparent;
-}
-.dashed:hover {
-  border-style: dashed;
-  background: var(--dsc-button-background--hover);
+
+  &:hover {
+    border-style: dashed;
+    background: var(--dsc-button-background--hover);
+  }
 }
 
+/* OUTLINE */
 .outline[data-color='neutral'] {
   color: var(--ds-color-primary-text-default);
 }
 
+[data-color-scheme='dark'] .outline[data-color='neutral'] {
+  color: var(--ds-color-primary-text-default);
+  border-color: var(--ds-color-neutral-border-subtle);
+  background-color: var(--ds-color-neutral-surface-default);
+
+  &:hover {
+    background-color: var(--ds-color-neutral-surface-tinted);
+  }
+
+  &:active {
+    background-color: var(--ds-color-neutral-surface-hover);
+  }
+}
+
+/* SUBTLE */
 .subtle {
   color: var(--ds-color-primary-text-default);
   background: var(--ds-color-primary-surface-tinted);
-}
-.subtle:hover {
-  background: var(--ds-color-primary-surface-hover);
-}
-.subtle:active {
-  background: var(--ds-color-primary-surface-active);
+
+  &:hover {
+    background: var(--ds-color-primary-surface-hover);
+  }
+
+  &:active {
+    background: var(--ds-color-primary-surface-active);
+  }
 }
 
 .subtle[data-color='neutral'] {
   color: var(--ds-color-neutral-text-default);
   background: var(--ds-color-neutral-surface-default);
+
+  &:hover {
+    background: var(--ds-color-neutral-surface-hover);
+  }
+
+  &:active {
+    background: var(--ds-color-neutral-surface-active);
+  }
 }
-.subtle[data-color='neutral']:hover {
-  background: var(--ds-color-neutral-surface-hover);
-}
-.subtle[data-color='neutral']:active {
-  background: var(--ds-color-neutral-surface-active);
+
+[data-color-scheme='dark'] .subtle[data-color='neutral'] {
+  background-color: var(--ds-color-neutral-surface-default);
 }
 
 .subtle[data-color='danger'] {
   color: var(--ds-color-danger-text-default);
   background: var(--ds-color-danger-surface-default);
-}
-.subtle[data-color='danger']:hover {
-  background: var(--ds-color-danger-surface-hover);
-}
-.subtle[data-color='danger']:active {
-  background: var(--ds-color-danger-surface-active);
+
+  &:hover {
+    background: var(--ds-color-danger-surface-hover);
+  }
+
+  &:active {
+    background: var(--ds-color-danger-surface-active);
+  }
 }
