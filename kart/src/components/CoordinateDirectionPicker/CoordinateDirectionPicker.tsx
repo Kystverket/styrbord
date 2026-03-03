@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useId, useRef, useState } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import { NumberInput } from '@kystverket/styrbord';
+import { Box, NumberInput, ValidationMessage } from '@kystverket/styrbord';
 
 /** SVG data URL for the rotation drag handle — a circular grab indicator with arrows. */
 const ROTATION_HANDLE_SVG = (() => {
@@ -22,6 +22,7 @@ import type {
   CoordinateDirectionPickerProps,
   CoordinateDirectionValue,
 } from './CoordinateDirectionPicker.types';
+import { ViewBoundsContext } from '~/utility/viewBoundsContext';
 
 /** Default center: roughly central Norway */
 const DEFAULT_CENTER: Coordinate = { latitude: 65.0, longitude: 14.0 };
@@ -51,6 +52,11 @@ function clampLatitude(lat: number): number {
 
 function clampLongitude(lon: number): number {
   return Math.max(-180, Math.min(180, lon));
+}
+
+function roundToDecimals(num: number, decimals: number): number {
+  const factor = 10 ** decimals;
+  return Math.round(num * factor) / factor;
 }
 
 /** Kartverket raster tile style for MapLibre GL */
@@ -85,12 +91,12 @@ export function CoordinateDirectionPicker({
   onChange,
   defaultCenter = DEFAULT_CENTER,
   defaultZoom = DEFAULT_ZOOM,
-  label,
   error,
   disabled = false,
   className,
 }: CoordinateDirectionPickerProps) {
   const id = useId();
+  const { viewBounds } = useContext(ViewBoundsContext);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const markerRef = useRef<maplibregl.Marker | null>(null);
@@ -105,18 +111,32 @@ export function CoordinateDirectionPicker({
   const disabledRef = useRef(disabled);
 
   // ----- Internal state (drives inputs; synced to/from props.value) -----
-  const [internalValue, setInternalValue] = useState<CoordinateDirectionValue>(
-    () => value ?? { coordinate: null, direction: null },
+  const [internalValue, setInternalValue] = useState<CoordinateDirectionValue>(() =>
+    value
+      ? {
+          coordinate: { latitude: value.geometry.coordinates[1], longitude: value.geometry.coordinates[0] },
+          direction: value.properties.direction,
+        }
+      : { coordinate: null, direction: null },
   );
 
   // Keep internal state in sync with controlled value prop
   useEffect(() => {
     if (value !== undefined) {
-      setInternalValue(value);
+      setInternalValue({
+        coordinate: { latitude: value.geometry.coordinates[1], longitude: value.geometry.coordinates[0] },
+        direction: value.properties.direction,
+      });
     }
   }, [value]);
 
-  const currentValue = value !== undefined ? value : internalValue;
+  const currentValue =
+    value !== undefined
+      ? {
+          coordinate: { latitude: value.geometry.coordinates[1], longitude: value.geometry.coordinates[0] },
+          direction: value.properties.direction,
+        }
+      : internalValue;
 
   // Refs that allow stable event handlers (set up once) to read latest values
   const currentValueRef = useRef(currentValue);
@@ -129,7 +149,18 @@ export function CoordinateDirectionPicker({
   const emit = useCallback(
     (next: CoordinateDirectionValue) => {
       setInternalValue(next);
-      onChange?.(next);
+      if (next.coordinate && next.direction !== null) {
+        onChange?.({
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [next.coordinate.longitude, next.coordinate.latitude],
+          },
+          properties: {
+            direction: next.direction,
+          },
+        });
+      }
     },
     [onChange],
   );
@@ -328,8 +359,8 @@ export function CoordinateDirectionPicker({
 
       const { lng, lat } = e.lngLat;
       const newCoord: Coordinate = {
-        latitude: clampLatitude(lat),
-        longitude: clampLongitude(lng),
+        latitude: roundToDecimals(clampLatitude(lat), 6),
+        longitude: roundToDecimals(clampLongitude(lng), 6),
       };
 
       emitRef.current({
@@ -344,6 +375,37 @@ export function CoordinateDirectionPicker({
       markerRef.current = null;
     };
   }, []);
+
+  // ----- Fit map to viewBounds when they change -----
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !viewBounds || viewBounds.length === 0) return;
+
+    // viewBounds is a polygon coordinate array (number[][][]).
+    // Flatten all rings to compute the bounding box.
+    const coords = viewBounds.flat();
+    if (coords.length === 0) return;
+
+    let minLng = Infinity;
+    let maxLng = -Infinity;
+    let minLat = Infinity;
+    let maxLat = -Infinity;
+
+    for (const [lng, lat] of coords) {
+      if (lng < minLng) minLng = lng;
+      if (lng > maxLng) maxLng = lng;
+      if (lat < minLat) minLat = lat;
+      if (lat > maxLat) maxLat = lat;
+    }
+
+    map.fitBounds(
+      [
+        [minLng, minLat],
+        [maxLng, maxLat],
+      ],
+      { padding: 20, duration: 300 },
+    );
+  }, [viewBounds]);
 
   // ----- Input handlers -----
   const commitLatLon = useCallback(
@@ -380,10 +442,7 @@ export function CoordinateDirectionPicker({
   );
 
   return (
-    <div className={[styles.container, className].filter(Boolean).join(' ')}>
-      {label && <div className={styles.label}>{label}</div>}
-
-      {/* Map */}
+    <Box gap={16} className={[className].filter(Boolean).join(' ')}>
       <div
         ref={mapContainerRef}
         className={[styles.mapContainer, disabled ? styles.disabled : ''].filter(Boolean).join(' ')}
@@ -396,7 +455,7 @@ export function CoordinateDirectionPicker({
       </div>
 
       {/* Coordinate + direction inputs */}
-      <div className={styles.inputRow}>
+      <Box horizontal gap={16}>
         {/* Latitude */}
         <NumberInput
           id={`${id}-lat`}
@@ -405,7 +464,6 @@ export function CoordinateDirectionPicker({
           value={latValue ?? null}
           disabled={disabled}
           placeholder="f.eks. 63.4305"
-          error={error ? true : null}
           onChange={(v) => setLatValue(v)}
           onBlur={() => commitLatLon(latValue, lonValue)}
         />
@@ -418,7 +476,6 @@ export function CoordinateDirectionPicker({
           value={lonValue ?? null}
           disabled={disabled}
           placeholder="f.eks. 10.3951"
-          error={error ? true : null}
           onChange={(v) => setLonValue(v)}
           onBlur={() => commitLatLon(latValue, lonValue)}
         />
@@ -433,14 +490,13 @@ export function CoordinateDirectionPicker({
           placeholder="0–360"
           min={0}
           max={360}
-          error={error ? true : null}
           onChange={(v) => setDirValue(v)}
           onBlur={() => commitDirection(dirValue)}
         />
-      </div>
+      </Box>
 
-      {error && <div className={styles.errorMessage}>{error}</div>}
-    </div>
+      {error && <ValidationMessage>{error}</ValidationMessage>}
+    </Box>
   );
 }
 

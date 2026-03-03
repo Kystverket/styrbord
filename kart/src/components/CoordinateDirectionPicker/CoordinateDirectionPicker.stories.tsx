@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import StyrbordDecorator from '../../../storybook/styrbordDecorator';
 import { CoordinateDirectionPicker } from './CoordinateDirectionPicker';
-import type { CoordinateDirectionValue } from './CoordinateDirectionPicker.types';
+import type { CoordinateDirectionGeoJSON } from './CoordinateDirectionPicker.types';
 
 const meta = {
   title: 'Kart/CoordinateDirectionPicker',
@@ -26,9 +26,15 @@ export const Default: Story = {
 
 // ---- Controlled with initial value ----
 const ControlledTemplate = () => {
-  const [value, setValue] = useState<CoordinateDirectionValue>({
-    coordinate: { latitude: 63.4305, longitude: 10.3951 },
-    direction: 45,
+  const [value, setValue] = useState<CoordinateDirectionGeoJSON>({
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [10.3951, 63.4305],
+    },
+    properties: {
+      direction: 45,
+    },
   });
 
   return (
@@ -58,8 +64,14 @@ export const Disabled: Story = {
   args: {
     label: 'Plassering og retning',
     value: {
-      coordinate: { latitude: 59.9139, longitude: 10.7522 },
-      direction: 180,
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [10.3951, 63.4305],
+      },
+      properties: {
+        direction: 45,
+      },
     },
     disabled: true,
   },

@@ -1,3 +1,6 @@
+import { Feature, Point } from 'geojson';
+import { VisibleLayersConfig } from '~/utility/layers.types';
+
 /**
  * A geographic coordinate in WGS84 (EPSG:4326).
  */
@@ -18,11 +21,19 @@ export interface CoordinateDirectionValue {
   direction: number | null;
 }
 
+export type CoordinateGeoJSON = Pick<Feature<Point>, 'type' | 'geometry'>;
+
+export type CoordinateDirectionGeoJSON = CoordinateGeoJSON & {
+  properties: {
+    direction: number;
+  };
+};
+
 export interface CoordinateDirectionPickerProps {
   /** Controlled value. */
-  value?: CoordinateDirectionValue;
+  value?: CoordinateDirectionGeoJSON;
   /** Called when the user changes the coordinate or direction. */
-  onChange?: (value: CoordinateDirectionValue) => void;
+  onChange?: (value: CoordinateDirectionGeoJSON) => void;
   /** Initial center of the map when no value is set. Defaults to approx. center of Norway. */
   defaultCenter?: Coordinate;
   /** Initial zoom level of the map. Defaults to 5. */
@@ -35,4 +46,6 @@ export interface CoordinateDirectionPickerProps {
   disabled?: boolean;
   /** Additional CSS class applied to the root element. */
   className?: string;
+
+  layers?: VisibleLayersConfig;
 }
