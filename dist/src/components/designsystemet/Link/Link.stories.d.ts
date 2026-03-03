@@ -1,0 +1,23 @@
+import type { StoryFn, StoryObj } from '@storybook/react';
+import React from 'react';
+import { Link } from '~/main';
+declare const meta: {
+    title: string;
+    component: React.FC<import("~/main").LinkProps>;
+    decorators: ((Story: import("@storybook/types").PartialStoryFn) => React.JSX.Element)[];
+    tags: string[];
+    argTypes: {};
+};
+export default meta;
+type Story = StoryObj<typeof meta>;
+export declare const Normal: Story;
+export declare const NormalSm: Story;
+export declare const NormalLg: Story;
+export declare const UtenUnderline: Story;
+export declare const Visited: Story;
+export declare const WithIcon: Story;
+export declare const WithIconAndNoUnderline: Story;
+export declare const InText: StoryFn<typeof Link>;
+export declare const LongLink: StoryFn<typeof Link>;
+export declare const Neutral: StoryFn<typeof Link>;
+export declare const Accent: StoryFn<typeof Link>;

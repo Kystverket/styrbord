@@ -1,0 +1,20 @@
+import type { StoryObj } from '@storybook/react';
+import { InputLabelProps } from './inputLabel';
+declare const meta: {
+    title: string;
+    component: ({ text, subText, loading, optional, required, embedded, children, }: InputLabelProps) => React.JSX.Element | null;
+    decorators: ((Story: import("@storybook/types").PartialStoryFn) => React.JSX.Element)[];
+    tags: string[];
+    argTypes: {};
+};
+export default meta;
+type Story = StoryObj<typeof meta>;
+export declare const Default: Story;
+export declare const Valgfritt: Story;
+export declare const LangTekst: Story;
+export declare const LangRequired: Story;
+export declare const LangRequiredText: Story;
+export declare const Required: Story;
+export declare const RequiredText: Story;
+export declare const Hvorfor: Story;
+export declare const Hvorfor2: Story;

@@ -1,0 +1,13 @@
+import type { Meta, StoryFn } from '@storybook/react';
+import { Avatar } from '~/main';
+type Story = StoryFn<typeof Avatar>;
+declare const meta: Meta<typeof Avatar>;
+export default meta;
+export declare const Preview: Story;
+export declare const NoName: Story;
+export declare const Sizes: Story;
+export declare const ColorVariants: Story;
+export declare const ShapeVariants: Story;
+export declare const WithImage: Story;
+export declare const InDropdown: Story;
+export declare const AsLink: Story;

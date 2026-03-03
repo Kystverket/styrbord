@@ -1,0 +1,21 @@
+import type { StoryObj } from '@storybook/react';
+import { BoxProps } from './box';
+declare const meta: {
+    title: string;
+    component: ({ className, radius, width, gap, wrap, align, grow, shrink, basis, show, hide, container, children, ...props }: BoxProps) => React.JSX.Element;
+    decorators: ((Story: import("@storybook/types").PartialStoryFn) => React.JSX.Element)[];
+    tags: string[];
+    argTypes: {};
+};
+export default meta;
+type Story = StoryObj<typeof meta>;
+export declare const Default: Story;
+export declare const Horizontal: Story;
+export declare const Gap: Story;
+export declare const HorizontalJustifyEnd: Story;
+export declare const HorizontalJustifyBetween: Story;
+export declare const NoShrink: Story;
+export declare const Spacings: Story;
+export declare const Colors: Story;
+export declare const WrapAndBasis: Story;
+export declare const HorizontalBreakpoints: Story;

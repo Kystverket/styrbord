@@ -1,0 +1,20 @@
+import type { StoryObj } from '@storybook/react';
+import { TextInputProps } from './TextInput';
+declare const meta: {
+    title: string;
+    component: ({ autoComplete, size, type, className, ...props }: TextInputProps) => React.JSX.Element;
+    decorators: ((Story: import("@storybook/types").PartialStoryFn) => React.JSX.Element)[];
+    tags: string[];
+    argTypes: {};
+};
+export default meta;
+type Story = StoryObj<typeof meta>;
+export declare const Default: Story;
+export declare const Required: Story;
+export declare const Optional: Story;
+export declare const OptionalText: Story;
+export declare const WithPlaceholder: Story;
+export declare const WithError: Story;
+export declare const Disabled: Story;
+export declare const ReadOnly: Story;
+export declare const Loading: Story;

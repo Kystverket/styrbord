@@ -91,3 +91,27 @@ Borders.parameters = {
     placeItems: 'center',
   },
 };
+
+export const Rounded: StoryFn<typeof Tag> = ({ ...rest }) => {
+  return (
+    <>
+      {colorVariants.map((color) => (
+        <Tag key={color} rounded data-color={color as TagProps['data-color']} {...rest}>
+          {color}
+        </Tag>
+      ))}
+    </>
+  );
+};
+
+export const RoundedWithSizes: StoryFn<typeof Tag> = ({ ...rest }) => {
+  return (
+    <>
+      {sizes.map((size) => (
+        <Tag key={size} rounded data-size={size} {...rest}>
+          {size}
+        </Tag>
+      ))}
+    </>
+  );
+};

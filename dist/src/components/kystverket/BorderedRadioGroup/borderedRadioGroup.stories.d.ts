@@ -1,0 +1,20 @@
+import type { StoryObj } from '@storybook/react';
+import { BorderedRadioGroupProps } from './borderedRadioGroup';
+declare const meta: {
+    title: string;
+    component: (props: BorderedRadioGroupProps) => React.JSX.Element;
+    decorators: ((Story: import("@storybook/types").PartialStoryFn) => React.JSX.Element)[];
+    tags: string[];
+    argTypes: {};
+};
+export default meta;
+type Story = StoryObj<typeof meta>;
+export declare const Default: Story;
+export declare const WithLongOptionText: Story;
+export declare const WithReactElementDescription: Story;
+export declare const WithError: Story;
+export declare const Optional: Story;
+export declare const OptionalText: Story;
+export declare const Required: Story;
+export declare const ReadOnly: Story;
+export declare const Disabled: Story;
