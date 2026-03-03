@@ -115,3 +115,15 @@ export const RoundedWithSizes: StoryFn<typeof Tag> = ({ ...rest }) => {
     </>
   );
 };
+
+export const RoundedWithBorders: StoryFn<typeof Tag> = ({ ...rest }) => {
+  return (
+    <>
+      {colorVariants.map((color) => (
+        <Tag key={color} rounded bordered data-color={color as TagProps['data-color']} {...rest}>
+          {color}
+        </Tag>
+      ))}
+    </>
+  );
+};
