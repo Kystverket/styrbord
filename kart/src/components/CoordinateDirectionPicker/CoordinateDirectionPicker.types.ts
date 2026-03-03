@@ -1,5 +1,4 @@
 import { Feature, Point } from 'geojson';
-import { VisibleLayersConfig } from '~/utility/layers.types';
 
 /**
  * A geographic coordinate in WGS84 (EPSG:4326).
@@ -46,6 +45,4 @@ export interface CoordinateDirectionPickerProps {
   disabled?: boolean;
   /** Additional CSS class applied to the root element. */
   className?: string;
-
-  layers?: VisibleLayersConfig;
 }
