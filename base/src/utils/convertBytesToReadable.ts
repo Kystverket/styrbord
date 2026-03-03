@@ -16,7 +16,9 @@
  * @example
  * convertBytesToReadable(-10, 2) // "0.00 kB"
  */
-export function convertBytesToReadable(bytes: number, decimals: number = 0): string {
+export function convertBytesToReadable(bytes?: number, decimals: number = 0): string | undefined {
+  if (bytes === undefined) return undefined;
+
   const safeBytes = Number.isFinite(bytes) && bytes > 0 ? bytes : 0;
   const safeDecimals = Number.isFinite(decimals) ? Math.max(0, Math.floor(decimals)) : 0;
 

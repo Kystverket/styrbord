@@ -9,7 +9,7 @@ export type FileInfo = {
   status: FileStatus;
   exif?: Exif;
   error?: string;
-  sizeInBytes: number;
+  sizeInBytes?: number;
 };
 
 export interface UploadFileResponse {
