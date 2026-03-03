@@ -11,7 +11,6 @@
 }
 
 .flexCenter {
-  background-color: var(--ds-color-neutral-border-subtle);
   color: var(--ds-color-neutral-text-default);
   display: flex;
   align-items: center;
