@@ -73,7 +73,6 @@
   top: 50%;
   transform: translateY(-50%);
 
-  /* ds-size-2 to make outline not clip outside */
   &.left {
     left: 0;
   }
@@ -101,15 +100,12 @@
   height: 100px;
   margin: 10px 0;
   overflow: hidden;
-  border-radius: var(--ds-border-radius-default);
-  outline-width: 7px;
   outline-offset: 3px;
+  border-radius: var(--ds-border-radius-default);
+
   background-color: var(--ds-color-neutral-surface-active);
   & span {
     color: var(--ds-color-neutral-text-subtle);
-  }
-  &:focus-visible {
-    outline: none;
   }
 }
 

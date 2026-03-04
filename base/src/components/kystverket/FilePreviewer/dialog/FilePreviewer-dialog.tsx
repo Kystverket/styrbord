@@ -176,7 +176,6 @@ export const FilePreviewerDialog = ({ animation = 'slide', onClose, files, start
           }
         }}
         ref={scrollRef}
-        tabIndex={0}
         className={classes.selectArea}
         {...dragScrollHandlers}
       >
@@ -187,7 +186,11 @@ export const FilePreviewerDialog = ({ animation = 'slide', onClose, files, start
               ref={(el) => {
                 previewButtonRefs.current[idx] = el;
               }}
-              tabIndex={-1}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  setSelectedFileIndex(idx);
+                }
+              }}
               className={classes.previewButton}
               onClick={() => {
                 // Only change selection if we haven't been dragging

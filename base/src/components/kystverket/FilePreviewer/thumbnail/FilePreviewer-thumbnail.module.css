@@ -10,11 +10,12 @@
   border-radius: var(--ds-border-radius-lg);
 }
 
-.container:not(:hover) .button {
-  display: none;
+.container:not(:hover):not(:focus-within) .button {
+  opacity: 0;
 }
 
-.container:hover .thumbnail::before {
+.container:hover .thumbnail::before,
+.container:focus-within .thumbnail::before {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
@@ -52,7 +53,7 @@
 
 .button {
   border-radius: var(--ds-border-radius-default);
-  background-color: white;
+  background-color: var(--ds-color-neutral-surface-default);
 }
 
 .fileName {
