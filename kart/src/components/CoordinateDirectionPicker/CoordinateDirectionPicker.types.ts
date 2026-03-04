@@ -1,4 +1,4 @@
-import { Feature, Point } from 'geojson';
+import { Feature, Point } from "geojson";
 
 /**
  * A geographic coordinate in WGS84 (EPSG:4326).
@@ -20,7 +20,7 @@ export interface CoordinateDirectionValue {
   direction: number | null;
 }
 
-export type CoordinateGeoJSON = Pick<Feature<Point>, 'type' | 'geometry'>;
+export type CoordinateGeoJSON = Pick<Feature<Point>, "type" | "geometry">;
 
 export type CoordinateDirectionGeoJSON = CoordinateGeoJSON & {
   properties: {

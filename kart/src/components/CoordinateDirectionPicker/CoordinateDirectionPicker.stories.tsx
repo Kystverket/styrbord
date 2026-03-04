@@ -1,16 +1,16 @@
-import { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import StyrbordDecorator from '../../../storybook/styrbordDecorator';
-import { CoordinateDirectionPicker } from './CoordinateDirectionPicker';
-import type { CoordinateDirectionGeoJSON } from './CoordinateDirectionPicker.types';
+import { useState } from "react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import StyrbordDecorator from "../../../storybook/styrbordDecorator";
+import { CoordinateDirectionPicker } from "./CoordinateDirectionPicker";
+import type { CoordinateDirectionGeoJSON } from "./CoordinateDirectionPicker.types";
 
 const meta = {
-  title: 'Kart/CoordinateDirectionPicker',
+  title: "Kart/CoordinateDirectionPicker",
   component: CoordinateDirectionPicker,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ["autodocs", "kyv"],
   parameters: {
-    layout: 'padded',
+    layout: "padded",
   },
 } satisfies Meta<typeof CoordinateDirectionPicker>;
 
@@ -20,16 +20,16 @@ type Story = StoryObj<typeof meta>;
 // ---- Default (empty) ----
 export const Default: Story = {
   args: {
-    label: 'Plassering og retning',
+    label: "Plassering og retning",
   },
 };
 
 // ---- Controlled with initial value ----
 const ControlledTemplate = () => {
   const [value, setValue] = useState<CoordinateDirectionGeoJSON>({
-    type: 'Feature',
+    type: "Feature",
     geometry: {
-      type: 'Point',
+      type: "Point",
       coordinates: [10.3951, 63.4305],
     },
     properties: {
@@ -39,8 +39,20 @@ const ControlledTemplate = () => {
 
   return (
     <div style={{ maxWidth: 700 }}>
-      <CoordinateDirectionPicker label="Skiltplassering" value={value} onChange={setValue} />
-      <pre style={{ marginTop: 16, fontSize: 12, background: '#f5f5f5', padding: 12, borderRadius: 4 }}>
+      <CoordinateDirectionPicker
+        label="Skiltplassering"
+        value={value}
+        onChange={setValue}
+      />
+      <pre
+        style={{
+          marginTop: 16,
+          fontSize: 12,
+          background: "#f5f5f5",
+          padding: 12,
+          borderRadius: 4,
+        }}
+      >
         {JSON.stringify(value, null, 2)}
       </pre>
     </div>
@@ -54,19 +66,19 @@ export const WithInitialValue: Story = {
 // ---- With error ----
 export const WithError: Story = {
   args: {
-    label: 'Plassering og retning',
-    error: 'Koordinat er påkrevd',
+    label: "Plassering og retning",
+    error: "Koordinat er påkrevd",
   },
 };
 
 // ---- Disabled ----
 export const Disabled: Story = {
   args: {
-    label: 'Plassering og retning',
+    label: "Plassering og retning",
     value: {
-      type: 'Feature',
+      type: "Feature",
       geometry: {
-        type: 'Point',
+        type: "Point",
         coordinates: [10.3951, 63.4305],
       },
       properties: {

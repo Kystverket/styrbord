@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode } from 'react';
+import React, { createContext, ReactNode } from "react";
 
 interface ViewBoundsContextProps {
   viewBounds?: number[][][] | undefined;
@@ -10,14 +10,18 @@ export const ViewBoundsContext = createContext<ViewBoundsContextProps>({
 });
 
 export const ViewBoundsProvider = ({ children }: { children: ReactNode }) => {
-  const [viewBounds, setViewBounds] = React.useState<number[][][] | undefined>(undefined);
+  const [viewBounds, setViewBounds] = React.useState<number[][][] | undefined>(
+    undefined,
+  );
 
   const updateViewBounds = (bounds: number[][][] | undefined): void => {
     setViewBounds(bounds);
   };
 
   return (
-    <ViewBoundsContext.Provider value={{ viewBounds, setViewBounds: updateViewBounds }}>
+    <ViewBoundsContext.Provider
+      value={{ viewBounds, setViewBounds: updateViewBounds }}
+    >
       {children}
     </ViewBoundsContext.Provider>
   );

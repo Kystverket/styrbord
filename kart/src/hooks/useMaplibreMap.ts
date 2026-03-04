@@ -1,10 +1,18 @@
-import { useContext, useEffect, useRef } from 'react';
-import maplibregl from 'maplibre-gl';
-import 'maplibre-gl/dist/maplibre-gl.css';
-import type { Coordinate } from '~/components/CoordinateDirectionPicker/CoordinateDirectionPicker.types';
-import { clampLatitude, clampLongitude, roundToDecimals } from '~/utility/coordinate';
-import { KARTVERKET_STYLE, DEFAULT_CENTER, DEFAULT_ZOOM } from '~/utility/mapStyle';
-import { ViewBoundsContext } from '~/utility/viewBoundsContext';
+import { useContext, useEffect, useRef } from "react";
+import maplibregl from "maplibre-gl";
+import "maplibre-gl/dist/maplibre-gl.css";
+import type { Coordinate } from "~/components/CoordinateDirectionPicker/CoordinateDirectionPicker.types";
+import {
+  clampLatitude,
+  clampLongitude,
+  roundToDecimals,
+} from "~/utility/coordinate";
+import {
+  KARTVERKET_STYLE,
+  DEFAULT_CENTER,
+  DEFAULT_ZOOM,
+} from "~/utility/mapStyle";
+import { ViewBoundsContext } from "~/utility/viewBoundsContext";
 
 export interface UseMaplibreMapOptions {
   /** Initial coordinate to center the map on. Falls back to `defaultCenter`. */
@@ -63,7 +71,7 @@ export function useMaplibreMap({
 
     mapRef.current = map;
 
-    map.on('click', (e: maplibregl.MapMouseEvent) => {
+    map.on("click", (e: maplibregl.MapMouseEvent) => {
       if (disabledRef.current) return;
       const { lng, lat } = e.lngLat;
       onMapClickRef.current?.({

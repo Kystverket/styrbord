@@ -1,16 +1,20 @@
-import { useCallback, useEffect, useId, useState } from 'react';
-import { Box, NumberInput, ValidationMessage } from '@kystverket/styrbord';
+import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { Box, NumberInput, ValidationMessage } from "@kystverket/styrbord";
 
-import styles from './CoordinateDirectionPicker.module.css';
+import styles from "./CoordinateDirectionPicker.module.css";
 import type {
   Coordinate,
   CoordinateDirectionPickerProps,
   CoordinateDirectionValue,
-} from './CoordinateDirectionPicker.types';
-import { DEFAULT_CENTER, DEFAULT_ZOOM } from '~/utility/mapStyle';
-import { clampDirection, clampLatitude, clampLongitude } from '~/utility/coordinate';
-import { useMaplibreMap } from '~/hooks/useMaplibreMap';
-import { useCompassMarker } from '~/hooks/useCompassMarker';
+} from "./CoordinateDirectionPicker.types";
+import { DEFAULT_CENTER, DEFAULT_ZOOM } from "~/utility/mapStyle";
+import {
+  clampDirection,
+  clampLatitude,
+  clampLongitude,
+} from "~/utility/coordinate";
+import { useMaplibreMap } from "~/hooks/useMaplibreMap";
+import { useCompassMarker } from "~/hooks/useCompassMarker";
 
 /**
  * CoordinateDirectionPicker — select a geographic coordinate and a facing
@@ -30,20 +34,27 @@ export function CoordinateDirectionPicker({
   const id = useId();
 
   // ----- Internal state (drives inputs; synced to/from props.value) -----
-  const [internalValue, setInternalValue] = useState<CoordinateDirectionValue>(() =>
-    value
-      ? {
-          coordinate: { latitude: value.geometry.coordinates[1], longitude: value.geometry.coordinates[0] },
-          direction: value.properties.direction,
-        }
-      : { coordinate: null, direction: null },
+  const [internalValue, setInternalValue] = useState<CoordinateDirectionValue>(
+    () =>
+      value
+        ? {
+            coordinate: {
+              latitude: value.geometry.coordinates[1],
+              longitude: value.geometry.coordinates[0],
+            },
+            direction: value.properties.direction,
+          }
+        : { coordinate: null, direction: null },
   );
 
   // Keep internal state in sync with controlled value prop
   useEffect(() => {
     if (value !== undefined) {
       setInternalValue({
-        coordinate: { latitude: value.geometry.coordinates[1], longitude: value.geometry.coordinates[0] },
+        coordinate: {
+          latitude: value.geometry.coordinates[1],
+          longitude: value.geometry.coordinates[0],
+        },
         direction: value.properties.direction,
       });
     }
@@ -52,7 +63,10 @@ export function CoordinateDirectionPicker({
   const currentValue =
     value !== undefined
       ? {
-          coordinate: { latitude: value.geometry.coordinates[1], longitude: value.geometry.coordinates[0] },
+          coordinate: {
+            latitude: value.geometry.coordinates[1],
+            longitude: value.geometry.coordinates[0],
+          },
           direction: value.properties.direction,
         }
       : internalValue;
@@ -62,9 +76,9 @@ export function CoordinateDirectionPicker({
       setInternalValue(next);
       if (next.coordinate && next.direction !== null) {
         onChange?.({
-          type: 'Feature',
+          type: "Feature",
           geometry: {
-            type: 'Point',
+            type: "Point",
             coordinates: [next.coordinate.longitude, next.coordinate.latitude],
           },
           properties: {
@@ -79,6 +93,8 @@ export function CoordinateDirectionPicker({
   // ----- Map hook -----
   const handleMapClick = useCallback(
     (coord: Coordinate) => {
+      // Ignore clicks that originate from a rotation drag
+      if (wasRecentlyDraggingRef.current?.()) return;
       emit({ coordinate: coord, direction: currentValue.direction });
     },
     [currentValue.direction, emit],
@@ -93,17 +109,27 @@ export function CoordinateDirectionPicker({
   });
 
   // ----- Compass marker hook -----
-  useCompassMarker({
+  const { wasRecentlyDragging } = useCompassMarker({
     mapRef,
     currentValue,
     disabled,
     onDirectionChange: emit,
   });
 
+  // Keep in a ref so the stable handleMapClick closure always reads the latest function
+  const wasRecentlyDraggingRef = useRef(wasRecentlyDragging);
+  wasRecentlyDraggingRef.current = wasRecentlyDragging;
+
   // ----- Input number state (synced to/from props.value, committed on blur) -----
-  const [latValue, setLatValue] = useState<number | undefined>(currentValue.coordinate?.latitude ?? undefined);
-  const [lonValue, setLonValue] = useState<number | undefined>(currentValue.coordinate?.longitude ?? undefined);
-  const [dirValue, setDirValue] = useState<number | undefined>(currentValue.direction ?? undefined);
+  const [latValue, setLatValue] = useState<number | undefined>(
+    currentValue.coordinate?.latitude ?? undefined,
+  );
+  const [lonValue, setLonValue] = useState<number | undefined>(
+    currentValue.coordinate?.longitude ?? undefined,
+  );
+  const [dirValue, setDirValue] = useState<number | undefined>(
+    currentValue.direction ?? undefined,
+  );
 
   // Sync input values when value changes externally (e.g. map click, compass drag)
   useEffect(() => {
@@ -146,15 +172,17 @@ export function CoordinateDirectionPicker({
   );
 
   return (
-    <Box gap={16} className={[className].filter(Boolean).join(' ')}>
+    <Box gap={16} className={[className].filter(Boolean).join(" ")}>
       <div
         ref={mapContainerRef}
-        className={[styles.mapContainer, disabled ? styles.disabled : ''].filter(Boolean).join(' ')}
+        className={[styles.mapContainer, disabled ? styles.disabled : ""]
+          .filter(Boolean)
+          .join(" ")}
       >
         <div className={styles.mapHint}>
           {currentValue.coordinate
-            ? 'Klikk for å flytte · Dra på markøren for å rotere retning'
-            : 'Klikk i kartet for å plassere markør'}
+            ? "Klikk for å flytte · Dra på markøren for å rotere retning"
+            : "Klikk i kartet for å plassere markør"}
         </div>
       </div>
 
