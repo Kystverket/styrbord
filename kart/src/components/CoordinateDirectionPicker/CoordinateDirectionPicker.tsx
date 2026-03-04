@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { Box, NumberInput, ValidationMessage } from "@kystverket/styrbord";
 
-import styles from "./CoordinateDirectionPicker.module.css";
+import styles from "~/components/shared/MapPicker.module.css";
 import type {
   Coordinate,
   CoordinateDirectionPickerProps,

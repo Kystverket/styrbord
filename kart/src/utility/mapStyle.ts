@@ -1,5 +1,5 @@
 import type maplibregl from "maplibre-gl";
-import type { Coordinate } from "~/components/CoordinateDirectionPicker/CoordinateDirectionPicker.types";
+import type { Coordinate } from "~/utility/types";
 
 /** Default center: roughly central Norway. */
 export const DEFAULT_CENTER: Coordinate = { latitude: 65.0, longitude: 14.0 };

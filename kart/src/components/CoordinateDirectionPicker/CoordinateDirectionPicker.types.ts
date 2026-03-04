@@ -1,14 +1,5 @@
-import { Feature, Point } from "geojson";
-
-/**
- * A geographic coordinate in WGS84 (EPSG:4326).
- */
-export interface Coordinate {
-  /** Latitude in decimal degrees (-90 to 90). */
-  latitude: number;
-  /** Longitude in decimal degrees (-180 to 180). */
-  longitude: number;
-}
+export type { Coordinate, CoordinateGeoJSON } from "~/utility/types";
+import type { Coordinate, CoordinateGeoJSON } from "~/utility/types";
 
 /**
  * The combined value of a placed coordinate and the direction it faces.
@@ -19,8 +10,6 @@ export interface CoordinateDirectionValue {
   /** Direction in degrees (0–360, where 0 = north, 90 = east), or null if not set. */
   direction: number | null;
 }
-
-export type CoordinateGeoJSON = Pick<Feature<Point>, "type" | "geometry">;
 
 export type CoordinateDirectionGeoJSON = CoordinateGeoJSON & {
   properties: {

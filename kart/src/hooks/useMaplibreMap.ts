@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import type { Coordinate } from "~/components/CoordinateDirectionPicker/CoordinateDirectionPicker.types";
+import type { Coordinate } from "~/utility/types";
 import {
   clampLatitude,
   clampLongitude,
