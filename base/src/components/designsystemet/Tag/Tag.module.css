@@ -29,4 +29,11 @@
   .bordered[data-color='info'] {
     --tag-border-color: var(--ds-color-info-border-subtle);
   }
+
+  .rounded {
+    border-radius: var(--ds-border-radius-full);
+    padding-left: var(--ds-size-4);
+    padding-right: var(--ds-size-4);
+    height: var(--ds-size-8);
+  }
 }

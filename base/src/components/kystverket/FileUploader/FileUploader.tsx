@@ -2,7 +2,7 @@
 
 import { ReactNode, useContext, useRef } from 'react';
 import { Exif, FileInfo } from './FileUploader.types';
-import { Field, Label, Spinner, ValidationMessage, Heading } from '@digdir/designsystemet-react';
+import { Field, Label, Spinner, ValidationMessage } from '@digdir/designsystemet-react';
 import classes from './FileUploader.module.css';
 import { Icon, LabelContent } from '~/main';
 import exifr from 'exifr';
@@ -169,7 +169,7 @@ export const FileUploader = ({
         )}
         {files && files.length > 0 && (
           <div className={classes.fileList}>
-            <Heading data-size="sm">{attachmentsHeading}</Heading>
+            <Label style={{ pointerEvents: 'none' }}>{attachmentsHeading}</Label>
             {files.map((file) => (
               <FileUploaderItem key={file.contextId} file={file} t={t} onDeleteFile={onDeleteFile} />
             ))}
