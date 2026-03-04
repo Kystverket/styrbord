@@ -1,4 +1,4 @@
-import { Box } from '~/main';
+import { Icon } from '~/main';
 import { FileInfoByContentType, FileInfo } from '../FilePreviewer.types';
 import classes from './FileRenderer.module.css';
 import { useEffect, useState } from 'react';
@@ -16,13 +16,13 @@ export const FileRenderer = ({
 }) => {
   if (mode === 'thumbnail') {
     if (file.contentType === 'image') return <ImageThumbnail file={file} className={className} />;
-    if (file.contentType === 'json') return <JsonThumbnail file={file} className={className} />;
-    if (file.contentType === 'pdf') return <PdfThumbnail file={file} className={className} />;
+    if (file.contentType === 'json') return <JsonThumbnail />;
+    if (file.contentType === 'pdf') return <PdfThumbnail />;
   }
 
   if (file.contentType === 'image') return <ImageDisplay file={file} className={className} />; //No tabindex because there's no interactive elements in the img
-  if (file.contentType === 'pdf') return <PdfDisplay tabIndex={tabIndex} file={file} className={className} />;
   if (file.contentType === 'json') return <JsonDisplay tabIndex={tabIndex} file={file} className={className} />;
+  if (file.contentType === 'pdf') return <PdfDisplay tabIndex={tabIndex} file={file} className={className} />;
 };
 
 /**
@@ -41,12 +41,8 @@ const ImageDisplay = ({ file, className }: { file: FileInfoByContentType<'image'
  * JSON
  */
 
-const JsonThumbnail = ({ file, className }: { file: FileInfoByContentType<'json'>; className?: string }) => {
-  return (
-    <Box align="center" justify="center" className={`${classes.thumbnail} ${classes.flexCenter} ${className || ''}`}>
-      <p>{file.fileName}</p>
-    </Box>
-  );
+const JsonThumbnail = () => {
+  return <Icon size="3xl" material="code_blocks" />;
 };
 
 function JsonDisplay({
@@ -102,12 +98,8 @@ function JsonDisplay({
  * PDF
  */
 
-const PdfThumbnail = ({ file, className }: { file: FileInfoByContentType<'pdf'>; className?: string }) => {
-  return (
-    <Box className={`${classes.thumbnail} ${classes.flexCenter} ${className || ''}`}>
-      <p>{file.fileName}</p>
-    </Box>
-  );
+const PdfThumbnail = () => {
+  return <Icon size="3xl" material="description" />;
 };
 
 const PdfDisplay = ({

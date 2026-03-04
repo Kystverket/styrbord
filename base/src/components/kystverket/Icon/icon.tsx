@@ -1,7 +1,7 @@
 import classes from './icon.module.css';
 import { IconId } from './icon.types';
 
-type IconSize = '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+type IconSize = '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
 
 const iconSizes: Record<IconSize, string> = {
   '2xs': '14px',
@@ -11,6 +11,7 @@ const iconSizes: Record<IconSize, string> = {
   lg: '24px',
   xl: '32px',
   '2xl': '48px',
+  '3xl': '64px',
 };
 
 export interface MaterialIconProps {
