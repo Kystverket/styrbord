@@ -1,10 +1,10 @@
 import React, { createContext, ReactNode, useCallback, useMemo } from "react";
-import {
-  type LayerDefinition,
-  type LayerFilterConfig,
-  BUILT_IN_LAYERS,
-  isLayerIncluded,
+import type {
+  LayerDefinition,
+  LayerFilterConfig,
 } from "~/utility/layers.types";
+import { BUILT_IN_LAYERS } from "~/utility/layers.builtIn";
+import { isLayerIncluded } from "~/utility/layers.helpers";
 
 // ---------------------------------------------------------------------------
 // Context value

@@ -48,11 +48,8 @@ export type { ViewBoundsProviderProps } from "./utility/viewBoundsContext";
 
 // Layer system
 export {
-  BUILT_IN_LAYERS,
   BUILT_IN_LAYER_IDS,
   HAVNEDATA_LAYER_NAMES,
-  createSimpleLayer,
-  isLayerIncluded,
 } from "./utility/layers.types";
 export type {
   LayerDefinition,
@@ -63,6 +60,8 @@ export type {
   SimpleWmsLayerOptions,
   SimpleVectorTilesLayerOptions,
 } from "./utility/layers.types";
+export { BUILT_IN_LAYERS } from "./utility/layers.builtIn";
+export { createSimpleLayer, isLayerIncluded } from "./utility/layers.helpers";
 
 export {
   BuiltInLayersContext,
