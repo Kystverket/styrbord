@@ -113,7 +113,7 @@ export const FilePreviewerDialog = ({ animation = 'slide', onClose, files, start
         <Box>
           <Body>{selectedFile.fileName}</Body>
           {selectedFile.fileSizeInBytes && (
-            <Body data-size="sm" className={classes.fileSize}>
+            <Body size="sm" className={classes.fileSize}>
               {selectedFile.fileSize ?? convertBytesToReadable(selectedFile.fileSizeInBytes)}
             </Body>
           )}
