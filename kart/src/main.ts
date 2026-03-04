@@ -29,11 +29,7 @@ export { useMapLayers } from "./hooks/useMapLayers";
 export type { UseMapLayersResult, LayerEntry } from "./hooks/useMapLayers";
 
 // Utilities
-export {
-  KARTVERKET_STYLE,
-  DEFAULT_CENTER,
-  DEFAULT_ZOOM,
-} from "./utility/mapStyle";
+export { EMPTY_STYLE, KARTVERKET_TOPO_BASE_LAYER, DEFAULT_CENTER, DEFAULT_ZOOM } from './utility/mapStyle';
 export {
   clampDirection,
   clampLatitude,
@@ -47,19 +43,15 @@ export {
 export type { ViewBoundsProviderProps } from "./utility/viewBoundsContext";
 
 // Layer system
-export {
-  BUILT_IN_LAYER_IDS,
-  HAVNEDATA_LAYER_NAMES,
-} from "./utility/layers.types";
 export type {
+  BaseLayerDefinition,
   LayerDefinition,
-  BuiltInLayerId,
   LayerFilterConfig,
   CreateSimpleLayerOptions,
   SimpleGeoJsonLayerOptions,
   SimpleWmsLayerOptions,
   SimpleVectorTilesLayerOptions,
-} from "./utility/layers.types";
+} from './utility/layers.types';
 export { BUILT_IN_LAYERS } from "./utility/layers.builtIn";
 export { createSimpleLayer, isLayerIncluded } from "./utility/layers.helpers";
 
@@ -80,3 +72,6 @@ export type {
   CustomLayersContextValue,
   CustomLayersProviderProps,
 } from "./utility/customLayersContext";
+
+export { BaseLayersContext, BaseLayersProvider } from './utility/baseLayersContext';
+export type { BaseLayersContextValue, BaseLayersProviderProps } from './utility/baseLayersContext';

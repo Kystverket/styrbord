@@ -7,11 +7,12 @@ import {
   clampLongitude,
   roundToDecimals,
 } from "~/utility/coordinate";
-import { KARTVERKET_STYLE } from "~/utility/mapStyle";
+import { EMPTY_STYLE } from '~/utility/mapStyle';
 import { ViewBoundsContext } from "~/utility/viewBoundsContext";
+import { BaseLayersContext } from '~/utility/baseLayersContext';
 import { BuiltInLayersContext } from "~/utility/builtInLayersContext";
 import { CustomLayersContext } from "~/utility/customLayersContext";
-import type { LayerDefinition } from "~/utility/layers.types";
+import type { BaseLayerDefinition, LayerDefinition } from '~/utility/layers.types';
 
 export interface UseMaplibreMapOptions {
   /** Initial coordinate to center the map on. Falls back to context `defaultCenter`. */
@@ -38,10 +39,10 @@ export function useMaplibreMap({
 }: UseMaplibreMapOptions = {}) {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
-  const { viewBounds, defaultCenter, defaultZoom } =
-    useContext(ViewBoundsContext);
+  const { viewBounds, defaultCenter, defaultZoom } = useContext(ViewBoundsContext);
 
-  // ----- Layer contexts (both optional — graceful when no provider is present) -----
+  // ----- Layer contexts (all optional — graceful when no provider is present) -----
+  const baseCtx = useContext(BaseLayersContext);
   const builtInCtx = useContext(BuiltInLayersContext);
   const customCtx = useContext(CustomLayersContext);
 
@@ -81,7 +82,7 @@ export function useMaplibreMap({
   // ----- Apply height to the container -----
   useEffect(() => {
     if (mapContainerRef.current) {
-      mapContainerRef.current.style.height = height ?? "";
+      mapContainerRef.current.style.height = height ?? '';
     }
   }, [height]);
 
@@ -95,7 +96,7 @@ export function useMaplibreMap({
 
     const map = new maplibregl.Map({
       container: mapContainerRef.current,
-      style: KARTVERKET_STYLE,
+      style: EMPTY_STYLE,
       center,
       zoom: initialCoordinate ? 14 : defaultZoom,
       attributionControl: {},
@@ -103,7 +104,7 @@ export function useMaplibreMap({
 
     mapRef.current = map;
 
-    map.on("click", (e: maplibregl.MapMouseEvent) => {
+    map.on('click', (e: maplibregl.MapMouseEvent) => {
       if (disabledRef.current) return;
       const { lng, lat } = e.lngLat;
       onMapClickRef.current?.({
@@ -147,7 +148,54 @@ export function useMaplibreMap({
     );
   }, [viewBounds]);
 
-  // ----- Sync context layers to the MapLibre instance -----
+  // ----- Sync base layer to the MapLibre instance -----
+  const appliedBaseLayerRef = useRef<BaseLayerDefinition | null>(null);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+
+    const syncBaseLayer = () => {
+      const desired = baseCtx.availableBaseLayers.find((l) => l.id === baseCtx.activeBaseLayerId);
+      const current = appliedBaseLayerRef.current;
+
+      // Nothing to do if the same base layer is already applied.
+      if (current?.id === desired?.id) return;
+
+      // Remove the previous base layer sources & layers.
+      if (current) {
+        removeFromMap(map, current);
+      }
+
+      // Add the new base layer at the bottom of the layer stack.
+      if (desired) {
+        // Determine the id of the first existing layer on the map so we can
+        // insert the base layer *below* all overlays.
+        const firstExistingLayerId = map.getStyle().layers?.[0]?.id;
+
+        for (const [srcId, srcSpec] of Object.entries(desired.sources)) {
+          if (!map.getSource(srcId)) {
+            map.addSource(srcId, srcSpec);
+          }
+        }
+        for (const layerSpec of desired.layers) {
+          if (!map.getLayer(layerSpec.id)) {
+            map.addLayer(layerSpec, firstExistingLayerId);
+          }
+        }
+      }
+
+      appliedBaseLayerRef.current = desired ?? null;
+    };
+
+    if (map.loaded()) {
+      syncBaseLayer();
+    } else {
+      map.once('load', syncBaseLayer);
+    }
+  }, [baseCtx.activeBaseLayerId, baseCtx.availableBaseLayers]);
+
+  // ----- Sync overlay layers to the MapLibre instance -----
   const appliedLayerIdsRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
@@ -156,14 +204,8 @@ export function useMaplibreMap({
 
     const syncLayers = () => {
       // Merge built-in + custom definitions. Built-in render below custom.
-      const allDefs: LayerDefinition[] = [
-        ...builtInCtx.availableLayers,
-        ...customCtx.layers,
-      ];
-      const allVisibleIds = new Set([
-        ...builtInCtx.visibleLayerIds,
-        ...customCtx.visibleLayerIds,
-      ]);
+      const allDefs: LayerDefinition[] = [...builtInCtx.availableLayers, ...customCtx.layers];
+      const allVisibleIds = new Set([...builtInCtx.visibleLayerIds, ...customCtx.visibleLayerIds]);
 
       const desiredIds = new Set(allDefs.map((d) => d.id));
       const previousIds = appliedLayerIdsRef.current;
@@ -172,7 +214,7 @@ export function useMaplibreMap({
       for (const prevId of previousIds) {
         if (!desiredIds.has(prevId)) {
           const def = findPreviousDef(prevId, allDefs);
-          if (def) removeDefFromMap(map, def);
+          if (def) removeFromMap(map, def);
           previousIds.delete(prevId);
         }
       }
@@ -194,22 +236,14 @@ export function useMaplibreMap({
             if (!map.getLayer(layerSpec.id)) {
               map.addLayer(layerSpec);
             }
-            map.setLayoutProperty(
-              layerSpec.id,
-              "visibility",
-              shouldBeVisible ? "visible" : "none",
-            );
+            map.setLayoutProperty(layerSpec.id, 'visibility', shouldBeVisible ? 'visible' : 'none');
           }
           previousIds.add(def.id);
         } else {
           // Already on map — just update visibility
           for (const layerSpec of def.layers) {
             if (map.getLayer(layerSpec.id)) {
-              map.setLayoutProperty(
-                layerSpec.id,
-                "visibility",
-                shouldBeVisible ? "visible" : "none",
-              );
+              map.setLayoutProperty(layerSpec.id, 'visibility', shouldBeVisible ? 'visible' : 'none');
             }
           }
         }
@@ -220,14 +254,9 @@ export function useMaplibreMap({
     if (map.loaded()) {
       syncLayers();
     } else {
-      map.once("load", syncLayers);
+      map.once('load', syncLayers);
     }
-  }, [
-    builtInCtx.availableLayers,
-    builtInCtx.visibleLayerIds,
-    customCtx.layers,
-    customCtx.visibleLayerIds,
-  ]);
+  }, [builtInCtx.availableLayers, builtInCtx.visibleLayerIds, customCtx.layers, customCtx.visibleLayerIds]);
 
   return { mapContainerRef, mapRef };
 }
@@ -243,7 +272,7 @@ function findPreviousDef(
   return currentDefs.find((d) => d.id === id);
 }
 
-function removeDefFromMap(map: maplibregl.Map, def: LayerDefinition) {
+function removeFromMap(map: maplibregl.Map, def: LayerDefinition | BaseLayerDefinition) {
   for (const layerSpec of def.layers) {
     if (map.getLayer(layerSpec.id)) {
       map.removeLayer(layerSpec.id);

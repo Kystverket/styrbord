@@ -1,7 +1,8 @@
 import { useContext, useMemo } from "react";
+import { BaseLayersContext } from '~/utility/baseLayersContext';
 import { BuiltInLayersContext } from "~/utility/builtInLayersContext";
 import { CustomLayersContext } from "~/utility/customLayersContext";
-import type { LayerDefinition } from "~/utility/layers.types";
+import type { BaseLayerDefinition, LayerDefinition } from '~/utility/layers.types';
 
 export interface LayerEntry {
   /** The full layer definition. */
@@ -13,9 +14,18 @@ export interface LayerEntry {
 }
 
 export interface UseMapLayersResult {
-  /** All layers (built-in + custom), each annotated with visibility and origin. */
+  // ---- Base layers (exclusive selection) ----
+  /** All available base layers. */
+  availableBaseLayers: BaseLayerDefinition[];
+  /** The id of the currently active base layer. */
+  activeBaseLayerId: string;
+  /** Switch to a different base layer. */
+  setActiveBaseLayer: (id: string) => void;
+
+  // ---- Overlay layers (multi-toggle) ----
+  /** All overlay layers (built-in + custom), each annotated with visibility and origin. */
   allLayers: LayerEntry[];
-  /** Only the currently visible layers. */
+  /** Only the currently visible overlay layers. */
   visibleLayers: LayerEntry[];
   /**
    * Toggle a layer's visibility regardless of which context owns it.
@@ -45,6 +55,7 @@ export interface UseMapLayersResult {
  * know which context a layer came from.
  */
 export function useMapLayers(): UseMapLayersResult {
+  const base = useContext(BaseLayersContext);
   const builtIn = useContext(BuiltInLayersContext);
   const custom = useContext(CustomLayersContext);
 
@@ -133,6 +144,11 @@ export function useMapLayers(): UseMapLayersResult {
   };
 
   return {
+    // Base layers
+    availableBaseLayers: base.availableBaseLayers,
+    activeBaseLayerId: base.activeBaseLayerId,
+    setActiveBaseLayer: base.setActiveBaseLayer,
+    // Overlay layers
     allLayers,
     visibleLayers,
     toggleLayer,

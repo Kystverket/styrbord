@@ -2,6 +2,31 @@ import type { Feature, FeatureCollection } from 'geojson';
 import type { LayerSpecification, SourceSpecification } from 'maplibre-gl';
 
 // ---------------------------------------------------------------------------
+// Base layer model (exclusive — only one active at a time)
+// ---------------------------------------------------------------------------
+
+/**
+ * Describes a base (background) map layer.
+ *
+ * Unlike overlay `LayerDefinition`s, base layers are mutually exclusive:
+ * the consumer selects **one** at a time via the `BaseLayersContext`.
+ */
+export interface BaseLayerDefinition {
+  /** Unique identifier for this base layer. */
+  id: string;
+  /** Human-readable name shown in the base layer switcher UI. */
+  label: string;
+  /** MapLibre sources keyed by source id. */
+  sources: Record<string, SourceSpecification>;
+  /** MapLibre layer specifications that reference the sources above. */
+  layers: LayerSpecification[];
+  /** Attribution string (shown in the map attribution control). */
+  attribution?: string;
+  /** Extensible metadata bag for application-specific data. */
+  metadata?: Record<string, unknown>;
+}
+
+// ---------------------------------------------------------------------------
 // Core layer model
 // ---------------------------------------------------------------------------
 

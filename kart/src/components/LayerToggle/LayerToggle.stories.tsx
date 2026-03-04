@@ -1,10 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import StyrbordDecorator from "../../../storybook/styrbordDecorator";
 import { LayerToggle } from "./LayerToggle";
+import { BaseLayersProvider } from '~/utility/baseLayersContext';
 import { BuiltInLayersProvider } from "~/utility/builtInLayersContext";
 import { CustomLayersProvider } from "~/utility/customLayersContext";
 import { ViewBoundsProvider } from "~/utility/viewBoundsContext";
 import { useMaplibreMap } from "~/hooks/useMaplibreMap";
+import { KARTVERKET_TOPO_BASE_LAYER } from '~/utility/mapStyle';
+import type { BaseLayerDefinition } from '~/utility/layers.types';
+import type { LayerSpecification } from 'maplibre-gl';
 
 // ---------------------------------------------------------------------------
 // Meta
@@ -53,11 +57,13 @@ function MapWithLayerToggle({ defaultOpen }: { defaultOpen?: boolean }) {
 export const Default: Story = {
   render: () => (
     <ViewBoundsProvider>
-      <BuiltInLayersProvider>
-        <CustomLayersProvider>
-          <MapWithLayerToggle />
-        </CustomLayersProvider>
-      </BuiltInLayersProvider>
+      <BaseLayersProvider>
+        <BuiltInLayersProvider>
+          <CustomLayersProvider>
+            <MapWithLayerToggle />
+          </CustomLayersProvider>
+        </BuiltInLayersProvider>
+      </BaseLayersProvider>
     </ViewBoundsProvider>
   ),
 };
@@ -66,11 +72,13 @@ export const Default: Story = {
 export const StartOpen: Story = {
   render: () => (
     <ViewBoundsProvider>
-      <BuiltInLayersProvider>
-        <CustomLayersProvider>
-          <MapWithLayerToggle defaultOpen />
-        </CustomLayersProvider>
-      </BuiltInLayersProvider>
+      <BaseLayersProvider>
+        <BuiltInLayersProvider>
+          <CustomLayersProvider>
+            <MapWithLayerToggle defaultOpen />
+          </CustomLayersProvider>
+        </BuiltInLayersProvider>
+      </BaseLayersProvider>
     </ViewBoundsProvider>
   ),
 };
@@ -79,11 +87,76 @@ export const StartOpen: Story = {
 export const FilteredLayers: Story = {
   render: () => (
     <ViewBoundsProvider>
-      <BuiltInLayersProvider include={["Havnedata", "Bilder"]}>
-        <CustomLayersProvider>
-          <MapWithLayerToggle defaultOpen />
-        </CustomLayersProvider>
-      </BuiltInLayersProvider>
+      <BaseLayersProvider>
+        <BuiltInLayersProvider include={['Havnedata', 'Bilder']}>
+          <CustomLayersProvider>
+            <MapWithLayerToggle defaultOpen />
+          </CustomLayersProvider>
+        </BuiltInLayersProvider>
+      </BaseLayersProvider>
+    </ViewBoundsProvider>
+  ),
+};
+
+// ---------------------------------------------------------------------------
+// Extra base layers for the multi-base-layer story
+// ---------------------------------------------------------------------------
+
+const KARTVERKET_SEA_BASE_LAYER: BaseLayerDefinition = {
+  id: 'kartverket-sea',
+  label: 'Sjøkart',
+  sources: {
+    'kartverket-sea': {
+      type: 'raster',
+      tiles: ['https://cache.kartverket.no/v1/wmts/1.0.0/sjokartraster/default/webmercator/{z}/{y}/{x}.png'],
+      tileSize: 256,
+      maxzoom: 18,
+      attribution: '&copy; <a href="https://www.kartverket.no/">Kartverket</a>',
+    },
+  },
+  layers: [
+    {
+      id: 'kartverket-sea-raster',
+      type: 'raster',
+      source: 'kartverket-sea',
+    } as LayerSpecification,
+  ],
+};
+
+const KARTVERKET_GRAATONE_BASE_LAYER: BaseLayerDefinition = {
+  id: 'kartverket-graatone',
+  label: 'Gråtone',
+  sources: {
+    'kartverket-graatone': {
+      type: 'raster',
+      tiles: ['https://cache.kartverket.no/v1/wmts/1.0.0/topograatone/default/webmercator/{z}/{y}/{x}.png'],
+      tileSize: 256,
+      maxzoom: 18,
+      attribution: '&copy; <a href="https://www.kartverket.no/">Kartverket</a>',
+    },
+  },
+  layers: [
+    {
+      id: 'kartverket-graatone-raster',
+      type: 'raster',
+      source: 'kartverket-graatone',
+    } as LayerSpecification,
+  ],
+};
+
+/** Multiple base layers — demonstrates the radio-button base layer switcher. */
+export const MultipleBaseLayers: Story = {
+  render: () => (
+    <ViewBoundsProvider>
+      <BaseLayersProvider
+        baseLayers={[KARTVERKET_TOPO_BASE_LAYER, KARTVERKET_SEA_BASE_LAYER, KARTVERKET_GRAATONE_BASE_LAYER]}
+      >
+        <BuiltInLayersProvider>
+          <CustomLayersProvider>
+            <MapWithLayerToggle defaultOpen />
+          </CustomLayersProvider>
+        </BuiltInLayersProvider>
+      </BaseLayersProvider>
     </ViewBoundsProvider>
   ),
 };

@@ -51,8 +51,10 @@ export function LayerToggle({
   defaultOpen = false,
 }: LayerToggleProps) {
   const [open, setOpen] = useState(defaultOpen);
-  const { allLayers, toggleLayer } = useMapLayers();
+  const { allLayers, toggleLayer, availableBaseLayers, activeBaseLayerId, setActiveBaseLayer } = useMapLayers();
   const panelRef = useRef<HTMLDivElement>(null);
+
+  const showBaseLayerGroup = availableBaseLayers.length > 1;
 
   // Group layers by category (uncategorised layers go under "Layers")
   const grouped = useMemo(() => {
@@ -78,8 +80,8 @@ export function LayerToggle({
         className={styles.toggleButton}
         onClick={() => setOpen((prev) => !prev)}
         aria-expanded={open}
-        aria-label={open ? "Skjul kartlag" : "Vis kartlag"}
-        title={open ? "Skjul kartlag" : "Vis kartlag"}
+        aria-label={open ? 'Skjul kartlag' : 'Vis kartlag'}
+        title={open ? 'Skjul kartlag' : 'Vis kartlag'}
       >
         <LayersIcon className={styles.toggleButtonIcon} />
         Kartlag
@@ -87,29 +89,44 @@ export function LayerToggle({
 
       {open && (
         <div className={styles.panel} ref={panelRef} role="group">
-          {allLayers.length === 0 ? (
-            <div className={styles.emptyMessage}>
-              Ingen kartlag tilgjengelig
-            </div>
+          {allLayers.length === 0 && !showBaseLayerGroup ? (
+            <div className={styles.emptyMessage}>Ingen kartlag tilgjengelig</div>
           ) : (
-            Array.from(grouped.entries()).map(([category, entries]) => (
-              <div key={category}>
-                {grouped.size > 1 && (
-                  <div className={styles.categoryHeading}>{category}</div>
-                )}
-                {entries.map((entry) => (
-                  <label key={entry.definition.id} className={styles.layerItem}>
-                    <input
-                      type="checkbox"
-                      className={styles.checkbox}
-                      checked={entry.visible}
-                      onChange={() => toggleLayer(entry.definition.id)}
-                    />
-                    {entry.definition.label}
-                  </label>
-                ))}
-              </div>
-            ))
+            <>
+              {showBaseLayerGroup && (
+                <div>
+                  <div className={styles.categoryHeading}>Bakgrunnskart</div>
+                  {availableBaseLayers.map((bl) => (
+                    <label key={bl.id} className={styles.layerItem}>
+                      <input
+                        type="radio"
+                        className={styles.radio}
+                        name="base-layer"
+                        checked={bl.id === activeBaseLayerId}
+                        onChange={() => setActiveBaseLayer(bl.id)}
+                      />
+                      {bl.label}
+                    </label>
+                  ))}
+                </div>
+              )}
+              {Array.from(grouped.entries()).map(([category, entries]) => (
+                <div key={category}>
+                  {(grouped.size > 1 || showBaseLayerGroup) && <div className={styles.categoryHeading}>{category}</div>}
+                  {entries.map((entry) => (
+                    <label key={entry.definition.id} className={styles.layerItem}>
+                      <input
+                        type="checkbox"
+                        className={styles.checkbox}
+                        checked={entry.visible}
+                        onChange={() => toggleLayer(entry.definition.id)}
+                      />
+                      {entry.definition.label}
+                    </label>
+                  ))}
+                </div>
+              ))}
+            </>
           )}
         </div>
       )}

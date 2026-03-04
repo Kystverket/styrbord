@@ -77,6 +77,14 @@
   margin: 0;
 }
 
+.radio {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--ds-color-accent-base-default, #0062ba);
+  cursor: pointer;
+  margin: 0;
+}
+
 .emptyMessage {
   padding: 12px;
   font-size: 0.8125rem;
