@@ -47,6 +47,7 @@ export const Select = ({ ...props }: SelectProps) => {
           props.onBlur?.();
           setIsOpen(false);
         }}
+        disabled={props.disabled}
         onMouseDown={() => setIsOpen((prev) => !prev)}
         onKeyDown={(event) => {
           if (event.key === 'Enter' || event.key === ' ' || event.key === 'ArrowDown' || event.key === 'ArrowUp') {
