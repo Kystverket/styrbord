@@ -20,6 +20,7 @@ export function CoordinatePicker({
   error,
   disabled = false,
   className,
+  height,
 }: CoordinatePickerProps) {
   const id = useId();
 
@@ -80,6 +81,7 @@ export function CoordinatePicker({
     initialCoordinate: currentCoordinate,
     disabled,
     onMapClick: handleMapClick,
+    height,
   });
 
   // ----- Point marker hook -----

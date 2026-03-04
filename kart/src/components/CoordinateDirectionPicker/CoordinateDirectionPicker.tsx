@@ -27,6 +27,7 @@ export function CoordinateDirectionPicker({
   error,
   disabled = false,
   className,
+  height,
 }: CoordinateDirectionPickerProps) {
   const id = useId();
 
@@ -101,6 +102,7 @@ export function CoordinateDirectionPicker({
     initialCoordinate: currentValue.coordinate,
     disabled,
     onMapClick: handleMapClick,
+    height,
   });
 
   // ----- Compass marker hook -----

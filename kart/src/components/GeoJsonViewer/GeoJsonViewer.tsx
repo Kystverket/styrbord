@@ -45,6 +45,7 @@ export function GeoJsonViewer({
 
   const { mapContainerRef, mapRef } = useMaplibreMap({
     disabled,
+    height,
   });
 
   // ----- Single effect: add / update GeoJSON source + layers -----
@@ -170,7 +171,6 @@ export function GeoJsonViewer({
     <div
       ref={mapContainerRef}
       className={[styles.mapContainer, className].filter(Boolean).join(" ")}
-      style={height ? { height } : undefined}
     />
   );
 }
