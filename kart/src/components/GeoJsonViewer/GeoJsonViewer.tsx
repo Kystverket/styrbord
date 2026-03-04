@@ -1,102 +1,21 @@
 import { useEffect, useMemo } from "react";
-import type { FeatureCollection } from "geojson";
-import type maplibregl from "maplibre-gl";
 import type { GeoJSONSource } from "maplibre-gl";
 
 import styles from "~/components/shared/MapPicker.module.css";
 import type { GeoJsonStyle, GeoJsonViewerProps } from "./GeoJsonViewer.types";
 import { DEFAULT_CENTER, DEFAULT_ZOOM } from "~/utility/mapStyle";
+import { computeBounds } from "~/utility/geojson";
 import { useMaplibreMap } from "~/hooks/useMaplibreMap";
-
-// ---------------------------------------------------------------------------
-// Defaults
-// ---------------------------------------------------------------------------
-
-const DEFAULT_STYLE: Required<GeoJsonStyle> = {
-  fillColor: "rgba(0, 6, 103, 0.2)",
-  lineColor: "#000667",
-  lineWidth: 2,
-  pointRadius: 6,
-  pointColor: "#df3c1b",
-  pointStrokeColor: "#000667",
-  pointStrokeWidth: 2,
-};
-
-const SOURCE_ID = "geojson-data";
-const FILL_LAYER = "geojson-fill";
-const LINE_LAYER = "geojson-line";
-const POINT_STROKE_LAYER = "geojson-point-stroke";
-const POINT_LAYER = "geojson-point";
-const ALL_LAYERS = [POINT_LAYER, POINT_STROKE_LAYER, LINE_LAYER, FILL_LAYER];
-
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
-/**
- * Normalise a Feature or FeatureCollection into a **clean** FeatureCollection.
- *
- * Strips non-standard top-level members (e.g. `crs`, `name`) that originate
- * from legacy GeoJSON files and can cause MapLibre's internal geojson-vt
- * worker to silently discard features.
- */
-function toFeatureCollection(
-  data: GeoJsonViewerProps["data"],
-): FeatureCollection {
-  if (data.type === "FeatureCollection") {
-    const fc = data as FeatureCollection;
-    return { type: "FeatureCollection", features: fc.features };
-  }
-  return { type: "FeatureCollection", features: [data] } as FeatureCollection;
-}
-
-/** Remove all GeoJSON layers and the source from the map, ignoring errors. */
-function removeLayers(map: maplibregl.Map) {
-  try {
-    for (const id of ALL_LAYERS) {
-      if (map.getLayer(id)) map.removeLayer(id);
-    }
-    if (map.getSource(SOURCE_ID)) map.removeSource(SOURCE_ID);
-  } catch {
-    // map may already be destroyed
-  }
-}
-
-/**
- * Compute a bounding box `[minLng, minLat, maxLng, maxLat]` from a
- * FeatureCollection by visiting every coordinate.
- */
-function computeBounds(
-  fc: FeatureCollection,
-): [number, number, number, number] | null {
-  let minLng = Infinity;
-  let maxLng = -Infinity;
-  let minLat = Infinity;
-  let maxLat = -Infinity;
-  let found = false;
-
-  function visit(coords: unknown): void {
-    if (!Array.isArray(coords)) return;
-    if (typeof coords[0] === "number" && typeof coords[1] === "number") {
-      const [lng, lat] = coords as [number, number];
-      if (lng < minLng) minLng = lng;
-      if (lng > maxLng) maxLng = lng;
-      if (lat < minLat) minLat = lat;
-      if (lat > maxLat) maxLat = lat;
-      found = true;
-    } else {
-      for (const child of coords) visit(child);
-    }
-  }
-
-  for (const feature of fc.features) {
-    if (feature.geometry && "coordinates" in feature.geometry) {
-      visit(feature.geometry.coordinates);
-    }
-  }
-
-  return found ? [minLng, minLat, maxLng, maxLat] : null;
-}
+import {
+  DEFAULT_STYLE,
+  FILL_LAYER,
+  LINE_LAYER,
+  POINT_LAYER,
+  POINT_STROKE_LAYER,
+  SOURCE_ID,
+  removeLayers,
+  toFeatureCollection,
+} from "./GeoJsonViewer.utils";
 
 // ---------------------------------------------------------------------------
 // Component
