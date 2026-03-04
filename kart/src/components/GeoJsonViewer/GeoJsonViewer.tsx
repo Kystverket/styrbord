@@ -33,9 +33,10 @@ export function GeoJsonViewer({
   defaultZoom = DEFAULT_ZOOM,
   fitBounds = true,
   fitBoundsPadding = 40,
-  style: styleProp,
+  geoJsonStyle: styleProp,
   height,
   className,
+  disabled,
 }: GeoJsonViewerProps) {
   const layerStyle: Required<GeoJsonStyle> = {
     ...DEFAULT_STYLE,
@@ -48,13 +49,14 @@ export function GeoJsonViewer({
   const { mapContainerRef, mapRef } = useMaplibreMap({
     defaultCenter,
     defaultZoom,
+    disabled,
   });
 
   // ----- Single effect: add / update GeoJSON source + layers -----
   useEffect(() => {
     const map = mapRef.current;
     if (!map) {
-      console.warn("[GeoJsonViewer] mapRef.current is null — effect skipped");
+      console.warn('[GeoJsonViewer] mapRef.current is null — effect skipped');
       return;
     }
 
@@ -65,29 +67,29 @@ export function GeoJsonViewer({
         if (existingSource) {
           (existingSource as GeoJSONSource).setData(fc);
         } else {
-          map.addSource(SOURCE_ID, { type: "geojson", data: fc });
+          map.addSource(SOURCE_ID, { type: 'geojson', data: fc });
         }
 
         // Add layers (idempotent — skipped if they already exist)
         if (!map.getLayer(FILL_LAYER)) {
           map.addLayer({
             id: FILL_LAYER,
-            type: "fill",
+            type: 'fill',
             source: SOURCE_ID,
-            layout: { visibility: "visible" },
-            paint: { "fill-color": layerStyle.fillColor },
+            layout: { visibility: 'visible' },
+            paint: { 'fill-color': layerStyle.fillColor },
           });
         }
 
         if (!map.getLayer(LINE_LAYER)) {
           map.addLayer({
             id: LINE_LAYER,
-            type: "line",
+            type: 'line',
             source: SOURCE_ID,
-            layout: { visibility: "visible" },
+            layout: { visibility: 'visible' },
             paint: {
-              "line-color": layerStyle.lineColor,
-              "line-width": layerStyle.lineWidth,
+              'line-color': layerStyle.lineColor,
+              'line-width': layerStyle.lineWidth,
             },
           });
         }
@@ -95,13 +97,12 @@ export function GeoJsonViewer({
         if (!map.getLayer(POINT_STROKE_LAYER)) {
           map.addLayer({
             id: POINT_STROKE_LAYER,
-            type: "circle",
+            type: 'circle',
             source: SOURCE_ID,
-            layout: { visibility: "visible" },
+            layout: { visibility: 'visible' },
             paint: {
-              "circle-radius":
-                layerStyle.pointRadius + layerStyle.pointStrokeWidth,
-              "circle-color": layerStyle.pointStrokeColor,
+              'circle-radius': layerStyle.pointRadius + layerStyle.pointStrokeWidth,
+              'circle-color': layerStyle.pointStrokeColor,
             },
           });
         }
@@ -109,12 +110,12 @@ export function GeoJsonViewer({
         if (!map.getLayer(POINT_LAYER)) {
           map.addLayer({
             id: POINT_LAYER,
-            type: "circle",
+            type: 'circle',
             source: SOURCE_ID,
-            layout: { visibility: "visible" },
+            layout: { visibility: 'visible' },
             paint: {
-              "circle-radius": layerStyle.pointRadius,
-              "circle-color": layerStyle.pointColor,
+              'circle-radius': layerStyle.pointRadius,
+              'circle-color': layerStyle.pointColor,
             },
           });
         }
@@ -138,23 +139,22 @@ export function GeoJsonViewer({
         // Diagnostic — check the browser console to verify layers exist
         // and features were parsed by the source.
         console.info(
-          "[GeoJsonViewer] layers:",
+          '[GeoJsonViewer] layers:',
           map.getStyle().layers.map((l) => l.id),
-          "| source features:",
+          '| source features:',
           map.querySourceFeatures(SOURCE_ID).length,
         );
       } catch (err) {
-        console.error("[GeoJsonViewer] Error adding source/layers:", err);
+        console.error('[GeoJsonViewer] Error adding source/layers:', err);
       }
     };
 
     // Catch any internal MapLibre errors
-    const onError = (e: unknown) =>
-      console.error("[GeoJsonViewer] Map error:", e);
-    map.on("error", onError);
+    const onError = (e: unknown) => console.error('[GeoJsonViewer] Map error:', e);
+    map.on('error', onError);
 
     // Use map.on (not .once) so map.off reliably removes the exact handler.
-    map.on("load", setup);
+    map.on('load', setup);
 
     // Also try immediately — covers the case where the map already loaded
     // (e.g. data prop changed after initial mount).
@@ -163,8 +163,8 @@ export function GeoJsonViewer({
     }
 
     return () => {
-      map.off("error", onError);
-      map.off("load", setup);
+      map.off('error', onError);
+      map.off('load', setup);
       removeLayers(map);
     };
   }, [fc, mapRef]);
@@ -172,7 +172,7 @@ export function GeoJsonViewer({
   return (
     <div
       ref={mapContainerRef}
-      className={[styles.mapContainer, className].filter(Boolean).join(" ")}
+      className={[styles.mapContainer, className].filter(Boolean).join(' ')}
       style={height ? { height } : undefined}
     />
   );

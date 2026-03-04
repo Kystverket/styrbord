@@ -4,7 +4,8 @@ import type {
   GeoJsonProperties,
   Geometry,
 } from "geojson";
-import type { Coordinate } from "~/utility/types";
+
+import { MapBaseProps } from '../shared/MapPicker.types';
 
 /**
  * Styling options for the GeoJSON layers rendered on the map.
@@ -26,15 +27,9 @@ export interface GeoJsonStyle {
   pointStrokeWidth?: number;
 }
 
-export interface GeoJsonViewerProps {
+export interface GeoJsonViewerProps extends MapBaseProps {
   /** GeoJSON data to display on the map. Accepts a Feature or FeatureCollection. */
-  data:
-    | Feature<Geometry, GeoJsonProperties>
-    | FeatureCollection<Geometry, GeoJsonProperties>;
-  /** Initial center of the map when no data bounds can be computed. Defaults to approx. center of Norway. */
-  defaultCenter?: Coordinate;
-  /** Initial zoom level when no data bounds can be computed. Defaults to 5. */
-  defaultZoom?: number;
+  data: Feature<Geometry, GeoJsonProperties> | FeatureCollection<Geometry, GeoJsonProperties>;
   /**
    * Whether to automatically fit the map view to the bounding box of the GeoJSON data.
    * Defaults to `true`.
@@ -43,9 +38,7 @@ export interface GeoJsonViewerProps {
   /** Padding (in pixels) applied when fitting bounds. Defaults to `40`. */
   fitBoundsPadding?: number;
   /** Styling overrides for the rendered GeoJSON layers. */
-  style?: GeoJsonStyle;
-  /** Height of the map container. Defaults to `"400px"`. */
-  height?: string;
+  geoJsonStyle?: GeoJsonStyle;
   /** Additional CSS class applied to the root element. */
   className?: string;
 }

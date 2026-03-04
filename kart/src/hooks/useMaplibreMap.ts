@@ -25,6 +25,8 @@ export interface UseMaplibreMapOptions {
   disabled?: boolean;
   /** Called when the user clicks on the map. Receives the clicked coordinate. */
   onMapClick?: (coord: Coordinate) => void;
+  /** Height of the map container. Defaults to `"400px"`. */
+  height?: string;
 }
 
 /**
@@ -39,6 +41,7 @@ export function useMaplibreMap({
   defaultZoom = DEFAULT_ZOOM,
   disabled = false,
   onMapClick,
+  height,
 }: UseMaplibreMapOptions = {}) {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
@@ -52,6 +55,37 @@ export function useMaplibreMap({
 
   const onMapClickRef = useRef(onMapClick);
   onMapClickRef.current = onMapClick;
+
+  // ----- Enable / disable map interactions -----
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+
+    if (disabled) {
+      map.dragPan.disable();
+      map.scrollZoom.disable();
+      map.boxZoom.disable();
+      map.dragRotate.disable();
+      map.keyboard.disable();
+      map.doubleClickZoom.disable();
+      map.touchZoomRotate.disable();
+    } else {
+      map.dragPan.enable();
+      map.scrollZoom.enable();
+      map.boxZoom.enable();
+      map.dragRotate.enable();
+      map.keyboard.enable();
+      map.doubleClickZoom.enable();
+      map.touchZoomRotate.enable();
+    }
+  }, [disabled]);
+
+  // ----- Apply height to the container -----
+  useEffect(() => {
+    if (mapContainerRef.current) {
+      mapContainerRef.current.style.height = height ?? '';
+    }
+  }, [height]);
 
   // ----- Initialise the map (once) -----
   useEffect(() => {
@@ -71,7 +105,7 @@ export function useMaplibreMap({
 
     mapRef.current = map;
 
-    map.on("click", (e: maplibregl.MapMouseEvent) => {
+    map.on('click', (e: maplibregl.MapMouseEvent) => {
       if (disabledRef.current) return;
       const { lng, lat } = e.lngLat;
       onMapClickRef.current?.({
