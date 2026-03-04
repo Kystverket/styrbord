@@ -9,6 +9,12 @@ export { CoordinatePicker } from "./components/CoordinatePicker/CoordinatePicker
 export type { CoordinatePickerProps } from "./components/CoordinatePicker/CoordinatePicker.types";
 export type { CoordinateGeoJSON } from "./utility/types";
 
+export { GeoJsonViewer } from "./components/GeoJsonViewer/GeoJsonViewer";
+export type {
+  GeoJsonViewerProps,
+  GeoJsonStyle,
+} from "./components/GeoJsonViewer/GeoJsonViewer.types";
+
 // Hooks
 export { useMaplibreMap } from "./hooks/useMaplibreMap";
 export type { UseMaplibreMapOptions } from "./hooks/useMaplibreMap";
