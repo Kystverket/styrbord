@@ -68,6 +68,13 @@ export const WithError: Story = {
   },
 };
 
+// ---- Custom height ----
+export const TallMap: Story = {
+  args: {
+    height: "1600px",
+  },
+};
+
 // ---- Disabled ----
 export const Disabled: Story = {
   args: {

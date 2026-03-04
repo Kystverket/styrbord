@@ -9,6 +9,9 @@ import {
 } from "~/utility/coordinate";
 import { KARTVERKET_STYLE } from "~/utility/mapStyle";
 import { ViewBoundsContext } from "~/utility/viewBoundsContext";
+import { BuiltInLayersContext } from "~/utility/builtInLayersContext";
+import { CustomLayersContext } from "~/utility/customLayersContext";
+import type { LayerDefinition } from "~/utility/layers.types";
 
 export interface UseMaplibreMapOptions {
   /** Initial coordinate to center the map on. Falls back to context `defaultCenter`. */
@@ -37,6 +40,10 @@ export function useMaplibreMap({
   const mapRef = useRef<maplibregl.Map | null>(null);
   const { viewBounds, defaultCenter, defaultZoom } =
     useContext(ViewBoundsContext);
+
+  // ----- Layer contexts (both optional — graceful when no provider is present) -----
+  const builtInCtx = useContext(BuiltInLayersContext);
+  const customCtx = useContext(CustomLayersContext);
 
   // Keep callbacks in refs so the map's one-time setup always reads the latest values.
   const disabledRef = useRef(disabled);
@@ -140,5 +147,111 @@ export function useMaplibreMap({
     );
   }, [viewBounds]);
 
+  // ----- Sync context layers to the MapLibre instance -----
+  const appliedLayerIdsRef = useRef<Set<string>>(new Set());
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+
+    const syncLayers = () => {
+      // Merge built-in + custom definitions. Built-in render below custom.
+      const allDefs: LayerDefinition[] = [
+        ...builtInCtx.availableLayers,
+        ...customCtx.layers,
+      ];
+      const allVisibleIds = new Set([
+        ...builtInCtx.visibleLayerIds,
+        ...customCtx.visibleLayerIds,
+      ]);
+
+      const desiredIds = new Set(allDefs.map((d) => d.id));
+      const previousIds = appliedLayerIdsRef.current;
+
+      // 1. Remove layers that are no longer in the definitions
+      for (const prevId of previousIds) {
+        if (!desiredIds.has(prevId)) {
+          const def = findPreviousDef(prevId, allDefs);
+          if (def) removeDefFromMap(map, def);
+          previousIds.delete(prevId);
+        }
+      }
+
+      // 2. Add new layers / update visibility
+      for (const def of allDefs) {
+        const isOnMap = previousIds.has(def.id);
+        const shouldBeVisible = allVisibleIds.has(def.id);
+
+        if (!isOnMap) {
+          // Add sources
+          for (const [srcId, srcSpec] of Object.entries(def.sources)) {
+            if (!map.getSource(srcId)) {
+              map.addSource(srcId, srcSpec);
+            }
+          }
+          // Add layers
+          for (const layerSpec of def.layers) {
+            if (!map.getLayer(layerSpec.id)) {
+              map.addLayer(layerSpec);
+            }
+            map.setLayoutProperty(
+              layerSpec.id,
+              "visibility",
+              shouldBeVisible ? "visible" : "none",
+            );
+          }
+          previousIds.add(def.id);
+        } else {
+          // Already on map — just update visibility
+          for (const layerSpec of def.layers) {
+            if (map.getLayer(layerSpec.id)) {
+              map.setLayoutProperty(
+                layerSpec.id,
+                "visibility",
+                shouldBeVisible ? "visible" : "none",
+              );
+            }
+          }
+        }
+      }
+    };
+
+    // The map might still be loading its initial style. Wait for "load" if so.
+    if (map.loaded()) {
+      syncLayers();
+    } else {
+      map.once("load", syncLayers);
+    }
+  }, [
+    builtInCtx.availableLayers,
+    builtInCtx.visibleLayerIds,
+    customCtx.layers,
+    customCtx.visibleLayerIds,
+  ]);
+
   return { mapContainerRef, mapRef };
+}
+
+// ---------------------------------------------------------------------------
+// Helpers (module-level to avoid re-creation)
+// ---------------------------------------------------------------------------
+
+function findPreviousDef(
+  id: string,
+  currentDefs: LayerDefinition[],
+): LayerDefinition | undefined {
+  return currentDefs.find((d) => d.id === id);
+}
+
+function removeDefFromMap(map: maplibregl.Map, def: LayerDefinition) {
+  for (const layerSpec of def.layers) {
+    if (map.getLayer(layerSpec.id)) {
+      map.removeLayer(layerSpec.id);
+    }
+  }
+  for (const srcId of Object.keys(def.sources)) {
+    if (map.getSource(srcId)) {
+      map.removeSource(srcId);
+    }
+  }
 }

@@ -92,7 +92,7 @@ export const CustomStyle: Story = {
 export const TallMap: Story = {
   args: {
     data: sampleGeoJson as FeatureCollection,
-    height: "600px",
+    height: "1600px",
   },
 };
 

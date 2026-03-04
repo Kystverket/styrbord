@@ -15,6 +15,9 @@ export type {
   GeoJsonStyle,
 } from "./components/GeoJsonViewer/GeoJsonViewer.types";
 
+export { LayerToggle } from "./components/LayerToggle/LayerToggle";
+export type { LayerToggleProps } from "./components/LayerToggle/LayerToggle.types";
+
 // Hooks
 export { useMaplibreMap } from "./hooks/useMaplibreMap";
 export type { UseMaplibreMapOptions } from "./hooks/useMaplibreMap";
@@ -22,6 +25,8 @@ export { useCompassMarker } from "./hooks/useCompassMarker";
 export type { UseCompassMarkerOptions } from "./hooks/useCompassMarker";
 export { usePointMarker } from "./hooks/usePointMarker";
 export type { UsePointMarkerOptions } from "./hooks/usePointMarker";
+export { useMapLayers } from "./hooks/useMapLayers";
+export type { UseMapLayersResult, LayerEntry } from "./hooks/useMapLayers";
 
 // Utilities
 export {
@@ -40,3 +45,39 @@ export {
   ViewBoundsProvider,
 } from "./utility/viewBoundsContext";
 export type { ViewBoundsProviderProps } from "./utility/viewBoundsContext";
+
+// Layer system
+export {
+  BUILT_IN_LAYERS,
+  BUILT_IN_LAYER_IDS,
+  HAVNEDATA_LAYER_NAMES,
+  createSimpleLayer,
+  isLayerIncluded,
+} from "./utility/layers.types";
+export type {
+  LayerDefinition,
+  BuiltInLayerId,
+  LayerFilterConfig,
+  CreateSimpleLayerOptions,
+  SimpleGeoJsonLayerOptions,
+  SimpleWmsLayerOptions,
+  SimpleVectorTilesLayerOptions,
+} from "./utility/layers.types";
+
+export {
+  BuiltInLayersContext,
+  BuiltInLayersProvider,
+} from "./utility/builtInLayersContext";
+export type {
+  BuiltInLayersContextValue,
+  BuiltInLayersProviderProps,
+} from "./utility/builtInLayersContext";
+
+export {
+  CustomLayersContext,
+  CustomLayersProvider,
+} from "./utility/customLayersContext";
+export type {
+  CustomLayersContextValue,
+  CustomLayersProviderProps,
+} from "./utility/customLayersContext";
