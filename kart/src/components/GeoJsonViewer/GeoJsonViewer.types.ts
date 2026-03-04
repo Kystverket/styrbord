@@ -1,4 +1,9 @@
-import type { Feature, FeatureCollection, GeoJsonProperties } from "geojson";
+import type {
+  Feature,
+  FeatureCollection,
+  GeoJsonProperties,
+  Geometry,
+} from "geojson";
 import type { Coordinate } from "~/utility/types";
 
 /**
@@ -24,8 +29,8 @@ export interface GeoJsonStyle {
 export interface GeoJsonViewerProps {
   /** GeoJSON data to display on the map. Accepts a Feature or FeatureCollection. */
   data:
-    | Feature<any, GeoJsonProperties>
-    | FeatureCollection<any, GeoJsonProperties>;
+    | Feature<Geometry, GeoJsonProperties>
+    | FeatureCollection<Geometry, GeoJsonProperties>;
   /** Initial center of the map when no data bounds can be computed. Defaults to approx. center of Norway. */
   defaultCenter?: Coordinate;
   /** Initial zoom level when no data bounds can be computed. Defaults to 5. */

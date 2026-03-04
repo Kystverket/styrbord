@@ -1,10 +1,12 @@
-import type { FeatureCollection } from 'geojson';
+import type { FeatureCollection } from "geojson";
 
 /**
  * Compute a bounding box `[minLng, minLat, maxLng, maxLat]` from a
  * FeatureCollection by visiting every coordinate.
  */
-export function computeBounds(fc: FeatureCollection): [number, number, number, number] | null {
+export function computeBounds(
+  fc: FeatureCollection,
+): [number, number, number, number] | null {
   let minLng = Infinity;
   let maxLng = -Infinity;
   let minLat = Infinity;
@@ -13,7 +15,7 @@ export function computeBounds(fc: FeatureCollection): [number, number, number, n
 
   function visit(coords: unknown): void {
     if (!Array.isArray(coords)) return;
-    if (typeof coords[0] === 'number' && typeof coords[1] === 'number') {
+    if (typeof coords[0] === "number" && typeof coords[1] === "number") {
       const [lng, lat] = coords as [number, number];
       if (lng < minLng) minLng = lng;
       if (lng > maxLng) maxLng = lng;
@@ -26,7 +28,7 @@ export function computeBounds(fc: FeatureCollection): [number, number, number, n
   }
 
   for (const feature of fc.features) {
-    if (feature.geometry && 'coordinates' in feature.geometry) {
+    if (feature.geometry && "coordinates" in feature.geometry) {
       visit(feature.geometry.coordinates);
     }
   }

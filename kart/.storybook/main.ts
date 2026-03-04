@@ -1,14 +1,18 @@
 import type { StorybookConfig } from "@storybook/react-vite";
 
 const config: StorybookConfig = {
-  stories: ['../storybook/**/*.mdx', '../storybook/**/*.stories.@(ts|tsx)', '../src/components/**/*.stories.@(ts|tsx)'],
+  stories: [
+    "../storybook/**/*.mdx",
+    "../storybook/**/*.stories.@(ts|tsx)",
+    "../src/components/**/*.stories.@(ts|tsx)",
+  ],
 
   addons: [
-    '@storybook/addon-onboarding',
-    '@storybook/addon-links',
-    '@chromatic-com/storybook',
-    'storybook-addon-tag-badges',
-    '@storybook/addon-docs',
+    "@storybook/addon-onboarding",
+    "@storybook/addon-links",
+    "@chromatic-com/storybook",
+    "storybook-addon-tag-badges",
+    "@storybook/addon-docs",
   ],
 
   core: {
@@ -16,11 +20,11 @@ const config: StorybookConfig = {
   },
 
   framework: {
-    name: '@storybook/react-vite',
+    name: "@storybook/react-vite",
     options: {},
   },
 
-  staticDirs: ['../assets'],
+  staticDirs: ["../assets"],
 
   docs: {},
 
@@ -29,7 +33,7 @@ const config: StorybookConfig = {
       ...viteFinalConfig.optimizeDeps,
       esbuildOptions: {
         ...viteFinalConfig.optimizeDeps?.esbuildOptions,
-        target: 'es2022',
+        target: "es2022",
       },
     };
     return viteFinalConfig;

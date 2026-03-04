@@ -1,28 +1,33 @@
-import type { FeatureCollection } from 'geojson';
-import type maplibregl from 'maplibre-gl';
+import type { FeatureCollection } from "geojson";
+import type maplibregl from "maplibre-gl";
 
-import type { GeoJsonStyle, GeoJsonViewerProps } from './GeoJsonViewer.types';
+import type { GeoJsonStyle, GeoJsonViewerProps } from "./GeoJsonViewer.types";
 
 // ---------------------------------------------------------------------------
 // Defaults & Constants
 // ---------------------------------------------------------------------------
 
 export const DEFAULT_STYLE: Required<GeoJsonStyle> = {
-  fillColor: 'rgba(0, 6, 103, 0.2)',
-  lineColor: '#000667',
+  fillColor: "rgba(0, 6, 103, 0.2)",
+  lineColor: "#000667",
   lineWidth: 2,
   pointRadius: 6,
-  pointColor: '#df3c1b',
-  pointStrokeColor: '#000667',
+  pointColor: "#df3c1b",
+  pointStrokeColor: "#000667",
   pointStrokeWidth: 2,
 };
 
-export const SOURCE_ID = 'geojson-data';
-export const FILL_LAYER = 'geojson-fill';
-export const LINE_LAYER = 'geojson-line';
-export const POINT_STROKE_LAYER = 'geojson-point-stroke';
-export const POINT_LAYER = 'geojson-point';
-export const ALL_LAYERS = [POINT_LAYER, POINT_STROKE_LAYER, LINE_LAYER, FILL_LAYER];
+export const SOURCE_ID = "geojson-data";
+export const FILL_LAYER = "geojson-fill";
+export const LINE_LAYER = "geojson-line";
+export const POINT_STROKE_LAYER = "geojson-point-stroke";
+export const POINT_LAYER = "geojson-point";
+export const ALL_LAYERS = [
+  POINT_LAYER,
+  POINT_STROKE_LAYER,
+  LINE_LAYER,
+  FILL_LAYER,
+];
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -35,12 +40,14 @@ export const ALL_LAYERS = [POINT_LAYER, POINT_STROKE_LAYER, LINE_LAYER, FILL_LAY
  * from legacy GeoJSON files and can cause MapLibre's internal geojson-vt
  * worker to silently discard features.
  */
-export function toFeatureCollection(data: GeoJsonViewerProps['data']): FeatureCollection {
-  if (data.type === 'FeatureCollection') {
+export function toFeatureCollection(
+  data: GeoJsonViewerProps["data"],
+): FeatureCollection {
+  if (data.type === "FeatureCollection") {
     const fc = data as FeatureCollection;
-    return { type: 'FeatureCollection', features: fc.features };
+    return { type: "FeatureCollection", features: fc.features };
   }
-  return { type: 'FeatureCollection', features: [data] } as FeatureCollection;
+  return { type: "FeatureCollection", features: [data] } as FeatureCollection;
 }
 
 /** Remove all GeoJSON layers and the source from the map, ignoring errors. */
