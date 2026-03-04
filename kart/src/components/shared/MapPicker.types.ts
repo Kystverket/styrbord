@@ -1,13 +1,7 @@
-import type { Coordinate } from "~/utility/types";
-
 /**
  * Common props shared by all map components
  */
 export interface MapBaseProps {
-  /** Initial center of the map when no value is set. Defaults to approx. center of Norway. */
-  defaultCenter?: Coordinate;
-  /** Initial zoom level of the map. Defaults to 5. */
-  defaultZoom?: number;
   /** Disables all interaction. */
   disabled?: boolean;
   /** Additional CSS class applied to the root element. */

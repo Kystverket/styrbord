@@ -7,7 +7,6 @@ import type {
   CoordinateDirectionPickerProps,
   CoordinateDirectionValue,
 } from "./CoordinateDirectionPicker.types";
-import { DEFAULT_CENTER, DEFAULT_ZOOM } from "~/utility/mapStyle";
 import {
   clampDirection,
   clampLatitude,
@@ -25,8 +24,6 @@ import { useCompassMarker } from "~/hooks/useCompassMarker";
 export function CoordinateDirectionPicker({
   value,
   onChange,
-  defaultCenter = DEFAULT_CENTER,
-  defaultZoom = DEFAULT_ZOOM,
   error,
   disabled = false,
   className,
@@ -102,8 +99,6 @@ export function CoordinateDirectionPicker({
 
   const { mapContainerRef, mapRef } = useMaplibreMap({
     initialCoordinate: currentValue.coordinate,
-    defaultCenter,
-    defaultZoom,
     disabled,
     onMapClick: handleMapClick,
   });

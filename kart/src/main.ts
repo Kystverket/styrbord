@@ -39,3 +39,4 @@ export {
   ViewBoundsContext,
   ViewBoundsProvider,
 } from "./utility/viewBoundsContext";
+export type { ViewBoundsProviderProps } from "./utility/viewBoundsContext";

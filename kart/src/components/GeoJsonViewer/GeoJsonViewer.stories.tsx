@@ -81,8 +81,8 @@ export const CustomStyle: Story = {
   args: {
     data: sampleGeoJson as FeatureCollection,
     geoJsonStyle: {
-      fillColor: 'rgba(223, 60, 27, 0.25)',
-      lineColor: '#df3c1b',
+      fillColor: "rgba(223, 60, 27, 0.25)",
+      lineColor: "#df3c1b",
       lineWidth: 3,
     },
   },
@@ -271,14 +271,14 @@ const complexMultiType: FeatureCollection = {
 export const ComplexMultiType: Story = {
   args: {
     data: complexMultiType,
-    height: '600px',
+    height: "600px",
     geoJsonStyle: {
-      fillColor: 'rgba(0, 6, 103, 0.15)',
-      lineColor: '#000667',
+      fillColor: "rgba(0, 6, 103, 0.15)",
+      lineColor: "#000667",
       lineWidth: 3,
       pointRadius: 7,
-      pointColor: '#df3c1b',
-      pointStrokeColor: '#000667',
+      pointColor: "#df3c1b",
+      pointStrokeColor: "#000667",
       pointStrokeWidth: 2,
     },
   },

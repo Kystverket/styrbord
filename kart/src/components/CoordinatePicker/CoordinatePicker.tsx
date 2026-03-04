@@ -4,7 +4,6 @@ import { Box, NumberInput, ValidationMessage } from "@kystverket/styrbord";
 import styles from "~/components/shared/MapPicker.module.css";
 import type { CoordinatePickerProps } from "./CoordinatePicker.types";
 import type { Coordinate } from "~/utility/types";
-import { DEFAULT_CENTER, DEFAULT_ZOOM } from "~/utility/mapStyle";
 import { clampLatitude, clampLongitude } from "~/utility/coordinate";
 import { useMaplibreMap } from "~/hooks/useMaplibreMap";
 import { usePointMarker } from "~/hooks/usePointMarker";
@@ -18,8 +17,6 @@ import { usePointMarker } from "~/hooks/usePointMarker";
 export function CoordinatePicker({
   value,
   onChange,
-  defaultCenter = DEFAULT_CENTER,
-  defaultZoom = DEFAULT_ZOOM,
   error,
   disabled = false,
   className,
@@ -81,8 +78,6 @@ export function CoordinatePicker({
 
   const { mapContainerRef, mapRef } = useMaplibreMap({
     initialCoordinate: currentCoordinate,
-    defaultCenter,
-    defaultZoom,
     disabled,
     onMapClick: handleMapClick,
   });

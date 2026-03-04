@@ -7,20 +7,12 @@ import {
   clampLongitude,
   roundToDecimals,
 } from "~/utility/coordinate";
-import {
-  KARTVERKET_STYLE,
-  DEFAULT_CENTER,
-  DEFAULT_ZOOM,
-} from "~/utility/mapStyle";
+import { KARTVERKET_STYLE } from "~/utility/mapStyle";
 import { ViewBoundsContext } from "~/utility/viewBoundsContext";
 
 export interface UseMaplibreMapOptions {
-  /** Initial coordinate to center the map on. Falls back to `defaultCenter`. */
+  /** Initial coordinate to center the map on. Falls back to context `defaultCenter`. */
   initialCoordinate?: Coordinate | null;
-  /** Default center when no initial coordinate is provided. */
-  defaultCenter?: Coordinate;
-  /** Default zoom level. */
-  defaultZoom?: number;
   /** Whether the map is disabled (blocks click events). */
   disabled?: boolean;
   /** Called when the user clicks on the map. Receives the clicked coordinate. */
@@ -37,15 +29,14 @@ export interface UseMaplibreMapOptions {
  */
 export function useMaplibreMap({
   initialCoordinate,
-  defaultCenter = DEFAULT_CENTER,
-  defaultZoom = DEFAULT_ZOOM,
   disabled = false,
   onMapClick,
   height,
 }: UseMaplibreMapOptions = {}) {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
-  const { viewBounds } = useContext(ViewBoundsContext);
+  const { viewBounds, defaultCenter, defaultZoom } =
+    useContext(ViewBoundsContext);
 
   // Keep callbacks in refs so the map's one-time setup always reads the latest values.
   const disabledRef = useRef(disabled);
@@ -83,7 +74,7 @@ export function useMaplibreMap({
   // ----- Apply height to the container -----
   useEffect(() => {
     if (mapContainerRef.current) {
-      mapContainerRef.current.style.height = height ?? '';
+      mapContainerRef.current.style.height = height ?? "";
     }
   }, [height]);
 
@@ -105,7 +96,7 @@ export function useMaplibreMap({
 
     mapRef.current = map;
 
-    map.on('click', (e: maplibregl.MapMouseEvent) => {
+    map.on("click", (e: maplibregl.MapMouseEvent) => {
       if (disabledRef.current) return;
       const { lng, lat } = e.lngLat;
       onMapClickRef.current?.({

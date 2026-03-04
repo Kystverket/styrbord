@@ -5,7 +5,7 @@ import type {
   Geometry,
 } from "geojson";
 
-import { MapBaseProps } from '../shared/MapPicker.types';
+import { MapBaseProps } from "../shared/MapPicker.types";
 
 /**
  * Styling options for the GeoJSON layers rendered on the map.
@@ -29,7 +29,9 @@ export interface GeoJsonStyle {
 
 export interface GeoJsonViewerProps extends MapBaseProps {
   /** GeoJSON data to display on the map. Accepts a Feature or FeatureCollection. */
-  data: Feature<Geometry, GeoJsonProperties> | FeatureCollection<Geometry, GeoJsonProperties>;
+  data:
+    | Feature<Geometry, GeoJsonProperties>
+    | FeatureCollection<Geometry, GeoJsonProperties>;
   /**
    * Whether to automatically fit the map view to the bounding box of the GeoJSON data.
    * Defaults to `true`.
