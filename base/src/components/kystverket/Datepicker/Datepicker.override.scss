@@ -19,6 +19,7 @@
 .react-datepicker .react-datepicker__day--selected {
   background-color: var(--ds-color-primary-border-strong);
   color: var(--ds-color-primary-base-contrast-default) !important;
+
   &:hover {
     background-color: var(--ds-color-primary-border-strong) !important;
     color: var(--ds-color-primary-base-contrast-default) !important;
@@ -130,6 +131,10 @@
 .react-datepicker-time__input {
   font-size: var(--ds-font-size-4) !important;
   color: var(--ds-color-primary-text-default);
+  box-shadow: none !important;
+  & > input:hover {
+    outline: var(--ds-color-neutral-border-default) auto 2px;
+  }
 }
 
 .react-datepicker-time__caption {
@@ -149,9 +154,13 @@
   font-weight: var(--ds-font-weight-regular);
   font-size: var(--ds-font-size-4);
   padding: var(--ds-size-1);
+  border-radius: var(--ds-border-radius-md);
   border: 1px solid #aeaeae; //Using same border color as timepicker
   & option {
     font-weight: var(--ds-font-weight-regular);
+  }
+  &:focus-visible {
+    border-color: #aeaeae;
   }
 }
 
@@ -159,4 +168,12 @@
 .react-datepicker__year-dropdown-container--select {
   margin: 0 5px;
   margin-top: 5px;
+  &:hover {
+    outline: var(--ds-color-neutral-border-default) auto 2px;
+  }
+  &:focus-within {
+    border: 1px black;
+    outline: var(--ds-color-neutral-border-default) auto 2px;
+    outline-offset: 2px;
+  }
 }
