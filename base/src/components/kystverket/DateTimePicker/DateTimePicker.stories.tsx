@@ -102,7 +102,7 @@ export const WithMinAndMaxDate: Story = {
   },
 };
 
-export const withYearAndMonthDropdown: Story = {
+export const WithYearAndMonthDropdown: Story = {
   args: {
     ...defaultProps,
     showYearDropdown: true,

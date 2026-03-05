@@ -97,7 +97,7 @@ export const WithMinAndMaxDate: Story = {
     label: 'Velg dato innen 2 uker',
     description: 'Du kan velge dato fra i dag og inntil 2 uker frem i tid',
     minDate: new Date(),
-    maxDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 100000), // 2 weeks from today
+    maxDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 2 weeks from today
   },
 };
 
@@ -161,7 +161,7 @@ export const InDialogNearEdge: Story = {
   ],
 };
 
-export const withYearAndMonthDropdown: Story = {
+export const WithYearAndMonthDropdown: Story = {
   args: {
     ...defaultProps,
     showYearDropdown: true,
