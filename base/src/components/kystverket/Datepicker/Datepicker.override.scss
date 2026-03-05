@@ -130,8 +130,13 @@
 
 .react-datepicker-time__input {
   font-size: var(--ds-font-size-4) !important;
-  color: var(--ds-color-primary-text-default);
+  border-radius: var(--ds-border-radius-md) !important;
+  font-weight: var(--ds-font-weight-regular);
   box-shadow: none !important;
+  & > input {
+    border: 1px solid var(--ds-color-neutral-border-default);
+    padding: var(--ds-size-1) var(--ds-size-2) !important;
+  }
   & > input:hover {
     outline: var(--ds-color-neutral-border-default) auto 2px;
   }
@@ -154,26 +159,24 @@
   font-weight: var(--ds-font-weight-regular);
   font-size: var(--ds-font-size-4);
   padding: var(--ds-size-1);
+  border: 1px solid var(--ds-color-neutral-border-default) !important;
   border-radius: var(--ds-border-radius-md);
-  border: 1px solid #aeaeae; //Using same border color as timepicker
   & option {
     font-weight: var(--ds-font-weight-regular);
   }
-  &:focus-visible {
-    border-color: #aeaeae;
+  &:hover:not(:focus) {
+    outline: var(--ds-color-neutral-border-default) solid 1px;
+  }
+  &:focus {
+    box-shadow: var(--_ds--focus, var(--dsc-focus-boxShadow));
+    outline: var(--_ds--focus, var(--dsc-focus-outline));
+    outline-offset: var(--_ds--focus, var(--ds-border-width-focus));
   }
 }
 
 .react-datepicker__month-dropdown-container--select,
 .react-datepicker__year-dropdown-container--select {
-  margin: 0 5px;
-  margin-top: 5px;
-  &:hover {
-    outline: var(--ds-color-neutral-border-default) auto 2px;
-  }
-  &:focus-within {
-    border: 1px black;
-    outline: var(--ds-color-neutral-border-default) auto 2px;
-    outline-offset: 2px;
-  }
+  margin: 0 var(--ds-size-2);
+  border: hidden;
+  margin-top: var(--ds-size-2);
 }
