@@ -101,3 +101,15 @@ export const WithMinAndMaxDate: Story = {
     maxDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 2 weeks from today
   },
 };
+
+export const withYearAndMonthDropdown: Story = {
+  args: {
+    ...defaultProps,
+    showYearDropdown: true,
+    showMonthDropdown: true,
+    value: new Date(),
+    minDate: new Date(2015, 1, 1),
+    maxDate: new Date(),
+    description: 'Også begrenset med minDate og maxDate',
+  },
+};

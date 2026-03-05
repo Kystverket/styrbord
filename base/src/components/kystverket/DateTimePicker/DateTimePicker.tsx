@@ -18,6 +18,8 @@ export interface DateTimePickerProps {
   onBlur?: () => void;
   value: Date | undefined;
   timeInputLabel?: string;
+  showMonthDropdown?: boolean;
+  showYearDropdown?: boolean;
   onChange?: (date: Date | undefined) => void;
   showCalendarIcon?: boolean;
   minDate?: Date; // Minimum selectable date. Dates before this will be greyed out and non-selectable.
@@ -46,6 +48,8 @@ export const DateTimePicker = ({
   showCalendarIcon = true,
   minDate,
   maxDate,
+  showMonthDropdown,
+  showYearDropdown,
   ...props
 }: DateTimePickerProps) => {
   return (
@@ -61,6 +65,9 @@ export const DateTimePicker = ({
         onChange={(date) => onChange?.(date ?? undefined)}
         customInput={createElement(CustomInput, { showCalendarIcon })}
         showTimeInput
+        showYearDropdown={showYearDropdown}
+        showMonthDropdown={showMonthDropdown}
+        dropdownMode="select"
         placeholderText="dd.mm.åååå, tt:mm"
         timeInputLabel={timeInputLabel}
         minDate={minDate}

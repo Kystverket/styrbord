@@ -143,3 +143,24 @@
 .react-datepicker__triangle {
   display: none;
 }
+
+.react-datepicker__year-select,
+.react-datepicker__month-select {
+  font-weight: var(--ds-font-weight-regular);
+  font-size: var(--ds-font-size-4);
+  padding: var(--ds-size-1);
+  border: 1px solid #aeaeae; //Using same border color as timepicker
+  & option {
+    font-weight: var(--ds-font-weight-regular);
+  }
+}
+
+.react-datepicker__year-select select {
+  max-height: 100px;
+}
+
+.react-datepicker__month-dropdown-container--select,
+.react-datepicker__year-dropdown-container--select {
+  margin: 0 5px;
+  margin-top: 5px;
+}

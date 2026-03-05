@@ -18,6 +18,8 @@ export interface DatepickerProps {
   onBlur?: () => void;
   value: Date | undefined;
   onChange?: (date: Date | undefined) => void;
+  showYearDropdown?: boolean;
+  showMonthDropdown?: boolean;
   showCalendarIcon?: boolean;
   minDate?: Date; // Minimum selectable date. Dates before this will be greyed out and non-selectable.
   maxDate?: Date; // Maximum selectable date. Dates after this will be greyed out and non-selectable.
@@ -48,6 +50,8 @@ export const Datepicker = ({
   maxDate,
   popperPlacement = 'top',
   withPortal,
+  showMonthDropdown,
+  showYearDropdown,
   ...props
 }: DatepickerProps) => {
   const [isMobile, setIsMobile] = useState(false);
@@ -80,6 +84,9 @@ export const Datepicker = ({
         customInput={createElement(CustomInput, { showCalendarIcon })}
         minDate={minDate}
         maxDate={maxDate}
+        dropdownMode="select"
+        showYearDropdown={showYearDropdown}
+        showMonthDropdown={showMonthDropdown}
         onBlur={props.onBlur}
         popperPlacement={popperPlacement}
         {...(usePortal && { withPortal: true, fixedHeight: true })}
