@@ -43,4 +43,6 @@ export interface GeoJsonViewerProps extends MapBaseProps {
   geoJsonStyle?: GeoJsonStyle;
   /** Additional CSS class applied to the root element. */
   className?: string;
+  /** Whether to show the layer toggle control on the map. Defaults to `false`. */
+  showLayerToggle?: boolean;
 }

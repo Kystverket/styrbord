@@ -3,6 +3,10 @@ import type { FeatureCollection, Feature } from "geojson";
 import StyrbordDecorator from "../../../storybook/styrbordDecorator";
 import { GeoJsonViewer } from "./GeoJsonViewer";
 import sampleGeoJson from "../../../assets/documents/geojson.json";
+import { ViewBoundsProvider } from '~/utility/viewBoundsContext';
+import { BaseLayersProvider } from '~/utility/baseLayersContext';
+import { BuiltInLayersProvider } from '~/utility/builtInLayersContext';
+import { CustomLayersProvider } from '~/utility/customLayersContext';
 
 const meta = {
   title: "Kart/GeoJsonViewer",
@@ -282,4 +286,23 @@ export const ComplexMultiType: Story = {
       pointStrokeWidth: 2,
     },
   },
+};
+
+// ---- With layer toggle ----
+export const WithLayerToggle: Story = {
+  args: {
+    data: sampleGeoJson as FeatureCollection,
+    showLayerToggle: true,
+  },
+  render: (args) => (
+    <ViewBoundsProvider>
+      <BaseLayersProvider>
+        <BuiltInLayersProvider>
+          <CustomLayersProvider>
+            <GeoJsonViewer {...args} />
+          </CustomLayersProvider>
+        </BuiltInLayersProvider>
+      </BaseLayersProvider>
+    </ViewBoundsProvider>
+  ),
 };

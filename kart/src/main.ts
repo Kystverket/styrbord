@@ -15,6 +15,9 @@ export type {
   GeoJsonStyle,
 } from "./components/GeoJsonViewer/GeoJsonViewer.types";
 
+export { GeoJsonEditor } from './components/GeoJsonEditor/GeoJsonEditor';
+export type { GeoJsonEditorProps, DrawMode } from './components/GeoJsonEditor/GeoJsonEditor.types';
+
 export { LayerToggle } from "./components/LayerToggle/LayerToggle";
 export type { LayerToggleProps } from "./components/LayerToggle/LayerToggle.types";
 
