@@ -133,6 +133,8 @@ export { default as Table } from './components/designsystemet/Table/Table';
 export { Avatar } from './components/designsystemet/Avatar/Avatar';
 export type { AvatarProps } from './components/designsystemet/Avatar/Avatar';
 
+export { IdProvider, useIdProvider } from './utils/idContext';
+
 //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 //
 // RE-EKSPORT AV DESIGNSYSTEMET
