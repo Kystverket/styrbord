@@ -1,12 +1,12 @@
 // vite.config.ts
-import { defineConfig } from "vite";
+import { defineConfig } from 'vite';
 
-import typescript from "@rollup/plugin-typescript";
-import path from "path";
-import { typescriptPaths } from "rollup-plugin-typescript-paths";
-import react from "@vitejs/plugin-react";
-import svgrPlugin from "vite-plugin-svgr";
-import preserveUseClientDirective from "rollup-plugin-preserve-use-client";
+import typescript from '@rollup/plugin-typescript';
+import path from 'path';
+import { typescriptPaths } from 'rollup-plugin-typescript-paths';
+import react from '@vitejs/plugin-react';
+import svgrPlugin from 'vite-plugin-svgr';
+import preserveUseClientDirective from 'rollup-plugin-preserve-use-client';
 
 export default defineConfig({
   plugins: [
@@ -30,7 +30,7 @@ export default defineConfig({
     reportCompressedSize: true,
     lib: {
       entry: path.resolve(__dirname, 'src/main.ts'),
-      fileName: 'main',
+      fileName: 'style',
       name: 'Styrbord',
     },
     rollupOptions: {

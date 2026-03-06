@@ -9,6 +9,7 @@ export type FileInfo = {
   status: FileStatus;
   exif?: Exif;
   error?: string;
+  sizeInBytes?: number;
 };
 
 export interface UploadFileResponse {
@@ -32,4 +33,5 @@ export type UploadFileError =
   | 'invalid-file-type'
   | 'file-too-large'
   | 'unknown-error'
-  | 'file-scan-failed';
+  | 'file-scan-failed'
+  | 'over-files-limit';

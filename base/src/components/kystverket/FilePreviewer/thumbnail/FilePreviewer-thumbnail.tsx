@@ -1,9 +1,11 @@
 import { useContext, useEffect } from 'react';
-import { FPContext } from './FilePreviewer-context';
-import { FileInfo } from './FilePreviewer.types';
+import { FPContext } from '../FilePreviewer-context';
+import { FileInfo } from '../FilePreviewer.types';
 import { Box, Button, Icon, Paragraph, Tooltip } from '~/main';
 import classes from './FilePreviewer-thumbnail.module.css';
-import { FileRenderer } from './FileRenderer';
+import { FileRenderer } from '../renderer/FileRenderer';
+import { convertBytesToReadable } from '~/utils/convertBytesToReadable';
+import { handleDownload } from '~/utils/handleFileDownload';
 
 export interface FilePreviewerThumbnailProps {
   file: FileInfo;
@@ -31,7 +33,7 @@ export const FilePreviewerThumbnail = ({ file, index }: FilePreviewerThumbnailPr
     [],
   );
 
-  const onClickHandler = () => {
+  const openDialogHandler = () => {
     if (ref && 'current' in ref && ref.current) {
       ref.current.showModal(index);
     }
@@ -42,22 +44,35 @@ export const FilePreviewerThumbnail = ({ file, index }: FilePreviewerThumbnailPr
     <Box className={classes.container}>
       <Box className={classes.thumbnail}>
         <FileRenderer file={file} />
-        <Button variant="ghost" color="neutral" className={classes.button} icon onClick={onClickHandler}>
-          <Icon material="pan_zoom" />
-        </Button>
+        <Box className={classes.buttonGroup} horizontal>
+          <Button variant="ghost" color="neutral" size="sm" className={classes.button} icon onClick={openDialogHandler}>
+            <Icon material="open_in_new" />
+          </Button>
+          <Button
+            variant="ghost"
+            color="neutral"
+            size="sm"
+            className={classes.button}
+            icon
+            onClick={() => handleDownload(file)}
+          >
+            <Icon material="download" />
+          </Button>
+        </Box>
       </Box>
       <Box className={classes.fileInfoContainer}>
         <Box horizontal>
-          <Tooltip content={filename.filename}>
-            <Paragraph data-size="sm" className={classes.fileName}>
-              {filename.filename}
-            </Paragraph>
+          <Tooltip content={`${filename.filename}.${filename.extension}`}>
+            <Paragraph className={classes.fileName}>{filename.filename}</Paragraph>
           </Tooltip>
-          <Paragraph className={classes.fileExtension} data-size="sm">
-            .{filename.extension}
-          </Paragraph>
+          <Paragraph className={classes.fileExtension}>.{filename.extension}</Paragraph>
         </Box>
-        {file.fileSize && <Paragraph data-size="xs">{file.fileSize}</Paragraph>}
+
+        {file.fileSizeInBytes && (
+          <Paragraph data-size="sm" className={classes.fileSize}>
+            {file.fileSize ?? convertBytesToReadable(file.fileSizeInBytes)}
+          </Paragraph>
+        )}
       </Box>
     </Box>
   );

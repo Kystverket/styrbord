@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { FileUploader, FileUploaderProps } from './FileUploader';
+import { ExistingFilesProviderItem, FileUploader, FileUploaderProps } from './FileUploader';
 import { FileUploaderContext } from './FileUploader.context';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { StyrbordTranslationContext } from '~/main';
@@ -35,7 +35,6 @@ type Story = StoryObj<typeof meta>;
 
 const defaultProps: FileUploaderProps = {
   label: 'Last opp filer',
-  buttonLabel: 'Last opp',
   description: 'Du kan laste opp flere filer samtidig',
   error: null,
   multiple: true,
@@ -46,18 +45,109 @@ const defaultProps: FileUploaderProps = {
       contentType: 'text/plain',
       contextId: '214b3c2e-1f4d-4f8a-9b6c-5d7e8f9a0b1c',
       storageId: '1',
+      sizeInBytes: 92881,
     },
+
     {
       fileName: 'file2.txt',
       status: 'uploaded',
       contentType: 'text/plain',
       contextId: '214b3c2e-1f4d-4f3a-9b6c-5d7e8f9a0b1c',
       storageId: '1',
+      sizeInBytes: 12122,
+    },
+    {
+      fileName: 'file3.jpeg',
+      status: 'uploaded',
+      contentType: 'image/jpeg',
+      thumbnailUri: cat1,
+      contextId: '214b3c2e-1f4d-4f8a-a127-5d7e8f9a0b1c',
+      storageId: '1',
+      sizeInBytes: 9281231,
     },
   ],
   maxFiles: 5,
+  maxSizeInBytes: 10 * 1000 * 1000, // 10MB
   onChange: (files) => console.log('Files changed:', files),
   allowedFileTypes: ['.pdf', '.jpg', '.jpeg', '.png'],
+};
+
+const existingFilesProvider = async (): Promise<ExistingFilesProviderItem[]> => {
+  await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate loading delay
+  return [
+    {
+      title: 'Testfiler',
+      label: 'Dette er bare noen testfiler',
+      files: [
+        {
+          contextId: 'existing-1',
+          fileName: 'document1.pdf',
+          storageId: 'storage-id-1',
+          contentType: 'application/pdf',
+          status: 'uploaded',
+          sizeInBytes: 5818,
+        },
+        {
+          contextId: 'existing-2',
+          fileName: 'image1.jpg',
+          storageId: 'storage-id-2',
+          contentType: 'image/jpeg',
+          thumbnailUri: cat1,
+          status: 'uploaded',
+          sizeInBytes: 17863,
+        },
+        {
+          contextId: 'existing-3',
+          fileName: 'screenshot.png',
+          storageId: 'storage-id-3',
+          contentType: 'image/png',
+          thumbnailUri: cat2,
+          status: 'uploaded',
+          sizeInBytes: 192811,
+        },
+      ],
+    },
+    {
+      title: 'Flere testfiler',
+      label: 'Abrakadabra, this page now has more testfiles',
+      files: [
+        {
+          contextId: 'existing-test2-1',
+          fileName: 'document1.pdf',
+          storageId: 'storage-id-test2-1',
+          contentType: 'application/pdf',
+          status: 'uploaded',
+          sizeInBytes: 5818,
+        },
+        {
+          contextId: 'existing-test2-2',
+          fileName: 'image1.jpg',
+          storageId: 'storage-id-test2-2',
+          contentType: 'image/jpeg',
+          thumbnailUri: cat1,
+          status: 'uploaded',
+          sizeInBytes: 17863,
+        },
+        {
+          contextId: 'existing-test2-3',
+          fileName: 'aCoolDocument.pdf',
+          storageId: 'storage-id-test2-3',
+          contentType: 'application/pdf',
+          status: 'uploaded',
+          sizeInBytes: 5818,
+        },
+        {
+          contextId: 'existing-test2-4',
+          fileName: 'screenshot.png',
+          storageId: 'storage-id-test2-4',
+          contentType: 'image/png',
+          thumbnailUri: cat2,
+          status: 'uploaded',
+          sizeInBytes: 192811,
+        },
+      ],
+    },
+  ];
 };
 
 export const Default: Story = {
@@ -78,6 +168,18 @@ export const RequiredText: Story = {
   args: { ...defaultProps, required: 'Påkrevd' },
 };
 
+export const Dropzone: Story = {
+  args: { ...defaultProps, variant: 'dropzone' },
+};
+
+export const DropzoneWithExistingFiles: Story = {
+  args: {
+    ...defaultProps,
+    variant: 'dropzone',
+    existingFilesProvider: existingFilesProvider,
+  },
+};
+
 export const WithError: Story = {
   args: { ...defaultProps, error: 'Det oppstod en feil' },
 };
@@ -86,34 +188,7 @@ export const WithExistingFiles: Story = {
   args: {
     ...defaultProps,
     files: [],
-    existingFilesProvider: async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate loading delay
-      return [
-        {
-          contextId: 'existing-1',
-          fileName: 'document1.pdf',
-          storageId: 'storage-id-1',
-          contentType: 'application/pdf',
-          status: 'uploaded',
-        },
-        {
-          contextId: 'existing-2',
-          fileName: 'image1.jpg',
-          storageId: 'storage-id-2',
-          contentType: 'image/jpeg',
-          thumbnailUri: cat1,
-          status: 'uploaded',
-        },
-        {
-          contextId: 'existing-3',
-          fileName: 'screenshot.png',
-          storageId: 'storage-id-3',
-          contentType: 'image/png',
-          thumbnailUri: cat2,
-          status: 'uploaded',
-        },
-      ];
-    },
+    existingFilesProvider: existingFilesProvider,
   },
 };
 
@@ -121,40 +196,13 @@ export const WithExistingFilesWithTranslations: Story = {
   args: {
     ...defaultProps,
     files: [],
-    existingFilesProvider: async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate loading delay
-      return [
-        {
-          contextId: 'existing-1',
-          fileName: 'document1.pdf',
-          storageId: 'storage-id-1',
-          contentType: 'application/pdf',
-          status: 'uploaded',
-        },
-        {
-          contextId: 'existing-2',
-          fileName: 'image1.jpg',
-          storageId: 'storage-id-2',
-          contentType: 'image/jpeg',
-          thumbnailUri: cat1,
-          status: 'uploaded',
-        },
-        {
-          contextId: 'existing-3',
-          fileName: 'screenshot.png',
-          storageId: 'storage-id-3',
-          contentType: 'image/png',
-          thumbnailUri: cat2,
-          status: 'uploaded',
-        },
-      ];
-    },
+    existingFilesProvider: existingFilesProvider,
     translations: {
       existingFiles: {
         buttonOpen: 'Velg eksisterende filer',
-        dialogTitle: 'Velg filer fra eksisterende',
+        dialogTitle: 'Velg eksisterende filer',
         dialogCancel: 'Avbryt',
-        dialogConfirm: 'Velg',
+        dialogConfirm: 'Legg til',
         noFilesAvailable: 'Ingen eksisterende filer tilgjengelig',
       },
     },
@@ -231,51 +279,16 @@ export const WithFileSizeLimitEnglish: Story = {
   args: {
     ...defaultProps,
     label: 'Upload files',
-    buttonLabel: 'Upload',
-    description: 'Files larger than 10MB will be rejected',
+    description: 'Files that are larger than 10MB will be denied',
     files: [],
   },
 };
 
-const uploadFileWithTypeRestriction = async (file: FormData): Promise<UploadFileResult> => {
-  return new Promise<UploadFileResult>((resolve) => {
-    const fileEntry = file.get('file') as File;
-    const forbiddenTypes = ['.exe', '.bat', '.scr', '.com', '.zip'];
-
-    // Simulate loading delay
-    setTimeout(() => {
-      if (fileEntry && forbiddenTypes.some((type) => fileEntry.name.toLowerCase().endsWith(type))) {
-        resolve({
-          storageId: '',
-          success: false,
-          error: 'invalid-file-type',
-        });
-      } else {
-        resolve({
-          storageId: uuidv4(),
-          success: true,
-        });
-      }
-    }, 1500);
-  });
-};
-
-export const withFileTypeRestriction: Story = {
-  decorators: [
-    (Story) => (
-      <FileUploaderContext.Provider
-        value={{
-          uploadFile: uploadFileWithTypeRestriction,
-          deleteFile: deleteFile,
-        }}
-      >
-        <Story />
-      </FileUploaderContext.Provider>
-    ),
-  ],
+export const withAllowedFileTypes: Story = {
   args: {
     ...defaultProps,
-    description: 'Filer med utvidelser .exe, .bat, .scr, .com, .zip vil bli avvist',
+    allowedFileTypes: ['.exe', '.bat', '.zip', 'image/*'],
+    description: 'Aksepterer kun filer med utvidelsene .exe, .bat, .zip og bildefiler',
     files: [],
   },
 };

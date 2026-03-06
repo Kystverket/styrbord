@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import classes from './FilePreviewer-dialog.module.css';
-import { Box, Button, Icon, Paragraph } from '~/main';
-import { FileInfo, defaultButtonsByType } from './FilePreviewer.types';
-import { FileRenderer } from './FileRenderer';
+import { Body, Box, Button, ButtonProps, Icon } from '~/main';
+import { FileInfo, defaultButtonsByType } from '../FilePreviewer.types';
+import { FileRenderer } from '../renderer/FileRenderer';
 import { useHorizontalDragScroll } from '~/hooks/useHorizontalDragScroll';
 import { handleDownload } from '~/utils/handleFileDownload';
+import { convertBytesToReadable } from '~/utils/convertBytesToReadable';
 
 const getButtonConfig = (file: FileInfo) => {
   const defaults = defaultButtonsByType[file.contentType];
@@ -98,35 +99,41 @@ export const FilePreviewerDialog = ({ animation = 'slide', onClose, files, start
     else return classes.next;
   };
 
+  const defaultButtonProps: Partial<ButtonProps> = {
+    variant: 'outline',
+    color: 'neutral',
+    icon: true,
+    size: 'lg',
+  };
   useEffect(() => dialogRef.current?.showModal(), []);
   return (
-    <dialog ref={dialogRef} className={classes.frame} onClose={handleClose}>
+    <dialog ref={dialogRef} className={classes.frame} onClose={handleClose} data-color-scheme="dark">
       {/* NAVIGATION */}
       <Box horizontal justify="between" className={classes.nav}>
         <Box>
-          <Paragraph style={{ color: '#EBECED' }}>{selectedFile.fileName}</Paragraph>
-          {selectedFile.fileSize && (
-            <Paragraph data-size="sm" style={{ color: 'var(--ds-color-neutral-text-subtle)' }}>
-              {selectedFile.fileSize}
-            </Paragraph>
+          <Body>{selectedFile.fileName}</Body>
+          {selectedFile.fileSizeInBytes && (
+            <Body size="sm" className={classes.fileSize}>
+              {selectedFile.fileSize ?? convertBytesToReadable(selectedFile.fileSizeInBytes)}
+            </Body>
           )}
         </Box>
-        <Box horizontal gap={32}>
-          <Box horizontal gap={8}>
+        <Box horizontal className={classes.topRightButtonContainer}>
+          <Box horizontal>
             {buttonConfig.showOpenInNew && (
-              <Button title="Åpne i ny fane" variant="filled" color="neutral" icon onClick={handleOpenInNew}>
-                <Icon material="open_in_new" size="xl" />
+              <Button title="Åpne i ny fane" onClick={handleOpenInNew} {...defaultButtonProps}>
+                <Icon material="open_in_new" size="lg" />
               </Button>
             )}
             {buttonConfig.showDownload && (
-              <Button title="Last ned" variant="filled" color="neutral" icon onClick={downloadHandler}>
-                <Icon material="download" size="xl" />
+              <Button title="Last ned" onClick={downloadHandler} {...defaultButtonProps}>
+                <Icon material="download" size="lg" />
               </Button>
             )}
           </Box>
           <Box>
-            <Button title="Lukk" variant="filled" color="neutral" icon onClick={handleClose}>
-              <Icon material="close" size="xl"></Icon>
+            <Button title="Lukk" onClick={handleClose} {...defaultButtonProps}>
+              <Icon material="close" size="lg"></Icon>
             </Button>
           </Box>
         </Box>
@@ -137,28 +144,20 @@ export const FilePreviewerDialog = ({ animation = 'slide', onClose, files, start
           <Button
             title="Forrige fil"
             onClick={handlePrev}
-            className={classes.switchButton}
-            size="lg"
-            variant="filled"
-            color="neutral"
-            style={{ left: '0' }}
-            icon
+            className={`${classes.switchButton} ${classes.left}`}
+            {...defaultButtonProps}
           >
-            <Icon material="arrow_back" size="xl" />
+            <Icon material="chevron_left" size="lg" />
           </Button>
         )}
         {selectedFileIndex < files.length - 1 && (
           <Button
             title="Neste fil"
             onClick={handleNext}
-            className={classes.switchButton}
-            size="lg"
-            variant="filled"
-            color="neutral"
-            style={{ right: '0' }}
-            icon
+            className={`${classes.switchButton} ${classes.right}`}
+            {...defaultButtonProps}
           >
-            <Icon material="arrow_forward" size="xl"></Icon>
+            <Icon material="chevron_right" size="lg"></Icon>
           </Button>
         )}
         <Box className={classes.fileInnerContainer}>
@@ -177,7 +176,6 @@ export const FilePreviewerDialog = ({ animation = 'slide', onClose, files, start
           }
         }}
         ref={scrollRef}
-        tabIndex={0}
         className={classes.selectArea}
         {...dragScrollHandlers}
       >
@@ -188,7 +186,11 @@ export const FilePreviewerDialog = ({ animation = 'slide', onClose, files, start
               ref={(el) => {
                 previewButtonRefs.current[idx] = el;
               }}
-              tabIndex={-1}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  setSelectedFileIndex(idx);
+                }
+              }}
               className={classes.previewButton}
               onClick={() => {
                 // Only change selection if we haven't been dragging

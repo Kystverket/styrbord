@@ -1,11 +1,15 @@
 {
   "fileUploader": {
+    "attachmentsCount": "Vedlegg ({count})",
+    "buttonLabel": "Last opp fil",
+    "dropzoneText": "Klikk for å laste opp\neller dra og slepp filer her",
     "errors": {
-      "network-error": "Nettverksfeil. Vennlegst sjekk tilkoplinga og prøv igjen.",
-      "invalid-file-type": "Filtypen er ikkje tillaten.",
-      "file-too-large": "Fila er for stor. Vennlegst vel ei mindre fil.",
-      "file-scan-failed": "Fila kunne ikkje lastast opp fordi tryggleiksskaninga feila.",
       "error": "Noko gjekk gale under opplastinga.",
+      "file-scan-failed": "Fila kunne ikkje lastast opp fordi tryggleiksskaninga feila.",
+      "file-too-large": "Fila er for stor. Vennlegst vel ei mindre fil.",
+      "invalid-file-type": "Filtypen er ikkje tillaten.",
+      "network-error": "Nettverksfeil. Vennlegst sjekk tilkoplinga og prøv igjen.",
+      "over-files-limit": "Fila er over grensa for kor mange filer som er tillatne",
       "unknown-error": "Ein ukjend feil oppstod. Vennlegst prøv igjen seinare."
     },
     "existingFiles": {
@@ -13,18 +17,23 @@
       "dialogCancel": "Avbryt",
       "dialogConfirm": "Vel",
       "dialogTitle": "Filer",
-      "noFilesAvailable": "Ingen filer tilgjengelege."
+      "filesCounter": "{shown} av {total} filer",
+      "inMenuTitle": "Filer i",
+      "noFilesAvailable": "Ingen filer tilgjengelege.",
+      "selectFilesLabel": "Vel filer",
+      "goBackToCollectionAriaLabel": "Gå tilbake til alle filer"
     },
-    "loading": "Laster",
+    "loading": "Lastar",
     "maxFilesReached": "Maksimalt tal filer er lasta opp.",
+    "removeFileAriaLabel": "Fjern fil",
     "unknownFilename": "Ukjent filnamn",
-    "uploading": "Lastar opp",
+    "uploading": "Lastar opp fil...",
     "uploadingPleaseWait": "Vennlegst vent med å velje fleire filer før alle filene er lasta opp"
   },
   "header-alt-text": "Til framsida",
   "kontakt": "Kontakt Kystverket",
   "kystverket": "Kystverket",
-  "loading": "Laster",
+  "loading": "Lastar",
   "organisasjonsnummer": "Organisasjonsnummer",
   "sentralbord": "Sentralbord"
 }

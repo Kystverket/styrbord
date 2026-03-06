@@ -1,0 +1,84 @@
+.container {
+  display: grid;
+  position: relative;
+  grid-template-rows: 128px auto;
+  grid-template-columns: 100%;
+  width: 200px;
+  min-width: 200px;
+  height: 204px;
+  border: 1px solid var(--ds-color-neutral-border-subtle);
+  border-radius: var(--ds-border-radius-lg);
+}
+
+.container:not(:hover):not(:focus-within) .button {
+  opacity: 0;
+}
+
+.container:hover .thumbnail::before,
+.container:focus-within .thumbnail::before {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.thumbnail::before {
+  position: absolute;
+  inset: 0;
+  background-color: transparent;
+  content: '';
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+.thumbnail {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  max-height: 128px;
+  overflow: hidden;
+  background-color: var(--ds-color-neutral-surface-tinted);
+  & span {
+    color: var(--ds-color-neutral-text-subtle);
+  }
+}
+
+.buttonGroup {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  flex-direction: row;
+  gap: var(--ds-size-2);
+}
+
+.button {
+  border-radius: var(--ds-border-radius-default);
+  background-color: var(--ds-color-neutral-surface-default);
+}
+
+.fileName {
+  flex: 1;
+  min-width: 0;
+  max-width: min-content;
+  overflow: hidden;
+  font-weight: var(--ds-font-weight-medium);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fileExtension {
+  font-weight: var(--ds-font-weight-medium);
+}
+
+.fileSize {
+  color: var(--ds-color-neutral-text-subtle);
+}
+
+.fileInfoContainer {
+  flex: 1;
+  display: flex;
+  padding-left: var(--ds-size-4);
+  padding-right: var(--ds-size-4);
+  justify-content: center;
+  gap: var(--ds-size-1);
+}

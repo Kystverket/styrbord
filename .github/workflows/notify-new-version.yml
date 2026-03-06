@@ -21,7 +21,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '24.x'
+          node-version: "24.x"
 
       # Step 3: Get the latest version of the package from npm
       - name: Get latest version of @kystverket/styrbord-tokens

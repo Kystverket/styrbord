@@ -1,5 +1,5 @@
 {
-  "editor.formatOnSaveMode": "modificationsIfAvailable",
+  "editor.formatOnSaveMode": "file",
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[json]": {
@@ -14,7 +14,7 @@
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "i18n-ally.localesPaths": ["src/i18n"],
+  "i18n-ally.localesPaths": ["base/src/i18n"],
   "workbench.colorCustomizations": {
     "activityBar.activeBackground": "#813466",
     "activityBar.background": "#813466",
@@ -34,5 +34,6 @@
     "titleBar.inactiveBackground": "#5d254999",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.remoteColor": "#5d2549"
+  "peacock.remoteColor": "#5d2549",
+  "i18n-ally.keystyle": "nested"
 }

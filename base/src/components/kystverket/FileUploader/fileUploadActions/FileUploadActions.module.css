@@ -1,17 +1,10 @@
 @layer styrbord-modules {
-  .uploadInformation {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding-left: var(--spacing-8);
-    gap: var(--spacing-8);
-  }
-
-  .fileList {
-    display: flex;
-    flex-direction: column;
-    margin-top: var(--spacing-16);
-    gap: var(--spacing-8);
+  .uploadButton {
+    color: var(--ds-color-neutral-text-default);
+    border: 1px solid var(--ds-color-neutral-border-default);
+    &:hover {
+      background-color: var(--ds-color-neutral-surface-tinted);
+    }
   }
 
   .dropzone {
@@ -24,12 +17,20 @@
     border: 1px dashed var(--ds-color-neutral-border-default);
     border-radius: var(--ds-border-radius-default);
     &:hover {
-      cursor: pointer;
       background-color: var(--ds-color-neutral-background-tinted);
+      cursor: pointer;
     }
+
+    /* Applied onDragOver, normal :active only triggers on file drop */
     &.active {
       background-color: var(--ds-color-neutral-background-tinted);
     }
+  }
+
+  .dropzoneText {
+    text-align: center;
+    white-space: pre-wrap;
+    pointer-events: none;
   }
 
   .dropzoneIcon {
@@ -40,5 +41,10 @@
     height: var(--ds-size-12);
     border-radius: var(--ds-border-radius-full);
     background-color: var(--ds-color-neutral-surface-tinted);
+    pointer-events: none;
+  }
+
+  .stretch {
+    flex-grow: 1;
   }
 }
