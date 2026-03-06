@@ -1,6 +1,5 @@
 import './css/index.scss';
 import '@material-symbols/font-400/outlined.css';
-import { useIdProvider } from './utils/idContext';
 
 export type { SupportedLanguage, ScreenSize } from './utils/types';
 

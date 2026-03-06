@@ -1,24 +1,27 @@
+import { FeatureCollection, Geometry } from 'geojson';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 import { useState } from 'react';
-import StyrbordDecorator from 'storybook/styrbordDecorator';
-import { GeoJsonEditor, GeoJsonEditorProps } from '~/main';
+import { GeoJsonAnnotater, GeoJsonAnnotaterProps } from '~/main';
+import StyrbordDecorator from '../../../storybook/styrbordDecorator';
 
-type FC = FeatureCollection<Geometry, GeoJsonProperties>;
+const Wrapper = (props: GeoJsonAnnotaterProps) => {
+  const [data, setData] = useState<FeatureCollection<Geometry>>(structuredClone(props.data));
 
-const Wrapper = (props: GeoJsonEditorProps) => {
-  const [data, setData] = useState<FC | undefined>(JSON.parse(JSON.stringify(props.value)) as FC | undefined);
-
-  const onChange = (d: FC) => {
+  const onChange = (d: FeatureCollection<Geometry>) => {
     setData(d);
-    props.onChange?.(d);
+    props.onChange(d);
   };
 
-  return <GeoJsonEditor value={data} onChange={onChange} />;
+  return (
+    <>
+      <GeoJsonAnnotater data={data} onChange={onChange} annotations={props.annotations} />
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </>
+  );
 };
 
 const meta = {
-  title: 'Maps/GeographicSelector',
+  title: 'Maps/GeoJsonAnnotater',
   component: Wrapper,
   decorators: [StyrbordDecorator],
   tags: ['autodocs'],
@@ -29,10 +32,27 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {
-    onChange: (d: FC | undefined) => {
-      console.log('onChange', d);
-    },
+const defaultProps: GeoJsonAnnotaterProps = {
+  data: {
+    type: 'FeatureCollection',
+    features: [
+      {
+        type: 'Feature',
+        properties: {
+          nummer: 1,
+          beskrivelse: 'Dette er en beskrivelse',
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: [10.0, 10.0],
+        },
+      },
+    ],
   },
+  onChange: () => console.log('clicked onChange'),
+  annotations: [{ name: 'beskrivelse', type: 'text' }],
+};
+
+export const Default: Story = {
+  args: defaultProps,
 };

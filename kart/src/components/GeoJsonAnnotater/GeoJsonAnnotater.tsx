@@ -1,9 +1,9 @@
 'use client';
 
-import { Box, Label, TextInput, ValidationMessage, useIdProvider } from '@kystverket/styrbord';
+import { Box, TextInput, ValidationMessage, useIdProvider } from '@kystverket/styrbord';
 import { FeatureCollection, Geometry } from 'geojson';
 
-export interface GeojsonAnnotaterProps {
+export interface GeoJsonAnnotaterProps {
   data: FeatureCollection<Geometry>;
   onChange: (geojson: FeatureCollection<Geometry>) => void;
   annotations: [
@@ -15,7 +15,7 @@ export interface GeojsonAnnotaterProps {
   getError?: (key: string) => string | null;
 }
 
-export const GeojsonAnnotater = ({ data, onChange, annotations, getError = undefined }: GeojsonAnnotaterProps) => {
+export const GeoJsonAnnotater = ({ data, onChange, annotations, getError = undefined }: GeoJsonAnnotaterProps) => {
   const { getId } = useIdProvider();
   const onFeatureChange = (index: number, name: string, value: string) => {
     const newFeatures = [
@@ -32,8 +32,8 @@ export const GeojsonAnnotater = ({ data, onChange, annotations, getError = undef
     <Box key={index}>
       {annotations.map((annotation) => (
         <Box key={annotation.name}>
-          <Box horizontal width="full" align="center">
-            <Label>#{feature.properties?.nummer}</Label>
+          <Box horizontal width="full" align="center" gap={8}>
+            <span>#{feature.properties?.nummer}</span>
             <Box grow>
               <TextInput
                 id={getId('features', index, 'properties', annotation.name)}
@@ -45,7 +45,9 @@ export const GeojsonAnnotater = ({ data, onChange, annotations, getError = undef
               />
             </Box>
           </Box>
-          <ValidationMessage key={annotation.name}>{getAnnotationError(index, annotation.name)}</ValidationMessage>
+          {getAnnotationError(index, annotation.name) && (
+            <ValidationMessage key={annotation.name}>{getAnnotationError(index, annotation.name)}</ValidationMessage>
+          )}
         </Box>
       ))}
     </Box>
