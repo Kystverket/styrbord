@@ -2,6 +2,7 @@ import { useContext, useMemo } from "react";
 import { BaseLayersContext } from '~/utility/baseLayersContext';
 import { BuiltInLayersContext } from "~/utility/builtInLayersContext";
 import { CustomLayersContext } from "~/utility/customLayersContext";
+import { WmsCatalogLayersContext } from '~/utility/wmsCatalogLayersContext';
 import type { BaseLayerDefinition, LayerDefinition } from '~/utility/layers.types';
 
 export interface LayerEntry {
@@ -10,7 +11,7 @@ export interface LayerEntry {
   /** Whether the layer is currently visible on the map. */
   visible: boolean;
   /** Whether the layer comes from the built-in registry or was added as a custom layer. */
-  origin: "built-in" | "custom";
+  origin: 'built-in' | 'custom' | 'wms-catalog';
 }
 
 export interface UseMapLayersResult {
@@ -58,6 +59,7 @@ export function useMapLayers(): UseMapLayersResult {
   const base = useContext(BaseLayersContext);
   const builtIn = useContext(BuiltInLayersContext);
   const custom = useContext(CustomLayersContext);
+  const wmsCatalog = useContext(WmsCatalogLayersContext);
 
   const builtInIds = useMemo(
     () => new Set(builtIn.availableLayers.map((l) => l.id)),
@@ -69,6 +71,8 @@ export function useMapLayers(): UseMapLayersResult {
     [custom.layers],
   );
 
+  const wmsCatalogIds = useMemo(() => new Set(wmsCatalog.layers.map((l) => l.id)), [wmsCatalog.layers]);
+
   const allLayers = useMemo<LayerEntry[]>(() => {
     const entries: LayerEntry[] = [];
 
@@ -76,7 +80,7 @@ export function useMapLayers(): UseMapLayersResult {
       entries.push({
         definition: def,
         visible: builtIn.visibleLayerIds.has(def.id),
-        origin: "built-in",
+        origin: 'built-in',
       });
     }
 
@@ -84,7 +88,15 @@ export function useMapLayers(): UseMapLayersResult {
       entries.push({
         definition: def,
         visible: custom.visibleLayerIds.has(def.id),
-        origin: "custom",
+        origin: 'custom',
+      });
+    }
+
+    for (const def of wmsCatalog.layers) {
+      entries.push({
+        definition: def,
+        visible: wmsCatalog.visibleLayerIds.has(def.id),
+        origin: 'wms-catalog',
       });
     }
 
@@ -94,6 +106,8 @@ export function useMapLayers(): UseMapLayersResult {
     builtIn.visibleLayerIds,
     custom.layers,
     custom.visibleLayerIds,
+    wmsCatalog.layers,
+    wmsCatalog.visibleLayerIds,
   ]);
 
   const visibleLayers = useMemo(
@@ -110,6 +124,10 @@ export function useMapLayers(): UseMapLayersResult {
       custom.toggleLayer(id);
       return true;
     }
+    if (wmsCatalogIds.has(id)) {
+      wmsCatalog.toggleLayer(id);
+      return true;
+    }
     return false;
   };
 
@@ -120,6 +138,10 @@ export function useMapLayers(): UseMapLayersResult {
     }
     if (customIds.has(id)) {
       custom.showLayer(id);
+      return true;
+    }
+    if (wmsCatalogIds.has(id)) {
+      wmsCatalog.showLayer(id);
       return true;
     }
     return false;
@@ -134,12 +156,17 @@ export function useMapLayers(): UseMapLayersResult {
       custom.hideLayer(id);
       return true;
     }
+    if (wmsCatalogIds.has(id)) {
+      wmsCatalog.hideLayer(id);
+      return true;
+    }
     return false;
   };
 
   const isVisible = (id: string): boolean => {
     if (builtInIds.has(id)) return builtIn.isVisible(id);
     if (customIds.has(id)) return custom.isVisible(id);
+    if (wmsCatalogIds.has(id)) return wmsCatalog.isVisible(id);
     return false;
   };
 

@@ -12,6 +12,7 @@ import { ViewBoundsContext } from "~/utility/viewBoundsContext";
 import { BaseLayersContext } from '~/utility/baseLayersContext';
 import { BuiltInLayersContext } from "~/utility/builtInLayersContext";
 import { CustomLayersContext } from "~/utility/customLayersContext";
+import { WmsCatalogLayersContext } from '~/utility/wmsCatalogLayersContext';
 import type { BaseLayerDefinition, LayerDefinition } from '~/utility/layers.types';
 
 export interface UseMaplibreMapOptions {
@@ -45,6 +46,7 @@ export function useMaplibreMap({
   const baseCtx = useContext(BaseLayersContext);
   const builtInCtx = useContext(BuiltInLayersContext);
   const customCtx = useContext(CustomLayersContext);
+  const wmsCatalogCtx = useContext(WmsCatalogLayersContext);
 
   // Keep callbacks in refs so the map's one-time setup always reads the latest values.
   const disabledRef = useRef(disabled);
@@ -204,8 +206,12 @@ export function useMaplibreMap({
 
     const syncLayers = () => {
       // Merge built-in + custom definitions. Built-in render below custom.
-      const allDefs: LayerDefinition[] = [...builtInCtx.availableLayers, ...customCtx.layers];
-      const allVisibleIds = new Set([...builtInCtx.visibleLayerIds, ...customCtx.visibleLayerIds]);
+      const allDefs: LayerDefinition[] = [...builtInCtx.availableLayers, ...customCtx.layers, ...wmsCatalogCtx.layers];
+      const allVisibleIds = new Set([
+        ...builtInCtx.visibleLayerIds,
+        ...customCtx.visibleLayerIds,
+        ...wmsCatalogCtx.visibleLayerIds,
+      ]);
 
       const desiredIds = new Set(allDefs.map((d) => d.id));
       const previousIds = appliedLayerIdsRef.current;
@@ -256,7 +262,14 @@ export function useMaplibreMap({
     } else {
       map.once('load', syncLayers);
     }
-  }, [builtInCtx.availableLayers, builtInCtx.visibleLayerIds, customCtx.layers, customCtx.visibleLayerIds]);
+  }, [
+    builtInCtx.availableLayers,
+    builtInCtx.visibleLayerIds,
+    customCtx.layers,
+    customCtx.visibleLayerIds,
+    wmsCatalogCtx.layers,
+    wmsCatalogCtx.visibleLayerIds,
+  ]);
 
   return { mapContainerRef, mapRef };
 }

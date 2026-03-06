@@ -9,6 +9,7 @@ import { useMaplibreMap } from "~/hooks/useMaplibreMap";
 import { KARTVERKET_TOPO_BASE_LAYER } from '~/utility/mapStyle';
 import type { BaseLayerDefinition } from '~/utility/layers.types';
 import type { LayerSpecification } from 'maplibre-gl';
+import { WmsCatalogLayersProvider } from '~/main';
 
 // ---------------------------------------------------------------------------
 // Meta
@@ -58,11 +59,12 @@ export const Default: Story = {
   render: () => (
     <ViewBoundsProvider>
       <BaseLayersProvider>
-        <BuiltInLayersProvider>
-          <CustomLayersProvider>
-            <MapWithLayerToggle />
-          </CustomLayersProvider>
-        </BuiltInLayersProvider>
+        <WmsCatalogLayersProvider
+          capabilitiesUrl="https://services.kystverket.no/wms.ashx?service=WMS&request=GetCapabilities"
+          attribution='&copy; <a href="https://www.kystverket.no/">Kystverket</a>'
+        >
+          <MapWithLayerToggle />
+        </WmsCatalogLayersProvider>
       </BaseLayersProvider>
     </ViewBoundsProvider>
   ),

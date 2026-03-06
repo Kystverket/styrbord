@@ -78,3 +78,10 @@ export type {
 
 export { BaseLayersContext, BaseLayersProvider } from './utility/baseLayersContext';
 export type { BaseLayersContextValue, BaseLayersProviderProps } from './utility/baseLayersContext';
+
+export { WmsCatalogLayersContext, WmsCatalogLayersProvider } from './utility/wmsCatalogLayersContext';
+export type {
+  WmsCatalogLayersContextValue,
+  WmsCatalogLayersProviderProps,
+  WmsCatalogLayer,
+} from './utility/wmsCatalogLayersContext';
