@@ -24,6 +24,9 @@ jobs:
       - name: Installere dependencies
         run: |
           npm ci --ignore-scripts
+      - name: Bygge base pakke
+        run: |
+          npm run build --workspace base
       - name: Bygge Storybooks
         run: |
           npm run storybook:build
