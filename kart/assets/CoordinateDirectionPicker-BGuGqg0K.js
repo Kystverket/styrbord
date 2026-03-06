@@ -1,4 +1,4 @@
-import{j as h}from"./jsx-runtime-D_zvdyIk.js";import{r as n}from"./iframe-DwN8Zb5S.js";import{q as T,J as S,V as J}from"./style-DtRa4plU.js";import{m as _,c as q,u as z,s as I,b as U,d as F}from"./useMaplibreMap-Clegi6e1.js";const K="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+import{j as h}from"./jsx-runtime-D_zvdyIk.js";import{r as n}from"./iframe-WbX0AX1K.js";import{q as T,J as S,V as J}from"./style-CIRqKYHb.js";import{m as _,c as q,u as z,s as I,b as U,d as F}from"./useMaplibreMap-BWLuc_Pd.js";const K="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
     <circle cx="12" cy="12" r="11" fill="white" stroke="#000667" stroke-width="1.5" opacity="0.9"/>
     <path d="M12 4l-2.5 3h5L12 4z" fill="#000667"/>
     <path d="M12 20l2.5-3h-5L12 20z" fill="#000667"/>
