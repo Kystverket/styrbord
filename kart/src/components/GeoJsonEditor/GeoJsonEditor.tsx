@@ -9,6 +9,7 @@ import type { DrawMode, GeoJsonEditorProps } from './GeoJsonEditor.types';
 import { useTerraDraw } from './useTerraDraw';
 import { GeoJsonEditorToolbar } from './GeoJsonEditorToolbar';
 import { LayerToggle } from '../LayerToggle/LayerToggle';
+import { ensureCollectionConsistency } from '~/utility/collection';
 
 // ---------------------------------------------------------------------------
 // Defaults
@@ -51,7 +52,9 @@ export function GeoJsonEditor({
     editable,
     deletable,
     disabled,
-    onChange,
+    onChange: (data) => {
+      onChange?.(ensureCollectionConsistency(data));
+    },
   });
 
   const { activeMode, setActiveMode, deleteSelected, hasSelection } = terraDrawResult;

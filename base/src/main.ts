@@ -1,5 +1,6 @@
 import './css/index.scss';
 import '@material-symbols/font-400/outlined.css';
+import { useIdProvider } from './utils/idContext';
 
 export type { SupportedLanguage, ScreenSize } from './utils/types';
 
@@ -128,6 +129,8 @@ export { default as Table } from './components/designsystemet/Table/Table';
 
 export { Avatar } from './components/designsystemet/Avatar/Avatar';
 export type { AvatarProps } from './components/designsystemet/Avatar/Avatar';
+
+export { IdProvider, useIdProvider } from './utils/idContext';
 
 //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 //
