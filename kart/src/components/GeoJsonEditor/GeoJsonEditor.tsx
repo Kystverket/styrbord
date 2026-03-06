@@ -1,21 +1,21 @@
-import { useEffect, useMemo } from 'react';
-import type { FeatureCollection } from 'geojson';
+import { useEffect, useMemo } from "react";
+import type { FeatureCollection } from "geojson";
 
-import styles from '~/components/shared/MapPicker.module.css';
-import { useMaplibreMap } from '~/hooks/useMaplibreMap';
-import { computeBounds } from '~/utility/geojson';
-import { toFeatureCollection } from '../GeoJsonViewer/GeoJsonViewer.utils';
-import type { DrawMode, GeoJsonEditorProps } from './GeoJsonEditor.types';
-import { useTerraDraw } from './useTerraDraw';
-import { GeoJsonEditorToolbar } from './GeoJsonEditorToolbar';
-import { LayerToggle } from '../LayerToggle/LayerToggle';
-import { ensureCollectionConsistency } from '~/utility/collection';
+import styles from "~/components/shared/MapPicker.module.css";
+import { useMaplibreMap } from "~/hooks/useMaplibreMap";
+import { computeBounds } from "~/utility/geojson";
+import { toFeatureCollection } from "../GeoJsonViewer/GeoJsonViewer.utils";
+import type { DrawMode, GeoJsonEditorProps } from "./GeoJsonEditor.types";
+import { useTerraDraw } from "./useTerraDraw";
+import { GeoJsonEditorToolbar } from "./GeoJsonEditorToolbar";
+import { LayerToggle } from "../LayerToggle/LayerToggle";
+import { ensureCollectionConsistency } from "~/utility/collection";
 
 // ---------------------------------------------------------------------------
 // Defaults
 // ---------------------------------------------------------------------------
 
-const ALL_MODES: DrawMode[] = ['point', 'linestring', 'polygon'];
+const ALL_MODES: DrawMode[] = ["point", "linestring", "polygon"];
 
 // ---------------------------------------------------------------------------
 // Component
@@ -57,13 +57,19 @@ export function GeoJsonEditor({
     },
   });
 
-  const { activeMode, setActiveMode, deleteSelected, hasSelection } = terraDrawResult;
+  const { activeMode, setActiveMode, deleteSelected, hasSelection } =
+    terraDrawResult;
   const loadInitialData = (
-    terraDrawResult as unknown as { loadInitialData: (v: FeatureCollection | undefined) => void }
+    terraDrawResult as unknown as {
+      loadInitialData: (v: FeatureCollection | undefined) => void;
+    }
   ).loadInitialData;
 
   // Normalise incoming value
-  const fc = useMemo(() => (value ? toFeatureCollection(value) : undefined), [value]);
+  const fc = useMemo(
+    () => (value ? toFeatureCollection(value) : undefined),
+    [value],
+  );
 
   // Load initial data into terra-draw once it's ready
   useEffect(() => {
@@ -87,12 +93,15 @@ export function GeoJsonEditor({
     if (map.isStyleLoaded()) {
       fit();
     } else {
-      map.once('load', fit);
+      map.once("load", fit);
     }
   }, [fc, fitBounds, fitBoundsPadding, mapRef]);
 
   return (
-    <div ref={mapContainerRef} className={[styles.mapContainer, className].filter(Boolean).join(' ')}>
+    <div
+      ref={mapContainerRef}
+      className={[styles.mapContainer, className].filter(Boolean).join(" ")}
+    >
       {!disabled && (
         <GeoJsonEditorToolbar
           modes={modes}

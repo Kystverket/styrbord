@@ -1,7 +1,7 @@
 import type maplibregl from "maplibre-gl";
-import type { LayerSpecification } from 'maplibre-gl';
+import type { LayerSpecification } from "maplibre-gl";
 import type { Coordinate } from "~/utility/types";
-import type { BaseLayerDefinition } from '~/utility/layers.types';
+import type { BaseLayerDefinition } from "~/utility/layers.types";
 
 /** Default center: roughly central Norway. */
 export const DEFAULT_CENTER: Coordinate = { latitude: 65.0, longitude: 14.0 };
@@ -23,12 +23,14 @@ export const EMPTY_STYLE: maplibregl.StyleSpecification = {
 
 /** Kartverket topographic raster base layer. */
 export const KARTVERKET_TOPO_BASE_LAYER: BaseLayerDefinition = {
-  id: 'kartverket-topo',
-  label: 'Topografisk',
+  id: "kartverket-topo",
+  label: "Topografisk",
   sources: {
-    'kartverket-topo': {
-      type: 'raster',
-      tiles: ['https://cache.kartverket.no/v1/wmts/1.0.0/topo/default/webmercator/{z}/{y}/{x}.png'],
+    "kartverket-topo": {
+      type: "raster",
+      tiles: [
+        "https://cache.kartverket.no/v1/wmts/1.0.0/topo/default/webmercator/{z}/{y}/{x}.png",
+      ],
       tileSize: 256,
       maxzoom: 18,
       attribution: '&copy; <a href="https://www.kartverket.no/">Kartverket</a>',
@@ -36,9 +38,9 @@ export const KARTVERKET_TOPO_BASE_LAYER: BaseLayerDefinition = {
   },
   layers: [
     {
-      id: 'kartverket-topo-raster',
-      type: 'raster',
-      source: 'kartverket-topo',
+      id: "kartverket-topo-raster",
+      type: "raster",
+      source: "kartverket-topo",
     } as LayerSpecification,
   ],
 };

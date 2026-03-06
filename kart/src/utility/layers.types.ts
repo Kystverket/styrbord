@@ -1,5 +1,5 @@
-import type { Feature, FeatureCollection } from 'geojson';
-import type { LayerSpecification, SourceSpecification } from 'maplibre-gl';
+import type { Feature, FeatureCollection } from "geojson";
+import type { LayerSpecification, SourceSpecification } from "maplibre-gl";
 
 // ---------------------------------------------------------------------------
 // Base layer model (exclusive — only one active at a time)
@@ -65,7 +65,7 @@ export type LayerFilterConfig = { include: string[] } | { exclude: string[] };
 // Simple layer factory types (higher-level API for custom layers)
 // ---------------------------------------------------------------------------
 
-export type SimpleLayerType = 'geojson' | 'wms' | 'vector-tiles';
+export type SimpleLayerType = "geojson" | "wms" | "vector-tiles";
 
 export interface SimpleLayerOptions {
   id: string;
@@ -76,7 +76,7 @@ export interface SimpleLayerOptions {
 }
 
 export interface SimpleGeoJsonLayerOptions extends SimpleLayerOptions {
-  type: 'geojson';
+  type: "geojson";
   data: Feature | FeatureCollection | string;
   /** Fill color. Defaults to semi-transparent blue. */
   fillColor?: string;
@@ -87,20 +87,20 @@ export interface SimpleGeoJsonLayerOptions extends SimpleLayerOptions {
 }
 
 export interface SimpleWmsLayerOptions extends SimpleLayerOptions {
-  type: 'wms';
+  type: "wms";
   /** Full WMS GetMap URL template with `{bbox-epsg-3857}` placeholder. */
   url: string;
   attribution?: string;
 }
 
 export interface SimpleVectorTilesLayerOptions extends SimpleLayerOptions {
-  type: 'vector-tiles';
+  type: "vector-tiles";
   /** URL template for vector tiles (pbf). */
   url: string;
   /** Source layer name inside the vector tile. */
   sourceLayer: string;
   /** One of the basic paint types. Defaults to "fill". */
-  renderAs?: 'fill' | 'line' | 'circle';
+  renderAs?: "fill" | "line" | "circle";
   color?: string;
 }
 

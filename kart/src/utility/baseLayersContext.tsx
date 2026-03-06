@@ -1,6 +1,6 @@
-import React, { createContext, ReactNode, useCallback, useMemo } from 'react';
-import type { BaseLayerDefinition } from '~/utility/layers.types';
-import { KARTVERKET_TOPO_BASE_LAYER } from '~/utility/mapStyle';
+import React, { createContext, ReactNode, useCallback, useMemo } from "react";
+import type { BaseLayerDefinition } from "~/utility/layers.types";
+import { KARTVERKET_TOPO_BASE_LAYER } from "~/utility/mapStyle";
 
 // ---------------------------------------------------------------------------
 // Context value
@@ -23,7 +23,8 @@ const defaultValue: BaseLayersContextValue = {
   setActiveBaseLayer: () => {},
 };
 
-export const BaseLayersContext = createContext<BaseLayersContextValue>(defaultValue);
+export const BaseLayersContext =
+  createContext<BaseLayersContextValue>(defaultValue);
 
 // ---------------------------------------------------------------------------
 // Provider
@@ -43,7 +44,11 @@ export interface BaseLayersProviderProps {
   defaultActiveId?: string;
 }
 
-export const BaseLayersProvider = ({ children, baseLayers, defaultActiveId }: BaseLayersProviderProps) => {
+export const BaseLayersProvider = ({
+  children,
+  baseLayers,
+  defaultActiveId,
+}: BaseLayersProviderProps) => {
   const availableBaseLayers = useMemo(
     () => (baseLayers && baseLayers.length > 0 ? baseLayers : fallbackLayers),
     [baseLayers],
@@ -71,5 +76,9 @@ export const BaseLayersProvider = ({ children, baseLayers, defaultActiveId }: Ba
     [availableBaseLayers, activeBaseLayerId, setActiveBaseLayer],
   );
 
-  return <BaseLayersContext.Provider value={value}>{children}</BaseLayersContext.Provider>;
+  return (
+    <BaseLayersContext.Provider value={value}>
+      {children}
+    </BaseLayersContext.Provider>
+  );
 };

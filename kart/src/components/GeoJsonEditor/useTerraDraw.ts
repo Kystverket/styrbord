@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import type { MutableRefObject } from 'react';
-import type { Map as MaplibreMap } from 'maplibre-gl';
-import type { FeatureCollection } from 'geojson';
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { MutableRefObject } from "react";
+import type { Map as MaplibreMap } from "maplibre-gl";
+import type { FeatureCollection } from "geojson";
 import {
   TerraDraw,
   TerraDrawPointMode,
@@ -10,11 +10,11 @@ import {
   TerraDrawSelectMode,
   TerraDrawRenderMode,
   type GeoJSONStoreFeatures,
-} from 'terra-draw';
-import { TerraDrawMapLibreGLAdapter } from 'terra-draw-maplibre-gl-adapter';
+} from "terra-draw";
+import { TerraDrawMapLibreGLAdapter } from "terra-draw-maplibre-gl-adapter";
 
-import type { DrawMode } from './GeoJsonEditor.types';
-import { toFeatureCollection } from '../GeoJsonViewer/GeoJsonViewer.utils';
+import type { DrawMode } from "./GeoJsonEditor.types";
+import { toFeatureCollection } from "../GeoJsonViewer/GeoJsonViewer.utils";
 
 type AnyTerraDrawMode =
   | TerraDrawPointMode
@@ -56,7 +56,7 @@ export function useTerraDraw({
   onChange,
 }: UseTerraDrawOptions): UseTerraDrawResult {
   const drawRef = useRef<TerraDraw | null>(null);
-  const [activeMode, setActiveModeState] = useState<string>('static');
+  const [activeMode, setActiveModeState] = useState<string>("static");
   const [hasSelection, setHasSelection] = useState(false);
   const initialDataLoaded = useRef(false);
 
@@ -71,12 +71,14 @@ export function useTerraDraw({
 
     const snapshot = draw.getSnapshot();
     // Filter out terra-draw internal features (selection midpoints, etc.)
-    const userFeatures = snapshot.filter((f: GeoJSONStoreFeatures) => f.properties?.mode !== 'select');
+    const userFeatures = snapshot.filter(
+      (f: GeoJSONStoreFeatures) => f.properties?.mode !== "select",
+    );
 
     const fc: FeatureCollection = {
-      type: 'FeatureCollection',
+      type: "FeatureCollection",
       features: userFeatures.map(({ id, geometry, properties }) => ({
-        type: 'Feature' as const,
+        type: "Feature" as const,
         ...(id != null ? { id } : {}),
         geometry,
         properties: { ...properties },
@@ -96,11 +98,11 @@ export function useTerraDraw({
 
       const drawModes: AnyTerraDrawMode[] = modes.map((m) => {
         switch (m) {
-          case 'point':
+          case "point":
             return new TerraDrawPointMode();
-          case 'linestring':
+          case "linestring":
             return new TerraDrawLineStringMode();
-          case 'polygon':
+          case "polygon":
             return new TerraDrawPolygonMode();
         }
       });
@@ -111,10 +113,24 @@ export function useTerraDraw({
             flags: {
               point: { feature: { draggable: true } },
               linestring: {
-                feature: { draggable: true, coordinates: { midpoints: true, draggable: true, deletable: true } },
+                feature: {
+                  draggable: true,
+                  coordinates: {
+                    midpoints: true,
+                    draggable: true,
+                    deletable: true,
+                  },
+                },
               },
               polygon: {
-                feature: { draggable: true, coordinates: { midpoints: true, draggable: true, deletable: true } },
+                feature: {
+                  draggable: true,
+                  coordinates: {
+                    midpoints: true,
+                    draggable: true,
+                    deletable: true,
+                  },
+                },
               },
             },
           }),
@@ -122,7 +138,9 @@ export function useTerraDraw({
       }
 
       // Static mode for when no drawing tool is active
-      drawModes.push(new TerraDrawRenderMode({ modeName: 'static', styles: {} }));
+      drawModes.push(
+        new TerraDrawRenderMode({ modeName: "static", styles: {} }),
+      );
 
       const draw = new TerraDraw({
         adapter: new TerraDrawMapLibreGLAdapter({ map }),
@@ -130,18 +148,18 @@ export function useTerraDraw({
       });
 
       draw.start();
-      draw.setMode('static');
+      draw.setMode("static");
 
       // Listen for changes
-      draw.on('change', () => {
+      draw.on("change", () => {
         emitSnapshot();
       });
 
-      draw.on('select', () => {
+      draw.on("select", () => {
         setHasSelection(true);
       });
 
-      draw.on('deselect', () => {
+      draw.on("deselect", () => {
         setHasSelection(false);
       });
 
@@ -152,11 +170,11 @@ export function useTerraDraw({
     if (map.isStyleLoaded()) {
       initDraw();
     } else {
-      map.on('load', initDraw);
+      map.on("load", initDraw);
     }
 
     return () => {
-      map.off('load', initDraw);
+      map.off("load", initDraw);
       const draw = drawRef.current;
       if (draw) {
         try {
@@ -173,9 +191,11 @@ export function useTerraDraw({
   // ---- Load initial value ----
   const loadInitialData = useCallback(
     (
-      value: UseTerraDrawOptions['onChange'] extends undefined
+      value: UseTerraDrawOptions["onChange"] extends undefined
         ? never
-        : Parameters<NonNullable<UseTerraDrawOptions['onChange']>>[0] | undefined,
+        :
+            | Parameters<NonNullable<UseTerraDrawOptions["onChange"]>>[0]
+            | undefined,
     ) => {
       const draw = drawRef.current;
       if (!draw || !value || initialDataLoaded.current) return;
@@ -185,14 +205,14 @@ export function useTerraDraw({
 
       const features = fc.features.map((f) => ({
         ...f,
-        properties: { ...f.properties, mode: 'static' },
+        properties: { ...f.properties, mode: "static" },
       })) as GeoJSONStoreFeatures[];
 
       try {
         draw.addFeatures(features);
         initialDataLoaded.current = true;
       } catch (err) {
-        console.error('[GeoJsonEditor] Error loading initial features:', err);
+        console.error("[GeoJsonEditor] Error loading initial features:", err);
       }
     },
     [],
@@ -207,7 +227,7 @@ export function useTerraDraw({
       draw.setMode(mode);
       setActiveModeState(mode);
     } catch (err) {
-      console.error('[GeoJsonEditor] Error setting mode:', err);
+      console.error("[GeoJsonEditor] Error setting mode:", err);
     }
   }, []);
 
@@ -217,7 +237,9 @@ export function useTerraDraw({
     if (!draw || !deletable) return;
 
     const snapshot = draw.getSnapshot();
-    const selected = snapshot.filter((f: GeoJSONStoreFeatures) => f.properties?.selected === true);
+    const selected = snapshot.filter(
+      (f: GeoJSONStoreFeatures) => f.properties?.selected === true,
+    );
 
     if (selected.length > 0) {
       const ids = selected.map((f: GeoJSONStoreFeatures) => f.id!);

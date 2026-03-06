@@ -1,13 +1,20 @@
-import type { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
+import type {
+  Feature,
+  FeatureCollection,
+  GeoJsonProperties,
+  Geometry,
+} from "geojson";
 
-import type { MapBaseProps } from '../shared/MapPicker.types';
+import type { MapBaseProps } from "../shared/MapPicker.types";
 
 /** Drawing modes available in the editor toolbar. */
-export type DrawMode = 'point' | 'linestring' | 'polygon';
+export type DrawMode = "point" | "linestring" | "polygon";
 
 export interface GeoJsonEditorProps extends MapBaseProps {
   /** Current GeoJSON value (controlled). Accepts a Feature or FeatureCollection. */
-  value?: Feature<Geometry, GeoJsonProperties> | FeatureCollection<Geometry, GeoJsonProperties>;
+  value?:
+    | Feature<Geometry, GeoJsonProperties>
+    | FeatureCollection<Geometry, GeoJsonProperties>;
 
   /** Called whenever features are created, edited, or deleted. */
   onChange?: (data: FeatureCollection) => void;

@@ -1,9 +1,12 @@
 import { useContext, useMemo } from "react";
-import { BaseLayersContext } from '~/utility/baseLayersContext';
+import { BaseLayersContext } from "~/utility/baseLayersContext";
 import { BuiltInLayersContext } from "~/utility/builtInLayersContext";
 import { CustomLayersContext } from "~/utility/customLayersContext";
-import { WmsCatalogLayersContext } from '~/utility/wmsCatalogLayersContext';
-import type { BaseLayerDefinition, LayerDefinition } from '~/utility/layers.types';
+import { WmsCatalogLayersContext } from "~/utility/wmsCatalogLayersContext";
+import type {
+  BaseLayerDefinition,
+  LayerDefinition,
+} from "~/utility/layers.types";
 
 export interface LayerEntry {
   /** The full layer definition. */
@@ -11,7 +14,7 @@ export interface LayerEntry {
   /** Whether the layer is currently visible on the map. */
   visible: boolean;
   /** Whether the layer comes from the built-in registry or was added as a custom layer. */
-  origin: 'built-in' | 'custom' | 'wms-catalog';
+  origin: "built-in" | "custom" | "wms-catalog";
 }
 
 export interface UseMapLayersResult {
@@ -71,7 +74,10 @@ export function useMapLayers(): UseMapLayersResult {
     [custom.layers],
   );
 
-  const wmsCatalogIds = useMemo(() => new Set(wmsCatalog.layers.map((l) => l.id)), [wmsCatalog.layers]);
+  const wmsCatalogIds = useMemo(
+    () => new Set(wmsCatalog.layers.map((l) => l.id)),
+    [wmsCatalog.layers],
+  );
 
   const allLayers = useMemo<LayerEntry[]>(() => {
     const entries: LayerEntry[] = [];
@@ -80,7 +86,7 @@ export function useMapLayers(): UseMapLayersResult {
       entries.push({
         definition: def,
         visible: builtIn.visibleLayerIds.has(def.id),
-        origin: 'built-in',
+        origin: "built-in",
       });
     }
 
@@ -88,7 +94,7 @@ export function useMapLayers(): UseMapLayersResult {
       entries.push({
         definition: def,
         visible: custom.visibleLayerIds.has(def.id),
-        origin: 'custom',
+        origin: "custom",
       });
     }
 
@@ -96,7 +102,7 @@ export function useMapLayers(): UseMapLayersResult {
       entries.push({
         definition: def,
         visible: wmsCatalog.visibleLayerIds.has(def.id),
-        origin: 'wms-catalog',
+        origin: "wms-catalog",
       });
     }
 

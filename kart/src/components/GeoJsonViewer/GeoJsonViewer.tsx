@@ -15,7 +15,7 @@ import {
   removeLayers,
   toFeatureCollection,
 } from "./GeoJsonViewer.utils";
-import { LayerToggle } from '../LayerToggle/LayerToggle';
+import { LayerToggle } from "../LayerToggle/LayerToggle";
 
 // ---------------------------------------------------------------------------
 // Component

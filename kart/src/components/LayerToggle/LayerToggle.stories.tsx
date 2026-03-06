@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import StyrbordDecorator from "../../../storybook/styrbordDecorator";
 import { LayerToggle } from "./LayerToggle";
-import { BaseLayersProvider } from '~/utility/baseLayersContext';
+import { BaseLayersProvider } from "~/utility/baseLayersContext";
 import { BuiltInLayersProvider } from "~/utility/builtInLayersContext";
 import { CustomLayersProvider } from "~/utility/customLayersContext";
 import { ViewBoundsProvider } from "~/utility/viewBoundsContext";
 import { useMaplibreMap } from "~/hooks/useMaplibreMap";
-import { KARTVERKET_TOPO_BASE_LAYER } from '~/utility/mapStyle';
-import type { BaseLayerDefinition } from '~/utility/layers.types';
-import type { LayerSpecification } from 'maplibre-gl';
-import { WmsCatalogLayersProvider } from '~/main';
+import { KARTVERKET_TOPO_BASE_LAYER } from "~/utility/mapStyle";
+import type { BaseLayerDefinition } from "~/utility/layers.types";
+import type { LayerSpecification } from "maplibre-gl";
+import { WmsCatalogLayersProvider } from "~/main";
 
 // ---------------------------------------------------------------------------
 // Meta
@@ -90,7 +90,7 @@ export const FilteredLayers: Story = {
   render: () => (
     <ViewBoundsProvider>
       <BaseLayersProvider>
-        <BuiltInLayersProvider include={['Havnedata', 'Bilder']}>
+        <BuiltInLayersProvider include={["Havnedata", "Bilder"]}>
           <CustomLayersProvider>
             <MapWithLayerToggle defaultOpen />
           </CustomLayersProvider>
@@ -105,12 +105,14 @@ export const FilteredLayers: Story = {
 // ---------------------------------------------------------------------------
 
 const KARTVERKET_SEA_BASE_LAYER: BaseLayerDefinition = {
-  id: 'kartverket-sea',
-  label: 'Sjøkart',
+  id: "kartverket-sea",
+  label: "Sjøkart",
   sources: {
-    'kartverket-sea': {
-      type: 'raster',
-      tiles: ['https://cache.kartverket.no/v1/wmts/1.0.0/sjokartraster/default/webmercator/{z}/{y}/{x}.png'],
+    "kartverket-sea": {
+      type: "raster",
+      tiles: [
+        "https://cache.kartverket.no/v1/wmts/1.0.0/sjokartraster/default/webmercator/{z}/{y}/{x}.png",
+      ],
       tileSize: 256,
       maxzoom: 18,
       attribution: '&copy; <a href="https://www.kartverket.no/">Kartverket</a>',
@@ -118,20 +120,22 @@ const KARTVERKET_SEA_BASE_LAYER: BaseLayerDefinition = {
   },
   layers: [
     {
-      id: 'kartverket-sea-raster',
-      type: 'raster',
-      source: 'kartverket-sea',
+      id: "kartverket-sea-raster",
+      type: "raster",
+      source: "kartverket-sea",
     } as LayerSpecification,
   ],
 };
 
 const KARTVERKET_GRAATONE_BASE_LAYER: BaseLayerDefinition = {
-  id: 'kartverket-graatone',
-  label: 'Gråtone',
+  id: "kartverket-graatone",
+  label: "Gråtone",
   sources: {
-    'kartverket-graatone': {
-      type: 'raster',
-      tiles: ['https://cache.kartverket.no/v1/wmts/1.0.0/topograatone/default/webmercator/{z}/{y}/{x}.png'],
+    "kartverket-graatone": {
+      type: "raster",
+      tiles: [
+        "https://cache.kartverket.no/v1/wmts/1.0.0/topograatone/default/webmercator/{z}/{y}/{x}.png",
+      ],
       tileSize: 256,
       maxzoom: 18,
       attribution: '&copy; <a href="https://www.kartverket.no/">Kartverket</a>',
@@ -139,9 +143,9 @@ const KARTVERKET_GRAATONE_BASE_LAYER: BaseLayerDefinition = {
   },
   layers: [
     {
-      id: 'kartverket-graatone-raster',
-      type: 'raster',
-      source: 'kartverket-graatone',
+      id: "kartverket-graatone-raster",
+      type: "raster",
+      source: "kartverket-graatone",
     } as LayerSpecification,
   ],
 };
@@ -151,7 +155,11 @@ export const MultipleBaseLayers: Story = {
   render: () => (
     <ViewBoundsProvider>
       <BaseLayersProvider
-        baseLayers={[KARTVERKET_TOPO_BASE_LAYER, KARTVERKET_SEA_BASE_LAYER, KARTVERKET_GRAATONE_BASE_LAYER]}
+        baseLayers={[
+          KARTVERKET_TOPO_BASE_LAYER,
+          KARTVERKET_SEA_BASE_LAYER,
+          KARTVERKET_GRAATONE_BASE_LAYER,
+        ]}
       >
         <BuiltInLayersProvider>
           <CustomLayersProvider>
