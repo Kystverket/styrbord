@@ -27,16 +27,5 @@ const config: StorybookConfig = {
   staticDirs: ["../assets"],
 
   docs: {},
-
-  viteFinal: async (viteFinalConfig) => {
-    viteFinalConfig.optimizeDeps = {
-      ...viteFinalConfig.optimizeDeps,
-      esbuildOptions: {
-        ...viteFinalConfig.optimizeDeps?.esbuildOptions,
-        target: "es2022",
-      },
-    };
-    return viteFinalConfig;
-  },
 };
 export default config;

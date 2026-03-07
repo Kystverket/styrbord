@@ -38,9 +38,6 @@ export default defineConfig({
         "react",
         "react-dom",
         "@digdir/designsystemet-react",
-        "maplibre-gl",
-        "terra-draw",
-        "terra-draw-maplibre-gl-adapter",
         new RegExp(".*storybook.*"),
       ],
       output: {
@@ -48,10 +45,7 @@ export default defineConfig({
         // for externalized deps
         globals: {
           react: "React",
-          "maplibre-gl": "maplibregl",
           "@digdir/designsystemet-react": "@digdir/designsystemet-react",
-          "terra-draw": "terraDraw",
-          "terra-draw-maplibre-gl-adapter": "terraDrawMapLibreGLAdapter",
         },
       },
       plugins: [
