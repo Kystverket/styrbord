@@ -43,7 +43,6 @@ export const Button: FC<ButtonProps> = ({
       break;
   }
 
-  //LOOKIE HERE
   propsToOverride['data-color'] = color;
   propsToOverride['data-size'] = size;
 

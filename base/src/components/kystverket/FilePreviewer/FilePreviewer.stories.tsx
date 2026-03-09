@@ -77,9 +77,9 @@ export const Default: StoryFn<FilePreviewerDialogProps> = (args) => {
     <>
       <FilePreviewer animation={args.animation}>
         {args.files.map((file, idx) => (
-          <div key={idx} style={{ marginTop: '8px' }}>
+          <Box key={idx} mt={8}>
             <FilePreviewer.Thumbnail file={file} index={idx} />
-          </div>
+          </Box>
         ))}
       </FilePreviewer>
     </>
