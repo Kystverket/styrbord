@@ -5,7 +5,8 @@ import { Box, Button, Icon, Paragraph, Tooltip } from '~/main';
 import classes from './FilePreviewer-thumbnail.module.css';
 import { FileRenderer } from '../renderer/FileRenderer';
 import { convertBytesToReadable } from '~/utils/convertBytesToReadable';
-import { handleDownload } from '~/utils/handleFileDownload';
+import { handleDownload } from '../FilePreviewer-handleFileDownload';
+import { openFileInNewTab } from '../FilePreviewer-openInNew';
 
 export interface FilePreviewerThumbnailProps {
   file: FileInfo;
@@ -39,13 +40,39 @@ export const FilePreviewerThumbnail = ({ file, index }: FilePreviewerThumbnailPr
     }
   };
 
+  const isButtonElement = (target: EventTarget | null) => target instanceof HTMLElement && !!target.closest('button');
   const filename = splitFilenameAndExtension(file.fileName);
   return (
-    <Box className={classes.container}>
-      <Box className={classes.thumbnail}>
+    <div
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (isButtonElement(e.target)) return;
+
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openDialogHandler();
+        }
+      }}
+      onClick={() => {
+        openDialogHandler();
+      }}
+      className={classes.container}
+    >
+      <div className={classes.thumbnail}>
         <FileRenderer file={file} />
         <Box className={classes.buttonGroup} horizontal>
-          <Button variant="ghost" color="neutral" size="sm" className={classes.button} icon onClick={openDialogHandler}>
+          <Button
+            variant="ghost"
+            color="neutral"
+            size="sm"
+            className={classes.button}
+            icon
+            onClick={(e) => {
+              e.stopPropagation();
+              openFileInNewTab(file);
+            }}
+          >
             <Icon material="open_in_new" />
           </Button>
           <Button
@@ -54,12 +81,15 @@ export const FilePreviewerThumbnail = ({ file, index }: FilePreviewerThumbnailPr
             size="sm"
             className={classes.button}
             icon
-            onClick={() => handleDownload(file)}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDownload(file);
+            }}
           >
             <Icon material="download" />
           </Button>
         </Box>
-      </Box>
+      </div>
       <Box className={classes.fileInfoContainer}>
         <Box horizontal>
           <Tooltip content={`${filename.filename}.${filename.extension}`}>
@@ -74,7 +104,7 @@ export const FilePreviewerThumbnail = ({ file, index }: FilePreviewerThumbnailPr
           </Paragraph>
         )}
       </Box>
-    </Box>
+    </div>
   );
 };
 
