@@ -1,0 +1,81 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  border-radius: var(--ds-border-radius-md) var(--ds-border-radius-md) 0 0;
+  flex-wrap: wrap;
+  border: 1px solid var(--ds-color-neutral-border-default);
+  border-bottom: none;
+}
+
+.toolbarButton {
+  color: var(--ds-color-neutral-text-default);
+  border-radius: var(--ds-border-radius-lg);
+  margin: 0.25rem;
+  min-width: 1.75rem;
+  height: 1.75rem;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.5rem;
+  cursor: pointer;
+}
+
+.toolbarButton:hover:not(:disabled) {
+  background: var(--ds-color-neutral-surface-active);
+}
+
+.toolbarButton[aria-pressed='true']:not(:disabled) {
+  background: var(--ds-color-primary-surface-active);
+  color: var(--ds-color-primary-text-default);
+}
+.toolbarButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.editorContainer {
+  position: relative;
+  border: 1px solid var(--ds-color-neutral-border-default);
+  border-radius: 0 0 var(--ds-border-radius-md) var(--ds-border-radius-md);
+  background: var(--ds-color-neutral-background-default);
+  overflow: auto;
+  padding: 0.625rem 0.75rem;
+}
+
+.editorContainerDisabled {
+  background: var(--ds-color-neutral-background-subtle);
+  opacity: 0.8;
+}
+
+.editorContainerReadOnly {
+  background: var(--ds-color-neutral-background-subtle);
+}
+
+.editor :global(.milkdown),
+.editor :global(.ProseMirror) {
+  min-height: calc(10rem - 1.25rem);
+  outline: none;
+  font: inherit;
+  color: inherit;
+}
+
+.editor :global(.ProseMirror p) {
+  margin: 0 0 0.5rem;
+}
+
+.editor :global(.ProseMirror p:last-child) {
+  margin-bottom: 0;
+}
+
+.placeholder {
+  position: absolute;
+  inset: 0.625rem 0.75rem auto;
+  color: var(--ds-color-neutral-text-subtle);
+  pointer-events: none;
+}
