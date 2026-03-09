@@ -13,7 +13,7 @@ export type ButtonProps = {
 
 export const Button: FC<ButtonProps> = ({
   variant = 'outline',
-  color = 'primary',
+  color = undefined,
   size = 'md',
   text = undefined,
   href = undefined,
