@@ -26,6 +26,7 @@ const defaultArgs: TextAreaProps = {
   onBlur: () => console.log('onBlur'),
   onChange: (value: string) => console.log(`onChange value: ${value}`),
   value: '',
+  description: 'this is a description',
   label: 'This is a label',
 };
 
