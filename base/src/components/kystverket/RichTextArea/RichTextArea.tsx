@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Milkdown, MilkdownProvider, useEditor } from '@milkdown/react';
 import { Editor, commandsCtx, defaultValueCtx, editorViewCtx, editorViewOptionsCtx, rootCtx } from '@milkdown/kit/core';
+import { undoCommand, redoCommand } from '@milkdown/kit/plugin/history';
 import { commonmark, toggleEmphasisCommand, toggleStrongCommand } from '@milkdown/kit/preset/commonmark';
 import { history } from '@milkdown/kit/plugin/history';
 import { listener, listenerCtx } from '@milkdown/kit/plugin/listener';
@@ -199,6 +200,8 @@ const RichTextAreaContainer = ({
             isItalicActive={isItalicActive}
             onBold={() => runCommand(toggleStrongCommand)}
             onItalic={() => runCommand(toggleEmphasisCommand)}
+            onUndo={() => runCommand(undoCommand)}
+            onRedo={() => runCommand(redoCommand)}
           />
         )}
 

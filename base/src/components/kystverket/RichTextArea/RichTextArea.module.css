@@ -5,7 +5,7 @@
 
 .toolbar {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
   border-radius: var(--ds-border-radius-md) var(--ds-border-radius-md) 0 0;
   flex-wrap: wrap;
   border: 1px solid var(--ds-color-neutral-border-default);
@@ -13,12 +13,11 @@
 }
 
 .toolbarButton {
-  color: var(--ds-color-neutral-text-default);
+  color: var(--ds-color-neutral-text-subtle);
   border-radius: var(--ds-border-radius-lg);
   margin: 0.25rem;
   min-width: 1.75rem;
   height: 1.75rem;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -27,12 +26,12 @@
 }
 
 .toolbarButton:hover:not(:disabled) {
-  background: var(--ds-color-neutral-surface-active);
+  background: var(--ds-color-neutral-surface-hover);
 }
 
 .toolbarButton[aria-pressed='true']:not(:disabled) {
-  background: var(--ds-color-primary-surface-active);
-  color: var(--ds-color-primary-text-default);
+  background: var(--ds-color-neutral-surface-active);
+  color: var(--ds-color-neutral-text-default);
 }
 .toolbarButton:disabled {
   opacity: 0.6;
@@ -42,6 +41,7 @@
 .editorContainer {
   position: relative;
   border: 1px solid var(--ds-color-neutral-border-default);
+  border-top: 1px solid var(--ds-color-neutral-border-subtle);
   border-radius: 0 0 var(--ds-border-radius-md) var(--ds-border-radius-md);
   background: var(--ds-color-neutral-background-default);
   overflow: auto;
