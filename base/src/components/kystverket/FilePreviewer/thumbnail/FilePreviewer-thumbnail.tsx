@@ -40,15 +40,14 @@ export const FilePreviewerThumbnail = ({ file, index }: FilePreviewerThumbnailPr
     }
   };
 
-  const isInteractiveTarget = (target: EventTarget | null) =>
-    target instanceof HTMLElement && !!target.closest('button, a, input, select, textarea, [role="button"]');
-
+  const isButtonElement = (target: EventTarget | null) => target instanceof HTMLElement && !!target.closest('button');
   const filename = splitFilenameAndExtension(file.fileName);
   return (
     <div
+      role="button"
       tabIndex={0}
       onKeyDown={(e) => {
-        if (isInteractiveTarget(e.target)) return;
+        if (isButtonElement(e.target)) return;
 
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
