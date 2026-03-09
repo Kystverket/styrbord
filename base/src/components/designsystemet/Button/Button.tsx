@@ -4,7 +4,7 @@ import { FC } from 'react';
 
 export type ButtonProps = {
   variant?: 'filled' | 'subtle' | 'outline' | 'ghost' | 'dashed';
-  color?: 'neutral' | 'danger';
+  color?: 'primary' | 'neutral' | 'danger';
   size?: 'sm' | 'md' | 'lg';
   text?: string;
   href?: string;
@@ -13,7 +13,7 @@ export type ButtonProps = {
 
 export const Button: FC<ButtonProps> = ({
   variant = 'outline',
-  color = undefined,
+  color = 'primary',
   size = 'md',
   text = undefined,
   href = undefined,
@@ -43,6 +43,7 @@ export const Button: FC<ButtonProps> = ({
       break;
   }
 
+  //LOOKIE HERE
   propsToOverride['data-color'] = color;
   propsToOverride['data-size'] = size;
 
