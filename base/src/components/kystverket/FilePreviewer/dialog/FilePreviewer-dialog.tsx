@@ -4,8 +4,9 @@ import { Body, Box, Button, ButtonProps, Icon } from '~/main';
 import { FileInfo, defaultButtonsByType } from '../FilePreviewer.types';
 import { FileRenderer } from '../renderer/FileRenderer';
 import { useHorizontalDragScroll } from '~/hooks/useHorizontalDragScroll';
-import { handleDownload } from '~/utils/handleFileDownload';
+import { handleDownload } from '../FilePreviewer-handleFileDownload';
 import { convertBytesToReadable } from '~/utils/convertBytesToReadable';
+import { openFileInNewTab } from '../FilePreviewer-openInNew';
 
 const getButtonConfig = (file: FileInfo) => {
   const defaults = defaultButtonsByType[file.contentType];
@@ -69,23 +70,7 @@ export const FilePreviewerDialog = ({ animation = 'slide', onClose, files, start
   };
 
   const downloadHandler = () => handleDownload(selectedFile);
-
-  const handleOpenInNew = () => {
-    if (selectedFile.contentType === 'image') window.open(selectedFile.src, '_blank');
-    else if (selectedFile.contentType === 'pdf') window.open(selectedFile.src, '_blank');
-    else if (selectedFile.contentType === 'json') openSelectedJsonFileAsBlob();
-  };
-
-  const openSelectedJsonFileAsBlob = () => {
-    if (selectedFile.contentType !== 'json') return;
-    {
-      const jsonString = JSON.stringify(selectedFile.data, null, 2);
-      const blob = new Blob([jsonString], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      window.open(url, '_blank');
-      setTimeout(() => URL.revokeObjectURL(url), 100);
-    }
-  };
+  const handleOpenInNew = () => openFileInNewTab(selectedFile);
 
   const handleNext = () => {
     if (selectedFileIndexRef.current < files.length - 1) setSelectedFileIndex((index) => index + 1);
@@ -133,7 +118,7 @@ export const FilePreviewerDialog = ({ animation = 'slide', onClose, files, start
           </Box>
           <Box>
             <Button title="Lukk" onClick={handleClose} {...defaultButtonProps}>
-              <Icon material="close" size="lg"></Icon>
+              <Icon material="close" size="lg" />
             </Button>
           </Box>
         </Box>
