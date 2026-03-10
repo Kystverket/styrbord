@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Milkdown, MilkdownProvider, useEditor } from '@milkdown/react';
-import { Editor, commandsCtx, defaultValueCtx, editorViewCtx, editorViewOptionsCtx, rootCtx } from '@milkdown/kit/core';
-import { undoCommand, redoCommand } from '@milkdown/kit/plugin/history';
+import { Editor, commandsCtx, defaultValueCtx, editorViewCtx, editorViewOptionsCtx, rootCtx } from '@milkdown/core';
+import { undoCommand, redoCommand } from '@milkdown/plugin-history';
 import {
   commonmark,
   liftListItemCommand,
@@ -11,11 +11,11 @@ import {
   toggleStrongCommand,
   wrapInBulletListCommand,
   wrapInOrderedListCommand,
-} from '@milkdown/kit/preset/commonmark';
-import { history } from '@milkdown/kit/plugin/history';
-import { listener, listenerCtx } from '@milkdown/kit/plugin/listener';
-import { replaceAll } from '@milkdown/kit/utils';
-import '@milkdown/kit/prose/view/style/prosemirror.css';
+} from '@milkdown/preset-commonmark';
+import { history } from '@milkdown/plugin-history';
+import { listener, listenerCtx } from '@milkdown/plugin-listener';
+import { replaceAll } from '@milkdown/utils';
+import '@milkdown/prose/view/style/prosemirror.css';
 
 import classes from './RichTextArea.module.css';
 import { Toolbar } from './Toolbar';
