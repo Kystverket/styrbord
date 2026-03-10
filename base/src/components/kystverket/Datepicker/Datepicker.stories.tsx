@@ -18,7 +18,19 @@ const Wrapper = (props: DatepickerProps) => {
 const meta = {
   title: 'Form/Datepicker',
   component: Wrapper,
-  decorators: [StyrbordDecorator, (Story) => <Story />],
+  decorators: [
+    StyrbordDecorator,
+    (Story) => (
+      <div
+        style={{
+          margin: '0 auto',
+          width: 'fit-content',
+        }}
+      >
+        <Story />
+      </div>
+    ),
+  ],
   tags: ['autodocs', 'kyv'],
   argTypes: {},
 } satisfies Meta<typeof Wrapper>;
@@ -147,4 +159,16 @@ export const InDialogNearEdge: Story = {
       );
     },
   ],
+};
+
+export const WithYearAndMonthDropdown: Story = {
+  args: {
+    ...defaultProps,
+    showYearDropdown: true,
+    showMonthDropdown: true,
+    value: new Date(),
+    minDate: new Date(2015, 1, 1),
+    maxDate: new Date(),
+    description: 'Også begrenset med minDate og maxDate',
+  },
 };

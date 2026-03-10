@@ -33,6 +33,11 @@
   background: var(--ds-color-neutral-surface-active);
   color: var(--ds-color-neutral-text-default);
 }
+.toolbarButton:focus-visible {
+  outline: 3px solid var(--ds-color-focus-outer);
+  outline-offset: 3px;
+}
+
 .toolbarButton:disabled {
   opacity: 0.6;
   cursor: not-allowed;
