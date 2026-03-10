@@ -19,7 +19,7 @@ import '@milkdown/kit/prose/view/style/prosemirror.css';
 
 import classes from './RichTextArea.module.css';
 import { Toolbar } from './Toolbar';
-import { Fieldset, LabelContent } from '~/main';
+import { Fieldset, LabelContent, ValidationMessage } from '~/main';
 
 export type RichTextAreaProps = {
   value: string;
@@ -32,6 +32,7 @@ export type RichTextAreaProps = {
   description?: string | React.ReactNode;
   optional?: boolean | string | undefined;
   required?: boolean | string | undefined;
+  error?: string;
 };
 
 type ToolbarCommand = { key: unknown };
@@ -47,6 +48,7 @@ const RichTextAreaContainer = ({
   description,
   optional = false,
   required = false,
+  error,
 }: RichTextAreaProps) => {
   const latestOnChangeRef = useRef(onChange);
   const lastKnownMarkdownRef = useRef(value);
@@ -328,6 +330,7 @@ const RichTextAreaContainer = ({
             <Milkdown />
           </div>
         </div>
+        {error && <ValidationMessage className={classes.error}>{error}</ValidationMessage>}
       </div>
     </Fieldset>
   );

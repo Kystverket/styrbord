@@ -59,3 +59,12 @@ export const ReadOnly: Story = {
   },
   render: renderInteractive,
 };
+
+export const WithError: Story = {
+  args: {
+    ...defaultArgs,
+
+    error: 'Du må fylle ut dette feltet.',
+  },
+  render: renderInteractive,
+};

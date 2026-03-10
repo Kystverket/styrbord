@@ -107,3 +107,7 @@
   color: var(--ds-color-neutral-text-subtle);
   pointer-events: none;
 }
+
+.error {
+  padding-top: var(--ds-size-2);
+}
