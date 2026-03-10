@@ -114,6 +114,9 @@ export type { NumberInputProps } from './components/designsystemet/NumberInput/N
 export { TextArea } from './components/designsystemet/TextArea/TextArea';
 export type { TextAreaProps } from './components/designsystemet/TextArea/TextArea';
 
+export { RichTextArea } from './components/kystverket/RichTextArea/RichTextArea';
+export type { RichTextAreaProps } from './components/kystverket/RichTextArea/RichTextArea';
+
 export type { InputSize } from './utils/input/input';
 
 export { Select } from './components/designsystemet/Select/Select';

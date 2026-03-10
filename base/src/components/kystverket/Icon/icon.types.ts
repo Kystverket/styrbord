@@ -96,6 +96,13 @@ export const iconIdList = [
   'code_blocks',
   'upload',
   'folder_open',
+  'format_italic',
+  'format_bold',
+  'format_list_bulleted',
+  'format_list_numbered',
+  'format_align_justify',
+  'undo',
+  'redo',
 ] as const;
 
 export type IconId = (typeof iconIdList)[number];
