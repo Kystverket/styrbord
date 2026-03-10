@@ -14,7 +14,7 @@
 
 .toolbarButton {
   color: var(--ds-color-neutral-text-subtle);
-  border-radius: var(--ds-border-radius-lg);
+  border-radius: var(--ds-border-radius-md);
   margin: 0.25rem;
   min-width: 1.75rem;
   height: 1.75rem;
@@ -27,6 +27,11 @@
 
 .toolbarButton:hover:not(:disabled) {
   background: var(--ds-color-neutral-surface-hover);
+}
+
+.toolbarButton:focus-visible {
+  outline: 3px solid var(--ds-color-focus-outer);
+  outline-offset: 3px;
 }
 
 .toolbarButton[aria-pressed='true']:not(:disabled) {
@@ -76,6 +81,24 @@
 
 .editor :global(.ProseMirror p:last-child) {
   margin-bottom: 0;
+}
+
+.editor :global(.ProseMirror ul),
+.editor :global(.ProseMirror ol) {
+  margin: 0 0 0.5rem;
+  padding-inline-start: 1.5rem;
+}
+
+.editor :global(.ProseMirror ul) {
+  list-style: disc;
+}
+
+.editor :global(.ProseMirror ol) {
+  list-style: decimal;
+}
+
+.editor :global(.ProseMirror li + li) {
+  margin-top: 0.125rem;
 }
 
 .placeholder {

@@ -4,7 +4,14 @@ import { useEffect, useRef, useState } from 'react';
 import { Milkdown, MilkdownProvider, useEditor } from '@milkdown/react';
 import { Editor, commandsCtx, defaultValueCtx, editorViewCtx, editorViewOptionsCtx, rootCtx } from '@milkdown/kit/core';
 import { undoCommand, redoCommand } from '@milkdown/kit/plugin/history';
-import { commonmark, toggleEmphasisCommand, toggleStrongCommand } from '@milkdown/kit/preset/commonmark';
+import {
+  commonmark,
+  liftListItemCommand,
+  toggleEmphasisCommand,
+  toggleStrongCommand,
+  wrapInBulletListCommand,
+  wrapInOrderedListCommand,
+} from '@milkdown/kit/preset/commonmark';
 import { history } from '@milkdown/kit/plugin/history';
 import { listener, listenerCtx } from '@milkdown/kit/plugin/listener';
 import { replaceAll } from '@milkdown/kit/utils';
@@ -27,6 +34,9 @@ export type RichTextAreaProps = {
   required?: boolean | string | undefined;
 };
 
+type ToolbarCommand = { key: unknown };
+type CommandToRun = { command: ToolbarCommand };
+
 const RichTextAreaContainer = ({
   value,
   onChange,
@@ -43,12 +53,14 @@ const RichTextAreaContainer = ({
 
   const [isBoldActive, setIsBoldActive] = useState(false);
   const [isItalicActive, setIsItalicActive] = useState(false);
+  const [isBulletListActive, setIsBulletListActive] = useState(false);
+  const [isOrderedListActive, setIsOrderedListActive] = useState(false);
 
   const isLocked = disabled || readOnly;
 
   latestOnChangeRef.current = onChange;
 
-  // Leser gjeldende markør/seleksjon i editoren og oppdaterer aktiv status for fet/kursiv-knappene.
+  // Leser gjeldende markør/seleksjon i editoren og oppdaterer aktiv status for toolbar
   const updateToolbarState = (ctx: Parameters<Editor['action']>[0] extends (arg: infer T) => unknown ? T : never) => {
     const view = ctx.get(editorViewCtx);
     const { state } = view;
@@ -85,8 +97,44 @@ const RichTextAreaContainer = ({
       return active;
     };
 
+    const hasNode = (nodeName: string) => {
+      const nodeType = state.schema.nodes[nodeName];
+
+      if (!nodeType) {
+        return false;
+      }
+
+      if (empty) {
+        for (let depth = $from.depth; depth >= 0; depth -= 1) {
+          if ($from.node(depth).type === nodeType) {
+            return true;
+          }
+        }
+
+        return false;
+      }
+
+      let active = false;
+      state.doc.nodesBetween(from, to, (node) => {
+        if (active) {
+          return false;
+        }
+
+        if (node.type === nodeType) {
+          active = true;
+          return false;
+        }
+
+        return undefined;
+      });
+
+      return active;
+    };
+
     setIsBoldActive(hasMark(['strong']));
     setIsItalicActive(hasMark(['emphasis', 'em']));
+    setIsBulletListActive(hasNode('bullet_list'));
+    setIsOrderedListActive(hasNode('ordered_list'));
   };
 
   // Oppretter Milkdown-editor med schema, historikk og listeners.
@@ -146,10 +194,9 @@ const RichTextAreaContainer = ({
 
     lastKnownMarkdownRef.current = value;
     editor.action(replaceAll(value));
-    console.log('External value updated editor content:', value);
   }, [get, value]);
 
-  // Sett korrekt initial knappestatus når editoren er tilgjengelig.
+  // Sett knappestatus når editoren er tilgjengelig.
   useEffect(() => {
     const editor = get();
 
@@ -163,7 +210,7 @@ const RichTextAreaContainer = ({
   }, [get]);
 
   // Kjører toolbar-kommando og oppdaterer knappestatus.
-  const runCommand = (command: { key: unknown }, payload?: unknown) => {
+  const runCommand = (command: ToolbarCommand) => {
     if (isLocked) {
       return;
     }
@@ -175,42 +222,108 @@ const RichTextAreaContainer = ({
     }
 
     editor.action((ctx) => {
+      ctx.get(editorViewCtx).focus();
       const commands = ctx.get(commandsCtx);
-      commands.call(command.key as never, payload as never);
+      type CommandKey = Parameters<typeof commands.call>[0];
+
+      commands.call(command.key as CommandKey);
       updateToolbarState(ctx);
     });
   };
 
-  // Vis placeholder kun når feltet er tomt.
+  // Kjører flere kommandoer i rekkefølge og oppdaterer knappestatus.
+  const runCommands = (commandsToRun: CommandToRun[]) => {
+    if (isLocked) {
+      return;
+    }
+
+    const editor = get();
+
+    if (!editor) {
+      return;
+    }
+
+    editor.action((ctx) => {
+      ctx.get(editorViewCtx).focus();
+      const commands = ctx.get(commandsCtx);
+      type CommandKey = Parameters<typeof commands.call>[0];
+
+      commandsToRun.forEach(({ command }) => {
+        commands.call(command.key as CommandKey);
+      });
+
+      updateToolbarState(ctx);
+    });
+  };
+
+  const toggleList = ({
+    isTargetListActive,
+    isOtherListActive,
+    wrapCommand,
+  }: {
+    isTargetListActive: boolean;
+    isOtherListActive: boolean;
+    wrapCommand: ToolbarCommand;
+  }) => {
+    if (isTargetListActive) {
+      runCommand(liftListItemCommand);
+      return;
+    }
+
+    if (isOtherListActive) {
+      runCommands([{ command: liftListItemCommand }, { command: wrapCommand }]);
+      return;
+    }
+
+    runCommand(wrapCommand);
+  };
+
   const showPlaceholder = !value && Boolean(placeholder);
 
   return (
     <Fieldset>
-      <Fieldset.Legend className={classes.legend}>
+      <Fieldset.Legend>
         <LabelContent text={label} required={required} optional={optional} />
       </Fieldset.Legend>
-      <Fieldset.Description className={classes.description}>{description}</Fieldset.Description>
+      <Fieldset.Description>{description}</Fieldset.Description>
 
       <div className={classes.wrapper}>
-        {/* Toolbar vises kun når feltet kan redigeres. */}
         {!readOnly && (
           <Toolbar
             disabled={disabled || loading}
             isBoldActive={isBoldActive}
             isItalicActive={isItalicActive}
+            isBulletListActive={isBulletListActive}
+            isOrderedListActive={isOrderedListActive}
             onBold={() => runCommand(toggleStrongCommand)}
             onItalic={() => runCommand(toggleEmphasisCommand)}
             onUndo={() => runCommand(undoCommand)}
             onRedo={() => runCommand(redoCommand)}
+            onBulletList={() =>
+              toggleList({
+                isTargetListActive: isBulletListActive,
+                isOtherListActive: isOrderedListActive,
+                wrapCommand: wrapInBulletListCommand,
+              })
+            }
+            onOrderedList={() =>
+              toggleList({
+                isTargetListActive: isOrderedListActive,
+                isOtherListActive: isBulletListActive,
+                wrapCommand: wrapInOrderedListCommand,
+              })
+            }
           />
         )}
 
-        {/* Editor-container med egne stilvarianter for disabled/read-only. */}
         <div
           className={`${classes.editorContainer} ${disabled ? classes.editorContainerDisabled : ''} ${readOnly ? classes.editorContainerReadOnly : ''}`}
         >
-          {/* Placeholder rendres som overlay når verdien er tom. */}
-          {showPlaceholder ? <span className={classes.placeholder}>{placeholder}</span> : null}
+          {showPlaceholder ? (
+            <span className={classes.placeholder} aria-hidden="true">
+              {placeholder}
+            </span>
+          ) : null}
           <div className={classes.editor}>
             <Milkdown />
           </div>
