@@ -145,40 +145,28 @@ const RichTextAreaContainer = ({
       Editor.make()
 
         .config((ctx) => {
-          // Knytter editoren til DOM-root.
           ctx.set(rootCtx, root);
-
-          // Setter initial markdown ved oppstart.
           ctx.set(defaultValueCtx, value);
-
-          // Styrer redigerbarhet ut fra disabled/readOnly.
           ctx.update(editorViewOptionsCtx, (prev = {}) => ({
             ...prev,
             editable: () => !isLocked,
           }));
-
-          // Synk markdown-endringer til parent og toolbar-state.
           ctx.get(listenerCtx).markdownUpdated((_ctx, markdown) => {
             if (markdown === lastKnownMarkdownRef.current) {
               updateToolbarState(_ctx);
               return;
             }
-
             lastKnownMarkdownRef.current = markdown;
             latestOnChangeRef.current(markdown);
             updateToolbarState(_ctx);
           });
-
-          // Oppdaterer aktiv knappestatus når markør/seleksjon flyttes.
           ctx.get(listenerCtx).selectionUpdated((listenerContext) => {
             updateToolbarState(listenerContext);
           });
         })
-        // Aktiverer commonmark, undo/redo og listener-plugin.
         .use(commonmark)
         .use(history)
         .use(listener),
-    // Re-konfigurerer editor når lock-state endres.
     [isLocked],
   );
 
@@ -233,7 +221,7 @@ const RichTextAreaContainer = ({
     });
   };
 
-  // Kjører flere kommandoer i rekkefølge og oppdaterer knappestatus.
+  // Kjører flere toolbar-kommandoer i rekkefølge og oppdaterer knappestatus.
   const runCommands = (commandsToRun: CommandToRun[]) => {
     if (isLocked) {
       return;
@@ -258,6 +246,7 @@ const RichTextAreaContainer = ({
     });
   };
 
+  // Håndterer toggling av listeformatering
   const toggleList = ({
     isTargetListActive,
     isOtherListActive,
