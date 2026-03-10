@@ -41,6 +41,20 @@ Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.
 
 ## Endringslogg
 
+### 2026-03-10 -- v1.4.0
+
+Endret fra StyrbordTranslationContext til å bruke @kystverket/sprak-react.
+
+Internt i Styrbord-komponenter kan man bruke følgende for å hente oversettelsesfunksjonen.
+
+```ts
+import { useStyrbordTranslation } from '~/translations';
+...
+const { t } = useTranslation();
+```
+
+Applikasjoner som bruker Styrbord må wrappe alt med både `<SprakProvider>` (for å velge språk) og `<StyrbordTranslations>` (for å hente oversettelsene til Styrbord).
+
 ### 2026-01-13 -- v1.3.0
 
 #### Knekkende endring

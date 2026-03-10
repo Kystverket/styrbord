@@ -1,14 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ExistingFilesProviderItem, FileUploader, FileUploaderProps } from './FileUploader';
-import { FileUploaderContext } from './FileUploader.context';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { PartialStoryFn } from 'storybook/internal/types';
 
 import { useState } from 'react';
-import { FileInfo, UploadFileResult } from './FileUploader.types';
-import { v4 as uuidv4 } from 'uuid';
+import { FileInfo } from './FileUploader.types';
 
-import { NamespaceProvider, SprakDebug, SprakProvider } from '@kystverket/sprak-react';
+import { NamespaceProvider } from '@kystverket/sprak-react';
 import { STYRBORD_TRANSLATIONS_NAMESPACE } from '~/translations';
 import { Box } from '~/main';
 
@@ -25,23 +23,10 @@ const Wrapper = (props: FileUploaderProps) => {
 
 const alternateFileUploaderTranslations = {
   fileUploader: {
-    buttonLabel: '🤖🤖🤖🤖',
-    existingFiles: {
-      buttonOpen: 'Velg eksisterende filer 📂',
-      dialogTitle: 'Velg eksisterende filer 🚀',
-      dialogCancel: 'Avbryt ❌',
-      dialogConfirm: 'Legg til ✅',
-      noFilesAvailable: 'Ingen eksisterende filer tilgjengelig 😢',
-    },
-  },
-};
-
-const alternateAlternateFileUploaderTranslations = {
-  fileUploader: {
     buttonLabel: '📂',
     existingFiles: {
       buttonOpen: '📂',
-      dialogTitle: '📂🚀',
+      dialogTitle: '🚀',
       dialogCancel: '❌',
       dialogConfirm: '✅',
       noFilesAvailable: '😢',
@@ -132,76 +117,10 @@ const existingFilesProvider = async (): Promise<ExistingFilesProviderItem[]> => 
   ];
 };
 
-const uploadFileWithSizeLimit = async (file: FormData): Promise<UploadFileResult> => {
-  return new Promise<UploadFileResult>((resolve) => {
-    const fileEntry = file.get('file') as File;
-    const maxSize = 10 * 1024 * 1024; // 10MB
-
-    // Simulate loading delay
-    setTimeout(() => {
-      if (fileEntry && fileEntry.size > maxSize) {
-        resolve({
-          storageId: '',
-          success: false,
-          error: 'file-too-large',
-        });
-      } else {
-        resolve({
-          storageId: uuidv4(),
-          success: true,
-        });
-      }
-    }, 1500);
-  });
-};
-
-const deleteFile = async (): Promise<void> => {
-  return new Promise((resolve) => {
-    // Simulate loading delay
-    setTimeout(() => {
-      resolve();
-    }, 1000);
-  });
-};
-
 export const WithExistingFilesWithTranslations: Story = {
   args: {
     ...defaultProps,
     files: [],
     existingFilesProvider: existingFilesProvider,
-  },
-};
-
-export const WithFileSizeLimitEnglish: Story = {
-  decorators: [
-    (Story) => (
-      <SprakProvider locale="en-US" debug defaultNamespace={STYRBORD_TRANSLATIONS_NAMESPACE}>
-        <NamespaceProvider
-          ns={STYRBORD_TRANSLATIONS_NAMESPACE}
-          translations={{
-            'nb-NO': alternateAlternateFileUploaderTranslations,
-            'nn-NO': alternateAlternateFileUploaderTranslations,
-            'en-US': alternateAlternateFileUploaderTranslations,
-          }}
-          zIndex={10}
-        >
-          <FileUploaderContext.Provider
-            value={{
-              uploadFile: uploadFileWithSizeLimit,
-              deleteFile: deleteFile,
-            }}
-          >
-            <Story />
-            <SprakDebug />
-          </FileUploaderContext.Provider>
-        </NamespaceProvider>
-      </SprakProvider>
-    ),
-  ],
-  args: {
-    ...defaultProps,
-    label: 'Upload files',
-    description: 'Files that are larger than 10MB will be denied',
-    files: [],
   },
 };
