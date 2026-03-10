@@ -77,7 +77,9 @@ export const Default: StoryFn<FilePreviewerDialogProps> = (args) => {
     <>
       <FilePreviewer animation={args.animation}>
         {args.files.map((file, idx) => (
-          <FilePreviewer.Thumbnail file={file} key={idx} index={idx} />
+          <Box key={idx} mt={8}>
+            <FilePreviewer.Thumbnail file={file} index={idx} />
+          </Box>
         ))}
       </FilePreviewer>
     </>
@@ -105,11 +107,16 @@ export const openWithRef: StoryFn<FilePreviewerDialogProps> = (args) => {
     filePreviewRef.current?.showModal();
   };
 
+  const openPreviewOnSecondItem = () => {
+    filePreviewRef.current?.showModal(2);
+  };
+
   return (
     <>
       <Box gap={8} width="form-sidebar">
         <p>Click the button below to open the file preview dialog.</p>
         <Button onClick={openPreview}>Open with Ref</Button>
+        <Button onClick={openPreviewOnSecondItem}>Open on item with index 2</Button>
         <FilePreviewer animation={args.animation} files={args.files} ref={filePreviewRef} />
       </Box>
     </>
