@@ -100,11 +100,7 @@ export const iconIdList = [
   'format_bold',
   'format_list_bulleted',
   'format_list_numbered',
-  'format_align_center',
-  'format_align_left',
-  'format_align_right',
   'format_align_justify',
-  'link',
   'undo',
   'redo',
 ] as const;

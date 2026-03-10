@@ -29,11 +29,6 @@
   background: var(--ds-color-neutral-surface-hover);
 }
 
-.toolbarButton:focus-visible {
-  outline: 3px solid var(--ds-color-focus-outer);
-  outline-offset: 3px;
-}
-
 .toolbarButton[aria-pressed='true']:not(:disabled) {
   background: var(--ds-color-neutral-surface-active);
   color: var(--ds-color-neutral-text-default);

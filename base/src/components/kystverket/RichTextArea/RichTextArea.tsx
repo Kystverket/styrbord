@@ -273,10 +273,12 @@ const RichTextAreaContainer = ({
 
   return (
     <Fieldset>
-      <Fieldset.Legend>
-        <LabelContent text={label} required={required} optional={optional} />
-      </Fieldset.Legend>
-      <Fieldset.Description>{description}</Fieldset.Description>
+      {label && (
+        <Fieldset.Legend>
+          <LabelContent text={label} required={required} optional={optional} />
+        </Fieldset.Legend>
+      )}
+      {description && <Fieldset.Description>{description}</Fieldset.Description>}
 
       <div className={classes.wrapper}>
         {!readOnly && (
