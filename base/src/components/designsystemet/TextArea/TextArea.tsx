@@ -20,7 +20,7 @@ export interface TextAreaProps {
   readOnly?: boolean;
   inputMode?: 'email' | 'tel' | 'search' | 'text' | 'none' | 'url' | 'numeric' | 'decimal';
   maxLength?: number;
-  minHeight?: 'small' | 'medium' | 'large';
+  minHeight?: 'sm' | 'md' | 'lg';
   size?: InputSize;
   id?: string;
 }
@@ -33,7 +33,7 @@ export const TextArea = ({
   optional,
   onChange,
   value,
-  minHeight = 'medium',
+  minHeight = 'md',
   ...props
 }: TextAreaProps) => {
   return (

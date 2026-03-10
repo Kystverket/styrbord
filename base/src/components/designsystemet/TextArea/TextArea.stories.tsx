@@ -26,7 +26,7 @@ const defaultArgs: TextAreaProps = {
   onBlur: () => console.log('onBlur'),
   onChange: (value: string) => console.log(`onChange value: ${value}`),
   value: '',
-  description: 'this is a description',
+
   label: 'This is a label',
 };
 
@@ -46,7 +46,7 @@ const renderInteractive: Story['render'] = (args) => {
 };
 
 export const Default: Story = {
-  args: defaultArgs,
+  args: { ...defaultArgs, description: 'this is a description' },
   render: renderInteractive,
 };
 

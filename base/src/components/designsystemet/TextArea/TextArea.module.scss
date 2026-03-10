@@ -2,17 +2,17 @@
   --textarea-padding-block: calc(var(--spacing-6) * 2);
 
   // 2 lines
-  &.small textarea {
+  &.sm textarea {
     min-height: calc(3rem + var(--textarea-padding-block));
   }
 
   // 4 lines
-  &.medium textarea {
+  &.md textarea {
     min-height: calc(6rem + var(--textarea-padding-block));
   }
 
   // 8 lines
-  &.large textarea {
+  &.lg textarea {
     min-height: calc(12rem + var(--textarea-padding-block));
   }
 }
