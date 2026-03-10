@@ -2,8 +2,7 @@ import classes from './Footer.module.css';
 import { Logo, Link, Icon } from '~/main';
 import { Select } from '@digdir/designsystemet-react';
 import { ReactNode } from 'react';
-import { useTranslation } from '@kystverket/sprak-react';
-import { STYRBORD_TRANSLATIONS_NAMESPACE } from '~/translations';
+import { useTranslation } from '~/translations';
 
 interface LinkToSite {
   text: string;
@@ -53,7 +52,7 @@ export function Footer({
   contacts = defaultContactLinks,
   links = [],
 }: FooterProps) {
-  const { t } = useTranslation(STYRBORD_TRANSLATIONS_NAMESPACE);
+  const { t } = useTranslation();
 
   const currentYear = new Date().getFullYear();
 

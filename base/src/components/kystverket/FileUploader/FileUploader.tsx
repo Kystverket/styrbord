@@ -14,8 +14,7 @@ import {
   ExistingFilesDialogHandle,
 } from '~/components/kystverket/FileUploader/existingFilesDialog/ExistingFilesDialog';
 import { FileUploadActions } from '~/components/kystverket/FileUploader/fileUploadActions/FileUploadActions';
-import { useTranslation } from '@kystverket/sprak-react';
-import { STYRBORD_TRANSLATIONS_NAMESPACE } from '~/translations';
+import { useTranslation } from '~/translations';
 
 // Remove all exif data except latitude and longitude
 const pruneUnwantedExifData = (exif: Exif): Exif | undefined => {
@@ -72,7 +71,7 @@ export const FileUploader = ({
   existingFilesProvider,
   variant = 'buttons',
 }: FileUploaderProps) => {
-  const { scopedT } = useTranslation(STYRBORD_TRANSLATIONS_NAMESPACE);
+  const { scopedT } = useTranslation();
   const t = scopedT('fileUploader');
 
   const fileUploaderContext = useContext(FileUploaderContext);
