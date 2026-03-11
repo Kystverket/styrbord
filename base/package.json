@@ -42,10 +42,10 @@
     "@material-symbols/font-400": "^0.39.0",
     "date-fns": "^4.1.0",
     "exifr": "^7.1.3",
+    "react": "^19.0.0",
     "react-datepicker": "^8.4.0",
     "react-dom": "^19.0.0",
-    "react": "^19.0.0",
+    "react-markdown": "^10.1.0",
     "uuid": "^11.1.0"
-  },
-  "devDependencies": {}
+  }
 }
