@@ -184,6 +184,15 @@ export const WithError: Story = {
   args: { ...defaultProps, error: 'Det oppstod en feil' },
 };
 
+export const withCaptureButton: Story = {
+  args: {
+    ...defaultProps,
+    description: 'Capture button vises kun på mobilenheter',
+    withCaptureButton: true,
+    files: [],
+  },
+};
+
 export const WithExistingFiles: Story = {
   args: {
     ...defaultProps,

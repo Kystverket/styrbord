@@ -96,6 +96,7 @@ export const iconIdList = [
   'code_blocks',
   'upload',
   'folder_open',
+  'photo_camera',
 ] as const;
 
 export type IconId = (typeof iconIdList)[number];

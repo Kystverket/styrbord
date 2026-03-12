@@ -52,6 +52,14 @@ export interface FileUploaderProps {
   buttonLabel?: string;
   required?: boolean | string;
   optional?: boolean | string;
+
+  /**
+   * Adds a button with "Open Camera" on most NON-PC devices
+   * \ Opens on the back camera by default
+   */
+  withCaptureButton?: boolean;
+
+  /** @deprecated in near future it'll most likely be replaced with a proper translation library */
   translations?: {
     existingFiles?: {
       buttonOpen?: string;
@@ -83,6 +91,7 @@ export const FileUploader = ({
   onChange,
   allowedFileTypes = defaultAllowedFileTypes,
   translations,
+  withCaptureButton,
   existingFilesProvider,
   variant = 'buttons',
 }: FileUploaderProps) => {
@@ -91,6 +100,7 @@ export const FileUploader = ({
 
   const fileUploaderContext = useContext(FileUploaderContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileCameraInputRef = useRef<HTMLInputElement>(null);
   const dialogRef = useRef<ExistingFilesDialogHandle>(null);
 
   const onUploadFile = (uploadedFiles: File[]) => {
@@ -118,7 +128,7 @@ export const FileUploader = ({
 
   const showUploadingWarning = files.some((f) => f.status === 'uploading');
   const showMaxReachedWarning = !showUploadingWarning && maxFiles && files.length >= maxFiles;
-  const showUploadButton = !showMaxReachedWarning && !showUploadingWarning;
+  const showUploadActions = !showMaxReachedWarning && !showUploadingWarning;
   const attachmentsHeading = t('attachmentsCount').replace('{count}', String(files.length));
 
   return (
@@ -128,24 +138,12 @@ export const FileUploader = ({
           <LabelContent text={label} required={required} optional={optional} />
         </Label>
         {description && <Field.Description>{description}</Field.Description>}
-        <input
-          type="file"
-          style={{ display: 'none' }}
-          ref={fileInputRef}
-          id="fileUploadButton"
-          name="fileUploadButton"
-          accept={allowedFileTypes.join(',')}
-          multiple={multiple}
-          onChange={(e) => {
-            const target = e.target as HTMLInputElement;
-            if (target.files && target.files.length > 0) {
-              onUploadFile(Array.from(target.files));
-              target.value = ''; // Reset the input value to allow re-uploading the same file
-            }
-          }}
-        />
-        {showUploadButton && (
+        {showUploadActions && (
           <FileUploadActions
+            fileCameraInputRef={fileCameraInputRef}
+            allowedFileTypes={allowedFileTypes}
+            multiple={multiple}
+            withCaptureButton={withCaptureButton}
             buttonLabel={buttonLabel}
             onUploadFile={onUploadFile}
             dialogRef={dialogRef}
