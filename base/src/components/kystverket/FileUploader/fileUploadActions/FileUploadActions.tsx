@@ -41,7 +41,7 @@ export function FileUploadActions({
     setCanUseCamera((hasGetUserMedia || hasCaptureAttr) && isTouchLike);
   }, []);
 
-  const onChangeFileUpload = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
+  const onChangeFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
       onUploadFile(Array.from(target.files));
@@ -103,7 +103,7 @@ export function FileUploadActions({
             <Paragraph className={classes.dropzoneText}>{t('dropzoneText')}</Paragraph>
           </div>
         )}
-        <Box gap={8} horizontal wrap>
+        <Box gap={8} className={classes.buttonRow} horizontal wrap>
           {variant === 'buttons' && (
             <Button
               className={`${classes.uploadButton}`}
