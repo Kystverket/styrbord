@@ -39,7 +39,6 @@ export function FileUploadActions({
       /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
     setCanUseCamera((hasGetUserMedia || hasCaptureAttr) && isTouchLike);
-    // setCanUseCamera(true);
   }, []);
 
   const onChangeFileUpload = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
