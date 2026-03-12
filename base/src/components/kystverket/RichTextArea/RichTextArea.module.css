@@ -12,6 +12,12 @@
   border-bottom: none;
 }
 
+.toolbarGroup {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem;
+}
+
 .toolbarButton {
   color: var(--ds-color-neutral-text-subtle);
   border-radius: var(--ds-border-radius-md);
@@ -25,15 +31,32 @@
   cursor: pointer;
 }
 
-.toolbarButton:hover:not(:disabled) {
+.toolbarSelect {
+  color: var(--ds-color-neutral-text-subtle);
+  border-radius: var(--ds-border-radius-md);
+  margin: 0.25rem;
+  min-width: 6.5rem;
+  height: 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+  cursor: pointer;
+}
+
+.toolbarButton:hover:not(:disabled),
+.toolbarSelect:hover:not(:disabled) {
   background: var(--ds-color-neutral-surface-hover);
 }
 
-.toolbarButton[aria-pressed='true']:not(:disabled) {
+.toolbarButton[aria-pressed='true']:not(:disabled),
+.toolbarSelect[aria-pressed='true']:not(:disabled) {
   background: var(--ds-color-neutral-surface-active);
   color: var(--ds-color-neutral-text-default);
 }
-.toolbarButton:focus-visible {
+
+.toolbarButton:focus-visible,
+.toolbarSelect:focus-visible {
   outline: 3px solid var(--ds-color-focus-outer);
   outline-offset: 3px;
 }

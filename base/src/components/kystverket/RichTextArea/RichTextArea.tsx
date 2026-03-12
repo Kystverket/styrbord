@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Milkdown, MilkdownProvider, useEditor } from '@milkdown/react';
 import { Editor, commandsCtx, defaultValueCtx, editorViewCtx, editorViewOptionsCtx, rootCtx } from '@milkdown/core';
+import type { CmdKey } from '@milkdown/core';
+import type { Ctx } from '@milkdown/ctx';
 import { undoCommand, redoCommand } from '@milkdown/plugin-history';
 import {
   commonmark,
@@ -11,6 +13,8 @@ import {
   toggleStrongCommand,
   wrapInBulletListCommand,
   wrapInOrderedListCommand,
+  wrapInHeadingCommand,
+  turnIntoTextCommand,
 } from '@milkdown/preset-commonmark';
 import { history } from '@milkdown/plugin-history';
 import { listener, listenerCtx } from '@milkdown/plugin-listener';
@@ -18,7 +22,7 @@ import { replaceAll } from '@milkdown/utils';
 import '@milkdown/prose/view/style/prosemirror.css';
 
 import classes from './RichTextArea.module.css';
-import { Toolbar } from './Toolbar';
+import { BlockType, Toolbar } from './components/Toolbar';
 import { Fieldset, LabelContent, ValidationMessage } from '~/main';
 
 export type RichTextAreaProps = {
@@ -35,8 +39,7 @@ export type RichTextAreaProps = {
   error?: string;
 };
 
-type ToolbarCommand = { key: unknown };
-type CommandToRun = { command: ToolbarCommand };
+type ToolbarCommand<T = unknown> = { key: CmdKey<T>; value?: T };
 
 const RichTextAreaContainer = ({
   value,
@@ -57,13 +60,14 @@ const RichTextAreaContainer = ({
   const [isItalicActive, setIsItalicActive] = useState(false);
   const [isBulletListActive, setIsBulletListActive] = useState(false);
   const [isOrderedListActive, setIsOrderedListActive] = useState(false);
+  const [selectedFormat, setSelectedFormat] = useState<BlockType>('paragraph');
 
   const isLocked = disabled || readOnly;
 
   latestOnChangeRef.current = onChange;
 
   // Leser gjeldende markør/seleksjon i editoren og oppdaterer aktiv status for toolbar
-  const updateToolbarState = (ctx: Parameters<Editor['action']>[0] extends (arg: infer T) => unknown ? T : never) => {
+  const updateToolbarState = (ctx: Ctx) => {
     const view = ctx.get(editorViewCtx);
     const { state } = view;
     const { from, to, empty, $from } = state.selection;
@@ -137,6 +141,7 @@ const RichTextAreaContainer = ({
     setIsItalicActive(hasMark(['emphasis', 'em']));
     setIsBulletListActive(hasNode('bullet_list'));
     setIsOrderedListActive(hasNode('ordered_list'));
+    setSelectedFormat(hasNode('heading') ? (`h${$from.node($from.depth).attrs.level}` as BlockType) : 'paragraph');
   };
 
   // Oppretter Milkdown-editor med schema, historikk og listeners.
@@ -199,50 +204,31 @@ const RichTextAreaContainer = ({
     });
   }, [get]);
 
-  // Kjører toolbar-kommando og oppdaterer knappestatus.
-  const runCommand = (command: ToolbarCommand) => {
-    if (isLocked) {
-      return;
-    }
-
+  // Fellesdelt guard + editor-action-mønster for alle toolbar-kommandoer.
+  const executeInEditor = (fn: (ctx: Ctx) => void) => {
+    if (isLocked) return;
     const editor = get();
-
-    if (!editor) {
-      return;
-    }
-
+    if (!editor) return;
     editor.action((ctx) => {
       ctx.get(editorViewCtx).focus();
-      const commands = ctx.get(commandsCtx);
-      type CommandKey = Parameters<typeof commands.call>[0];
-
-      commands.call(command.key as CommandKey);
+      fn(ctx);
       updateToolbarState(ctx);
     });
   };
 
-  // Kjører flere toolbar-kommandoer i rekkefølge og oppdaterer knappestatus.
-  const runCommands = (commandsToRun: CommandToRun[]) => {
-    if (isLocked) {
-      return;
-    }
-
-    const editor = get();
-
-    if (!editor) {
-      return;
-    }
-
-    editor.action((ctx) => {
-      ctx.get(editorViewCtx).focus();
+  // Kjører toolbar-kommando og oppdaterer knappestatus.
+  const runCommand = <T,>(command: ToolbarCommand<T>) => {
+    executeInEditor((ctx) => {
       const commands = ctx.get(commandsCtx);
-      type CommandKey = Parameters<typeof commands.call>[0];
+      commands.call(command.key, command.value);
+    });
+  };
 
-      commandsToRun.forEach(({ command }) => {
-        commands.call(command.key as CommandKey);
-      });
-
-      updateToolbarState(ctx);
+  // Kjører flere toolbar-kommandoer i rekkefølge og oppdaterer knappestatus.
+  const runCommands = (commandsToRun: ToolbarCommand<unknown>[]) => {
+    executeInEditor((ctx) => {
+      const commands = ctx.get(commandsCtx);
+      commandsToRun.forEach((command) => commands.call(command.key, command.value));
     });
   };
 
@@ -254,7 +240,7 @@ const RichTextAreaContainer = ({
   }: {
     isTargetListActive: boolean;
     isOtherListActive: boolean;
-    wrapCommand: ToolbarCommand;
+    wrapCommand: ToolbarCommand<unknown>;
   }) => {
     if (isTargetListActive) {
       runCommand(liftListItemCommand);
@@ -262,11 +248,19 @@ const RichTextAreaContainer = ({
     }
 
     if (isOtherListActive) {
-      runCommands([{ command: liftListItemCommand }, { command: wrapCommand }]);
+      runCommands([liftListItemCommand, wrapCommand]);
       return;
     }
 
     runCommand(wrapCommand);
+  };
+
+  const handleFormatChange = (format: BlockType) => {
+    if (format === 'paragraph') {
+      runCommand(turnIntoTextCommand);
+    } else {
+      runCommand({ key: wrapInHeadingCommand.key, value: parseInt(format.slice(1), 10) });
+    }
   };
 
   const showPlaceholder = !value && Boolean(placeholder);
@@ -288,6 +282,7 @@ const RichTextAreaContainer = ({
             isItalicActive={isItalicActive}
             isBulletListActive={isBulletListActive}
             isOrderedListActive={isOrderedListActive}
+            selectedFormat={selectedFormat}
             onBold={() => runCommand(toggleStrongCommand)}
             onItalic={() => runCommand(toggleEmphasisCommand)}
             onUndo={() => runCommand(undoCommand)}
@@ -306,11 +301,18 @@ const RichTextAreaContainer = ({
                 wrapCommand: wrapInOrderedListCommand,
               })
             }
+            onFormatChange={handleFormatChange}
           />
         )}
 
         <div
-          className={`${classes.editorContainer} ${disabled ? classes.editorContainerDisabled : ''} ${readOnly ? classes.editorContainerReadOnly : ''}`}
+          className={[
+            classes.editorContainer,
+            disabled && classes.editorContainerDisabled,
+            readOnly && classes.editorContainerReadOnly,
+          ]
+            .filter(Boolean)
+            .join(' ')}
         >
           {showPlaceholder ? (
             <span className={classes.placeholder} aria-hidden="true">
