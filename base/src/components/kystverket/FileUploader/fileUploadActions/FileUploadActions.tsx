@@ -121,7 +121,7 @@ export function FileUploadActions({
               onClick={() => fileCameraInputRef.current?.click()}
             >
               <Icon material="photo_camera" />
-              Åpne kamera
+              {t('withCaptureButtonLabel')}
             </Button>
           )}
           {existingFilesProvider && (
