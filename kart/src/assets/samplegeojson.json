@@ -1,0 +1,105 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [10.751, 59.912] },
+      "properties": { "name": "Oslo A", "id": 1 }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [10.748, 59.913] },
+      "properties": { "name": "Oslo B", "id": 2 }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [10.754, 59.909] },
+      "properties": { "name": "Oslo C", "id": 3 }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [10.756, 59.911] },
+      "properties": { "name": "Oslo D", "id": 4 }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [10.747, 59.91] },
+      "properties": { "name": "Oslo E", "id": 5 }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [10.752, 59.914] },
+      "properties": { "name": "Oslo F", "id": 6 }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [10.749, 59.908] },
+      "properties": { "name": "Oslo G", "id": 7 }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [5.321, 60.391] },
+      "properties": { "name": "Bergen A", "id": 8 }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [5.319, 60.392] },
+      "properties": { "name": "Bergen B", "id": 9 }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [5.323, 60.389] },
+      "properties": { "name": "Bergen C", "id": 10 }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [5.324, 60.39] },
+      "properties": { "name": "Bergen D", "id": 11 }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [5.318, 60.388] },
+      "properties": { "name": "Bergen E", "id": 12 }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [5.322, 60.393] },
+      "properties": { "name": "Bergen F", "id": 13 }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [10.401, 63.431] },
+      "properties": { "name": "Trondheim A", "id": 14 }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [10.399, 63.432] },
+      "properties": { "name": "Trondheim B", "id": 15 }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [10.403, 63.429] },
+      "properties": { "name": "Trondheim C", "id": 16 }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [10.404, 63.43] },
+      "properties": { "name": "Trondheim D", "id": 17 }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [10.398, 63.428] },
+      "properties": { "name": "Trondheim E", "id": 18 }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [10.402, 63.433] },
+      "properties": { "name": "Trondheim F", "id": 19 }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [10.4, 63.427] },
+      "properties": { "name": "Trondheim G", "id": 20 }
+    }
+  ]
+}

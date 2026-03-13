@@ -1,0 +1,166 @@
+@layer styrbord-modules {
+    .map {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        border-radius: 4px;
+        border: 1px solid lightgray;
+        filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.25));
+        overflow: hidden;
+        height: 600px;
+        width: 600px;
+        position: relative;
+    }
+
+    .mapFullscreen {
+        position: fixed !important;
+        top: 0; left: 0; right: 0; bottom: 0;
+        width: 100vw !important;
+        height: 100vh !important;
+        z-index: 10060;
+        background: #fff;
+        margin: 0;
+        flex-direction: column;
+    }
+
+    .fullscreenButton {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        gap: 2px;
+        z-index: 1000;
+    }
+
+    .zoomButtons {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        width: max-content;
+        margin-bottom: 8px;
+    }
+
+    .exportButton {
+        display: flex;
+        flex-direction: row;
+        gap: 2px;
+    }
+
+    .controlButtons {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        gap: 2px;
+        z-index: 1000;
+    }
+
+    .controlButtonsRow {
+        display: flex;
+        flex-direction: row;
+        gap: 2px;
+    }
+
+    .layerSwitcher {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        gap: 2px;
+        bottom: 10px;
+        right: 10px;
+        z-index: 1000;
+    }
+
+    /* Feature Panel - Right side panel */
+    .featurePanel {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 0px;
+        width: 350px;
+        height: 80%;
+        background: white;
+        border-radius: 6px 0 0 6px;
+        box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        transition: transform 0.3s ease;
+    }
+
+    .featurePanelCollapsed {
+        transform: translateX(350px);
+    }
+
+    .featurePanelToggle {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translate(-100%, -50%);
+        z-index: 1;
+        background: white !important;
+        border: 1px solid #e0e0e0 !important;
+        border-right: none !important;
+        box-shadow: -3px 2px 6px rgba(0, 0, 0, 0.15) !important;
+        border-radius: 4px 0 0 4px !important;
+    }
+
+    .featurePanelCollapsed .featurePanelToggle {
+        border-right: 1px solid #e0e0e0 !important;
+        border-radius: 4px !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    .featurePanelHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 16px;
+        background: #f5f5f5;
+        border-bottom: 1px solid #e0e0e0;
+        font-weight: 600;
+    }
+
+    .featurePanelClose {
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: #666;
+        line-height: 1;
+        padding: 0;
+    }
+
+    .featurePanelClose:hover {
+        color: #333;
+    }
+
+    .featurePanelContent {
+        padding: 12px 12px;
+        overflow-y: auto;
+        flex: 1;
+    }
+
+    .featureDetails {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .featurePanelContentColumn {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: start;
+    }
+
+    .featurePanelContentRow {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+        align-items: end;
+        height: 100%;
+    }
+
+}

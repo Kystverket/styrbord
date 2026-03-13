@@ -1,0 +1,35 @@
+@font-face {
+  font-family: 'Museo sans';
+  src:
+    url('../../base/assets/fonts/museo-sans-300.woff2') format('woff2'),
+    url('../../base/assets/fonts/museo-sans-300.woff') format('woff'),
+    url('../../base/assets/fonts/museo-sans-300.otf') format('opentype');
+  font-display: auto;
+  font-style: normal;
+  font-weight: 300;
+  font-stretch: normal;
+}
+
+@font-face {
+  font-family: 'Museo sans';
+  src:
+    url('../../base/assets/fonts/museo-sans-500.woff2') format('woff2'),
+    url('../../base/assets/fonts/museo-sans-500.woff') format('woff'),
+    url('../../base/assets/fonts/museo-sans-500.otf') format('opentype');
+  font-display: auto;
+  font-style: normal;
+  font-weight: 500;
+  font-stretch: normal;
+}
+
+@font-face {
+  font-family: 'Museo sans';
+  src:
+    url('../../base/assets/fonts/museo-sans-700.woff2') format('woff2'),
+    url('../../base/assets/fonts/museo-sans-700.woff') format('woff'),
+    url('../../base/assets/fonts/museo-sans-700.otf') format('opentype');
+  font-display: auto;
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: normal;
+}

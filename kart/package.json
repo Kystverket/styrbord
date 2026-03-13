@@ -37,7 +37,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@kystverket/styrbord": "^1.3.0"
+    "@kystverket/styrbord": "*",
+    "ol": "^10.4.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^5.0.1",

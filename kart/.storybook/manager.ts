@@ -1,8 +1,5 @@
 import { addons } from "storybook/manager-api";
-import {
-  defaultConfig,
-  type TagBadgeParameters,
-} from "storybook-addon-tag-badges/manager-helpers";
+import { defaultConfig } from "storybook-addon-tag-badges/manager-helpers";
 import StyrbordTheme from "./StyrbordTheme";
 
 addons.setConfig({
@@ -14,7 +11,7 @@ addons.setConfig({
         text: "🌈+⚓",
         bgColor: "#ffffff",
         fgColor: "#4aa4e7",
-      },
+      } as any,
       display: {
         sidebar: ["component"],
         toolbar: false,
@@ -26,7 +23,7 @@ addons.setConfig({
         text: "🌈",
         bgColor: "#ffffff",
         fgColor: "#e7a44a",
-      },
+      } as any,
       display: {
         sidebar: ["component"],
         toolbar: false,
@@ -38,7 +35,7 @@ addons.setConfig({
         text: "🔥 beta",
         bgColor: "#FFBBBB",
         fgColor: "#800000",
-      },
+      } as any,
       display: {
         sidebar: ["component"],
         toolbar: false,
@@ -50,7 +47,7 @@ addons.setConfig({
         text: "⚓",
         bgColor: "transparent",
         fgColor: "#000667",
-      },
+      } as any,
       display: {
         sidebar: ["component"],
         toolbar: false,
@@ -62,7 +59,7 @@ addons.setConfig({
         text: "Deprecated",
         bgColor: "#ff00ff",
         fgColor: "#ffffff",
-      },
+      } as any,
       display: {
         sidebar: ["component"],
         toolbar: false,
@@ -70,5 +67,5 @@ addons.setConfig({
     },
     // Place the default config after your custom matchers.
     ...defaultConfig,
-  ] satisfies TagBadgeParameters,
+  ],
 });
