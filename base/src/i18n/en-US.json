@@ -18,17 +18,18 @@
       "dialogConfirm": "Select",
       "dialogTitle": "Files",
       "filesCounter": "{shown} of {total} files",
+      "goBackToCollectionAriaLabel": "Go back to file collections list",
       "inMenuTitle": "Files in",
       "noFilesAvailable": "No files available.",
-      "selectFilesLabel": "Select files",
-      "goBackToCollectionAriaLabel": "Go back to file collections list"
+      "selectFilesLabel": "Select files"
     },
     "loading": "Loading",
     "maxFilesReached": "Maximum number of files uploaded.",
     "removeFileAriaLabel": "Remove file",
     "unknownFilename": "Unknown filename",
     "uploading": "Uploading file...",
-    "uploadingPleaseWait": "Please wait to select more files until all files are uploaded"
+    "uploadingPleaseWait": "Please wait to select more files until all files are uploaded",
+    "withCaptureButtonLabel": "Open camera"
   },
   "header-alt-text": "To the front page",
   "kontakt": "Contact us",
