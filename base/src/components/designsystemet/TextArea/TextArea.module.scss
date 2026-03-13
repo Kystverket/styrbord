@@ -1,0 +1,18 @@
+.textArea {
+  --textarea-padding-block: calc(var(--spacing-6) * 2);
+
+  // 2 lines
+  &.sm textarea {
+    min-height: calc(3rem + var(--textarea-padding-block));
+  }
+
+  // 4 lines
+  &.md textarea {
+    min-height: calc(6rem + var(--textarea-padding-block));
+  }
+
+  // 8 lines
+  &.lg textarea {
+    min-height: calc(12rem + var(--textarea-padding-block));
+  }
+}
