@@ -10,15 +10,14 @@ type FileUploadActionsProps = {
   t: (key: string) => string;
   onUploadFile: (uploadedFiles: File[]) => void;
   allowedFileTypes: string[];
-} & Pick<FileUploaderProps, 'variant' | 'existingFilesProvider' | 'buttonLabel' | 'withCaptureButton' | 'multiple'>;
+} & Pick<FileUploaderProps, 'variant' | 'existingFilesProvider' | 'withCaptureButton' | 'multiple'>;
 
 export function FileUploadActions({
   variant,
   fileInputRef,
-  fileCameraInputRef,
-  buttonLabel,
   onUploadFile,
   existingFilesProvider,
+  fileCameraInputRef,
   dialogRef,
   allowedFileTypes,
   withCaptureButton,
@@ -111,7 +110,7 @@ export function FileUploadActions({
               onClick={() => fileInputRef.current?.click()}
             >
               <Icon material="upload" />
-              {buttonLabel ?? t('buttonLabel')}
+              {t('buttonLabel')}
             </Button>
           )}
           {canUseCamera && withCaptureButton && (

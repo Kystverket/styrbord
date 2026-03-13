@@ -7,7 +7,6 @@ import classes from './FileUploader.module.css';
 import { Icon, LabelContent } from '~/main';
 import exifr from 'exifr';
 import { FileUploaderContext } from './FileUploader.context';
-import { useStyrbordTranslation } from '~/i18n/translations';
 import { FileUploaderItem } from './item/FileUploaderItem';
 import { onFilesChanged } from '~/components/kystverket/FileUploader/FileUploaderHelpers';
 import {
@@ -15,6 +14,7 @@ import {
   ExistingFilesDialogHandle,
 } from '~/components/kystverket/FileUploader/existingFilesDialog/ExistingFilesDialog';
 import { FileUploadActions } from '~/components/kystverket/FileUploader/fileUploadActions/FileUploadActions';
+import { useTranslation } from '~/translations';
 
 // Remove all exif data except latitude and longitude
 const pruneUnwantedExifData = (exif: Exif): Exif | undefined => {
@@ -48,8 +48,6 @@ export interface FileUploaderProps {
   maxSizeInBytes?: number;
   onChange: (files: FileInfo[]) => void;
   allowedFileTypes?: string[];
-  /** @deprecated Use translations instead. */
-  buttonLabel?: string;
   required?: boolean | string;
   optional?: boolean | string;
 
@@ -58,19 +56,6 @@ export interface FileUploaderProps {
    * \ Opens on the back camera by default
    */
   withCaptureButton?: boolean;
-
-  /** @deprecated in near future it'll most likely be replaced with a proper translation library */
-  translations?: {
-    existingFiles?: {
-      buttonOpen?: string;
-      dialogTitle?: string;
-      dialogCancel?: string;
-      dialogConfirm?: string;
-      noFilesAvailable?: string;
-    };
-    buttonLabel?: string;
-  };
-
   existingFilesProvider?: () => Promise<ExistingFilesProviderItem[]>;
   variant?: 'dropzone' | 'buttons';
 }
@@ -86,17 +71,15 @@ export const FileUploader = ({
   error = null,
   multiple = true,
   files = [],
-  buttonLabel,
   maxFiles,
   onChange,
   allowedFileTypes = defaultAllowedFileTypes,
-  translations,
   withCaptureButton,
   existingFilesProvider,
   variant = 'buttons',
 }: FileUploaderProps) => {
-  const { at } = useStyrbordTranslation();
-  const t = at.bind(null, 'fileUploader', translations);
+  const { scopedT } = useTranslation();
+  const t = scopedT('fileUploader');
 
   const fileUploaderContext = useContext(FileUploaderContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -144,7 +127,6 @@ export const FileUploader = ({
             allowedFileTypes={allowedFileTypes}
             multiple={multiple}
             withCaptureButton={withCaptureButton}
-            buttonLabel={buttonLabel}
             onUploadFile={onUploadFile}
             dialogRef={dialogRef}
             fileInputRef={fileInputRef}

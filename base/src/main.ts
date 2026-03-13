@@ -96,8 +96,6 @@ export type * from './components/kystverket/FileUploader/FileUploader.types';
 
 export { default as CardTitle, type CardTitleProps } from './components/designsystemet/CardTitle/CardTitle';
 
-export { StyrbordTranslationContext } from './i18n/translations';
-
 //^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\
 //  Komponenter fra Designsystemet
 //^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\
