@@ -1,0 +1,4 @@
+{
+  "pattern": "src/i18n/:language.json",
+  "mainLanguage": "nb-NO"
+}

@@ -1,8 +1,8 @@
 import classes from './Footer.module.css';
 import { Logo, Link, Icon } from '~/main';
-import { useStyrbordTranslation } from '~/i18n/translations';
 import { Select } from '@digdir/designsystemet-react';
 import { ReactNode } from 'react';
+import { useTranslation } from '~/translations';
 
 interface LinkToSite {
   text: string;
@@ -52,7 +52,7 @@ export function Footer({
   contacts = defaultContactLinks,
   links = [],
 }: FooterProps) {
-  const { t } = useStyrbordTranslation();
+  const { t } = useTranslation();
 
   const currentYear = new Date().getFullYear();
 
