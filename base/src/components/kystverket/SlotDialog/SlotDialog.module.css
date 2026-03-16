@@ -1,0 +1,58 @@
+.dialogOverrides {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  padding-top: var(--ds-size-7);
+  padding-bottom: var(--ds-size-7);
+
+  /* So it actually closes when it's supposed to be closed */
+  &:not([open]) {
+    display: revert;
+  }
+
+  /* If button is float, it'll follow flex which is not a wanted behaviour */
+  & > :global(.ds-button):first-child {
+    position: absolute;
+    top: var(--ds-size-3);
+    right: var(--ds-size-3);
+    margin: 0;
+  }
+}
+
+/*--------- New Dialog Styling ---------*/
+.dialogBlock {
+  --scrollbar-deadzone: var(--ds-size-2);
+
+  padding-left: var(--ds-size-7);
+  scrollbar-gutter: auto both-edges;
+  padding-inline: calc(var(--ds-size-7) - var(--scrollbar-deadzone));
+  &.withDividers:not(:first-of-type) {
+    border-top: 1px solid var(--ds-color-neutral-surface-hover);
+  }
+}
+
+.headerBlock {
+  padding-bottom: var(--ds-size-3);
+  &.withDividers {
+    padding-bottom: var(--ds-size-7);
+  }
+  & :global(.ds-paragraph) {
+    color: var(--ds-color-neutral-text-subtle);
+  }
+}
+
+.contentBlock {
+  flex: 1;
+  gap: var(--ds-size-5);
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+
+  &.withDividers {
+    padding-top: var(--ds-size-7);
+    padding-bottom: var(--ds-size-7);
+  }
+}
+
+.buttonBlock {
+  padding-top: var(--ds-size-7);
+}
