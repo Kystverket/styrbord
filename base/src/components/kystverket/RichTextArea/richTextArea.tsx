@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef } from 'react';
 import { Milkdown, MilkdownProvider, useEditor } from '@milkdown/react';
 import { Editor, commandsCtx, defaultValueCtx, editorViewCtx, editorViewOptionsCtx, rootCtx } from '@milkdown/core';
 import type { CmdKey } from '@milkdown/core';
@@ -21,16 +21,20 @@ import { listener, listenerCtx } from '@milkdown/plugin-listener';
 import { replaceAll } from '@milkdown/utils';
 import '@milkdown/prose/view/style/prosemirror.css';
 
-import classes from './RichTextArea.module.css';
-import { BlockType, Toolbar } from './components/Toolbar';
+import classes from './richTextArea.module.css';
+
 import { Fieldset, LabelContent, ValidationMessage } from '~/main';
+import LinkEditor from './components/LinkEditor/linkEditor';
+import { BlockType, Toolbar } from './components/Toolbar/toolbar';
+import { normalizeHref } from './utils/linkUtils';
+import { useRichTextToolbarState } from './hooks/useRichTextToolbarState';
+import { useRichTextLinkEditor } from './hooks/useRichTextLinkEditor';
 
 export type RichTextAreaProps = {
   value: string;
   onChange: (markdown: string) => void;
   placeholder?: string;
   disabled?: boolean;
-  readOnly?: boolean;
   className?: string;
   label?: string;
   description?: string | React.ReactNode;
@@ -46,7 +50,6 @@ const RichTextAreaContainer = ({
   onChange,
   placeholder,
   disabled = false,
-  readOnly = false,
   label,
   description,
   optional = false,
@@ -56,93 +59,11 @@ const RichTextAreaContainer = ({
   const latestOnChangeRef = useRef(onChange);
   const lastKnownMarkdownRef = useRef(value);
 
-  const [isBoldActive, setIsBoldActive] = useState(false);
-  const [isItalicActive, setIsItalicActive] = useState(false);
-  const [isBulletListActive, setIsBulletListActive] = useState(false);
-  const [isOrderedListActive, setIsOrderedListActive] = useState(false);
-  const [selectedFormat, setSelectedFormat] = useState<BlockType>('paragraph');
+  const { toolbarState, updateToolbarState } = useRichTextToolbarState();
 
-  const isLocked = disabled || readOnly;
+  const linkEditorAnchorId = `rich-text-link-editor-${useId().replace(/:/g, '')}`;
 
   latestOnChangeRef.current = onChange;
-
-  // Leser gjeldende markør/seleksjon i editoren og oppdaterer aktiv status for toolbar
-  const updateToolbarState = (ctx: Ctx) => {
-    const view = ctx.get(editorViewCtx);
-    const { state } = view;
-    const { from, to, empty, $from } = state.selection;
-
-    const hasMark = (markNames: string[]) => {
-      const markTypes = markNames
-        .map((markName) => state.schema.marks[markName])
-        .filter((markType): markType is NonNullable<typeof markType> => Boolean(markType));
-
-      if (markTypes.length === 0) {
-        return false;
-      }
-
-      if (empty) {
-        const marks = state.storedMarks ?? $from.marks();
-        return marks.some((mark) => markTypes.includes(mark.type));
-      }
-
-      let active = false;
-      state.doc.nodesBetween(from, to, (node) => {
-        if (active) {
-          return false;
-        }
-
-        if (markTypes.some((markType) => markType.isInSet(node.marks))) {
-          active = true;
-          return false;
-        }
-
-        return undefined;
-      });
-
-      return active;
-    };
-
-    const hasNode = (nodeName: string) => {
-      const nodeType = state.schema.nodes[nodeName];
-
-      if (!nodeType) {
-        return false;
-      }
-
-      if (empty) {
-        for (let depth = $from.depth; depth >= 0; depth -= 1) {
-          if ($from.node(depth).type === nodeType) {
-            return true;
-          }
-        }
-
-        return false;
-      }
-
-      let active = false;
-      state.doc.nodesBetween(from, to, (node) => {
-        if (active) {
-          return false;
-        }
-
-        if (node.type === nodeType) {
-          active = true;
-          return false;
-        }
-
-        return undefined;
-      });
-
-      return active;
-    };
-
-    setIsBoldActive(hasMark(['strong']));
-    setIsItalicActive(hasMark(['emphasis', 'em']));
-    setIsBulletListActive(hasNode('bullet_list'));
-    setIsOrderedListActive(hasNode('ordered_list'));
-    setSelectedFormat(hasNode('heading') ? (`h${$from.node($from.depth).attrs.level}` as BlockType) : 'paragraph');
-  };
 
   // Oppretter Milkdown-editor med schema, historikk og listeners.
   const { loading, get } = useEditor(
@@ -154,7 +75,33 @@ const RichTextAreaContainer = ({
           ctx.set(defaultValueCtx, value);
           ctx.update(editorViewOptionsCtx, (prev = {}) => ({
             ...prev,
-            editable: () => !isLocked,
+            editable: () => !disabled,
+            handleDOMEvents: {
+              ...prev.handleDOMEvents,
+              click: (_view, event) => {
+                const target = event.target;
+
+                if (!(target instanceof HTMLElement)) {
+                  return false;
+                }
+
+                const anchor = target.closest('a[href]');
+
+                if (!anchor) {
+                  return false;
+                }
+
+                const href = anchor.getAttribute('href');
+
+                if (!href) {
+                  return false;
+                }
+
+                event.preventDefault();
+                window.open(normalizeHref(href), '_blank', 'noopener,noreferrer');
+                return true;
+              },
+            },
           }));
           ctx.get(listenerCtx).markdownUpdated((_ctx, markdown) => {
             if (markdown === lastKnownMarkdownRef.current) {
@@ -172,7 +119,7 @@ const RichTextAreaContainer = ({
         .use(commonmark)
         .use(history)
         .use(listener),
-    [isLocked],
+    [disabled],
   );
 
   // Synker ekstern verdi til editor ved endringer.
@@ -184,6 +131,16 @@ const RichTextAreaContainer = ({
     }
 
     if (value === lastKnownMarkdownRef.current) {
+      return;
+    }
+
+    // Ikke synk ekstern verdi mens bruker aktivt skriver i editoren.
+    let isEditorFocused = false;
+    editor.action((ctx) => {
+      isEditorFocused = ctx.get(editorViewCtx).hasFocus();
+    });
+
+    if (isEditorFocused) {
       return;
     }
 
@@ -204,9 +161,9 @@ const RichTextAreaContainer = ({
     });
   }, [get]);
 
-  // Fellesdelt guard + editor-action-mønster for alle toolbar-kommandoer.
+  // Felles flyt for alle toolbar-kommandoer.
   const executeInEditor = (fn: (ctx: Ctx) => void) => {
-    if (isLocked) return;
+    if (disabled) return;
     const editor = get();
     if (!editor) return;
     editor.action((ctx) => {
@@ -231,6 +188,12 @@ const RichTextAreaContainer = ({
       commandsToRun.forEach((command) => commands.call(command.key, command.value));
     });
   };
+
+  const { linkEditorOpen, linkEditorState, closeLinkEditor, openLinkEditor, handleLinkSave, handleLinkRemove } =
+    useRichTextLinkEditor({
+      disabled,
+      executeInEditor,
+    });
 
   // Håndterer toggling av listeformatering
   const toggleList = ({
@@ -275,44 +238,39 @@ const RichTextAreaContainer = ({
       {description && <Fieldset.Description>{description}</Fieldset.Description>}
 
       <div className={classes.wrapper}>
-        {!readOnly && (
-          <Toolbar
-            disabled={disabled || loading}
-            isBoldActive={isBoldActive}
-            isItalicActive={isItalicActive}
-            isBulletListActive={isBulletListActive}
-            isOrderedListActive={isOrderedListActive}
-            selectedFormat={selectedFormat}
-            onBold={() => runCommand(toggleStrongCommand)}
-            onItalic={() => runCommand(toggleEmphasisCommand)}
-            onUndo={() => runCommand(undoCommand)}
-            onRedo={() => runCommand(redoCommand)}
-            onBulletList={() =>
-              toggleList({
-                isTargetListActive: isBulletListActive,
-                isOtherListActive: isOrderedListActive,
-                wrapCommand: wrapInBulletListCommand,
-              })
-            }
-            onOrderedList={() =>
-              toggleList({
-                isTargetListActive: isOrderedListActive,
-                isOtherListActive: isBulletListActive,
-                wrapCommand: wrapInOrderedListCommand,
-              })
-            }
-            onFormatChange={handleFormatChange}
-          />
-        )}
+        <Toolbar
+          disabled={disabled || loading}
+          isBoldActive={toolbarState.isBoldActive}
+          isItalicActive={toolbarState.isItalicActive}
+          isBulletListActive={toolbarState.isBulletListActive}
+          isOrderedListActive={toolbarState.isOrderedListActive}
+          selectedFormat={toolbarState.selectedFormat}
+          isLinkActive={toolbarState.isLinkActive}
+          onBold={() => runCommand(toggleStrongCommand)}
+          onItalic={() => runCommand(toggleEmphasisCommand)}
+          onUndo={() => runCommand(undoCommand)}
+          onRedo={() => runCommand(redoCommand)}
+          onLink={openLinkEditor}
+          linkPopoverTarget={linkEditorAnchorId}
+          onBulletList={() =>
+            toggleList({
+              isTargetListActive: toolbarState.isBulletListActive,
+              isOtherListActive: toolbarState.isOrderedListActive,
+              wrapCommand: wrapInBulletListCommand,
+            })
+          }
+          onOrderedList={() =>
+            toggleList({
+              isTargetListActive: toolbarState.isOrderedListActive,
+              isOtherListActive: toolbarState.isBulletListActive,
+              wrapCommand: wrapInOrderedListCommand,
+            })
+          }
+          onFormatChange={handleFormatChange}
+        />
 
         <div
-          className={[
-            classes.editorContainer,
-            disabled && classes.editorContainerDisabled,
-            readOnly && classes.editorContainerReadOnly,
-          ]
-            .filter(Boolean)
-            .join(' ')}
+          className={[classes.editorContainer, disabled && classes.editorContainerDisabled].filter(Boolean).join(' ')}
         >
           {showPlaceholder ? (
             <span className={classes.placeholder} aria-hidden="true">
@@ -323,6 +281,15 @@ const RichTextAreaContainer = ({
             <Milkdown />
           </div>
         </div>
+        <LinkEditor
+          open={linkEditorOpen}
+          anchorId={linkEditorAnchorId}
+          href={linkEditorState?.href ?? ''}
+          hasSelection={linkEditorState?.hasSelection ?? false}
+          onSave={handleLinkSave}
+          onRemove={handleLinkRemove}
+          onClose={closeLinkEditor}
+        />
         {error && <ValidationMessage className={classes.error}>{error}</ValidationMessage>}
       </div>
     </Fieldset>

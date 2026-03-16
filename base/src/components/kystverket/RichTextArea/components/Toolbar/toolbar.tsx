@@ -1,6 +1,6 @@
 import { Icon } from '~/main';
 import type { IconId } from '~/main';
-import classes from '../RichTextArea.module.css';
+import styles from './toolbar.module.css';
 
 const BLOCK_TYPES = ['paragraph', 'h1', 'h2', 'h3'] as const;
 export type BlockType = (typeof BLOCK_TYPES)[number];
@@ -11,7 +11,9 @@ type ToolbarProps = {
   isItalicActive: boolean;
   isBulletListActive: boolean;
   isOrderedListActive: boolean;
+  isLinkActive: boolean;
   selectedFormat: BlockType;
+  linkPopoverTarget?: string;
   onBold: () => void;
   onItalic: () => void;
   onBulletList: () => void;
@@ -19,9 +21,12 @@ type ToolbarProps = {
   onUndo: () => void;
   onRedo: () => void;
   onFormatChange: (format: BlockType) => void;
+  onLink: () => void;
 };
 
 type ToolbarButtonProps = {
+  id?: string;
+  popoverTarget?: string;
   label: string;
   icon: IconId;
   active?: boolean;
@@ -29,12 +34,14 @@ type ToolbarButtonProps = {
   onClick: () => void;
 };
 
-const ToolbarButton = ({ label, icon, active, disabled, onClick }: ToolbarButtonProps) => (
+const ToolbarButton = ({ id, popoverTarget, label, icon, active, disabled, onClick }: ToolbarButtonProps) => (
   <button
+    id={id}
     type="button"
-    className={classes.toolbarButton}
+    className={styles.toolbarButton}
     onClick={onClick}
     disabled={disabled}
+    popoverTarget={popoverTarget}
     aria-label={label}
     aria-pressed={active}
   >
@@ -48,7 +55,9 @@ export const Toolbar = ({
   isItalicActive,
   isBulletListActive,
   isOrderedListActive,
+  isLinkActive,
   selectedFormat,
+  linkPopoverTarget,
   onBulletList,
   onOrderedList,
   onBold,
@@ -56,10 +65,11 @@ export const Toolbar = ({
   onUndo,
   onRedo,
   onFormatChange,
+  onLink,
 }: ToolbarProps) => {
   return (
-    <div className={classes.toolbar} role="toolbar" aria-label="Rich text formatting">
-      <div className={classes.toolbarGroup}>
+    <div className={styles.toolbar} role="toolbar" aria-label="Rich text formatting">
+      <div className={styles.toolbarGroup}>
         <ToolbarButton label="Bold" icon="format_bold" active={isBoldActive} disabled={disabled} onClick={onBold} />
         <ToolbarButton
           label="Italic"
@@ -82,8 +92,17 @@ export const Toolbar = ({
           disabled={disabled}
           onClick={onOrderedList}
         />
+        <ToolbarButton
+          label="Link"
+          icon="link"
+          active={isLinkActive}
+          disabled={disabled}
+          id={linkPopoverTarget}
+          popoverTarget={linkPopoverTarget}
+          onClick={onLink}
+        />
         <select
-          className={classes.toolbarSelect}
+          className={styles.toolbarSelect}
           disabled={disabled}
           aria-label="Heading levels"
           value={selectedFormat}
@@ -98,7 +117,7 @@ export const Toolbar = ({
           <option value="h3">Heading 3</option>
         </select>
       </div>
-      <div className={classes.toolbarGroup}>
+      <div className={styles.toolbarGroup}>
         <ToolbarButton label="Undo" icon="undo" disabled={disabled} onClick={onUndo} />
         <ToolbarButton label="Redo" icon="redo" disabled={disabled} onClick={onRedo} />
       </div>

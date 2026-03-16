@@ -1,0 +1,38 @@
+/* Link-tooltip fra Milkdown: flytende visning, skjul/vis og innhold */
+
+.container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.input {
+  font-size: var(--ds-font-size-sm, 0.875rem);
+  padding-top: var(--ds-size-1);
+  padding-bottom: var(--ds-size-1);
+}
+
+.hint {
+  margin: 0;
+  font-size: var(--ds-font-size-sm, 0.875rem);
+  color: var(--ds-color-neutral-text-subtle);
+}
+
+.button:hover {
+  background: var(--ds-color-neutral-surface-hover);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.125rem;
+  border-radius: var(--ds-border-radius-sm);
+  cursor: pointer;
+  color: var(--ds-color-primary-text-subtle);
+}
+
+.button:focus-visible {
+  outline: 3px solid var(--ds-color-focus-outer);
+  outline-offset: 3px;
+}

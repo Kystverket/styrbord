@@ -1,0 +1,70 @@
+/* Toolbar-container med ramme og avrunding */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  border-radius: var(--ds-border-radius-md) var(--ds-border-radius-md) 0 0;
+  flex-wrap: wrap;
+  border: 1px solid var(--ds-color-neutral-border-default);
+  border-bottom: 1px solid var(--ds-color-neutral-border-subtle);
+}
+
+.toolbarGroup {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem;
+}
+
+.toolbarButton {
+  color: var(--ds-color-neutral-text-subtle);
+  border-radius: var(--ds-border-radius-md);
+  margin: 0.25rem;
+  min-width: 1.75rem;
+  height: 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.5rem;
+  cursor: pointer;
+}
+
+.toolbarSelect {
+  color: var(--ds-color-neutral-text-subtle);
+  border-radius: var(--ds-border-radius-md);
+  margin: 0.25rem;
+  min-width: 6.5rem;
+  height: 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+  cursor: pointer;
+}
+
+.toolbarButton:hover:not(:disabled) {
+  background: var(--ds-color-neutral-surface-hover);
+}
+
+.toolbarSelect:hover:not(:disabled):not(:focus) {
+  background: var(--ds-color-neutral-surface-hover);
+}
+
+.toolbarButton[aria-pressed='true']:not(:disabled),
+.toolbarSelect[aria-pressed='true']:not(:disabled) {
+  background: var(--ds-color-neutral-surface-active);
+  color: var(--ds-color-neutral-text-default);
+}
+
+.toolbarButton:focus-visible {
+  outline: 3px solid var(--ds-color-focus-outer);
+  outline-offset: 3px;
+}
+
+.toolbarSelect:focus-visible {
+  outline: 3px solid var(--ds-color-focus-outer);
+  outline-offset: 3px;
+}
+
+.toolbarButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

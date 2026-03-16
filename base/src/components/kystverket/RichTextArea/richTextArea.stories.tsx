@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { RichTextArea, type RichTextAreaProps } from './RichTextArea';
+
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
+import { RichTextArea, RichTextAreaProps } from './richTextArea';
 
 const meta = {
   title: 'Form/RichTextArea',
@@ -50,16 +51,6 @@ export const Disabled: Story = {
   },
   render: renderInteractive,
 };
-
-export const ReadOnly: Story = {
-  args: {
-    ...defaultArgs,
-    readOnly: true,
-    value: 'Denne editoren er skrivebeskyttet og skjuler verktøylinja.',
-  },
-  render: renderInteractive,
-};
-
 export const WithError: Story = {
   args: {
     ...defaultArgs,
