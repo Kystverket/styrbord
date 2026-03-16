@@ -95,9 +95,32 @@ function getTokenStyle(token: (typeof TOKENS)[number]): CSSProperties {
   };
 }
 
+const ColorTokenCollections = ({ dataColor, dataColorScheme }: StoryArgs) => {
+  return (
+    <div
+      data-color={dataColor}
+      data-color-scheme={dataColorScheme}
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+        gap: '0.75rem',
+        padding: '0.75rem',
+        background: 'var(--ds-color-background-default)',
+      }}
+    >
+      {TOKENS.map((token) => (
+        <div key={token} style={getTokenStyle(token)}>
+          {token}
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const meta = {
   title: 'Tokens/Color Collections',
   tags: ['autodocs'],
+  component: ColorTokenCollections,
   args: {
     dataColor: 'primary',
     dataColorScheme: 'light',
@@ -122,27 +145,7 @@ const meta = {
       },
     },
   },
-  render: ({ dataColor, dataColorScheme }: StoryArgs) => {
-    return (
-      <div
-        data-color={dataColor}
-        data-color-scheme={dataColorScheme}
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-          gap: '0.75rem',
-          padding: '0.75rem',
-          background: 'var(--ds-color-background-default)',
-        }}
-      >
-        {TOKENS.map((token) => (
-          <div key={token} style={getTokenStyle(token)}>
-            {token}
-          </div>
-        ))}
-      </div>
-    );
-  },
+  render: (args: StoryArgs) => <ColorTokenCollections {...args} />,
 } satisfies Meta<StoryArgs>;
 
 export default meta;
