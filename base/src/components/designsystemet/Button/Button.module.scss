@@ -12,6 +12,7 @@
 // DATA-COLOR: PRIMARY - NEUTRAL - DANGER
 // STATES : DEFAULT - HOVER - ACTIVE/PRESSED - DISABLED
 
+/* ---------- outline ---------- */
 .outline {
   color: var(--ds-color-text-default);
   border: 1px solid var(--ds-color-border-default);
@@ -24,20 +25,7 @@
   }
 }
 
-.outline[data-color='danger'] {
-  color: var(--ds-color-text-subtle);
-}
-/**
-*
-*
-*/
-.ghost[data-color='danger'] {
-  color: var(--ds-color-danger-text-subtle);
-}
-/**
-*
-*
-*/
+/* ---------- subtle ---------- */
 .subtle {
   color: var(--ds-color-text-default);
   background: var(--ds-color-background-tinted);
@@ -57,19 +45,13 @@
   border-color: var(--ds-color-border-subtle);
 }
 
-.subtle[data-color='danger'] {
-  color: var(--ds-color-danger-text-subtle);
-}
-
 .subtle[data-color='neutral'] {
   [data-color-scheme='dark'] & {
     background-color: var(--ds-color-surface-default);
   }
 }
-/**
-*
-*
-*/
+
+/* ---------- ghost ---------- */
 .ghost {
   color: var(--ds-color-text-default);
   &:hover {
@@ -80,13 +62,7 @@
   }
 }
 
-.ghost[data-color='danger'] {
-  color: var(--ds-color-danger-text-subtle);
-}
-/**
-*
-*
-*/
+/* ---------- dashed ---------- */
 .dashed {
   border-style: dashed;
   background: transparent;
@@ -102,6 +78,7 @@
   }
 }
 
-.dashed[data-color='danger'] {
+/* ---------- collection overrides ---------- */
+:is(.dashed, .subtle, .ghost, .outline)[data-color='danger'] {
   color: var(--ds-color-danger-text-subtle);
 }
