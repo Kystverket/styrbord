@@ -22,10 +22,8 @@
 
   /*--------- New Dialog Styling ---------*/
   .dialogBlockBase {
-    --scrollbar-deadzone: var(--ds-size-2);
-
     scrollbar-gutter: stable both-edges;
-    padding-inline: calc(var(--ds-size-7));
+    padding-inline: var(--ds-size-7);
     &.withDividers:not(:first-of-type) {
       border-top: 1px solid var(--ds-color-neutral-surface-hover);
     }

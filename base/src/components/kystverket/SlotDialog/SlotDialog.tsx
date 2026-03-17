@@ -25,7 +25,7 @@ export function SlotDialog({
   children,
   withDividers,
 }: SlotDialogProps) {
-  const DialogBlockClasses = `${classes.dialogBlockBase} ${withDividers && classes.withDividers}`;
+  const DialogBlockClasses = `${classes.dialogBlockBase} ${withDividers ? classes.withDividers : ''}`;
 
   return (
     <Dialog open={isOpen} onClose={onClose} ref={ref} className={classes.slotDialogOverrides} closedby="any">

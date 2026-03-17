@@ -85,7 +85,7 @@ export const LotsOfContentWithDividers: StoryFn<typeof SlotDialog> = (args) => {
   );
 };
 
-export const withRef: StoryFn<typeof SlotDialog> = (args) => {
+export const WithRef: StoryFn<typeof SlotDialog> = (args) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   return (
