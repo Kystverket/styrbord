@@ -92,8 +92,3 @@ h2 {
   font-weight: var(--ds-font-weight-medium);
   color: var(--ds-color-neutral-text-default);
 }
-
-p {
-  font-size: var(--ds-font-size-4);
-  color: var(--ds-color-neutral-text-default);
-}
