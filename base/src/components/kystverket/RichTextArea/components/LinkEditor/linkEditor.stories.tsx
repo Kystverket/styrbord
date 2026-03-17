@@ -76,3 +76,42 @@ export const Default: Story = {
   },
   render: renderInteractive,
 };
+
+export const WithoutHref: Story = {
+  args: {
+    open: true,
+    anchorId: 'link-editor-story-popover',
+    href: '',
+    hasSelection: true,
+    onSave: () => {},
+    onClose: () => {},
+    onRemove: () => {},
+  },
+  render: renderInteractive,
+};
+
+export const WithHref: Story = {
+  args: {
+    open: true,
+    anchorId: 'link-editor-story-popover',
+    href: 'https://www.kystverket.no',
+    hasSelection: true,
+    onSave: () => {},
+    onClose: () => {},
+    onRemove: () => {},
+  },
+  render: renderInteractive,
+};
+
+export const NoSelection: Story = {
+  args: {
+    open: true,
+    anchorId: 'link-editor-story-popover',
+    href: '',
+    hasSelection: false,
+    onSave: () => {},
+    onClose: () => {},
+    onRemove: () => {},
+  },
+  render: renderInteractive,
+};
