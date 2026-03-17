@@ -4,14 +4,14 @@ import { IconId } from './icon.types';
 type IconSize = '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
 
 const iconSizes: Record<IconSize, string> = {
-  '2xs': '14px',
-  xs: '16px',
-  sm: '18px',
-  md: '21px',
-  lg: '24px',
-  xl: '32px',
-  '2xl': '48px',
-  '3xl': '64px',
+  '2xs': '0.875rem', // 14px
+  xs: '1rem', // 16px
+  sm: '1.125rem', // 18px
+  md: '1.3125rem', // 21px
+  lg: '1.5rem', // 24px
+  xl: '2rem', // 32px
+  '2xl': '3rem', // 48px
+  '3xl': '4rem', // 64px
 };
 
 export interface MaterialIconProps {
