@@ -26,6 +26,7 @@
   @include meta.load-css('../components/designsystemet/Checkbox/Checkbox.override.scss');
   @include meta.load-css('../components/designsystemet/Tooltip/Tooltip.override.scss');
   @include meta.load-css('../components/designsystemet/Avatar/Avatar.override.scss');
+  @include meta.load-css('../components/designsystemet/Dropdown/Dropdown.override.scss');
   @include meta.load-css('../components/kystverket/Datepicker/Datepicker.override.scss');
   @include meta.load-css('../components/designsystemet/Dialog/Dialog.override.scss');
 }
