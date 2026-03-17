@@ -133,6 +133,8 @@ export type { AvatarProps } from './components/designsystemet/Avatar/Avatar';
 
 export { IdProvider, useIdProvider } from './utils/idContext';
 
+export { SlotDialog, type SlotDialogProps } from './components/kystverket/SlotDialog/SlotDialog';
+
 //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 //
 // RE-EKSPORT AV DESIGNSYSTEMET

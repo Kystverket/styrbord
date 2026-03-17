@@ -3,7 +3,7 @@ import { Box, Dialog, Heading, Paragraph } from '~/main';
 import classes from './SlotDialog.module.css';
 
 export interface SlotDialogProps {
-  isOpen?: boolean;
+  open?: boolean;
   onClose?: () => void;
   ref?: React.Ref<HTMLDialogElement>;
 
@@ -15,11 +15,11 @@ export interface SlotDialogProps {
   children: ReactNode;
 }
 
-export function SlotDialog({ title, subtitle, isOpen, onClose, ref, buttons, children, longContent }: SlotDialogProps) {
+export function SlotDialog({ title, subtitle, open, onClose, ref, buttons, children, longContent }: SlotDialogProps) {
   const DialogBlockClasses = `${classes.dialogBlockBase} ${longContent ? classes.longContent : ''}`;
 
   return (
-    <Dialog open={isOpen} onClose={onClose} ref={ref} className={classes.slotDialogOverrides} closedby="any">
+    <Dialog open={open} onClose={onClose} ref={ref} className={classes.slotDialogOverrides} closedby="any">
       <Box gap={4} className={`${classes.headerBlock} ${DialogBlockClasses}`}>
         {!!subtitle && <Paragraph>{subtitle}</Paragraph>}
         <Heading>{title}</Heading>

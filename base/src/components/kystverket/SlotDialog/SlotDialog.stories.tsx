@@ -1,7 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react-vite';
 import { useRef, useState } from 'react';
-import { Button, Paragraph } from '~/main';
-import { SlotDialog } from '~/components/kystverket/SlotDialog/SlotDialog';
+import { Button, Paragraph, SlotDialog } from '~/main';
 
 export default {
   title: 'Components/SlotDialog',
@@ -25,7 +24,7 @@ export const Default: StoryFn<typeof SlotDialog> = (args) => {
       <Button onClick={() => setIsOpen(true)}>Open dialog</Button>
       <SlotDialog
         {...args}
-        isOpen={isOpen}
+        open={isOpen}
         onClose={() => setIsOpen(false)}
         title="Dialog title"
         buttons={
@@ -89,7 +88,7 @@ export const LotsOfContentWithLongContentProp: StoryFn<typeof SlotDialog> = (arg
       <SlotDialog
         {...args}
         longContent
-        isOpen={isOpen}
+        open={isOpen}
         onClose={() => setIsOpen(false)}
         title="Dialog title"
         subtitle="Subtitle"
