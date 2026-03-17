@@ -48,43 +48,6 @@ export const Default: StoryFn<typeof SlotDialog> = (args) => {
   );
 };
 
-export const LotsOfContentWithDividers: StoryFn<typeof SlotDialog> = (args) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const contentParagraphCount = 30;
-
-  return (
-    <>
-      <Button onClick={() => setIsOpen(true)}>Open dialog</Button>
-      <SlotDialog
-        {...args}
-        withDividers
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        title="Dialog title"
-        subtitle="Subtitle"
-        buttons={
-          <>
-            <Button variant="filled" onClick={() => setIsOpen(false)}>
-              Confirm
-            </Button>
-            <Button variant="outline" onClick={() => setIsOpen(false)}>
-              Cancel
-            </Button>
-          </>
-        }
-      >
-        <Paragraph>
-          Some random filler text that fills the entire width to test that it wraps correctly or that it at least looks
-          nice
-        </Paragraph>
-        {Array.from({ length: contentParagraphCount }, (_, index) => (
-          <Paragraph key={index}>Dialog content goes here.</Paragraph>
-        ))}
-      </SlotDialog>
-    </>
-  );
-};
-
 export const WithRef: StoryFn<typeof SlotDialog> = (args) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -111,6 +74,43 @@ export const WithRef: StoryFn<typeof SlotDialog> = (args) => {
           Some random filler text that fills the entire width to test that it wraps correctly or that it at least looks
           nice
         </Paragraph>
+      </SlotDialog>
+    </>
+  );
+};
+
+export const LotsOfContentWithLongContentProp: StoryFn<typeof SlotDialog> = (args) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const contentParagraphCount = 30;
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open dialog</Button>
+      <SlotDialog
+        {...args}
+        longContent
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        title="Dialog title"
+        subtitle="Subtitle"
+        buttons={
+          <>
+            <Button variant="filled" onClick={() => setIsOpen(false)}>
+              Confirm
+            </Button>
+            <Button variant="outline" onClick={() => setIsOpen(false)}>
+              Cancel
+            </Button>
+          </>
+        }
+      >
+        <Paragraph>
+          Some random filler text that fills the entire width to test that it wraps correctly or that it at least looks
+          nice
+        </Paragraph>
+        {Array.from({ length: contentParagraphCount }, (_, index) => (
+          <Paragraph key={index}>Dialog content goes here.</Paragraph>
+        ))}
       </SlotDialog>
     </>
   );

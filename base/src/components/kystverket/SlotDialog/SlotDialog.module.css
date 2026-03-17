@@ -24,14 +24,14 @@
   .dialogBlockBase {
     scrollbar-gutter: stable both-edges;
     padding-inline: var(--ds-size-7);
-    &.withDividers:not(:first-of-type) {
+    &.longContent:not(:first-of-type) {
       border-top: 1px solid var(--ds-color-neutral-surface-hover);
     }
   }
 
   .headerBlock {
     padding-bottom: var(--ds-size-3);
-    &.withDividers {
+    &.longContent {
       padding-bottom: var(--ds-size-7);
     }
     & :global(.ds-paragraph) {
@@ -41,11 +41,10 @@
 
   .contentBlock {
     flex: 1;
-    gap: var(--ds-size-5);
     overflow-y: auto;
     scrollbar-gutter: stable;
 
-    &.withDividers {
+    &.longContent {
       padding-top: var(--ds-size-7);
       padding-bottom: var(--ds-size-7);
     }

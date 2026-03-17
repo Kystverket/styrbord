@@ -8,24 +8,15 @@ export interface SlotDialogProps {
   ref?: React.Ref<HTMLDialogElement>;
 
   /**Should be enabled with long content */
-  withDividers?: boolean;
+  longContent?: boolean;
   title: string;
   subtitle?: string;
   buttons?: ReactNode;
   children: ReactNode;
 }
 
-export function SlotDialog({
-  title,
-  subtitle,
-  isOpen,
-  onClose,
-  ref,
-  buttons,
-  children,
-  withDividers,
-}: SlotDialogProps) {
-  const DialogBlockClasses = `${classes.dialogBlockBase} ${withDividers ? classes.withDividers : ''}`;
+export function SlotDialog({ title, subtitle, isOpen, onClose, ref, buttons, children, longContent }: SlotDialogProps) {
+  const DialogBlockClasses = `${classes.dialogBlockBase} ${longContent ? classes.longContent : ''}`;
 
   return (
     <Dialog open={isOpen} onClose={onClose} ref={ref} className={classes.slotDialogOverrides} closedby="any">
