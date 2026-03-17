@@ -7,7 +7,7 @@ applikasjonen ha et Kystverket uttrykk samtidig som det følger moderne prinsipp
 Styrbord tar i bruk [designsystemet.no](https://www.designsystemet.no/) sine komponenter og prinsipper.
 Komponentene til Designsystemet blir eksportert videre av Styrbord med Kystverkets farger og tekststil.
 Dette betyr at [dokumentasjonen til Designsystemet](https://storybook.designsystemet.no/) er vel så viktig
-som den du finner her.
+som den du finner [her](https://kystverket.github.io/styrbord/base).
 
 Alle komponentene og typene i Designsystemet er tilgjengelig i Styrbord med følgende merknader:
 
