@@ -25,10 +25,10 @@ export function SlotDialog({
   children,
   withDividers,
 }: SlotDialogProps) {
-  const DialogBlockClasses = `${classes.dialogBlock} ${withDividers && classes.withDividers}`;
+  const DialogBlockClasses = `${classes.dialogBlockBase} ${withDividers && classes.withDividers}`;
 
   return (
-    <Dialog open={isOpen} onClose={onClose} ref={ref} className={classes.dialogOverrides} closedby="any">
+    <Dialog open={isOpen} onClose={onClose} ref={ref} className={classes.slotDialogOverrides} closedby="any">
       <Box gap={4} className={`${classes.headerBlock} ${DialogBlockClasses}`}>
         {!!subtitle && <Paragraph>{subtitle}</Paragraph>}
         <Heading>{title}</Heading>

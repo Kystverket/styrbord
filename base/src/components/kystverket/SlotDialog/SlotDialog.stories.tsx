@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react-vite';
-import { useState } from 'react';
-import { Button } from '~/main';
+import { useRef, useState } from 'react';
+import { Button, Paragraph } from '~/main';
 import { SlotDialog } from '~/components/kystverket/SlotDialog/SlotDialog';
 
 export default {
@@ -9,6 +9,11 @@ export default {
   tags: ['autodocs', 'ds-override', 'beta'],
   parameters: {
     layout: 'fullscreen',
+    docs: {
+      source: {
+        type: 'code',
+      },
+    },
   },
 } satisfies Meta<typeof SlotDialog>;
 
@@ -26,18 +31,18 @@ export const Default: StoryFn<typeof SlotDialog> = (args) => {
         buttons={
           <>
             <Button variant="filled" onClick={() => setIsOpen(false)}>
-              Accept
+              Confirm
             </Button>
             <Button variant="outline" onClick={() => setIsOpen(false)}>
-              Deny
+              Cancel
             </Button>
           </>
         }
       >
-        <p>
+        <Paragraph>
           Some random filler text that fills the entire width to test that it wraps correctly or that it at least looks
           nice
-        </p>
+        </Paragraph>
       </SlotDialog>
     </>
   );
@@ -68,13 +73,44 @@ export const LotsOfContentWithDividers: StoryFn<typeof SlotDialog> = (args) => {
           </>
         }
       >
-        <p>
+        <Paragraph>
           Some random filler text that fills the entire width to test that it wraps correctly or that it at least looks
           nice
-        </p>
+        </Paragraph>
         {Array.from({ length: contentParagraphCount }, (_, index) => (
-          <p key={index}>Dialog content goes here.</p>
+          <Paragraph key={index}>Dialog content goes here.</Paragraph>
         ))}
+      </SlotDialog>
+    </>
+  );
+};
+
+export const withRef: StoryFn<typeof SlotDialog> = (args) => {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  return (
+    <>
+      <Button onClick={() => dialogRef.current?.showModal()}>Open dialog</Button>
+      <SlotDialog
+        {...args}
+        ref={dialogRef}
+        title="Dialog title"
+        subtitle="Subtitle"
+        buttons={
+          <>
+            <Button variant="filled" onClick={() => dialogRef.current?.close()}>
+              Confirm
+            </Button>
+            <Button variant="outline" onClick={() => dialogRef.current?.close()}>
+              Cancel
+            </Button>
+          </>
+        }
+      >
+        <Paragraph>
+          Some random filler text that fills the entire width to test that it wraps correctly or that it at least looks
+          nice
+        </Paragraph>
       </SlotDialog>
     </>
   );
