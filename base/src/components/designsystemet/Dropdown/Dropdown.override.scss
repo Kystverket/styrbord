@@ -1,0 +1,21 @@
+.ds-dropdown {
+  border-radius: var(--ds-border-radius-lg);
+  box-shadow: var(--ds-shadow-lg);
+  --dsc-dropdown-border-color: var(--ds-color-neutral-border-subtle);
+  padding: var(--ds-size-2);
+}
+
+.ds-dropdown :is(a, button, [role='button']) {
+  --dsc-button-color: var(--ds-color-neutral-text-default);
+  --dsc-button-color--hover: var(--ds-color-neutral-text-default);
+  --dsc-button-background--hover: var(--ds-color-neutral-background-tinted);
+  --dsc-button-background--active: var(--ds-color-primary-surface-tinted);
+  padding-top: var(--ds-size-3);
+  padding-bottom: var(--ds-size-3);
+  font-weight: 300;
+}
+
+.ds-heading {
+  font-weight: 300;
+  color: var(--ds-color-neutral-text-subtle);
+}

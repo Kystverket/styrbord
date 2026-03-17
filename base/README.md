@@ -7,7 +7,7 @@ applikasjonen ha et Kystverket uttrykk samtidig som det følger moderne prinsipp
 Styrbord tar i bruk [designsystemet.no](https://www.designsystemet.no/) sine komponenter og prinsipper.
 Komponentene til Designsystemet blir eksportert videre av Styrbord med Kystverkets farger og tekststil.
 Dette betyr at [dokumentasjonen til Designsystemet](https://storybook.designsystemet.no/) er vel så viktig
-som den du finner her.
+som den du finner [her](https://kystverket.github.io/styrbord/base).
 
 Alle komponentene og typene i Designsystemet er tilgjengelig i Styrbord med følgende merknader:
 
@@ -40,6 +40,20 @@ import { Heading, Ingress, Tabs } from '@kystverket/styrbord';
 Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.com/Kystverket/styrbord-tokens).
 
 ## Endringslogg
+
+### 2026-03-10 -- v1.4.0
+
+Endret fra StyrbordTranslationContext til å bruke @kystverket/sprak-react.
+
+Internt i Styrbord-komponenter kan man bruke følgende for å hente oversettelsesfunksjonen.
+
+```ts
+import { useStyrbordTranslation } from '~/translations';
+...
+const { t } = useTranslation();
+```
+
+Applikasjoner som bruker Styrbord må wrappe alt med både `<SprakProvider>` (for å velge språk) og `<StyrbordTranslations>` (for å hente oversettelsene til Styrbord).
 
 ### 2026-01-13 -- v1.3.0
 

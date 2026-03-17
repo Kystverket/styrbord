@@ -6,10 +6,11 @@ export type ButtonProps = {
   variant?: 'filled' | 'subtle' | 'outline' | 'ghost' | 'dashed';
   color?: 'primary' | 'neutral' | 'danger';
   size?: 'sm' | 'md' | 'lg';
+  disabled?: boolean;
   text?: string;
   href?: string;
   target?: string;
-} & Omit<DsButtonProps, 'variant' | 'data-color' | 'data-size'>;
+} & Omit<DsButtonProps, 'variant' | 'data-color' | 'data-size' | 'disabled'>;
 
 export const Button: FC<ButtonProps> = ({
   variant = 'outline',
@@ -21,6 +22,9 @@ export const Button: FC<ButtonProps> = ({
   ...props
 }) => {
   const propsToOverride: DsButtonProps = { ...props };
+  if (!props.icon) {
+    propsToOverride.className = [propsToOverride.className, classes.paddingOverrides].join(' ');
+  }
 
   switch (variant) {
     case 'filled':
@@ -32,6 +36,7 @@ export const Button: FC<ButtonProps> = ({
       break;
     case 'ghost':
       propsToOverride.variant = 'tertiary';
+      propsToOverride.className = [propsToOverride.className, classes.ghost].join(' ');
       break;
     case 'subtle':
       propsToOverride.variant = 'primary';

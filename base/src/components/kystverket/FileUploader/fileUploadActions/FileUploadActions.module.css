@@ -1,9 +1,21 @@
 @layer styrbord-modules {
+  .buttonRow {
+    container-type: inline-size;
+  }
+
   .uploadButton {
+    flex: 0 0 auto;
     color: var(--ds-color-neutral-text-default);
     border: 1px solid var(--ds-color-neutral-border-default);
     &:hover {
       background-color: var(--ds-color-neutral-surface-tinted);
+    }
+  }
+
+  /* ~360 pixels on font-size 16 */
+  @container (max-width: 23rem) {
+    .uploadButton {
+      flex: 1 1 100%;
     }
   }
 

@@ -2,76 +2,83 @@
   width: max-content;
 }
 
-/* DASHED */
-.dashed {
-  border-style: dashed;
-  background: transparent;
-
-  &:hover {
-    border-style: dashed;
-    background: var(--dsc-button-background--hover);
-  }
+.paddingOverrides {
+  // Original er --dsc-button-padding
+  padding: var(--ds-size-2) var(--ds-size-5);
 }
 
-/* OUTLINE */
-.outline[data-color='neutral'] {
-  color: var(--ds-color-primary-text-default);
-}
+// SORT ORDER -- RESEMBLES FIGMA
+// VARIANTS: FILLED - OUTLINE - SUBTLE - GHOST - DASHED
+// DATA-COLOR: PRIMARY - NEUTRAL - DANGER
+// STATES : DEFAULT - HOVER - ACTIVE/PRESSED - DISABLED
 
-[data-color-scheme='dark'] .outline[data-color='neutral'] {
-  color: var(--ds-color-primary-text-default);
-  border-color: var(--ds-color-neutral-border-subtle);
-  background-color: var(--ds-color-neutral-surface-default);
+/* ---------- outline ---------- */
+.outline {
+  color: var(--ds-color-text-default);
+  border: 1px solid var(--ds-color-border-default);
 
   &:hover {
-    background-color: var(--ds-color-neutral-surface-tinted);
+    background-color: var(--ds-color-surface-tinted);
   }
-
   &:active {
-    background-color: var(--ds-color-neutral-surface-hover);
+    background-color: var(--ds-color-surface-hover);
   }
 }
 
-/* SUBTLE */
+/* ---------- subtle ---------- */
 .subtle {
-  color: var(--ds-color-primary-text-default);
-  background: var(--ds-color-primary-surface-tinted);
+  color: var(--ds-color-text-default);
+  background: var(--ds-color-background-tinted);
+  border: 1px solid var(--ds-color-surface-active);
 
   &:hover {
-    background: var(--ds-color-primary-surface-hover);
+    background: var(--ds-color-surface-tinted);
   }
 
   &:active {
-    background: var(--ds-color-primary-surface-active);
+    background: var(--ds-color-surface-hover);
   }
+}
+
+.subtle:not([data-color]),
+.subtle[data-color='primary'] {
+  border-color: var(--ds-color-border-subtle);
 }
 
 .subtle[data-color='neutral'] {
-  color: var(--ds-color-neutral-text-default);
-  background: var(--ds-color-neutral-surface-default);
-
-  &:hover {
-    background: var(--ds-color-neutral-surface-hover);
-  }
-
-  &:active {
-    background: var(--ds-color-neutral-surface-active);
+  [data-color-scheme='dark'] & {
+    background-color: var(--ds-color-surface-default);
   }
 }
 
-[data-color-scheme='dark'] .subtle[data-color='neutral'] {
-  background-color: var(--ds-color-neutral-surface-default);
+/* ---------- ghost ---------- */
+.ghost {
+  color: var(--ds-color-text-default);
+  &:hover {
+    background-color: var(--ds-color-surface-tinted);
+  }
+  &:active {
+    background-color: var(--ds-color-surface-hover);
+  }
 }
 
-.subtle[data-color='danger'] {
-  color: var(--ds-color-danger-text-default);
-  background: var(--ds-color-danger-surface-default);
+/* ---------- dashed ---------- */
+.dashed {
+  border-style: dashed;
+  background: transparent;
+  color: var(--ds-color-text-default);
 
   &:hover {
-    background: var(--ds-color-danger-surface-hover);
+    border-style: dashed;
+    background-color: var(--ds-color-surface-tinted);
   }
 
   &:active {
-    background: var(--ds-color-danger-surface-active);
+    background-color: var(--ds-color-surface-hover);
   }
+}
+
+/* ---------- collection overrides ---------- */
+:is(.dashed, .subtle, .ghost, .outline)[data-color='danger'] {
+  color: var(--ds-color-danger-text-subtle);
 }

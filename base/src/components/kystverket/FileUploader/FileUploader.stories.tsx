@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ExistingFilesProviderItem, FileUploader, FileUploaderProps } from './FileUploader';
 import { FileUploaderContext } from './FileUploader.context';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
-import { StyrbordTranslationContext } from '~/main';
+
 import { useState } from 'react';
 import { FileInfo, UploadFileResult } from './FileUploader.types';
 import { v4 as uuidv4 } from 'uuid';
@@ -184,28 +184,20 @@ export const WithError: Story = {
   args: { ...defaultProps, error: 'Det oppstod en feil' },
 };
 
+export const WithCaptureButton: Story = {
+  args: {
+    ...defaultProps,
+    description: 'Capture button vises kun på mobilenheter',
+    withCaptureButton: true,
+    files: [],
+  },
+};
+
 export const WithExistingFiles: Story = {
   args: {
     ...defaultProps,
     files: [],
     existingFilesProvider: existingFilesProvider,
-  },
-};
-
-export const WithExistingFilesWithTranslations: Story = {
-  args: {
-    ...defaultProps,
-    files: [],
-    existingFilesProvider: existingFilesProvider,
-    translations: {
-      existingFiles: {
-        buttonOpen: 'Velg eksisterende filer',
-        dialogTitle: 'Velg eksisterende filer',
-        dialogCancel: 'Avbryt',
-        dialogConfirm: 'Legg til',
-        noFilesAvailable: 'Ingen eksisterende filer tilgjengelig',
-      },
-    },
   },
 };
 
@@ -257,29 +249,6 @@ export const withFileSizeLimit: Story = {
   args: {
     ...defaultProps,
     description: 'Filer som er større enn 10MB vil bli avvist',
-    files: [],
-  },
-};
-
-export const WithFileSizeLimitEnglish: Story = {
-  decorators: [
-    (Story) => (
-      <StyrbordTranslationContext.Provider value={{ language: 'en-US' }}>
-        <FileUploaderContext.Provider
-          value={{
-            uploadFile: uploadFileWithSizeLimit,
-            deleteFile: deleteFile,
-          }}
-        >
-          <Story />
-        </FileUploaderContext.Provider>
-      </StyrbordTranslationContext.Provider>
-    ),
-  ],
-  args: {
-    ...defaultProps,
-    label: 'Upload files',
-    description: 'Files that are larger than 10MB will be denied',
     files: [],
   },
 };

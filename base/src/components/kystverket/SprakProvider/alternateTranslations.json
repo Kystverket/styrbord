@@ -1,0 +1,12 @@
+{
+  "fileUploader": {
+    "buttonLabel": "📂",
+    "existingFiles": {
+      "buttonOpen": "📂",
+      "dialogTitle": "🚀",
+      "dialogCancel": "❌",
+      "dialogConfirm": "✅",
+      "noFilesAvailable": "😢"
+    }
+  }
+}
