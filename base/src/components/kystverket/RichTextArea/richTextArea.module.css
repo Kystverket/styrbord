@@ -80,3 +80,20 @@
 .error {
   padding-top: var(--ds-size-2);
 }
+
+h1 {
+  font-size: var(--ds-font-size-6);
+  font-weight: var(--ds-font-weight-medium);
+  color: var(--ds-color-neutral-text-default);
+}
+
+h2 {
+  font-size: var(--ds-font-size-5);
+  font-weight: var(--ds-font-weight-medium);
+  color: var(--ds-color-neutral-text-default);
+}
+
+p {
+  font-size: var(--ds-font-size-4);
+  color: var(--ds-color-neutral-text-default);
+}

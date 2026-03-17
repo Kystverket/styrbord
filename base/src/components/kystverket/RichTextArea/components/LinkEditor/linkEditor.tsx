@@ -15,16 +15,20 @@ type LinkEditorProps = {
 
 const LinkEditor = ({ href, open, hasSelection, onSave, onClose, anchorId, onRemove }: LinkEditorProps) => {
   const [value, setValue] = useState(href);
-  const [linkState, setLinkState] = useState<'empty' | 'open' | 'edit'>('empty');
+  const [linkState, setLinkState] = useState<'empty' | 'view' | 'edit'>('empty');
 
   useEffect(() => {
+    if (!open) {
+      return;
+    }
+
     setValue(href);
     if (href) {
-      setLinkState('open');
+      setLinkState('view');
     } else {
       setLinkState('empty');
     }
-  }, [href]);
+  }, [open, href]);
 
   const handleOpenLink = () => {
     const trimmed = value.trim();
@@ -40,19 +44,24 @@ const LinkEditor = ({ href, open, hasSelection, onSave, onClose, anchorId, onRem
       // Ignorer ugyldige URL-er
     }
   };
+  if (!hasSelection) {
+    return (
+      <Popover id={anchorId} open={open} onClose={onClose} data-color="info" variant="tinted">
+        <div className={styles.noSelection}>
+          <Icon material="info" />
+          Marker tekst for å legge til en lenke
+        </div>
+      </Popover>
+    );
+  }
 
   return (
     <Popover id={anchorId} data-color="neutral" open={open} onClose={onClose}>
-      {!hasSelection && (
-        <div className={styles.noSelection}>
-          <Icon material="warning" />
-          Marker tekst for å legge til en lenke
-        </div>
-      )}
       {linkState === 'empty' && hasSelection && (
         <div className={styles.container}>
           <Input
             value={value}
+            placeholder="Skriv eller lim inn lenke"
             onChange={(e) => setValue(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
@@ -66,7 +75,7 @@ const LinkEditor = ({ href, open, hasSelection, onSave, onClose, anchorId, onRem
           </Button>
         </div>
       )}
-      {linkState === 'open' && hasSelection && (
+      {linkState === 'view' && hasSelection && (
         <div className={styles.container}>
           <Button onClick={handleOpenLink} variant="ghost" color="primary">
             <Icon material="open_in_new" />

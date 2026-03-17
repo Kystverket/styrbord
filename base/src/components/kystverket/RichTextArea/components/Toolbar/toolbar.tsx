@@ -114,7 +114,6 @@ export const Toolbar = ({
           <option value="paragraph">Paragraph</option>
           <option value="h1">Heading 1</option>
           <option value="h2">Heading 2</option>
-          <option value="h3">Heading 3</option>
         </select>
       </div>
       <div className={styles.toolbarGroup}>

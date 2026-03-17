@@ -101,6 +101,42 @@ const RichTextAreaContainer = ({
                 window.open(normalizeHref(href), '_blank', 'noopener,noreferrer');
                 return true;
               },
+              keydown: (view, event) => {
+                if (event.key !== ' ' || event.ctrlKey || event.metaKey || event.altKey) {
+                  return false;
+                }
+
+                const { state } = view;
+                const { selection } = state;
+                const linkMarkType = state.schema.marks.link;
+
+                if (!linkMarkType || !selection.empty) {
+                  return false;
+                }
+
+                const { from, $from } = selection;
+                const nodeBefore = $from.nodeBefore;
+                const nodeAfter = $from.nodeAfter;
+
+                const linkInCursorMarks = linkMarkType.isInSet(state.storedMarks ?? $from.marks());
+                const linkOnNodeBefore = !!(nodeBefore?.isText && linkMarkType.isInSet(nodeBefore.marks));
+
+                if (!linkInCursorMarks && !linkOnNodeBefore) {
+                  return false;
+                }
+
+                if (nodeAfter?.isText && linkMarkType.isInSet(nodeAfter.marks)) {
+                  return false;
+                }
+
+                event.preventDefault();
+
+                const tr = state.tr.setStoredMarks([]).insertText(' ', from, from);
+
+                view.dispatch(tr);
+
+                return true;
+              },
             },
           }));
           ctx.get(listenerCtx).markdownUpdated((_ctx, markdown) => {
