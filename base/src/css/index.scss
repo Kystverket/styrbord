@@ -28,5 +28,11 @@
   @include meta.load-css('../components/designsystemet/Avatar/Avatar.override.scss');
   @include meta.load-css('../components/designsystemet/Dropdown/Dropdown.override.scss');
   @include meta.load-css('../components/kystverket/Datepicker/Datepicker.override.scss');
+}
+
+// Override popover max-width fra 300px til 400px for LinkEditor brukstilfelle
+// TODO: Vurder å flytte til en komponent-spesifikk override-fil hvis flere popover-tilpassinger trengs
+.ds-popover {
+  max-width: 400px;
   @include meta.load-css('../components/designsystemet/Dialog/Dialog.override.scss');
 }
