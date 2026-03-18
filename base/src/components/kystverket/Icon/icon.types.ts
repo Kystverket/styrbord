@@ -98,6 +98,13 @@ export const iconIdList = [
   'warning',
   'zoom_in_map',
   'zoom_out_map',
+  'format_italic',
+  'format_bold',
+  'format_list_bulleted',
+  'format_list_numbered',
+  'format_align_justify',
+  'undo',
+  'redo',
 ] as const;
 
 export type IconId = (typeof iconIdList)[number];
