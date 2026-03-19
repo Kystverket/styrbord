@@ -10,7 +10,7 @@ const meta = {
   argTypes: {
     markdown: { control: 'text' },
   },
-} satisfies Meta<typeof MarkDownToReact>;
+} satisfies Meta<typeof MarkdownToReact>;
 
 export default meta;
 
@@ -88,10 +88,10 @@ Denne komponenten lar deg **rendere markdown** som React-komponenter.
 ## Eksempel på kode
 
 \`\`\`typescript
-import MarkDownToReact from './markdownToReact';
+import MarkdownToReact from './markdownToReact';
 
 const App = () => (
-  <MarkDownToReact markdown="**Hei verden!**" />
+  <MarkdownToReact markdown="**Hei verden!**" />
 );
 \`\`\``,
   },
