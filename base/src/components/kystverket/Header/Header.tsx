@@ -4,7 +4,7 @@ import { ReactNode, useCallback, useRef, useState } from 'react';
 import { Divider, Label, Paragraph } from '@digdir/designsystemet-react';
 import { IconId } from '../Icon/icon.types';
 import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
-import { useStyrbordTranslation } from '~/i18n/translations';
+import { useTranslation } from '~/translations';
 
 export type HeaderLinkComponentProps = {
   className?: string;
@@ -101,7 +101,7 @@ export function Header({
   profile,
   linkComponent: LinkComponent = Link,
 }: HeaderProps) {
-  const { t } = useStyrbordTranslation();
+  const { t } = useTranslation();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);

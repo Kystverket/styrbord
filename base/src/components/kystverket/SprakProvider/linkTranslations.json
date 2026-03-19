@@ -1,0 +1,11 @@
+{
+  "specificForm": {
+    "fileUploader": {
+      "buttonLabel": "Hent fra maskin",
+      "existingFiles": {
+        "buttonOpen": "Hent fra sak",
+        "dialogTitle": "Vedleggsvelger"
+      }
+    }
+  }
+}

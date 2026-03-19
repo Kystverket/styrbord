@@ -1,0 +1,94 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.editorContainer {
+  position: relative;
+  border: 1px solid var(--ds-color-neutral-border-default);
+  border-top: none;
+  border-radius: 0 0 var(--ds-border-radius-md) var(--ds-border-radius-md);
+  background: var(--ds-color-neutral-background-default);
+  overflow: auto;
+  padding: 0.625rem 0.75rem;
+}
+
+.editorContainerDisabled {
+  background: var(--ds-color-neutral-background-subtle);
+  opacity: 0.8;
+}
+
+/* Basestil for Milkdown/ProseMirror-innhold */
+.editor :global(.milkdown),
+.editor :global(.ProseMirror) {
+  min-height: calc(10rem - 1.25rem);
+  outline: none;
+  font: inherit;
+  color: inherit;
+}
+
+.editor :global(.ProseMirror p) {
+  margin: 0 0 0.5rem;
+}
+
+.editor :global(.ProseMirror p:last-child) {
+  margin-bottom: 0;
+}
+
+.editor :global(.ProseMirror ul),
+.editor :global(.ProseMirror ol) {
+  margin: 0 0 0.5rem;
+  padding-inline-start: 1.5rem;
+}
+
+.editor :global(.ProseMirror ul) {
+  list-style: disc;
+}
+
+.editor :global(.ProseMirror ol) {
+  list-style: decimal;
+}
+
+.editor :global(.ProseMirror li + li) {
+  margin-top: 0.125rem;
+}
+
+.editor :global(.ProseMirror a) {
+  color: var(--ds-color-primary-text-default);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.editor :global(.ProseMirror a:hover) {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.editor :global(.ProseMirror a:focus-visible) {
+  outline: 2px solid var(--ds-color-focus-outer);
+  outline-offset: 2px;
+}
+
+.placeholder {
+  position: absolute;
+  inset: 0.625rem 0.75rem auto;
+  color: var(--ds-color-neutral-text-subtle);
+  pointer-events: none;
+}
+
+/* Feilmelding under editoren */
+.error {
+  padding-top: var(--ds-size-2);
+}
+
+h1 {
+  font-size: var(--ds-font-size-6);
+  font-weight: var(--ds-font-weight-medium);
+  color: var(--ds-color-neutral-text-default);
+}
+
+h2 {
+  font-size: var(--ds-font-size-5);
+  font-weight: var(--ds-font-weight-medium);
+  color: var(--ds-color-neutral-text-default);
+}

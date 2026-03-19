@@ -1,3 +1,4 @@
+// Basisstil for alle tab-knapper
 :is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) button {
   font-weight: 500;
   padding: 9px 3px 9px 3px;
@@ -9,6 +10,15 @@
   gap: 7px;
 }
 
+// Aktiv tab - tekstfarge på den valgte taben
+:is(
+  :is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) > [role='tab'][aria-selected='true'],
+  :is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) > u-tab[aria-selected='true']
+) {
+  color: var(--ds-color-primary-text-default);
+}
+
+// Aktiv tab - understreken (::after) på den valgte taben
 :is(
   :is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) > [role='tab'][aria-selected='true'],
   :is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) > u-tab[aria-selected='true']
@@ -17,14 +27,16 @@
   transform: translateY(1px);
 }
 
+// Hover på inaktiv tab - viser en understrek ved hover
 :is(
   :is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) > [role='tab']:hover:not([aria-selected='true']),
   :is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) > u-tab:hover:not([aria-selected='true'])
 ):after {
-  background: var(--color-neutral-surface-hover);
+  background: var(--ds-color-neutral-border-subtle);
   transform: translateY(1px);
 }
 
+// Tab-listen (container) - tillater overflow slik at understrek ikke klippes
 :is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) {
   overflow: initial !important;
 }
