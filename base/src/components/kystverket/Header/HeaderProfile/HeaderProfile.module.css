@@ -7,7 +7,8 @@
   /* ========================= */
 
   /* logic: align profile menu to button first, then to header when small*/
-  .relativeUntilMobile {
+
+  .profileRoot {
     position: relative;
 
     @container header (width < 37.5rem) {
@@ -21,7 +22,7 @@
     }
   }
 
-  .profileButtonTabletAndSmaller {
+  .profileButtonCompact {
     display: none;
     @container header (width < 64rem) {
       display: flex;
@@ -52,18 +53,18 @@
     }
   }
 
-  .profileContainer {
+  .profileMenuHeader {
     flex-grow: 1;
     padding: var(--ds-size-3) var(--ds-size-4);
     gap: 0.5rem;
   }
 
-  .profileMenuName {
+  .profileDisplayName {
     margin-top: 0.125rem;
     font-weight: var(--ds-font-weight-medium);
   }
 
-  .profileMenuDepartment {
+  .profileDepartment {
     color: var(--ds-color-neutral-text-subtle);
     font-size: var(--ds-font-size-3);
   }
@@ -82,12 +83,12 @@
     }
   }
 
-  .profileTextContainer {
+  .profileMeta {
     flex: 1;
     min-width: 0;
   }
 
-  .profileLogOutButton {
+  .profileLogoutButton {
     display: flex;
     flex: 1;
     align-items: center;
@@ -97,7 +98,7 @@
     text-transform: none;
   }
 
-  .EllipsisOnOverflow {
+  .truncateOverflow {
     min-width: 0;
     max-width: 100%;
     overflow: hidden;

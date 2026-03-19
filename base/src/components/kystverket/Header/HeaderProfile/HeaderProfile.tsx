@@ -21,7 +21,7 @@ export function HeaderProfile({
   useOnClickOutsideAndEscape(profileRef, closeProfile);
 
   return (
-    <div className={classes.relativeUntilMobile} ref={profileRef}>
+    <div className={classes.profileRoot} ref={profileRef}>
       <Button variant="ghost" onClick={toggleProfileOpen} className={`${classes.profileButtonDesktop}`}>
         <Avatar
           aria-label={`${profile.name} profile picture`}
@@ -34,7 +34,7 @@ export function HeaderProfile({
         </Paragraph>
         <Icon material={isProfileOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down'} />
       </Button>
-      <Button onClick={toggleProfileOpen} variant="ghost" className={`${classes.profileButtonTabletAndSmaller} `}>
+      <Button onClick={toggleProfileOpen} variant="ghost" className={`${classes.profileButtonCompact} `}>
         <Icon material="person" />
         Profil
       </Button>
@@ -42,18 +42,18 @@ export function HeaderProfile({
       {/* Profile Menu */}
       {isProfileOpen && (
         <Box className={classes.profileMenu}>
-          <Box horizontal className={classes.profileContainer}>
+          <Box horizontal className={classes.profileMenuHeader}>
             <Avatar
               aria-label={`${profile.name} profile picture`}
               data-color={'primary'}
               data-size="2xs"
               initials={profile.initials}
             />
-            <Box className={classes.profileTextContainer}>
-              <Paragraph className={`${classes.profileMenuName} ${classes.EllipsisOnOverflow}`}>
+            <Box className={classes.profileMeta}>
+              <Paragraph className={`${classes.profileDisplayName} ${classes.truncateOverflow}`}>
                 {profile.name}
               </Paragraph>
-              <Paragraph className={`${classes.profileMenuDepartment} ${classes.EllipsisOnOverflow}`}>
+              <Paragraph className={`${classes.profileDepartment} ${classes.truncateOverflow}`}>
                 {profile.department}
               </Paragraph>
             </Box>
@@ -74,7 +74,7 @@ export function HeaderProfile({
             ))}
           {profile?.links && <Divider />}
           {/* End of Profile links */}
-          <Button variant="ghost" onClick={() => profile.logoutHandler()} className={`${classes.profileLogOutButton}`}>
+          <Button variant="ghost" onClick={() => profile.logoutHandler()} className={`${classes.profileLogoutButton}`}>
             <Icon material="logout" />
             Logg ut
           </Button>

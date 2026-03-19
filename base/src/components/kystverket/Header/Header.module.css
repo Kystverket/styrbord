@@ -70,7 +70,7 @@
     gap: var(--spacing-16);
   }
 
-  .headerButton {
+  .navLinkButton {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -101,7 +101,7 @@
     }
   }
 
-  .menuButton {
+  .mobileMenuToggle {
     display: none;
     flex-direction: column;
     padding: var(--ds-size-3) var(--ds-size-4);
@@ -111,7 +111,7 @@
     }
   }
 
-  .menuContainerButton {
+  .mobileMenuItem {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -130,7 +130,7 @@
     }
   }
 
-  .menuDropdown {
+  .mobileMenuDropdown {
     display: none;
     z-index: 999;
     position: absolute;

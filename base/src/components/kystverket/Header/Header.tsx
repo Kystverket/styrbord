@@ -139,12 +139,12 @@ export function Header({
           {links && (
             <>
               {links.map((link, index) => (
-                <LinkComponent key={index} href={link.url} className={`${classes.headerButton}`}>
+                <LinkComponent key={index} href={link.url} className={classes.navLinkButton}>
                   <Icon material={link.icon} />
                   <Paragraph>{link.label}</Paragraph>
                 </LinkComponent>
               ))}
-              <Button onClick={toggleMenuOpen} variant="ghost" className={` ${classes.menuButton}`}>
+              <Button onClick={toggleMenuOpen} variant="ghost" className={classes.mobileMenuToggle}>
                 <Icon material="menu"></Icon>
                 Meny
               </Button>
@@ -166,10 +166,10 @@ export function Header({
       <Box className={classes.buttonsContainer}>
         {/*Logic: Hamburger menu for the links when header width is down to phone-size*/}
         {links && isMenuOpen && (
-          <Box justify="start" className={`${classes.menuDropdown} ${classes.disappearAbovePhone}`}>
+          <Box justify="start" className={`${classes.mobileMenuDropdown}`}>
             {links.map((link, index) => (
               <Button variant="ghost" asChild>
-                <LinkComponent key={index} href={link.url} className={`${classes.menuContainerButton}`}>
+                <LinkComponent key={index} href={link.url} className={classes.mobileMenuItem}>
                   <Icon material={link.icon} />
                   {link.label}
                 </LinkComponent>
