@@ -1,10 +1,10 @@
-import { Avatar, Box, Button, Icon, Link, Logo, LogoVariant } from '~/main';
+import { Box, Button, Icon, Link, Logo, LogoVariant } from '~/main';
 import classes from './Header.module.css';
-import { ReactNode, useCallback, useRef, useState } from 'react';
-import { Divider, Label, Paragraph } from '@digdir/designsystemet-react';
+import { ReactNode, useCallback, useState } from 'react';
+import { Label, Paragraph } from '@digdir/designsystemet-react';
 import { IconId } from '../Icon/icon.types';
-import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
 import { useTranslation } from '~/translations';
+import { HeaderProfile } from '~/components/kystverket/Header/HeaderProfile/HeaderProfile';
 
 export type HeaderLinkComponentProps = {
   className?: string;
@@ -105,7 +105,6 @@ export function Header({
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const profileRef = useRef<HTMLDivElement>(null);
 
   const toggleMenuOpen = useCallback(() => {
     setIsMenuOpen((prev) => {
@@ -121,9 +120,7 @@ export function Header({
     });
   }, [setIsProfileOpen, setIsMenuOpen]);
 
-  const closeProfile = () => setIsProfileOpen(false);
-
-  useOnClickOutsideAndEscape(profileRef, closeProfile);
+  const closeProfile = useCallback(() => setIsProfileOpen(false), []);
 
   return (
     <Box horizontal justify="center" align="center" className={classes.headerContainer}>
@@ -142,98 +139,27 @@ export function Header({
           {links && (
             <>
               {links.map((link, index) => (
-                <LinkComponent
-                  key={index}
-                  href={link.url}
-                  className={`${classes.headerButton} ${classes.disappearBelowPhone}`}
-                >
+                <LinkComponent key={index} href={link.url} className={`${classes.headerButton}`}>
                   <Icon material={link.icon} />
                   <Paragraph>{link.label}</Paragraph>
                 </LinkComponent>
               ))}
-              <Button
-                onClick={toggleMenuOpen}
-                variant="ghost"
-                className={`${classes.disappearAbovePhone} ${classes.headerButton}`}
-              >
+              <Button onClick={toggleMenuOpen} variant="ghost" className={` ${classes.menuButton}`}>
                 <Icon material="menu"></Icon>
                 Meny
               </Button>
             </>
           )}
           {/* End of Links */}
-          {/* Profile */}
-          {profile?.name && (
-            <div className={classes.relativeUntilMobile} ref={profileRef}>
-              <Button variant="ghost" onClick={toggleProfileOpen} className={`${classes.headerButton}`}>
-                <Avatar
-                  className={classes.avatarShowOnWideHeader}
-                  aria-label={`${profile.name} profile picture`}
-                  data-color={'primary'}
-                  data-size="2xs"
-                  initials={profile.initials}
-                />
-                <Avatar
-                  className={classes.avatarShowOnSmallHeader}
-                  aria-label={`${profile.name} profile picture`}
-                  data-color={'primary'}
-                  data-size="3xs"
-                  initials={profile.initials}
-                />
-                <Paragraph className={classes.profileName}>
-                  <span className={classes.disappearBelowTablet}>{profile.name}</span>
-                  <span className={classes.profileNameShort}>{profile.name?.split(' ')[0]}</span>
-                </Paragraph>
-                <Icon
-                  material={isProfileOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}
-                  className={classes.disappearBelowTablet}
-                />
-              </Button>
-              {/* Profile Menu */}
-              {isProfileOpen && (
-                <Box className={classes.profileMenu}>
-                  <Box horizontal className={classes.profileContainer}>
-                    <Avatar
-                      aria-label={`${profile.name} profile picture`}
-                      data-color={'primary'}
-                      data-size="2xs"
-                      initials={profile.initials}
-                    />
-                    <Box className={classes.profileTextContainer}>
-                      <Paragraph className={`${classes.profileMenuName} ${classes.EllipsisOnOverflow}`}>
-                        {profile.name}
-                      </Paragraph>
-                      <Paragraph className={`${classes.profileMenuDepartment} ${classes.EllipsisOnOverflow}`}>
-                        {profile.department}
-                      </Paragraph>
-                    </Box>
-                  </Box>
-                  <Divider />
-                  {/* Profile links */}
-                  {profile?.links &&
-                    profile?.links.map((link, index) => (
-                      <LinkComponent
-                        key={index}
-                        href={link.url}
-                        className={`${classes.headerButton} ${classes.disappearBelowPhone}`}
-                        onClick={closeProfile}
-                      >
-                        <Icon material={link.icon} />
-                        <Paragraph>{link.label}</Paragraph>
-                      </LinkComponent>
-                    ))}
-                  {profile?.links && <Divider />}
-                  {/* End of Profile links */}
-                  <Button onClick={() => profile.logoutHandler()} className={`${classes.profileLogOutButton}`}>
-                    <Icon material="logout" />
-                    Logg ut
-                  </Button>
-                </Box>
-              )}
-              {/*End Of Profile Menu */}
-            </div>
+          {!!profile && (
+            <HeaderProfile
+              profile={profile}
+              isProfileOpen={isProfileOpen}
+              toggleProfileOpen={toggleProfileOpen}
+              closeProfile={closeProfile}
+              linkComponent={LinkComponent}
+            />
           )}
-          {/*End Of Profile */}
         </Box>
       </Box>
 
@@ -242,10 +168,12 @@ export function Header({
         {links && isMenuOpen && (
           <Box justify="start" className={`${classes.menuDropdown} ${classes.disappearAbovePhone}`}>
             {links.map((link, index) => (
-              <LinkComponent key={index} href={link.url} className={`${classes.menuButton}`}>
-                <Icon material={link.icon} />
-                {link.label}
-              </LinkComponent>
+              <Button variant="ghost" asChild>
+                <LinkComponent key={index} href={link.url} className={`${classes.menuContainerButton}`}>
+                  <Icon material={link.icon} />
+                  {link.label}
+                </LinkComponent>
+              </Button>
             ))}
           </Box>
         )}

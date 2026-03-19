@@ -1,0 +1,133 @@
+@layer styrbord-modules {
+  /* 64rem (1024px): upwards tablet */
+  /* 37.5rem (600px): upwards phone */
+
+  /* ========================= */
+  /* Avatar & Profile          */
+  /* ========================= */
+
+  /* logic: align profile menu to button first, then to header when small*/
+  .relativeUntilMobile {
+    position: relative;
+
+    @container header (width < 37.5rem) {
+      position: revert;
+    }
+  }
+
+  .profileButtonDesktop {
+    @container header (width < 64rem) {
+      display: none;
+    }
+  }
+
+  .profileButtonTabletAndSmaller {
+    display: none;
+    @container header (width < 64rem) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .profileMenu {
+    z-index: 999;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 15.625rem;
+    padding: var(--ds-size-3) var(--ds-size-2);
+    border-radius: var(--ds-border-radius-default);
+    background-color: white;
+    box-shadow:
+      0 0 1px 0 rgba(0, 0, 0, 0.14),
+      0 2px 4px 0 rgba(0, 0, 0, 0.12),
+      0 4px 8px 0 rgba(0, 0, 0, 0.12);
+    font-weight: var(--ds-font-weight-medium);
+    opacity: 1;
+
+    @container header (width < 37.5rem) {
+      width: 100%;
+      border-top: 1px solid var(--ds-color-neutral-surface-hover);
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12);
+    }
+  }
+
+  .profileContainer {
+    flex-grow: 1;
+    padding: var(--ds-size-3) var(--ds-size-4);
+    gap: 0.5rem;
+  }
+
+  .profileMenuName {
+    margin-top: 0.125rem;
+    font-weight: var(--ds-font-weight-medium);
+  }
+
+  .profileMenuDepartment {
+    color: var(--ds-color-neutral-text-subtle);
+    font-size: var(--ds-font-size-3);
+  }
+
+  .profileName {
+    color: var(--ds-color-primary-text-default);
+    font-weight: var(--ds-font-weight-medium);
+    text-align: center;
+  }
+
+  .profileNameShort {
+    display: none;
+
+    @container header (width < 64rem) {
+      display: block;
+    }
+  }
+
+  .profileTextContainer {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .profileLogOutButton {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: flex-start;
+    border: none;
+    border-radius: var(--ds-border-radius-md);
+    text-transform: none;
+  }
+
+  .EllipsisOnOverflow {
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* ========================= */
+  /* Buttons                   */
+  /* ========================= */
+
+  .profileMenuButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: var(--ds-size-3) var(--ds-size-4);
+    gap: var(--ds-size-2);
+    border-radius: var(--ds-border-radius-md);
+    color: var(--ds-color-text-default);
+    font-weight: var(--ds-font-weight-medium);
+    text-decoration: none;
+    text-transform: none;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: var(--ds-color-surface-hover);
+    }
+    &:active {
+      background-color: var(--ds-color-surface-active);
+    }
+  }
+}
