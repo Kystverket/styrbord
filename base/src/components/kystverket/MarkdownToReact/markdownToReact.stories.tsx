@@ -18,7 +18,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    markdown: '**MarkdownToReact** støtter vanlig markdown-syntaks.',
+    markdown: '**MarkdownToReact** er en komponent som lar deg rendere markdown som React-komponenter.',
   },
 };
 
@@ -43,8 +43,6 @@ export const Lists: Story = {
     markdown: `## Uordnet liste
 * Første element
 * Andre element
-  * Nestet element
-  * Enda et nestet element
 * Tredje element
 
 ## Ordnet liste

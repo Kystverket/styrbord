@@ -16,3 +16,13 @@
 .markdownToReact li > ol {
   margin-top: 0.25rem;
 }
+
+.heading1 {
+  font-size: var(--ds-font-size-6);
+  font-weight: var(--ds-font-weight-medium);
+}
+
+.heading2 {
+  font-size: var(--ds-font-size-5);
+  font-weight: var(--ds-font-weight-medium);
+}
