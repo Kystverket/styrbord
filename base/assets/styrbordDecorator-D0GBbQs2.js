@@ -1,1 +1,0 @@
-import{j as r}from"./jsx-runtime-D_zvdyIk.js";import"./iframe-CHebWKUH.js";import{S as s,a,b as e}from"./translations-Bf8d8dsQ.js";const t=o=>r.jsx("div",{children:r.jsx(s,{locale:"nb-NO",defaultNamespace:a,children:r.jsx(e,{children:r.jsx(o,{})})})});t.__docgenInfo={description:"",methods:[],displayName:"StyrbordDecorator"};export{t as S};
