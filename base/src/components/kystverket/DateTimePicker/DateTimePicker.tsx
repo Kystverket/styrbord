@@ -24,6 +24,7 @@ export interface DateTimePickerProps {
   showCalendarIcon?: boolean;
   minDate?: Date; // Minimum selectable date. Dates before this will be greyed out and non-selectable.
   maxDate?: Date; // Maximum selectable date. Dates after this will be greyed out and non-selectable.
+  disabled?: boolean; // Disable the datepicker
 }
 
 const CustomInput = (props: HTMLProps<HTMLInputElement> & { showCalendarIcon: boolean }) => {
@@ -67,6 +68,7 @@ export const DateTimePicker = ({
         showTimeInput
         showYearDropdown={showYearDropdown}
         showMonthDropdown={showMonthDropdown}
+        disabled={props.disabled}
         dropdownMode="select"
         placeholderText="dd.mm.åååå, tt:mm"
         timeInputLabel={timeInputLabel}

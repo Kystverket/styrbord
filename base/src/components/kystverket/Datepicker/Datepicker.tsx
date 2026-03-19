@@ -25,6 +25,7 @@ export interface DatepickerProps {
   maxDate?: Date; // Maximum selectable date. Dates after this will be greyed out and non-selectable.
   popperPlacement?: 'top' | 'bottom' | 'left' | 'right'; // Controls where the calendar popup appears
   withPortal?: boolean; // Use portal for calendar popup (good for dialogs and mobile)
+  disabled?: boolean; // Disable the datepicker
 }
 
 const CustomInput = (props: HTMLProps<HTMLInputElement> & { showCalendarIcon: boolean }) => {
@@ -84,6 +85,7 @@ export const Datepicker = ({
         customInput={createElement(CustomInput, { showCalendarIcon })}
         minDate={minDate}
         maxDate={maxDate}
+        disabled={props.disabled}
         dropdownMode="select"
         showYearDropdown={showYearDropdown}
         showMonthDropdown={showMonthDropdown}
