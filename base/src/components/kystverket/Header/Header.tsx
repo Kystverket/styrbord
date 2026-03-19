@@ -168,8 +168,8 @@ export function Header({
         {links && isMenuOpen && (
           <Box justify="start" className={`${classes.mobileMenuDropdown}`}>
             {links.map((link, index) => (
-              <Button variant="ghost" asChild>
-                <LinkComponent key={index} href={link.url} className={classes.mobileMenuItem}>
+              <Button key={index} variant="ghost" asChild>
+                <LinkComponent href={link.url} className={classes.mobileMenuItem}>
                   <Icon material={link.icon} />
                   {link.label}
                 </LinkComponent>

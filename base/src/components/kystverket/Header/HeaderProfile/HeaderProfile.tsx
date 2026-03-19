@@ -22,13 +22,13 @@ export function HeaderProfile({
 
   return (
     <div className={classes.profileRoot} ref={profileRef}>
-      <Button variant="ghost" onClick={toggleProfileOpen} className={`${classes.profileButtonDesktop}`}>
-        <Avatar
-          aria-label={`${profile.name} profile picture`}
-          data-color={'primary'}
-          data-size="2xs"
-          initials={profile.initials}
-        />
+      <Button
+        aria-label={isProfileOpen ? 'Close profile menu' : 'Open profile menu'}
+        variant="ghost"
+        onClick={toggleProfileOpen}
+        className={`${classes.profileButtonDesktop}`}
+      >
+        <Avatar aria-hidden data-color={'primary'} data-size="2xs" initials={profile.initials} />
         <Paragraph className={classes.profileName}>
           <span>{profile.name}</span>
         </Paragraph>
@@ -66,7 +66,7 @@ export function HeaderProfile({
                 key={index}
                 href={link.url}
                 className={`${classes.profileMenuButton}`}
-                onClick={toggleProfileOpen}
+                onClick={closeProfile}
               >
                 <Icon material={link.icon} />
                 <Paragraph>{link.label}</Paragraph>
