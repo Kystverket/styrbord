@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import MarkDownToReact from './markdownToReact';
+import MarkdownToReact from './markdownToReact';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
   title: 'Components/MarkdownToReact',
-  component: MarkDownToReact,
+  component: MarkdownToReact,
   decorators: [StyrbordDecorator],
   tags: ['autodocs'],
   argTypes: {

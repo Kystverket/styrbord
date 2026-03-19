@@ -1,12 +1,12 @@
 import ReactMarkdown from 'react-markdown';
 import styles from './markdownToReact.module.css';
 import { Link, Paragraph } from '~/main';
-export type MarkDownToReactProps = {
+export type MarkdownToReactProps = {
   markdown: string;
 };
 
 // Overskrifter (h1-h6) rendres som <Paragraph> med tanke på dokumenthierarki (enn så lenge, dette må vi komme tilbake til etter hvert)
-const MarkDownToReact = ({ markdown }: MarkDownToReactProps) => {
+const MarkdownToReact = ({ markdown }: MarkdownToReactProps) => {
   return (
     <div className={styles.markdownToReact}>
       <ReactMarkdown
@@ -18,9 +18,9 @@ const MarkDownToReact = ({ markdown }: MarkDownToReactProps) => {
           h5: ({ children }) => <Paragraph>{children}</Paragraph>,
           h6: ({ children }) => <Paragraph>{children}</Paragraph>,
           p: ({ children }) => <Paragraph>{children}</Paragraph>,
-          li: ({ children }) => <li className={styles.li}>{children}</li>,
-          ul: ({ children }) => <ul className={styles.ul}>{children}</ul>,
-          ol: ({ children }) => <ol className={styles.ol}>{children}</ol>,
+          li: ({ children }) => <li>{children}</li>,
+          ul: ({ children }) => <ul>{children}</ul>,
+          ol: ({ children }) => <ol>{children}</ol>,
 
           a: ({ href, children }) => (
             <Link data-color="accent" href={href}>
@@ -34,4 +34,4 @@ const MarkDownToReact = ({ markdown }: MarkDownToReactProps) => {
     </div>
   );
 };
-export default MarkDownToReact;
+export default MarkdownToReact;
