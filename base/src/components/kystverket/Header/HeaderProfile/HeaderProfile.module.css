@@ -39,10 +39,7 @@
     padding: var(--ds-size-3) var(--ds-size-2);
     border-radius: var(--ds-border-radius-default);
     background-color: white;
-    box-shadow:
-      0 0 1px 0 rgba(0, 0, 0, 0.14),
-      0 2px 4px 0 rgba(0, 0, 0, 0.12),
-      0 4px 8px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: var(--ds-shadow-lg);
     font-weight: var(--ds-font-weight-medium);
     opacity: 1;
 
