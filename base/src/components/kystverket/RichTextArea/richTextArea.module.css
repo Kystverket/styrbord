@@ -95,14 +95,23 @@
   padding-top: var(--ds-size-2);
 }
 
-h1 {
+.editor :global(.ProseMirror h1) {
   font-size: var(--ds-font-size-6);
   font-weight: var(--ds-font-weight-medium);
   color: var(--ds-color-neutral-text-default);
 }
 
-h2 {
+.editor :global(.ProseMirror h2) {
   font-size: var(--ds-font-size-5);
   font-weight: var(--ds-font-weight-medium);
+  color: var(--ds-color-neutral-text-default);
+}
+
+.editor :global(.ProseMirror h3),
+.editor :global(.ProseMirror h4),
+.editor :global(.ProseMirror h5),
+.editor :global(.ProseMirror h6) {
+  font-size: var(--ds-font-size-4);
+  font-weight: var(--ds-font-weight-regular);
   color: var(--ds-color-neutral-text-default);
 }
