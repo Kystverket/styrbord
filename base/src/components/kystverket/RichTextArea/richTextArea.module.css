@@ -1,13 +1,27 @@
-.wrapper {
+.editorWrapper {
   display: flex;
   flex-direction: column;
+  border: 1px solid var(--ds-color-neutral-border-default);
+  border-radius: var(--ds-border-radius-md);
+  overflow: hidden;
+}
+
+.editorWrapperError {
+  border-color: var(--ds-color-danger-border-default);
+}
+
+.editorWrapper:not(.editorWrapperDisabled):hover:not(:focus-within) {
+  outline: 1px solid var(--ds-color-neutral-border-default);
+}
+
+.editorWrapper:focus-within {
+  outline: 3px solid var(--ds-color-focus-outer);
+  outline-offset: 3px;
 }
 
 .editorContainer {
   position: relative;
-  border: 1px solid var(--ds-color-neutral-border-default);
-  border-top: none;
-  border-radius: 0 0 var(--ds-border-radius-md) var(--ds-border-radius-md);
+  border: 0;
   background: var(--ds-color-neutral-background-default);
   overflow: auto;
   padding: 0.625rem 0.75rem;
