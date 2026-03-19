@@ -44,13 +44,13 @@
     line-height: 0;
     text-decoration: none !important;
 
+    &:active {
+      background-color: inherit;
+    }
+
     @container header (width < 37.5rem) {
       margin-top: 10px;
     }
-  }
-
-  .logoLink:active {
-    background-color: inherit;
   }
 
   .titleText {
