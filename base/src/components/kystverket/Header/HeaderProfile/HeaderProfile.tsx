@@ -53,9 +53,11 @@ export function HeaderProfile({
               <Paragraph className={`${classes.profileDisplayName} ${classes.truncateOverflow}`}>
                 {profile.name}
               </Paragraph>
-              <Paragraph className={`${classes.profileDepartment} ${classes.truncateOverflow}`}>
-                {profile.department}
-              </Paragraph>
+              {profile.department && (
+                <Paragraph className={`${classes.profileDepartment} ${classes.truncateOverflow}`}>
+                  {profile.department}
+                </Paragraph>
+              )}
             </Box>
           </Box>
           <Divider />

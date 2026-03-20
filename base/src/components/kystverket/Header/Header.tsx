@@ -64,7 +64,7 @@ export interface HeaderProps {
     /**
      * department
      */
-    department: string;
+    department?: string;
     /**
      * initials. Keep it to `2` characters
      */
@@ -151,7 +151,10 @@ export function Header({
             </>
           )}
           {/* End of Links */}
-          {!!profile && (
+          {/* Logic: checks name because component 
+          can in theory be rendered without name and with profile, 
+          and it looks weird without name and initials */}
+          {!!profile?.name && (
             <HeaderProfile
               profile={profile}
               isProfileOpen={isProfileOpen}
