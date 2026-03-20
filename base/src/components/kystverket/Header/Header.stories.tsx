@@ -122,7 +122,7 @@ export const medProfilLenker: Story = {
     ...defaultProps,
     profile: {
       name: 'Ola Nordmann',
-      department: 'Hav- og kystforvaltning',
+      // department: 'Hav- og kystforvaltning',
       logoutHandler: () => alert('Logger ut'),
       initials: 'ON',
       links: [
