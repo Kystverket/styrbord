@@ -34,7 +34,13 @@ export default defineConfig({
       name: 'Styrbord',
     },
     rollupOptions: {
-      external: ['react', 'react-dom', '@digdir/designsystemet-react', '@kystverket/sprak-react', new RegExp('.*storybook.*')],
+      external: [
+        'react',
+        'react-dom',
+        '@digdir/designsystemet-react',
+        '@kystverket/sprak-react',
+        new RegExp('.*storybook.*'),
+      ],
       output: {
         // Provide global variables to use in the UMD build
         // for externalized deps
