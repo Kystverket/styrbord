@@ -1,6 +1,6 @@
 {
   "name": "@kystverket/styrbord",
-  "version": "1.4.10",
+  "version": "1.4.12",
   "description": "",
   "type": "module",
   "repository": {
@@ -55,5 +55,8 @@
     "react-dom": "^19.0.0",
     "react-markdown": "^10.1.0",
     "uuid": "^11.1.0"
+  },
+  "peerDependencies": {
+    "@kystverket/sprak-react": "^0.0.14"
   }
 }

@@ -31,7 +31,7 @@ import { useRichTextToolbarState } from './hooks/useRichTextToolbarState';
 import { useRichTextLinkEditor } from './hooks/useRichTextLinkEditor';
 
 export type RichTextAreaProps = {
-  value: string;
+  value: string | null | undefined;
   onChange: (markdown: string) => void;
   placeholder?: string;
   disabled?: boolean;
@@ -56,8 +56,9 @@ const RichTextAreaContainer = ({
   required = false,
   error,
 }: RichTextAreaProps) => {
+  const normalizedValue = value ?? '';
   const latestOnChangeRef = useRef(onChange);
-  const lastKnownMarkdownRef = useRef(value);
+  const lastKnownMarkdownRef = useRef(normalizedValue);
 
   const { toolbarState, updateToolbarState } = useRichTextToolbarState();
 
@@ -72,7 +73,7 @@ const RichTextAreaContainer = ({
 
         .config((ctx) => {
           ctx.set(rootCtx, root);
-          ctx.set(defaultValueCtx, value);
+          ctx.set(defaultValueCtx, normalizedValue);
           ctx.update(editorViewOptionsCtx, (prev = {}) => ({
             ...prev,
             editable: () => !disabled,
@@ -84,7 +85,6 @@ const RichTextAreaContainer = ({
                 if (!(target instanceof HTMLElement)) {
                   return false;
                 }
-
                 const anchor = target.closest('a[href]');
 
                 if (!anchor) {
@@ -166,7 +166,7 @@ const RichTextAreaContainer = ({
       return;
     }
 
-    if (value === lastKnownMarkdownRef.current) {
+    if (normalizedValue === lastKnownMarkdownRef.current) {
       return;
     }
 
@@ -180,9 +180,9 @@ const RichTextAreaContainer = ({
       return;
     }
 
-    lastKnownMarkdownRef.current = value;
-    editor.action(replaceAll(value));
-  }, [get, value]);
+    lastKnownMarkdownRef.current = normalizedValue;
+    editor.action(replaceAll(normalizedValue));
+  }, [get, normalizedValue]);
 
   // Sett knappestatus når editoren er tilgjengelig.
   useEffect(() => {
@@ -262,7 +262,7 @@ const RichTextAreaContainer = ({
     }
   };
 
-  const showPlaceholder = !value && Boolean(placeholder);
+  const showPlaceholder = !normalizedValue && Boolean(placeholder);
 
   return (
     <Fieldset>
@@ -273,59 +273,69 @@ const RichTextAreaContainer = ({
       )}
       {description && <Fieldset.Description>{description}</Fieldset.Description>}
 
-      <div className={classes.wrapper}>
-        <Toolbar
-          disabled={disabled || loading}
-          isBoldActive={toolbarState.isBoldActive}
-          isItalicActive={toolbarState.isItalicActive}
-          isBulletListActive={toolbarState.isBulletListActive}
-          isOrderedListActive={toolbarState.isOrderedListActive}
-          selectedFormat={toolbarState.selectedFormat}
-          isLinkActive={toolbarState.isLinkActive}
-          onBold={() => runCommand(toggleStrongCommand)}
-          onItalic={() => runCommand(toggleEmphasisCommand)}
-          onUndo={() => runCommand(undoCommand)}
-          onRedo={() => runCommand(redoCommand)}
-          onLink={openLinkEditor}
-          linkPopoverTarget={linkEditorAnchorId}
-          onBulletList={() =>
-            toggleList({
-              isTargetListActive: toolbarState.isBulletListActive,
-              isOtherListActive: toolbarState.isOrderedListActive,
-              wrapCommand: wrapInBulletListCommand,
-            })
-          }
-          onOrderedList={() =>
-            toggleList({
-              isTargetListActive: toolbarState.isOrderedListActive,
-              isOtherListActive: toolbarState.isBulletListActive,
-              wrapCommand: wrapInOrderedListCommand,
-            })
-          }
-          onFormatChange={handleFormatChange}
-        />
-
+      <div>
         <div
-          className={[classes.editorContainer, disabled && classes.editorContainerDisabled].filter(Boolean).join(' ')}
+          className={[
+            classes.editorWrapper,
+            error && classes.editorWrapperError,
+            disabled && classes.editorWrapperDisabled,
+          ]
+            .filter(Boolean)
+            .join(' ')}
         >
-          {showPlaceholder ? (
-            <span className={classes.placeholder} aria-hidden="true">
-              {placeholder}
-            </span>
-          ) : null}
-          <div className={classes.editor}>
-            <Milkdown />
+          <Toolbar
+            disabled={disabled || loading}
+            isBoldActive={toolbarState.isBoldActive}
+            isItalicActive={toolbarState.isItalicActive}
+            isBulletListActive={toolbarState.isBulletListActive}
+            isOrderedListActive={toolbarState.isOrderedListActive}
+            selectedFormat={toolbarState.selectedFormat}
+            isLinkActive={toolbarState.isLinkActive}
+            onBold={() => runCommand(toggleStrongCommand)}
+            onItalic={() => runCommand(toggleEmphasisCommand)}
+            onUndo={() => runCommand(undoCommand)}
+            onRedo={() => runCommand(redoCommand)}
+            onLink={openLinkEditor}
+            linkPopoverTarget={linkEditorAnchorId}
+            onBulletList={() =>
+              toggleList({
+                isTargetListActive: toolbarState.isBulletListActive,
+                isOtherListActive: toolbarState.isOrderedListActive,
+                wrapCommand: wrapInBulletListCommand,
+              })
+            }
+            onOrderedList={() =>
+              toggleList({
+                isTargetListActive: toolbarState.isOrderedListActive,
+                isOtherListActive: toolbarState.isBulletListActive,
+                wrapCommand: wrapInOrderedListCommand,
+              })
+            }
+            onFormatChange={handleFormatChange}
+          />
+
+          <div
+            className={[classes.editorContainer, disabled && classes.editorContainerDisabled].filter(Boolean).join(' ')}
+          >
+            {showPlaceholder ? (
+              <span className={classes.placeholder} aria-hidden="true">
+                {placeholder}
+              </span>
+            ) : null}
+            <div className={classes.editor}>
+              <Milkdown />
+            </div>
           </div>
+          <LinkEditor
+            open={linkEditorOpen}
+            anchorId={linkEditorAnchorId}
+            href={linkEditorState?.href ?? ''}
+            hasSelection={linkEditorState?.hasSelection ?? false}
+            onSave={handleLinkSave}
+            onRemove={handleLinkRemove}
+            onClose={closeLinkEditor}
+          />
         </div>
-        <LinkEditor
-          open={linkEditorOpen}
-          anchorId={linkEditorAnchorId}
-          href={linkEditorState?.href ?? ''}
-          hasSelection={linkEditorState?.hasSelection ?? false}
-          onSave={handleLinkSave}
-          onRemove={handleLinkRemove}
-          onClose={closeLinkEditor}
-        />
         {error && <ValidationMessage className={classes.error}>{error}</ValidationMessage>}
       </div>
     </Fieldset>

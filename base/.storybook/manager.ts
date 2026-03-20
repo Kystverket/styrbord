@@ -37,7 +37,7 @@ addons.setConfig({
         fgColor: '#800000',
       },
       display: {
-        sidebar: ['component'],
+        sidebar: ['component', 'group'],
         toolbar: false,
       },
     },
