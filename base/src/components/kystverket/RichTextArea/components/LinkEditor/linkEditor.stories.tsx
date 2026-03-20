@@ -9,7 +9,7 @@ const meta = {
   title: 'Form/RichTextArea/LinkEditor',
   component: LinkEditor,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ['autodocs', 'kyv', 'beta'],
   argTypes: {
     onSave: { action: 'onSave' },
     onClose: { action: 'onClose' },
