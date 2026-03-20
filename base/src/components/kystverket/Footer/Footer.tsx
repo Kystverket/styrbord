@@ -3,23 +3,29 @@ import { Logo, Link, Icon } from '~/main';
 import { Select } from '@digdir/designsystemet-react';
 import { ReactNode } from 'react';
 import { useTranslation } from '~/translations';
+import { TFunction } from '@kystverket/sprak-react';
 
 interface LinkToSite {
   text: string;
   url: string;
 }
 
-const defaultContactLinks: LinkToSite[] = [
-  {
-    text: 'Kontakt Kystverket',
-    url: 'https://www.kystverket.no/kontakt-oss/',
-  },
-  { text: 'Lostjenesten', url: 'https://www.kystverket.no/kontakt-oss/los/' },
-  { text: 'Kontakt farledsbevistjenesten', url: 'https://www.kystverket.no/kontakt-oss/farledsbevistjenesten/' },
-  { text: 'Sjøtrafikksentralen', url: 'https://www.kystverket.no/kontakt-oss/sjotrafikksentralene/' },
-  { text: 'Presse', url: 'https://www.kystverket.no/kontakt-oss/presse/' },
-  { text: 'Arealplanlegging', url: 'https://www.kystverket.no/kontakt-oss/arealplan/' },
-];
+const defaultContactLinks: (t: TFunction) => LinkToSite[] = (t: TFunction) => {
+  return [
+    {
+      text: t('footer.contact'),
+      url: 'https://www.kystverket.no/kontakt-oss/',
+    },
+    { text: t('footer.links.lostjenesten'), url: 'https://www.kystverket.no/kontakt-oss/los/' },
+    {
+      text: t('footer.links.farledsbevistjenesten'),
+      url: 'https://www.kystverket.no/kontakt-oss/farledsbevistjenesten/',
+    },
+    { text: t('footer.links.sjotrafikksentralen'), url: 'https://www.kystverket.no/kontakt-oss/sjotrafikksentralene/' },
+    { text: t('footer.links.presse'), url: 'https://www.kystverket.no/kontakt-oss/presse/' },
+    { text: t('footer.links.arealplanlegging'), url: 'https://www.kystverket.no/kontakt-oss/arealplan/' },
+  ];
+};
 
 export type FooterProps = {
   additionalLogo?: ReactNode;
@@ -45,19 +51,17 @@ function LinkList({ links }: { links: LinkToSite[] }) {
   );
 }
 
-export function Footer({
-  additionalLogo,
-  text = '',
-  copyright = '',
-  contacts = defaultContactLinks,
-  links = [],
-}: FooterProps) {
+export function Footer({ additionalLogo, text = '', copyright = '', contacts, links = [] }: FooterProps) {
   const { t } = useTranslation();
 
   const currentYear = new Date().getFullYear();
 
   if (!copyright) {
-    copyright = `Opphavsrett Kystverket © ${currentYear}`;
+    copyright = t('footer.copyright', { currentYear });
+  }
+
+  if (contacts === undefined) {
+    contacts = defaultContactLinks(t);
   }
 
   return (
@@ -89,7 +93,7 @@ export function Footer({
             </div>
             {contacts.length > 0 && (
               <Select
-                aria-label={t('kontakt')}
+                aria-label={t('footer.contact')}
                 defaultValue=""
                 className={classes.select}
                 width="full"
@@ -99,7 +103,7 @@ export function Footer({
                 }}
               >
                 <Select.Option disabled value="" aria-hidden="true" hidden>
-                  {t('kontakt')}
+                  {t('footer.contact')}
                 </Select.Option>
                 {contacts.map((link: LinkToSite, index: number) => (
                   <Select.Option key={index} value={link.url} className={classes.selectOption}>

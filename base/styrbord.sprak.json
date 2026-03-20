@@ -1,4 +1,26 @@
 {
   "pattern": "src/i18n/:language.json",
-  "mainLanguage": "nb-NO"
+  "mainLanguage": "nb-NO",
+  "ignore": [
+    { "key": "kystverket", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "organisasjonsnummer", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "sentralbord", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "fileUploader.attachmentsCount", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "fileUploader.buttonLabel", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "fileUploader.removeFileAriaLabel", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "fileUploader.existingFiles.dialogCancel", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "fileUploader.existingFiles.dialogTitle", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "fileUploader.existingFiles.filesCounter", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    {
+      "key": "fileUploader.existingFiles.goBackToCollectionAriaLabel",
+      "checks": ["untranslated"],
+      "languages": ["nn-NO"]
+    },
+    { "key": "fileUploader.existingFiles.inMenuTitle", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "footer.contact", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "footer.copyright", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "footer.links.arealplanlegging", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "footer.links.presse", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "footer.links.sjotrafikksentralen", "checks": ["untranslated"], "languages": ["nn-NO"] }
+  ]
 }

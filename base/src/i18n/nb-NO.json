@@ -31,8 +31,18 @@
     "uploadingPleaseWait": "Vennligst vent med å velge flere filer før alle filene er lastet opp",
     "withCaptureButtonLabel": "Åpne kamera"
   },
+  "footer": {
+    "copyright": "Opphavsrett Kystverket © {{currentYear}}",
+    "contact": "Kontakt Kystverket",
+    "links": {
+      "lostjenesten": "Lostjenesten",
+      "farledsbevistjenesten": "Farledsbevistjenesten",
+      "sjotrafikksentralen": "Sjøtrafikksentralen",
+      "presse": "Presse",
+      "arealplanlegging": "Arealplanlegging"
+    }
+  },
   "header-alt-text": "Til forsiden",
-  "kontakt": "Kontakt Kystverket",
   "kystverket": "Kystverket",
   "loading": "Laster",
   "organisasjonsnummer": "Organisasjonsnummer",

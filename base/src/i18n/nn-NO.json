@@ -29,10 +29,20 @@
     "unknownFilename": "Ukjent filnamn",
     "uploading": "Lastar opp fil...",
     "uploadingPleaseWait": "Vennlegst vent med å velje fleire filer før alle filene er lasta opp",
-    "withCaptureButtonLabel": "Åpne kamera"
+    "withCaptureButtonLabel": "Opne kamera"
+  },
+  "footer": {
+    "copyright": "Opphavsrett Kystverket © {{currentYear}}",
+    "contact": "Kontakt Kystverket",
+    "links": {
+      "lostjenesten": "Lostenesta",
+      "farledsbevistjenesten": "Farledsbevistenesta",
+      "sjotrafikksentralen": "Sjøtrafikksentralen",
+      "presse": "Presse",
+      "arealplanlegging": "Arealplanlegging"
+    }
   },
   "header-alt-text": "Til framsida",
-  "kontakt": "Kontakt Kystverket",
   "kystverket": "Kystverket",
   "loading": "Lastar",
   "organisasjonsnummer": "Organisasjonsnummer",

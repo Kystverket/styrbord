@@ -31,8 +31,18 @@
     "uploadingPleaseWait": "Please wait to select more files until all files are uploaded",
     "withCaptureButtonLabel": "Open camera"
   },
+  "footer": {
+    "copyright": "Copyright Norwegian Coastal Administration © {{currentYear}}",
+    "contact": "Contact the Norwegian Coastal Administration",
+    "links": {
+      "lostjenesten": "Pilotage service",
+      "farledsbevistjenesten": "Fairway dues service",
+      "sjotrafikksentralen": "Vessel traffic service",
+      "presse": "Press",
+      "arealplanlegging": "Spatial planning"
+    }
+  },
   "header-alt-text": "To the front page",
-  "kontakt": "Contact us",
   "kystverket": "Norwegian coastal administration",
   "loading": "Loading",
   "organisasjonsnummer": "Organization number",
