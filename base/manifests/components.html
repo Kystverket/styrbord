@@ -6235,7 +6235,7 @@ profile?: {
   /**
    * department
    */
-  department: string;
+  department?: string;
   /**
    * initials. Keep it to `2` characters
    */
@@ -6415,7 +6415,7 @@ profile?: {
               <pre><code>const medProfilLenker = () =&gt; &lt;Header
     profile={{
       name: &#39;Ola Nordmann&#39;,
-      department: &#39;Hav- og kystforvaltning&#39;,
+      // department: &#39;Hav- og kystforvaltning&#39;,
       logoutHandler: () =&gt; alert(&#39;Logger ut&#39;),
       initials: &#39;ON&#39;,
       links: [
