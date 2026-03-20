@@ -58,7 +58,5 @@
     "vite": "^6.4.1",
     "vite-plugin-svgr": "^4.5.0"
   },
-  "dependencies": {
-    "@kystverket/sprak-react": "^0.0.14"
-  }
+  "dependencies": {}
 }
