@@ -6,7 +6,7 @@ const meta = {
   title: 'Components/MarkdownToReact',
   component: MarkdownToReact,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'kyv', 'beta'],
   argTypes: {
     markdown: { control: 'text' },
   },
