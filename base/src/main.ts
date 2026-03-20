@@ -35,6 +35,9 @@ export { default as KyvDivider } from './components/kystverket/KyvDivider/kyvDiv
 export { PageHeading } from './components/kystverket/PageHeading/PageHeading';
 export type { PageHeadingProps } from './components/kystverket/PageHeading/PageHeading';
 
+export { default as MarkdownToReact } from './components/kystverket/MarkdownToReact/markdownToReact';
+export type { MarkdownToReactProps } from './components/kystverket/MarkdownToReact/markdownToReact';
+
 export { default as Alert } from './components/kystverket/Alert/alert';
 export type { AlertProps } from './components/kystverket/Alert/alert';
 

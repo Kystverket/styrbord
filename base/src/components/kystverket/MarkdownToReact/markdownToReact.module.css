@@ -1,0 +1,28 @@
+.markdownToReact ul,
+.markdownToReact ol {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.markdownToReact ul {
+  list-style: disc;
+}
+
+.markdownToReact ol {
+  list-style: decimal;
+}
+
+.markdownToReact li > ul,
+.markdownToReact li > ol {
+  margin-top: 0.25rem;
+}
+
+.heading1 {
+  font-size: var(--ds-font-size-6);
+  font-weight: var(--ds-font-weight-medium);
+}
+
+.heading2 {
+  font-size: var(--ds-font-size-5);
+  font-weight: var(--ds-font-weight-medium);
+}

@@ -1,6 +1,6 @@
 {
   "name": "@kystverket/styrbord",
-  "version": "1.4.12",
+  "version": "1.4.13",
   "description": "",
   "type": "module",
   "repository": {
@@ -53,6 +53,7 @@
     "react": "^19.0.0",
     "react-datepicker": "^8.4.0",
     "react-dom": "^19.0.0",
+    "react-markdown": "^10.1.0",
     "uuid": "^11.1.0"
   },
   "peerDependencies": {
