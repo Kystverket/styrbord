@@ -1,13 +1,27 @@
-.wrapper {
+.editorWrapper {
   display: flex;
   flex-direction: column;
+  border: 1px solid var(--ds-color-neutral-border-default);
+  border-radius: var(--ds-border-radius-md);
+  overflow: hidden;
+}
+
+.editorWrapperError {
+  border-color: var(--ds-color-danger-border-default);
+}
+
+.editorWrapper:not(.editorWrapperDisabled):hover:not(:focus-within) {
+  outline: 1px solid var(--ds-color-neutral-border-default);
+}
+
+.editorWrapper:focus-within {
+  outline: 3px solid var(--ds-color-focus-outer);
+  outline-offset: 3px;
 }
 
 .editorContainer {
   position: relative;
-  border: 1px solid var(--ds-color-neutral-border-default);
-  border-top: none;
-  border-radius: 0 0 var(--ds-border-radius-md) var(--ds-border-radius-md);
+  border: 0;
   background: var(--ds-color-neutral-background-default);
   overflow: auto;
   padding: 0.625rem 0.75rem;
@@ -81,14 +95,23 @@
   padding-top: var(--ds-size-2);
 }
 
-h1 {
+.editor :global(.ProseMirror h1) {
   font-size: var(--ds-font-size-6);
   font-weight: var(--ds-font-weight-medium);
   color: var(--ds-color-neutral-text-default);
 }
 
-h2 {
+.editor :global(.ProseMirror h2) {
   font-size: var(--ds-font-size-5);
   font-weight: var(--ds-font-weight-medium);
+  color: var(--ds-color-neutral-text-default);
+}
+
+.editor :global(.ProseMirror h3),
+.editor :global(.ProseMirror h4),
+.editor :global(.ProseMirror h5),
+.editor :global(.ProseMirror h6) {
+  font-size: var(--ds-font-size-4);
+  font-weight: var(--ds-font-weight-regular);
   color: var(--ds-color-neutral-text-default);
 }

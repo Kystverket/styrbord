@@ -2,9 +2,9 @@
 .toolbar {
   display: flex;
   justify-content: space-between;
-  border-radius: var(--ds-border-radius-md) var(--ds-border-radius-md) 0 0;
+  border-radius: 0;
   flex-wrap: wrap;
-  border: 1px solid var(--ds-color-neutral-border-default);
+  border: 0;
   border-bottom: 1px solid var(--ds-color-neutral-border-subtle);
 }
 

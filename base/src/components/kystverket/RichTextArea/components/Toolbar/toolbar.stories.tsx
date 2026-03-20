@@ -8,7 +8,7 @@ const meta = {
   title: 'Form/RichTextArea/Toolbar',
   component: Toolbar,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ['autodocs', 'kyv', 'beta'],
   argTypes: {
     onBold: { action: 'onBold' },
     onItalic: { action: 'onItalic' },

@@ -5,10 +5,10 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { RichTextArea, RichTextAreaProps } from './richTextArea';
 
 const meta = {
-  title: 'Form/RichTextArea',
+  title: 'Form/RichTextArea/RichTextArea',
   component: RichTextArea,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ['autodocs', 'kyv', 'beta'],
 } satisfies Meta<typeof RichTextArea>;
 
 export default meta;
