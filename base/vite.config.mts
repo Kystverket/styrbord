@@ -17,6 +17,9 @@ export default defineConfig({
     }),
   ],
   resolve: {
+    // Avoid bundling browser-only conditional exports (e.g. decode-named-character-reference)
+    // that use top-level `document` calls, breaking SSR consumers.
+    conditions: ['module', 'import', 'default'],
     alias: {
       '~': path.resolve(__dirname, 'src'),
       '@assets': path.resolve(__dirname, 'assets'),
@@ -39,6 +42,12 @@ export default defineConfig({
         'react-dom',
         '@digdir/designsystemet-react',
         '@kystverket/sprak-react',
+        'react-markdown',
+        'react-datepicker',
+        'date-fns',
+        'exifr',
+        'uuid',
+        /^@milkdown\//,
         new RegExp('.*storybook.*'),
       ],
       output: {

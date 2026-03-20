@@ -1,6 +1,6 @@
 {
   "name": "@kystverket/styrbord",
-  "version": "1.4.15",
+  "version": "1.4.16",
   "description": "",
   "type": "module",
   "repository": {
@@ -38,8 +38,11 @@
   "license": "ISC",
   "dependencies": {
     "@digdir/designsystemet-css": "~1.9.0",
+    "@material-symbols/font-400": "^0.39.0"
+  },
+  "peerDependencies": {
     "@digdir/designsystemet-react": "~1.9.0",
-    "@material-symbols/font-400": "^0.39.0",
+    "@kystverket/sprak-react": "^0.0.14",
     "@milkdown/components": "^7.19.0",
     "@milkdown/core": "^7.19.0",
     "@milkdown/plugin-history": "^7.19.0",
@@ -50,13 +53,10 @@
     "@milkdown/utils": "^7.19.0",
     "date-fns": "^4.1.0",
     "exifr": "^7.1.3",
-    "react": "^19.0.0",
     "react-datepicker": "^8.4.0",
     "react-dom": "^19.0.0",
     "react-markdown": "^10.1.0",
+    "react": "^19.0.0",
     "uuid": "^11.1.0"
-  },
-  "peerDependencies": {
-    "@kystverket/sprak-react": "^0.0.14"
   }
 }
