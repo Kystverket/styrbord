@@ -30,6 +30,8 @@ export { FilePreviewer, type FilePreviewerProps } from './components/kystverket/
 //  Egenproduserte komponenter
 //^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\
 
+export { StyrbordTranslations } from './translations';
+
 export { default as KyvDivider } from './components/kystverket/KyvDivider/kyvDivider';
 
 export { PageHeading } from './components/kystverket/PageHeading/PageHeading';

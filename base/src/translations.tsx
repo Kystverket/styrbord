@@ -1,5 +1,6 @@
 import { SupportedLanguage } from '~/utils/types';
 import { useTranslation as useTranslationSprak } from '@kystverket/sprak-react';
+import { ReactNode } from 'react';
 
 import nbNO from './i18n/nb-NO.json';
 import nnNO from './i18n/nn-NO.json';
@@ -15,7 +16,7 @@ const translations: Record<SupportedLanguage, Record<string, unknown>> = {
 
 export const STYRBORD_TRANSLATIONS_NAMESPACE = 'styrbord';
 
-export const StyrbordTranslations = (props: { children: React.ReactNode }) => {
+export const StyrbordTranslations = (props: { children: ReactNode }) => {
   return (
     <NamespaceProvider ns={STYRBORD_TRANSLATIONS_NAMESPACE} translations={translations}>
       {props.children}

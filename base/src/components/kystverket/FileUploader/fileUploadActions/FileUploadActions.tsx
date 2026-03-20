@@ -28,6 +28,8 @@ export function FileUploadActions({
   const [canUseCamera, setCanUseCamera] = useState(false);
 
   useEffect(() => {
+    if (typeof document === 'undefined') return;
+
     const hasGetUserMedia = !!navigator.mediaDevices?.getUserMedia;
     const input = document.createElement('input');
     const hasCaptureAttr = 'capture' in input;
