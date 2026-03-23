@@ -106,13 +106,22 @@ export const FileUploader = ({
       if (file.status !== 'uploaded') {
         return;
       }
-      if (file.contentType.startsWith('image/') && file.thumbnailUri) {
+      const src = file.previewUri || file.thumbnailUri;
+      if (file.contentType.startsWith('image/') && src) {
         indexMap.set(file.contextId, result.length);
         result.push({
           fileName: file.fileName,
           fileSizeInBytes: file.sizeInBytes,
           contentType: 'image',
-          src: file.thumbnailUri,
+          src,
+        });
+      } else if ((file.contentType === 'application/pdf' || file.contentType.endsWith('/pdf')) && src) {
+        indexMap.set(file.contextId, result.length);
+        result.push({
+          fileName: file.fileName,
+          fileSizeInBytes: file.sizeInBytes,
+          contentType: 'pdf',
+          src,
         });
       }
     });

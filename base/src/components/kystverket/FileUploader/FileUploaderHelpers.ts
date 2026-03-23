@@ -20,12 +20,14 @@ export const onFilesChanged = (
   // Add accepted files with uploading status
   acceptedFiles.forEach((fileAndExif) => {
     const contextId = v4();
-    const url = fileAndExif.file.type.startsWith('image/') ? URL.createObjectURL(fileAndExif.file) : undefined;
+    const blobUrl = URL.createObjectURL(fileAndExif.file);
+    const isImage = fileAndExif.file.type.startsWith('image/');
     newFilesState.push({
       contextId,
       fileName: fileAndExif.file.name,
       status: 'uploading',
-      thumbnailUri: url,
+      thumbnailUri: isImage ? blobUrl : undefined,
+      previewUri: blobUrl,
       contentType: fileAndExif.file.type,
       exif: fileAndExif.exif,
       sizeInBytes: fileAndExif.file.size,
