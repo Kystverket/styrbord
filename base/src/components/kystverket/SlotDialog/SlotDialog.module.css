@@ -4,7 +4,7 @@
     flex-direction: column;
     padding: 0;
     padding-top: var(--ds-size-7);
-    padding-bottom: var(--ds-size-7);
+    padding-bottom: 0;
 
     /* So it actually closes when it's supposed to be closed */
     &:not([open]) {
@@ -43,6 +43,7 @@
     flex: 1;
     overflow-y: auto;
     scrollbar-gutter: stable;
+    padding-bottom: var(--ds-size-7);
 
     &.longContent {
       padding-top: var(--ds-size-7);
@@ -51,6 +52,9 @@
   }
 
   .buttonBlock {
-    padding-top: var(--ds-size-7);
+    padding-bottom: var(--ds-size-7);
+    &.longContent {
+      padding-top: var(--ds-size-7);
+    }
   }
 }
