@@ -25,6 +25,7 @@
     },
     "loading": "Laster",
     "maxFilesReached": "Maksimalt antall filer er lastet opp.",
+    "previewFileAriaLabel": "Forhåndsvis fil",
     "removeFileAriaLabel": "Fjern fil",
     "unknownFilename": "Ukjent filnavn",
     "uploading": "Laster opp fil...",
@@ -32,14 +33,14 @@
     "withCaptureButtonLabel": "Åpne kamera"
   },
   "footer": {
-    "copyright": "Opphavsrett Kystverket © {{currentYear}}",
     "contact": "Kontakt Kystverket",
+    "copyright": "Opphavsrett Kystverket © {{currentYear}}",
     "links": {
-      "lostjenesten": "Lostjenesten",
+      "arealplanlegging": "Arealplanlegging",
       "farledsbevistjenesten": "Farledsbevistjenesten",
-      "sjotrafikksentralen": "Sjøtrafikksentralen",
+      "lostjenesten": "Lostjenesten",
       "presse": "Presse",
-      "arealplanlegging": "Arealplanlegging"
+      "sjotrafikksentralen": "Sjøtrafikksentralen"
     }
   },
   "header-alt-text": "Til forsiden",
