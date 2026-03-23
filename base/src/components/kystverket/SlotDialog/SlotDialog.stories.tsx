@@ -5,7 +5,7 @@ import { Box, Button, Input, Label, Paragraph, SlotDialog } from '~/main';
 export default {
   title: 'Components/SlotDialog',
   component: SlotDialog,
-  tags: ['autodocs', 'ds-override', 'beta'],
+  tags: ['autodocs', 'beta'],
   parameters: {
     layout: 'fullscreen',
     docs: {
