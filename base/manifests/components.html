@@ -576,7 +576,7 @@
 <header>
   <div class="wrap">
     <h1>Manifest Debugger</h1>
-    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">13/75 prop type errors</a><a class="filter-pill info" data-k="infos" href="#filter-infos">75/75 infos</a><a class="filter-pill err" data-k="story-errors" href="#filter-story-errors">67/424 story errors</a><a class="filter-pill ok" data-k="docs" href="#filter-docs">1 doc ok</a></div>
+    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">13/75 prop type errors</a><a class="filter-pill info" data-k="infos" href="#filter-infos">75/75 infos</a><a class="filter-pill err" data-k="story-errors" href="#filter-story-errors">68/425 story errors</a><a class="filter-pill ok" data-k="docs" href="#filter-docs">1 doc ok</a></div>
   </div>
 </header>
 <main>
@@ -14729,7 +14729,7 @@ export const WithYearAndMonthDropdown: Story = {
       <div class="badges">
         <label for="c-71-form-fileuploader-err" class="badge err as-toggle">prop type error</label>
         <label for="c-71-form-fileuploader-info" class="badge info as-toggle">1 info</label>
-        <label for="c-71-form-fileuploader-stories" class="badge err as-toggle">13/13 story errors</label>
+        <label for="c-71-form-fileuploader-stories" class="badge err as-toggle">14/14 story errors</label>
         
       </div>
     </div>
@@ -14753,13 +14753,13 @@ export const WithYearAndMonthDropdown: Story = {
     <div class="note err">
       <div class="note-title">Prop type error</div>
       <div class="note-body"><pre><code>No component file found for the &quot;Wrapper&quot; component.
-  22 | };
-  23 |
-&gt; 24 | const meta = {
+  23 | };
+  24 |
+&gt; 25 | const meta = {
      | ^
-  25 |   title: &#39;Form/FileUploader&#39;,
-  26 |   component: Wrapper,
-  27 |   decorators: [StyrbordDecorator],
+  26 |   title: &#39;Form/FileUploader&#39;,
+  27 |   component: Wrapper,
+  28 |   decorators: [StyrbordDecorator],
 
 ./src/components/kystverket/FileUploader/FileUploader.stories.tsx:
 import type { Meta, StoryObj } from &#39;@storybook/react-vite&#39;;
@@ -14773,6 +14773,7 @@ import { v4 as uuidv4 } from &#39;uuid&#39;;
 
 import cat1 from &#39;/assets/img/cats/Cat 1.jpg&#39;;
 import cat2 from &#39;/assets/img/cats/Cat 2.jpg&#39;;
+import samplePdf from &#39;/assets/documents/Pikekyst Oppskrift.pdf&#39;;
 
 const Wrapper = (props: FileUploaderProps) =&gt; {
   const [value, setValue] = useState&lt;FileInfo[]&gt;([...props.files]);
@@ -15058,6 +15059,51 @@ export const withFileScanFailed: Story = {
     files: [],
   },
 };
+
+export const WithFilePreview: Story = {
+  args: {
+    ...defaultProps,
+    allowFilePreview: true,
+    description: &#39;Klikk på forhåndsvisningsknappen for å se filer i full størrelse&#39;,
+    files: [
+      {
+        fileName: &#39;Pikekyst Oppskrift.pdf&#39;,
+        status: &#39;uploaded&#39;,
+        contentType: &#39;application/pdf&#39;,
+        contextId: &#39;preview-pdf-1&#39;,
+        storageId: &#39;1&#39;,
+        previewUri: samplePdf,
+        sizeInBytes: 92881,
+      },
+      {
+        fileName: &#39;file3.jpeg&#39;,
+        status: &#39;uploaded&#39;,
+        contentType: &#39;image/jpeg&#39;,
+        thumbnailUri: cat1,
+        contextId: &#39;preview-img-1&#39;,
+        storageId: &#39;1&#39;,
+        sizeInBytes: 9281231,
+      },
+      {
+        fileName: &#39;file4.jpeg&#39;,
+        status: &#39;uploaded&#39;,
+        contentType: &#39;image/jpeg&#39;,
+        thumbnailUri: cat2,
+        contextId: &#39;preview-img-2&#39;,
+        storageId: &#39;1&#39;,
+        sizeInBytes: 192811,
+      },
+      {
+        fileName: &#39;readme.txt&#39;,
+        status: &#39;uploaded&#39;,
+        contentType: &#39;text/plain&#39;,
+        contextId: &#39;preview-txt-1&#39;,
+        storageId: &#39;1&#39;,
+        sizeInBytes: 12122,
+      },
+    ],
+  },
+};
 </code></pre></div>
     </div>
         </div>
@@ -15196,6 +15242,16 @@ export const withFileScanFailed: Story = {
             <div class="note err">
               <div class="row">
                 <span class="ex-name">With File Scan Failed</span>
+                <span class="badge err">story error</span>
+              </div>
+              
+              
+              
+              <pre><code>Could not generate snippet without component name.</code></pre>
+            </div>
+            <div class="note err">
+              <div class="row">
+                <span class="ex-name">With File Preview</span>
                 <span class="badge err">story error</span>
               </div>
               
@@ -17926,7 +17982,7 @@ export const WithYearAndMonthDropdown: Story = {
       <div class="badges">
         <label for="c-error-8-form-fileuploader-err" class="badge err as-toggle">prop type error</label>
         <label for="c-error-8-form-fileuploader-info" class="badge info as-toggle">1 info</label>
-        <label for="c-error-8-form-fileuploader-stories" class="badge err as-toggle">13/13 story errors</label>
+        <label for="c-error-8-form-fileuploader-stories" class="badge err as-toggle">14/14 story errors</label>
         
       </div>
     </div>
@@ -17950,13 +18006,13 @@ export const WithYearAndMonthDropdown: Story = {
     <div class="note err">
       <div class="note-title">Prop type error</div>
       <div class="note-body"><pre><code>No component file found for the &quot;Wrapper&quot; component.
-  22 | };
-  23 |
-&gt; 24 | const meta = {
+  23 | };
+  24 |
+&gt; 25 | const meta = {
      | ^
-  25 |   title: &#39;Form/FileUploader&#39;,
-  26 |   component: Wrapper,
-  27 |   decorators: [StyrbordDecorator],
+  26 |   title: &#39;Form/FileUploader&#39;,
+  27 |   component: Wrapper,
+  28 |   decorators: [StyrbordDecorator],
 
 ./src/components/kystverket/FileUploader/FileUploader.stories.tsx:
 import type { Meta, StoryObj } from &#39;@storybook/react-vite&#39;;
@@ -17970,6 +18026,7 @@ import { v4 as uuidv4 } from &#39;uuid&#39;;
 
 import cat1 from &#39;/assets/img/cats/Cat 1.jpg&#39;;
 import cat2 from &#39;/assets/img/cats/Cat 2.jpg&#39;;
+import samplePdf from &#39;/assets/documents/Pikekyst Oppskrift.pdf&#39;;
 
 const Wrapper = (props: FileUploaderProps) =&gt; {
   const [value, setValue] = useState&lt;FileInfo[]&gt;([...props.files]);
@@ -18255,6 +18312,51 @@ export const withFileScanFailed: Story = {
     files: [],
   },
 };
+
+export const WithFilePreview: Story = {
+  args: {
+    ...defaultProps,
+    allowFilePreview: true,
+    description: &#39;Klikk på forhåndsvisningsknappen for å se filer i full størrelse&#39;,
+    files: [
+      {
+        fileName: &#39;Pikekyst Oppskrift.pdf&#39;,
+        status: &#39;uploaded&#39;,
+        contentType: &#39;application/pdf&#39;,
+        contextId: &#39;preview-pdf-1&#39;,
+        storageId: &#39;1&#39;,
+        previewUri: samplePdf,
+        sizeInBytes: 92881,
+      },
+      {
+        fileName: &#39;file3.jpeg&#39;,
+        status: &#39;uploaded&#39;,
+        contentType: &#39;image/jpeg&#39;,
+        thumbnailUri: cat1,
+        contextId: &#39;preview-img-1&#39;,
+        storageId: &#39;1&#39;,
+        sizeInBytes: 9281231,
+      },
+      {
+        fileName: &#39;file4.jpeg&#39;,
+        status: &#39;uploaded&#39;,
+        contentType: &#39;image/jpeg&#39;,
+        thumbnailUri: cat2,
+        contextId: &#39;preview-img-2&#39;,
+        storageId: &#39;1&#39;,
+        sizeInBytes: 192811,
+      },
+      {
+        fileName: &#39;readme.txt&#39;,
+        status: &#39;uploaded&#39;,
+        contentType: &#39;text/plain&#39;,
+        contextId: &#39;preview-txt-1&#39;,
+        storageId: &#39;1&#39;,
+        sizeInBytes: 12122,
+      },
+    ],
+  },
+};
 </code></pre></div>
     </div>
         </div>
@@ -18393,6 +18495,16 @@ export const withFileScanFailed: Story = {
             <div class="note err">
               <div class="row">
                 <span class="ex-name">With File Scan Failed</span>
+                <span class="badge err">story error</span>
+              </div>
+              
+              
+              
+              <pre><code>Could not generate snippet without component name.</code></pre>
+            </div>
+            <div class="note err">
+              <div class="row">
+                <span class="ex-name">With File Preview</span>
                 <span class="badge err">story error</span>
               </div>
               
