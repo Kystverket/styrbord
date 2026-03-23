@@ -1,0 +1,30 @@
+.popup {
+  position: absolute;
+  z-index: 10;
+  background: var(--ds-color-neutral-background-default, #fff);
+  border: 1px solid var(--ds-color-neutral-border-default, #c9c9c9);
+  border-radius: var(--ds-border-radius-md, 6px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 8px 12px;
+  pointer-events: none;
+  max-width: 280px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--ds-color-neutral-text-default, #1e2b3c);
+}
+
+.defaultContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.featureType {
+  font-weight: 600;
+  color: var(--ds-color-accent-text-default, #0062ba);
+}
+
+.featureName {
+  color: var(--ds-color-neutral-text-default, #1e2b3c);
+}

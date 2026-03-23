@@ -1,21 +1,24 @@
-import { useEffect, useMemo } from "react";
-import type { FeatureCollection } from "geojson";
+import { useEffect, useMemo, useState, useCallback, useRef } from 'react';
+import type { FeatureCollection, Feature, Geometry, GeoJsonProperties } from 'geojson';
+import type maplibregl from 'maplibre-gl';
 
-import styles from "~/components/shared/MapPicker.module.css";
-import { useMaplibreMap } from "~/hooks/useMaplibreMap";
-import { computeBounds } from "~/utility/geojson";
-import { toFeatureCollection } from "../GeoJsonViewer/GeoJsonViewer.utils";
-import type { DrawMode, GeoJsonEditorProps } from "./GeoJsonEditor.types";
-import { useTerraDraw } from "./useTerraDraw";
-import { GeoJsonEditorToolbar } from "./GeoJsonEditorToolbar";
-import { LayerToggle } from "../LayerToggle/LayerToggle";
-import { ensureCollectionConsistency } from "~/utility/collection";
+import styles from '~/components/shared/MapPicker.module.css';
+import { useMaplibreMap } from '~/hooks/useMaplibreMap';
+import { computeBounds } from '~/utility/geojson';
+import { toFeatureCollection } from '../GeoJsonViewer/GeoJsonViewer.utils';
+import type { DrawMode, GeoJsonEditorProps } from './GeoJsonEditor.types';
+import { useTerraDraw } from './useTerraDraw';
+import { GeoJsonEditorToolbar } from './GeoJsonEditorToolbar';
+import { LayerToggle } from '../LayerToggle/LayerToggle';
+import { ensureCollectionConsistency } from '~/utility/collection';
+import { GeoJsonViewerHoverPopup } from '../GeoJsonViewer/GeoJsonViewerHoverPopup';
+import type { InteractiveFeature } from '~/hooks/useFeatureInteraction';
 
 // ---------------------------------------------------------------------------
 // Defaults
 // ---------------------------------------------------------------------------
 
-const ALL_MODES: DrawMode[] = ["point", "linestring", "polygon"];
+const ALL_MODES: DrawMode[] = ['point', 'linestring', 'polygon'];
 
 // ---------------------------------------------------------------------------
 // Component
@@ -27,6 +30,9 @@ const ALL_MODES: DrawMode[] = ["point", "linestring", "polygon"];
  *
  * Uses terra-draw for interactive drawing and editing. Emits the full
  * FeatureCollection via `onChange` on every change.
+ *
+ * Supports feature hover (with customizable content per type) and selection
+ * callbacks when using terra-draw's select mode.
  */
 export function GeoJsonEditor({
   value,
@@ -40,11 +46,31 @@ export function GeoJsonEditor({
   height,
   className,
   disabled = false,
+  hoverable = true,
+  onHover,
+  onSelect,
+  hoverContent,
 }: GeoJsonEditorProps) {
   const { mapContainerRef, mapRef } = useMaplibreMap({
     disabled,
     height,
   });
+
+  // Track hover state
+  const [hoveredFeature, setHoveredFeature] = useState<InteractiveFeature | null>(null);
+  const [hoverPosition, setHoverPosition] = useState<{ x: number; y: number } | null>(null);
+
+  // Keep onHover callback in ref to avoid re-creating effect
+  const onHoverRef = useRef(onHover);
+  onHoverRef.current = onHover;
+
+  // Handle selection changes from terra-draw
+  const handleTerraDrawSelect = useCallback(
+    (features: Feature<Geometry, GeoJsonProperties>[] | null) => {
+      onSelect?.(features as InteractiveFeature[] | null);
+    },
+    [onSelect],
+  );
 
   const terraDrawResult = useTerraDraw({
     mapRef,
@@ -55,10 +81,10 @@ export function GeoJsonEditor({
     onChange: (data) => {
       onChange?.(ensureCollectionConsistency(data));
     },
+    onSelect: handleTerraDrawSelect,
   });
 
-  const { activeMode, setActiveMode, deleteSelected, hasSelection } =
-    terraDrawResult;
+  const { activeMode, setActiveMode, deleteSelected, hasSelection } = terraDrawResult;
   const loadInitialData = (
     terraDrawResult as unknown as {
       loadInitialData: (v: FeatureCollection | undefined) => void;
@@ -66,10 +92,7 @@ export function GeoJsonEditor({
   ).loadInitialData;
 
   // Normalise incoming value
-  const fc = useMemo(
-    () => (value ? toFeatureCollection(value) : undefined),
-    [value],
-  );
+  const fc = useMemo(() => (value ? toFeatureCollection(value) : undefined), [value]);
 
   // Load initial data into terra-draw once it's ready
   useEffect(() => {
@@ -93,15 +116,71 @@ export function GeoJsonEditor({
     if (map.isStyleLoaded()) {
       fit();
     } else {
-      map.once("load", fit);
+      map.once('load', fit);
     }
   }, [fc, fitBounds, fitBoundsPadding, mapRef]);
 
+  // Hover detection for terra-draw features
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || disabled || !hoverable) return;
+
+    let prevHoveredId: string | number | null = null;
+
+    const handleMouseMove = (e: maplibregl.MapMouseEvent) => {
+      // Query all rendered features at the mouse position
+      const features = map.queryRenderedFeatures(e.point);
+
+      // Find terra-draw features (they have the 'mode' property set by terra-draw)
+      const terraDrawFeature = features.find((f) => f.properties?.mode && f.properties.mode !== 'select');
+
+      if (terraDrawFeature) {
+        const featureId = terraDrawFeature.id ?? terraDrawFeature.properties?.id ?? null;
+
+        if (featureId !== prevHoveredId) {
+          prevHoveredId = featureId;
+          const feature: InteractiveFeature = {
+            type: 'Feature',
+            id: featureId ?? undefined,
+            geometry: terraDrawFeature.geometry as Geometry,
+            properties: terraDrawFeature.properties as GeoJsonProperties,
+          };
+          setHoveredFeature(feature);
+          onHoverRef.current?.(feature, e);
+        }
+        setHoverPosition({ x: e.point.x, y: e.point.y });
+        map.getCanvas().style.cursor = 'pointer';
+      } else {
+        if (prevHoveredId !== null) {
+          prevHoveredId = null;
+          setHoveredFeature(null);
+          setHoverPosition(null);
+          onHoverRef.current?.(null, null);
+        }
+        map.getCanvas().style.cursor = '';
+      }
+    };
+
+    const handleMouseLeave = () => {
+      prevHoveredId = null;
+      setHoveredFeature(null);
+      setHoverPosition(null);
+      onHoverRef.current?.(null, null);
+      map.getCanvas().style.cursor = '';
+    };
+
+    map.on('mousemove', handleMouseMove);
+    map.on('mouseleave', handleMouseLeave);
+
+    return () => {
+      map.off('mousemove', handleMouseMove);
+      map.off('mouseleave', handleMouseLeave);
+      map.getCanvas().style.cursor = '';
+    };
+  }, [mapRef, disabled, hoverable]);
+
   return (
-    <div
-      ref={mapContainerRef}
-      className={[styles.mapContainer, className].filter(Boolean).join(" ")}
-    >
+    <div ref={mapContainerRef} className={[styles.mapContainer, className].filter(Boolean).join(' ')}>
       {!disabled && (
         <GeoJsonEditorToolbar
           modes={modes}
@@ -114,6 +193,9 @@ export function GeoJsonEditor({
         />
       )}
       {showLayerToggle && <LayerToggle />}
+      {hoverable && hoveredFeature && hoverPosition && (
+        <GeoJsonViewerHoverPopup feature={hoveredFeature} position={hoverPosition} hoverContent={hoverContent} />
+      )}
     </div>
   );
 }

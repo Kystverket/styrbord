@@ -1,10 +1,12 @@
-import { useEffect, useMemo } from "react";
-import type { GeoJSONSource } from "maplibre-gl";
+import { useEffect, useMemo, useState, useCallback } from 'react';
+import type { GeoJSONSource } from 'maplibre-gl';
+import type maplibregl from 'maplibre-gl';
 
-import styles from "~/components/shared/MapPicker.module.css";
-import type { GeoJsonStyle, GeoJsonViewerProps } from "./GeoJsonViewer.types";
-import { computeBounds } from "~/utility/geojson";
-import { useMaplibreMap } from "~/hooks/useMaplibreMap";
+import styles from '~/components/shared/MapPicker.module.css';
+import type { GeoJsonStyle, GeoJsonViewerProps } from './GeoJsonViewer.types';
+import { computeBounds } from '~/utility/geojson';
+import { useMaplibreMap } from '~/hooks/useMaplibreMap';
+import { useFeatureInteraction, type InteractiveFeature } from '~/hooks/useFeatureInteraction';
 import {
   DEFAULT_STYLE,
   FILL_LAYER,
@@ -12,10 +14,15 @@ import {
   POINT_LAYER,
   POINT_STROKE_LAYER,
   SOURCE_ID,
+  INTERACTIVE_LAYERS,
   removeLayers,
   toFeatureCollection,
-} from "./GeoJsonViewer.utils";
-import { LayerToggle } from "../LayerToggle/LayerToggle";
+  addHighlightLayers,
+  updateHoverHighlight,
+  updateSelectionHighlight,
+} from './GeoJsonViewer.utils';
+import { LayerToggle } from '../LayerToggle/LayerToggle';
+import { GeoJsonViewerHoverPopup } from './GeoJsonViewerHoverPopup';
 
 // ---------------------------------------------------------------------------
 // Component
@@ -26,6 +33,9 @@ import { LayerToggle } from "../LayerToggle/LayerToggle";
  *
  * Renders Point, LineString, Polygon (and their Multi-variants) using
  * MapLibre GL layers. The map auto-fits to the data bounds by default.
+ *
+ * Supports feature hover (with customizable content per type) and selection
+ * (single or multi-select with Ctrl/Cmd).
  */
 export function GeoJsonViewer({
   data,
@@ -36,6 +46,11 @@ export function GeoJsonViewer({
   height,
   className,
   disabled,
+  hoverable = true,
+  selectable = true,
+  onHover,
+  onSelect,
+  hoverContent,
 }: GeoJsonViewerProps) {
   const layerStyle: Required<GeoJsonStyle> = {
     ...DEFAULT_STYLE,
@@ -45,16 +60,72 @@ export function GeoJsonViewer({
   // Strip foreign members and normalise to FeatureCollection
   const fc = useMemo(() => toFeatureCollection(data), [data]);
 
+  // Track whether layers are ready for interaction
+  const [layersReady, setLayersReady] = useState(false);
+
+  // Track hover popup position
+  const [hoverPosition, setHoverPosition] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
+
   const { mapContainerRef, mapRef } = useMaplibreMap({
     disabled,
     height,
+  });
+
+  // ----- Feature interaction hook -----
+  const handleHover = useCallback(
+    (feature: InteractiveFeature | null, event: maplibregl.MapMouseEvent | null) => {
+      onHover?.(feature, event);
+
+      // Update hover highlight
+      const map = mapRef.current;
+      if (map && layersReady) {
+        const featureId = feature?.id ?? null;
+        updateHoverHighlight(map, featureId);
+      }
+
+      // Update hover popup position
+      if (event && feature) {
+        setHoverPosition({ x: event.point.x, y: event.point.y });
+      } else {
+        setHoverPosition(null);
+      }
+    },
+    [onHover, mapRef, layersReady],
+  );
+
+  const handleSelect = useCallback(
+    (features: InteractiveFeature[] | null) => {
+      onSelect?.(features);
+
+      // Update selection highlight
+      const map = mapRef.current;
+      if (map && layersReady) {
+        const featureIds = features?.map((f) => f.id).filter((id): id is string | number => id !== undefined) ?? [];
+        updateSelectionHighlight(map, featureIds);
+      }
+    },
+    [onSelect, mapRef, layersReady],
+  );
+
+  const { hoveredFeature, selectedFeatures, hasSelection } = useFeatureInteraction({
+    mapRef,
+    layerIds: INTERACTIVE_LAYERS,
+    sourceId: SOURCE_ID,
+    enabled: layersReady && !disabled,
+    hoverable,
+    selectable,
+    onHover: handleHover,
+    onSelect: handleSelect,
   });
 
   // ----- Single effect: add / update GeoJSON source + layers -----
   useEffect(() => {
     const map = mapRef.current;
     if (!map) {
-      console.warn("[GeoJsonViewer] mapRef.current is null — effect skipped");
+      console.warn('[GeoJsonViewer] mapRef.current is null — effect skipped');
       return;
     }
 
@@ -65,29 +136,29 @@ export function GeoJsonViewer({
         if (existingSource) {
           (existingSource as GeoJSONSource).setData(fc);
         } else {
-          map.addSource(SOURCE_ID, { type: "geojson", data: fc });
+          map.addSource(SOURCE_ID, { type: 'geojson', data: fc });
         }
 
         // Add layers (idempotent — skipped if they already exist)
         if (!map.getLayer(FILL_LAYER)) {
           map.addLayer({
             id: FILL_LAYER,
-            type: "fill",
+            type: 'fill',
             source: SOURCE_ID,
-            layout: { visibility: "visible" },
-            paint: { "fill-color": layerStyle.fillColor },
+            layout: { visibility: 'visible' },
+            paint: { 'fill-color': layerStyle.fillColor },
           });
         }
 
         if (!map.getLayer(LINE_LAYER)) {
           map.addLayer({
             id: LINE_LAYER,
-            type: "line",
+            type: 'line',
             source: SOURCE_ID,
-            layout: { visibility: "visible" },
+            layout: { visibility: 'visible' },
             paint: {
-              "line-color": layerStyle.lineColor,
-              "line-width": layerStyle.lineWidth,
+              'line-color': layerStyle.lineColor,
+              'line-width': layerStyle.lineWidth,
             },
           });
         }
@@ -95,13 +166,12 @@ export function GeoJsonViewer({
         if (!map.getLayer(POINT_STROKE_LAYER)) {
           map.addLayer({
             id: POINT_STROKE_LAYER,
-            type: "circle",
+            type: 'circle',
             source: SOURCE_ID,
-            layout: { visibility: "visible" },
+            layout: { visibility: 'visible' },
             paint: {
-              "circle-radius":
-                layerStyle.pointRadius + layerStyle.pointStrokeWidth,
-              "circle-color": layerStyle.pointStrokeColor,
+              'circle-radius': layerStyle.pointRadius + layerStyle.pointStrokeWidth,
+              'circle-color': layerStyle.pointStrokeColor,
             },
           });
         }
@@ -109,15 +179,21 @@ export function GeoJsonViewer({
         if (!map.getLayer(POINT_LAYER)) {
           map.addLayer({
             id: POINT_LAYER,
-            type: "circle",
+            type: 'circle',
             source: SOURCE_ID,
-            layout: { visibility: "visible" },
+            layout: { visibility: 'visible' },
             paint: {
-              "circle-radius": layerStyle.pointRadius,
-              "circle-color": layerStyle.pointColor,
+              'circle-radius': layerStyle.pointRadius,
+              'circle-color': layerStyle.pointColor,
             },
           });
         }
+
+        // Add highlight layers for hover and selection effects
+        addHighlightLayers(map, layerStyle);
+
+        // Mark layers as ready for interaction
+        setLayersReady(true);
 
         // Fit bounds
         if (fitBounds) {
@@ -138,23 +214,22 @@ export function GeoJsonViewer({
         // Diagnostic — check the browser console to verify layers exist
         // and features were parsed by the source.
         console.info(
-          "[GeoJsonViewer] layers:",
+          '[GeoJsonViewer] layers:',
           map.getStyle().layers.map((l) => l.id),
-          "| source features:",
+          '| source features:',
           map.querySourceFeatures(SOURCE_ID).length,
         );
       } catch (err) {
-        console.error("[GeoJsonViewer] Error adding source/layers:", err);
+        console.error('[GeoJsonViewer] Error adding source/layers:', err);
       }
     };
 
     // Catch any internal MapLibre errors
-    const onError = (e: unknown) =>
-      console.error("[GeoJsonViewer] Map error:", e);
-    map.on("error", onError);
+    const onError = (e: unknown) => console.error('[GeoJsonViewer] Map error:', e);
+    map.on('error', onError);
 
     // Use map.on (not .once) so map.off reliably removes the exact handler.
-    map.on("load", setup);
+    map.on('load', setup);
 
     // Also try immediately — covers the case where the map already loaded
     // (e.g. data prop changed after initial mount).
@@ -163,18 +238,19 @@ export function GeoJsonViewer({
     }
 
     return () => {
-      map.off("error", onError);
-      map.off("load", setup);
+      map.off('error', onError);
+      map.off('load', setup);
+      setLayersReady(false);
       removeLayers(map);
     };
   }, [fc, mapRef]);
 
   return (
-    <div
-      ref={mapContainerRef}
-      className={[styles.mapContainer, className].filter(Boolean).join(" ")}
-    >
+    <div ref={mapContainerRef} className={[styles.mapContainer, className].filter(Boolean).join(' ')}>
       {showLayerToggle && <LayerToggle />}
+      {hoverable && hoveredFeature && hoverPosition && (
+        <GeoJsonViewerHoverPopup feature={hoveredFeature} position={hoverPosition} hoverContent={hoverContent} />
+      )}
     </div>
   );
 }
