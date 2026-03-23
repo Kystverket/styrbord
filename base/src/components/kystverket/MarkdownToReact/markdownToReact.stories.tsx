@@ -25,8 +25,7 @@ export const Default: Story = {
 export const Headings: Story = {
   args: {
     markdown: `# Overskrift nivå 1
-## Overskrift nivå 2 
-### Overskrift nivå 3`,
+## Overskrift nivå 2`,
   },
 };
 
