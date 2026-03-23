@@ -4,6 +4,15 @@ on:
   - pull_request
 
 jobs:
+  check-i18n:
+    name: Check i18n
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '24.x'
+      - run: npx @kystverket/sprak-cli check --config ./base/styrbord.sprak.json
   check-version-base:
     name: Is Base NPM version untagged?
     runs-on: ubuntu-latest

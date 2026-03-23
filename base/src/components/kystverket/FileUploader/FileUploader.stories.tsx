@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import cat1 from '/assets/img/cats/Cat 1.jpg';
 import cat2 from '/assets/img/cats/Cat 2.jpg';
+import samplePdf from '/assets/documents/Pikekyst Oppskrift.pdf';
 
 const Wrapper = (props: FileUploaderProps) => {
   const [value, setValue] = useState<FileInfo[]>([...props.files]);
@@ -184,6 +185,15 @@ export const WithError: Story = {
   args: { ...defaultProps, error: 'Det oppstod en feil' },
 };
 
+export const WithCaptureButton: Story = {
+  args: {
+    ...defaultProps,
+    description: 'Capture button vises kun på mobilenheter',
+    withCaptureButton: true,
+    files: [],
+  },
+};
+
 export const WithExistingFiles: Story = {
   args: {
     ...defaultProps,
@@ -283,5 +293,50 @@ export const withFileScanFailed: Story = {
     ...defaultProps,
     description: 'Opplastning av fil vil gi feil ved scanning av filen',
     files: [],
+  },
+};
+
+export const WithFilePreview: Story = {
+  args: {
+    ...defaultProps,
+    allowFilePreview: true,
+    description: 'Klikk på forhåndsvisningsknappen for å se filer i full størrelse',
+    files: [
+      {
+        fileName: 'Pikekyst Oppskrift.pdf',
+        status: 'uploaded',
+        contentType: 'application/pdf',
+        contextId: 'preview-pdf-1',
+        storageId: '1',
+        previewUri: samplePdf,
+        sizeInBytes: 92881,
+      },
+      {
+        fileName: 'file3.jpeg',
+        status: 'uploaded',
+        contentType: 'image/jpeg',
+        thumbnailUri: cat1,
+        contextId: 'preview-img-1',
+        storageId: '1',
+        sizeInBytes: 9281231,
+      },
+      {
+        fileName: 'file4.jpeg',
+        status: 'uploaded',
+        contentType: 'image/jpeg',
+        thumbnailUri: cat2,
+        contextId: 'preview-img-2',
+        storageId: '1',
+        sizeInBytes: 192811,
+      },
+      {
+        fileName: 'readme.txt',
+        status: 'uploaded',
+        contentType: 'text/plain',
+        contextId: 'preview-txt-1',
+        storageId: '1',
+        sizeInBytes: 12122,
+      },
+    ],
   },
 };

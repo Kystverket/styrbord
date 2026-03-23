@@ -1,0 +1,37 @@
+import { ReactNode } from 'react';
+import { Box, Dialog, Heading, Paragraph } from '~/main';
+import classes from './SlotDialog.module.css';
+
+export interface SlotDialogProps {
+  open?: boolean;
+  onClose?: () => void;
+  ref?: React.Ref<HTMLDialogElement>;
+
+  /**Should be enabled with long content */
+  longContent?: boolean;
+  title: string;
+  subtitle?: string;
+  buttons?: ReactNode;
+  children: ReactNode;
+}
+
+export function SlotDialog({ title, subtitle, open, onClose, ref, buttons, children, longContent }: SlotDialogProps) {
+  const DialogBlockClasses = `${classes.dialogBlockBase} ${longContent ? classes.longContent : ''}`;
+
+  return (
+    <Dialog open={open} onClose={onClose} ref={ref} className={classes.slotDialogOverrides} closedby="any">
+      <Box gap={4} className={`${classes.headerBlock} ${DialogBlockClasses}`}>
+        {!!subtitle && <Paragraph>{subtitle}</Paragraph>}
+        <Heading>{title}</Heading>
+      </Box>
+      <Box className={`${classes.contentBlock} ${DialogBlockClasses}`}>
+        <Box>{children}</Box>
+      </Box>
+      <Box className={`${classes.buttonBlock} ${DialogBlockClasses}`}>
+        <Box horizontal gap={12}>
+          {buttons}
+        </Box>
+      </Box>
+    </Dialog>
+  );
+}

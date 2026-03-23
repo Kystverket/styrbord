@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useContext, useRef } from 'react';
+import { ReactNode, useContext, useMemo, useRef, useState } from 'react';
 import { Exif, FileInfo } from './FileUploader.types';
 import { Field, Label, Spinner, ValidationMessage } from '@digdir/designsystemet-react';
 import classes from './FileUploader.module.css';
@@ -15,6 +15,8 @@ import {
 } from '~/components/kystverket/FileUploader/existingFilesDialog/ExistingFilesDialog';
 import { FileUploadActions } from '~/components/kystverket/FileUploader/fileUploadActions/FileUploadActions';
 import { useTranslation } from '~/translations';
+import { FilePreviewerDialog } from '../FilePreviewer/dialog/FilePreviewer-dialog';
+import { FileInfo as PreviewFileInfo } from '../FilePreviewer/FilePreviewer.types';
 
 // Remove all exif data except latitude and longitude
 const pruneUnwantedExifData = (exif: Exif): Exif | undefined => {
@@ -50,8 +52,20 @@ export interface FileUploaderProps {
   allowedFileTypes?: string[];
   required?: boolean | string;
   optional?: boolean | string;
+
+  /**
+   * Adds a button with "Open Camera" on most NON-PC devices
+   * \ Opens on the back camera by default
+   */
+  withCaptureButton?: boolean;
   existingFilesProvider?: () => Promise<ExistingFilesProviderItem[]>;
   variant?: 'dropzone' | 'buttons';
+
+  /**
+   * Enables file preview using the FilePreviewer component.
+   * When enabled, a preview button appears on each uploaded file that can be previewed.
+   */
+  allowFilePreview?: boolean;
 }
 
 const defaultAllowedFileTypes = ['.pdf', '.jpg', '.jpeg', '.png'];
@@ -68,15 +82,51 @@ export const FileUploader = ({
   maxFiles,
   onChange,
   allowedFileTypes = defaultAllowedFileTypes,
+  withCaptureButton,
   existingFilesProvider,
   variant = 'buttons',
+  allowFilePreview,
 }: FileUploaderProps) => {
   const { scopedT } = useTranslation();
   const t = scopedT('fileUploader');
 
   const fileUploaderContext = useContext(FileUploaderContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileCameraInputRef = useRef<HTMLInputElement>(null);
   const dialogRef = useRef<ExistingFilesDialogHandle>(null);
+  const [previewStartIndex, setPreviewStartIndex] = useState<number | null>(null);
+
+  const { previewFiles, contextIdToPreviewIndex } = useMemo(() => {
+    if (!allowFilePreview) {
+      return { previewFiles: [] as PreviewFileInfo[], contextIdToPreviewIndex: new Map<string, number>() };
+    }
+    const result: PreviewFileInfo[] = [];
+    const indexMap = new Map<string, number>();
+    files.forEach((file) => {
+      if (file.status !== 'uploaded') {
+        return;
+      }
+      const src = file.previewUri || file.thumbnailUri;
+      if (file.contentType.startsWith('image/') && src) {
+        indexMap.set(file.contextId, result.length);
+        result.push({
+          fileName: file.fileName,
+          fileSizeInBytes: file.sizeInBytes,
+          contentType: 'image',
+          src,
+        });
+      } else if ((file.contentType === 'application/pdf' || file.contentType.endsWith('/pdf')) && src) {
+        indexMap.set(file.contextId, result.length);
+        result.push({
+          fileName: file.fileName,
+          fileSizeInBytes: file.sizeInBytes,
+          contentType: 'pdf',
+          src,
+        });
+      }
+    });
+    return { previewFiles: result, contextIdToPreviewIndex: indexMap };
+  }, [allowFilePreview, files]);
 
   const onUploadFile = (uploadedFiles: File[]) => {
     Promise.all(
@@ -103,7 +153,7 @@ export const FileUploader = ({
 
   const showUploadingWarning = files.some((f) => f.status === 'uploading');
   const showMaxReachedWarning = !showUploadingWarning && maxFiles && files.length >= maxFiles;
-  const showUploadButton = !showMaxReachedWarning && !showUploadingWarning;
+  const showUploadActions = !showMaxReachedWarning && !showUploadingWarning;
   const attachmentsHeading = t('attachmentsCount').replace('{count}', String(files.length));
 
   return (
@@ -113,24 +163,12 @@ export const FileUploader = ({
           <LabelContent text={label} required={required} optional={optional} />
         </Label>
         {description && <Field.Description>{description}</Field.Description>}
-        <input
-          type="file"
-          style={{ display: 'none' }}
-          ref={fileInputRef}
-          id="fileUploadButton"
-          name="fileUploadButton"
-          accept={allowedFileTypes.join(',')}
-          multiple={multiple}
-          onChange={(e) => {
-            const target = e.target as HTMLInputElement;
-            if (target.files && target.files.length > 0) {
-              onUploadFile(Array.from(target.files));
-              target.value = ''; // Reset the input value to allow re-uploading the same file
-            }
-          }}
-        />
-        {showUploadButton && (
+        {showUploadActions && (
           <FileUploadActions
+            fileCameraInputRef={fileCameraInputRef}
+            allowedFileTypes={allowedFileTypes}
+            multiple={multiple}
+            withCaptureButton={withCaptureButton}
             onUploadFile={onUploadFile}
             dialogRef={dialogRef}
             fileInputRef={fileInputRef}
@@ -155,12 +193,29 @@ export const FileUploader = ({
           <div className={classes.fileList}>
             <Label style={{ pointerEvents: 'none' }}>{attachmentsHeading}</Label>
             {files.map((file) => (
-              <FileUploaderItem key={file.contextId} file={file} t={t} onDeleteFile={onDeleteFile} />
+              <FileUploaderItem
+                key={file.contextId}
+                file={file}
+                t={t}
+                onDeleteFile={onDeleteFile}
+                onPreviewFile={
+                  allowFilePreview && contextIdToPreviewIndex.has(file.contextId)
+                    ? () => setPreviewStartIndex(contextIdToPreviewIndex.get(file.contextId)!)
+                    : undefined
+                }
+              />
             ))}
           </div>
         )}
         {error && <ValidationMessage>{error}</ValidationMessage>}
       </Field>
+      {previewStartIndex !== null && previewFiles.length > 0 && (
+        <FilePreviewerDialog
+          files={previewFiles}
+          startIndex={previewStartIndex}
+          onClose={() => setPreviewStartIndex(null)}
+        />
+      )}
       {existingFilesProvider && (
         <ExistingFilesDialog
           t={t}

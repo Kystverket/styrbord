@@ -89,3 +89,7 @@ export const WithIcon: Story = {
     ),
   },
 };
+
+export const IconButton: Story = {
+  args: { ...defaultProps, variant: 'filled', icon: true, children: <Icon material="file_save" /> },
+};

@@ -15,6 +15,8 @@ export function useOnClickOutsideAndEscape(ref: React.RefObject<HTMLElement | nu
       }
     }
 
+    if (typeof document === 'undefined') return;
+
     document.addEventListener('click', handleClick);
     document.addEventListener('touchstart', handleClick);
     document.addEventListener('keydown', handleKeyDown);

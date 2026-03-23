@@ -1,14 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ExistingFilesProviderItem, FileUploader, FileUploaderProps } from './FileUploader';
+import { ExistingFilesProviderItem, FileUploader, FileUploaderProps } from '../FileUploader/FileUploader';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { PartialStoryFn } from 'storybook/internal/types';
 
 import { useState } from 'react';
-import { FileInfo } from './FileUploader.types';
+import { FileInfo } from '../FileUploader/FileUploader.types';
 
-import { NamespaceProvider } from '@kystverket/sprak-react';
+import { NamespaceProvider, SprakProvider, SprakDebug } from '@kystverket/sprak-react';
 import { STYRBORD_TRANSLATIONS_NAMESPACE } from '~/translations';
 import { Box } from '~/main';
+
+import linkTranslations from './linkTranslations.json';
 
 const Wrapper = (props: FileUploaderProps) => {
   const [value, setValue] = useState<FileInfo[]>([...props.files]);
@@ -21,39 +23,31 @@ const Wrapper = (props: FileUploaderProps) => {
   return <FileUploader {...props} files={value} onChange={onChange} />;
 };
 
-const alternateFileUploaderTranslations = {
-  fileUploader: {
-    buttonLabel: '📂',
-    existingFiles: {
-      buttonOpen: '📂',
-      dialogTitle: '🚀',
-      dialogCancel: '❌',
-      dialogConfirm: '✅',
-      noFilesAvailable: '😢',
-    },
-  },
-};
-
-const AlternateTranslationsDecorator = (Story: PartialStoryFn) => (
+const LinkTranslationsDecorator = (Story: PartialStoryFn) => (
   <Box color="danger" p={24}>
-    <NamespaceProvider
-      ns={STYRBORD_TRANSLATIONS_NAMESPACE}
-      translations={{
-        'nb-NO': alternateFileUploaderTranslations,
-        'nn-NO': alternateFileUploaderTranslations,
-        'en-US': alternateFileUploaderTranslations,
-      }}
-      zIndex={5}
-    >
-      <Story />
-    </NamespaceProvider>
+    <SprakProvider locale="nb-NO" defaultNamespace={STYRBORD_TRANSLATIONS_NAMESPACE} debug>
+      <NamespaceProvider
+        ns={'other-namespace'}
+        translations={{
+          'nb-NO': linkTranslations,
+          'nn-NO': linkTranslations,
+          'en-US': linkTranslations,
+        }}
+        zIndex={5}
+      >
+        <NamespaceProvider ns={STYRBORD_TRANSLATIONS_NAMESPACE} link={'other-namespace:specificForm'} zIndex={10}>
+          <Story />
+          <SprakDebug />
+        </NamespaceProvider>
+      </NamespaceProvider>
+    </SprakProvider>
   </Box>
 );
 
 const meta = {
-  title: 'Form/FileUploader-Translations',
+  title: 'Sprak/Link Translations',
   component: Wrapper,
-  decorators: [AlternateTranslationsDecorator, StyrbordDecorator],
+  decorators: [LinkTranslationsDecorator, StyrbordDecorator],
   tags: ['autodocs', 'kyv', 'beta'],
   argTypes: {},
 } satisfies Meta<typeof Wrapper>;
@@ -117,7 +111,7 @@ const existingFilesProvider = async (): Promise<ExistingFilesProviderItem[]> => 
   ];
 };
 
-export const WithExistingFilesWithTranslations: Story = {
+export const OverriddenTranslations: Story = {
   args: {
     ...defaultProps,
     files: [],

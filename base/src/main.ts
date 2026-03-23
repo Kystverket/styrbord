@@ -30,10 +30,15 @@ export { FilePreviewer, type FilePreviewerProps } from './components/kystverket/
 //  Egenproduserte komponenter
 //^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\
 
+export { StyrbordTranslations } from './translations';
+
 export { default as KyvDivider } from './components/kystverket/KyvDivider/kyvDivider';
 
 export { PageHeading } from './components/kystverket/PageHeading/PageHeading';
 export type { PageHeadingProps } from './components/kystverket/PageHeading/PageHeading';
+
+export { default as MarkdownToReact } from './components/kystverket/MarkdownToReact/markdownToReact';
+export type { MarkdownToReactProps } from './components/kystverket/MarkdownToReact/markdownToReact';
 
 export { default as Alert } from './components/kystverket/Alert/alert';
 export type { AlertProps } from './components/kystverket/Alert/alert';
@@ -112,6 +117,9 @@ export type { NumberInputProps } from './components/designsystemet/NumberInput/N
 export { TextArea } from './components/designsystemet/TextArea/TextArea';
 export type { TextAreaProps } from './components/designsystemet/TextArea/TextArea';
 
+export { RichTextArea } from './components/kystverket/RichTextArea/richTextArea';
+export type { RichTextAreaProps } from './components/kystverket/RichTextArea/richTextArea';
+
 export type { InputSize } from './utils/input/input';
 
 export { Select } from './components/designsystemet/Select/Select';
@@ -132,6 +140,8 @@ export { Avatar } from './components/designsystemet/Avatar/Avatar';
 export type { AvatarProps } from './components/designsystemet/Avatar/Avatar';
 
 export { IdProvider, useIdProvider } from './utils/idContext';
+
+export { SlotDialog, type SlotDialogProps } from './components/kystverket/SlotDialog/SlotDialog';
 
 //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 //

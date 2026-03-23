@@ -56,6 +56,7 @@ function JsonDisplay({
 }) {
   const [jsonData, setJsonData] = useState<Record<string, unknown>>({});
   const selectAllText = (element: HTMLPreElement) => {
+    if (typeof document === 'undefined') return;
     const selection = window.getSelection();
     const range = document.createRange();
     range.selectNodeContents(element);

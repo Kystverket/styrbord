@@ -20,7 +20,7 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^5.0.1",
     "@eslint/js": "^9.22.0",
-    "@kystverket/styrbord-tokens": "^0.3.11",
+    "@kystverket/styrbord-tokens": "^0.3.12",
     "@rollup/plugin-typescript": "^11.1.6",
     "@storybook/addon-docs": "^10.2.13",
     "@storybook/addon-links": "^10.2.13",
@@ -58,7 +58,5 @@
     "vite": "^6.4.1",
     "vite-plugin-svgr": "^4.5.0"
   },
-  "dependencies": {
-    "@kystverket/sprak-react": "^0.0.7"
-  }
+  "dependencies": {}
 }

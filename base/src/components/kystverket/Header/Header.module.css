@@ -1,16 +1,19 @@
 @layer styrbord-modules {
+  /* 64rem (1024px): upwards tablet */
+  /* 37.5rem (600px): upwards phone */
+
   /* ========================= */
   /* Header Container & Layout */
   /* ========================= */
   .headerContainer {
+    container: header / inline-size;
     position: relative;
     height: fit-content;
     min-height: 72px;
-    container: header / inline-size;
-    background-color: var(--ds-color-neutral-background-default);
     border-bottom: 1px solid var(--ds-color-neutral-surface-tinted);
-    border-bottom-left-radius: var(--ds-border-radius-small);
     border-bottom-right-radius: var(--ds-border-radius-small);
+    border-bottom-left-radius: var(--ds-border-radius-small);
+    background-color: var(--ds-color-neutral-background-default);
   }
 
   .headerFlex {
@@ -18,6 +21,19 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+
+    @container header (width < 37.5rem) {
+      flex-direction: column;
+      padding-bottom: var(--ds-size-3);
+      gap: 12px;
+    }
+  }
+
+  .logo {
+    flex-shrink: 0;
+    @container header (width < 37.5rem) {
+      flex-shrink: 1;
+    }
   }
 
   .logoLink {
@@ -27,222 +43,110 @@
     gap: 14px;
     line-height: 0;
     text-decoration: none !important;
-  }
 
-  .logoLink:active {
-    background-color: inherit;
+    &:active {
+      background-color: inherit;
+    }
+
+    @container header (width < 37.5rem) {
+      margin-top: 10px;
+    }
   }
 
   .titleText {
     display: inline-block;
-    font-size: var(--ds-font-size-4);
-    font-weight: lighter;
     color: var(--ds-color-primary-base-default);
-    text-transform: uppercase;
+    font-weight: lighter;
+    font-size: var(--ds-font-size-4);
     letter-spacing: 0.1em !important;
-  }
-
-  /* ========================= */
-  /* Avatar & Profile          */
-  /* ========================= */
-
-  .relativeUntilMobile {
-    position: relative;
-  }
-
-  .profileMenu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    width: 250px;
-    z-index: 999;
-    padding: var(--ds-size-3) var(--ds-size-2);
-    background-color: white;
-    border-radius: var(--ds-border-radius-default);
-    box-shadow:
-      0 0 1px 0 rgba(0, 0, 0, 0.14),
-      0 2px 4px 0 rgba(0, 0, 0, 0.12),
-      0 4px 8px 0 rgba(0, 0, 0, 0.12);
-    font-weight: var(--ds-font-weight-medium);
-    opacity: 1;
-  }
-
-  .profileContainer {
-    flex-grow: 1;
-    gap: 8px;
-    padding: var(--ds-size-3) var(--ds-size-4);
-  }
-
-  .profileMenuName {
-    font-weight: var(--ds-font-weight-medium);
-    margin-top: 2px;
-  }
-
-  .profileMenuDepartment {
-    font-size: var(--ds-font-size-3);
-    color: var(--ds-color-neutral-text-subtle);
-  }
-
-  .profileName {
-    font-weight: var(--ds-font-weight-medium);
-    color: var(--ds-color-primary-text-default);
-    text-align: center;
-  }
-
-  .profileNameShort {
-    display: none;
-  }
-
-  .profileTextContainer {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .profileLogOutButton {
-    display: flex;
-    flex: 1;
-    align-items: center;
-    justify-content: flex-start;
-    border-radius: var(--ds-border-radius-md);
-    border: none;
-    font-weight: var(--ds-font-weight-medium);
-    text-transform: none;
-  }
-
-  .EllipsisOnOverflow {
-    max-width: 100%;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    text-transform: uppercase;
   }
 
   /* ========================= */
   /* Buttons & Menu            */
   /* ========================= */
   .buttonsContainer {
-    gap: var(--spacing-16);
     padding: 4px;
+    gap: var(--spacing-16);
   }
 
-  .headerButton {
+  .navLinkButton {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    gap: var(--ds-size-1);
     padding: var(--ds-size-3) var(--ds-size-4);
+    gap: var(--ds-size-1);
     border-radius: var(--ds-border-radius-md);
+    color: var(--ds-color-text-default);
     font-weight: var(--ds-font-weight-medium);
     text-decoration: none;
     text-transform: none;
     white-space: nowrap;
+    &:hover {
+      background-color: var(--ds-color-surface-hover);
+    }
+    &:active {
+      background-color: var(--ds-color-surface-active);
+    }
+
+    @container header (width < 64rem) {
+      flex-direction: column;
+    }
+
+    @container header (width < 37.5rem) {
+      /* Logic: If any buttons, makes the Header bigger to look better */
+      display: none;
+      /* margin-bottom: 16px; */
+    }
   }
 
-  .menuButton {
+  .mobileMenuToggle {
+    display: none;
+    flex-direction: column;
+    padding: var(--ds-size-3) var(--ds-size-4);
+
+    @container header (width < 37.5rem) {
+      display: flex;
+    }
+  }
+
+  .mobileMenuItem {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-    gap: var(--ds-size-2);
     padding: var(--ds-size-5) var(--ds-size-4);
+    gap: var(--ds-size-2);
     border-radius: var(--ds-border-radius-md);
     font-weight: var(--ds-font-weight-regular);
     text-decoration: none;
+
+    &:hover {
+      background-color: var(--ds-color-surface-hover);
+    }
+    &:active {
+      background-color: var(--ds-color-surface-active);
+    }
   }
 
-  .headerButton:hover,
-  .menuButton:hover {
-    background-color: var(--ds-color-surface-hover);
-  }
-  .headerButton:active,
-  .menuButton:active {
-    background-color: var(--ds-color-surface-active);
-  }
-
-  .menuDropdown {
-    position: absolute;
+  .mobileMenuDropdown {
+    display: none;
     z-index: 999;
+    position: absolute;
     top: 100%;
     left: 0;
-    display: none;
+
     background-color: var(--ds-color-surface-default);
-  }
 
-  @container header (width > 1024px) {
-    .avatarShowOnSmallHeader {
-      display: none;
-    }
-  }
-  /* ========================= */
-  /* Responsive Design         */
-  /* ========================= */
-  @container header (width < 1024px) {
-    .avatarShowOnSmallHeader {
-      display: flex;
-      margin: 0.5px; /*To make it line up with the other buttons. */
-    }
-
-    .avatarShowOnWideHeader {
-      display: none;
-    }
-
-    .disappearBelowTablet {
-      display: none;
-    }
-
-    .profileNameShort {
-      display: block;
-    }
-    .headerButton {
-      flex-direction: column;
-    }
-  }
-
-  @container header (width < 600px) {
-    .disappearBelowPhone {
-      display: none;
-    }
-    /* Logic: If any buttons, makes the Header bigger to look better */
-    .headerButton {
-      margin-bottom: 16px;
-    }
-    .menuDropdown {
+    @container header (width < 37.5rem) {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-start;
-      flex-grow: 1;
       width: 100%;
-      padding: var(--ds-size-3) var(--ds-size-2);
+      padding-inline: var(--ds-size-2);
+      padding-block: var(--ds-size-3);
       border-top: 1px solid var(--ds-color-neutral-surface-hover);
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12);
-      font-size: var(--ds-font-size-4);
-      font-weight: var(--ds-font-weight-regular);
-    }
-    .headerFlex {
-      flex-direction: column;
-      gap: 12px;
-    }
-    .relativeUntilMobile {
-      position: static;
-    }
-    .profileMenu {
-      width: 100%;
-      border-top: 1px solid var(--ds-color-neutral-surface-hover);
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12);
-    }
-    .logoLink {
-      margin-top: 10px;
-    }
-  }
-
-  @container header (width > 600px) {
-    .logo {
-      flex-shrink: 0;
-    }
-    .disappearAbovePhone {
-      display: none;
     }
   }
 }

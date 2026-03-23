@@ -18,20 +18,32 @@
       "dialogConfirm": "Vel",
       "dialogTitle": "Filer",
       "filesCounter": "{shown} av {total} filer",
+      "goBackToCollectionAriaLabel": "Gå tilbake til alle filer",
       "inMenuTitle": "Filer i",
       "noFilesAvailable": "Ingen filer tilgjengelege.",
-      "selectFilesLabel": "Vel filer",
-      "goBackToCollectionAriaLabel": "Gå tilbake til alle filer"
+      "selectFilesLabel": "Vel filer"
     },
     "loading": "Lastar",
     "maxFilesReached": "Maksimalt tal filer er lasta opp.",
+    "previewFileAriaLabel": "Førehandsvis fil",
     "removeFileAriaLabel": "Fjern fil",
     "unknownFilename": "Ukjent filnamn",
     "uploading": "Lastar opp fil...",
-    "uploadingPleaseWait": "Vennlegst vent med å velje fleire filer før alle filene er lasta opp"
+    "uploadingPleaseWait": "Vennlegst vent med å velje fleire filer før alle filene er lasta opp",
+    "withCaptureButtonLabel": "Opne kamera"
+  },
+  "footer": {
+    "contact": "Kontakt Kystverket",
+    "copyright": "Opphavsrett Kystverket © {{currentYear}}",
+    "links": {
+      "arealplanlegging": "Arealplanlegging",
+      "farledsbevistjenesten": "Farledsbevistenesta",
+      "lostjenesten": "Lostenesta",
+      "presse": "Presse",
+      "sjotrafikksentralen": "Sjøtrafikksentralen"
+    }
   },
   "header-alt-text": "Til framsida",
-  "kontakt": "Kontakt Kystverket",
   "kystverket": "Kystverket",
   "loading": "Lastar",
   "organisasjonsnummer": "Organisasjonsnummer",

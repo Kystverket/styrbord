@@ -79,6 +79,13 @@ export const medProfilOgMenyItems: Story = {
       initials: 'ON',
     },
   },
+  decorators: [
+    (Story) => (
+      <div style={{ marginBottom: '300px' }}>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export const medMenyItems: Story = {
@@ -101,6 +108,13 @@ export const medProfil: Story = {
       initials: 'ON',
     },
   },
+  decorators: [
+    (Story) => (
+      <div style={{ marginBottom: '150px' }}>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export const medProfilLenker: Story = {
@@ -108,7 +122,7 @@ export const medProfilLenker: Story = {
     ...defaultProps,
     profile: {
       name: 'Ola Nordmann',
-      department: 'Hav- og kystforvaltning',
+      // department: 'Hav- og kystforvaltning',
       logoutHandler: () => alert('Logger ut'),
       initials: 'ON',
       links: [
@@ -117,4 +131,11 @@ export const medProfilLenker: Story = {
       ],
     },
   },
+  decorators: [
+    (Story) => (
+      <div style={{ marginBottom: '300px' }}>
+        <Story />
+      </div>
+    ),
+  ],
 };

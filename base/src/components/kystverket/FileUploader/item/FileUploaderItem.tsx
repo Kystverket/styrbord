@@ -8,6 +8,7 @@ type FileUploaderItemProps = {
   file: FileInfo;
   t: (key: string) => string;
   onDeleteFile: (file: FileInfo) => void;
+  onPreviewFile?: () => void;
 };
 
 export const getPrefixIcon = (contentType: FileInfo['contentType']): MaterialIconProps['material'] => {
@@ -17,7 +18,7 @@ export const getPrefixIcon = (contentType: FileInfo['contentType']): MaterialIco
   return 'anchor';
 };
 
-export function FileUploaderItem({ file, t, onDeleteFile }: FileUploaderItemProps) {
+export function FileUploaderItem({ file, t, onDeleteFile, onPreviewFile }: FileUploaderItemProps) {
   return (
     <Box className={classes.itemWrapper}>
       <Box className={classes.filePreview}>
@@ -34,7 +35,12 @@ export function FileUploaderItem({ file, t, onDeleteFile }: FileUploaderItemProp
         </Paragraph>
         {file.status === 'error' && <ValidationMessage>{file.error}</ValidationMessage>}
       </Box>
-      <Box align="center" className={classes.buttonContainer}>
+      <Box align="center" horizontal className={classes.buttonContainer}>
+        {onPreviewFile && file.status === 'uploaded' && (
+          <Button onClick={onPreviewFile} aria-label={t('previewFileAriaLabel')} icon variant="ghost" color="neutral">
+            <Icon material="visibility" />
+          </Button>
+        )}
         {(file.status === 'uploaded' || file.status === 'error') && (
           <Button
             onClick={() => onDeleteFile(file)}

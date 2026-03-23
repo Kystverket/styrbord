@@ -1,6 +1,8 @@
 import { FileInfo } from '~/components/kystverket/FilePreviewer/FilePreviewer.types';
 
 export const handleDownload = (selectedFile: FileInfo) => {
+  if (typeof document === 'undefined') return;
+
   if (selectedFile.contentType === 'json') {
     // For JSON, create a blob and download
     const jsonString = JSON.stringify(selectedFile.data, null, 2);
