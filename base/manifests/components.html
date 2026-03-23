@@ -576,13 +576,13 @@
 <header>
   <div class="wrap">
     <h1>Manifest Debugger</h1>
-    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">13/75 prop type errors</a><a class="filter-pill info" data-k="infos" href="#filter-infos">75/75 infos</a><a class="filter-pill err" data-k="story-errors" href="#filter-story-errors">68/425 story errors</a><a class="filter-pill ok" data-k="docs" href="#filter-docs">1 doc ok</a></div>
+    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">13/75 prop type errors</a><a class="filter-pill info" data-k="infos" href="#filter-infos">75/75 infos</a><a class="filter-pill err" data-k="story-errors" href="#filter-story-errors">68/427 story errors</a><a class="filter-pill ok" data-k="docs" href="#filter-docs">1 doc ok</a></div>
   </div>
 </header>
 <main>
   <div class="wrap">
     <div class="note info" style="margin-bottom: 16px;">
-            <strong>Tip:</strong> You are using <code>react-docgen</code> (the default). Generation took <strong>1.9s</strong>. For higher quality prop types, consider switching to <code>react-docgen-typescript</code> in your <code>main.ts</code>:
+            <strong>Tip:</strong> You are using <code>react-docgen</code> (the default). Generation took <strong>2.0s</strong>. For higher quality prop types, consider switching to <code>react-docgen-typescript</code> in your <code>main.ts</code>:
             <pre><code>typescript: {
   reactDocgen: 'react-docgen-typescript',
 }</code></pre>
@@ -10490,9 +10490,9 @@ text?: string | null</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> SlotDialog</h2>
       <div class="badges">
-        <label for="c-52-components-slotdialog-props" class="badge ok as-toggle">8 prop types</label>
+        <label for="c-52-components-slotdialog-props" class="badge ok as-toggle">3 prop types</label>
         <label for="c-52-components-slotdialog-info" class="badge info as-toggle">1 info</label>
-        <label for="c-52-components-slotdialog-stories" class="badge ok as-toggle">3 stories</label>
+        <label for="c-52-components-slotdialog-stories" class="badge ok as-toggle">5 stories</label>
         
       </div>
     </div>
@@ -10524,25 +10524,15 @@ text?: string | null</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">8 prop types</span>
+              <span class="badge ok">3 prop types</span>
             </div>
-            <pre><code>Component: src/components/kystverket/SlotDialog/SlotDialog.tsx::SlotDialog</code></pre>
+            <pre><code>Component: src/components/deprecated/ErrorLabel/errorLabel.tsx::default</code></pre>
             <pre><code>Props:</code></pre>
-            <pre><code>buttons?: ReactNode
+            <pre><code>children?: ReactNode
 
-children: ReactNode
+error?: string | null
 
-longContent?: boolean
-
-onClose?: () =&gt; void
-
-open?: boolean
-
-ref?: React.Ref&lt;HTMLDialogElement&gt;
-
-subtitle?: string
-
-title: string</code></pre>
+text?: string | null</code></pre>
           </div>
         </div>
     
@@ -10554,7 +10544,7 @@ title: string</code></pre>
                 <div class="row">
                   <span class="ex-name">Imports</span>
                 </div>
-                <pre><code>import { Button, Paragraph, SlotDialog } from "@kystverket/styrbord";</code></pre>
+                <pre><code>import { Box, Button, Input, Label, Paragraph, SlotDialog } from "@kystverket/styrbord";</code></pre>
               </div>
           
           
@@ -10571,23 +10561,16 @@ title: string</code></pre>
     return (
         &lt;&gt;
             &lt;Button onClick={() =&gt; setIsOpen(true)}&gt;Open dialog&lt;/Button&gt;
-            &lt;SlotDialog
-                open={isOpen}
-                onClose={() =&gt; setIsOpen(false)}
-                title=&quot;Dialog title&quot;
-                buttons={
-                  &lt;&gt;
-                    &lt;Button variant=&quot;filled&quot; onClick={() =&gt; setIsOpen(false)}&gt;
-                      Confirm
-                    &lt;/Button&gt;
-                    &lt;Button variant=&quot;outline&quot; onClick={() =&gt; setIsOpen(false)}&gt;
-                      Cancel
-                    &lt;/Button&gt;
-                  &lt;/&gt;
-                }&gt;
+            &lt;SlotDialog open={isOpen} onClose={() =&gt; setIsOpen(false)} title=&quot;Dialog title&quot;&gt;
                 &lt;Paragraph&gt;Some random filler text that fills the entire width to test that it wraps correctly or that it at least looks
                               nice
                             &lt;/Paragraph&gt;
+                &lt;SlotDialog.Buttons&gt;
+                    &lt;Button variant=&quot;filled&quot; onClick={() =&gt; setIsOpen(false)}&gt;Confirm
+                                  &lt;/Button&gt;
+                    &lt;Button variant=&quot;outline&quot; onClick={() =&gt; setIsOpen(false)}&gt;Cancel
+                                  &lt;/Button&gt;
+                &lt;/SlotDialog.Buttons&gt;
             &lt;/SlotDialog&gt;
         &lt;/&gt;
     );
@@ -10606,23 +10589,14 @@ title: string</code></pre>
     return (
         &lt;&gt;
             &lt;Button onClick={() =&gt; dialogRef.current?.showModal()}&gt;Open dialog&lt;/Button&gt;
-            &lt;SlotDialog
-                ref={dialogRef}
-                title=&quot;Dialog title&quot;
-                subtitle=&quot;Subtitle&quot;
-                buttons={
-                  &lt;&gt;
-                    &lt;Button variant=&quot;filled&quot; onClick={() =&gt; dialogRef.current?.close()}&gt;
-                      Confirm
-                    &lt;/Button&gt;
-                    &lt;Button variant=&quot;outline&quot; onClick={() =&gt; dialogRef.current?.close()}&gt;
-                      Cancel
-                    &lt;/Button&gt;
-                  &lt;/&gt;
-                }&gt;
+            &lt;SlotDialog ref={dialogRef} title=&quot;Dialog title&quot; subtitle=&quot;Subtitle&quot;&gt;
                 &lt;Paragraph&gt;Some random filler text that fills the entire width to test that it wraps correctly or that it at least looks
                               nice
                             &lt;/Paragraph&gt;
+                &lt;SlotDialog.Buttons&gt;
+                    &lt;Button variant=&quot;filled&quot; onClick={() =&gt; dialogRef.current?.close()}&gt;Close
+                                  &lt;/Button&gt;
+                &lt;/SlotDialog.Buttons&gt;
             &lt;/SlotDialog&gt;
         &lt;/&gt;
     );
@@ -10647,23 +10621,113 @@ title: string</code></pre>
                 open={isOpen}
                 onClose={() =&gt; setIsOpen(false)}
                 title=&quot;Dialog title&quot;
-                subtitle=&quot;Subtitle&quot;
-                buttons={
-                  &lt;&gt;
-                    &lt;Button variant=&quot;filled&quot; onClick={() =&gt; setIsOpen(false)}&gt;
-                      Confirm
-                    &lt;/Button&gt;
-                    &lt;Button variant=&quot;outline&quot; onClick={() =&gt; setIsOpen(false)}&gt;
-                      Cancel
-                    &lt;/Button&gt;
-                  &lt;/&gt;
-                }&gt;
+                subtitle=&quot;Subtitle&quot;&gt;
                 &lt;Paragraph&gt;Some random filler text that fills the entire width to test that it wraps correctly or that it at least looks
                               nice
                             &lt;/Paragraph&gt;
                 {Array.from({ length: contentParagraphCount }, (_, index) =&gt; (
                   &lt;Paragraph key={index}&gt;Dialog content goes here.&lt;/Paragraph&gt;
                 ))}
+                &lt;Button variant=&quot;outline&quot; onClick={() =&gt; setIsOpen(false)}&gt;Cancel
+                            &lt;/Button&gt;
+            &lt;/SlotDialog&gt;
+        &lt;/&gt;
+    );
+};</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">No Buttons</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const NoButtons = () =&gt; {
+    const [isOpen, setIsOpen] = useState(false);
+    const contentParagraphCount = 30;
+
+    return (
+        &lt;&gt;
+            &lt;Button onClick={() =&gt; setIsOpen(true)}&gt;Open dialog&lt;/Button&gt;
+            &lt;SlotDialog
+                longContent
+                open={isOpen}
+                onClose={() =&gt; setIsOpen(false)}
+                title=&quot;Dialog title&quot;
+                subtitle=&quot;Subtitle&quot;&gt;
+                &lt;Paragraph&gt;Some random filler text that fills the entire width to test that it wraps correctly or that it at least looks
+                              nice
+                            &lt;/Paragraph&gt;
+                {Array.from({ length: contentParagraphCount }, (_, index) =&gt; (
+                  &lt;Paragraph key={index}&gt;Dialog content goes here.&lt;/Paragraph&gt;
+                ))}
+            &lt;/SlotDialog&gt;
+        &lt;/&gt;
+    );
+};</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Multiple Pages</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const MultiplePages = () =&gt; {
+    const [isOpen, setIsOpen] = useState(false);
+    const [page, setPage] = useState(0);
+    const totalPages = 4;
+    const isLastPage = page === totalPages - 1;
+
+    const closeAndReset = () =&gt; {
+      setIsOpen(false);
+      setPage(0);
+    };
+
+    return (
+        &lt;&gt;
+            &lt;Button onClick={() =&gt; setIsOpen(true)}&gt;Open dialog&lt;/Button&gt;
+            &lt;SlotDialog
+                longContent
+                open={isOpen}
+                onClose={closeAndReset}
+                title=&quot;Multi-page dialog&quot;
+                subtitle={`Step ${page + 1} of ${totalPages}`}&gt;
+                &lt;Box gap={16}&gt;
+                    &lt;Paragraph&gt;This is page {page + 1}.&lt;/Paragraph&gt;
+                    &lt;Paragraph&gt;Use {isLastPage ? &#39;&quot;Submit&quot;&#39; : &#39;&quot;Next&quot;&#39;}to continue.&lt;/Paragraph&gt;
+                    {[0, 2].includes(page) &amp;&amp; (
+                      &lt;&gt;
+                        &lt;Label&gt;
+                          Navn
+                          &lt;Input /&gt;
+                        &lt;/Label&gt;
+                        &lt;Label&gt;
+                          Input 2
+                          &lt;Input /&gt;
+                        &lt;/Label&gt;
+                      &lt;/&gt;
+                    )}
+                &lt;/Box&gt;
+                &lt;SlotDialog.Buttons&gt;
+                    {!isLastPage &amp;&amp; (
+                      &lt;Button variant=&quot;filled&quot; onClick={() =&gt; setPage((prev) =&gt; prev + 1)}&gt;
+                        Next
+                      &lt;/Button&gt;
+                    )}
+                    {isLastPage &amp;&amp; (
+                      &lt;Button variant=&quot;filled&quot; onClick={closeAndReset}&gt;
+                        Submit
+                      &lt;/Button&gt;
+                    )}
+                    {page &gt; 0 &amp;&amp; (
+                      &lt;Button variant=&quot;outline&quot; onClick={() =&gt; setPage((prev) =&gt; prev - 1)}&gt;
+                        Back
+                      &lt;/Button&gt;
+                    )}
+                    &lt;Button variant=&quot;ghost&quot; onClick={closeAndReset}&gt;Cancel
+                                  &lt;/Button&gt;
+                &lt;/SlotDialog.Buttons&gt;
             &lt;/SlotDialog&gt;
         &lt;/&gt;
     );
