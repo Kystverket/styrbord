@@ -1,12 +1,6 @@
-import React, {
-  createContext,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-} from "react";
-import type { LayerSpecification } from "maplibre-gl";
-import type { LayerDefinition } from "~/utility/layers.types";
+import React, { createContext, ReactNode, useCallback, useEffect, useMemo } from 'react';
+import type { LayerSpecification } from 'maplibre-gl';
+import type { LayerDefinition } from '~/utility/layers.types';
 
 // ---------------------------------------------------------------------------
 // WMS catalog layer entry (parsed from GetCapabilities)
@@ -32,6 +26,10 @@ export interface WmsCatalogLayersContextValue {
   layers: LayerDefinition[];
   /** Set of layer ids that are currently visible on the map. */
   visibleLayerIds: Set<string>;
+  /** The derived base WMS URL (without service params) for building GetFeatureInfo requests. */
+  baseUrl: string;
+  /** Raw catalog entries parsed from GetCapabilities (name + title). */
+  catalogEntries: WmsCatalogLayer[];
   /** Toggle visibility of a WMS catalog layer. */
   toggleLayer: (id: string) => void;
   /** Make a WMS catalog layer visible. */
@@ -47,14 +45,15 @@ const defaultValue: WmsCatalogLayersContextValue = {
   error: null,
   layers: [],
   visibleLayerIds: new Set(),
+  baseUrl: '',
+  catalogEntries: [],
   toggleLayer: () => {},
   showLayer: () => {},
   hideLayer: () => {},
   isVisible: () => false,
 };
 
-export const WmsCatalogLayersContext =
-  createContext<WmsCatalogLayersContextValue>(defaultValue);
+export const WmsCatalogLayersContext = createContext<WmsCatalogLayersContextValue>(defaultValue);
 
 // ---------------------------------------------------------------------------
 // XML parsing helpers
@@ -62,19 +61,19 @@ export const WmsCatalogLayersContext =
 
 function parseGetCapabilities(xml: string): WmsCatalogLayer[] {
   const parser = new DOMParser();
-  const doc = parser.parseFromString(xml, "text/xml");
+  const doc = parser.parseFromString(xml, 'text/xml');
 
-  const parserError = doc.querySelector("parsererror");
+  const parserError = doc.querySelector('parsererror');
   if (parserError) {
-    throw new Error("Failed to parse WMS GetCapabilities XML");
+    throw new Error('Failed to parse WMS GetCapabilities XML');
   }
 
   const layers: WmsCatalogLayer[] = [];
-  const layerElements = doc.querySelectorAll("Layer > Layer");
+  const layerElements = doc.querySelectorAll('Layer > Layer');
 
   for (const el of layerElements) {
-    const nameEl = el.querySelector(":scope > Name");
-    const titleEl = el.querySelector(":scope > Title");
+    const nameEl = el.querySelector(':scope > Name');
+    const titleEl = el.querySelector(':scope > Title');
     const name = nameEl?.textContent?.trim();
     const title = titleEl?.textContent?.trim();
     if (name) {
@@ -85,43 +84,39 @@ function parseGetCapabilities(xml: string): WmsCatalogLayer[] {
   return layers;
 }
 
-function buildWmsLayerDefinition(
-  entry: WmsCatalogLayer,
-  baseUrl: string,
-  attribution?: string,
-): LayerDefinition {
+function buildWmsLayerDefinition(entry: WmsCatalogLayer, baseUrl: string, attribution?: string): LayerDefinition {
   const id = `wms-catalog-${entry.name}`;
   const sourceId = `wms-cat-${entry.name}`;
 
-  const separator = baseUrl.includes("?") ? "&" : "?";
+  const separator = baseUrl.includes('?') ? '&' : '?';
   const queryParams = {
-    SERVICE: "WMS",
-    VERSION: "1.3.0",
-    REQUEST: "GetMap",
+    SERVICE: 'WMS',
+    VERSION: '1.3.0',
+    REQUEST: 'GetMap',
     LAYERS: entry.name,
-    STYLES: "",
-    CRS: "EPSG:3857",
-    BBOX: "{bbox-epsg-3857}",
-    EXCEPTIONS: "XML",
-    WIDTH: "256",
-    HEIGHT: "256",
-    FORMAT: "image/png",
-    TRANSPARENT: "TRUE",
+    STYLES: '',
+    CRS: 'EPSG:3857',
+    BBOX: '{bbox-epsg-3857}',
+    EXCEPTIONS: 'XML',
+    WIDTH: '256',
+    HEIGHT: '256',
+    FORMAT: 'image/png',
+    TRANSPARENT: 'TRUE',
   };
 
   return {
     id,
     label: entry.title,
-    category: "WMS-katalog",
+    category: 'WMS-katalog',
     defaultVisible: false,
     sources: {
       [sourceId]: {
-        type: "raster",
+        type: 'raster',
         tiles: [
           `${baseUrl}${separator}` +
             Object.entries(queryParams)
               .map(([key, value]) => `${key}=${value}`)
-              .join("&"),
+              .join('&'),
         ],
         tileSize: 256,
         attribution,
@@ -130,7 +125,7 @@ function buildWmsLayerDefinition(
     layers: [
       {
         id: `${sourceId}-raster`,
-        type: "raster",
+        type: 'raster',
         source: sourceId,
       } as LayerSpecification,
     ],
@@ -140,15 +135,15 @@ function buildWmsLayerDefinition(
 /** Derive the base WMS URL from a GetCapabilities URL. */
 function deriveBaseUrl(capabilitiesUrl: string): string {
   const url = new URL(capabilitiesUrl);
-  url.searchParams.delete("service");
-  url.searchParams.delete("SERVICE");
-  url.searchParams.delete("request");
-  url.searchParams.delete("REQUEST");
-  url.searchParams.delete("version");
-  url.searchParams.delete("VERSION");
+  url.searchParams.delete('service');
+  url.searchParams.delete('SERVICE');
+  url.searchParams.delete('request');
+  url.searchParams.delete('REQUEST');
+  url.searchParams.delete('version');
+  url.searchParams.delete('VERSION');
   const remaining = url.toString();
   // Strip trailing ? or & left over
-  return remaining.replace(/[?&]$/, "");
+  return remaining.replace(/[?&]$/, '');
 }
 
 // ---------------------------------------------------------------------------
@@ -163,24 +158,13 @@ export interface WmsCatalogLayersProviderProps {
   attribution?: string;
 }
 
-export const WmsCatalogLayersProvider = ({
-  children,
-  capabilitiesUrl,
-  attribution,
-}: WmsCatalogLayersProviderProps) => {
+export const WmsCatalogLayersProvider = ({ children, capabilitiesUrl, attribution }: WmsCatalogLayersProviderProps) => {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
-  const [catalogEntries, setCatalogEntries] = React.useState<WmsCatalogLayer[]>(
-    [],
-  );
-  const [visibleLayerIds, setVisibleLayerIds] = React.useState<Set<string>>(
-    new Set(),
-  );
+  const [catalogEntries, setCatalogEntries] = React.useState<WmsCatalogLayer[]>([]);
+  const [visibleLayerIds, setVisibleLayerIds] = React.useState<Set<string>>(new Set());
 
-  const baseUrl = useMemo(
-    () => deriveBaseUrl(capabilitiesUrl),
-    [capabilitiesUrl],
-  );
+  const baseUrl = useMemo(() => deriveBaseUrl(capabilitiesUrl), [capabilitiesUrl]);
 
   useEffect(() => {
     let cancelled = false;
@@ -210,10 +194,7 @@ export const WmsCatalogLayersProvider = ({
   }, [capabilitiesUrl]);
 
   const layers = useMemo(
-    () =>
-      catalogEntries.map((entry) =>
-        buildWmsLayerDefinition(entry, baseUrl, attribution),
-      ),
+    () => catalogEntries.map((entry) => buildWmsLayerDefinition(entry, baseUrl, attribution)),
     [catalogEntries, baseUrl, attribution],
   );
 
@@ -247,10 +228,7 @@ export const WmsCatalogLayersProvider = ({
     });
   }, []);
 
-  const isVisible = useCallback(
-    (id: string) => visibleLayerIds.has(id),
-    [visibleLayerIds],
-  );
+  const isVisible = useCallback((id: string) => visibleLayerIds.has(id), [visibleLayerIds]);
 
   const value = useMemo<WmsCatalogLayersContextValue>(
     () => ({
@@ -258,26 +236,15 @@ export const WmsCatalogLayersProvider = ({
       error,
       layers,
       visibleLayerIds,
+      baseUrl,
+      catalogEntries,
       toggleLayer,
       showLayer,
       hideLayer,
       isVisible,
     }),
-    [
-      loading,
-      error,
-      layers,
-      visibleLayerIds,
-      toggleLayer,
-      showLayer,
-      hideLayer,
-      isVisible,
-    ],
+    [loading, error, layers, visibleLayerIds, baseUrl, catalogEntries, toggleLayer, showLayer, hideLayer, isVisible],
   );
 
-  return (
-    <WmsCatalogLayersContext.Provider value={value}>
-      {children}
-    </WmsCatalogLayersContext.Provider>
-  );
+  return <WmsCatalogLayersContext.Provider value={value}>{children}</WmsCatalogLayersContext.Provider>;
 };

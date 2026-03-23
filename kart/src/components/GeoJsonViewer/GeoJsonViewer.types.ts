@@ -4,6 +4,7 @@ import type maplibregl from 'maplibre-gl';
 
 import { MapBaseProps } from '../shared/MapPicker.types';
 import type { InteractiveFeature } from '~/hooks/useFeatureInteraction';
+import type { CoordinateClickResult } from '~/utility/wmsGetFeatureInfo';
 
 /**
  * Styling options for the GeoJSON layers rendered on the map.
@@ -67,4 +68,10 @@ export interface GeoJsonViewerProps extends MapBaseProps {
    * If a feature's type is not in this map, the default content (type name) is shown.
    */
   hoverContent?: Record<string, (feature: InteractiveFeature) => ReactNode>;
+
+  /**
+   * Called when the user clicks on the map. The result includes the clicked
+   * coordinate and WMS GetFeatureInfo results for all visible WMS catalog layers.
+   */
+  onCoordinateClick?: (result: CoordinateClickResult) => void;
 }

@@ -4,7 +4,9 @@ import type maplibregl from 'maplibre-gl';
 
 import styles from '~/components/shared/MapPicker.module.css';
 import { useMaplibreMap } from '~/hooks/useMaplibreMap';
+import { useWmsFeatureInfo } from '~/hooks/useWmsFeatureInfo';
 import { computeBounds } from '~/utility/geojson';
+import type { Coordinate } from '~/utility/types';
 import { toFeatureCollection } from '../GeoJsonViewer/GeoJsonViewer.utils';
 import type { DrawMode, GeoJsonEditorProps } from './GeoJsonEditor.types';
 import { useTerraDraw } from './useTerraDraw';
@@ -50,11 +52,51 @@ export function GeoJsonEditor({
   onHover,
   onSelect,
   hoverContent,
+  onCoordinateClick,
 }: GeoJsonEditorProps) {
   const { mapContainerRef, mapRef } = useMaplibreMap({
     disabled,
     height,
   });
+
+  // ----- Coordinate click → WMS feature info -----
+  const [clickedCoordinate, setClickedCoordinate] = useState<Coordinate | null>(null);
+  const activeModeRef = useRef<string>('static');
+
+  const onCoordinateClickRef = useRef(onCoordinateClick);
+  onCoordinateClickRef.current = onCoordinateClick;
+
+  const { result: featureInfoResult } = useWmsFeatureInfo({
+    mapRef,
+    coordinate: clickedCoordinate,
+    enabled: !!onCoordinateClick,
+  });
+
+  useEffect(() => {
+    if (featureInfoResult) {
+      onCoordinateClickRef.current?.(featureInfoResult);
+    }
+  }, [featureInfoResult]);
+
+  // Install map click listener for coordinate click (suppressed during drawing)
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || disabled || !onCoordinateClickRef.current) return;
+
+    const handleClick = (e: maplibregl.MapMouseEvent) => {
+      // Suppress during active drawing (point/linestring/polygon placement).
+      const mode = activeModeRef.current;
+      if (mode === 'point' || mode === 'linestring' || mode === 'polygon') return;
+
+      const { lng, lat } = e.lngLat;
+      setClickedCoordinate({ latitude: lat, longitude: lng });
+    };
+
+    map.on('click', handleClick);
+    return () => {
+      map.off('click', handleClick);
+    };
+  }, [mapRef, disabled]);
 
   // Track hover state
   const [hoveredFeature, setHoveredFeature] = useState<InteractiveFeature | null>(null);
@@ -85,6 +127,10 @@ export function GeoJsonEditor({
   });
 
   const { activeMode, setActiveMode, deleteSelected, hasSelection } = terraDrawResult;
+
+  // Keep activeModeRef in sync so the click handler can check it.
+  activeModeRef.current = activeMode;
+
   const loadInitialData = (
     terraDrawResult as unknown as {
       loadInitialData: (v: FeatureCollection | undefined) => void;

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useCallback } from 'react';
+import { useEffect, useMemo, useState, useCallback, useRef } from 'react';
 import type { GeoJSONSource } from 'maplibre-gl';
 import type maplibregl from 'maplibre-gl';
 
@@ -7,6 +7,8 @@ import type { GeoJsonStyle, GeoJsonViewerProps } from './GeoJsonViewer.types';
 import { computeBounds } from '~/utility/geojson';
 import { useMaplibreMap } from '~/hooks/useMaplibreMap';
 import { useFeatureInteraction, type InteractiveFeature } from '~/hooks/useFeatureInteraction';
+import { useWmsFeatureInfo } from '~/hooks/useWmsFeatureInfo';
+import type { Coordinate } from '~/utility/types';
 import {
   DEFAULT_STYLE,
   FILL_LAYER,
@@ -51,6 +53,7 @@ export function GeoJsonViewer({
   onHover,
   onSelect,
   hoverContent,
+  onCoordinateClick,
 }: GeoJsonViewerProps) {
   const layerStyle: Required<GeoJsonStyle> = {
     ...DEFAULT_STYLE,
@@ -69,10 +72,38 @@ export function GeoJsonViewer({
     y: number;
   } | null>(null);
 
+  // ----- Coordinate click → WMS feature info -----
+  const [clickedCoordinate, setClickedCoordinate] = useState<Coordinate | null>(null);
+
+  const handleMapClick = useCallback(
+    (coord: Coordinate) => {
+      if (onCoordinateClick) {
+        setClickedCoordinate(coord);
+      }
+    },
+    [onCoordinateClick],
+  );
+
   const { mapContainerRef, mapRef } = useMaplibreMap({
     disabled,
     height,
+    onMapClick: onCoordinateClick ? handleMapClick : undefined,
   });
+
+  const onCoordinateClickRef = useRef(onCoordinateClick);
+  onCoordinateClickRef.current = onCoordinateClick;
+
+  const { result: featureInfoResult } = useWmsFeatureInfo({
+    mapRef,
+    coordinate: clickedCoordinate,
+    enabled: !!onCoordinateClick,
+  });
+
+  useEffect(() => {
+    if (featureInfoResult) {
+      onCoordinateClickRef.current?.(featureInfoResult);
+    }
+  }, [featureInfoResult]);
 
   // ----- Feature interaction hook -----
   const handleHover = useCallback(

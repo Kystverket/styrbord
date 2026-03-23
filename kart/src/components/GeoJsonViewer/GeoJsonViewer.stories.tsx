@@ -6,6 +6,7 @@ import sampleGeoJson from '../../../assets/documents/geojson.json';
 import { ViewBoundsProvider } from '~/utility/viewBoundsContext';
 import { BaseLayersProvider } from '~/utility/baseLayersContext';
 import { BuiltInLayersProvider } from '~/utility/builtInLayersContext';
+import { WmsCatalogLayersProvider } from '~/utility/wmsCatalogLayersContext';
 import { CustomLayersProvider } from '~/utility/customLayersContext';
 
 const meta = {
@@ -516,6 +517,44 @@ export const NonInteractive: Story = {
     docs: {
       description: {
         story: 'Both hover and selection are disabled. The map is view-only.',
+      },
+    },
+  },
+};
+
+// ---- Coordinate click with WMS feature info ----
+export const CoordinateClick: Story = {
+  args: {
+    data: pointCollection,
+    height: '500px',
+    showLayerToggle: true,
+    onCoordinateClick: (result) => {
+      console.log('Coordinate clicked:', result.coordinate);
+      console.log('WMS layer results:', result.layerResults);
+      for (const layer of result.layerResults) {
+        console.log(`  ${layer.layerName}:`, layer.html);
+      }
+    },
+  },
+  render: (args) => (
+    <ViewBoundsProvider>
+      <BaseLayersProvider>
+        <WmsCatalogLayersProvider
+          capabilitiesUrl="https://services.kystverket.no/wms.ashx?service=WMS&request=GetCapabilities"
+          attribution='&copy; <a href="https://www.kystverket.no/">Kystverket</a>'
+        >
+          <CustomLayersProvider>
+            <GeoJsonViewer {...args} />
+          </CustomLayersProvider>
+        </WmsCatalogLayersProvider>
+      </BaseLayersProvider>
+    </ViewBoundsProvider>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Click on the map to trigger `onCoordinateClick`. Enable WMS catalog layers via the layer toggle, then click to see GetFeatureInfo results logged to the console. Open the browser console or the Storybook Actions panel to see the output.',
       },
     },
   },
