@@ -15,6 +15,8 @@ export function SlotDialogButtonsProvider({ children }: { children: ReactNode })
   const [buttons, setButtons] = useState<ReactNode>(null);
 
   return (
-    <SlotDialogButtonsContainerContext value={{ setButtons, buttons }}>{children}</SlotDialogButtonsContainerContext>
+    <SlotDialogButtonsContainerContext.Provider value={{ setButtons, buttons }}>
+      {children}
+    </SlotDialogButtonsContainerContext.Provider>
   );
 }

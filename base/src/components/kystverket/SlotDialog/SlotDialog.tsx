@@ -19,7 +19,7 @@ export interface SlotDialogProps {
   children: ReactNode;
 }
 
-export function SlotDialog({ title, subtitle, open, onClose, ref, children, longContent }: SlotDialogProps) {
+function SlotDialogRoot({ title, subtitle, open, onClose, ref, children, longContent }: SlotDialogProps) {
   const DialogBlockClasses = `${classes.dialogBlockBase} ${longContent ? classes.longContent : ''}`;
 
   return (
@@ -54,4 +54,10 @@ function SlotDialogButtonsBlock({ className }: { className: string }) {
   );
 }
 
-SlotDialog.Buttons = SlotDialogButtons;
+type SlotDialogComponent = typeof SlotDialogRoot & {
+  Buttons: typeof SlotDialogButtons;
+};
+
+export const SlotDialog = Object.assign(SlotDialogRoot, {
+  Buttons: SlotDialogButtons,
+}) as SlotDialogComponent;
