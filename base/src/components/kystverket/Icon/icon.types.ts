@@ -105,6 +105,7 @@ export const iconIdList = [
   'format_align_justify',
   'undo',
   'redo',
+  'visibility',
 ] as const;
 
 export type IconId = (typeof iconIdList)[number];

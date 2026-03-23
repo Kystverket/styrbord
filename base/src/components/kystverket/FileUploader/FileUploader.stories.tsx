@@ -294,3 +294,11 @@ export const withFileScanFailed: Story = {
     files: [],
   },
 };
+
+export const WithFilePreview: Story = {
+  args: {
+    ...defaultProps,
+    allowFilePreview: true,
+    description: 'Klikk på forhåndsvisningsknappen for å se filer i full størrelse',
+  },
+};

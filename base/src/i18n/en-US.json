@@ -25,6 +25,7 @@
     },
     "loading": "Loading",
     "maxFilesReached": "Maximum number of files uploaded.",
+    "previewFileAriaLabel": "Preview file",
     "removeFileAriaLabel": "Remove file",
     "unknownFilename": "Unknown filename",
     "uploading": "Uploading file...",
@@ -32,14 +33,14 @@
     "withCaptureButtonLabel": "Open camera"
   },
   "footer": {
-    "copyright": "Copyright Norwegian Coastal Administration © {{currentYear}}",
     "contact": "Contact the Norwegian Coastal Administration",
+    "copyright": "Copyright Norwegian Coastal Administration © {{currentYear}}",
     "links": {
-      "lostjenesten": "Pilotage service",
+      "arealplanlegging": "Spatial planning",
       "farledsbevistjenesten": "Fairway dues service",
-      "sjotrafikksentralen": "Vessel traffic service",
+      "lostjenesten": "Pilotage service",
       "presse": "Press",
-      "arealplanlegging": "Spatial planning"
+      "sjotrafikksentralen": "Vessel traffic service"
     }
   },
   "header-alt-text": "To the front page",
