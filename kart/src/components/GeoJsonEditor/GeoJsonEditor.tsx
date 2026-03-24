@@ -2,7 +2,8 @@ import { useEffect, useMemo, useState, useCallback, useRef } from 'react';
 import type { FeatureCollection, Feature, Geometry, GeoJsonProperties } from 'geojson';
 import type maplibregl from 'maplibre-gl';
 
-import styles from '~/components/shared/MapPicker.module.css';
+import mapStyles from '~/components/shared/MapPicker.module.css';
+import editorStyles from './GeoJsonEditor.module.css';
 import { useMaplibreMap } from '~/hooks/useMaplibreMap';
 import { useWmsFeatureInfo } from '~/hooks/useWmsFeatureInfo';
 import { computeBounds } from '~/utility/geojson';
@@ -180,6 +181,19 @@ export function GeoJsonEditor({
     let prevHoveredId: string | number | null = null;
 
     const handleMouseMove = (e: maplibregl.MapMouseEvent) => {
+      // Suppress hover while actively drawing
+      const mode = activeModeRef.current;
+      if (mode === 'point' || mode === 'linestring' || mode === 'polygon') {
+        if (prevHoveredId !== null) {
+          prevHoveredId = null;
+          setHoveredFeature(null);
+          setHoverPosition(null);
+          onHoverRef.current?.(null, null);
+          map.getCanvas().style.cursor = '';
+        }
+        return;
+      }
+
       // Query all rendered features at the mouse position
       const features = map.queryRenderedFeatures(e.point);
 
@@ -232,7 +246,7 @@ export function GeoJsonEditor({
   }, [mapRef, disabled, hoverable]);
 
   return (
-    <div ref={mapContainerRef} className={[styles.mapContainer, className].filter(Boolean).join(' ')}>
+    <div className={[editorStyles.editorWrapper, className].filter(Boolean).join(' ')}>
       {!disabled && (
         <GeoJsonEditorToolbar
           modes={modes}
@@ -244,18 +258,20 @@ export function GeoJsonEditor({
           onDelete={deleteSelected}
         />
       )}
-      {showLayerToggle && <LayerToggle />}
-      {!disabled && (
-        <MapCenterAction
-          mapRef={mapRef}
-          visible={
-            showCenterAction && (activeMode === 'point' || activeMode === 'linestring' || activeMode === 'polygon')
-          }
-        />
-      )}
-      {hoverable && hoveredFeature && hoverPosition && (
-        <GeoJsonViewerHoverPopup feature={hoveredFeature} position={hoverPosition} hoverContent={hoverContent} />
-      )}
+      <div ref={mapContainerRef} className={mapStyles.mapContainer}>
+        {showLayerToggle && <LayerToggle />}
+        {!disabled && (
+          <MapCenterAction
+            mapRef={mapRef}
+            visible={
+              showCenterAction && (activeMode === 'point' || activeMode === 'linestring' || activeMode === 'polygon')
+            }
+          />
+        )}
+        {hoverable && hoveredFeature && hoverPosition && (
+          <GeoJsonViewerHoverPopup feature={hoveredFeature} position={hoverPosition} hoverContent={hoverContent} />
+        )}
+      </div>
     </div>
   );
 }
