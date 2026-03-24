@@ -248,7 +248,9 @@ export function GeoJsonEditor({
       {!disabled && (
         <MapCenterAction
           mapRef={mapRef}
-          visible={showCenterAction && (activeMode === 'point' || activeMode === 'linestring' || activeMode === 'polygon')}
+          visible={
+            showCenterAction && (activeMode === 'point' || activeMode === 'linestring' || activeMode === 'polygon')
+          }
         />
       )}
       {hoverable && hoveredFeature && hoverPosition && (
