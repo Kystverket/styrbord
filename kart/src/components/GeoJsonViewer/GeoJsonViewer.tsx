@@ -25,6 +25,7 @@ import {
 } from './GeoJsonViewer.utils';
 import { LayerToggle } from '../LayerToggle/LayerToggle';
 import { GeoJsonViewerHoverPopup } from './GeoJsonViewerHoverPopup';
+import { MapCenterAction } from '../shared/MapCenterAction';
 
 // ---------------------------------------------------------------------------
 // Component
@@ -54,6 +55,7 @@ export function GeoJsonViewer({
   onSelect,
   hoverContent,
   onCoordinateClick,
+  showCenterAction,
 }: GeoJsonViewerProps) {
   const layerStyle: Required<GeoJsonStyle> = {
     ...DEFAULT_STYLE,
@@ -279,6 +281,7 @@ export function GeoJsonViewer({
   return (
     <div ref={mapContainerRef} className={[styles.mapContainer, className].filter(Boolean).join(' ')}>
       {showLayerToggle && <LayerToggle />}
+      {!disabled && <MapCenterAction mapRef={mapRef} visible={showCenterAction} />}
       {hoverable && hoveredFeature && hoverPosition && (
         <GeoJsonViewerHoverPopup feature={hoveredFeature} position={hoverPosition} hoverContent={hoverContent} />
       )}

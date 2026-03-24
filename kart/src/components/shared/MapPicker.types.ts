@@ -8,6 +8,13 @@ export interface MapBaseProps {
   className?: string;
   /** Height of the map container. Defaults to `"400px"`. */
   height?: string;
+  /**
+   * Show a crosshair at the map center with a button to trigger a click there.
+   * - `true` — always visible
+   * - `false` — always hidden
+   * - `undefined` — auto-detect (visible on touch devices)
+   */
+  showCenterAction?: boolean;
 }
 
 /**

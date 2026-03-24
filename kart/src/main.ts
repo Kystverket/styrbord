@@ -21,6 +21,9 @@ export type { GeoJsonAnnotaterProps } from './components/GeoJsonAnnotater/GeoJso
 export { LayerToggle } from './components/LayerToggle/LayerToggle';
 export type { LayerToggleProps } from './components/LayerToggle/LayerToggle.types';
 
+export { MapCenterAction } from './components/shared/MapCenterAction';
+export type { MapCenterActionProps } from './components/shared/MapCenterAction';
+
 // Hooks
 export { useMaplibreMap } from './hooks/useMaplibreMap';
 export type { UseMaplibreMapOptions } from './hooks/useMaplibreMap';

@@ -1,19 +1,16 @@
-import { useCallback, useEffect, useId, useRef, useState } from "react";
-import { Box, NumberInput, ValidationMessage } from "@kystverket/styrbord";
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { Box, NumberInput, ValidationMessage } from '@kystverket/styrbord';
 
-import styles from "~/components/shared/MapPicker.module.css";
+import styles from '~/components/shared/MapPicker.module.css';
 import type {
   Coordinate,
   CoordinateDirectionPickerProps,
   CoordinateDirectionValue,
-} from "./CoordinateDirectionPicker.types";
-import {
-  clampDirection,
-  clampLatitude,
-  clampLongitude,
-} from "~/utility/coordinate";
-import { useMaplibreMap } from "~/hooks/useMaplibreMap";
-import { useCompassMarker } from "~/hooks/useCompassMarker";
+} from './CoordinateDirectionPicker.types';
+import { clampDirection, clampLatitude, clampLongitude } from '~/utility/coordinate';
+import { useMaplibreMap } from '~/hooks/useMaplibreMap';
+import { useCompassMarker } from '~/hooks/useCompassMarker';
+import { MapCenterAction } from '~/components/shared/MapCenterAction';
 
 /**
  * CoordinateDirectionPicker — select a geographic coordinate and a facing
@@ -28,21 +25,21 @@ export function CoordinateDirectionPicker({
   disabled = false,
   className,
   height,
+  showCenterAction,
 }: CoordinateDirectionPickerProps) {
   const id = useId();
 
   // ----- Internal state (drives inputs; synced to/from props.value) -----
-  const [internalValue, setInternalValue] = useState<CoordinateDirectionValue>(
-    () =>
-      value
-        ? {
-            coordinate: {
-              latitude: value.geometry.coordinates[1],
-              longitude: value.geometry.coordinates[0],
-            },
-            direction: value.properties.direction,
-          }
-        : { coordinate: null, direction: null },
+  const [internalValue, setInternalValue] = useState<CoordinateDirectionValue>(() =>
+    value
+      ? {
+          coordinate: {
+            latitude: value.geometry.coordinates[1],
+            longitude: value.geometry.coordinates[0],
+          },
+          direction: value.properties.direction,
+        }
+      : { coordinate: null, direction: null },
   );
 
   // Keep internal state in sync with controlled value prop
@@ -74,9 +71,9 @@ export function CoordinateDirectionPicker({
       setInternalValue(next);
       if (next.coordinate && next.direction !== null) {
         onChange?.({
-          type: "Feature",
+          type: 'Feature',
           geometry: {
-            type: "Point",
+            type: 'Point',
             coordinates: [next.coordinate.longitude, next.coordinate.latitude],
           },
           properties: {
@@ -118,15 +115,9 @@ export function CoordinateDirectionPicker({
   wasRecentlyDraggingRef.current = wasRecentlyDragging;
 
   // ----- Input number state (synced to/from props.value, committed on blur) -----
-  const [latValue, setLatValue] = useState<number | undefined>(
-    currentValue.coordinate?.latitude ?? undefined,
-  );
-  const [lonValue, setLonValue] = useState<number | undefined>(
-    currentValue.coordinate?.longitude ?? undefined,
-  );
-  const [dirValue, setDirValue] = useState<number | undefined>(
-    currentValue.direction ?? undefined,
-  );
+  const [latValue, setLatValue] = useState<number | undefined>(currentValue.coordinate?.latitude ?? undefined);
+  const [lonValue, setLonValue] = useState<number | undefined>(currentValue.coordinate?.longitude ?? undefined);
+  const [dirValue, setDirValue] = useState<number | undefined>(currentValue.direction ?? undefined);
 
   // Sync input values when value changes externally (e.g. map click, compass drag)
   useEffect(() => {
@@ -169,18 +160,17 @@ export function CoordinateDirectionPicker({
   );
 
   return (
-    <Box gap={16} className={[className].filter(Boolean).join(" ")}>
+    <Box gap={16} className={[className].filter(Boolean).join(' ')}>
       <div
         ref={mapContainerRef}
-        className={[styles.mapContainer, disabled ? styles.disabled : ""]
-          .filter(Boolean)
-          .join(" ")}
+        className={[styles.mapContainer, disabled ? styles.disabled : ''].filter(Boolean).join(' ')}
       >
         <div className={styles.mapHint}>
           {currentValue.coordinate
-            ? "Klikk for å flytte · Dra på markøren for å rotere retning"
-            : "Klikk i kartet for å plassere markør"}
+            ? 'Klikk for å flytte · Dra på markøren for å rotere retning'
+            : 'Klikk i kartet for å plassere markør'}
         </div>
+        {!disabled && <MapCenterAction mapRef={mapRef} visible={showCenterAction} />}
       </div>
 
       {/* Coordinate + direction inputs */}

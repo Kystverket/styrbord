@@ -115,7 +115,7 @@ const ControlledTemplate: StoryFn<typeof GeoJsonEditor> = () => {
 
   return (
     <div>
-      <GeoJsonEditor value={data} onChange={setData} />
+      <GeoJsonEditor showCenterAction value={data} onChange={setData} />
       <pre
         style={{
           marginTop: 16,
@@ -144,7 +144,7 @@ export const WithLayerToggle: Story = {
       <BaseLayersProvider>
         <BuiltInLayersProvider>
           <CustomLayersProvider>
-            <GeoJsonEditor value={sampleData} showLayerToggle />
+            <GeoJsonEditor showCenterAction value={sampleData} showLayerToggle />
           </CustomLayersProvider>
         </BuiltInLayersProvider>
       </BaseLayersProvider>
@@ -215,6 +215,7 @@ const InteractiveTemplate: StoryFn<typeof GeoJsonEditor> = () => {
   return (
     <div>
       <GeoJsonEditor
+        showCenterAction
         value={interactiveData}
         onHover={(feature) => {
           setHoveredName(feature?.properties?.name ?? 'None');

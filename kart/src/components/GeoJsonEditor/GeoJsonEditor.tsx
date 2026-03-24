@@ -15,6 +15,7 @@ import { LayerToggle } from '../LayerToggle/LayerToggle';
 import { ensureCollectionConsistency } from '~/utility/collection';
 import { GeoJsonViewerHoverPopup } from '../GeoJsonViewer/GeoJsonViewerHoverPopup';
 import type { InteractiveFeature } from '~/hooks/useFeatureInteraction';
+import { MapCenterAction } from '../shared/MapCenterAction';
 
 // ---------------------------------------------------------------------------
 // Defaults
@@ -42,7 +43,7 @@ export function GeoJsonEditor({
   modes = ALL_MODES,
   editable = true,
   deletable = true,
-  fitBounds = true,
+  fitBounds = false,
   fitBoundsPadding = 40,
   showLayerToggle = false,
   height,
@@ -53,6 +54,7 @@ export function GeoJsonEditor({
   onSelect,
   hoverContent,
   onCoordinateClick,
+  showCenterAction,
 }: GeoJsonEditorProps) {
   const { mapContainerRef, mapRef } = useMaplibreMap({
     disabled,
@@ -147,13 +149,17 @@ export function GeoJsonEditor({
     }
   }, [fc, loadInitialData]);
 
-  // Fit bounds to initial data
+  // Fit bounds to initial data (only once — skip re-fitting after user edits)
+  const hasFittedBoundsRef = useRef(false);
+
   useEffect(() => {
     const map = mapRef.current;
-    if (!map || !fc || !fitBounds) return;
+    if (!map || !fc || !fitBounds || hasFittedBoundsRef.current) return;
 
     const bounds = computeBounds(fc);
     if (!bounds) return;
+
+    hasFittedBoundsRef.current = true;
 
     const fit = () => {
       map.fitBounds(bounds, { padding: fitBoundsPadding, duration: 300 });
@@ -239,6 +245,7 @@ export function GeoJsonEditor({
         />
       )}
       {showLayerToggle && <LayerToggle />}
+      {!disabled && <MapCenterAction mapRef={mapRef} visible={showCenterAction} />}
       {hoverable && hoveredFeature && hoverPosition && (
         <GeoJsonViewerHoverPopup feature={hoveredFeature} position={hoverPosition} hoverContent={hoverContent} />
       )}

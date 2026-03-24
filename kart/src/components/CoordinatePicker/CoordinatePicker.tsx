@@ -1,12 +1,13 @@
-import { useCallback, useEffect, useId, useState } from "react";
-import { Box, NumberInput, ValidationMessage } from "@kystverket/styrbord";
+import { useCallback, useEffect, useId, useState } from 'react';
+import { Box, NumberInput, ValidationMessage } from '@kystverket/styrbord';
 
-import styles from "~/components/shared/MapPicker.module.css";
-import type { CoordinatePickerProps } from "./CoordinatePicker.types";
-import type { Coordinate } from "~/utility/types";
-import { clampLatitude, clampLongitude } from "~/utility/coordinate";
-import { useMaplibreMap } from "~/hooks/useMaplibreMap";
-import { usePointMarker } from "~/hooks/usePointMarker";
+import styles from '~/components/shared/MapPicker.module.css';
+import type { CoordinatePickerProps } from './CoordinatePicker.types';
+import type { Coordinate } from '~/utility/types';
+import { clampLatitude, clampLongitude } from '~/utility/coordinate';
+import { useMaplibreMap } from '~/hooks/useMaplibreMap';
+import { usePointMarker } from '~/hooks/usePointMarker';
+import { MapCenterAction } from '~/components/shared/MapCenterAction';
 
 /**
  * CoordinatePicker — select a geographic coordinate via an interactive map
@@ -21,19 +22,19 @@ export function CoordinatePicker({
   disabled = false,
   className,
   height,
+  showCenterAction,
 }: CoordinatePickerProps) {
   const id = useId();
 
   // ----- Internal state (drives inputs; synced to/from props.value) -----
-  const [internalCoordinate, setInternalCoordinate] =
-    useState<Coordinate | null>(() =>
-      value
-        ? {
-            latitude: value.geometry.coordinates[1],
-            longitude: value.geometry.coordinates[0],
-          }
-        : null,
-    );
+  const [internalCoordinate, setInternalCoordinate] = useState<Coordinate | null>(() =>
+    value
+      ? {
+          latitude: value.geometry.coordinates[1],
+          longitude: value.geometry.coordinates[0],
+        }
+      : null,
+  );
 
   // Keep internal state in sync with controlled value prop
   useEffect(() => {
@@ -58,9 +59,9 @@ export function CoordinatePicker({
       setInternalCoordinate(coord);
       if (coord) {
         onChange?.({
-          type: "Feature",
+          type: 'Feature',
           geometry: {
-            type: "Point",
+            type: 'Point',
             coordinates: [coord.longitude, coord.latitude],
           },
         });
@@ -92,12 +93,8 @@ export function CoordinatePicker({
   });
 
   // ----- Input number state (synced to/from props.value, committed on blur) -----
-  const [latValue, setLatValue] = useState<number | undefined>(
-    currentCoordinate?.latitude ?? undefined,
-  );
-  const [lonValue, setLonValue] = useState<number | undefined>(
-    currentCoordinate?.longitude ?? undefined,
-  );
+  const [latValue, setLatValue] = useState<number | undefined>(currentCoordinate?.latitude ?? undefined);
+  const [lonValue, setLonValue] = useState<number | undefined>(currentCoordinate?.longitude ?? undefined);
 
   // Sync input values when value changes externally (e.g. map click)
   useEffect(() => {
@@ -128,18 +125,15 @@ export function CoordinatePicker({
   );
 
   return (
-    <Box gap={16} className={[className].filter(Boolean).join(" ")}>
+    <Box gap={16} className={[className].filter(Boolean).join(' ')}>
       <div
         ref={mapContainerRef}
-        className={[styles.mapContainer, disabled ? styles.disabled : ""]
-          .filter(Boolean)
-          .join(" ")}
+        className={[styles.mapContainer, disabled ? styles.disabled : ''].filter(Boolean).join(' ')}
       >
         <div className={styles.mapHint}>
-          {currentCoordinate
-            ? "Klikk for å flytte markør"
-            : "Klikk i kartet for å plassere markør"}
+          {currentCoordinate ? 'Klikk for å flytte markør' : 'Klikk i kartet for å plassere markør'}
         </div>
+        {!disabled && <MapCenterAction mapRef={mapRef} visible={showCenterAction} />}
       </div>
 
       {/* Coordinate inputs */}
