@@ -7,7 +7,7 @@ import type { InteractiveFeature } from '~/hooks/useFeatureInteraction';
 import type { CoordinateClickResult } from '~/utility/wmsGetFeatureInfo';
 
 /** Drawing modes available in the editor toolbar. */
-export type DrawMode = 'point' | 'linestring' | 'polygon';
+export type DrawMode = 'point' | 'linestring' | 'polygon' | 'directional-point';
 
 export interface GeoJsonEditorProps extends MapBaseProps {
   /** Current GeoJSON value (controlled). Accepts a Feature or FeatureCollection. */

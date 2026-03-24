@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-import styles from "./GeoJsonEditor.module.css";
-import type { DrawMode } from "./GeoJsonEditor.types";
+import type { ReactNode } from 'react';
+import styles from './GeoJsonEditor.module.css';
+import type { DrawMode } from './GeoJsonEditor.types';
 
 // ---------------------------------------------------------------------------
 // SVG Icons (inline to avoid external dependency)
@@ -66,6 +66,15 @@ const DeleteIcon = () => (
   </svg>
 );
 
+const DirectionalPointIcon = () => (
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+    <circle cx="12" cy="12" r="8" fill="white" stroke="currentColor" strokeWidth="1.5" />
+    <polygon points="12,5 14,11 12,10 10,11" fill="currentColor" />
+    <polygon points="12,19 10,13 12,14 14,13" fill="currentColor" fillOpacity="0.4" />
+    <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+  </svg>
+);
+
 // ---------------------------------------------------------------------------
 // Icons map
 // ---------------------------------------------------------------------------
@@ -74,12 +83,14 @@ const MODE_ICONS: Record<DrawMode, () => ReactNode> = {
   point: PointIcon,
   linestring: LineIcon,
   polygon: PolygonIcon,
+  'directional-point': DirectionalPointIcon,
 };
 
 const MODE_LABELS: Record<DrawMode, string> = {
-  point: "Tegn punkt",
-  linestring: "Tegn linje",
-  polygon: "Tegn polygon",
+  point: 'Tegn punkt',
+  linestring: 'Tegn linje',
+  polygon: 'Tegn polygon',
+  'directional-point': 'Tegn retningspunkt',
 };
 
 // ---------------------------------------------------------------------------
@@ -117,10 +128,8 @@ export function GeoJsonEditorToolbar({
             title={MODE_LABELS[mode]}
             aria-label={MODE_LABELS[mode]}
             aria-pressed={isActive}
-            className={[styles.toolbarButton, isActive && styles.active]
-              .filter(Boolean)
-              .join(" ")}
-            onClick={() => onSetMode(isActive ? "static" : mode)}
+            className={[styles.toolbarButton, isActive && styles.active].filter(Boolean).join(' ')}
+            onClick={() => onSetMode(isActive ? 'static' : mode)}
           >
             <Icon />
           </button>
@@ -134,16 +143,9 @@ export function GeoJsonEditorToolbar({
             type="button"
             title="Velg/rediger"
             aria-label="Velg/rediger"
-            aria-pressed={activeMode === "select"}
-            className={[
-              styles.toolbarButton,
-              activeMode === "select" && styles.active,
-            ]
-              .filter(Boolean)
-              .join(" ")}
-            onClick={() =>
-              onSetMode(activeMode === "select" ? "static" : "select")
-            }
+            aria-pressed={activeMode === 'select'}
+            className={[styles.toolbarButton, activeMode === 'select' && styles.active].filter(Boolean).join(' ')}
+            onClick={() => onSetMode(activeMode === 'select' ? 'static' : 'select')}
           >
             <SelectIcon />
           </button>
@@ -157,7 +159,7 @@ export function GeoJsonEditorToolbar({
             type="button"
             title="Slett valgt"
             aria-label="Slett valgt"
-            className={[styles.toolbarButton, styles.danger].join(" ")}
+            className={[styles.toolbarButton, styles.danger].join(' ')}
             onClick={onDelete}
           >
             <DeleteIcon />

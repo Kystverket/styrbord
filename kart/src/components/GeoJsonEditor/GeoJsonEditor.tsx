@@ -11,6 +11,8 @@ import type { Coordinate } from '~/utility/types';
 import { toFeatureCollection } from '../GeoJsonViewer/GeoJsonViewer.utils';
 import type { DrawMode, GeoJsonEditorProps } from './GeoJsonEditor.types';
 import { useTerraDraw } from './useTerraDraw';
+import { useDirectionalPoints } from './useDirectionalPoints';
+import type { DirectionalPointFeature } from './useDirectionalPoints';
 import { GeoJsonEditorToolbar } from './GeoJsonEditorToolbar';
 import { LayerToggle } from '../LayerToggle/LayerToggle';
 import { ensureCollectionConsistency } from '~/utility/collection';
@@ -65,6 +67,8 @@ export function GeoJsonEditor({
   // ----- Coordinate click → WMS feature info -----
   const [clickedCoordinate, setClickedCoordinate] = useState<Coordinate | null>(null);
   const activeModeRef = useRef<string>('static');
+  /** Tracks the "combined" active mode across both terra-draw and directional-point systems. */
+  const [combinedMode, setCombinedMode] = useState<string>('static');
 
   const onCoordinateClickRef = useRef(onCoordinateClick);
   onCoordinateClickRef.current = onCoordinateClick;
@@ -87,9 +91,9 @@ export function GeoJsonEditor({
     if (!map || disabled || !onCoordinateClickRef.current) return;
 
     const handleClick = (e: maplibregl.MapMouseEvent) => {
-      // Suppress during active drawing (point/linestring/polygon placement).
+      // Suppress during active drawing (point/linestring/polygon/directional-point placement).
       const mode = activeModeRef.current;
-      if (mode === 'point' || mode === 'linestring' || mode === 'polygon') return;
+      if (mode === 'point' || mode === 'linestring' || mode === 'polygon' || mode === 'directional-point') return;
 
       const { lng, lat } = e.lngLat;
       setClickedCoordinate({ latitude: lat, longitude: lng });
@@ -112,27 +116,121 @@ export function GeoJsonEditor({
   // Handle selection changes from terra-draw
   const handleTerraDrawSelect = useCallback(
     (features: Feature<Geometry, GeoJsonProperties>[] | null) => {
+      // Cross-deselect: when terra-draw selects, deselect directional points
+      directionalPointsRef.current?.deselect();
       onSelect?.(features as InteractiveFeature[] | null);
     },
     [onSelect],
   );
 
+  // Ref to directional points result — needed for cross-deselect in terra-draw callback
+  const directionalPointsRef = useRef<{ deselect: () => void } | null>(null);
+
+  // Ref for the combined onChange emitter — defined later, referenced in useTerraDraw/useDirectionalPoints callbacks
+  const emitCombinedRef = useRef<(terraData?: FeatureCollection) => void>(() => {});
+
+  // Terra-draw modes: filter out 'directional-point' since terra-draw doesn't handle it
+  const terraDrawModes = useMemo(
+    () => modes.filter((m): m is Exclude<DrawMode, 'directional-point'> => m !== 'directional-point'),
+    [modes],
+  );
+
   const terraDrawResult = useTerraDraw({
     mapRef,
-    modes,
+    modes: terraDrawModes,
     editable,
     deletable,
     disabled,
     onChange: (data) => {
-      onChange?.(ensureCollectionConsistency(data));
+      emitCombinedRef.current(data);
     },
     onSelect: handleTerraDrawSelect,
   });
 
-  const { activeMode, setActiveMode, deleteSelected, hasSelection } = terraDrawResult;
+  const {
+    activeMode: terraActiveMode,
+    setActiveMode: setTerraActiveMode,
+    deleteSelected: terraDeleteSelected,
+    hasSelection: terraHasSelection,
+  } = terraDrawResult;
 
   // Keep activeModeRef in sync so the click handler can check it.
-  activeModeRef.current = activeMode;
+  activeModeRef.current = combinedMode;
+
+  // ----- Directional points hook -----
+  const directionalPoints = useDirectionalPoints({
+    mapRef,
+    disabled,
+    activeMode: combinedMode,
+    onChange: () => {
+      emitCombinedRef.current();
+    },
+    onSelect: (feature) => {
+      if (feature) {
+        // Cross-deselect: when directional point selected, deselect terra-draw
+        setTerraActiveMode('static');
+        onSelect?.([feature as unknown as InteractiveFeature]);
+      }
+    },
+  });
+
+  // Keep ref in sync for cross-deselect from terra-draw callback
+  directionalPointsRef.current = directionalPoints;
+
+  // ----- Combined onChange emission -----
+  const emitCombined = useCallback(
+    (terraData?: FeatureCollection) => {
+      if (!onChange) return;
+
+      const terraFeatures = terraData?.features ?? terraDrawResult.getSnapshot();
+      const dirFeatures = directionalPoints.getFeatures();
+
+      const combined: FeatureCollection = {
+        type: 'FeatureCollection',
+        features: [...terraFeatures, ...dirFeatures],
+      };
+      onChange(ensureCollectionConsistency(combined));
+    },
+    [onChange, terraDrawResult, directionalPoints],
+  );
+
+  // Keep emitCombinedRef in sync
+  emitCombinedRef.current = emitCombined;
+
+  // ----- Mode coordination -----
+  const setActiveMode = useCallback(
+    (mode: string) => {
+      if (mode === 'directional-point') {
+        // Directional-point mode: set terra-draw to static
+        setTerraActiveMode('static');
+      } else {
+        // Any other mode: deselect directional points, set terra-draw mode
+        directionalPoints.deselect();
+        setTerraActiveMode(mode);
+      }
+      setCombinedMode(mode);
+    },
+    [setTerraActiveMode, directionalPoints],
+  );
+
+  // Keep combinedMode in sync with terra-draw's mode changes (e.g. auto-deselect)
+  useEffect(() => {
+    if (combinedMode !== 'directional-point') {
+      setCombinedMode(terraActiveMode);
+    }
+  }, [terraActiveMode, combinedMode]);
+
+  // Combined selection state
+  const hasSelection = terraHasSelection || directionalPoints.hasSelection;
+
+  // Combined delete
+  const deleteSelected = useCallback(() => {
+    if (directionalPoints.hasSelection) {
+      directionalPoints.deleteSelected();
+    } else {
+      terraDeleteSelected();
+    }
+  }, [directionalPoints, terraDeleteSelected]);
 
   const loadInitialData = (
     terraDrawResult as unknown as {
@@ -143,12 +241,31 @@ export function GeoJsonEditor({
   // Normalise incoming value
   const fc = useMemo(() => (value ? toFeatureCollection(value) : undefined), [value]);
 
-  // Load initial data into terra-draw once it's ready
+  // Extract stable loadFeatures ref to avoid re-running this effect on every render
+  const { loadFeatures: loadDirectionalFeatures } = directionalPoints;
+
+  // Load initial data — partition between terra-draw and directional points
   useEffect(() => {
-    if (fc && loadInitialData) {
-      loadInitialData(fc);
+    if (!fc) return;
+
+    const dirFeatures: DirectionalPointFeature[] = [];
+    const otherFeatures: Feature<Geometry, GeoJsonProperties>[] = [];
+
+    for (const feature of fc.features) {
+      if (feature.properties?.mode === 'directional-point') {
+        dirFeatures.push(feature as DirectionalPointFeature);
+      } else {
+        otherFeatures.push(feature);
+      }
     }
-  }, [fc, loadInitialData]);
+
+    if (loadInitialData) {
+      loadInitialData({ type: 'FeatureCollection', features: otherFeatures });
+    }
+    if (dirFeatures.length > 0) {
+      loadDirectionalFeatures(dirFeatures);
+    }
+  }, [fc, loadInitialData, loadDirectionalFeatures]);
 
   // Fit bounds to initial data (only once — skip re-fitting after user edits)
   const hasFittedBoundsRef = useRef(false);
@@ -183,7 +300,7 @@ export function GeoJsonEditor({
     const handleMouseMove = (e: maplibregl.MapMouseEvent) => {
       // Suppress hover while actively drawing
       const mode = activeModeRef.current;
-      if (mode === 'point' || mode === 'linestring' || mode === 'polygon') {
+      if (mode === 'point' || mode === 'linestring' || mode === 'polygon' || mode === 'directional-point') {
         if (prevHoveredId !== null) {
           prevHoveredId = null;
           setHoveredFeature(null);
@@ -250,7 +367,7 @@ export function GeoJsonEditor({
       {!disabled && (
         <GeoJsonEditorToolbar
           modes={modes}
-          activeMode={activeMode}
+          activeMode={combinedMode}
           hasSelection={hasSelection}
           deletable={deletable}
           editable={editable}
@@ -264,7 +381,11 @@ export function GeoJsonEditor({
           <MapCenterAction
             mapRef={mapRef}
             visible={
-              showCenterAction && (activeMode === 'point' || activeMode === 'linestring' || activeMode === 'polygon')
+              showCenterAction &&
+              (combinedMode === 'point' ||
+                combinedMode === 'linestring' ||
+                combinedMode === 'polygon' ||
+                combinedMode === 'directional-point')
             }
           />
         )}

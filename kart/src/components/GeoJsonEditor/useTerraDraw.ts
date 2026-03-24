@@ -16,6 +16,9 @@ import { TerraDrawMapLibreGLAdapter } from 'terra-draw-maplibre-gl-adapter';
 import type { DrawMode } from './GeoJsonEditor.types';
 import { toFeatureCollection } from '../GeoJsonViewer/GeoJsonViewer.utils';
 
+/** Drawing modes that terra-draw handles natively. */
+type TerraDrawableMode = Exclude<DrawMode, 'directional-point'>;
+
 type AnyTerraDrawMode =
   | TerraDrawPointMode
   | TerraDrawLineStringMode
@@ -29,7 +32,7 @@ type AnyTerraDrawMode =
 
 export interface UseTerraDrawOptions {
   mapRef: MutableRefObject<MaplibreMap | null>;
-  modes: DrawMode[];
+  modes: TerraDrawableMode[];
   editable: boolean;
   deletable: boolean;
   disabled: boolean;

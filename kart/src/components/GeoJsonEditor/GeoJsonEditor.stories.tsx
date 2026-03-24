@@ -302,3 +302,83 @@ export const NonInteractive: Story = {
     hoverable: false,
   },
 };
+
+// ---- Directional points only ----
+export const DirectionalPointsOnly: Story = {
+  args: {
+    modes: ['directional-point'],
+  },
+};
+
+// ---- All modes including directional points ----
+export const AllModesWithDirectional: Story = {
+  args: {
+    modes: ['point', 'directional-point', 'linestring', 'polygon'],
+  },
+};
+
+// ---- Directional points with initial data ----
+const directionalSampleData: FeatureCollection = {
+  type: 'FeatureCollection',
+  features: [
+    {
+      type: 'Feature',
+      properties: {
+        id: 'dir-1',
+        direction: 45,
+        mode: 'directional-point',
+        name: 'Nordøst-retning',
+      },
+      geometry: { type: 'Point', coordinates: [10.3951, 63.4305] },
+    },
+    {
+      type: 'Feature',
+      properties: {
+        id: 'dir-2',
+        direction: 180,
+        mode: 'directional-point',
+        name: 'Sør-retning',
+      },
+      geometry: { type: 'Point', coordinates: [5.3221, 60.3913] },
+    },
+    {
+      type: 'Feature',
+      properties: { name: 'Vanlig punkt' },
+      geometry: { type: 'Point', coordinates: [6.151, 62.469] },
+    },
+  ],
+};
+
+// ---- Controlled with directional points ----
+const DirectionalControlledTemplate: StoryFn<typeof GeoJsonEditor> = () => {
+  const [data, setData] = useState<FeatureCollection>(directionalSampleData);
+
+  return (
+    <div>
+      <GeoJsonEditor
+        showCenterAction
+        value={data}
+        onChange={setData}
+        modes={['point', 'directional-point', 'linestring', 'polygon']}
+        fitBounds
+      />
+      <pre
+        style={{
+          marginTop: 16,
+          padding: 12,
+          background: '#f5f5f5',
+          borderRadius: 8,
+          fontSize: '0.8rem',
+          maxHeight: 300,
+          overflow: 'auto',
+        }}
+      >
+        {JSON.stringify(data, null, 2)}
+      </pre>
+    </div>
+  );
+};
+
+export const DirectionalControlled: Story = {
+  render: DirectionalControlledTemplate,
+};
