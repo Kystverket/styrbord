@@ -245,7 +245,12 @@ export function GeoJsonEditor({
         />
       )}
       {showLayerToggle && <LayerToggle />}
-      {!disabled && <MapCenterAction mapRef={mapRef} visible={showCenterAction} />}
+      {!disabled && (
+        <MapCenterAction
+          mapRef={mapRef}
+          visible={showCenterAction && (activeMode === 'point' || activeMode === 'linestring' || activeMode === 'polygon')}
+        />
+      )}
       {hoverable && hoveredFeature && hoverPosition && (
         <GeoJsonViewerHoverPopup feature={hoveredFeature} position={hoverPosition} hoverContent={hoverContent} />
       )}
