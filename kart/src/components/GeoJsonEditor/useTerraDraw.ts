@@ -36,6 +36,8 @@ export interface UseTerraDrawOptions {
   editable: boolean;
   deletable: boolean;
   disabled: boolean;
+  /** When true, only one feature is allowed — new features replace existing ones. */
+  singleFeature?: boolean;
   onChange?: (data: FeatureCollection) => void;
   /**
    * Called when selection changes (features selected or deselected).
@@ -65,6 +67,7 @@ export function useTerraDraw({
   editable,
   deletable,
   disabled,
+  singleFeature = false,
   onChange,
   onSelect,
 }: UseTerraDrawOptions): UseTerraDrawResult {
@@ -81,6 +84,10 @@ export function useTerraDraw({
   // Keep onSelect ref stable
   const onSelectRef = useRef(onSelect);
   onSelectRef.current = onSelect;
+
+  // Keep singleFeature in ref for use inside callbacks
+  const singleFeatureRef = useRef(singleFeature);
+  singleFeatureRef.current = singleFeature;
 
   // ---- Emit current snapshot as FeatureCollection ----
   const emitSnapshot = useCallback(() => {
@@ -162,10 +169,21 @@ export function useTerraDraw({
       });
 
       draw.start();
-      draw.setMode('static');
+      draw.setMode(singleFeature ? modes[0] : 'static');
 
       // Listen for changes
       draw.on('change', () => {
+        // In single-feature mode, remove all but the newest user feature.
+        if (singleFeatureRef.current) {
+          const snap = draw.getSnapshot();
+          const userFeats = snap.filter((f: GeoJSONStoreFeatures) => f.properties?.mode !== 'select');
+          if (userFeats.length > 1) {
+            // Keep only the last (newest) feature, remove the rest.
+            const toRemove = userFeats.slice(0, -1).map((f: GeoJSONStoreFeatures) => f.id!);
+            draw.removeFeatures(toRemove);
+            return; // removeFeatures triggers another change event
+          }
+        }
         emitSnapshot();
       });
 
@@ -214,7 +232,7 @@ export function useTerraDraw({
         initialDataLoaded.current = false;
       }
     };
-  }, [mapRef, disabled, modes, editable, emitSnapshot]);
+  }, [mapRef, disabled, modes, editable, singleFeature, emitSnapshot]);
 
   // ---- Load initial value ----
   const loadInitialData = useCallback(

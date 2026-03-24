@@ -58,6 +58,7 @@ export function GeoJsonEditor({
   hoverContent,
   onCoordinateClick,
   showCenterAction,
+  singleFeature = false,
 }: GeoJsonEditorProps) {
   const { mapContainerRef, mapRef } = useMaplibreMap({
     disabled,
@@ -68,7 +69,7 @@ export function GeoJsonEditor({
   const [clickedCoordinate, setClickedCoordinate] = useState<Coordinate | null>(null);
   const activeModeRef = useRef<string>('static');
   /** Tracks the "combined" active mode across both terra-draw and directional-point systems. */
-  const [combinedMode, setCombinedMode] = useState<string>('static');
+  const [combinedMode, setCombinedMode] = useState<string>(singleFeature ? modes[0] : 'static');
 
   const onCoordinateClickRef = useRef(onCoordinateClick);
   onCoordinateClickRef.current = onCoordinateClick;
@@ -141,6 +142,7 @@ export function GeoJsonEditor({
     editable,
     deletable,
     disabled,
+    singleFeature,
     onChange: (data) => {
       emitCombinedRef.current(data);
     },
@@ -162,6 +164,7 @@ export function GeoJsonEditor({
     mapRef,
     disabled,
     activeMode: combinedMode,
+    singleFeature,
     onChange: () => {
       emitCombinedRef.current();
     },
@@ -364,7 +367,7 @@ export function GeoJsonEditor({
 
   return (
     <div className={[editorStyles.editorWrapper, className].filter(Boolean).join(' ')}>
-      {!disabled && (
+      {!disabled && !singleFeature && (
         <GeoJsonEditorToolbar
           modes={modes}
           activeMode={combinedMode}

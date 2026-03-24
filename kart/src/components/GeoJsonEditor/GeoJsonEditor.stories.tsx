@@ -382,3 +382,85 @@ const DirectionalControlledTemplate: StoryFn<typeof GeoJsonEditor> = () => {
 export const DirectionalControlled: Story = {
   render: DirectionalControlledTemplate,
 };
+
+// ---- Single feature mode stories ----
+
+export const SinglePoint: Story = {
+  args: {
+    singleFeature: true,
+    modes: ['point'],
+  },
+};
+
+export const SingleDirectionalPoint: Story = {
+  args: {
+    singleFeature: true,
+    modes: ['directional-point'],
+  },
+};
+
+export const SingleLine: Story = {
+  args: {
+    singleFeature: true,
+    modes: ['linestring'],
+  },
+};
+
+export const SinglePolygon: Story = {
+  args: {
+    singleFeature: true,
+    modes: ['polygon'],
+  },
+};
+
+// ---- Single feature with initial value ----
+const singlePointData: FeatureCollection = {
+  type: 'FeatureCollection',
+  features: [
+    {
+      type: 'Feature',
+      properties: { name: 'Trondheim' },
+      geometry: { type: 'Point', coordinates: [10.3951, 63.4305] },
+    },
+  ],
+};
+
+export const SinglePointWithInitialValue: Story = {
+  args: {
+    singleFeature: true,
+    modes: ['point'],
+    value: singlePointData,
+    fitBounds: true,
+  },
+};
+
+// ---- Single feature controlled ----
+const SinglePointControlledTemplate: StoryFn<typeof GeoJsonEditor> = () => {
+  const [data, setData] = useState<FeatureCollection>({
+    type: 'FeatureCollection',
+    features: [],
+  });
+
+  return (
+    <div>
+      <GeoJsonEditor singleFeature modes={['point']} value={data} onChange={setData} />
+      <pre
+        style={{
+          marginTop: 16,
+          padding: 12,
+          background: '#f5f5f5',
+          borderRadius: 8,
+          fontSize: '0.8rem',
+          maxHeight: 300,
+          overflow: 'auto',
+        }}
+      >
+        {JSON.stringify(data, null, 2)}
+      </pre>
+    </div>
+  );
+};
+
+export const SinglePointControlled: Story = {
+  render: SinglePointControlledTemplate,
+};

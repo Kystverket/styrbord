@@ -34,6 +34,8 @@ export interface UseDirectionalPointsOptions {
   disabled: boolean;
   /** Current active editor mode — the hook only places points when this is 'directional-point'. */
   activeMode: string;
+  /** When true, only one directional point is allowed — new points replace existing ones. */
+  singleFeature?: boolean;
   onChange?: () => void;
   onSelect?: (feature: DirectionalPointFeature | null) => void;
 }
@@ -77,6 +79,7 @@ export function useDirectionalPoints({
   mapRef,
   disabled,
   activeMode,
+  singleFeature = false,
   onChange,
   onSelect,
 }: UseDirectionalPointsOptions): UseDirectionalPointsResult {
@@ -97,6 +100,9 @@ export function useDirectionalPoints({
   onSelectRef.current = onSelect;
 
   selectedIdRef.current = selectedId;
+
+  const singleFeatureRef = useRef(singleFeature);
+  singleFeatureRef.current = singleFeature;
 
   // ----- Create a compass marker for a feature -----
   const createMarkerForFeature = useCallback(
@@ -313,6 +319,16 @@ export function useDirectionalPoints({
 
       // Mark as loaded so controlled value round-trips won't re-create markers
       initialLoaded.current = true;
+
+      // In single-feature mode, remove all existing markers before placing a new one.
+      if (singleFeatureRef.current && featuresRef.current.length > 0) {
+        for (const entry of markersRef.current) {
+          entry.marker.remove();
+        }
+        markersRef.current = [];
+        featuresRef.current = [];
+        setSelectedId(null);
+      }
 
       const id = getUuid();
       const feature: DirectionalPointFeature = {

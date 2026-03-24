@@ -72,4 +72,17 @@ export interface GeoJsonEditorProps extends MapBaseProps {
    * results for all visible WMS catalog layers.
    */
   onCoordinateClick?: (result: CoordinateClickResult) => void;
+
+  /**
+   * When `true`, only one feature can exist at a time. The feature type is
+   * determined by `modes[0]` (which should contain exactly one mode).
+   *
+   * - The toolbar is hidden and drawing mode is auto-activated.
+   * - Placing a new feature automatically replaces the existing one.
+   *
+   * This allows GeoJsonEditor to be used as a drop-in replacement for
+   * `CoordinatePicker` (with `modes: ['point']`) or
+   * `CoordinateDirectionPicker` (with `modes: ['directional-point']`).
+   */
+  singleFeature?: boolean;
 }
