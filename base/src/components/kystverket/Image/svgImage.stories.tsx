@@ -53,6 +53,8 @@ import {
   ImageTilskuddTilFiskerihavnFarget,
   ImageUtfordringIFarvannetFarget,
   ImageUtfordringIFarvannet,
+  ImageUtbedringIFarvannetFarget,
+  ImageUtbedringIFarvannet,
 } from './svgImage';
 import { Body } from '~/main';
 
@@ -117,6 +119,8 @@ const images: [string, React.FC<SvgImageProps>][] = [
   ['ImageTilskuddTilFiskerihavnFarget', ImageTilskuddTilFiskerihavnFarget],
   ['ImageUtfordringIFarvannet', ImageUtfordringIFarvannet],
   ['ImageUtfordringIFarvannetFarget', ImageUtfordringIFarvannetFarget],
+  ['ImageUtbedringIFarvannet', ImageUtbedringIFarvannet],
+  ['ImageUtbedringIFarvannetFarget', ImageUtbedringIFarvannetFarget],
 ];
 
 const variants = [...svgImageColors] as const;
