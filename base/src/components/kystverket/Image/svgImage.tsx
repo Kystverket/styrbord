@@ -50,6 +50,8 @@ import TilskuddTilFiskerihavn from './svg/tilskudd_til_fiskerihavn.svg?react';
 import TilskuddTilFiskerihavnFarget from './svg/tilskudd_til_fiskerihavn_farget.svg?react';
 import UtfordringIFarvannet from './svg/utfordring_farvannet.svg?react';
 import UtfordringIFarvannetFarget from './svg/utfordring_farvannet_farget.svg?react';
+import UtbedringIFarvannet from './svg/utbedring_i_farvannet.svg?react';
+import UtbedringIFarvannetFarget from './svg/utbedring_i_farvannet_farget.svg?react';
 
 export const svgImageColors = ['primary', 'info', 'accent', 'sand', 'neutral', 'white'] as const;
 export type SvgImageColor = (typeof svgImageColors)[number];
@@ -290,4 +292,12 @@ export const ImageUtfordringIFarvannet = (props: SvgImageProps) => {
 
 export const ImageUtfordringIFarvannetFarget = (props: SvgImageProps) => {
   return <UtfordringIFarvannetFarget {...getImageProps({ name: 'utfordring_i_farvannet_farget', ...props })} />;
+};
+
+export const ImageUtbedringIFarvannet = (props: SvgImageProps) => {
+  return <UtbedringIFarvannet {...getImageProps({ name: 'utbedring_i_farvannet', ...props })} />;
+};
+
+export const ImageUtbedringIFarvannetFarget = (props: SvgImageProps) => {
+  return <UtbedringIFarvannetFarget {...getImageProps({ name: 'utbedring_i_farvannet_farget', ...props })} />;
 };
