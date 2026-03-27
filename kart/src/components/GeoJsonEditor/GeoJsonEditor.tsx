@@ -130,10 +130,14 @@ export function GeoJsonEditor({
   // Ref for the combined onChange emitter — defined later, referenced in useTerraDraw/useDirectionalPoints callbacks
   const emitCombinedRef = useRef<(terraData?: FeatureCollection) => void>(() => {});
 
-  // Terra-draw modes: filter out 'directional-point' since terra-draw doesn't handle it
+  // Terra-draw modes: filter out 'directional-point' since terra-draw doesn't handle it.
+  // Memoise on the serialised content so that a new but identical array reference from the
+  // parent does not cause terra-draw to be torn down and recreated (which would lose
+  // in-progress drawing state).
+  const terraDrawModesKey = modes.filter((m) => m !== 'directional-point').join(',');
   const terraDrawModes = useMemo(
-    () => modes.filter((m): m is Exclude<DrawMode, 'directional-point'> => m !== 'directional-point'),
-    [modes],
+    () => terraDrawModesKey.split(',').filter(Boolean) as Exclude<DrawMode, 'directional-point'>[],
+    [terraDrawModesKey],
   );
 
   const terraDrawResult = useTerraDraw({
@@ -154,6 +158,7 @@ export function GeoJsonEditor({
     setActiveMode: setTerraActiveMode,
     deleteSelected: terraDeleteSelected,
     hasSelection: terraHasSelection,
+    isReady: terraDrawReady,
   } = terraDrawResult;
 
   // Keep activeModeRef in sync so the click handler can check it.
@@ -268,7 +273,7 @@ export function GeoJsonEditor({
     if (dirFeatures.length > 0) {
       loadDirectionalFeatures(dirFeatures);
     }
-  }, [fc, loadInitialData, loadDirectionalFeatures]);
+  }, [fc, loadInitialData, loadDirectionalFeatures, terraDrawReady]);
 
   // Fit bounds to initial data (only once — skip re-fitting after user edits)
   const hasFittedBoundsRef = useRef(false);
@@ -283,7 +288,7 @@ export function GeoJsonEditor({
     hasFittedBoundsRef.current = true;
 
     const fit = () => {
-      map.fitBounds(bounds, { padding: fitBoundsPadding, duration: 300 });
+      map.fitBounds(bounds, { padding: fitBoundsPadding, maxZoom: 16, duration: 300 });
     };
 
     if (map.isStyleLoaded()) {

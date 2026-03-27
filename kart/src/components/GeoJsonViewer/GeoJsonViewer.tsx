@@ -234,6 +234,7 @@ export function GeoJsonViewer({
           if (bounds) {
             map.fitBounds(bounds, {
               padding: fitBoundsPadding,
+              maxZoom: 16,
               duration: 300,
             });
           }

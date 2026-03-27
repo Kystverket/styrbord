@@ -55,6 +55,8 @@ export interface UseTerraDrawResult {
   selectedFeatures: Feature<Geometry, GeoJsonProperties>[];
   /** Get the current snapshot of all features. */
   getSnapshot: () => Feature<Geometry, GeoJsonProperties>[];
+  /** True once terra-draw has been initialised and is ready to accept features. */
+  isReady: boolean;
 }
 
 // ---------------------------------------------------------------------------
@@ -75,6 +77,7 @@ export function useTerraDraw({
   const [activeMode, setActiveModeState] = useState<string>('static');
   const [hasSelection, setHasSelection] = useState(false);
   const [selectedFeatures, setSelectedFeatures] = useState<Feature<Geometry, GeoJsonProperties>[]>([]);
+  const [isReady, setIsReady] = useState(false);
   const initialDataLoaded = useRef(false);
 
   // Keep onChange ref stable to avoid re-creating terra-draw on every render
@@ -93,6 +96,9 @@ export function useTerraDraw({
   const emitSnapshot = useCallback(() => {
     const draw = drawRef.current;
     if (!draw || !onChangeRef.current) return;
+
+    // Mark as loaded so controlled-value round-trips won't re-add features.
+    initialDataLoaded.current = true;
 
     const snapshot = draw.getSnapshot();
     // Filter out terra-draw internal features (selection midpoints, etc.)
@@ -169,7 +175,9 @@ export function useTerraDraw({
       });
 
       draw.start();
-      draw.setMode(singleFeature ? modes[0] : 'static');
+      const initialMode = singleFeature && modes.length > 0 ? modes[0] : 'static';
+      draw.setMode(initialMode);
+      setActiveModeState(initialMode);
 
       // Listen for changes
       draw.on('change', () => {
@@ -210,6 +218,7 @@ export function useTerraDraw({
       });
 
       drawRef.current = draw;
+      setIsReady(true);
     };
 
     // Initialise when the map style is loaded
@@ -230,6 +239,7 @@ export function useTerraDraw({
         }
         drawRef.current = null;
         initialDataLoaded.current = false;
+        setIsReady(false);
       }
     };
   }, [mapRef, disabled, modes, editable, singleFeature, emitSnapshot]);
@@ -316,6 +326,7 @@ export function useTerraDraw({
     hasSelection,
     selectedFeatures,
     getSnapshot,
+    isReady,
     /** @internal — exposed for the component to call after mount */
     loadInitialData,
   } as UseTerraDrawResult & { loadInitialData: typeof loadInitialData };
