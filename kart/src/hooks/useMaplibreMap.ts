@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import type { Coordinate } from '~/utility/types';
@@ -25,8 +25,14 @@ export interface UseMaplibreMapOptions {
 /**
  * Manages a MapLibre GL map instance.
  *
- * Returns refs for the container element and the map, so callers can add
- * markers, layers, or event handlers on top.
+ * The map is created lazily — only once the container div enters the viewport.
+ * This prevents "Too many active WebGL contexts" warnings when many map
+ * components are rendered off-screen simultaneously (e.g. Storybook Docs).
+ *
+ * Returns refs for the container element and the map, plus a `mapReady` flag
+ * that is `true` once the map instance has been created. Callers that set up
+ * map event handlers or layers must include `mapReady` in their effect
+ * dependency arrays so those effects re-run once the map is available.
  */
 export function useMaplibreMap({
   initialCoordinate,
@@ -36,6 +42,7 @@ export function useMaplibreMap({
 }: UseMaplibreMapOptions = {}) {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
+  const [mapReady, setMapReady] = useState(false);
   const { viewBounds, defaultCenter, defaultZoom } = useContext(ViewBoundsContext);
 
   // ----- Layer contexts (all optional — graceful when no provider is present) -----
@@ -55,6 +62,7 @@ export function useMaplibreMap({
 
   // ----- Enable / disable map interactions -----
   useEffect(() => {
+    if (!mapReady) return;
     const map = mapRef.current;
     if (!map) return;
 
@@ -75,7 +83,7 @@ export function useMaplibreMap({
       map.doubleClickZoom.enable();
       map.touchZoomRotate.enable();
     }
-  }, [disabled]);
+  }, [disabled, mapReady]);
 
   // ----- Apply height to the container -----
   useEffect(() => {
@@ -84,48 +92,84 @@ export function useMaplibreMap({
     }
   }, [height]);
 
-  // ----- Initialise the map (once) -----
+  // ----- Initialise the map (once, lazily when container enters viewport) -----
   useEffect(() => {
-    if (!mapContainerRef.current || mapRef.current) return;
+    const container = mapContainerRef.current;
+    if (!container || mapRef.current) return;
 
-    const center: [number, number] = initialCoordinate
-      ? [initialCoordinate.longitude, initialCoordinate.latitude]
-      : [defaultCenter.longitude, defaultCenter.latitude];
+    const createMap = () => {
+      if (mapRef.current) return; // guard against double-create (e.g. React StrictMode)
 
-    const map = new maplibregl.Map({
-      container: mapContainerRef.current,
-      style: EMPTY_STYLE,
-      center,
-      zoom: initialCoordinate ? 14 : defaultZoom,
-      attributionControl: {},
-    });
+      const center: [number, number] = initialCoordinate
+        ? [initialCoordinate.longitude, initialCoordinate.latitude]
+        : [defaultCenter.longitude, defaultCenter.latitude];
 
-    mapRef.current = map;
-
-    map.on('click', (e: maplibregl.MapMouseEvent) => {
-      if (disabledRef.current) return;
-      const { lng, lat } = e.lngLat;
-      onMapClickRef.current?.({
-        latitude: roundToDecimals(clampLatitude(lat), 6),
-        longitude: roundToDecimals(clampLongitude(lng), 6),
+      const map = new maplibregl.Map({
+        container,
+        style: EMPTY_STYLE,
+        center,
+        zoom: initialCoordinate ? 14 : defaultZoom,
+        attributionControl: {},
       });
-    });
 
-    return () => {
-      // Grab the existing WebGL context BEFORE map.remove() — calling
-      // getContext() after removal may create a new context instead of
-      // returning the one MapLibre is using, which makes the leak worse.
+      mapRef.current = map;
+      setMapReady(true);
+
+      map.on('click', (e: maplibregl.MapMouseEvent) => {
+        if (disabledRef.current) return;
+        const { lng, lat } = e.lngLat;
+        onMapClickRef.current?.({
+          latitude: roundToDecimals(clampLatitude(lat), 6),
+          longitude: roundToDecimals(clampLongitude(lng), 6),
+        });
+      });
+    };
+
+    const destroyMap = () => {
+      const map = mapRef.current;
+      if (!map) return;
       const canvas = map.getCanvas();
       const gl = canvas?.getContext('webgl2') ?? canvas?.getContext('webgl');
       const ext = gl?.getExtension('WEBGL_lose_context');
       map.remove();
       ext?.loseContext();
       mapRef.current = null;
+      setMapReady(false);
+    };
+
+    // Create the map immediately if the container is already visible; otherwise
+    // defer until it enters the viewport. This avoids creating many WebGL
+    // contexts for off-screen components (e.g. Storybook Docs renders all stories).
+    const rect = container.getBoundingClientRect();
+    const vH = window.innerHeight || document.documentElement.clientHeight;
+    const vW = window.innerWidth || document.documentElement.clientWidth;
+    const inViewport = rect.bottom > 0 && rect.right > 0 && rect.top < vH && rect.left < vW;
+
+    if (inViewport) {
+      createMap();
+      return destroyMap;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          observer.disconnect();
+          createMap();
+        }
+      },
+      { threshold: 0 },
+    );
+    observer.observe(container);
+
+    return () => {
+      observer.disconnect();
+      destroyMap();
     };
   }, []);
 
   // ----- Fit map to viewBounds when they change -----
   useEffect(() => {
+    if (!mapReady) return;
     const map = mapRef.current;
     if (!map || !viewBounds || viewBounds.length === 0) return;
 
@@ -151,12 +195,13 @@ export function useMaplibreMap({
       ],
       { padding: 20, duration: 300 },
     );
-  }, [viewBounds]);
+  }, [viewBounds, mapReady]);
 
   // ----- Sync base layer to the MapLibre instance -----
   const appliedBaseLayerRef = useRef<BaseLayerDefinition | null>(null);
 
   useEffect(() => {
+    if (!mapReady) return;
     const map = mapRef.current;
     if (!map) return;
 
@@ -198,12 +243,13 @@ export function useMaplibreMap({
     } else {
       map.once('load', syncBaseLayer);
     }
-  }, [baseCtx.activeBaseLayerId, baseCtx.availableBaseLayers]);
+  }, [baseCtx.activeBaseLayerId, baseCtx.availableBaseLayers, mapReady]);
 
   // ----- Sync overlay layers to the MapLibre instance -----
   const appliedLayerIdsRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
+    if (!mapReady) return;
     const map = mapRef.current;
     if (!map) return;
 
@@ -272,9 +318,10 @@ export function useMaplibreMap({
     customCtx.visibleLayerIds,
     wmsCatalogCtx.layers,
     wmsCatalogCtx.visibleLayerIds,
+    mapReady,
   ]);
 
-  return { mapContainerRef, mapRef };
+  return { mapContainerRef, mapRef, mapReady };
 }
 
 // ---------------------------------------------------------------------------

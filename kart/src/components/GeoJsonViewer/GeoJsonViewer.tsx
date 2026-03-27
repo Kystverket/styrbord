@@ -86,7 +86,7 @@ export function GeoJsonViewer({
     [onCoordinateClick],
   );
 
-  const { mapContainerRef, mapRef } = useMaplibreMap({
+  const { mapContainerRef, mapRef, mapReady } = useMaplibreMap({
     disabled,
     height,
     onMapClick: onCoordinateClick ? handleMapClick : undefined,
@@ -277,7 +277,7 @@ export function GeoJsonViewer({
       setLayersReady(false);
       removeLayers(map);
     };
-  }, [fc, mapRef]);
+  }, [fc, mapRef, mapReady]);
 
   return (
     <div ref={mapContainerRef} className={[styles.mapContainer, className].filter(Boolean).join(' ')}>

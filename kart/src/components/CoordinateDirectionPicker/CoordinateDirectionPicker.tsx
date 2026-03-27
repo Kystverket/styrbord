@@ -27,21 +27,6 @@ export function CoordinateDirectionPicker({
   // Stable ID for the directional-point feature
   const directionalIdRef = useRef(getUuid());
 
-  // Track whether a value change originated from this component
-  const selfChangeRef = useRef(false);
-
-  // Key to force GeoJsonEditor remount when the value is set externally or via number inputs
-  const [editorKey, setEditorKey] = useState(0);
-
-  // Bump editor key on external value changes (skip when the change originated from this component)
-  useEffect(() => {
-    if (selfChangeRef.current) {
-      selfChangeRef.current = false;
-    } else {
-      setEditorKey((k) => k + 1);
-    }
-  }, [value]);
-
   // ----- GeoJsonEditor value bridge -----
   const editorValue = useMemo<FeatureCollection | undefined>(() => {
     if (!value) return undefined;
@@ -76,7 +61,6 @@ export function CoordinateDirectionPicker({
             direction: dirFeature.properties?.direction ?? 0,
           },
         };
-        selfChangeRef.current = true;
         onChange(geo);
       }
     },
@@ -98,9 +82,7 @@ export function CoordinateDirectionPicker({
   // ----- Input handlers -----
   const emitUpdate = useCallback(
     (geo: CoordinateDirectionGeoJSON) => {
-      selfChangeRef.current = true;
       onChange(geo);
-      setEditorKey((k) => k + 1);
     },
     [onChange],
   );
@@ -143,7 +125,6 @@ export function CoordinateDirectionPicker({
   return (
     <Box gap={16} className={[className].filter(Boolean).join(' ')}>
       <GeoJsonEditor
-        key={editorKey}
         singleFeature
         modes={['directional-point']}
         value={editorValue}

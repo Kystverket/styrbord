@@ -31,6 +31,8 @@ interface MarkerEntry {
 
 export interface UseDirectionalPointsOptions {
   mapRef: MutableRefObject<MaplibreMap | null>;
+  /** Must be `true` before the click handler is installed (set by `useMaplibreMap`). */
+  mapReady: boolean;
   disabled: boolean;
   /** Current active editor mode — the hook only places points when this is 'directional-point'. */
   activeMode: string;
@@ -49,6 +51,8 @@ export interface UseDirectionalPointsResult {
   getFeatures: () => DirectionalPointFeature[];
   /** Load initial directional-point features (called once on mount). */
   loadFeatures: (features: DirectionalPointFeature[]) => void;
+  /** Replace all directional-point features (clears existing markers before loading). */
+  replaceFeatures: (features: DirectionalPointFeature[]) => void;
   /** Deselect any selected directional point. */
   deselect: () => void;
 }
@@ -77,6 +81,7 @@ function setSelectedStyle(container: HTMLDivElement, selected: boolean) {
 
 export function useDirectionalPoints({
   mapRef,
+  mapReady,
   disabled,
   activeMode,
   singleFeature = false,
@@ -312,7 +317,7 @@ export function useDirectionalPoints({
   // ----- Map click handler: place new directional point -----
   useEffect(() => {
     const map = mapRef.current;
-    if (!map || disabled) return;
+    if (!map || !mapReady || disabled) return;
 
     const handleClick = (e: maplibregl.MapMouseEvent) => {
       if (activeModeRef.current !== 'directional-point') return;
@@ -353,7 +358,7 @@ export function useDirectionalPoints({
     return () => {
       map.off('click', handleClick);
     };
-  }, [mapRef, disabled, createMarkerForFeature]);
+  }, [mapRef, mapReady, disabled, createMarkerForFeature]);
 
   // ----- Deselect -----
   const deselect = useCallback(() => {
@@ -405,6 +410,28 @@ export function useDirectionalPoints({
     [createMarkerForFeature],
   );
 
+  // ----- Replace all features (clears existing markers then loads new ones) -----
+  const replaceFeatures = useCallback(
+    (features: DirectionalPointFeature[]) => {
+      for (const entry of markersRef.current) {
+        entry.marker.remove();
+      }
+      markersRef.current = [];
+      featuresRef.current = [];
+      setSelectedId(null);
+      initialLoaded.current = false;
+
+      if (features.length === 0) return;
+
+      featuresRef.current = features;
+      initialLoaded.current = true;
+      for (const feature of features) {
+        createMarkerForFeature(feature);
+      }
+    },
+    [createMarkerForFeature],
+  );
+
   // ----- Cleanup markers on unmount -----
   useEffect(() => {
     return () => {
@@ -420,6 +447,7 @@ export function useDirectionalPoints({
     deleteSelected,
     getFeatures,
     loadFeatures,
+    replaceFeatures,
     deselect,
   };
 }

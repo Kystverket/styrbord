@@ -60,7 +60,7 @@ export function GeoJsonEditor({
   showCenterAction,
   singleFeature = false,
 }: GeoJsonEditorProps) {
-  const { mapContainerRef, mapRef } = useMaplibreMap({
+  const { mapContainerRef, mapRef, mapReady } = useMaplibreMap({
     disabled,
     height,
   });
@@ -89,7 +89,7 @@ export function GeoJsonEditor({
   // Install map click listener for coordinate click (suppressed during drawing)
   useEffect(() => {
     const map = mapRef.current;
-    if (!map || disabled || !onCoordinateClickRef.current) return;
+    if (!map || !mapReady || disabled || !onCoordinateClickRef.current) return;
 
     const handleClick = (e: maplibregl.MapMouseEvent) => {
       // Suppress during active drawing (point/linestring/polygon/directional-point placement).
@@ -104,7 +104,7 @@ export function GeoJsonEditor({
     return () => {
       map.off('click', handleClick);
     };
-  }, [mapRef, disabled]);
+  }, [mapRef, mapReady, disabled]);
 
   // Track hover state
   const [hoveredFeature, setHoveredFeature] = useState<InteractiveFeature | null>(null);
@@ -130,6 +130,9 @@ export function GeoJsonEditor({
   // Ref for the combined onChange emitter — defined later, referenced in useTerraDraw/useDirectionalPoints callbacks
   const emitCombinedRef = useRef<(terraData?: FeatureCollection) => void>(() => {});
 
+  // Tracks whether the last onChange was fired by this component (to skip the round-trip reload).
+  const isInternalChangeRef = useRef(false);
+
   // Terra-draw modes: filter out 'directional-point' since terra-draw doesn't handle it.
   // Memoise on the serialised content so that a new but identical array reference from the
   // parent does not cause terra-draw to be torn down and recreated (which would lose
@@ -142,6 +145,7 @@ export function GeoJsonEditor({
 
   const terraDrawResult = useTerraDraw({
     mapRef,
+    mapReady,
     modes: terraDrawModes,
     editable,
     deletable,
@@ -167,6 +171,7 @@ export function GeoJsonEditor({
   // ----- Directional points hook -----
   const directionalPoints = useDirectionalPoints({
     mapRef,
+    mapReady,
     disabled,
     activeMode: combinedMode,
     singleFeature,
@@ -189,6 +194,9 @@ export function GeoJsonEditor({
   const emitCombined = useCallback(
     (terraData?: FeatureCollection) => {
       if (!onChange) return;
+
+      // Mark as internal so the value-sync effect doesn't reload features on the round-trip.
+      isInternalChangeRef.current = true;
 
       const terraFeatures = terraData?.features ?? terraDrawResult.getSnapshot();
       const dirFeatures = directionalPoints.getFeatures();
@@ -240,47 +248,48 @@ export function GeoJsonEditor({
     }
   }, [directionalPoints, terraDeleteSelected]);
 
-  const loadInitialData = (
-    terraDrawResult as unknown as {
-      loadInitialData: (v: FeatureCollection | undefined) => void;
-    }
-  ).loadInitialData;
+  const { replaceFeatures: replaceTerraDraw } = terraDrawResult as unknown as {
+    replaceFeatures: (v: FeatureCollection | undefined) => void;
+  };
 
   // Normalise incoming value
   const fc = useMemo(() => (value ? toFeatureCollection(value) : undefined), [value]);
 
-  // Extract stable loadFeatures ref to avoid re-running this effect on every render
-  const { loadFeatures: loadDirectionalFeatures } = directionalPoints;
+  const { replaceFeatures: replaceDirectionalFeatures } = directionalPoints;
 
-  // Load initial data — partition between terra-draw and directional points
+  // Sync external value changes into terra-draw and directional markers.
+  // Skips round-trips caused by our own onChange calls.
   useEffect(() => {
-    if (!fc) return;
+    if (!terraDrawReady) return;
+
+    if (isInternalChangeRef.current) {
+      isInternalChangeRef.current = false;
+      return;
+    }
 
     const dirFeatures: DirectionalPointFeature[] = [];
     const otherFeatures: Feature<Geometry, GeoJsonProperties>[] = [];
 
-    for (const feature of fc.features) {
-      if (feature.properties?.mode === 'directional-point') {
-        dirFeatures.push(feature as DirectionalPointFeature);
-      } else {
-        otherFeatures.push(feature);
+    if (fc) {
+      for (const feature of fc.features) {
+        if (feature.properties?.mode === 'directional-point') {
+          dirFeatures.push(feature as DirectionalPointFeature);
+        } else {
+          otherFeatures.push(feature);
+        }
       }
     }
 
-    if (loadInitialData) {
-      loadInitialData({ type: 'FeatureCollection', features: otherFeatures });
-    }
-    if (dirFeatures.length > 0) {
-      loadDirectionalFeatures(dirFeatures);
-    }
-  }, [fc, loadInitialData, loadDirectionalFeatures, terraDrawReady]);
+    replaceTerraDraw({ type: 'FeatureCollection', features: otherFeatures });
+    replaceDirectionalFeatures(dirFeatures);
+  }, [fc, replaceTerraDraw, replaceDirectionalFeatures, terraDrawReady]);
 
   // Fit bounds to initial data (only once — skip re-fitting after user edits)
   const hasFittedBoundsRef = useRef(false);
 
   useEffect(() => {
     const map = mapRef.current;
-    if (!map || !fc || !fitBounds || hasFittedBoundsRef.current) return;
+    if (!map || !mapReady || !fc || !fitBounds || hasFittedBoundsRef.current) return;
 
     const bounds = computeBounds(fc);
     if (!bounds) return;
@@ -296,12 +305,12 @@ export function GeoJsonEditor({
     } else {
       map.once('load', fit);
     }
-  }, [fc, fitBounds, fitBoundsPadding, mapRef]);
+  }, [fc, fitBounds, fitBoundsPadding, mapRef, mapReady]);
 
   // Hover detection for terra-draw features
   useEffect(() => {
     const map = mapRef.current;
-    if (!map || disabled || !hoverable) return;
+    if (!map || !mapReady || disabled || !hoverable) return;
 
     let prevHoveredId: string | number | null = null;
 
@@ -368,7 +377,7 @@ export function GeoJsonEditor({
       map.off('mouseleave', handleMouseLeave);
       map.getCanvas().style.cursor = '';
     };
-  }, [mapRef, disabled, hoverable]);
+  }, [mapRef, mapReady, disabled, hoverable]);
 
   return (
     <div className={[editorStyles.editorWrapper, className].filter(Boolean).join(' ')}>

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useState } from 'react';
 import { Box, NumberInput, ValidationMessage } from '@kystverket/styrbord';
 import type { FeatureCollection, Point } from 'geojson';
 
@@ -24,21 +24,6 @@ export function CoordinatePicker({
 }: CoordinatePickerProps) {
   const id = useId();
 
-  // Track whether a value change originated from this component (map click or input commit)
-  const selfChangeRef = useRef(false);
-
-  // Key to force GeoJsonEditor remount when the coordinate is set externally or via number inputs
-  const [editorKey, setEditorKey] = useState(0);
-
-  // Bump editor key on external value changes (skip when the change originated from this component)
-  useEffect(() => {
-    if (selfChangeRef.current) {
-      selfChangeRef.current = false;
-    } else {
-      setEditorKey((k) => k + 1);
-    }
-  }, [value]);
-
   // ----- GeoJsonEditor value bridge -----
   const editorValue = useMemo<FeatureCollection | undefined>(() => {
     if (!value) return undefined;
@@ -62,7 +47,6 @@ export function CoordinatePicker({
           type: 'Feature',
           geometry: feature.geometry as Point,
         };
-        selfChangeRef.current = true;
         onChange(geo);
       }
     },
@@ -91,9 +75,7 @@ export function CoordinatePicker({
             coordinates: [clampLongitude(lon), clampLatitude(lat)],
           },
         };
-        selfChangeRef.current = true;
         onChange(geo);
-        setEditorKey((k) => k + 1);
       }
     },
     [onChange],
@@ -102,7 +84,6 @@ export function CoordinatePicker({
   return (
     <Box gap={16} className={[className].filter(Boolean).join(' ')}>
       <GeoJsonEditor
-        key={editorKey}
         singleFeature
         modes={['point']}
         value={editorValue}

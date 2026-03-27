@@ -32,6 +32,8 @@ type AnyTerraDrawMode =
 
 export interface UseTerraDrawOptions {
   mapRef: MutableRefObject<MaplibreMap | null>;
+  /** Must be `true` before terra-draw will initialise (set by `useMaplibreMap`). */
+  mapReady: boolean;
   modes: TerraDrawableMode[];
   editable: boolean;
   deletable: boolean;
@@ -65,6 +67,7 @@ export interface UseTerraDrawResult {
 
 export function useTerraDraw({
   mapRef,
+  mapReady,
   modes,
   editable,
   deletable,
@@ -120,7 +123,7 @@ export function useTerraDraw({
   // ---- Initialize / tear down terra-draw ----
   useEffect(() => {
     const map = mapRef.current;
-    if (!map || disabled) return;
+    if (!map || !mapReady || disabled) return;
 
     const initDraw = () => {
       if (drawRef.current) return; // already initialised
@@ -278,7 +281,49 @@ export function useTerraDraw({
         setIsReady(false);
       }
     };
-  }, [mapRef, disabled, modes, editable, singleFeature, emitSnapshot]);
+  }, [mapRef, mapReady, disabled, modes, editable, singleFeature, emitSnapshot]);
+
+  // ---- Replace all features with new data (clears existing before loading) ----
+  const replaceFeatures = useCallback((value: FeatureCollection | undefined) => {
+    const draw = drawRef.current;
+    if (!draw) return;
+
+    const snapshot = draw.getSnapshot();
+    const toRemove = snapshot
+      .filter(
+        (f: GeoJSONStoreFeatures) =>
+          f.properties?.mode !== 'select' &&
+          !f.properties?.closingPoint &&
+          !f.properties?.snappingPoint &&
+          !f.properties?.coordinatePoint,
+      )
+      .map((f: GeoJSONStoreFeatures) => f.id!);
+
+    if (toRemove.length > 0) {
+      try {
+        draw.removeFeatures(toRemove);
+      } catch {
+        // features may already be removed
+      }
+    }
+
+    initialDataLoaded.current = false;
+
+    if (!value || value.features.length === 0) return;
+
+    const fc = toFeatureCollection(value);
+    const features = fc.features.map((f) => ({
+      ...f,
+      properties: { ...f.properties, mode: 'static' },
+    })) as GeoJSONStoreFeatures[];
+
+    try {
+      draw.addFeatures(features);
+      initialDataLoaded.current = true;
+    } catch (err) {
+      console.error('[GeoJsonEditor] Error replacing features:', err);
+    }
+  }, []);
 
   // ---- Load initial value ----
   const loadInitialData = useCallback(
@@ -365,5 +410,7 @@ export function useTerraDraw({
     isReady,
     /** @internal — exposed for the component to call after mount */
     loadInitialData,
-  } as UseTerraDrawResult & { loadInitialData: typeof loadInitialData };
+    /** @internal — replaces all features without remounting the map */
+    replaceFeatures,
+  } as UseTerraDrawResult & { loadInitialData: typeof loadInitialData; replaceFeatures: typeof replaceFeatures };
 }
