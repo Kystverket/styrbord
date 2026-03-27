@@ -181,18 +181,54 @@ export function useTerraDraw({
 
       // Listen for changes
       draw.on('change', () => {
-        // In single-feature mode, remove all but the newest user feature.
-        if (singleFeatureRef.current) {
-          const snap = draw.getSnapshot();
-          const userFeats = snap.filter((f: GeoJSONStoreFeatures) => f.properties?.mode !== 'select');
-          if (userFeats.length > 1) {
-            // Keep only the last (newest) feature, remove the rest.
-            const toRemove = userFeats.slice(0, -1).map((f: GeoJSONStoreFeatures) => f.id!);
-            draw.removeFeatures(toRemove);
-            return; // removeFeatures triggers another change event
-          }
-        }
         emitSnapshot();
+      });
+
+      // In single-feature mode, after a feature is completed:
+      // 1. Remove all older features so only the newest one remains.
+      // 2. Re-activate the drawing mode so the user can immediately
+      //    draw a replacement.
+      //
+      // This is done in the `finish` event (not `change`) because
+      // terra-draw creates internal helper features (closing points,
+      // snapping points) during drawing that would be incorrectly
+      // counted as user features in the `change` handler.
+      draw.on('finish', (finishedId) => {
+        if (singleFeatureRef.current && modes.length > 0) {
+          // Defer to let terra-draw complete its internal cleanup first.
+          Promise.resolve().then(() => {
+            const d = drawRef.current;
+            if (!d) return;
+
+            // Remove every user feature except the just-finished one.
+            const snap = d.getSnapshot();
+            const toRemove = snap
+              .filter(
+                (f: GeoJSONStoreFeatures) =>
+                  f.properties?.mode !== 'select' &&
+                  !f.properties?.closingPoint &&
+                  !f.properties?.snappingPoint &&
+                  !f.properties?.coordinatePoint &&
+                  f.id !== finishedId,
+              )
+              .map((f: GeoJSONStoreFeatures) => f.id!);
+
+            if (toRemove.length > 0) {
+              try {
+                d.removeFeatures(toRemove);
+              } catch {
+                // Features may have already been removed
+              }
+            }
+
+            // Re-activate drawing mode so the user can draw another feature.
+            const drawingMode = modes[0];
+            if (d.getMode() !== drawingMode) {
+              d.setMode(drawingMode);
+              setActiveModeState(drawingMode);
+            }
+          });
+        }
       });
 
       draw.on('select', () => {
