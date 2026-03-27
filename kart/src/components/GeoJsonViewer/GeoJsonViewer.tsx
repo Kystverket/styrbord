@@ -143,7 +143,7 @@ export function GeoJsonViewer({
     [onSelect, mapRef, layersReady],
   );
 
-  const { hoveredFeature, selectedFeatures, hasSelection } = useFeatureInteraction({
+  const { hoveredFeature } = useFeatureInteraction({
     mapRef,
     layerIds: INTERACTIVE_LAYERS,
     sourceId: SOURCE_ID,
