@@ -12,6 +12,15 @@ const meta = {
   tags: ['autodocs', 'kyv'],
   parameters: {
     layout: 'padded',
+    docs: {
+      story: {
+        // Render each story in its own iframe in the docs page so that
+        // the MapLibre/terra-draw instance is fully isolated — the same
+        // context as the focused canvas view where clicking works.
+        inline: false,
+        iframeHeight: '600px',
+      },
+    },
   },
 } satisfies Meta<typeof CoordinatePicker>;
 
@@ -76,6 +85,9 @@ export const WithError: Story = {
 export const TallMap: Story = {
   args: { value: undefined, onChange: noop },
   render: () => <Controlled height="1600px" />,
+  parameters: {
+    docs: { story: { iframeHeight: '1750px' } },
+  },
 };
 
 // ---- Disabled ----

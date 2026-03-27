@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type { MutableRefObject } from 'react';
 import type { Map as MaplibreMap } from 'maplibre-gl';
 import maplibregl from 'maplibre-gl';
-import type { Feature, FeatureCollection, Point } from 'geojson';
+import type { Feature, Point } from 'geojson';
 
 import { clampDirection } from '~/utility/coordinate';
 import { getUuid } from '~/utility/uuid';
@@ -61,9 +61,7 @@ export interface UseDirectionalPointsResult {
 // Selection styling
 // ---------------------------------------------------------------------------
 
-const SELECTED_BORDER = 'none';
 const SELECTED_SHADOW = '0 0 0 3px rgba(0, 98, 186, 0.5)';
-const DEFAULT_BORDER = 'none';
 const DEFAULT_SHADOW = 'none';
 
 function setSelectedStyle(container: HTMLDivElement, selected: boolean) {
@@ -127,7 +125,6 @@ export function useDirectionalPoints({
 
       // --- Rotation drag state ---
       let isDraggingRotation = false;
-      let lastDragEnd = 0;
 
       const getFeature = () => featuresRef.current.find((f) => f.properties.id === feature.properties.id);
 
@@ -165,7 +162,6 @@ export function useDirectionalPoints({
       const onHandlePointerUp = (e: PointerEvent) => {
         if (isDraggingRotation) {
           isDraggingRotation = false;
-          lastDragEnd = Date.now();
           (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
           e.stopPropagation();
           e.preventDefault();
@@ -220,7 +216,6 @@ export function useDirectionalPoints({
           isDraggingPosition = false;
           dragStartLngLat = null;
           dragStartMarkerLngLat = null;
-          lastDragEnd = Date.now();
           (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
           e.stopPropagation();
           e.preventDefault();
