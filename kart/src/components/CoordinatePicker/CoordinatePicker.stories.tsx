@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import StyrbordDecorator from '../../../storybook/styrbordDecorator';
 import { CoordinatePicker } from './CoordinatePicker';
 import type { CoordinateGeoJSON } from '~/utility/types';
+import type { CoordinatePickerProps } from './CoordinatePicker.types';
 
 const meta = {
   title: 'Kart/CoordinatePicker',
@@ -17,11 +18,19 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+/** Wrapper that provides controlled state for stories. */
+const Controlled = (props: Partial<CoordinatePickerProps> & { initialValue?: CoordinateGeoJSON }) => {
+  const { initialValue, ...rest } = props;
+  const [value, setValue] = useState<CoordinateGeoJSON | undefined>(initialValue);
+  return <CoordinatePicker value={value} onChange={setValue} {...rest} />;
+};
+
+const noop = () => {};
+
 // ---- Default (empty) ----
 export const Default: Story = {
-  args: {
-    label: 'Plassering',
-  },
+  args: { value: undefined, onChange: noop },
+  render: () => <Controlled label="Plassering" />,
 };
 
 // ---- Controlled with initial value ----
@@ -53,35 +62,36 @@ const ControlledTemplate = () => {
 };
 
 export const WithInitialValue: Story = {
+  args: { value: undefined, onChange: noop },
   render: () => <ControlledTemplate />,
 };
 
 // ---- With error ----
 export const WithError: Story = {
-  args: {
-    label: 'Plassering',
-    error: 'Koordinat er påkrevd',
-  },
+  args: { value: undefined, onChange: noop },
+  render: () => <Controlled label="Plassering" error="Koordinat er påkrevd" />,
 };
 
 // ---- Custom height ----
 export const TallMap: Story = {
-  args: {
-    height: '1600px',
-  },
+  args: { value: undefined, onChange: noop },
+  render: () => <Controlled height="1600px" />,
 };
 
 // ---- Disabled ----
 export const Disabled: Story = {
-  args: {
-    label: 'Plassering',
-    value: {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [10.3951, 63.4305],
-      },
-    },
-    disabled: true,
-  },
+  args: { value: undefined, onChange: noop },
+  render: () => (
+    <Controlled
+      label="Plassering"
+      initialValue={{
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [10.3951, 63.4305],
+        },
+      }}
+      disabled
+    />
+  ),
 };

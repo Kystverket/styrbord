@@ -1,6 +1,6 @@
-export type { Coordinate, CoordinateGeoJSON } from "~/utility/types";
-import type { Coordinate, CoordinateGeoJSON } from "~/utility/types";
-import type { MapPickerBaseProps } from "~/components/shared/MapPicker.types";
+export type { Coordinate, CoordinateGeoJSON } from '~/utility/types';
+import type { Coordinate, CoordinateGeoJSON } from '~/utility/types';
+import type { MapPickerBaseProps } from '~/components/shared/MapPicker.types';
 
 /**
  * The combined value of a placed coordinate and the direction it faces.
@@ -20,7 +20,7 @@ export type CoordinateDirectionGeoJSON = CoordinateGeoJSON & {
 
 export interface CoordinateDirectionPickerProps extends MapPickerBaseProps {
   /** Controlled value. */
-  value?: CoordinateDirectionGeoJSON;
+  value: CoordinateDirectionGeoJSON | undefined;
   /** Called when the user changes the coordinate or direction. */
-  onChange?: (value: CoordinateDirectionGeoJSON) => void;
+  onChange: (value: CoordinateDirectionGeoJSON) => void;
 }

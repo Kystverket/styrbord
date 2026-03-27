@@ -27,48 +27,39 @@ export function CoordinateDirectionPicker({
   // Stable ID for the directional-point feature
   const directionalIdRef = useRef(getUuid());
 
-  // ----- Internal state (for uncontrolled usage) -----
-  const [internalValue, setInternalValue] = useState<CoordinateDirectionGeoJSON | undefined>(value);
-
   // Track whether a value change originated from this component
   const selfChangeRef = useRef(false);
 
   // Key to force GeoJsonEditor remount when the value is set externally or via number inputs
   const [editorKey, setEditorKey] = useState(0);
 
-  // Sync controlled value prop
+  // Bump editor key on external value changes (skip when the change originated from this component)
   useEffect(() => {
-    if (value !== undefined) {
-      setInternalValue(value);
-      if (selfChangeRef.current) {
-        selfChangeRef.current = false;
-      } else {
-        // External value change — remount editor to load new data
-        setEditorKey((k) => k + 1);
-      }
+    if (selfChangeRef.current) {
+      selfChangeRef.current = false;
+    } else {
+      setEditorKey((k) => k + 1);
     }
   }, [value]);
 
-  const currentValue = value !== undefined ? value : internalValue;
-
   // ----- GeoJsonEditor value bridge -----
   const editorValue = useMemo<FeatureCollection | undefined>(() => {
-    if (!currentValue) return undefined;
+    if (!value) return undefined;
     return {
       type: 'FeatureCollection',
       features: [
         {
           type: 'Feature',
-          geometry: currentValue.geometry,
+          geometry: value.geometry,
           properties: {
             mode: 'directional-point' as const,
-            direction: currentValue.properties.direction,
+            direction: value.properties.direction,
             id: directionalIdRef.current,
           },
         },
       ],
     };
-  }, [currentValue]);
+  }, [value]);
 
   const handleEditorChange = useCallback(
     (fc: FeatureCollection) => {
@@ -86,31 +77,29 @@ export function CoordinateDirectionPicker({
           },
         };
         selfChangeRef.current = true;
-        setInternalValue(geo);
-        onChange?.(geo);
+        onChange(geo);
       }
     },
     [onChange],
   );
 
-  // ----- Input number state (synced to/from currentValue, committed on blur) -----
-  const [latValue, setLatValue] = useState<number | undefined>(currentValue?.geometry.coordinates[1] ?? undefined);
-  const [lonValue, setLonValue] = useState<number | undefined>(currentValue?.geometry.coordinates[0] ?? undefined);
-  const [dirValue, setDirValue] = useState<number | undefined>(currentValue?.properties.direction ?? undefined);
+  // ----- Input number state (synced to/from value, committed on blur) -----
+  const [latValue, setLatValue] = useState<number | undefined>(value?.geometry.coordinates[1] ?? undefined);
+  const [lonValue, setLonValue] = useState<number | undefined>(value?.geometry.coordinates[0] ?? undefined);
+  const [dirValue, setDirValue] = useState<number | undefined>(value?.properties.direction ?? undefined);
 
   useEffect(() => {
-    const coords = currentValue?.geometry.coordinates;
+    const coords = value?.geometry.coordinates;
     setLatValue(coords ? coords[1] : undefined);
     setLonValue(coords ? coords[0] : undefined);
-    setDirValue(currentValue?.properties.direction ?? undefined);
-  }, [currentValue]);
+    setDirValue(value?.properties.direction ?? undefined);
+  }, [value]);
 
   // ----- Input handlers -----
   const emitUpdate = useCallback(
     (geo: CoordinateDirectionGeoJSON) => {
       selfChangeRef.current = true;
-      setInternalValue(geo);
-      onChange?.(geo);
+      onChange(geo);
       setEditorKey((k) => k + 1);
     },
     [onChange],
@@ -127,28 +116,28 @@ export function CoordinateDirectionPicker({
             coordinates: [clampLongitude(lon), clampLatitude(lat)],
           },
           properties: {
-            direction: currentValue?.properties.direction ?? 0,
+            direction: value?.properties.direction ?? 0,
           },
         };
         emitUpdate(geo);
       }
     },
-    [currentValue?.properties.direction, emitUpdate],
+    [value?.properties.direction, emitUpdate],
   );
 
   const commitDirection = useCallback(
     (dir: number | undefined) => {
-      if (!currentValue) return;
+      if (!value) return;
       const geo: CoordinateDirectionGeoJSON = {
         type: 'Feature',
-        geometry: currentValue.geometry,
+        geometry: value.geometry,
         properties: {
           direction: dir != null ? Math.round(clampDirection(dir)) : 0,
         },
       };
       emitUpdate(geo);
     },
-    [currentValue, emitUpdate],
+    [value, emitUpdate],
   );
 
   return (

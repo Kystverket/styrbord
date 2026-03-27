@@ -24,44 +24,35 @@ export function CoordinatePicker({
 }: CoordinatePickerProps) {
   const id = useId();
 
-  // ----- Internal state (for uncontrolled usage) -----
-  const [internalValue, setInternalValue] = useState<CoordinateGeoJSON | undefined>(value);
-
   // Track whether a value change originated from this component (map click or input commit)
   const selfChangeRef = useRef(false);
 
   // Key to force GeoJsonEditor remount when the coordinate is set externally or via number inputs
   const [editorKey, setEditorKey] = useState(0);
 
-  // Sync controlled value prop
+  // Bump editor key on external value changes (skip when the change originated from this component)
   useEffect(() => {
-    if (value !== undefined) {
-      setInternalValue(value);
-      if (selfChangeRef.current) {
-        selfChangeRef.current = false;
-      } else {
-        // External value change — remount editor to load new data
-        setEditorKey((k) => k + 1);
-      }
+    if (selfChangeRef.current) {
+      selfChangeRef.current = false;
+    } else {
+      setEditorKey((k) => k + 1);
     }
   }, [value]);
 
-  const currentValue = value !== undefined ? value : internalValue;
-
   // ----- GeoJsonEditor value bridge -----
   const editorValue = useMemo<FeatureCollection | undefined>(() => {
-    if (!currentValue) return undefined;
+    if (!value) return undefined;
     return {
       type: 'FeatureCollection',
       features: [
         {
           type: 'Feature',
-          geometry: currentValue.geometry,
+          geometry: value.geometry,
           properties: {},
         },
       ],
     };
-  }, [currentValue]);
+  }, [value]);
 
   const handleEditorChange = useCallback(
     (fc: FeatureCollection) => {
@@ -72,22 +63,21 @@ export function CoordinatePicker({
           geometry: feature.geometry as Point,
         };
         selfChangeRef.current = true;
-        setInternalValue(geo);
-        onChange?.(geo);
+        onChange(geo);
       }
     },
     [onChange],
   );
 
-  // ----- Input number state (synced to/from currentValue, committed on blur) -----
-  const [latValue, setLatValue] = useState<number | undefined>(currentValue?.geometry.coordinates[1] ?? undefined);
-  const [lonValue, setLonValue] = useState<number | undefined>(currentValue?.geometry.coordinates[0] ?? undefined);
+  // ----- Input number state (synced to/from value, committed on blur) -----
+  const [latValue, setLatValue] = useState<number | undefined>(value?.geometry.coordinates[1] ?? undefined);
+  const [lonValue, setLonValue] = useState<number | undefined>(value?.geometry.coordinates[0] ?? undefined);
 
   useEffect(() => {
-    const coords = currentValue?.geometry.coordinates;
+    const coords = value?.geometry.coordinates;
     setLatValue(coords ? coords[1] : undefined);
     setLonValue(coords ? coords[0] : undefined);
-  }, [currentValue]);
+  }, [value]);
 
   // ----- Input handlers -----
   const commitLatLon = useCallback(
@@ -102,8 +92,7 @@ export function CoordinatePicker({
           },
         };
         selfChangeRef.current = true;
-        setInternalValue(geo);
-        onChange?.(geo);
+        onChange(geo);
         setEditorKey((k) => k + 1);
       }
     },
