@@ -1,22 +1,17 @@
-import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Box, NumberInput, ValidationMessage } from '@kystverket/styrbord';
+import type { FeatureCollection, Point } from 'geojson';
 
-import styles from '~/components/shared/MapPicker.module.css';
-import type {
-  Coordinate,
-  CoordinateDirectionPickerProps,
-  CoordinateDirectionValue,
-} from './CoordinateDirectionPicker.types';
+import type { CoordinateDirectionGeoJSON, CoordinateDirectionPickerProps } from './CoordinateDirectionPicker.types';
 import { clampDirection, clampLatitude, clampLongitude } from '~/utility/coordinate';
-import { useMaplibreMap } from '~/hooks/useMaplibreMap';
-import { useCompassMarker } from '~/hooks/useCompassMarker';
-import { MapCenterAction } from '~/components/shared/MapCenterAction';
+import { getUuid } from '~/utility/uuid';
+import { GeoJsonEditor } from '~/components/GeoJsonEditor/GeoJsonEditor';
 
 /**
  * CoordinateDirectionPicker — select a geographic coordinate and a facing
  * direction (0–360°) via an interactive map or manual input fields.
  *
- * Uses Kartverket topographic tiles and WGS84 (EPSG:4326) coordinates.
+ * Internally delegates to GeoJsonEditor in single-feature directional-point mode.
  */
 export function CoordinateDirectionPicker({
   value,
@@ -29,149 +24,145 @@ export function CoordinateDirectionPicker({
 }: CoordinateDirectionPickerProps) {
   const id = useId();
 
-  // ----- Internal state (drives inputs; synced to/from props.value) -----
-  const [internalValue, setInternalValue] = useState<CoordinateDirectionValue>(() =>
-    value
-      ? {
-          coordinate: {
-            latitude: value.geometry.coordinates[1],
-            longitude: value.geometry.coordinates[0],
-          },
-          direction: value.properties.direction,
-        }
-      : { coordinate: null, direction: null },
-  );
+  // Stable ID for the directional-point feature
+  const directionalIdRef = useRef(getUuid());
 
-  // Keep internal state in sync with controlled value prop
+  // ----- Internal state (for uncontrolled usage) -----
+  const [internalValue, setInternalValue] = useState<CoordinateDirectionGeoJSON | undefined>(value);
+
+  // Track whether a value change originated from this component
+  const selfChangeRef = useRef(false);
+
+  // Key to force GeoJsonEditor remount when the value is set externally or via number inputs
+  const [editorKey, setEditorKey] = useState(0);
+
+  // Sync controlled value prop
   useEffect(() => {
     if (value !== undefined) {
-      setInternalValue({
-        coordinate: {
-          latitude: value.geometry.coordinates[1],
-          longitude: value.geometry.coordinates[0],
-        },
-        direction: value.properties.direction,
-      });
+      setInternalValue(value);
+      if (selfChangeRef.current) {
+        selfChangeRef.current = false;
+      } else {
+        // External value change — remount editor to load new data
+        setEditorKey((k) => k + 1);
+      }
     }
   }, [value]);
 
-  const currentValue =
-    value !== undefined
-      ? {
-          coordinate: {
-            latitude: value.geometry.coordinates[1],
-            longitude: value.geometry.coordinates[0],
-          },
-          direction: value.properties.direction,
-        }
-      : internalValue;
+  const currentValue = value !== undefined ? value : internalValue;
 
-  const emit = useCallback(
-    (next: CoordinateDirectionValue) => {
-      setInternalValue(next);
-      if (next.coordinate && next.direction !== null) {
-        onChange?.({
+  // ----- GeoJsonEditor value bridge -----
+  const editorValue = useMemo<FeatureCollection | undefined>(() => {
+    if (!currentValue) return undefined;
+    return {
+      type: 'FeatureCollection',
+      features: [
+        {
           type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: [next.coordinate.longitude, next.coordinate.latitude],
-          },
+          geometry: currentValue.geometry,
           properties: {
-            direction: next.direction,
+            mode: 'directional-point' as const,
+            direction: currentValue.properties.direction,
+            id: directionalIdRef.current,
           },
-        });
+        },
+      ],
+    };
+  }, [currentValue]);
+
+  const handleEditorChange = useCallback(
+    (fc: FeatureCollection) => {
+      const dirFeature = fc.features.find((f) => f.properties?.mode === 'directional-point');
+      if (dirFeature) {
+        // Keep the id for future round-trips
+        if (dirFeature.properties?.id) {
+          directionalIdRef.current = dirFeature.properties.id;
+        }
+        const geo: CoordinateDirectionGeoJSON = {
+          type: 'Feature',
+          geometry: dirFeature.geometry as Point,
+          properties: {
+            direction: dirFeature.properties?.direction ?? 0,
+          },
+        };
+        selfChangeRef.current = true;
+        setInternalValue(geo);
+        onChange?.(geo);
       }
     },
     [onChange],
   );
 
-  // ----- Map hook -----
-  const handleMapClick = useCallback(
-    (coord: Coordinate) => {
-      // Ignore clicks that originate from a rotation drag
-      if (wasRecentlyDraggingRef.current?.()) return;
-      emit({ coordinate: coord, direction: currentValue.direction });
-    },
-    [currentValue.direction, emit],
-  );
+  // ----- Input number state (synced to/from currentValue, committed on blur) -----
+  const [latValue, setLatValue] = useState<number | undefined>(currentValue?.geometry.coordinates[1] ?? undefined);
+  const [lonValue, setLonValue] = useState<number | undefined>(currentValue?.geometry.coordinates[0] ?? undefined);
+  const [dirValue, setDirValue] = useState<number | undefined>(currentValue?.properties.direction ?? undefined);
 
-  const { mapContainerRef, mapRef } = useMaplibreMap({
-    initialCoordinate: currentValue.coordinate,
-    disabled,
-    onMapClick: handleMapClick,
-    height,
-  });
-
-  // ----- Compass marker hook -----
-  const { wasRecentlyDragging } = useCompassMarker({
-    mapRef,
-    currentValue,
-    disabled,
-    onDirectionChange: emit,
-  });
-
-  // Keep in a ref so the stable handleMapClick closure always reads the latest function
-  const wasRecentlyDraggingRef = useRef(wasRecentlyDragging);
-  wasRecentlyDraggingRef.current = wasRecentlyDragging;
-
-  // ----- Input number state (synced to/from props.value, committed on blur) -----
-  const [latValue, setLatValue] = useState<number | undefined>(currentValue.coordinate?.latitude ?? undefined);
-  const [lonValue, setLonValue] = useState<number | undefined>(currentValue.coordinate?.longitude ?? undefined);
-  const [dirValue, setDirValue] = useState<number | undefined>(currentValue.direction ?? undefined);
-
-  // Sync input values when value changes externally (e.g. map click, compass drag)
   useEffect(() => {
-    setLatValue(currentValue.coordinate?.latitude ?? undefined);
-    setLonValue(currentValue.coordinate?.longitude ?? undefined);
-    setDirValue(currentValue.direction ?? undefined);
+    const coords = currentValue?.geometry.coordinates;
+    setLatValue(coords ? coords[1] : undefined);
+    setLonValue(coords ? coords[0] : undefined);
+    setDirValue(currentValue?.properties.direction ?? undefined);
   }, [currentValue]);
 
   // ----- Input handlers -----
+  const emitUpdate = useCallback(
+    (geo: CoordinateDirectionGeoJSON) => {
+      selfChangeRef.current = true;
+      setInternalValue(geo);
+      onChange?.(geo);
+      setEditorKey((k) => k + 1);
+    },
+    [onChange],
+  );
+
   const commitLatLon = useCallback(
     (lat: number | undefined, lon: number | undefined) => {
-      if (lat == null && lon == null) {
-        emit({ ...currentValue, coordinate: null });
-        return;
-      }
+      if (lat == null && lon == null) return;
       if (lat != null && lon != null) {
-        const newCoord: Coordinate = {
-          latitude: clampLatitude(lat),
-          longitude: clampLongitude(lon),
+        const geo: CoordinateDirectionGeoJSON = {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [clampLongitude(lon), clampLatitude(lat)],
+          },
+          properties: {
+            direction: currentValue?.properties.direction ?? 0,
+          },
         };
-        emit({ ...currentValue, coordinate: newCoord });
-        mapRef.current?.flyTo({
-          center: [newCoord.longitude, newCoord.latitude],
-          duration: 300,
-        });
+        emitUpdate(geo);
       }
     },
-    [currentValue, emit, mapRef],
+    [currentValue?.properties.direction, emitUpdate],
   );
 
   const commitDirection = useCallback(
     (dir: number | undefined) => {
-      if (dir == null) {
-        emit({ ...currentValue, direction: null });
-      } else {
-        emit({ ...currentValue, direction: Math.round(clampDirection(dir)) });
-      }
+      if (!currentValue) return;
+      const geo: CoordinateDirectionGeoJSON = {
+        type: 'Feature',
+        geometry: currentValue.geometry,
+        properties: {
+          direction: dir != null ? Math.round(clampDirection(dir)) : 0,
+        },
+      };
+      emitUpdate(geo);
     },
-    [currentValue, emit],
+    [currentValue, emitUpdate],
   );
 
   return (
     <Box gap={16} className={[className].filter(Boolean).join(' ')}>
-      <div
-        ref={mapContainerRef}
-        className={[styles.mapContainer, disabled ? styles.disabled : ''].filter(Boolean).join(' ')}
-      >
-        <div className={styles.mapHint}>
-          {currentValue.coordinate
-            ? 'Klikk for å flytte · Dra på markøren for å rotere retning'
-            : 'Klikk i kartet for å plassere markør'}
-        </div>
-        {!disabled && <MapCenterAction mapRef={mapRef} visible={showCenterAction} />}
-      </div>
+      <GeoJsonEditor
+        key={editorKey}
+        singleFeature
+        modes={['directional-point']}
+        value={editorValue}
+        onChange={handleEditorChange}
+        disabled={disabled}
+        height={height}
+        showCenterAction={showCenterAction}
+      />
 
       {/* Coordinate + direction inputs */}
       <Box horizontal gap={16}>

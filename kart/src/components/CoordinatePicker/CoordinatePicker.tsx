@@ -1,19 +1,17 @@
-import { useCallback, useEffect, useId, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Box, NumberInput, ValidationMessage } from '@kystverket/styrbord';
+import type { FeatureCollection, Point } from 'geojson';
 
-import styles from '~/components/shared/MapPicker.module.css';
 import type { CoordinatePickerProps } from './CoordinatePicker.types';
-import type { Coordinate } from '~/utility/types';
+import type { CoordinateGeoJSON } from '~/utility/types';
 import { clampLatitude, clampLongitude } from '~/utility/coordinate';
-import { useMaplibreMap } from '~/hooks/useMaplibreMap';
-import { usePointMarker } from '~/hooks/usePointMarker';
-import { MapCenterAction } from '~/components/shared/MapCenterAction';
+import { GeoJsonEditor } from '~/components/GeoJsonEditor/GeoJsonEditor';
 
 /**
  * CoordinatePicker — select a geographic coordinate via an interactive map
  * or manual input fields.
  *
- * Uses Kartverket topographic tiles and WGS84 (EPSG:4326) coordinates.
+ * Internally delegates to GeoJsonEditor in single-feature point mode.
  */
 export function CoordinatePicker({
   value,
@@ -26,115 +24,104 @@ export function CoordinatePicker({
 }: CoordinatePickerProps) {
   const id = useId();
 
-  // ----- Internal state (drives inputs; synced to/from props.value) -----
-  const [internalCoordinate, setInternalCoordinate] = useState<Coordinate | null>(() =>
-    value
-      ? {
-          latitude: value.geometry.coordinates[1],
-          longitude: value.geometry.coordinates[0],
-        }
-      : null,
-  );
+  // ----- Internal state (for uncontrolled usage) -----
+  const [internalValue, setInternalValue] = useState<CoordinateGeoJSON | undefined>(value);
 
-  // Keep internal state in sync with controlled value prop
+  // Track whether a value change originated from this component (map click or input commit)
+  const selfChangeRef = useRef(false);
+
+  // Key to force GeoJsonEditor remount when the coordinate is set externally or via number inputs
+  const [editorKey, setEditorKey] = useState(0);
+
+  // Sync controlled value prop
   useEffect(() => {
     if (value !== undefined) {
-      setInternalCoordinate({
-        latitude: value.geometry.coordinates[1],
-        longitude: value.geometry.coordinates[0],
-      });
+      setInternalValue(value);
+      if (selfChangeRef.current) {
+        selfChangeRef.current = false;
+      } else {
+        // External value change — remount editor to load new data
+        setEditorKey((k) => k + 1);
+      }
     }
   }, [value]);
 
-  const currentCoordinate =
-    value !== undefined
-      ? {
-          latitude: value.geometry.coordinates[1],
-          longitude: value.geometry.coordinates[0],
-        }
-      : internalCoordinate;
+  const currentValue = value !== undefined ? value : internalValue;
 
-  const emit = useCallback(
-    (coord: Coordinate | null) => {
-      setInternalCoordinate(coord);
-      if (coord) {
-        onChange?.({
+  // ----- GeoJsonEditor value bridge -----
+  const editorValue = useMemo<FeatureCollection | undefined>(() => {
+    if (!currentValue) return undefined;
+    return {
+      type: 'FeatureCollection',
+      features: [
+        {
           type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: [coord.longitude, coord.latitude],
-          },
-        });
+          geometry: currentValue.geometry,
+          properties: {},
+        },
+      ],
+    };
+  }, [currentValue]);
+
+  const handleEditorChange = useCallback(
+    (fc: FeatureCollection) => {
+      if (fc.features.length > 0) {
+        const feature = fc.features[0];
+        const geo: CoordinateGeoJSON = {
+          type: 'Feature',
+          geometry: feature.geometry as Point,
+        };
+        selfChangeRef.current = true;
+        setInternalValue(geo);
+        onChange?.(geo);
       }
     },
     [onChange],
   );
 
-  // ----- Map hook -----
-  const handleMapClick = useCallback(
-    (coord: Coordinate) => {
-      emit(coord);
-    },
-    [emit],
-  );
+  // ----- Input number state (synced to/from currentValue, committed on blur) -----
+  const [latValue, setLatValue] = useState<number | undefined>(currentValue?.geometry.coordinates[1] ?? undefined);
+  const [lonValue, setLonValue] = useState<number | undefined>(currentValue?.geometry.coordinates[0] ?? undefined);
 
-  const { mapContainerRef, mapRef } = useMaplibreMap({
-    initialCoordinate: currentCoordinate,
-    disabled,
-    onMapClick: handleMapClick,
-    height,
-  });
-
-  // ----- Point marker hook -----
-  usePointMarker({
-    mapRef,
-    coordinate: currentCoordinate,
-    disabled,
-  });
-
-  // ----- Input number state (synced to/from props.value, committed on blur) -----
-  const [latValue, setLatValue] = useState<number | undefined>(currentCoordinate?.latitude ?? undefined);
-  const [lonValue, setLonValue] = useState<number | undefined>(currentCoordinate?.longitude ?? undefined);
-
-  // Sync input values when value changes externally (e.g. map click)
   useEffect(() => {
-    setLatValue(currentCoordinate?.latitude ?? undefined);
-    setLonValue(currentCoordinate?.longitude ?? undefined);
-  }, [currentCoordinate]);
+    const coords = currentValue?.geometry.coordinates;
+    setLatValue(coords ? coords[1] : undefined);
+    setLonValue(coords ? coords[0] : undefined);
+  }, [currentValue]);
 
   // ----- Input handlers -----
   const commitLatLon = useCallback(
     (lat: number | undefined, lon: number | undefined) => {
-      if (lat == null && lon == null) {
-        emit(null);
-        return;
-      }
+      if (lat == null && lon == null) return;
       if (lat != null && lon != null) {
-        const newCoord: Coordinate = {
-          latitude: clampLatitude(lat),
-          longitude: clampLongitude(lon),
+        const geo: CoordinateGeoJSON = {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [clampLongitude(lon), clampLatitude(lat)],
+          },
         };
-        emit(newCoord);
-        mapRef.current?.flyTo({
-          center: [newCoord.longitude, newCoord.latitude],
-          duration: 300,
-        });
+        selfChangeRef.current = true;
+        setInternalValue(geo);
+        onChange?.(geo);
+        setEditorKey((k) => k + 1);
       }
     },
-    [emit, mapRef],
+    [onChange],
   );
 
   return (
     <Box gap={16} className={[className].filter(Boolean).join(' ')}>
-      <div
-        ref={mapContainerRef}
-        className={[styles.mapContainer, disabled ? styles.disabled : ''].filter(Boolean).join(' ')}
-      >
-        <div className={styles.mapHint}>
-          {currentCoordinate ? 'Klikk for å flytte markør' : 'Klikk i kartet for å plassere markør'}
-        </div>
-        {!disabled && <MapCenterAction mapRef={mapRef} visible={showCenterAction} />}
-      </div>
+      <GeoJsonEditor
+        key={editorKey}
+        singleFeature
+        modes={['point']}
+        value={editorValue}
+        onChange={handleEditorChange}
+        disabled={disabled}
+        height={height}
+        showCenterAction={showCenterAction}
+      />
 
       {/* Coordinate inputs */}
       <Box horizontal gap={16}>
