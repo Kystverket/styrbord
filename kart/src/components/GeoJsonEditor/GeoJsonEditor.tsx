@@ -64,6 +64,7 @@ export function GeoJsonEditor({
   onCoordinateClick,
   showCenterAction,
   singleFeature = false,
+  getLabel = (feature) => `#${feature.properties?.nummer}`,
 }: GeoJsonEditorProps) {
   const { mapContainerRef, mapRef, mapReady } = useMaplibreMap({
     disabled,
@@ -412,6 +413,77 @@ export function GeoJsonEditor({
       map.once("load", fit);
     }
   }, [fc, fitBounds, fitBoundsPadding, mapRef, mapReady]);
+
+  // ----- Feature labels -----
+  // Renders a symbol layer with labels computed via getLabel().
+  // Uses a dedicated GeoJSON source so it works alongside both terra-draw
+  // and the disabled-mode plain layers.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapReady || !getLabel || !fc || fc.features.length === 0)
+      return;
+
+    const LABEL_SOURCE = "geojson-editor-labels";
+    const LABEL_LAYER = "geojson-editor-label";
+
+    // Pre-compute labels and inject as a synthetic property
+    const labelledFc: FeatureCollection = {
+      type: "FeatureCollection",
+      features: fc.features.map((feature) => ({
+        ...feature,
+        properties: {
+          ...feature.properties,
+          _label: getLabel(feature) ?? "",
+        },
+      })),
+    };
+
+    const addLabels = () => {
+      if (map.getSource(LABEL_SOURCE)) {
+        (map.getSource(LABEL_SOURCE) as maplibregl.GeoJSONSource).setData(
+          labelledFc,
+        );
+      } else {
+        map.addSource(LABEL_SOURCE, { type: "geojson", data: labelledFc });
+      }
+
+      if (!map.getLayer(LABEL_LAYER)) {
+        map.addLayer({
+          id: LABEL_LAYER,
+          type: "symbol",
+          source: LABEL_SOURCE,
+          layout: {
+            "text-field": ["get", "_label"],
+            "text-size": 16,
+            "text-anchor": "left",
+            "text-offset": [1.2, 0],
+            "text-allow-overlap": true,
+            "text-optional": false,
+          },
+          paint: {
+            "text-color": "#1a1a1a",
+            "text-halo-color": "#ffffff",
+            "text-halo-width": 2,
+          },
+        });
+      }
+    };
+
+    if (map.isStyleLoaded()) {
+      addLabels();
+    } else {
+      map.once("load", addLabels);
+    }
+
+    return () => {
+      try {
+        if (map.getLayer(LABEL_LAYER)) map.removeLayer(LABEL_LAYER);
+        if (map.getSource(LABEL_SOURCE)) map.removeSource(LABEL_SOURCE);
+      } catch {
+        // map may already be destroyed
+      }
+    };
+  }, [mapRef, mapReady, fc, getLabel]);
 
   // Hover detection for terra-draw features
   useEffect(() => {

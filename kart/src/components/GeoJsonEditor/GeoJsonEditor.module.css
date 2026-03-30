@@ -42,7 +42,7 @@
 
 .toolbarButton.active {
   background: var(--ds-color-accent-surface-default, #e6f0ff);
-  border-color: var(--ds-color-accent-border-default, #0062ba);
+  border: 2px solid #000667;
   color: var(--ds-color-accent-text-default, #0062ba);
 }
 

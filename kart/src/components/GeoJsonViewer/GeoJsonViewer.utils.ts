@@ -51,6 +51,9 @@ export const HIGHLIGHT_LAYERS = [
 // All interactive layers (for querying features)
 export const INTERACTIVE_LAYERS = [FILL_LAYER, LINE_LAYER, POINT_LAYER];
 
+// Label layer
+export const LABEL_LAYER = "geojson-label";
+
 // Highlight colors
 export const HOVER_COLOR = "rgba(0, 98, 186, 0.4)";
 export const SELECTED_COLOR = "#0062ba";
@@ -80,7 +83,7 @@ export function toFeatureCollection(
 /** Remove all GeoJSON layers and the source from the map, ignoring errors. */
 export function removeLayers(map: maplibregl.Map) {
   try {
-    for (const id of [...ALL_LAYERS, ...HIGHLIGHT_LAYERS]) {
+    for (const id of [...ALL_LAYERS, ...HIGHLIGHT_LAYERS, LABEL_LAYER]) {
       if (map.getLayer(id)) map.removeLayer(id);
     }
     if (map.getSource(SOURCE_ID)) map.removeSource(SOURCE_ID);
@@ -240,5 +243,44 @@ export function updateSelectionHighlight(
     if (map.getLayer(layerId)) {
       map.setFilter(layerId, filter as maplibregl.FilterSpecification);
     }
+  }
+}
+
+/**
+ * Add a symbol layer that renders a feature property value as a text label
+ * next to each feature. The label is offset slightly so it doesn't overlap
+ * the feature marker.
+ */
+export function addLabelLayer(map: maplibregl.Map, propertyKey: string) {
+  if (map.getLayer(LABEL_LAYER)) return;
+
+  map.addLayer({
+    id: LABEL_LAYER,
+    type: "symbol",
+    source: SOURCE_ID,
+    layout: {
+      "text-field": ["get", propertyKey],
+      "text-size": 13,
+      "text-anchor": "left",
+      "text-offset": [1.2, 0],
+      "text-allow-overlap": true,
+      "text-optional": false,
+    },
+    paint: {
+      "text-color": "#1a1a1a",
+      "text-halo-color": "#ffffff",
+      "text-halo-width": 1.5,
+    },
+  });
+}
+
+/**
+ * Remove just the label layer (without affecting the rest of the GeoJSON layers).
+ */
+export function removeLabelLayer(map: maplibregl.Map) {
+  try {
+    if (map.getLayer(LABEL_LAYER)) map.removeLayer(LABEL_LAYER);
+  } catch {
+    // map may already be destroyed
   }
 }
