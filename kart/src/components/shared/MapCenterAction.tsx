@@ -1,6 +1,6 @@
-import { useEffect, useState, type RefObject } from 'react';
-import type maplibregl from 'maplibre-gl';
-import styles from './MapCenterAction.module.css';
+import { useEffect, useState, type RefObject } from "react";
+import type maplibregl from "maplibre-gl";
+import styles from "./MapCenterAction.module.css";
 
 export interface MapCenterActionProps {
   /** Ref to the MapLibre map instance. */
@@ -20,15 +20,57 @@ export interface MapCenterActionProps {
 
 function CrosshairIcon() {
   return (
-    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true" className={styles.crosshairSvg}>
+    <svg
+      width="40"
+      height="40"
+      viewBox="0 0 40 40"
+      fill="none"
+      aria-hidden="true"
+      className={styles.crosshairSvg}
+    >
       {/* Horizontal line */}
-      <line x1="0" y1="20" x2="16" y2="20" stroke="currentColor" strokeWidth="1.5" />
-      <line x1="24" y1="20" x2="40" y2="20" stroke="currentColor" strokeWidth="1.5" />
+      <line
+        x1="0"
+        y1="20"
+        x2="16"
+        y2="20"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+      <line
+        x1="24"
+        y1="20"
+        x2="40"
+        y2="20"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
       {/* Vertical line */}
-      <line x1="20" y1="0" x2="20" y2="16" stroke="currentColor" strokeWidth="1.5" />
-      <line x1="20" y1="24" x2="20" y2="40" stroke="currentColor" strokeWidth="1.5" />
+      <line
+        x1="20"
+        y1="0"
+        x2="20"
+        y2="16"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+      <line
+        x1="20"
+        y1="24"
+        x2="20"
+        y2="40"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
       {/* Center circle */}
-      <circle cx="20" cy="20" r="3" stroke="currentColor" strokeWidth="1.5" fill="none" />
+      <circle
+        cx="20"
+        cy="20"
+        r="3"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        fill="none"
+      />
     </svg>
   );
 }
@@ -72,7 +114,7 @@ export function MapCenterAction({ mapRef, visible }: MapCenterActionProps) {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
-    setIsTouchDevice(window.matchMedia('(pointer: coarse)').matches);
+    setIsTouchDevice(window.matchMedia("(pointer: coarse)").matches);
   }, []);
 
   const show = visible ?? isTouchDevice;
@@ -109,16 +151,18 @@ export function MapCenterAction({ mapRef, visible }: MapCenterActionProps) {
       bubbles: true,
       pointerId: 1,
       isPrimary: true,
-      pointerType: 'touch',
+      pointerType: "touch",
       button: 0,
       buttons: 1,
     };
 
-    canvas.dispatchEvent(new PointerEvent('pointermove', shared));
-    canvas.dispatchEvent(new PointerEvent('pointerdown', shared));
-    canvas.dispatchEvent(new PointerEvent('pointerup', { ...shared, buttons: 0 }));
+    canvas.dispatchEvent(new PointerEvent("pointermove", shared));
+    canvas.dispatchEvent(new PointerEvent("pointerdown", shared));
     canvas.dispatchEvent(
-      new MouseEvent('click', {
+      new PointerEvent("pointerup", { ...shared, buttons: 0 }),
+    );
+    canvas.dispatchEvent(
+      new MouseEvent("click", {
         clientX: centerX,
         clientY: centerY,
         bubbles: true,
@@ -132,7 +176,12 @@ export function MapCenterAction({ mapRef, visible }: MapCenterActionProps) {
       <div className={styles.crosshair}>
         <CrosshairIcon />
       </div>
-      <button type="button" className={styles.actionButton} onClick={handleClick} aria-label="Velg i sentrum av kartet">
+      <button
+        type="button"
+        className={styles.actionButton}
+        onClick={handleClick}
+        aria-label="Velg i sentrum av kartet"
+      >
         <TargetIcon />
         <span>Velg her</span>
       </button>

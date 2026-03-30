@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react';
-import type { InteractiveFeature } from '~/hooks/useFeatureInteraction';
+import type { ReactNode } from "react";
+import type { InteractiveFeature } from "~/hooks/useFeatureInteraction";
 
-import styles from './GeoJsonViewerHoverPopup.module.css';
+import styles from "./GeoJsonViewerHoverPopup.module.css";
 
 export interface GeoJsonViewerHoverPopupProps {
   /** The feature currently being hovered. */
@@ -20,14 +20,22 @@ export interface GeoJsonViewerHoverPopupProps {
  * Popup component that displays when hovering over a map feature.
  * Content is customizable per feature type via the `hoverContent` prop.
  */
-export function GeoJsonViewerHoverPopup({ feature, position, hoverContent }: GeoJsonViewerHoverPopupProps) {
+export function GeoJsonViewerHoverPopup({
+  feature,
+  position,
+  hoverContent,
+}: GeoJsonViewerHoverPopupProps) {
   const featureType = feature.properties?.type as string | undefined;
 
   // Get custom render function for this feature type
   const renderFn = featureType ? hoverContent?.[featureType] : undefined;
 
   // Render content
-  const content = renderFn ? renderFn(feature) : <DefaultHoverContent feature={feature} />;
+  const content = renderFn ? (
+    renderFn(feature)
+  ) : (
+    <DefaultHoverContent feature={feature} />
+  );
 
   // Offset popup from cursor to avoid overlap
   const offsetX = 12;
@@ -58,9 +66,15 @@ function DefaultHoverContent({ feature }: { feature: InteractiveFeature }) {
 
   return (
     <div className={styles.defaultContent}>
-      {featureType && <span className={styles.featureType}>{String(featureType)}</span>}
+      {featureType && (
+        <span className={styles.featureType}>{String(featureType)}</span>
+      )}
       {name && <span className={styles.featureName}>{String(name)}</span>}
-      {!featureType && !name && <span className={styles.featureType}>{feature.geometry?.type ?? 'Feature'}</span>}
+      {!featureType && !name && (
+        <span className={styles.featureType}>
+          {feature.geometry?.type ?? "Feature"}
+        </span>
+      )}
     </div>
   );
 }

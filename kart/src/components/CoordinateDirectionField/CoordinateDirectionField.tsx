@@ -1,11 +1,25 @@
-import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
-import { Box, NumberInput, ValidationMessage } from '@kystverket/styrbord';
-import type { FeatureCollection, Point } from 'geojson';
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { Box, NumberInput, ValidationMessage } from "@kystverket/styrbord";
+import type { FeatureCollection, Point } from "geojson";
 
-import type { CoordinateDirectionGeoJSON, CoordinateDirectionFieldProps } from './CoordinateDirectionField.types';
-import { clampDirection, clampLatitude, clampLongitude } from '~/utility/coordinate';
-import { getUuid } from '~/utility/uuid';
-import { GeoJsonEditor } from '~/components/GeoJsonEditor/GeoJsonEditor';
+import type {
+  CoordinateDirectionGeoJSON,
+  CoordinateDirectionFieldProps,
+} from "./CoordinateDirectionField.types";
+import {
+  clampDirection,
+  clampLatitude,
+  clampLongitude,
+} from "~/utility/coordinate";
+import { getUuid } from "~/utility/uuid";
+import { GeoJsonEditor } from "~/components/GeoJsonEditor/GeoJsonEditor";
 
 /**
  * CoordinateDirectionField — select a geographic coordinate and a facing
@@ -34,13 +48,13 @@ export function CoordinateDirectionField({
   const editorValue = useMemo<FeatureCollection | undefined>(() => {
     if (!value) return undefined;
     return {
-      type: 'FeatureCollection',
+      type: "FeatureCollection",
       features: [
         {
-          type: 'Feature',
+          type: "Feature",
           geometry: value.geometry,
           properties: {
-            mode: 'directional-point' as const,
+            mode: "directional-point" as const,
             direction: value.properties.direction,
             id: directionalIdRef.current,
           },
@@ -51,16 +65,19 @@ export function CoordinateDirectionField({
 
   const handleEditorChange = useCallback(
     (fc: FeatureCollection) => {
-      const dirFeature = fc.features.find((f) => f.properties?.mode === 'directional-point');
+      const dirFeature = fc.features.find(
+        (f) => f.properties?.mode === "directional-point",
+      );
       if (dirFeature) {
         // Keep the id for future round-trips
         if (dirFeature.properties?.id) {
           directionalIdRef.current = dirFeature.properties.id;
         }
-        const direction = dirFeature.properties?.direction ?? lastDirectionRef.current;
+        const direction =
+          dirFeature.properties?.direction ?? lastDirectionRef.current;
         lastDirectionRef.current = direction;
         const geo: CoordinateDirectionGeoJSON = {
-          type: 'Feature',
+          type: "Feature",
           geometry: dirFeature.geometry as Point,
           properties: {
             direction,
@@ -73,9 +90,15 @@ export function CoordinateDirectionField({
   );
 
   // ----- Input number state (synced to/from value, committed on blur) -----
-  const [latValue, setLatValue] = useState<number | undefined>(value?.geometry.coordinates[1] ?? undefined);
-  const [lonValue, setLonValue] = useState<number | undefined>(value?.geometry.coordinates[0] ?? undefined);
-  const [dirValue, setDirValue] = useState<number | undefined>(value?.properties.direction ?? undefined);
+  const [latValue, setLatValue] = useState<number | undefined>(
+    value?.geometry.coordinates[1] ?? undefined,
+  );
+  const [lonValue, setLonValue] = useState<number | undefined>(
+    value?.geometry.coordinates[0] ?? undefined,
+  );
+  const [dirValue, setDirValue] = useState<number | undefined>(
+    value?.properties.direction ?? undefined,
+  );
 
   useEffect(() => {
     const coords = value?.geometry.coordinates;
@@ -100,9 +123,9 @@ export function CoordinateDirectionField({
       if (lat == null && lon == null) return;
       if (lat != null && lon != null) {
         const geo: CoordinateDirectionGeoJSON = {
-          type: 'Feature',
+          type: "Feature",
           geometry: {
-            type: 'Point',
+            type: "Point",
             coordinates: [clampLongitude(lon), clampLatitude(lat)],
           },
           properties: {
@@ -119,7 +142,7 @@ export function CoordinateDirectionField({
     (dir: number | undefined) => {
       if (!value) return;
       const geo: CoordinateDirectionGeoJSON = {
-        type: 'Feature',
+        type: "Feature",
         geometry: value.geometry,
         properties: {
           direction: dir != null ? Math.round(clampDirection(dir)) : 0,
@@ -131,10 +154,10 @@ export function CoordinateDirectionField({
   );
 
   return (
-    <Box gap={16} className={[className].filter(Boolean).join(' ')}>
+    <Box gap={16} className={[className].filter(Boolean).join(" ")}>
       <GeoJsonEditor
         singleFeature
-        modes={['directional-point']}
+        modes={["directional-point"]}
         value={editorValue}
         onChange={handleEditorChange}
         disabled={disabled}

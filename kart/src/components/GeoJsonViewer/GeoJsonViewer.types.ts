@@ -1,10 +1,15 @@
-import type { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
-import type { ReactNode } from 'react';
-import type maplibregl from 'maplibre-gl';
+import type {
+  Feature,
+  FeatureCollection,
+  GeoJsonProperties,
+  Geometry,
+} from "geojson";
+import type { ReactNode } from "react";
+import type maplibregl from "maplibre-gl";
 
-import { MapBaseProps } from '../shared/MapPicker.types';
-import type { InteractiveFeature } from '~/hooks/useFeatureInteraction';
-import type { CoordinateClickResult } from '~/utility/wmsGetFeatureInfo';
+import { MapBaseProps } from "../shared/MapPicker.types";
+import type { InteractiveFeature } from "~/hooks/useFeatureInteraction";
+import type { CoordinateClickResult } from "~/utility/wmsGetFeatureInfo";
 
 /**
  * Styling options for the GeoJSON layers rendered on the map.
@@ -28,7 +33,9 @@ export interface GeoJsonStyle {
 
 export interface GeoJsonViewerProps extends MapBaseProps {
   /** GeoJSON data to display on the map. Accepts a Feature or FeatureCollection. */
-  data: Feature<Geometry, GeoJsonProperties> | FeatureCollection<Geometry, GeoJsonProperties>;
+  data:
+    | Feature<Geometry, GeoJsonProperties>
+    | FeatureCollection<Geometry, GeoJsonProperties>;
   /**
    * Whether to automatically fit the map view to the bounding box of the GeoJSON data.
    * Defaults to `true`.
@@ -54,7 +61,10 @@ export interface GeoJsonViewerProps extends MapBaseProps {
    * Called when the hovered feature changes.
    * Receives the feature and the original mouse event, or null when hover ends.
    */
-  onHover?: (feature: InteractiveFeature | null, event: maplibregl.MapMouseEvent | null) => void;
+  onHover?: (
+    feature: InteractiveFeature | null,
+    event: maplibregl.MapMouseEvent | null,
+  ) => void;
   /**
    * Called when the selection changes.
    * Receives array of selected features, or null when selection is cleared.

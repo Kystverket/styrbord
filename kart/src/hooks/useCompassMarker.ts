@@ -1,8 +1,11 @@
-import { useCallback, useEffect, useRef } from 'react';
-import maplibregl from 'maplibre-gl';
-import type { CoordinateDirectionValue } from '~/components/CoordinateDirectionField/CoordinateDirectionField.types';
-import { clampDirection } from '~/utility/coordinate';
-import { createCompassMarkerElement, positionHandle } from '~/utility/compassMarker';
+import { useCallback, useEffect, useRef } from "react";
+import maplibregl from "maplibre-gl";
+import type { CoordinateDirectionValue } from "~/components/CoordinateDirectionField/CoordinateDirectionField.types";
+import { clampDirection } from "~/utility/coordinate";
+import {
+  createCompassMarkerElement,
+  positionHandle,
+} from "~/utility/compassMarker";
 
 // ---------------------------------------------------------------------------
 // Hook
@@ -123,11 +126,11 @@ export function useCompassMarker({
     };
 
     for (const el of [compass, handle]) {
-      el.addEventListener('pointerdown', onPointerDown);
-      el.addEventListener('pointermove', onPointerMove);
-      el.addEventListener('pointerup', onPointerUp);
-      el.addEventListener('mousedown', suppressEvent);
-      el.addEventListener('click', suppressEvent);
+      el.addEventListener("pointerdown", onPointerDown);
+      el.addEventListener("pointermove", onPointerMove);
+      el.addEventListener("pointerup", onPointerUp);
+      el.addEventListener("mousedown", suppressEvent);
+      el.addEventListener("click", suppressEvent);
     }
 
     // Set initial handle position
@@ -167,7 +170,7 @@ export function useCompassMarker({
       const el = getOrCreateMarkerElement();
       markerRef.current = new maplibregl.Marker({
         element: el,
-        anchor: 'center',
+        anchor: "center",
       })
         .setLngLat([coord.longitude, coord.latitude])
         .addTo(map);
@@ -176,7 +179,8 @@ export function useCompassMarker({
 
   /** Returns true if a rotation drag is active or ended very recently (< 200 ms). */
   const wasRecentlyDragging = useCallback(
-    () => isDraggingRotation.current || Date.now() - lastDragEndRef.current < 200,
+    () =>
+      isDraggingRotation.current || Date.now() - lastDragEndRef.current < 200,
     [],
   );
 

@@ -1,21 +1,21 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import type { FeatureCollection, Feature } from 'geojson';
-import StyrbordDecorator from '../../../storybook/styrbordDecorator';
-import { GeoJsonViewer } from './GeoJsonViewer';
-import sampleGeoJson from '../../../assets/documents/geojson.json';
-import { ViewBoundsProvider } from '~/utility/viewBoundsContext';
-import { BaseLayersProvider } from '~/utility/baseLayersContext';
-import { BuiltInLayersProvider } from '~/utility/builtInLayersContext';
-import { WmsCatalogLayersProvider } from '~/utility/wmsCatalogLayersContext';
-import { CustomLayersProvider } from '~/utility/customLayersContext';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { FeatureCollection, Feature } from "geojson";
+import StyrbordDecorator from "../../../storybook/styrbordDecorator";
+import { GeoJsonViewer } from "./GeoJsonViewer";
+import sampleGeoJson from "../../../assets/documents/geojson.json";
+import { ViewBoundsProvider } from "~/utility/viewBoundsContext";
+import { BaseLayersProvider } from "~/utility/baseLayersContext";
+import { BuiltInLayersProvider } from "~/utility/builtInLayersContext";
+import { WmsCatalogLayersProvider } from "~/utility/wmsCatalogLayersContext";
+import { CustomLayersProvider } from "~/utility/customLayersContext";
 
 const meta = {
-  title: 'Kart/GeoJsonViewer',
+  title: "Kart/GeoJsonViewer",
   component: GeoJsonViewer,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ["autodocs", "kyv"],
   parameters: {
-    layout: 'padded',
+    layout: "padded",
   },
 } satisfies Meta<typeof GeoJsonViewer>;
 
@@ -31,10 +31,10 @@ export const Default: Story = {
 
 // ---- Single polygon feature ----
 const singlePolygon: Feature = {
-  type: 'Feature',
-  properties: { name: 'Ålesund havn' },
+  type: "Feature",
+  properties: { name: "Ålesund havn" },
   geometry: {
-    type: 'Polygon',
+    type: "Polygon",
     coordinates: [
       [
         [6.151401, 62.469249],
@@ -55,22 +55,22 @@ export const SinglePolygon: Story = {
 
 // ---- Points ----
 const pointCollection: FeatureCollection = {
-  type: 'FeatureCollection',
+  type: "FeatureCollection",
   features: [
     {
-      type: 'Feature',
-      properties: { name: 'Trondheim' },
-      geometry: { type: 'Point', coordinates: [10.3951, 63.4305] },
+      type: "Feature",
+      properties: { name: "Trondheim" },
+      geometry: { type: "Point", coordinates: [10.3951, 63.4305] },
     },
     {
-      type: 'Feature',
-      properties: { name: 'Bergen' },
-      geometry: { type: 'Point', coordinates: [5.3221, 60.3913] },
+      type: "Feature",
+      properties: { name: "Bergen" },
+      geometry: { type: "Point", coordinates: [5.3221, 60.3913] },
     },
     {
-      type: 'Feature',
-      properties: { name: 'Tromsø' },
-      geometry: { type: 'Point', coordinates: [18.9553, 69.6496] },
+      type: "Feature",
+      properties: { name: "Tromsø" },
+      geometry: { type: "Point", coordinates: [18.9553, 69.6496] },
     },
   ],
 };
@@ -86,8 +86,8 @@ export const CustomStyle: Story = {
   args: {
     data: sampleGeoJson as FeatureCollection,
     geoJsonStyle: {
-      fillColor: 'rgba(223, 60, 27, 0.25)',
-      lineColor: '#df3c1b',
+      fillColor: "rgba(223, 60, 27, 0.25)",
+      lineColor: "#df3c1b",
       lineWidth: 3,
     },
   },
@@ -97,7 +97,7 @@ export const CustomStyle: Story = {
 export const TallMap: Story = {
   args: {
     data: sampleGeoJson as FeatureCollection,
-    height: '1600px',
+    height: "1600px",
   },
 };
 
@@ -106,23 +106,23 @@ export const TallMap: Story = {
 // MultiLineString, Polygon, MultiPolygon, and GeometryCollection —
 // all in a single FeatureCollection around the Norwegian coast.
 const complexMultiType: FeatureCollection = {
-  type: 'FeatureCollection',
+  type: "FeatureCollection",
   features: [
     // --- Point ---
     {
-      type: 'Feature',
-      properties: { name: 'Lindesnes fyr', type: 'Point' },
+      type: "Feature",
+      properties: { name: "Lindesnes fyr", type: "Point" },
       geometry: {
-        type: 'Point',
+        type: "Point",
         coordinates: [7.0485, 57.9825],
       },
     },
     // --- MultiPoint ---
     {
-      type: 'Feature',
-      properties: { name: 'Nordsjø-fyrstasjonar', type: 'MultiPoint' },
+      type: "Feature",
+      properties: { name: "Nordsjø-fyrstasjonar", type: "MultiPoint" },
       geometry: {
-        type: 'MultiPoint',
+        type: "MultiPoint",
         coordinates: [
           [5.624, 58.97], // Kvitsøy
           [4.869, 61.156], // Marstein
@@ -132,10 +132,10 @@ const complexMultiType: FeatureCollection = {
     },
     // --- LineString (shipping lane) ---
     {
-      type: 'Feature',
-      properties: { name: 'Skipsled Oslo–Kristiansand', type: 'LineString' },
+      type: "Feature",
+      properties: { name: "Skipsled Oslo–Kristiansand", type: "LineString" },
       geometry: {
-        type: 'LineString',
+        type: "LineString",
         coordinates: [
           [10.757, 59.912], // Oslo
           [10.22, 59.13], // Larvik
@@ -147,10 +147,10 @@ const complexMultiType: FeatureCollection = {
     },
     // --- MultiLineString (two ferry routes) ---
     {
-      type: 'Feature',
-      properties: { name: 'Ferjesamband', type: 'MultiLineString' },
+      type: "Feature",
+      properties: { name: "Ferjesamband", type: "MultiLineString" },
       geometry: {
-        type: 'MultiLineString',
+        type: "MultiLineString",
         coordinates: [
           // Moss–Horten
           [
@@ -167,10 +167,10 @@ const complexMultiType: FeatureCollection = {
     },
     // --- Polygon (harbour area in Stavanger) ---
     {
-      type: 'Feature',
-      properties: { name: 'Stavanger hamn', type: 'Polygon' },
+      type: "Feature",
+      properties: { name: "Stavanger hamn", type: "Polygon" },
       geometry: {
-        type: 'Polygon',
+        type: "Polygon",
         coordinates: [
           [
             [5.726, 58.975],
@@ -184,10 +184,10 @@ const complexMultiType: FeatureCollection = {
     },
     // --- MultiPolygon (two harbour areas in Bergen) ---
     {
-      type: 'Feature',
-      properties: { name: 'Bergen hamneområde', type: 'MultiPolygon' },
+      type: "Feature",
+      properties: { name: "Bergen hamneområde", type: "MultiPolygon" },
       geometry: {
-        type: 'MultiPolygon',
+        type: "MultiPolygon",
         coordinates: [
           // Skolten terminal
           [
@@ -214,13 +214,13 @@ const complexMultiType: FeatureCollection = {
     },
     // --- Polygon with hole (restricted area in Oslofjorden) ---
     {
-      type: 'Feature',
+      type: "Feature",
       properties: {
-        name: 'Avgrensa sone – Oslofjorden',
-        type: 'Polygon (with hole)',
+        name: "Avgrensa sone – Oslofjorden",
+        type: "Polygon (with hole)",
       },
       geometry: {
-        type: 'Polygon',
+        type: "Polygon",
         coordinates: [
           // Outer ring
           [
@@ -243,20 +243,20 @@ const complexMultiType: FeatureCollection = {
     },
     // --- GeometryCollection (Tromsø: point + harbour polygon) ---
     {
-      type: 'Feature',
+      type: "Feature",
       properties: {
-        name: 'Tromsø – punkt og hamn',
-        type: 'GeometryCollection',
+        name: "Tromsø – punkt og hamn",
+        type: "GeometryCollection",
       },
       geometry: {
-        type: 'GeometryCollection',
+        type: "GeometryCollection",
         geometries: [
           {
-            type: 'Point',
+            type: "Point",
             coordinates: [18.955, 69.649],
           },
           {
-            type: 'Polygon',
+            type: "Polygon",
             coordinates: [
               [
                 [18.94, 69.655],
@@ -276,14 +276,14 @@ const complexMultiType: FeatureCollection = {
 export const ComplexMultiType: Story = {
   args: {
     data: complexMultiType,
-    height: '600px',
+    height: "600px",
     geoJsonStyle: {
-      fillColor: 'rgba(0, 6, 103, 0.15)',
-      lineColor: '#000667',
+      fillColor: "rgba(0, 6, 103, 0.15)",
+      lineColor: "#000667",
       lineWidth: 3,
       pointRadius: 7,
-      pointColor: '#df3c1b',
-      pointStrokeColor: '#000667',
+      pointColor: "#df3c1b",
+      pointStrokeColor: "#000667",
       pointStrokeWidth: 2,
     },
   },
@@ -309,19 +309,19 @@ export const WithLayerToggle: Story = {
 
 // ---- Interactive features data with typed features ----
 const interactiveData: FeatureCollection = {
-  type: 'FeatureCollection',
+  type: "FeatureCollection",
   features: [
     {
       id: 1,
-      type: 'Feature',
+      type: "Feature",
       properties: {
-        type: 'harbor',
-        name: 'Stavanger havn',
+        type: "harbor",
+        name: "Stavanger havn",
         capacity: 250,
-        status: 'operational',
+        status: "operational",
       },
       geometry: {
-        type: 'Polygon',
+        type: "Polygon",
         coordinates: [
           [
             [5.726, 58.975],
@@ -335,29 +335,29 @@ const interactiveData: FeatureCollection = {
     },
     {
       id: 2,
-      type: 'Feature',
+      type: "Feature",
       properties: {
-        type: 'lighthouse',
-        name: 'Lindesnes fyr',
+        type: "lighthouse",
+        name: "Lindesnes fyr",
         established: 1656,
         height: 16,
       },
       geometry: {
-        type: 'Point',
+        type: "Point",
         coordinates: [7.0485, 57.9825],
       },
     },
     {
       id: 3,
-      type: 'Feature',
+      type: "Feature",
       properties: {
-        type: 'shipping_lane',
-        name: 'Skagerrak skipslei',
+        type: "shipping_lane",
+        name: "Skagerrak skipslei",
         depth: 45,
-        traffic: 'high',
+        traffic: "high",
       },
       geometry: {
-        type: 'LineString',
+        type: "LineString",
         coordinates: [
           [10.757, 59.912],
           [10.22, 59.13],
@@ -368,15 +368,15 @@ const interactiveData: FeatureCollection = {
     },
     {
       id: 4,
-      type: 'Feature',
+      type: "Feature",
       properties: {
-        type: 'harbor',
-        name: 'Bergen havn',
+        type: "harbor",
+        name: "Bergen havn",
         capacity: 400,
-        status: 'maintenance',
+        status: "maintenance",
       },
       geometry: {
-        type: 'Polygon',
+        type: "Polygon",
         coordinates: [
           [
             [5.308, 60.401],
@@ -390,15 +390,15 @@ const interactiveData: FeatureCollection = {
     },
     {
       id: 5,
-      type: 'Feature',
+      type: "Feature",
       properties: {
-        type: 'lighthouse',
-        name: 'Runde fyr',
+        type: "lighthouse",
+        name: "Runde fyr",
         established: 1767,
         height: 24,
       },
       geometry: {
-        type: 'Point',
+        type: "Point",
         coordinates: [5.018, 62.335],
       },
     },
@@ -409,41 +409,53 @@ const interactiveData: FeatureCollection = {
 export const Interactive: Story = {
   args: {
     data: interactiveData,
-    height: '500px',
+    height: "500px",
     hoverable: true,
     selectable: true,
     hoverContent: {
       harbor: (feature) => (
-        <div style={{ padding: '4px 0' }}>
-          <div style={{ fontWeight: 600, color: '#0062ba' }}>🏭 Havn</div>
+        <div style={{ padding: "4px 0" }}>
+          <div style={{ fontWeight: 600, color: "#0062ba" }}>🏭 Havn</div>
           <div>{feature.properties?.name}</div>
-          <div style={{ fontSize: '0.85em', color: '#666' }}>Kapasitet: {feature.properties?.capacity} skip</div>
-          <div style={{ fontSize: '0.85em', color: '#666' }}>Status: {feature.properties?.status}</div>
+          <div style={{ fontSize: "0.85em", color: "#666" }}>
+            Kapasitet: {feature.properties?.capacity} skip
+          </div>
+          <div style={{ fontSize: "0.85em", color: "#666" }}>
+            Status: {feature.properties?.status}
+          </div>
         </div>
       ),
       lighthouse: (feature) => (
-        <div style={{ padding: '4px 0' }}>
-          <div style={{ fontWeight: 600, color: '#df3c1b' }}>🏠 Fyrtårn</div>
+        <div style={{ padding: "4px 0" }}>
+          <div style={{ fontWeight: 600, color: "#df3c1b" }}>🏠 Fyrtårn</div>
           <div>{feature.properties?.name}</div>
-          <div style={{ fontSize: '0.85em', color: '#666' }}>Etablert: {feature.properties?.established}</div>
-          <div style={{ fontSize: '0.85em', color: '#666' }}>Høyde: {feature.properties?.height}m</div>
+          <div style={{ fontSize: "0.85em", color: "#666" }}>
+            Etablert: {feature.properties?.established}
+          </div>
+          <div style={{ fontSize: "0.85em", color: "#666" }}>
+            Høyde: {feature.properties?.height}m
+          </div>
         </div>
       ),
       shipping_lane: (feature) => (
-        <div style={{ padding: '4px 0' }}>
-          <div style={{ fontWeight: 600, color: '#000667' }}>🚢 Skipslei</div>
+        <div style={{ padding: "4px 0" }}>
+          <div style={{ fontWeight: 600, color: "#000667" }}>🚢 Skipslei</div>
           <div>{feature.properties?.name}</div>
-          <div style={{ fontSize: '0.85em', color: '#666' }}>Dybde: {feature.properties?.depth}m</div>
-          <div style={{ fontSize: '0.85em', color: '#666' }}>Trafikk: {feature.properties?.traffic}</div>
+          <div style={{ fontSize: "0.85em", color: "#666" }}>
+            Dybde: {feature.properties?.depth}m
+          </div>
+          <div style={{ fontSize: "0.85em", color: "#666" }}>
+            Trafikk: {feature.properties?.traffic}
+          </div>
         </div>
       ),
     },
     onSelect: (features) => {
-      console.log('Selection changed:', features);
+      console.log("Selection changed:", features);
     },
     onHover: (feature) => {
       if (feature) {
-        console.log('Hovering:', feature.properties?.name);
+        console.log("Hovering:", feature.properties?.name);
       }
     },
   },
@@ -451,7 +463,7 @@ export const Interactive: Story = {
     docs: {
       description: {
         story:
-          'Demonstrates custom hover content based on feature type. Hover over different features to see type-specific tooltips. Click features to select them (use Ctrl/Cmd for multi-select).',
+          "Demonstrates custom hover content based on feature type. Hover over different features to see type-specific tooltips. Click features to select them (use Ctrl/Cmd for multi-select).",
       },
     },
   },
@@ -461,14 +473,14 @@ export const Interactive: Story = {
 export const SelectionDemo: Story = {
   args: {
     data: interactiveData,
-    height: '500px',
+    height: "500px",
     selectable: true,
     onSelect: (features) => {
       if (features && features.length > 0) {
-        const names = features.map((f) => f.properties?.name).join(', ');
+        const names = features.map((f) => f.properties?.name).join(", ");
         alert(`Selected: ${names}\n\nUse Ctrl/Cmd + Click to multi-select.`);
       } else {
-        console.log('Selection cleared');
+        console.log("Selection cleared");
       }
     },
   },
@@ -476,7 +488,7 @@ export const SelectionDemo: Story = {
     docs: {
       description: {
         story:
-          'Click a feature to select it and see an alert. Click empty space to deselect. Hold Ctrl (Windows) or Cmd (Mac) while clicking to add/remove from selection.',
+          "Click a feature to select it and see an alert. Click empty space to deselect. Hold Ctrl (Windows) or Cmd (Mac) while clicking to add/remove from selection.",
       },
     },
   },
@@ -486,19 +498,20 @@ export const SelectionDemo: Story = {
 export const HoverOnly: Story = {
   args: {
     data: interactiveData,
-    height: '500px',
+    height: "500px",
     hoverable: true,
     selectable: false,
     onHover: (feature) => {
       if (feature) {
-        console.log('Hovering:', feature.properties?.name);
+        console.log("Hovering:", feature.properties?.name);
       }
     },
   },
   parameters: {
     docs: {
       description: {
-        story: 'Hover events are enabled but selection is disabled. Features can still be hovered for tooltips.',
+        story:
+          "Hover events are enabled but selection is disabled. Features can still be hovered for tooltips.",
       },
     },
   },
@@ -508,14 +521,14 @@ export const HoverOnly: Story = {
 export const NonInteractive: Story = {
   args: {
     data: interactiveData,
-    height: '500px',
+    height: "500px",
     hoverable: false,
     selectable: false,
   },
   parameters: {
     docs: {
       description: {
-        story: 'Both hover and selection are disabled. The map is view-only.',
+        story: "Both hover and selection are disabled. The map is view-only.",
       },
     },
   },
@@ -525,11 +538,11 @@ export const NonInteractive: Story = {
 export const CoordinateClick: Story = {
   args: {
     data: pointCollection,
-    height: '500px',
+    height: "500px",
     showLayerToggle: true,
     onCoordinateClick: (result) => {
-      console.log('Coordinate clicked:', result.coordinate);
-      console.log('WMS layer results:', result.layerResults);
+      console.log("Coordinate clicked:", result.coordinate);
+      console.log("WMS layer results:", result.layerResults);
       for (const layer of result.layerResults) {
         console.log(`  ${layer.layerName}:`, layer.html);
       }
@@ -553,7 +566,7 @@ export const CoordinateClick: Story = {
     docs: {
       description: {
         story:
-          'Click on the map to trigger `onCoordinateClick`. Enable WMS catalog layers via the layer toggle, then click to see GetFeatureInfo results logged to the console. Open the browser console or the Storybook Actions panel to see the output.',
+          "Click on the map to trigger `onCoordinateClick`. Enable WMS catalog layers via the layer toggle, then click to see GetFeatureInfo results logged to the console. Open the browser console or the Storybook Actions panel to see the output.",
       },
     },
   },

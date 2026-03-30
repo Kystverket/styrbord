@@ -1,24 +1,24 @@
-import { useState } from 'react';
-import type { Meta, StoryObj, StoryFn } from '@storybook/react-vite';
-import type { FeatureCollection } from 'geojson';
-import StyrbordDecorator from '../../../storybook/styrbordDecorator';
-import { GeoJsonEditor } from './GeoJsonEditor';
-import { ViewBoundsProvider } from '~/utility/viewBoundsContext';
-import { BaseLayersProvider } from '~/utility/baseLayersContext';
-import { BuiltInLayersProvider } from '~/utility/builtInLayersContext';
-import { CustomLayersProvider } from '~/utility/customLayersContext';
+import { useState } from "react";
+import type { Meta, StoryObj, StoryFn } from "@storybook/react-vite";
+import type { FeatureCollection } from "geojson";
+import StyrbordDecorator from "../../../storybook/styrbordDecorator";
+import { GeoJsonEditor } from "./GeoJsonEditor";
+import { ViewBoundsProvider } from "~/utility/viewBoundsContext";
+import { BaseLayersProvider } from "~/utility/baseLayersContext";
+import { BuiltInLayersProvider } from "~/utility/builtInLayersContext";
+import { CustomLayersProvider } from "~/utility/customLayersContext";
 
 const meta = {
-  title: 'Kart/GeoJsonEditor',
+  title: "Kart/GeoJsonEditor",
   component: GeoJsonEditor,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ["autodocs", "kyv"],
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       story: {
         inline: false,
-        iframeHeight: '600px',
+        iframeHeight: "600px",
       },
     },
   },
@@ -33,13 +33,13 @@ type Story = StoryObj<typeof meta>;
 
 /** A mix of point, line and polygon features along the Norwegian coast. */
 const norwegianCoastData: FeatureCollection = {
-  type: 'FeatureCollection',
+  type: "FeatureCollection",
   features: [
     {
-      type: 'Feature',
-      properties: { type: 'harbor', name: 'Ålesund Havn', capacity: 500 },
+      type: "Feature",
+      properties: { type: "harbor", name: "Ålesund Havn", capacity: 500 },
       geometry: {
-        type: 'Polygon',
+        type: "Polygon",
         coordinates: [
           [
             [6.151401, 62.469249],
@@ -52,15 +52,19 @@ const norwegianCoastData: FeatureCollection = {
       },
     },
     {
-      type: 'Feature',
-      properties: { type: 'lighthouse', name: 'Kråkenes Fyr', height: 35 },
-      geometry: { type: 'Point', coordinates: [4.999, 62.032] },
+      type: "Feature",
+      properties: { type: "lighthouse", name: "Kråkenes Fyr", height: 35 },
+      geometry: { type: "Point", coordinates: [4.999, 62.032] },
     },
     {
-      type: 'Feature',
-      properties: { type: 'shipping_lane', name: 'Hovedled Sør–Nord', traffic: 'høy' },
+      type: "Feature",
+      properties: {
+        type: "shipping_lane",
+        name: "Hovedled Sør–Nord",
+        traffic: "høy",
+      },
       geometry: {
-        type: 'LineString',
+        type: "LineString",
         coordinates: [
           [5.3221, 60.3913],
           [6.151, 62.469],
@@ -73,17 +77,25 @@ const norwegianCoastData: FeatureCollection = {
 
 /** Two directional-point features (e.g. vessels with a heading). */
 const directionalData: FeatureCollection = {
-  type: 'FeatureCollection',
+  type: "FeatureCollection",
   features: [
     {
-      type: 'Feature',
-      properties: { mode: 'directional-point', direction: 45, name: 'MS Nordlys' },
-      geometry: { type: 'Point', coordinates: [10.3951, 63.4305] },
+      type: "Feature",
+      properties: {
+        mode: "directional-point",
+        direction: 45,
+        name: "MS Nordlys",
+      },
+      geometry: { type: "Point", coordinates: [10.3951, 63.4305] },
     },
     {
-      type: 'Feature',
-      properties: { mode: 'directional-point', direction: 200, name: 'MS Trollfjord' },
-      geometry: { type: 'Point', coordinates: [5.3221, 60.3913] },
+      type: "Feature",
+      properties: {
+        mode: "directional-point",
+        direction: 200,
+        name: "MS Trollfjord",
+      },
+      geometry: { type: "Point", coordinates: [5.3221, 60.3913] },
     },
   ],
 };
@@ -125,7 +137,7 @@ export const WithInitialData: Story = {
  */
 const ControlledTemplate: StoryFn<typeof GeoJsonEditor> = () => {
   const [data, setData] = useState<FeatureCollection>({
-    type: 'FeatureCollection',
+    type: "FeatureCollection",
     features: [],
   });
 
@@ -136,11 +148,11 @@ const ControlledTemplate: StoryFn<typeof GeoJsonEditor> = () => {
         style={{
           marginTop: 16,
           padding: 12,
-          background: '#f5f5f5',
+          background: "#f5f5f5",
           borderRadius: 8,
-          fontSize: '0.8rem',
+          fontSize: "0.8rem",
           maxHeight: 280,
-          overflow: 'auto',
+          overflow: "auto",
         }}
       >
         {JSON.stringify(data, null, 2)}
@@ -159,17 +171,17 @@ export const Controlled: Story = {
 
 /** Only the point tool is available in the toolbar. */
 export const PointsOnly: Story = {
-  args: { modes: ['point'] },
+  args: { modes: ["point"] },
 };
 
 /** Only the linestring tool is available in the toolbar. */
 export const LinesOnly: Story = {
-  args: { modes: ['linestring'] },
+  args: { modes: ["linestring"] },
 };
 
 /** Only the polygon tool is available in the toolbar. */
 export const PolygonsOnly: Story = {
-  args: { modes: ['polygon'] },
+  args: { modes: ["polygon"] },
 };
 
 /**
@@ -177,7 +189,7 @@ export const PolygonsOnly: Story = {
  * (0–360°) that can be used to represent headings, bearings, etc.
  */
 export const DirectionalPointsOnly: Story = {
-  args: { modes: ['directional-point'] },
+  args: { modes: ["directional-point"] },
 };
 
 // ---------------------------------------------------------------------------
@@ -196,7 +208,7 @@ const DirectionalControlledTemplate: StoryFn<typeof GeoJsonEditor> = () => {
       <GeoJsonEditor
         value={data}
         onChange={setData}
-        modes={['point', 'directional-point', 'linestring', 'polygon']}
+        modes={["point", "directional-point", "linestring", "polygon"]}
         fitBounds
         showCenterAction
       />
@@ -204,11 +216,11 @@ const DirectionalControlledTemplate: StoryFn<typeof GeoJsonEditor> = () => {
         style={{
           marginTop: 16,
           padding: 12,
-          background: '#f5f5f5',
+          background: "#f5f5f5",
           borderRadius: 8,
-          fontSize: '0.8rem',
+          fontSize: "0.8rem",
           maxHeight: 280,
-          overflow: 'auto',
+          overflow: "auto",
         }}
       >
         {JSON.stringify(data, null, 2)}
@@ -277,22 +289,27 @@ const HoverTemplate: StoryFn<typeof GeoJsonEditor> = () => {
           ),
         }}
         onHover={(feature) => setHoveredName(feature?.properties?.name ?? null)}
-        onSelect={(features) => setSelectedNames(features?.map((f) => f.properties?.name ?? 'ukjent') ?? [])}
+        onSelect={(features) =>
+          setSelectedNames(
+            features?.map((f) => f.properties?.name ?? "ukjent") ?? [],
+          )
+        }
       />
       <div
         style={{
           marginTop: 12,
           padding: 10,
-          background: '#f5f5f5',
+          background: "#f5f5f5",
           borderRadius: 8,
-          fontSize: '0.85rem',
+          fontSize: "0.85rem",
         }}
       >
         <div>
-          <strong>Hover:</strong> {hoveredName ?? '–'}
+          <strong>Hover:</strong> {hoveredName ?? "–"}
         </div>
         <div>
-          <strong>Valgt:</strong> {selectedNames.length > 0 ? selectedNames.join(', ') : '–'}
+          <strong>Valgt:</strong>{" "}
+          {selectedNames.length > 0 ? selectedNames.join(", ") : "–"}
         </div>
       </div>
     </div>
@@ -317,7 +334,11 @@ export const WithLayerToggle: Story = {
       <BaseLayersProvider>
         <BuiltInLayersProvider>
           <CustomLayersProvider>
-            <GeoJsonEditor value={norwegianCoastData} fitBounds showCenterAction />
+            <GeoJsonEditor
+              value={norwegianCoastData}
+              fitBounds
+              showCenterAction
+            />
           </CustomLayersProvider>
         </BuiltInLayersProvider>
       </BaseLayersProvider>
@@ -337,22 +358,27 @@ export const WithLayerToggle: Story = {
  */
 const SingleFeatureTemplate: StoryFn<typeof GeoJsonEditor> = () => {
   const [data, setData] = useState<FeatureCollection>({
-    type: 'FeatureCollection',
+    type: "FeatureCollection",
     features: [],
   });
 
   return (
     <div>
-      <GeoJsonEditor singleFeature modes={['point']} value={data} onChange={setData} />
+      <GeoJsonEditor
+        singleFeature
+        modes={["point"]}
+        value={data}
+        onChange={setData}
+      />
       <pre
         style={{
           marginTop: 16,
           padding: 12,
-          background: '#f5f5f5',
+          background: "#f5f5f5",
           borderRadius: 8,
-          fontSize: '0.8rem',
+          fontSize: "0.8rem",
           maxHeight: 180,
-          overflow: 'auto',
+          overflow: "auto",
         }}
       >
         {JSON.stringify(data, null, 2)}
@@ -372,22 +398,27 @@ export const SingleFeaturePoint: Story = {
  */
 const SingleDirectionalTemplate: StoryFn<typeof GeoJsonEditor> = () => {
   const [data, setData] = useState<FeatureCollection>({
-    type: 'FeatureCollection',
+    type: "FeatureCollection",
     features: [],
   });
 
   return (
     <div>
-      <GeoJsonEditor singleFeature modes={['directional-point']} value={data} onChange={setData} />
+      <GeoJsonEditor
+        singleFeature
+        modes={["directional-point"]}
+        value={data}
+        onChange={setData}
+      />
       <pre
         style={{
           marginTop: 16,
           padding: 12,
-          background: '#f5f5f5',
+          background: "#f5f5f5",
           borderRadius: 8,
-          fontSize: '0.8rem',
+          fontSize: "0.8rem",
           maxHeight: 180,
-          overflow: 'auto',
+          overflow: "auto",
         }}
       >
         {JSON.stringify(data, null, 2)}
@@ -404,6 +435,6 @@ export const SingleFeatureDirectionalPoint: Story = {
 export const SingleFeaturePolygon: Story = {
   args: {
     singleFeature: true,
-    modes: ['polygon'],
+    modes: ["polygon"],
   },
 };

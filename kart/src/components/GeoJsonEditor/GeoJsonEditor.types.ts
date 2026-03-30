@@ -1,17 +1,24 @@
-import type { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
-import type { ReactNode } from 'react';
-import type maplibregl from 'maplibre-gl';
+import type {
+  Feature,
+  FeatureCollection,
+  GeoJsonProperties,
+  Geometry,
+} from "geojson";
+import type { ReactNode } from "react";
+import type maplibregl from "maplibre-gl";
 
-import type { MapBaseProps } from '../shared/MapPicker.types';
-import type { InteractiveFeature } from '~/hooks/useFeatureInteraction';
-import type { CoordinateClickResult } from '~/utility/wmsGetFeatureInfo';
+import type { MapBaseProps } from "../shared/MapPicker.types";
+import type { InteractiveFeature } from "~/hooks/useFeatureInteraction";
+import type { CoordinateClickResult } from "~/utility/wmsGetFeatureInfo";
 
 /** Drawing modes available in the editor toolbar. */
-export type DrawMode = 'point' | 'linestring' | 'polygon' | 'directional-point';
+export type DrawMode = "point" | "linestring" | "polygon" | "directional-point";
 
 export interface GeoJsonEditorProps extends MapBaseProps {
   /** Current GeoJSON value (controlled). Accepts a Feature or FeatureCollection. */
-  value?: Feature<Geometry, GeoJsonProperties> | FeatureCollection<Geometry, GeoJsonProperties>;
+  value?:
+    | Feature<Geometry, GeoJsonProperties>
+    | FeatureCollection<Geometry, GeoJsonProperties>;
 
   /** Called whenever features are created, edited, or deleted. */
   onChange?: (data: FeatureCollection) => void;
@@ -49,7 +56,10 @@ export interface GeoJsonEditorProps extends MapBaseProps {
    * Called when the hovered feature changes.
    * Receives the feature and the original mouse event, or null when hover ends.
    */
-  onHover?: (feature: InteractiveFeature | null, event: maplibregl.MapMouseEvent | null) => void;
+  onHover?: (
+    feature: InteractiveFeature | null,
+    event: maplibregl.MapMouseEvent | null,
+  ) => void;
 
   /**
    * Called when the selection changes (via click or terra-draw selection).

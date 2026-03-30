@@ -1,15 +1,22 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-import maplibregl from 'maplibre-gl';
-import 'maplibre-gl/dist/maplibre-gl.css';
-import type { Coordinate } from '~/utility/types';
-import { clampLatitude, clampLongitude, roundToDecimals } from '~/utility/coordinate';
-import { EMPTY_STYLE } from '~/utility/mapStyle';
-import { ViewBoundsContext } from '~/utility/viewBoundsContext';
-import { BaseLayersContext } from '~/utility/baseLayersContext';
-import { BuiltInLayersContext } from '~/utility/builtInLayersContext';
-import { CustomLayersContext } from '~/utility/customLayersContext';
-import { WmsCatalogLayersContext } from '~/utility/wmsCatalogLayersContext';
-import type { BaseLayerDefinition, LayerDefinition } from '~/utility/layers.types';
+import { useContext, useEffect, useRef, useState } from "react";
+import maplibregl from "maplibre-gl";
+import "maplibre-gl/dist/maplibre-gl.css";
+import type { Coordinate } from "~/utility/types";
+import {
+  clampLatitude,
+  clampLongitude,
+  roundToDecimals,
+} from "~/utility/coordinate";
+import { EMPTY_STYLE } from "~/utility/mapStyle";
+import { ViewBoundsContext } from "~/utility/viewBoundsContext";
+import { BaseLayersContext } from "~/utility/baseLayersContext";
+import { BuiltInLayersContext } from "~/utility/builtInLayersContext";
+import { CustomLayersContext } from "~/utility/customLayersContext";
+import { WmsCatalogLayersContext } from "~/utility/wmsCatalogLayersContext";
+import type {
+  BaseLayerDefinition,
+  LayerDefinition,
+} from "~/utility/layers.types";
 
 export interface UseMaplibreMapOptions {
   /** Initial coordinate to center the map on. Falls back to context `defaultCenter`. */
@@ -43,7 +50,8 @@ export function useMaplibreMap({
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const [mapReady, setMapReady] = useState(false);
-  const { viewBounds, defaultCenter, defaultZoom } = useContext(ViewBoundsContext);
+  const { viewBounds, defaultCenter, defaultZoom } =
+    useContext(ViewBoundsContext);
 
   // ----- Layer contexts (all optional — graceful when no provider is present) -----
   const baseCtx = useContext(BaseLayersContext);
@@ -88,7 +96,7 @@ export function useMaplibreMap({
   // ----- Apply height to the container -----
   useEffect(() => {
     if (mapContainerRef.current) {
-      mapContainerRef.current.style.height = height ?? '';
+      mapContainerRef.current.style.height = height ?? "";
     }
   }, [height]);
 
@@ -115,7 +123,7 @@ export function useMaplibreMap({
       mapRef.current = map;
       setMapReady(true);
 
-      map.on('click', (e: maplibregl.MapMouseEvent) => {
+      map.on("click", (e: maplibregl.MapMouseEvent) => {
         if (disabledRef.current) return;
         const { lng, lat } = e.lngLat;
         onMapClickRef.current?.({
@@ -129,8 +137,8 @@ export function useMaplibreMap({
       const map = mapRef.current;
       if (!map) return;
       const canvas = map.getCanvas();
-      const gl = canvas?.getContext('webgl2') ?? canvas?.getContext('webgl');
-      const ext = gl?.getExtension('WEBGL_lose_context');
+      const gl = canvas?.getContext("webgl2") ?? canvas?.getContext("webgl");
+      const ext = gl?.getExtension("WEBGL_lose_context");
       map.remove();
       ext?.loseContext();
       mapRef.current = null;
@@ -143,7 +151,8 @@ export function useMaplibreMap({
     const rect = container.getBoundingClientRect();
     const vH = window.innerHeight || document.documentElement.clientHeight;
     const vW = window.innerWidth || document.documentElement.clientWidth;
-    const inViewport = rect.bottom > 0 && rect.right > 0 && rect.top < vH && rect.left < vW;
+    const inViewport =
+      rect.bottom > 0 && rect.right > 0 && rect.top < vH && rect.left < vW;
 
     if (inViewport) {
       createMap();
@@ -206,7 +215,9 @@ export function useMaplibreMap({
     if (!map) return;
 
     const syncBaseLayer = () => {
-      const desired = baseCtx.availableBaseLayers.find((l) => l.id === baseCtx.activeBaseLayerId);
+      const desired = baseCtx.availableBaseLayers.find(
+        (l) => l.id === baseCtx.activeBaseLayerId,
+      );
       const current = appliedBaseLayerRef.current;
 
       // Nothing to do if the same base layer is already applied.
@@ -241,7 +252,7 @@ export function useMaplibreMap({
     if (map.loaded()) {
       syncBaseLayer();
     } else {
-      map.once('load', syncBaseLayer);
+      map.once("load", syncBaseLayer);
     }
   }, [baseCtx.activeBaseLayerId, baseCtx.availableBaseLayers, mapReady]);
 
@@ -255,7 +266,11 @@ export function useMaplibreMap({
 
     const syncLayers = () => {
       // Merge built-in + custom definitions. Built-in render below custom.
-      const allDefs: LayerDefinition[] = [...builtInCtx.availableLayers, ...customCtx.layers, ...wmsCatalogCtx.layers];
+      const allDefs: LayerDefinition[] = [
+        ...builtInCtx.availableLayers,
+        ...customCtx.layers,
+        ...wmsCatalogCtx.layers,
+      ];
       const allVisibleIds = new Set([
         ...builtInCtx.visibleLayerIds,
         ...customCtx.visibleLayerIds,
@@ -291,14 +306,22 @@ export function useMaplibreMap({
             if (!map.getLayer(layerSpec.id)) {
               map.addLayer(layerSpec);
             }
-            map.setLayoutProperty(layerSpec.id, 'visibility', shouldBeVisible ? 'visible' : 'none');
+            map.setLayoutProperty(
+              layerSpec.id,
+              "visibility",
+              shouldBeVisible ? "visible" : "none",
+            );
           }
           previousIds.add(def.id);
         } else {
           // Already on map — just update visibility
           for (const layerSpec of def.layers) {
             if (map.getLayer(layerSpec.id)) {
-              map.setLayoutProperty(layerSpec.id, 'visibility', shouldBeVisible ? 'visible' : 'none');
+              map.setLayoutProperty(
+                layerSpec.id,
+                "visibility",
+                shouldBeVisible ? "visible" : "none",
+              );
             }
           }
         }
@@ -309,7 +332,7 @@ export function useMaplibreMap({
     if (map.loaded()) {
       syncLayers();
     } else {
-      map.once('load', syncLayers);
+      map.once("load", syncLayers);
     }
   }, [
     builtInCtx.availableLayers,
@@ -328,29 +351,29 @@ export function useMaplibreMap({
     if (!map) return;
 
     const addEasterEgg = () => {
-      if (map.getSource('easter-egg-src')) return;
-      map.addSource('easter-egg-src', {
-        type: 'geojson',
+      if (map.getSource("easter-egg-src")) return;
+      map.addSource("easter-egg-src", {
+        type: "geojson",
         data: EASTER_EGG_GEOJSON,
       });
       map.addLayer({
-        id: 'easter-egg-fill',
-        type: 'fill',
-        source: 'easter-egg-src',
+        id: "easter-egg-fill",
+        type: "fill",
+        source: "easter-egg-src",
         minzoom: 16,
         paint: {
-          'fill-color': ['get', 'fill'],
-          'fill-opacity': 0.85,
+          "fill-color": ["get", "fill"],
+          "fill-opacity": 0.85,
         },
       });
       map.addLayer({
-        id: 'easter-egg-outline',
-        type: 'line',
-        source: 'easter-egg-src',
+        id: "easter-egg-outline",
+        type: "line",
+        source: "easter-egg-src",
         minzoom: 16,
         paint: {
-          'line-color': ['get', 'stroke'],
-          'line-width': 2,
+          "line-color": ["get", "stroke"],
+          "line-width": 2,
         },
       });
     };
@@ -358,7 +381,7 @@ export function useMaplibreMap({
     if (map.loaded()) {
       addEasterEgg();
     } else {
-      map.once('load', addEasterEgg);
+      map.once("load", addEasterEgg);
     }
   }, [mapReady]);
 
@@ -369,11 +392,17 @@ export function useMaplibreMap({
 // Helpers (module-level to avoid re-creation)
 // ---------------------------------------------------------------------------
 
-function findPreviousDef(id: string, currentDefs: LayerDefinition[]): LayerDefinition | undefined {
+function findPreviousDef(
+  id: string,
+  currentDefs: LayerDefinition[],
+): LayerDefinition | undefined {
   return currentDefs.find((d) => d.id === id);
 }
 
-function removeFromMap(map: maplibregl.Map, def: LayerDefinition | BaseLayerDefinition) {
+function removeFromMap(
+  map: maplibregl.Map,
+  def: LayerDefinition | BaseLayerDefinition,
+) {
   for (const layerSpec of def.layers) {
     if (map.getLayer(layerSpec.id)) {
       map.removeLayer(layerSpec.id);
@@ -391,14 +420,14 @@ function removeFromMap(map: maplibregl.Map, def: LayerDefinition | BaseLayerDefi
 // ~25 m circumradius, corners smoothed with arcs.
 // ---------------------------------------------------------------------------
 const EASTER_EGG_GEOJSON: GeoJSON.FeatureCollection = {
-  type: 'FeatureCollection',
+  type: "FeatureCollection",
   features: [
     // Brown triangle at 59.2165629°N, 10.9500666°E
     {
-      type: 'Feature',
-      properties: { fill: '#8B4513', stroke: '#5C2D0A' },
+      type: "Feature",
+      properties: { fill: "#8B4513", stroke: "#5C2D0A" },
       geometry: {
-        type: 'Polygon',
+        type: "Polygon",
         coordinates: [
           [
             [10.9501935, 59.2167004],
@@ -429,10 +458,10 @@ const EASTER_EGG_GEOJSON: GeoJSON.FeatureCollection = {
     },
     // Red/pink triangle at 62.4595714°N, 6.1022856°E
     {
-      type: 'Feature',
-      properties: { fill: '#E8466A', stroke: '#A1203E' },
+      type: "Feature",
+      properties: { fill: "#E8466A", stroke: "#A1203E" },
       geometry: {
-        type: 'Polygon',
+        type: "Polygon",
         coordinates: [
           [
             [6.1024125, 62.4597089],

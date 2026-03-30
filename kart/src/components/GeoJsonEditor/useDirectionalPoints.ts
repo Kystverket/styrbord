@@ -1,12 +1,15 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import type { MutableRefObject } from 'react';
-import type { Map as MaplibreMap } from 'maplibre-gl';
-import maplibregl from 'maplibre-gl';
-import type { Feature, Point } from 'geojson';
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { MutableRefObject } from "react";
+import type { Map as MaplibreMap } from "maplibre-gl";
+import maplibregl from "maplibre-gl";
+import type { Feature, Point } from "geojson";
 
-import { clampDirection } from '~/utility/coordinate';
-import { getUuid } from '~/utility/uuid';
-import { createCompassMarkerElement, positionHandle } from '~/utility/compassMarker';
+import { clampDirection } from "~/utility/coordinate";
+import { getUuid } from "~/utility/uuid";
+import {
+  createCompassMarkerElement,
+  positionHandle,
+} from "~/utility/compassMarker";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -16,7 +19,7 @@ export interface DirectionalPointFeature extends Feature<Point> {
   properties: {
     id: string;
     direction: number;
-    mode: 'directional-point';
+    mode: "directional-point";
     [key: string]: unknown;
   };
 }
@@ -61,15 +64,15 @@ export interface UseDirectionalPointsResult {
 // Selection styling
 // ---------------------------------------------------------------------------
 
-const SELECTED_SHADOW = '0 0 0 3px rgba(0, 98, 186, 0.5)';
-const DEFAULT_SHADOW = 'none';
+const SELECTED_SHADOW = "0 0 0 3px rgba(0, 98, 186, 0.5)";
+const DEFAULT_SHADOW = "none";
 
 function setSelectedStyle(container: HTMLDivElement, selected: boolean) {
-  const compass = container.querySelector('div') as HTMLElement | null;
+  const compass = container.querySelector("div") as HTMLElement | null;
   if (!compass) return;
-  compass.style.outline = selected ? '2px solid #0062ba' : 'none';
-  compass.style.outlineOffset = selected ? '2px' : '';
-  compass.style.borderRadius = selected ? '50%' : '';
+  compass.style.outline = selected ? "2px solid #0062ba" : "none";
+  compass.style.outlineOffset = selected ? "2px" : "";
+  compass.style.borderRadius = selected ? "50%" : "";
   compass.style.boxShadow = selected ? SELECTED_SHADOW : DEFAULT_SHADOW;
 }
 
@@ -126,7 +129,10 @@ export function useDirectionalPoints({
       // --- Rotation drag state ---
       let isDraggingRotation = false;
 
-      const getFeature = () => featuresRef.current.find((f) => f.properties.id === feature.properties.id);
+      const getFeature = () =>
+        featuresRef.current.find(
+          (f) => f.properties.id === feature.properties.id,
+        );
 
       const angleFromPointer = (e: PointerEvent): number => {
         const f = getFeature();
@@ -187,7 +193,10 @@ export function useDirectionalPoints({
 
         const f = getFeature();
         if (f) {
-          dragStartMarkerLngLat = [f.geometry.coordinates[0], f.geometry.coordinates[1]];
+          dragStartMarkerLngLat = [
+            f.geometry.coordinates[0],
+            f.geometry.coordinates[1],
+          ];
         }
 
         // Disable map drag while repositioning
@@ -195,7 +204,8 @@ export function useDirectionalPoints({
       };
 
       const onCompassPointerMove = (e: PointerEvent) => {
-        if (!isDraggingPosition || !dragStartLngLat || !dragStartMarkerLngLat) return;
+        if (!isDraggingPosition || !dragStartLngLat || !dragStartMarkerLngLat)
+          return;
 
         const rect = map.getContainer().getBoundingClientRect();
         const mouseX = e.clientX - rect.left;
@@ -229,22 +239,22 @@ export function useDirectionalPoints({
       };
 
       // Wire up handle events
-      handle.addEventListener('pointerdown', onHandlePointerDown);
-      handle.addEventListener('pointermove', onHandlePointerMove);
-      handle.addEventListener('pointerup', onHandlePointerUp);
-      handle.addEventListener('mousedown', suppressEvent);
-      handle.addEventListener('click', suppressEvent);
+      handle.addEventListener("pointerdown", onHandlePointerDown);
+      handle.addEventListener("pointermove", onHandlePointerMove);
+      handle.addEventListener("pointerup", onHandlePointerUp);
+      handle.addEventListener("mousedown", suppressEvent);
+      handle.addEventListener("click", suppressEvent);
 
       // Wire up compass body events
-      compass.addEventListener('pointerdown', onCompassPointerDown);
-      compass.addEventListener('pointermove', onCompassPointerMove);
-      compass.addEventListener('pointerup', onCompassPointerUp);
-      compass.addEventListener('mousedown', suppressEvent);
-      compass.addEventListener('click', suppressEvent);
+      compass.addEventListener("pointerdown", onCompassPointerDown);
+      compass.addEventListener("pointermove", onCompassPointerMove);
+      compass.addEventListener("pointerup", onCompassPointerUp);
+      compass.addEventListener("mousedown", suppressEvent);
+      compass.addEventListener("click", suppressEvent);
 
       const marker = new maplibregl.Marker({
         element: container,
-        anchor: 'center',
+        anchor: "center",
       })
         .setLngLat([lng, lat])
         .addTo(map);
@@ -315,7 +325,7 @@ export function useDirectionalPoints({
     if (!map || !mapReady || disabled) return;
 
     const handleClick = (e: maplibregl.MapMouseEvent) => {
-      if (activeModeRef.current !== 'directional-point') return;
+      if (activeModeRef.current !== "directional-point") return;
 
       // Mark as loaded so controlled value round-trips won't re-create markers
       initialLoaded.current = true;
@@ -335,15 +345,15 @@ export function useDirectionalPoints({
 
       const id = getUuid();
       const feature: DirectionalPointFeature = {
-        type: 'Feature',
+        type: "Feature",
         geometry: {
-          type: 'Point',
+          type: "Point",
           coordinates: [e.lngLat.lng, e.lngLat.lat],
         },
         properties: {
           id,
           direction: singleFeatureRef.current ? previousDirection : 0,
-          mode: 'directional-point',
+          mode: "directional-point",
         },
       };
 
@@ -352,9 +362,9 @@ export function useDirectionalPoints({
       onChangeRef.current?.();
     };
 
-    map.on('click', handleClick);
+    map.on("click", handleClick);
     return () => {
-      map.off('click', handleClick);
+      map.off("click", handleClick);
     };
   }, [mapRef, mapReady, disabled, createMarkerForFeature]);
 
@@ -380,7 +390,9 @@ export function useDirectionalPoints({
     markersRef.current = markersRef.current.filter((m) => m.featureId !== id);
 
     // Remove feature
-    featuresRef.current = featuresRef.current.filter((f) => f.properties.id !== id);
+    featuresRef.current = featuresRef.current.filter(
+      (f) => f.properties.id !== id,
+    );
 
     setSelectedId(null);
     onSelectRef.current?.(null);
@@ -401,7 +413,10 @@ export function useDirectionalPoints({
       featuresRef.current = features;
       for (const feature of features) {
         // Skip if a marker already exists for this feature (e.g. from a controlled round-trip)
-        if (markersRef.current.some((m) => m.featureId === feature.properties.id)) continue;
+        if (
+          markersRef.current.some((m) => m.featureId === feature.properties.id)
+        )
+          continue;
         createMarkerForFeature(feature);
       }
     },

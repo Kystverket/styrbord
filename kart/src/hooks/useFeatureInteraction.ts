@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
-import type { Feature, GeoJsonProperties, Geometry } from 'geojson';
-import type maplibregl from 'maplibre-gl';
+import { useEffect, useRef, useState, useCallback } from "react";
+import type { Feature, GeoJsonProperties, Geometry } from "geojson";
+import type maplibregl from "maplibre-gl";
 
 /**
  * A GeoJSON feature with an optional numeric ID for MapLibre compatibility.
@@ -26,7 +26,10 @@ export interface UseFeatureInteractionOptions {
    * Called when hovered feature changes.
    * Receives the feature and the original mouse event, or null when hover ends.
    */
-  onHover?: (feature: InteractiveFeature | null, event: maplibregl.MapMouseEvent | null) => void;
+  onHover?: (
+    feature: InteractiveFeature | null,
+    event: maplibregl.MapMouseEvent | null,
+  ) => void;
   /**
    * Called when selection changes.
    * Receives array of selected features, or null when selection is cleared.
@@ -63,8 +66,11 @@ export function useFeatureInteraction({
   onHover,
   onSelect,
 }: UseFeatureInteractionOptions): UseFeatureInteractionResult {
-  const [hoveredFeature, setHoveredFeature] = useState<InteractiveFeature | null>(null);
-  const [selectedFeatures, setSelectedFeatures] = useState<InteractiveFeature[]>([]);
+  const [hoveredFeature, setHoveredFeature] =
+    useState<InteractiveFeature | null>(null);
+  const [selectedFeatures, setSelectedFeatures] = useState<
+    InteractiveFeature[]
+  >([]);
 
   // Keep callbacks in refs to avoid effect re-runs
   const onHoverRef = useRef(onHover);
@@ -80,17 +86,23 @@ export function useFeatureInteraction({
    * Get a stable ID for a feature.
    * Uses feature.id if available, otherwise generates from properties.
    */
-  const getFeatureId = useCallback((feature: InteractiveFeature): string | number => {
-    if (feature.id !== undefined) return feature.id;
-    // Fallback: use stringified properties as ID (not ideal but works)
-    return JSON.stringify(feature.properties);
-  }, []);
+  const getFeatureId = useCallback(
+    (feature: InteractiveFeature): string | number => {
+      if (feature.id !== undefined) return feature.id;
+      // Fallback: use stringified properties as ID (not ideal but works)
+      return JSON.stringify(feature.properties);
+    },
+    [],
+  );
 
   /**
    * Query features at a given point.
    */
   const queryFeaturesAtPoint = useCallback(
-    (map: maplibregl.Map, point: maplibregl.PointLike): InteractiveFeature[] => {
+    (
+      map: maplibregl.Map,
+      point: maplibregl.PointLike,
+    ): InteractiveFeature[] => {
       const existingLayers = layerIds.filter((id) => map.getLayer(id));
       if (existingLayers.length === 0) return [];
 
@@ -148,7 +160,7 @@ export function useFeatureInteraction({
         onHoverRef.current?.(topFeature, topFeature ? e : null);
 
         // Update cursor
-        map.getCanvas().style.cursor = topFeature ? 'pointer' : '';
+        map.getCanvas().style.cursor = topFeature ? "pointer" : "";
       }
     };
 
@@ -159,7 +171,7 @@ export function useFeatureInteraction({
         prevHoveredIdRef.current = null;
         setHoveredFeature(null);
         onHoverRef.current?.(null, null);
-        map.getCanvas().style.cursor = '';
+        map.getCanvas().style.cursor = "";
       }
     };
 
@@ -187,7 +199,9 @@ export function useFeatureInteraction({
 
         if (isMultiSelect) {
           // Multi-select: toggle the clicked feature
-          const isAlreadySelected = prev.some((f) => getFeatureId(f) === clickedId);
+          const isAlreadySelected = prev.some(
+            (f) => getFeatureId(f) === clickedId,
+          );
 
           if (isAlreadySelected) {
             // Remove from selection
@@ -198,7 +212,8 @@ export function useFeatureInteraction({
           }
         } else {
           // Single select: replace selection
-          const isAlreadyOnlySelected = prev.length === 1 && getFeatureId(prev[0]) === clickedId;
+          const isAlreadyOnlySelected =
+            prev.length === 1 && getFeatureId(prev[0]) === clickedId;
 
           if (isAlreadyOnlySelected) {
             // Clicking the only selected feature deselects it
@@ -218,17 +233,26 @@ export function useFeatureInteraction({
     };
 
     // Register event handlers
-    map.on('mousemove', handleMouseMove);
-    map.on('mouseleave', handleMouseLeave);
-    map.on('click', handleClick);
+    map.on("mousemove", handleMouseMove);
+    map.on("mouseleave", handleMouseLeave);
+    map.on("click", handleClick);
 
     return () => {
-      map.off('mousemove', handleMouseMove);
-      map.off('mouseleave', handleMouseLeave);
-      map.off('click', handleClick);
-      map.getCanvas().style.cursor = '';
+      map.off("mousemove", handleMouseMove);
+      map.off("mouseleave", handleMouseLeave);
+      map.off("click", handleClick);
+      map.getCanvas().style.cursor = "";
     };
-  }, [mapRef, enabled, hoverable, selectable, layerIds, queryFeaturesAtPoint, getFeatureId, selectedFeatures.length]);
+  }, [
+    mapRef,
+    enabled,
+    hoverable,
+    selectable,
+    layerIds,
+    queryFeaturesAtPoint,
+    getFeatureId,
+    selectedFeatures.length,
+  ]);
 
   return {
     hoveredFeature,

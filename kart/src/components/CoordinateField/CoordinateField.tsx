@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useId, useMemo, useState } from 'react';
-import { Box, NumberInput, ValidationMessage } from '@kystverket/styrbord';
-import type { FeatureCollection, Point } from 'geojson';
+import { useCallback, useEffect, useId, useMemo, useState } from "react";
+import { Box, NumberInput, ValidationMessage } from "@kystverket/styrbord";
+import type { FeatureCollection, Point } from "geojson";
 
-import type { CoordinateFieldProps } from './CoordinateField.types';
-import type { CoordinateGeoJSON } from '~/utility/types';
-import { clampLatitude, clampLongitude } from '~/utility/coordinate';
-import { GeoJsonEditor } from '~/components/GeoJsonEditor/GeoJsonEditor';
+import type { CoordinateFieldProps } from "./CoordinateField.types";
+import type { CoordinateGeoJSON } from "~/utility/types";
+import { clampLatitude, clampLongitude } from "~/utility/coordinate";
+import { GeoJsonEditor } from "~/components/GeoJsonEditor/GeoJsonEditor";
 
 /**
  * CoordinateField — select a geographic coordinate via an interactive map
@@ -28,10 +28,10 @@ export function CoordinateField({
   const editorValue = useMemo<FeatureCollection | undefined>(() => {
     if (!value) return undefined;
     return {
-      type: 'FeatureCollection',
+      type: "FeatureCollection",
       features: [
         {
-          type: 'Feature',
+          type: "Feature",
           geometry: value.geometry,
           properties: {},
         },
@@ -44,7 +44,7 @@ export function CoordinateField({
       if (fc.features.length > 0) {
         const feature = fc.features[0];
         const geo: CoordinateGeoJSON = {
-          type: 'Feature',
+          type: "Feature",
           geometry: feature.geometry as Point,
         };
         onChange(geo);
@@ -54,8 +54,12 @@ export function CoordinateField({
   );
 
   // ----- Input number state (synced to/from value, committed on blur) -----
-  const [latValue, setLatValue] = useState<number | undefined>(value?.geometry.coordinates[1] ?? undefined);
-  const [lonValue, setLonValue] = useState<number | undefined>(value?.geometry.coordinates[0] ?? undefined);
+  const [latValue, setLatValue] = useState<number | undefined>(
+    value?.geometry.coordinates[1] ?? undefined,
+  );
+  const [lonValue, setLonValue] = useState<number | undefined>(
+    value?.geometry.coordinates[0] ?? undefined,
+  );
 
   useEffect(() => {
     const coords = value?.geometry.coordinates;
@@ -69,9 +73,9 @@ export function CoordinateField({
       if (lat == null && lon == null) return;
       if (lat != null && lon != null) {
         const geo: CoordinateGeoJSON = {
-          type: 'Feature',
+          type: "Feature",
           geometry: {
-            type: 'Point',
+            type: "Point",
             coordinates: [clampLongitude(lon), clampLatitude(lat)],
           },
         };
@@ -82,10 +86,10 @@ export function CoordinateField({
   );
 
   return (
-    <Box gap={16} className={[className].filter(Boolean).join(' ')}>
+    <Box gap={16} className={[className].filter(Boolean).join(" ")}>
       <GeoJsonEditor
         singleFeature
-        modes={['point']}
+        modes={["point"]}
         value={editorValue}
         onChange={handleEditorChange}
         disabled={disabled}

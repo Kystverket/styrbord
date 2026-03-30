@@ -1,20 +1,23 @@
-import { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import StyrbordDecorator from '../../../storybook/styrbordDecorator';
-import { CoordinateDirectionField } from './CoordinateDirectionField';
-import type { CoordinateDirectionGeoJSON, CoordinateDirectionFieldProps } from './CoordinateDirectionField.types';
+import { useState } from "react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import StyrbordDecorator from "../../../storybook/styrbordDecorator";
+import { CoordinateDirectionField } from "./CoordinateDirectionField";
+import type {
+  CoordinateDirectionGeoJSON,
+  CoordinateDirectionFieldProps,
+} from "./CoordinateDirectionField.types";
 
 const meta = {
-  title: 'Kart/CoordinateDirectionField',
+  title: "Kart/CoordinateDirectionField",
   component: CoordinateDirectionField,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ["autodocs", "kyv"],
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       story: {
         inline: false,
-        iframeHeight: '600px',
+        iframeHeight: "600px",
       },
     },
   },
@@ -24,10 +27,18 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /** Wrapper that provides controlled state for stories. */
-const Controlled = (props: Partial<CoordinateDirectionFieldProps> & { initialValue?: CoordinateDirectionGeoJSON }) => {
+const Controlled = (
+  props: Partial<CoordinateDirectionFieldProps> & {
+    initialValue?: CoordinateDirectionGeoJSON;
+  },
+) => {
   const { initialValue, ...rest } = props;
-  const [value, setValue] = useState<CoordinateDirectionGeoJSON | undefined>(initialValue);
-  return <CoordinateDirectionField value={value} onChange={setValue} {...rest} />;
+  const [value, setValue] = useState<CoordinateDirectionGeoJSON | undefined>(
+    initialValue,
+  );
+  return (
+    <CoordinateDirectionField value={value} onChange={setValue} {...rest} />
+  );
 };
 
 const noop = () => {};
@@ -41,9 +52,9 @@ export const Default: Story = {
 // ---- Controlled with initial value ----
 const ControlledTemplate = () => {
   const [value, setValue] = useState<CoordinateDirectionGeoJSON>({
-    type: 'Feature',
+    type: "Feature",
     geometry: {
-      type: 'Point',
+      type: "Point",
       coordinates: [10.3951, 63.4305],
     },
     properties: {
@@ -53,12 +64,16 @@ const ControlledTemplate = () => {
 
   return (
     <div style={{ maxWidth: 700 }}>
-      <CoordinateDirectionField label="Skiltplassering" value={value} onChange={setValue} />
+      <CoordinateDirectionField
+        label="Skiltplassering"
+        value={value}
+        onChange={setValue}
+      />
       <pre
         style={{
           marginTop: 16,
           fontSize: 12,
-          background: '#f5f5f5',
+          background: "#f5f5f5",
           padding: 12,
           borderRadius: 4,
         }}
@@ -77,7 +92,9 @@ export const WithInitialValue: Story = {
 // ---- With error ----
 export const WithError: Story = {
   args: { value: undefined, onChange: noop },
-  render: () => <Controlled label="Plassering og retning" error="Koordinat er påkrevd" />,
+  render: () => (
+    <Controlled label="Plassering og retning" error="Koordinat er påkrevd" />
+  ),
 };
 
 // ---- Disabled ----
@@ -87,9 +104,9 @@ export const Disabled: Story = {
     <Controlled
       label="Plassering og retning"
       initialValue={{
-        type: 'Feature',
+        type: "Feature",
         geometry: {
-          type: 'Point',
+          type: "Point",
           coordinates: [10.3951, 63.4305],
         },
         properties: {

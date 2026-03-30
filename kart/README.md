@@ -31,24 +31,28 @@ I tillegg eksporteres hooks, context-providers og hjelpefunksjoner for lagoppset
 Det holder å importere CSS globalt en gang.
 
 ```js
-import '@kystverket/styrbord/style.css';
-import '@kystverket/styrbord-kart/style.css';
+import "@kystverket/styrbord/style.css";
+import "@kystverket/styrbord-kart/style.css";
 ```
 
 Importering av enkeltkomponenter.
 
 ```js
-import { GeoJsonViewer, GeoJsonEditor, CoordinateField } from '@kystverket/styrbord-kart';
+import {
+  GeoJsonViewer,
+  GeoJsonEditor,
+  CoordinateField,
+} from "@kystverket/styrbord-kart";
 ```
 
 Et enkelt eksempel med visning av GeoJSON.
 
 ```tsx
-import type { FeatureCollection } from 'geojson';
-import { GeoJsonViewer } from '@kystverket/styrbord-kart';
+import type { FeatureCollection } from "geojson";
+import { GeoJsonViewer } from "@kystverket/styrbord-kart";
 
 const data: FeatureCollection = {
-  type: 'FeatureCollection',
+  type: "FeatureCollection",
   features: [],
 };
 

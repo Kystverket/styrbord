@@ -1,9 +1,12 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-import type maplibregl from 'maplibre-gl';
-import type { Coordinate } from '~/utility/types';
-import { WmsCatalogLayersContext } from '~/utility/wmsCatalogLayersContext';
-import { fetchFeatureInfo } from '~/utility/wmsGetFeatureInfo';
-import type { CoordinateClickResult, WmsFeatureInfoResult } from '~/utility/wmsGetFeatureInfo';
+import { useContext, useEffect, useRef, useState } from "react";
+import type maplibregl from "maplibre-gl";
+import type { Coordinate } from "~/utility/types";
+import { WmsCatalogLayersContext } from "~/utility/wmsCatalogLayersContext";
+import { fetchFeatureInfo } from "~/utility/wmsGetFeatureInfo";
+import type {
+  CoordinateClickResult,
+  WmsFeatureInfoResult,
+} from "~/utility/wmsGetFeatureInfo";
 
 export interface UseWmsFeatureInfoOptions {
   /** Ref to the MapLibre map instance (needed for bounds / size). */
@@ -32,7 +35,9 @@ export function useWmsFeatureInfo({
   coordinate,
   enabled = true,
 }: UseWmsFeatureInfoOptions): UseWmsFeatureInfoResult {
-  const { baseUrl, catalogEntries, visibleLayerIds } = useContext(WmsCatalogLayersContext);
+  const { baseUrl, catalogEntries, visibleLayerIds } = useContext(
+    WmsCatalogLayersContext,
+  );
 
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<CoordinateClickResult | null>(null);
@@ -53,8 +58,10 @@ export function useWmsFeatureInfo({
     if (!map) return;
 
     // Determine which catalog entries are visible.
-    const visibleEntries = catalogEntries.filter((entry) => visibleLayerIds.has(`wms-catalog-${entry.name}`));
-    console.log('Visible WMS catalog entries:', visibleEntries, catalogEntries);
+    const visibleEntries = catalogEntries.filter((entry) =>
+      visibleLayerIds.has(`wms-catalog-${entry.name}`),
+    );
+    console.log("Visible WMS catalog entries:", visibleEntries, catalogEntries);
     if (visibleEntries.length === 0) {
       // No visible WMS layers — still report the coordinate with empty results.
       setResult({ coordinate, layerResults: [] });
@@ -79,7 +86,15 @@ export function useWmsFeatureInfo({
 
     Promise.all(
       visibleEntries.map((entry) =>
-        fetchFeatureInfo(baseUrl, `wms-catalog-${entry.name}`, entry.name, coordinate, bounds, size, controller.signal),
+        fetchFeatureInfo(
+          baseUrl,
+          `wms-catalog-${entry.name}`,
+          entry.name,
+          coordinate,
+          bounds,
+          size,
+          controller.signal,
+        ),
       ),
     )
       .then((layerResults: WmsFeatureInfoResult[]) => {

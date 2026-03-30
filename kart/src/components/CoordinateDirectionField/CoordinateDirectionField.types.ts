@@ -1,6 +1,6 @@
-export type { Coordinate, CoordinateGeoJSON } from '~/utility/types';
-import type { Coordinate, CoordinateGeoJSON } from '~/utility/types';
-import type { MapPickerBaseProps } from '~/components/shared/MapPicker.types';
+export type { Coordinate, CoordinateGeoJSON } from "~/utility/types";
+import type { Coordinate, CoordinateGeoJSON } from "~/utility/types";
+import type { MapPickerBaseProps } from "~/components/shared/MapPicker.types";
 
 /**
  * The combined value of a placed coordinate and the direction it faces.

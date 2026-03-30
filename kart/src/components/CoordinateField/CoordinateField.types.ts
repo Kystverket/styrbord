@@ -1,5 +1,5 @@
-import type { CoordinateGeoJSON } from '~/utility/types';
-import type { MapPickerBaseProps } from '~/components/shared/MapPicker.types';
+import type { CoordinateGeoJSON } from "~/utility/types";
+import type { MapPickerBaseProps } from "~/components/shared/MapPicker.types";
 
 export interface CoordinateFieldProps extends MapPickerBaseProps {
   /** Controlled value — a GeoJSON Point Feature. */

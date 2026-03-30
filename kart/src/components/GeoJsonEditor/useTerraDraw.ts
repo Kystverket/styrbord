@@ -1,7 +1,12 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import type { MutableRefObject } from 'react';
-import type { Map as MaplibreMap } from 'maplibre-gl';
-import type { FeatureCollection, Feature, Geometry, GeoJsonProperties } from 'geojson';
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { MutableRefObject } from "react";
+import type { Map as MaplibreMap } from "maplibre-gl";
+import type {
+  FeatureCollection,
+  Feature,
+  Geometry,
+  GeoJsonProperties,
+} from "geojson";
 import {
   TerraDraw,
   TerraDrawPointMode,
@@ -10,37 +15,40 @@ import {
   TerraDrawSelectMode,
   TerraDrawRenderMode,
   type GeoJSONStoreFeatures,
-} from 'terra-draw';
-import { TerraDrawMapLibreGLAdapter } from 'terra-draw-maplibre-gl-adapter';
+} from "terra-draw";
+import { TerraDrawMapLibreGLAdapter } from "terra-draw-maplibre-gl-adapter";
 
-import type { DrawMode } from './GeoJsonEditor.types';
-import { toFeatureCollection } from '../GeoJsonViewer/GeoJsonViewer.utils';
+import type { DrawMode } from "./GeoJsonEditor.types";
+import { toFeatureCollection } from "../GeoJsonViewer/GeoJsonViewer.utils";
 
 /** Drawing modes that terra-draw handles natively. */
-type TerraDrawableMode = Exclude<DrawMode, 'directional-point'>;
+type TerraDrawableMode = Exclude<DrawMode, "directional-point">;
 
 /**
  * Map a GeoJSON geometry type to the corresponding terra-draw drawing mode.
  * Falls back to `'static'` for unsupported geometry types or when the mode
  * isn't registered.
  */
-function getModeForGeometry(geometry: Geometry, registeredModes: TerraDrawableMode[]): string {
+function getModeForGeometry(
+  geometry: Geometry,
+  registeredModes: TerraDrawableMode[],
+): string {
   let mode: TerraDrawableMode | undefined;
   switch (geometry.type) {
-    case 'Point':
-    case 'MultiPoint':
-      mode = 'point';
+    case "Point":
+    case "MultiPoint":
+      mode = "point";
       break;
-    case 'LineString':
-    case 'MultiLineString':
-      mode = 'linestring';
+    case "LineString":
+    case "MultiLineString":
+      mode = "linestring";
       break;
-    case 'Polygon':
-    case 'MultiPolygon':
-      mode = 'polygon';
+    case "Polygon":
+    case "MultiPolygon":
+      mode = "polygon";
       break;
   }
-  return mode && registeredModes.includes(mode) ? mode : 'static';
+  return mode && registeredModes.includes(mode) ? mode : "static";
 }
 
 type AnyTerraDrawMode =
@@ -101,9 +109,11 @@ export function useTerraDraw({
   onSelect,
 }: UseTerraDrawOptions): UseTerraDrawResult {
   const drawRef = useRef<TerraDraw | null>(null);
-  const [activeMode, setActiveModeState] = useState<string>('static');
+  const [activeMode, setActiveModeState] = useState<string>("static");
   const [hasSelection, setHasSelection] = useState(false);
-  const [selectedFeatures, setSelectedFeatures] = useState<Feature<Geometry, GeoJsonProperties>[]>([]);
+  const [selectedFeatures, setSelectedFeatures] = useState<
+    Feature<Geometry, GeoJsonProperties>[]
+  >([]);
   const [isReady, setIsReady] = useState(false);
   const initialDataLoaded = useRef(false);
 
@@ -133,12 +143,14 @@ export function useTerraDraw({
 
     const snapshot = draw.getSnapshot();
     // Filter out terra-draw internal features (selection midpoints, etc.)
-    const userFeatures = snapshot.filter((f: GeoJSONStoreFeatures) => f.properties?.mode !== 'select');
+    const userFeatures = snapshot.filter(
+      (f: GeoJSONStoreFeatures) => f.properties?.mode !== "select",
+    );
 
     const fc: FeatureCollection = {
-      type: 'FeatureCollection',
+      type: "FeatureCollection",
       features: userFeatures.map(({ id, geometry, properties }) => ({
-        type: 'Feature' as const,
+        type: "Feature" as const,
         ...(id != null ? { id } : {}),
         geometry,
         properties: { ...properties },
@@ -158,55 +170,55 @@ export function useTerraDraw({
 
       const drawModes: AnyTerraDrawMode[] = modes.map((m) => {
         switch (m) {
-          case 'point':
+          case "point":
             return new TerraDrawPointMode({
               styles: {
-                pointColor: '#ff451f',
+                pointColor: "#ff451f",
                 pointWidth: 6,
-                pointOutlineColor: '#ffffff',
+                pointOutlineColor: "#ffffff",
                 pointOutlineWidth: 3,
               },
             });
-          case 'linestring':
+          case "linestring":
             return new TerraDrawLineStringMode({
               styles: {
-                lineStringColor: '#ff451f',
+                lineStringColor: "#ff451f",
                 lineStringWidth: 4,
-                closingPointColor: '#ff451f',
-                closingPointOutlineColor: '#ffffff',
+                closingPointColor: "#ff451f",
+                closingPointOutlineColor: "#ffffff",
                 closingPointOutlineWidth: 2,
                 closingPointWidth: 5,
-                snappingPointColor: '#ff451f',
-                snappingPointOutlineColor: '#ffffff',
+                snappingPointColor: "#ff451f",
+                snappingPointOutlineColor: "#ffffff",
                 snappingPointOutlineWidth: 2,
                 snappingPointWidth: 5,
-                coordinatePointColor: '#ff451f',
-                coordinatePointOutlineColor: '#ffffff',
+                coordinatePointColor: "#ff451f",
+                coordinatePointOutlineColor: "#ffffff",
                 coordinatePointOutlineWidth: 2,
                 coordinatePointWidth: 5,
               },
             });
-          case 'polygon':
+          case "polygon":
             return new TerraDrawPolygonMode({
               styles: {
-                fillColor: '#ff451f',
+                fillColor: "#ff451f",
                 fillOpacity: 0.2,
-                outlineColor: '#ff451f',
+                outlineColor: "#ff451f",
                 outlineWidth: 4,
-                closingPointColor: '#ff451f',
-                closingPointOutlineColor: '#ffffff',
+                closingPointColor: "#ff451f",
+                closingPointOutlineColor: "#ffffff",
                 closingPointOutlineWidth: 2,
                 closingPointWidth: 5,
-                snappingPointColor: '#ff451f',
-                snappingPointOutlineColor: '#ffffff',
+                snappingPointColor: "#ff451f",
+                snappingPointOutlineColor: "#ffffff",
                 snappingPointOutlineWidth: 2,
                 snappingPointWidth: 5,
-                editedPointColor: '#ff451f',
-                editedPointOutlineColor: '#ffffff',
+                editedPointColor: "#ff451f",
+                editedPointOutlineColor: "#ffffff",
                 editedPointOutlineWidth: 2,
                 editedPointWidth: 5,
-                coordinatePointColor: '#ff451f',
-                coordinatePointOutlineColor: '#ffffff',
+                coordinatePointColor: "#ff451f",
+                coordinatePointOutlineColor: "#ffffff",
                 coordinatePointOutlineWidth: 2,
                 coordinatePointWidth: 5,
               },
@@ -218,21 +230,21 @@ export function useTerraDraw({
         drawModes.push(
           new TerraDrawSelectMode({
             styles: {
-              selectedPointColor: '#ff451f',
+              selectedPointColor: "#ff451f",
               selectedPointWidth: 6,
-              selectedPointOutlineColor: '#ff0000',
+              selectedPointOutlineColor: "#ff0000",
               selectedPointOutlineWidth: 3,
-              selectedLineStringColor: '#ff451f',
+              selectedLineStringColor: "#ff451f",
               selectedLineStringWidth: 4,
-              selectedPolygonColor: '#ff451f',
+              selectedPolygonColor: "#ff451f",
               selectedPolygonFillOpacity: 0.2,
-              selectedPolygonOutlineColor: '#ff451f',
+              selectedPolygonOutlineColor: "#ff451f",
               selectedPolygonOutlineWidth: 4,
-              selectionPointColor: '#df3c1b',
-              selectionPointOutlineColor: '#ff0000',
+              selectionPointColor: "#df3c1b",
+              selectionPointOutlineColor: "#ff0000",
               selectionPointOutlineWidth: 2,
-              midPointColor: '#ff7559',
-              midPointOutlineColor: '#ffffff',
+              midPointColor: "#ff7559",
+              midPointOutlineColor: "#ffffff",
               midPointOutlineWidth: 2,
             },
             flags: {
@@ -265,17 +277,17 @@ export function useTerraDraw({
       // Static mode for when no drawing tool is active
       drawModes.push(
         new TerraDrawRenderMode({
-          modeName: 'static',
+          modeName: "static",
           styles: {
-            pointColor: '#ff451f',
+            pointColor: "#ff451f",
             pointWidth: 6,
-            pointOutlineColor: '#ffffff',
+            pointOutlineColor: "#ffffff",
             pointOutlineWidth: 3,
-            lineStringColor: '#ff451f',
+            lineStringColor: "#ff451f",
             lineStringWidth: 4,
-            polygonFillColor: '#ff451f',
+            polygonFillColor: "#ff451f",
             polygonFillOpacity: 0.2,
-            polygonOutlineColor: '#ff451f',
+            polygonOutlineColor: "#ff451f",
             polygonOutlineWidth: 4,
           },
         }),
@@ -287,12 +299,13 @@ export function useTerraDraw({
       });
 
       draw.start();
-      const initialMode = singleFeature && modes.length > 0 ? modes[0] : 'static';
+      const initialMode =
+        singleFeature && modes.length > 0 ? modes[0] : "static";
       draw.setMode(initialMode);
       setActiveModeState(initialMode);
 
       // Listen for changes
-      draw.on('change', () => {
+      draw.on("change", () => {
         emitSnapshot();
       });
 
@@ -305,7 +318,7 @@ export function useTerraDraw({
       // terra-draw creates internal helper features (closing points,
       // snapping points) during drawing that would be incorrectly
       // counted as user features in the `change` handler.
-      draw.on('finish', (finishedId) => {
+      draw.on("finish", (finishedId) => {
         if (singleFeatureRef.current && modes.length > 0) {
           // Defer to let terra-draw complete its internal cleanup first.
           Promise.resolve().then(() => {
@@ -317,7 +330,7 @@ export function useTerraDraw({
             const toRemove = snap
               .filter(
                 (f: GeoJSONStoreFeatures) =>
-                  f.properties?.mode !== 'select' &&
+                  f.properties?.mode !== "select" &&
                   !f.properties?.closingPoint &&
                   !f.properties?.snappingPoint &&
                   !f.properties?.coordinatePoint &&
@@ -343,14 +356,14 @@ export function useTerraDraw({
         }
       });
 
-      draw.on('select', () => {
+      draw.on("select", () => {
         setHasSelection(true);
         // Get selected features and emit
         const snapshot = draw.getSnapshot();
         const selected = snapshot
           .filter((f: GeoJSONStoreFeatures) => f.properties?.selected === true)
           .map(({ id, geometry, properties }) => ({
-            type: 'Feature' as const,
+            type: "Feature" as const,
             ...(id != null ? { id } : {}),
             geometry,
             properties: { ...properties },
@@ -359,7 +372,7 @@ export function useTerraDraw({
         onSelectRef.current?.(selected.length > 0 ? selected : null);
       });
 
-      draw.on('deselect', () => {
+      draw.on("deselect", () => {
         setHasSelection(false);
         setSelectedFeatures([]);
         onSelectRef.current?.(null);
@@ -373,11 +386,11 @@ export function useTerraDraw({
     if (map.isStyleLoaded()) {
       initDraw();
     } else {
-      map.on('load', initDraw);
+      map.on("load", initDraw);
     }
 
     return () => {
-      map.off('load', initDraw);
+      map.off("load", initDraw);
       const draw = drawRef.current;
       if (draw) {
         try {
@@ -390,56 +403,72 @@ export function useTerraDraw({
         setIsReady(false);
       }
     };
-  }, [mapRef, mapReady, disabled, modes, editable, singleFeature, emitSnapshot]);
+  }, [
+    mapRef,
+    mapReady,
+    disabled,
+    modes,
+    editable,
+    singleFeature,
+    emitSnapshot,
+  ]);
 
   // ---- Replace all features with new data (clears existing before loading) ----
-  const replaceFeatures = useCallback((value: FeatureCollection | undefined) => {
-    const draw = drawRef.current;
-    if (!draw) return;
+  const replaceFeatures = useCallback(
+    (value: FeatureCollection | undefined) => {
+      const draw = drawRef.current;
+      if (!draw) return;
 
-    const snapshot = draw.getSnapshot();
-    const toRemove = snapshot
-      .filter(
-        (f: GeoJSONStoreFeatures) =>
-          f.properties?.mode !== 'select' &&
-          !f.properties?.closingPoint &&
-          !f.properties?.snappingPoint &&
-          !f.properties?.coordinatePoint,
-      )
-      .map((f: GeoJSONStoreFeatures) => f.id!);
+      const snapshot = draw.getSnapshot();
+      const toRemove = snapshot
+        .filter(
+          (f: GeoJSONStoreFeatures) =>
+            f.properties?.mode !== "select" &&
+            !f.properties?.closingPoint &&
+            !f.properties?.snappingPoint &&
+            !f.properties?.coordinatePoint,
+        )
+        .map((f: GeoJSONStoreFeatures) => f.id!);
 
-    if (toRemove.length > 0) {
-      try {
-        draw.removeFeatures(toRemove);
-      } catch {
-        // features may already be removed
+      if (toRemove.length > 0) {
+        try {
+          draw.removeFeatures(toRemove);
+        } catch {
+          // features may already be removed
+        }
       }
-    }
 
-    initialDataLoaded.current = false;
+      initialDataLoaded.current = false;
 
-    if (!value || value.features.length === 0) return;
+      if (!value || value.features.length === 0) return;
 
-    const fc = toFeatureCollection(value);
-    const features = fc.features.map((f) => ({
-      ...f,
-      properties: { ...f.properties, mode: getModeForGeometry(f.geometry, modesRef.current) },
-    })) as GeoJSONStoreFeatures[];
+      const fc = toFeatureCollection(value);
+      const features = fc.features.map((f) => ({
+        ...f,
+        properties: {
+          ...f.properties,
+          mode: getModeForGeometry(f.geometry, modesRef.current),
+        },
+      })) as GeoJSONStoreFeatures[];
 
-    try {
-      draw.addFeatures(features);
-      initialDataLoaded.current = true;
-    } catch (err) {
-      console.error('[GeoJsonEditor] Error replacing features:', err);
-    }
-  }, []);
+      try {
+        draw.addFeatures(features);
+        initialDataLoaded.current = true;
+      } catch (err) {
+        console.error("[GeoJsonEditor] Error replacing features:", err);
+      }
+    },
+    [],
+  );
 
   // ---- Load initial value ----
   const loadInitialData = useCallback(
     (
-      value: UseTerraDrawOptions['onChange'] extends undefined
+      value: UseTerraDrawOptions["onChange"] extends undefined
         ? never
-        : Parameters<NonNullable<UseTerraDrawOptions['onChange']>>[0] | undefined,
+        :
+            | Parameters<NonNullable<UseTerraDrawOptions["onChange"]>>[0]
+            | undefined,
     ) => {
       const draw = drawRef.current;
       if (!draw || !value || initialDataLoaded.current) return;
@@ -449,14 +478,17 @@ export function useTerraDraw({
 
       const features = fc.features.map((f) => ({
         ...f,
-        properties: { ...f.properties, mode: getModeForGeometry(f.geometry, modesRef.current) },
+        properties: {
+          ...f.properties,
+          mode: getModeForGeometry(f.geometry, modesRef.current),
+        },
       })) as GeoJSONStoreFeatures[];
 
       try {
         draw.addFeatures(features);
         initialDataLoaded.current = true;
       } catch (err) {
-        console.error('[GeoJsonEditor] Error loading initial features:', err);
+        console.error("[GeoJsonEditor] Error loading initial features:", err);
       }
     },
     [],
@@ -471,7 +503,7 @@ export function useTerraDraw({
       draw.setMode(mode);
       setActiveModeState(mode);
     } catch (err) {
-      console.error('[GeoJsonEditor] Error setting mode:', err);
+      console.error("[GeoJsonEditor] Error setting mode:", err);
     }
   }, []);
 
@@ -481,7 +513,9 @@ export function useTerraDraw({
     if (!draw || !deletable) return;
 
     const snapshot = draw.getSnapshot();
-    const selected = snapshot.filter((f: GeoJSONStoreFeatures) => f.properties?.selected === true);
+    const selected = snapshot.filter(
+      (f: GeoJSONStoreFeatures) => f.properties?.selected === true,
+    );
 
     if (selected.length > 0) {
       const ids = selected.map((f: GeoJSONStoreFeatures) => f.id!);
@@ -494,15 +528,18 @@ export function useTerraDraw({
   }, [deletable, emitSnapshot]);
 
   // ---- Get current snapshot of all features ----
-  const getSnapshot = useCallback((): Feature<Geometry, GeoJsonProperties>[] => {
+  const getSnapshot = useCallback((): Feature<
+    Geometry,
+    GeoJsonProperties
+  >[] => {
     const draw = drawRef.current;
     if (!draw) return [];
 
     const snapshot = draw.getSnapshot();
     return snapshot
-      .filter((f: GeoJSONStoreFeatures) => f.properties?.mode !== 'select')
+      .filter((f: GeoJSONStoreFeatures) => f.properties?.mode !== "select")
       .map(({ id, geometry, properties }) => ({
-        type: 'Feature' as const,
+        type: "Feature" as const,
         ...(id != null ? { id } : {}),
         geometry,
         properties: { ...properties },
@@ -521,5 +558,8 @@ export function useTerraDraw({
     loadInitialData,
     /** @internal — replaces all features without remounting the map */
     replaceFeatures,
-  } as UseTerraDrawResult & { loadInitialData: typeof loadInitialData; replaceFeatures: typeof replaceFeatures };
+  } as UseTerraDrawResult & {
+    loadInitialData: typeof loadInitialData;
+    replaceFeatures: typeof replaceFeatures;
+  };
 }

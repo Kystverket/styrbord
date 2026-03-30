@@ -1,24 +1,24 @@
-import { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import StyrbordDecorator from '../../../storybook/styrbordDecorator';
-import { CoordinateField } from './CoordinateField';
-import type { CoordinateGeoJSON } from '~/utility/types';
-import type { CoordinateFieldProps } from './CoordinateField.types';
+import { useState } from "react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import StyrbordDecorator from "../../../storybook/styrbordDecorator";
+import { CoordinateField } from "./CoordinateField";
+import type { CoordinateGeoJSON } from "~/utility/types";
+import type { CoordinateFieldProps } from "./CoordinateField.types";
 
 const meta = {
-  title: 'Kart/CoordinateField',
+  title: "Kart/CoordinateField",
   component: CoordinateField,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ["autodocs", "kyv"],
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       story: {
         // Render each story in its own iframe in the docs page so that
         // the MapLibre/terra-draw instance is fully isolated — the same
         // context as the focused canvas view where clicking works.
         inline: false,
-        iframeHeight: '600px',
+        iframeHeight: "600px",
       },
     },
   },
@@ -28,9 +28,13 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /** Wrapper that provides controlled state for stories. */
-const Controlled = (props: Partial<CoordinateFieldProps> & { initialValue?: CoordinateGeoJSON }) => {
+const Controlled = (
+  props: Partial<CoordinateFieldProps> & { initialValue?: CoordinateGeoJSON },
+) => {
   const { initialValue, ...rest } = props;
-  const [value, setValue] = useState<CoordinateGeoJSON | undefined>(initialValue);
+  const [value, setValue] = useState<CoordinateGeoJSON | undefined>(
+    initialValue,
+  );
   return <CoordinateField value={value} onChange={setValue} {...rest} />;
 };
 
@@ -45,21 +49,26 @@ export const Default: Story = {
 // ---- Controlled with initial value ----
 const ControlledTemplate = () => {
   const [value, setValue] = useState<CoordinateGeoJSON>({
-    type: 'Feature',
+    type: "Feature",
     geometry: {
-      type: 'Point',
+      type: "Point",
       coordinates: [10.3951, 63.4305],
     },
   });
 
   return (
     <div style={{ maxWidth: 700 }}>
-      <CoordinateField label="Skiltplassering" value={value} onChange={setValue} showCenterAction />
+      <CoordinateField
+        label="Skiltplassering"
+        value={value}
+        onChange={setValue}
+        showCenterAction
+      />
       <pre
         style={{
           marginTop: 16,
           fontSize: 12,
-          background: '#f5f5f5',
+          background: "#f5f5f5",
           padding: 12,
           borderRadius: 4,
         }}
@@ -86,7 +95,7 @@ export const TallMap: Story = {
   args: { value: undefined, onChange: noop },
   render: () => <Controlled height="1600px" />,
   parameters: {
-    docs: { story: { iframeHeight: '1750px' } },
+    docs: { story: { iframeHeight: "1750px" } },
   },
 };
 
@@ -97,9 +106,9 @@ export const Disabled: Story = {
     <Controlled
       label="Plassering"
       initialValue={{
-        type: 'Feature',
+        type: "Feature",
         geometry: {
-          type: 'Point',
+          type: "Point",
           coordinates: [10.3951, 63.4305],
         },
       }}

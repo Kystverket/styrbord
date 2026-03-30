@@ -1,4 +1,4 @@
-import type { Coordinate } from '~/utility/types';
+import type { Coordinate } from "~/utility/types";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -54,29 +54,35 @@ export function buildGetFeatureInfoUrl(
   // Compute I (column) and J (row) pixel positions.
   // WMS 1.3.0 + EPSG:4326: axis order is lat, lon.
   // BBOX = minLat, minLon, maxLat, maxLon
-  const i = Math.round(((coordinate.longitude - bounds.west) / (bounds.east - bounds.west)) * size.width);
-  const j = Math.round(((bounds.north - coordinate.latitude) / (bounds.north - bounds.south)) * size.height);
+  const i = Math.round(
+    ((coordinate.longitude - bounds.west) / (bounds.east - bounds.west)) *
+      size.width,
+  );
+  const j = Math.round(
+    ((bounds.north - coordinate.latitude) / (bounds.north - bounds.south)) *
+      size.height,
+  );
 
   const params: Record<string, string> = {
-    SERVICE: 'WMS',
-    VERSION: '1.3.0',
-    REQUEST: 'GetFeatureInfo',
+    SERVICE: "WMS",
+    VERSION: "1.3.0",
+    REQUEST: "GetFeatureInfo",
     LAYERS: layerName,
     QUERY_LAYERS: layerName,
-    CRS: 'EPSG:4326',
+    CRS: "EPSG:4326",
     BBOX: `${bounds.south},${bounds.west},${bounds.north},${bounds.east}`,
     WIDTH: String(size.width),
     HEIGHT: String(size.height),
-    INFO_FORMAT: 'text/html',
+    INFO_FORMAT: "text/html",
     I: String(i),
     J: String(j),
-    FEATURE_COUNT: '10',
+    FEATURE_COUNT: "10",
   };
 
-  const separator = baseUrl.includes('?') ? '&' : '?';
+  const separator = baseUrl.includes("?") ? "&" : "?";
   const qs = Object.entries(params)
     .map(([k, v]) => `${k}=${encodeURIComponent(v)}`)
-    .join('&');
+    .join("&");
   return `${baseUrl}${separator}${qs}`;
 }
 
@@ -95,17 +101,23 @@ export async function fetchFeatureInfo(
   size: MapSize,
   signal?: AbortSignal,
 ): Promise<WmsFeatureInfoResult> {
-  const url = buildGetFeatureInfoUrl(baseUrl, layerName, coordinate, bounds, size);
+  const url = buildGetFeatureInfoUrl(
+    baseUrl,
+    layerName,
+    coordinate,
+    bounds,
+    size,
+  );
 
   try {
     const res = await fetch(url, { signal });
     if (!res.ok) {
-      return { layerId, layerName, html: '' };
+      return { layerId, layerName, html: "" };
     }
     const html = await res.text();
     return { layerId, layerName, html };
   } catch {
     // Network error, abort, or parse failure
-    return { layerId, layerName, html: '' };
+    return { layerId, layerName, html: "" };
   }
 }
