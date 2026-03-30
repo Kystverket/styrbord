@@ -1,4 +1,15 @@
 {
   "pattern": "src/i18n/:language.json",
-  "mainLanguage": "nb-NO"
+  "mainLanguage": "nb-NO",
+  "ignore": [
+    { "key": "fields.directionPlaceholder", "checks": ["untranslated"], "languages": ["en-US", "nn-NO"] },
+    { "key": "fields.direction", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "fields.longitude", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "layers.backgroundMaps", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "layers.filterAriaLabel", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "layers.hide", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "layers.searchPlaceholder", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "layers.show", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "layers.toggleButtonLabel", "checks": ["untranslated"], "languages": ["nn-NO"] }
+  ]
 }

@@ -1,35 +1,35 @@
 {
-  "layers": {
-    "hide": "Skjul kartlag",
-    "show": "Vis kartlag",
-    "toggleButtonLabel": "Kartlag",
-    "searchPlaceholder": "Søk etter lag…",
-    "filterAriaLabel": "Filtrer kartlag",
-    "noResults": "Ingen lag samsvarer med søket",
-    "noLayersAvailable": "Ingen kartlag tilgjengelig",
-    "backgroundMaps": "Bakgrunnskart",
-    "defaultCategory": "Lag"
+  "drawMode": {
+    "directionalPoint": "Tegn retningspunkt",
+    "linestring": "Tegn linje",
+    "point": "Tegn punkt",
+    "polygon": "Tegn polygon"
   },
   "fields": {
-    "latitude": "Breddegrad",
-    "longitude": "Lengdegrad",
     "direction": "Retning (grader)",
+    "directionPlaceholder": "0–360",
+    "latitude": "Breddegrad",
     "latitudePlaceholder": "f.eks. 63.4305",
-    "longitudePlaceholder": "f.eks. 10.3951",
-    "directionPlaceholder": "0–360"
+    "longitude": "Lengdegrad",
+    "longitudePlaceholder": "f.eks. 10.3951"
   },
-  "drawMode": {
-    "point": "Tegn punkt",
-    "linestring": "Tegn linje",
-    "polygon": "Tegn polygon",
-    "directionalPoint": "Tegn retningspunkt"
-  },
-  "toolbar": {
-    "select": "Velg/rediger",
-    "delete": "Slett valgt"
+  "layers": {
+    "backgroundMaps": "Bakgrunnskart",
+    "defaultCategory": "Lag",
+    "filterAriaLabel": "Filtrer kartlag",
+    "hide": "Skjul kartlag",
+    "noLayersAvailable": "Ingen kartlag tilgjengelig",
+    "noResults": "Ingen lag samsvarer med søket",
+    "searchPlaceholder": "Søk etter lag…",
+    "show": "Vis kartlag",
+    "toggleButtonLabel": "Kartlag"
   },
   "mapCenterAction": {
     "ariaLabel": "Velg i sentrum av kartet",
     "buttonText": "Velg her"
+  },
+  "toolbar": {
+    "delete": "Slett valgt",
+    "select": "Velg/rediger"
   }
 }
