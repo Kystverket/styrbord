@@ -121,4 +121,7 @@ export type {
   WmsCatalogLayer,
 } from "./utility/wmsCatalogLayersContext";
 
-export { STYRBORD_KART_TRANSLATIONS_NAMESPACE } from "./translations";
+export {
+  STYRBORD_KART_TRANSLATIONS_NAMESPACE,
+  StyrbordKartTranslations,
+} from "./translations";
