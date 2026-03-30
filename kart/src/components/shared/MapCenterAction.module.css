@@ -1,0 +1,49 @@
+.crosshair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.crosshairSvg {
+  display: block;
+  color: var(--ds-color-accent-base-default, #0062ba);
+  opacity: 0.7;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.8));
+}
+
+.actionButton {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: var(--ds-border-radius-md, 6px);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ds-color-accent-base-default, #0062ba);
+  line-height: 1;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.actionButton:hover {
+  background: var(--ds-color-neutral-surface-hover, #f3f4f5);
+}
+
+.actionButton:active {
+  background: var(--ds-color-accent-surface-default, #e6f0ff);
+}

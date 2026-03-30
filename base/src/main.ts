@@ -325,3 +325,5 @@ export type { TooltipProps } from '@digdir/designsystemet-react';
 export { Tooltip } from '@digdir/designsystemet-react';
 export type { ValidationMessageProps } from '@digdir/designsystemet-react';
 export { ValidationMessage } from '@digdir/designsystemet-react';
+
+export { STYRBORD_TRANSLATIONS_NAMESPACE } from './translations';
