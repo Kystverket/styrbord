@@ -131,6 +131,10 @@ export function LayerToggle({ className, defaultOpen = false }: LayerToggleProps
   const showBaseGroup = showBaseLayerGroup && filteredBaseLayers.length > 0;
   const hasContent = grouped.size > 0 || showBaseGroup;
 
+  if (allLayers.length === 0 && !showBaseLayerGroup) {
+    return null;
+  }
+
   return (
     <div className={rootClassName}>
       <button

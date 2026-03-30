@@ -48,7 +48,7 @@ export function GeoJsonEditor({
   deletable = true,
   fitBounds = false,
   fitBoundsPadding = 40,
-  showLayerToggle = false,
+  showLayerToggle = true,
   height,
   className,
   disabled = false,

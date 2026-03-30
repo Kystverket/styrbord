@@ -317,7 +317,7 @@ export const WithLayerToggle: Story = {
       <BaseLayersProvider>
         <BuiltInLayersProvider>
           <CustomLayersProvider>
-            <GeoJsonEditor value={norwegianCoastData} fitBounds showCenterAction showLayerToggle />
+            <GeoJsonEditor value={norwegianCoastData} fitBounds showCenterAction />
           </CustomLayersProvider>
         </BuiltInLayersProvider>
       </BaseLayersProvider>

@@ -293,7 +293,6 @@ export const ComplexMultiType: Story = {
 export const WithLayerToggle: Story = {
   args: {
     data: sampleGeoJson as FeatureCollection,
-    showLayerToggle: true,
   },
   render: (args) => (
     <ViewBoundsProvider>

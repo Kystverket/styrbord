@@ -45,7 +45,7 @@ export function GeoJsonViewer({
   fitBounds = true,
   fitBoundsPadding = 40,
   geoJsonStyle: styleProp,
-  showLayerToggle = false,
+  showLayerToggle = true,
   height,
   className,
   disabled,
