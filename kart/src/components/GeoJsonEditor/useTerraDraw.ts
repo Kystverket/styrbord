@@ -19,6 +19,30 @@ import { toFeatureCollection } from '../GeoJsonViewer/GeoJsonViewer.utils';
 /** Drawing modes that terra-draw handles natively. */
 type TerraDrawableMode = Exclude<DrawMode, 'directional-point'>;
 
+/**
+ * Map a GeoJSON geometry type to the corresponding terra-draw drawing mode.
+ * Falls back to `'static'` for unsupported geometry types or when the mode
+ * isn't registered.
+ */
+function getModeForGeometry(geometry: Geometry, registeredModes: TerraDrawableMode[]): string {
+  let mode: TerraDrawableMode | undefined;
+  switch (geometry.type) {
+    case 'Point':
+    case 'MultiPoint':
+      mode = 'point';
+      break;
+    case 'LineString':
+    case 'MultiLineString':
+      mode = 'linestring';
+      break;
+    case 'Polygon':
+    case 'MultiPolygon':
+      mode = 'polygon';
+      break;
+  }
+  return mode && registeredModes.includes(mode) ? mode : 'static';
+}
+
 type AnyTerraDrawMode =
   | TerraDrawPointMode
   | TerraDrawLineStringMode
@@ -94,6 +118,10 @@ export function useTerraDraw({
   // Keep singleFeature in ref for use inside callbacks
   const singleFeatureRef = useRef(singleFeature);
   singleFeatureRef.current = singleFeature;
+
+  // Keep modes in ref so memoised callbacks always see the latest list
+  const modesRef = useRef(modes);
+  modesRef.current = modes;
 
   // ---- Emit current snapshot as FeatureCollection ----
   const emitSnapshot = useCallback(() => {
@@ -395,7 +423,7 @@ export function useTerraDraw({
     const fc = toFeatureCollection(value);
     const features = fc.features.map((f) => ({
       ...f,
-      properties: { ...f.properties, mode: 'static' },
+      properties: { ...f.properties, mode: getModeForGeometry(f.geometry, modesRef.current) },
     })) as GeoJSONStoreFeatures[];
 
     try {
@@ -421,7 +449,7 @@ export function useTerraDraw({
 
       const features = fc.features.map((f) => ({
         ...f,
-        properties: { ...f.properties, mode: 'static' },
+        properties: { ...f.properties, mode: getModeForGeometry(f.geometry, modesRef.current) },
       })) as GeoJSONStoreFeatures[];
 
       try {

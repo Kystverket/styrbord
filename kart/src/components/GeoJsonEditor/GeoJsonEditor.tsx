@@ -284,6 +284,75 @@ export function GeoJsonEditor({
     replaceDirectionalFeatures(dirFeatures);
   }, [fc, replaceTerraDraw, replaceDirectionalFeatures, terraDrawReady]);
 
+  // ----- Disabled (read-only) rendering via plain MapLibre layers -----
+  // When disabled, terra-draw is not initialised so we render features
+  // directly onto the map using native GeoJSON source + layers.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapReady || !disabled || !fc || fc.features.length === 0) return;
+
+    const SOURCE = 'geojson-editor-disabled';
+    const FILL = 'geojson-editor-disabled-fill';
+    const LINE = 'geojson-editor-disabled-line';
+    const POINT_STROKE = 'geojson-editor-disabled-point-stroke';
+    const POINT = 'geojson-editor-disabled-point';
+
+    const addLayers = () => {
+      if (map.getSource(SOURCE)) {
+        (map.getSource(SOURCE) as maplibregl.GeoJSONSource).setData(fc);
+        return;
+      }
+
+      map.addSource(SOURCE, { type: 'geojson', data: fc });
+
+      map.addLayer({
+        id: FILL,
+        type: 'fill',
+        source: SOURCE,
+        filter: ['==', '$type', 'Polygon'],
+        paint: { 'fill-color': '#ff451f', 'fill-opacity': 0.2 },
+      });
+      map.addLayer({
+        id: LINE,
+        type: 'line',
+        source: SOURCE,
+        filter: ['in', '$type', 'LineString', 'Polygon'],
+        paint: { 'line-color': '#ff451f', 'line-width': 4 },
+      });
+      map.addLayer({
+        id: POINT_STROKE,
+        type: 'circle',
+        source: SOURCE,
+        filter: ['==', '$type', 'Point'],
+        paint: { 'circle-radius': 9, 'circle-color': '#ffffff' },
+      });
+      map.addLayer({
+        id: POINT,
+        type: 'circle',
+        source: SOURCE,
+        filter: ['==', '$type', 'Point'],
+        paint: { 'circle-radius': 6, 'circle-color': '#ff451f' },
+      });
+    };
+
+    if (map.isStyleLoaded()) {
+      addLayers();
+    } else {
+      map.once('load', addLayers);
+    }
+
+    return () => {
+      try {
+        for (const id of [POINT, POINT_STROKE, LINE, FILL]) {
+          if (map.getLayer(id)) map.removeLayer(id);
+        }
+        if (map.getSource(SOURCE)) map.removeSource(SOURCE);
+      } catch {
+        // map may already be destroyed
+      }
+    };
+  }, [mapRef, mapReady, disabled, fc]);
+
   // Fit bounds to initial data (only once — skip re-fitting after user edits)
   const hasFittedBoundsRef = useRef(false);
 

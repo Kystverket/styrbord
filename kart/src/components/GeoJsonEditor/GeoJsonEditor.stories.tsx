@@ -238,23 +238,6 @@ export const ReadOnly: Story = {
 };
 
 // ---------------------------------------------------------------------------
-// 7. Non-editable / non-deletable
-// ---------------------------------------------------------------------------
-
-/**
- * Features are visible and selectable but cannot be reshaped (`editable: false`)
- * or removed (`deletable: false`). Useful for review/approval flows.
- */
-export const SelectOnly: Story = {
-  args: {
-    value: norwegianCoastData,
-    fitBounds: true,
-    editable: false,
-    deletable: false,
-  },
-};
-
-// ---------------------------------------------------------------------------
 // 8. Hover tooltips
 // ---------------------------------------------------------------------------
 
