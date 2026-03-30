@@ -1,8 +1,8 @@
-import { useCallback, useMemo, useRef, useState } from "react";
-import { useMapLayers } from "~/hooks/useMapLayers";
-import type { LayerEntry } from "~/hooks/useMapLayers";
-import type { LayerToggleProps } from "./LayerToggle.types";
-import styles from "./LayerToggle.module.css";
+import { useCallback, useMemo, useRef, useState } from 'react';
+import { useMapLayers } from '~/hooks/useMapLayers';
+import type { LayerEntry } from '~/hooks/useMapLayers';
+import type { LayerToggleProps } from './LayerToggle.types';
+import styles from './LayerToggle.module.css';
 
 // ---------------------------------------------------------------------------
 // Inline SVG icon — a simple "layers" stack icon (no external dependency)
@@ -29,13 +29,7 @@ function LayersIcon({ className }: { className?: string }) {
 // ---------------------------------------------------------------------------
 // Chevron icon for collapsible groups
 // ---------------------------------------------------------------------------
-function ChevronIcon({
-  expanded,
-  className,
-}: {
-  expanded: boolean;
-  className?: string;
-}) {
+function ChevronIcon({ expanded, className }: { expanded: boolean; className?: string }) {
   return (
     <svg
       className={className}
@@ -47,8 +41,8 @@ function ChevronIcon({
       strokeLinejoin="round"
       aria-hidden="true"
       style={{
-        transform: expanded ? "rotate(90deg)" : undefined,
-        transition: "transform 150ms ease",
+        transform: expanded ? 'rotate(90deg)' : undefined,
+        transition: 'transform 150ms ease',
       }}
     >
       <polyline points="6 4 10 8 6 12" />
@@ -76,20 +70,11 @@ function ChevronIcon({
  * </div>
  * ```
  */
-export function LayerToggle({
-  className,
-  defaultOpen = false,
-}: LayerToggleProps) {
+export function LayerToggle({ className, defaultOpen = false }: LayerToggleProps) {
   const [open, setOpen] = useState(defaultOpen);
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState('');
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
-  const {
-    allLayers,
-    toggleLayer,
-    availableBaseLayers,
-    activeBaseLayerId,
-    setActiveBaseLayer,
-  } = useMapLayers();
+  const { allLayers, toggleLayer, availableBaseLayers, activeBaseLayerId, setActiveBaseLayer } = useMapLayers();
   const panelRef = useRef<HTMLDivElement>(null);
 
   const showBaseLayerGroup = availableBaseLayers.length > 1;
@@ -111,22 +96,17 @@ export function LayerToggle({
   // Filter base layers
   const filteredBaseLayers = useMemo(() => {
     if (!normalizedFilter) return availableBaseLayers;
-    return availableBaseLayers.filter((bl) =>
-      bl.label.toLowerCase().includes(normalizedFilter),
-    );
+    return availableBaseLayers.filter((bl) => bl.label.toLowerCase().includes(normalizedFilter));
   }, [availableBaseLayers, normalizedFilter]);
 
   // Group layers by category, applying filter
   const grouped = useMemo(() => {
     const map = new Map<string, LayerEntry[]>();
     for (const entry of allLayers) {
-      if (
-        normalizedFilter &&
-        !entry.definition.label.toLowerCase().includes(normalizedFilter)
-      ) {
+      if (normalizedFilter && !entry.definition.label.toLowerCase().includes(normalizedFilter)) {
         continue;
       }
-      const cat = entry.definition.category ?? "Lag";
+      const cat = entry.definition.category ?? 'Lag';
       const list = map.get(cat);
       if (list) {
         list.push(entry);
@@ -146,7 +126,7 @@ export function LayerToggle({
     [normalizedFilter, expandedGroups],
   );
 
-  const rootClassName = [styles.root, className].filter(Boolean).join(" ");
+  const rootClassName = [styles.root, className].filter(Boolean).join(' ');
 
   const showBaseGroup = showBaseLayerGroup && filteredBaseLayers.length > 0;
   const hasContent = grouped.size > 0 || showBaseGroup;
@@ -158,8 +138,8 @@ export function LayerToggle({
         className={styles.toggleButton}
         onClick={() => setOpen((prev) => !prev)}
         aria-expanded={open}
-        aria-label={open ? "Skjul kartlag" : "Vis kartlag"}
-        title={open ? "Skjul kartlag" : "Vis kartlag"}
+        aria-label={open ? 'Skjul kartlag' : 'Vis kartlag'}
+        title={open ? 'Skjul kartlag' : 'Vis kartlag'}
       >
         <LayersIcon className={styles.toggleButtonIcon} />
         Kartlag
@@ -180,39 +160,25 @@ export function LayerToggle({
 
           {!hasContent ? (
             <div className={styles.emptyMessage}>
-              {normalizedFilter
-                ? "Ingen lag samsvarer med søket"
-                : "Ingen kartlag tilgjengelig"}
+              {normalizedFilter ? 'Ingen lag samsvarer med søket' : 'Ingen kartlag tilgjengelig'}
             </div>
           ) : (
             <>
               {showBaseGroup && (
                 <div>
-                  <button
-                    type="button"
-                    className={styles.categoryHeading}
-                    onClick={() => toggleGroup("__base__")}
-                    aria-expanded={isGroupExpanded("__base__")}
-                  >
-                    <ChevronIcon
-                      expanded={isGroupExpanded("__base__")}
-                      className={styles.chevron}
-                    />
-                    Bakgrunnskart
-                  </button>
-                  {isGroupExpanded("__base__") &&
-                    filteredBaseLayers.map((bl) => (
-                      <label key={bl.id} className={styles.layerItem}>
-                        <input
-                          type="radio"
-                          className={styles.radio}
-                          name="base-layer"
-                          checked={bl.id === activeBaseLayerId}
-                          onChange={() => setActiveBaseLayer(bl.id)}
-                        />
-                        {bl.label}
-                      </label>
-                    ))}
+                  <span className={styles.categoryHeading}>Bakgrunnskart</span>
+                  {filteredBaseLayers.map((bl) => (
+                    <label key={bl.id} className={styles.layerItem}>
+                      <input
+                        type="radio"
+                        className={styles.radio}
+                        name="base-layer"
+                        checked={bl.id === activeBaseLayerId}
+                        onChange={() => setActiveBaseLayer(bl.id)}
+                      />
+                      {bl.label}
+                    </label>
+                  ))}
                 </div>
               )}
               {Array.from(grouped.entries()).map(([category, entries]) => {
@@ -227,19 +193,13 @@ export function LayerToggle({
                         onClick={() => toggleGroup(category)}
                         aria-expanded={expanded}
                       >
-                        <ChevronIcon
-                          expanded={expanded}
-                          className={styles.chevron}
-                        />
+                        <ChevronIcon expanded={expanded} className={styles.chevron} />
                         {category}
                       </button>
                     ) : null}
                     {(!showHeading || expanded) &&
                       entries.map((entry) => (
-                        <label
-                          key={entry.definition.id}
-                          className={styles.layerItem}
-                        >
+                        <label key={entry.definition.id} className={styles.layerItem}>
                           <input
                             type="checkbox"
                             className={styles.checkbox}
