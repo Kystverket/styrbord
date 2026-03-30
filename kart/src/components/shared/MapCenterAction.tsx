@@ -1,6 +1,7 @@
 import { useEffect, useState, type RefObject } from "react";
 import type maplibregl from "maplibre-gl";
 import styles from "./MapCenterAction.module.css";
+import { useTranslation } from "~/translations";
 
 export interface MapCenterActionProps {
   /** Ref to the MapLibre map instance. */
@@ -112,6 +113,7 @@ function TargetIcon() {
  */
 export function MapCenterAction({ mapRef, visible }: MapCenterActionProps) {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setIsTouchDevice(window.matchMedia("(pointer: coarse)").matches);
@@ -180,10 +182,10 @@ export function MapCenterAction({ mapRef, visible }: MapCenterActionProps) {
         type="button"
         className={styles.actionButton}
         onClick={handleClick}
-        aria-label="Velg i sentrum av kartet"
+        aria-label={t("mapCenterAction.ariaLabel")}
       >
         <TargetIcon />
-        <span>Velg her</span>
+        <span>{t("mapCenterAction.buttonText")}</span>
       </button>
     </>
   );

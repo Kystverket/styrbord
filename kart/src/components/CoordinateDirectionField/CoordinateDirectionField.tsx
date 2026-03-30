@@ -20,6 +20,7 @@ import {
 } from "~/utility/coordinate";
 import { getUuid } from "~/utility/uuid";
 import { GeoJsonEditor } from "~/components/GeoJsonEditor/GeoJsonEditor";
+import { useTranslation } from "~/translations";
 
 /**
  * CoordinateDirectionField — select a geographic coordinate and a facing
@@ -37,6 +38,7 @@ export function CoordinateDirectionField({
   showCenterAction,
 }: CoordinateDirectionFieldProps) {
   const id = useId();
+  const { t } = useTranslation();
 
   // Stable ID for the directional-point feature
   const directionalIdRef = useRef(getUuid());
@@ -170,10 +172,10 @@ export function CoordinateDirectionField({
         <NumberInput
           id={`${id}-lat`}
           inputMode="decimal"
-          label="Breddegrad (lat)"
+          label={t("fields.latitude")}
           value={latValue ?? null}
           disabled={disabled}
-          placeholder="f.eks. 63.4305"
+          placeholder={t("fields.latitudePlaceholder")}
           onChange={(v) => setLatValue(v)}
           onBlur={() => commitLatLon(latValue, lonValue)}
         />
@@ -181,10 +183,10 @@ export function CoordinateDirectionField({
         <NumberInput
           id={`${id}-lon`}
           inputMode="decimal"
-          label="Lengdegrad (lon)"
+          label={t("fields.longitude")}
           value={lonValue ?? null}
           disabled={disabled}
-          placeholder="f.eks. 10.3951"
+          placeholder={t("fields.longitudePlaceholder")}
           onChange={(v) => setLonValue(v)}
           onBlur={() => commitLatLon(latValue, lonValue)}
         />
@@ -192,10 +194,10 @@ export function CoordinateDirectionField({
         <NumberInput
           id={`${id}-dir`}
           inputMode="decimal"
-          label="Retning (grader)"
+          label={t("fields.direction")}
           value={dirValue ?? null}
           disabled={disabled}
-          placeholder="0–360"
+          placeholder={t("fields.directionPlaceholder")}
           min={0}
           max={360}
           onChange={(v) => setDirValue(v)}

@@ -6,6 +6,7 @@ import type { CoordinateFieldProps } from "./CoordinateField.types";
 import type { CoordinateGeoJSON } from "~/utility/types";
 import { clampLatitude, clampLongitude } from "~/utility/coordinate";
 import { GeoJsonEditor } from "~/components/GeoJsonEditor/GeoJsonEditor";
+import { useTranslation } from "~/translations";
 
 /**
  * CoordinateField — select a geographic coordinate via an interactive map
@@ -23,6 +24,7 @@ export function CoordinateField({
   showCenterAction,
 }: CoordinateFieldProps) {
   const id = useId();
+  const { t } = useTranslation();
 
   // ----- GeoJsonEditor value bridge -----
   const editorValue = useMemo<FeatureCollection | undefined>(() => {
@@ -102,10 +104,10 @@ export function CoordinateField({
         <NumberInput
           id={`${id}-lat`}
           inputMode="decimal"
-          label="Breddegrad (lat)"
+          label={t("fields.latitude")}
           value={latValue ?? null}
           disabled={disabled}
-          placeholder="f.eks. 63.4305"
+          placeholder={t("fields.latitudePlaceholder")}
           onChange={(v) => setLatValue(v)}
           onBlur={() => commitLatLon(latValue, lonValue)}
         />
@@ -113,10 +115,10 @@ export function CoordinateField({
         <NumberInput
           id={`${id}-lon`}
           inputMode="decimal"
-          label="Lengdegrad (lon)"
+          label={t("fields.longitude")}
           value={lonValue ?? null}
           disabled={disabled}
-          placeholder="f.eks. 10.3951"
+          placeholder={t("fields.longitudePlaceholder")}
           onChange={(v) => setLonValue(v)}
           onBlur={() => commitLatLon(latValue, lonValue)}
         />

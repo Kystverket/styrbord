@@ -2,6 +2,34 @@
   "layers": {
     "hide": "Skjul kartlag",
     "show": "Vis kartlag",
-    "toggleButtonLabel": "Kartlag"
+    "toggleButtonLabel": "Kartlag",
+    "searchPlaceholder": "Søk etter lag…",
+    "filterAriaLabel": "Filtrer kartlag",
+    "noResults": "Ingen lag samsvarer med søket",
+    "noLayersAvailable": "Ingen kartlag tilgjengelig",
+    "backgroundMaps": "Bakgrunnskart",
+    "defaultCategory": "Lag"
+  },
+  "fields": {
+    "latitude": "Breddegrad",
+    "longitude": "Lengdegrad",
+    "direction": "Retning (grader)",
+    "latitudePlaceholder": "f.eks. 63.4305",
+    "longitudePlaceholder": "f.eks. 10.3951",
+    "directionPlaceholder": "0–360"
+  },
+  "drawMode": {
+    "point": "Tegn punkt",
+    "linestring": "Tegn linje",
+    "polygon": "Tegn polygon",
+    "directionalPoint": "Tegn retningspunkt"
+  },
+  "toolbar": {
+    "select": "Velg/rediger",
+    "delete": "Slett valgt"
+  },
+  "mapCenterAction": {
+    "ariaLabel": "Velg i sentrum av kartet",
+    "buttonText": "Velg her"
   }
 }

@@ -128,7 +128,7 @@ export function LayerToggle({
       ) {
         continue;
       }
-      const cat = entry.definition.category ?? "Lag";
+      const cat = entry.definition.category ?? t("layers.defaultCategory");
       const list = map.get(cat);
       if (list) {
         list.push(entry);
@@ -137,7 +137,7 @@ export function LayerToggle({
       }
     }
     return map;
-  }, [allLayers, normalizedFilter]);
+  }, [allLayers, normalizedFilter, t]);
 
   // When a filter is active, expand all groups so results are visible
   const isGroupExpanded = useCallback(
@@ -177,24 +177,24 @@ export function LayerToggle({
             <input
               type="text"
               className={styles.filterInput}
-              placeholder="Søk etter lag…"
+              placeholder={t("layers.searchPlaceholder")}
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
-              aria-label="Filtrer kartlag"
+              aria-label={t("layers.filterAriaLabel")}
             />
           </div>
 
           {!hasContent ? (
             <div className={styles.emptyMessage}>
               {normalizedFilter
-                ? "Ingen lag samsvarer med søket"
-                : "Ingen kartlag tilgjengelig"}
+                ? t("layers.noResults")
+                : t("layers.noLayersAvailable")}
             </div>
           ) : (
             <>
               {showBaseGroup && (
                 <div>
-                  <span className={styles.categoryHeading}>Bakgrunnskart</span>
+                  <span className={styles.categoryHeading}>{t("layers.backgroundMaps")}</span>
                   {filteredBaseLayers.map((bl) => (
                     <label key={bl.id} className={styles.layerItem}>
                       <input

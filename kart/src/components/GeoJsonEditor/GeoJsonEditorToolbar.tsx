@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import styles from "./GeoJsonEditor.module.css";
 import type { DrawMode } from "./GeoJsonEditor.types";
+import { useTranslation } from "~/translations";
 
 // ---------------------------------------------------------------------------
 // SVG Icons (inline to avoid external dependency)
@@ -97,11 +98,11 @@ const MODE_ICONS: Record<DrawMode, () => ReactNode> = {
   "directional-point": DirectionalPointIcon,
 };
 
-const MODE_LABELS: Record<DrawMode, string> = {
-  point: "Tegn punkt",
-  linestring: "Tegn linje",
-  polygon: "Tegn polygon",
-  "directional-point": "Tegn retningspunkt",
+const MODE_LABEL_KEYS: Record<DrawMode, string> = {
+  point: "drawMode.point",
+  linestring: "drawMode.linestring",
+  polygon: "drawMode.polygon",
+  "directional-point": "drawMode.directionalPoint",
 };
 
 // ---------------------------------------------------------------------------
@@ -127,6 +128,8 @@ export function GeoJsonEditorToolbar({
   onSetMode,
   onDelete,
 }: GeoJsonEditorToolbarProps) {
+  const { t } = useTranslation();
+
   return (
     <div className={styles.toolbar}>
       {modes.map((mode) => {
@@ -136,8 +139,8 @@ export function GeoJsonEditorToolbar({
           <button
             key={mode}
             type="button"
-            title={MODE_LABELS[mode]}
-            aria-label={MODE_LABELS[mode]}
+            title={t(MODE_LABEL_KEYS[mode])}
+            aria-label={t(MODE_LABEL_KEYS[mode])}
             aria-pressed={isActive}
             className={[styles.toolbarButton, isActive && styles.active]
               .filter(Boolean)
@@ -154,8 +157,8 @@ export function GeoJsonEditorToolbar({
           <div className={styles.toolbarDivider} />
           <button
             type="button"
-            title="Velg/rediger"
-            aria-label="Velg/rediger"
+            title={t("toolbar.select")}
+            aria-label={t("toolbar.select")}
             aria-pressed={activeMode === "select"}
             className={[
               styles.toolbarButton,
@@ -177,8 +180,8 @@ export function GeoJsonEditorToolbar({
           <div className={styles.toolbarDivider} />
           <button
             type="button"
-            title="Slett valgt"
-            aria-label="Slett valgt"
+            title={t("toolbar.delete")}
+            aria-label={t("toolbar.delete")}
             className={[styles.toolbarButton, styles.danger].join(" ")}
             onClick={onDelete}
           >
