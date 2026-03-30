@@ -7,7 +7,7 @@ import type {
 import type { ReactNode } from "react";
 import type maplibregl from "maplibre-gl";
 
-import { MapBaseProps } from "../shared/MapPicker.types";
+import type { MapBaseProps } from "../shared/MapPicker.types";
 import type { InteractiveFeature } from "~/hooks/useFeatureInteraction";
 import type { CoordinateClickResult } from "~/utility/wmsGetFeatureInfo";
 
@@ -86,8 +86,11 @@ export interface GeoJsonViewerProps extends MapBaseProps {
   onCoordinateClick?: (result: CoordinateClickResult) => void;
 
   /**
-   * Feature property key whose value is rendered as a label next to each feature.
-   * Set to `false` to disable labels. Defaults to `"nummer"`.
+   * Function that computes a label for each feature. Return `null` or
+   * `undefined` to skip labelling a feature. Defaults to showing
+   * `#<nummer>` when a `nummer` property exists.
    */
-  labelProperty?: string | false;
+  getLabel?: (
+    feature: Feature<Geometry, GeoJsonProperties>,
+  ) => string | number | null | undefined;
 }
