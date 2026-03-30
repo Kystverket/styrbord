@@ -74,3 +74,5 @@ export type {
   WmsCatalogLayersProviderProps,
   WmsCatalogLayer,
 } from './utility/wmsCatalogLayersContext';
+
+export { STYRBORD_KART_TRANSLATIONS_NAMESPACE } from './translations';

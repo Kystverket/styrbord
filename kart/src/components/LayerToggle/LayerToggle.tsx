@@ -3,6 +3,7 @@ import { useMapLayers } from '~/hooks/useMapLayers';
 import type { LayerEntry } from '~/hooks/useMapLayers';
 import type { LayerToggleProps } from './LayerToggle.types';
 import styles from './LayerToggle.module.css';
+import { useTranslation } from '~/translations';
 
 // ---------------------------------------------------------------------------
 // Inline SVG icon — a simple "layers" stack icon (no external dependency)
@@ -71,6 +72,7 @@ function ChevronIcon({ expanded, className }: { expanded: boolean; className?: s
  * ```
  */
 export function LayerToggle({ className, defaultOpen = false }: LayerToggleProps) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(defaultOpen);
   const [filter, setFilter] = useState('');
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
@@ -142,11 +144,11 @@ export function LayerToggle({ className, defaultOpen = false }: LayerToggleProps
         className={styles.toggleButton}
         onClick={() => setOpen((prev) => !prev)}
         aria-expanded={open}
-        aria-label={open ? 'Skjul kartlag' : 'Vis kartlag'}
-        title={open ? 'Skjul kartlag' : 'Vis kartlag'}
+        aria-label={open ? t('layers.hide') : t('layers.show')}
+        title={open ? t('layers.hide') : t('layers.show')}
       >
         <LayersIcon className={styles.toggleButtonIcon} />
-        Kartlag
+        {t('layers.toggleButtonLabel')}
       </button>
 
       {open && (

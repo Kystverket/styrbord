@@ -1,0 +1,7 @@
+{
+  "layers": {
+    "hide": "Skjul kartlag",
+    "show": "Vis kartlag",
+    "toggleButtonLabel": "Kartlag"
+  }
+}
