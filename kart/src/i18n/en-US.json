@@ -1,1 +1,35 @@
-{}
+{
+  "drawMode": {
+    "directionalPoint": "Draw directional point",
+    "linestring": "Draw line",
+    "point": "Draw point",
+    "polygon": "Draw polygon"
+  },
+  "fields": {
+    "direction": "Direction (degrees)",
+    "directionPlaceholder": "0–360",
+    "latitude": "Latitude",
+    "latitudePlaceholder": "e.g. 63.4305",
+    "longitude": "Longitude",
+    "longitudePlaceholder": "e.g. 10.3951"
+  },
+  "layers": {
+    "backgroundMaps": "Background maps",
+    "defaultCategory": "Layers",
+    "filterAriaLabel": "Filter map layers",
+    "hide": "Hide map layers",
+    "noLayersAvailable": "No map layers available",
+    "noResults": "No layers match the search",
+    "searchPlaceholder": "Search for layers…",
+    "show": "Show map layers",
+    "toggleButtonLabel": "Map layers"
+  },
+  "mapCenterAction": {
+    "ariaLabel": "Select at the center of the map",
+    "buttonText": "Select here"
+  },
+  "toolbar": {
+    "delete": "Delete selected",
+    "select": "Select/edit"
+  }
+}

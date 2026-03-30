@@ -499,18 +499,18 @@ export function GeoJsonEditor({
         .filter(Boolean)
         .join(" ")}
     >
-      {!disabled && !singleFeature && (
-        <GeoJsonEditorToolbar
-          modes={modes}
-          activeMode={combinedMode}
-          hasSelection={hasSelection}
-          deletable={deletable}
-          editable={editable}
-          onSetMode={setActiveMode}
-          onDelete={deleteSelected}
-        />
-      )}
       <div ref={mapContainerRef} className={mapStyles.mapContainer}>
+        {!disabled && !singleFeature && (
+          <GeoJsonEditorToolbar
+            modes={modes}
+            activeMode={combinedMode}
+            hasSelection={hasSelection}
+            deletable={deletable}
+            editable={editable}
+            onSetMode={setActiveMode}
+            onDelete={deleteSelected}
+          />
+        )}
         {showLayerToggle && <LayerToggle />}
         {!disabled && (
           <MapCenterAction

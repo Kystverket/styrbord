@@ -1,1 +1,35 @@
-{}
+{
+  "drawMode": {
+    "directionalPoint": "Teikn retningspunkt",
+    "linestring": "Teikn linje",
+    "point": "Teikn punkt",
+    "polygon": "Teikn polygon"
+  },
+  "fields": {
+    "direction": "Retning (grader)",
+    "directionPlaceholder": "0–360",
+    "latitude": "Breiddegrad",
+    "latitudePlaceholder": "t.d. 63.4305",
+    "longitude": "Lengdegrad",
+    "longitudePlaceholder": "t.d. 10.3951"
+  },
+  "layers": {
+    "backgroundMaps": "Bakgrunnskart",
+    "defaultCategory": "Lag",
+    "filterAriaLabel": "Filtrer kartlag",
+    "hide": "Skjul kartlag",
+    "noLayersAvailable": "Ingen kartlag tilgjengelege",
+    "noResults": "Ingen lag samsvarar med søket",
+    "searchPlaceholder": "Søk etter lag…",
+    "show": "Vis kartlag",
+    "toggleButtonLabel": "Kartlag"
+  },
+  "mapCenterAction": {
+    "ariaLabel": "Vel i sentrum av kartet",
+    "buttonText": "Vel her"
+  },
+  "toolbar": {
+    "delete": "Slett valt",
+    "select": "Vel/rediger"
+  }
+}

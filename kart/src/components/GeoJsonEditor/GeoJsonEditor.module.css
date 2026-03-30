@@ -1,10 +1,13 @@
 .editorWrapper {
   display: flex;
   flex-direction: column;
-  gap: 8px;
 }
 
 .toolbar {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 1;
   display: flex;
   gap: 4px;
   background: var(--ds-color-neutral-background-default, #fff);
