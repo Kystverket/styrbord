@@ -194,7 +194,9 @@ export function LayerToggle({
             <>
               {showBaseGroup && (
                 <div>
-                  <span className={styles.categoryHeading}>{t("layers.backgroundMaps")}</span>
+                  <span className={styles.categoryHeading}>
+                    {t("layers.backgroundMaps")}
+                  </span>
                   {filteredBaseLayers.map((bl) => (
                     <label key={bl.id} className={styles.layerItem}>
                       <input
