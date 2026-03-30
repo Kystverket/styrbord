@@ -131,17 +131,82 @@ export function useTerraDraw({
       const drawModes: AnyTerraDrawMode[] = modes.map((m) => {
         switch (m) {
           case 'point':
-            return new TerraDrawPointMode();
+            return new TerraDrawPointMode({
+              styles: {
+                pointColor: '#ff451f',
+                pointWidth: 6,
+                pointOutlineColor: '#ffffff',
+                pointOutlineWidth: 3,
+              },
+            });
           case 'linestring':
-            return new TerraDrawLineStringMode();
+            return new TerraDrawLineStringMode({
+              styles: {
+                lineStringColor: '#ff451f',
+                lineStringWidth: 4,
+                closingPointColor: '#ff451f',
+                closingPointOutlineColor: '#ffffff',
+                closingPointOutlineWidth: 2,
+                closingPointWidth: 5,
+                snappingPointColor: '#ff451f',
+                snappingPointOutlineColor: '#ffffff',
+                snappingPointOutlineWidth: 2,
+                snappingPointWidth: 5,
+                coordinatePointColor: '#ff451f',
+                coordinatePointOutlineColor: '#ffffff',
+                coordinatePointOutlineWidth: 2,
+                coordinatePointWidth: 5,
+              },
+            });
           case 'polygon':
-            return new TerraDrawPolygonMode();
+            return new TerraDrawPolygonMode({
+              styles: {
+                fillColor: '#ff451f',
+                fillOpacity: 0.2,
+                outlineColor: '#ff451f',
+                outlineWidth: 4,
+                closingPointColor: '#ff451f',
+                closingPointOutlineColor: '#ffffff',
+                closingPointOutlineWidth: 2,
+                closingPointWidth: 5,
+                snappingPointColor: '#ff451f',
+                snappingPointOutlineColor: '#ffffff',
+                snappingPointOutlineWidth: 2,
+                snappingPointWidth: 5,
+                editedPointColor: '#ff451f',
+                editedPointOutlineColor: '#ffffff',
+                editedPointOutlineWidth: 2,
+                editedPointWidth: 5,
+                coordinatePointColor: '#ff451f',
+                coordinatePointOutlineColor: '#ffffff',
+                coordinatePointOutlineWidth: 2,
+                coordinatePointWidth: 5,
+              },
+            });
         }
       });
 
       if (editable) {
         drawModes.push(
           new TerraDrawSelectMode({
+            styles: {
+              selectedPointColor: '#ff451f',
+              selectedPointWidth: 6,
+              selectedPointOutlineColor: '#ff0000',
+              selectedPointOutlineWidth: 3,
+              selectedLineStringColor: '#ff451f',
+              selectedLineStringWidth: 4,
+              selectedPolygonColor: '#ff451f',
+              selectedPolygonFillOpacity: 0.2,
+              selectedPolygonOutlineColor: '#ff451f',
+              selectedPolygonOutlineWidth: 4,
+              selectionPointColor: '#df3c1b',
+              selectionPointOutlineColor: '#ff0000',
+              selectionPointOutlineWidth: 2,
+              midPointColor: '#ff7559',
+              midPointOutlineColor: '#ffffff',
+              midPointOutlineWidth: 2,
+            },
             flags: {
               point: { feature: { draggable: true } },
               linestring: {
@@ -170,7 +235,23 @@ export function useTerraDraw({
       }
 
       // Static mode for when no drawing tool is active
-      drawModes.push(new TerraDrawRenderMode({ modeName: 'static', styles: {} }));
+      drawModes.push(
+        new TerraDrawRenderMode({
+          modeName: 'static',
+          styles: {
+            pointColor: '#ff451f',
+            pointWidth: 6,
+            pointOutlineColor: '#ffffff',
+            pointOutlineWidth: 3,
+            lineStringColor: '#ff451f',
+            lineStringWidth: 4,
+            polygonFillColor: '#ff451f',
+            polygonFillOpacity: 0.2,
+            polygonOutlineColor: '#ff451f',
+            polygonOutlineWidth: 4,
+          },
+        }),
+      );
 
       const draw = new TerraDraw({
         adapter: new TerraDrawMapLibreGLAdapter({ map }),

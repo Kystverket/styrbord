@@ -321,7 +321,10 @@ export function useDirectionalPoints({
       initialLoaded.current = true;
 
       // In single-feature mode, remove all existing markers before placing a new one.
+      // Carry over the previous direction so the user doesn't lose it.
+      let previousDirection = 0;
       if (singleFeatureRef.current && featuresRef.current.length > 0) {
+        previousDirection = featuresRef.current[0].properties.direction;
         for (const entry of markersRef.current) {
           entry.marker.remove();
         }
@@ -339,7 +342,7 @@ export function useDirectionalPoints({
         },
         properties: {
           id,
-          direction: 0,
+          direction: singleFeatureRef.current ? previousDirection : 0,
           mode: 'directional-point',
         },
       };

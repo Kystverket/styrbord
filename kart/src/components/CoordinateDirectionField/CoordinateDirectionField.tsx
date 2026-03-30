@@ -27,6 +27,9 @@ export function CoordinateDirectionField({
   // Stable ID for the directional-point feature
   const directionalIdRef = useRef(getUuid());
 
+  // Remember the last direction so newly placed points reuse it
+  const lastDirectionRef = useRef(value?.properties.direction ?? 0);
+
   // ----- GeoJsonEditor value bridge -----
   const editorValue = useMemo<FeatureCollection | undefined>(() => {
     if (!value) return undefined;
@@ -54,11 +57,13 @@ export function CoordinateDirectionField({
         if (dirFeature.properties?.id) {
           directionalIdRef.current = dirFeature.properties.id;
         }
+        const direction = dirFeature.properties?.direction ?? lastDirectionRef.current;
+        lastDirectionRef.current = direction;
         const geo: CoordinateDirectionGeoJSON = {
           type: 'Feature',
           geometry: dirFeature.geometry as Point,
           properties: {
-            direction: dirFeature.properties?.direction ?? 0,
+            direction,
           },
         };
         onChange(geo);
@@ -77,6 +82,9 @@ export function CoordinateDirectionField({
     setLatValue(coords ? coords[1] : undefined);
     setLonValue(coords ? coords[0] : undefined);
     setDirValue(value?.properties.direction ?? undefined);
+    if (value?.properties.direction != null) {
+      lastDirectionRef.current = value.properties.direction;
+    }
   }, [value]);
 
   // ----- Input handlers -----
