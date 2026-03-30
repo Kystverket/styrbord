@@ -576,21 +576,1685 @@
 <header>
   <div class="wrap">
     <h1>Manifest Debugger</h1>
-    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill ok" data-k="docs" href="#filter-docs">1 doc ok</a></div>
+    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">1/6 prop type error</a><a class="filter-pill info" data-k="infos" href="#filter-infos">1/6 info</a><a class="filter-pill err" data-k="story-errors" href="#filter-story-errors">1/40 story errors</a><a class="filter-pill ok" data-k="docs" href="#filter-docs">1 doc ok</a></div>
   </div>
 </header>
 <main>
   <div class="wrap">
     <div class="note info" style="margin-bottom: 16px;">
-            <strong>Tip:</strong> You are using <code>react-docgen</code> (the default). Generation took <strong>0.0s</strong>. For higher quality prop types, consider switching to <code>react-docgen-typescript</code> in your <code>main.ts</code>:
+            <strong>Tip:</strong> You are using <code>react-docgen</code> (the default). Generation took <strong>0.8s</strong>. For higher quality prop types, consider switching to <code>react-docgen-typescript</code> in your <code>main.ts</code>:
             <pre><code>typescript: {
   reactDocgen: 'react-docgen-typescript',
 }</code></pre>
             Note: <code>react-docgen-typescript</code> can be slower. If performance is acceptable for your project, it generally produces better results.
             <a href="https://storybook.js.org/docs/api/main-config/main-config-typescript#reactdocgen" target="_blank">Learn more</a>
           </div>
+    <h2 class="section-title">Components</h2>
+    <div class="grid" role="list">
+      
+<article
+  class="card 
+  no-error 
+  no-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="CoordinateDirectionField">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-ok"></span> CoordinateDirectionField</h2>
+      <div class="badges">
+        <label for="c-0-kart-coordinatedirectionfield-props" class="badge ok as-toggle">8 prop types</label>
+        
+        <label for="c-0-kart-coordinatedirectionfield-stories" class="badge ok as-toggle">4 stories</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/CoordinateDirectionField/CoordinateDirectionField.stories.tsx">kart-coordinatedirectionfield · ./src/components/CoordinateDirectionField/CoordinateDirectionField.stories.tsx</div>
+    
+    <div class="hint">CoordinateDirectionField — select a geographic coordinate and a facing direction (0–360°) via an interactive map or manual input fields. Internally delegates to GeoJsonEditor in single-feature directional-point mode.</div>
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  
+  
+  <input id="c-0-kart-coordinatedirectionfield-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  <input id="c-0-kart-coordinatedirectionfield-props" class="tg tg-props" type="checkbox" hidden />
+
+  <div class="panels">
     
     
+    
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">8 prop types</span>
+            </div>
+            <pre><code>Component: src/components/CoordinateDirectionField/CoordinateDirectionField.tsx::CoordinateDirectionField</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>/**
+ * Additional CSS class applied to the root element.
+ */
+className?: string
+
+/**
+ * Disables all interaction.
+ */
+disabled?: boolean = false
+
+/**
+ * Error message displayed below the inputs.
+ */
+error?: string
+
+/**
+ * Height of the map container. Defaults to `&quot;400px&quot;`.
+ */
+height?: string
+
+/**
+ * Label displayed above the component.
+ */
+label?: string
+
+/**
+ * Called when the user changes the coordinate or direction.
+ */
+onChange: (value: CoordinateDirectionGeoJSON) =&gt; void
+
+/**
+ * Show a crosshair at the map center with a button to trigger a click there.
+ * - `true` — always visible
+ * - `false` — always hidden
+ * - `undefined` — auto-detect (visible on touch devices)
+ */
+showCenterAction?: boolean
+
+/**
+ * Controlled value.
+ */
+value: CoordinateDirectionGeoJSON | undefined</code></pre>
+          </div>
+        </div>
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { CoordinateDirectionField } from "@kystverket/styrbord-kart";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Default</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Default = () =&gt; &lt;Controlled label=&quot;Plassering og retning&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Initial Value</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithInitialValue = () =&gt; &lt;ControlledTemplate /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Error</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithError = () =&gt; (
+  &lt;Controlled label=&quot;Plassering og retning&quot; error=&quot;Koordinat er påkrevd&quot; /&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Disabled</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Disabled = () =&gt; (
+  &lt;Controlled
+    label=&quot;Plassering og retning&quot;
+    initialValue={{
+      type: &quot;Feature&quot;,
+      geometry: {
+        type: &quot;Point&quot;,
+        coordinates: [10.3951, 63.4305],
+      },
+      properties: {
+        direction: 45,
+      },
+    }}
+    disabled
+  /&gt;
+);</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  no-error 
+  no-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="CoordinateField">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-ok"></span> CoordinateField</h2>
+      <div class="badges">
+        <label for="c-1-kart-coordinatefield-props" class="badge ok as-toggle">8 prop types</label>
+        
+        <label for="c-1-kart-coordinatefield-stories" class="badge ok as-toggle">5 stories</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/CoordinateField/CoordinateField.stories.tsx">kart-coordinatefield · ./src/components/CoordinateField/CoordinateField.stories.tsx</div>
+    
+    <div class="hint">CoordinateField — select a geographic coordinate via an interactive map or manual input fields. Internally delegates to GeoJsonEditor in single-feature point mode.</div>
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  
+  
+  <input id="c-1-kart-coordinatefield-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  <input id="c-1-kart-coordinatefield-props" class="tg tg-props" type="checkbox" hidden />
+
+  <div class="panels">
+    
+    
+    
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">8 prop types</span>
+            </div>
+            <pre><code>Component: src/components/CoordinateField/CoordinateField.tsx::CoordinateField</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>/**
+ * Additional CSS class applied to the root element.
+ */
+className?: string
+
+/**
+ * Disables all interaction.
+ */
+disabled?: boolean = false
+
+/**
+ * Error message displayed below the inputs.
+ */
+error?: string
+
+/**
+ * Height of the map container. Defaults to `&quot;400px&quot;`.
+ */
+height?: string
+
+/**
+ * Label displayed above the component.
+ */
+label?: string
+
+/**
+ * Called when the user places or changes the coordinate.
+ */
+onChange: (value: CoordinateGeoJSON) =&gt; void
+
+/**
+ * Show a crosshair at the map center with a button to trigger a click there.
+ * - `true` — always visible
+ * - `false` — always hidden
+ * - `undefined` — auto-detect (visible on touch devices)
+ */
+showCenterAction?: boolean
+
+/**
+ * Controlled value — a GeoJSON Point Feature.
+ */
+value: CoordinateGeoJSON | undefined</code></pre>
+          </div>
+        </div>
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { CoordinateField } from "@kystverket/styrbord-kart";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Default</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Default = () =&gt; &lt;Controlled label=&quot;Plassering&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Initial Value</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithInitialValue = () =&gt; &lt;ControlledTemplate /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Error</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithError = () =&gt; &lt;Controlled label=&quot;Plassering&quot; error=&quot;Koordinat er påkrevd&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Tall Map</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const TallMap = () =&gt; &lt;Controlled height=&quot;1600px&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Disabled</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Disabled = () =&gt; (
+  &lt;Controlled
+    label=&quot;Plassering&quot;
+    initialValue={{
+      type: &quot;Feature&quot;,
+      geometry: {
+        type: &quot;Point&quot;,
+        coordinates: [10.3951, 63.4305],
+      },
+    }}
+    disabled
+  /&gt;
+);</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  no-error 
+  no-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="GeoJsonEditor">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-ok"></span> GeoJsonEditor</h2>
+      <div class="badges">
+        <label for="c-2-kart-geojsoneditor-props" class="badge ok as-toggle">18 prop types</label>
+        
+        <label for="c-2-kart-geojsoneditor-stories" class="badge ok as-toggle">14 stories</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/GeoJsonEditor/GeoJsonEditor.stories.tsx">kart-geojsoneditor · ./src/components/GeoJsonEditor/GeoJsonEditor.stories.tsx</div>
+    
+    <div class="hint">GeoJsonEditor — draw and edit GeoJSON points, lines, and polygons on an interactive Kartverket map. Uses terra-draw for interactive drawing and editing. Emits the full FeatureCollection via `onChange` on every change. Supports feature hover (with customizable content per type) and selection callbacks when using terra-draw&#39;s select mode.</div>
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  
+  
+  <input id="c-2-kart-geojsoneditor-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  <input id="c-2-kart-geojsoneditor-props" class="tg tg-props" type="checkbox" hidden />
+
+  <div class="panels">
+    
+    
+    
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">18 prop types</span>
+            </div>
+            <pre><code>Component: src/components/GeoJsonEditor/GeoJsonEditor.tsx::GeoJsonEditor</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>/**
+ * Additional CSS class applied to the root element.
+ */
+className?: string
+
+/**
+ * Whether selected features can be deleted. Defaults to `true`.
+ */
+deletable?: boolean = true
+
+/**
+ * Disables all interaction.
+ */
+disabled?: boolean = false
+
+/**
+ * Whether existing features can be selected and edited. Defaults to `true`.
+ */
+editable?: boolean = true
+
+/**
+ * Whether the map should auto-fit to the data bounds when `value` is first provided.
+ * Defaults to `true`.
+ */
+fitBounds?: boolean = false
+
+/**
+ * Padding (in pixels) applied when fitting bounds. Defaults to `40`.
+ */
+fitBoundsPadding?: number = 40
+
+/**
+ * Height of the map container. Defaults to `&quot;400px&quot;`.
+ */
+height?: string
+
+/**
+ * Whether features can be hovered to show tooltips. Defaults to `true`.
+ */
+hoverable?: boolean = true
+
+/**
+ * Custom render functions for hover content based on the feature&#39;s `type` property.
+ * Keys are the `properties.type` values; the function receives the hovered feature
+ * and returns the content to display in the hover popup.
+ * 
+ * If a feature&#39;s type is not in this map, the default content (type name) is shown.
+ */
+hoverContent?: Record&lt;string, (feature: InteractiveFeature) =&gt; ReactNode&gt;
+
+/**
+ * Which drawing modes to show in the toolbar.
+ * Defaults to all three: `[&quot;point&quot;, &quot;linestring&quot;, &quot;polygon&quot;]`.
+ */
+modes?: DrawMode[] = [&quot;point&quot;, &quot;linestring&quot;, &quot;polygon&quot;]
+
+/**
+ * Called whenever features are created, edited, or deleted.
+ */
+onChange?: (data: FeatureCollection) =&gt; void
+
+/**
+ * Called when the user clicks on the map (while not actively drawing).
+ * The result includes the clicked coordinate and WMS GetFeatureInfo
+ * results for all visible WMS catalog layers.
+ */
+onCoordinateClick?: (result: CoordinateClickResult) =&gt; void
+
+/**
+ * Called when the hovered feature changes.
+ * Receives the feature and the original mouse event, or null when hover ends.
+ */
+onHover?: (
+  feature: InteractiveFeature | null,
+  event: maplibregl.MapMouseEvent | null,
+) =&gt; void
+
+/**
+ * Called when the selection changes (via click or terra-draw selection).
+ * Receives array of selected features, or null when selection is cleared.
+ */
+onSelect?: (features: InteractiveFeature[] | null) =&gt; void
+
+/**
+ * Show a crosshair at the map center with a button to trigger a click there.
+ * - `true` — always visible
+ * - `false` — always hidden
+ * - `undefined` — auto-detect (visible on touch devices)
+ */
+showCenterAction?: boolean
+
+/**
+ * Whether to show the layer toggle control on the map. Defaults to `false`.
+ */
+showLayerToggle?: boolean = true
+
+/**
+ * When `true`, only one feature can exist at a time. The feature type is
+ * determined by `modes[0]` (which should contain exactly one mode).
+ * 
+ * - The toolbar is hidden and drawing mode is auto-activated.
+ * - Placing a new feature automatically replaces the existing one.
+ * 
+ * This allows GeoJsonEditor to be used as a drop-in replacement for
+ * `CoordinateField` (with `modes: [&#39;point&#39;]`) or
+ * `CoordinateDirectionField` (with `modes: [&#39;directional-point&#39;]`).
+ */
+singleFeature?: boolean = false
+
+/**
+ * Current GeoJSON value (controlled). Accepts a Feature or FeatureCollection.
+ */
+value?: | Feature&lt;Geometry, GeoJsonProperties&gt;
+| FeatureCollection&lt;Geometry, GeoJsonProperties&gt;</code></pre>
+          </div>
+        </div>
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import {
+    BaseLayersProvider,
+    BuiltInLayersProvider,
+    CustomLayersProvider,
+    GeoJsonEditor,
+    ViewBoundsProvider,
+} from "@kystverket/styrbord-kart";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Default</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">The default state: an empty map with all drawing tools available. Use the toolbar to draw points, lines, and polygons.</div>
+              <pre><code>const Default = () =&gt; &lt;GeoJsonEditor /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Initial Data</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">The editor pre-loaded with a FeatureCollection containing a polygon (Ålesund Havn), a point (Kråkenes Fyr) and a linestring (Hovedled Sør–Nord). `fitBounds` zooms the map to fit all features on mount.</div>
+              <pre><code>const WithInitialData = () =&gt; &lt;GeoJsonEditor value={norwegianCoastData} fitBounds showCenterAction /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Controlled</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Controlled = () =&gt; {
+  const [data, setData] = useState&lt;FeatureCollection&gt;({
+    type: &quot;FeatureCollection&quot;,
+    features: [],
+  });
+
+  return (
+    &lt;div&gt;
+      &lt;GeoJsonEditor value={data} onChange={setData} showCenterAction /&gt;
+      &lt;pre
+        style={{
+          marginTop: 16,
+          padding: 12,
+          background: &quot;#f5f5f5&quot;,
+          borderRadius: 8,
+          fontSize: &quot;0.8rem&quot;,
+          maxHeight: 280,
+          overflow: &quot;auto&quot;,
+        }}
+      &gt;
+        {JSON.stringify(data, null, 2)}
+      &lt;/pre&gt;
+    &lt;/div&gt;
+  );
+};</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Points Only</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">Only the point tool is available in the toolbar.</div>
+              <pre><code>const PointsOnly = () =&gt; &lt;GeoJsonEditor modes={[&quot;point&quot;]} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Lines Only</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">Only the linestring tool is available in the toolbar.</div>
+              <pre><code>const LinesOnly = () =&gt; &lt;GeoJsonEditor modes={[&quot;linestring&quot;]} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Polygons Only</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">Only the polygon tool is available in the toolbar.</div>
+              <pre><code>const PolygonsOnly = () =&gt; &lt;GeoJsonEditor modes={[&quot;polygon&quot;]} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Directional Points Only</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">Only directional-point mode. Each placed point stores a `direction` angle (0–360°) that can be used to represent headings, bearings, etc.</div>
+              <pre><code>const DirectionalPointsOnly = () =&gt; &lt;GeoJsonEditor modes={[&quot;directional-point&quot;]} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Directional Controlled</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const DirectionalControlled = () =&gt; {
+  const [data, setData] = useState&lt;FeatureCollection&gt;(directionalData);
+
+  return (
+    &lt;div&gt;
+      &lt;GeoJsonEditor
+        value={data}
+        onChange={setData}
+        modes={[&quot;point&quot;, &quot;directional-point&quot;, &quot;linestring&quot;, &quot;polygon&quot;]}
+        fitBounds
+        showCenterAction
+      /&gt;
+      &lt;pre
+        style={{
+          marginTop: 16,
+          padding: 12,
+          background: &quot;#f5f5f5&quot;,
+          borderRadius: 8,
+          fontSize: &quot;0.8rem&quot;,
+          maxHeight: 280,
+          overflow: &quot;auto&quot;,
+        }}
+      &gt;
+        {JSON.stringify(data, null, 2)}
+      &lt;/pre&gt;
+    &lt;/div&gt;
+  );
+};</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Read Only</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">`disabled` removes the toolbar and all interaction. Use this to display GeoJSON data without allowing any edits.</div>
+              <pre><code>const ReadOnly = () =&gt; &lt;GeoJsonEditor value={norwegianCoastData} fitBounds disabled /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Hover Content</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithHoverContent = () =&gt; {
+  const [hoveredName, setHoveredName] = useState&lt;string | null&gt;(null);
+  const [selectedNames, setSelectedNames] = useState&lt;string[]&gt;([]);
+
+  return (
+    &lt;div&gt;
+      &lt;GeoJsonEditor
+        value={norwegianCoastData}
+        fitBounds
+        showCenterAction
+        hoverContent={{
+          harbor: (f) =&gt; (
+            &lt;div&gt;
+              &lt;strong&gt;{f.properties?.name}&lt;/strong&gt;
+              &lt;div&gt;Kapasitet: {f.properties?.capacity} båter&lt;/div&gt;
+            &lt;/div&gt;
+          ),
+          lighthouse: (f) =&gt; (
+            &lt;div&gt;
+              &lt;strong&gt;{f.properties?.name}&lt;/strong&gt;
+              &lt;div&gt;Høyde: {f.properties?.height} m&lt;/div&gt;
+            &lt;/div&gt;
+          ),
+          shipping_lane: (f) =&gt; (
+            &lt;div&gt;
+              &lt;strong&gt;{f.properties?.name}&lt;/strong&gt;
+              &lt;div&gt;Trafikk: {f.properties?.traffic}&lt;/div&gt;
+            &lt;/div&gt;
+          ),
+        }}
+        onHover={(feature) =&gt; setHoveredName(feature?.properties?.name ?? null)}
+        onSelect={(features) =&gt;
+          setSelectedNames(
+            features?.map((f) =&gt; f.properties?.name ?? &quot;ukjent&quot;) ?? [],
+          )
+        }
+      /&gt;
+      &lt;div
+        style={{
+          marginTop: 12,
+          padding: 10,
+          background: &quot;#f5f5f5&quot;,
+          borderRadius: 8,
+          fontSize: &quot;0.85rem&quot;,
+        }}
+      &gt;
+        &lt;div&gt;
+          &lt;strong&gt;Hover:&lt;/strong&gt; {hoveredName ?? &quot;–&quot;}
+        &lt;/div&gt;
+        &lt;div&gt;
+          &lt;strong&gt;Valgt:&lt;/strong&gt;{&quot; &quot;}
+          {selectedNames.length &gt; 0 ? selectedNames.join(&quot;, &quot;) : &quot;–&quot;}
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+};</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Layer Toggle</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">Shows the built-in layer toggle control. Requires the full layer context stack (`ViewBoundsProvider`, `BaseLayersProvider`, etc.).</div>
+              <pre><code>const WithLayerToggle = () =&gt; (
+  &lt;ViewBoundsProvider&gt;
+    &lt;BaseLayersProvider&gt;
+      &lt;BuiltInLayersProvider&gt;
+        &lt;CustomLayersProvider&gt;
+          &lt;GeoJsonEditor
+            value={norwegianCoastData}
+            fitBounds
+            showCenterAction
+          /&gt;
+        &lt;/CustomLayersProvider&gt;
+      &lt;/BuiltInLayersProvider&gt;
+    &lt;/BaseLayersProvider&gt;
+  &lt;/ViewBoundsProvider&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Single Feature Point</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const SingleFeaturePoint = () =&gt; {
+  const [data, setData] = useState&lt;FeatureCollection&gt;({
+    type: &quot;FeatureCollection&quot;,
+    features: [],
+  });
+
+  return (
+    &lt;div&gt;
+      &lt;GeoJsonEditor
+        singleFeature
+        modes={[&quot;point&quot;]}
+        value={data}
+        onChange={setData}
+      /&gt;
+      &lt;pre
+        style={{
+          marginTop: 16,
+          padding: 12,
+          background: &quot;#f5f5f5&quot;,
+          borderRadius: 8,
+          fontSize: &quot;0.8rem&quot;,
+          maxHeight: 180,
+          overflow: &quot;auto&quot;,
+        }}
+      &gt;
+        {JSON.stringify(data, null, 2)}
+      &lt;/pre&gt;
+    &lt;/div&gt;
+  );
+};</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Single Feature Directional Point</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const SingleFeatureDirectionalPoint = () =&gt; {
+  const [data, setData] = useState&lt;FeatureCollection&gt;({
+    type: &quot;FeatureCollection&quot;,
+    features: [],
+  });
+
+  return (
+    &lt;div&gt;
+      &lt;GeoJsonEditor
+        singleFeature
+        modes={[&quot;directional-point&quot;]}
+        value={data}
+        onChange={setData}
+      /&gt;
+      &lt;pre
+        style={{
+          marginTop: 16,
+          padding: 12,
+          background: &quot;#f5f5f5&quot;,
+          borderRadius: 8,
+          fontSize: &quot;0.8rem&quot;,
+          maxHeight: 180,
+          overflow: &quot;auto&quot;,
+        }}
+      &gt;
+        {JSON.stringify(data, null, 2)}
+      &lt;/pre&gt;
+    &lt;/div&gt;
+  );
+};</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Single Feature Polygon</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">`singleFeature` with `polygon` mode — only one polygon at a time.</div>
+              <pre><code>const SingleFeaturePolygon = () =&gt; &lt;GeoJsonEditor singleFeature modes={[&quot;polygon&quot;]} /&gt;;</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  no-error 
+  no-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="GeoJsonViewer">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-ok"></span> GeoJsonViewer</h2>
+      <div class="badges">
+        <label for="c-3-kart-geojsonviewer-props" class="badge ok as-toggle">15 prop types</label>
+        
+        <label for="c-3-kart-geojsonviewer-stories" class="badge ok as-toggle">12 stories</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/GeoJsonViewer/GeoJsonViewer.stories.tsx">kart-geojsonviewer · ./src/components/GeoJsonViewer/GeoJsonViewer.stories.tsx</div>
+    
+    <div class="hint">GeoJsonViewer — display GeoJSON data on an interactive Kartverket map. Renders Point, LineString, Polygon (and their Multi-variants) using MapLibre GL layers. The map auto-fits to the data bounds by default. Supports feature hover (with customizable content per type) and selection (single or multi-select with Ctrl/Cmd).</div>
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  
+  
+  <input id="c-3-kart-geojsonviewer-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  <input id="c-3-kart-geojsonviewer-props" class="tg tg-props" type="checkbox" hidden />
+
+  <div class="panels">
+    
+    
+    
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">15 prop types</span>
+            </div>
+            <pre><code>Component: src/components/GeoJsonViewer/GeoJsonViewer.tsx::GeoJsonViewer</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>/**
+ * Additional CSS class applied to the root element.
+ */
+className?: string
+
+/**
+ * GeoJSON data to display on the map. Accepts a Feature or FeatureCollection.
+ */
+data: | Feature&lt;Geometry, GeoJsonProperties&gt;
+| FeatureCollection&lt;Geometry, GeoJsonProperties&gt;
+
+/**
+ * Disables all interaction.
+ */
+disabled?: boolean
+
+/**
+ * Whether to automatically fit the map view to the bounding box of the GeoJSON data.
+ * Defaults to `true`.
+ */
+fitBounds?: boolean = true
+
+/**
+ * Padding (in pixels) applied when fitting bounds. Defaults to `40`.
+ */
+fitBoundsPadding?: number = 40
+
+/**
+ * Styling overrides for the rendered GeoJSON layers.
+ */
+geoJsonStyle?: GeoJsonStyle
+
+/**
+ * Height of the map container. Defaults to `&quot;400px&quot;`.
+ */
+height?: string
+
+/**
+ * Whether features can be hovered to show tooltips. Defaults to `true`.
+ */
+hoverable?: boolean = true
+
+/**
+ * Custom render functions for hover content based on the feature&#39;s `type` property.
+ * Keys are the `properties.type` values; the function receives the hovered feature
+ * and returns the content to display in the hover popup.
+ * 
+ * If a feature&#39;s type is not in this map, the default content (type name) is shown.
+ */
+hoverContent?: Record&lt;string, (feature: InteractiveFeature) =&gt; ReactNode&gt;
+
+/**
+ * Called when the user clicks on the map. The result includes the clicked
+ * coordinate and WMS GetFeatureInfo results for all visible WMS catalog layers.
+ */
+onCoordinateClick?: (result: CoordinateClickResult) =&gt; void
+
+/**
+ * Called when the hovered feature changes.
+ * Receives the feature and the original mouse event, or null when hover ends.
+ */
+onHover?: (
+  feature: InteractiveFeature | null,
+  event: maplibregl.MapMouseEvent | null,
+) =&gt; void
+
+/**
+ * Called when the selection changes.
+ * Receives array of selected features, or null when selection is cleared.
+ */
+onSelect?: (features: InteractiveFeature[] | null) =&gt; void
+
+/**
+ * Whether features can be clicked to select them. Defaults to `true`.
+ */
+selectable?: boolean = true
+
+/**
+ * Show a crosshair at the map center with a button to trigger a click there.
+ * - `true` — always visible
+ * - `false` — always hidden
+ * - `undefined` — auto-detect (visible on touch devices)
+ */
+showCenterAction?: boolean
+
+/**
+ * Whether to show the layer toggle control on the map. Defaults to `false`.
+ */
+showLayerToggle?: boolean = true</code></pre>
+          </div>
+        </div>
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import {
+    BaseLayersProvider,
+    BuiltInLayersProvider,
+    CustomLayersProvider,
+    GeoJsonViewer,
+    ViewBoundsProvider,
+    WmsCatalogLayersProvider,
+} from "@kystverket/styrbord-kart";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Default</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Default = () =&gt; &lt;GeoJsonViewer data={sampleGeoJson as FeatureCollection} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Single Polygon</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const SinglePolygon = () =&gt; &lt;GeoJsonViewer data={singlePolygon} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Points</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Points = () =&gt; &lt;GeoJsonViewer data={pointCollection} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Custom Style</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const CustomStyle = () =&gt; &lt;GeoJsonViewer
+    data={sampleGeoJson as FeatureCollection}
+    geoJsonStyle={{
+      fillColor: &quot;rgba(223, 60, 27, 0.25)&quot;,
+      lineColor: &quot;#df3c1b&quot;,
+      lineWidth: 3,
+    }} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Tall Map</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const TallMap = () =&gt; &lt;GeoJsonViewer data={sampleGeoJson as FeatureCollection} height=&quot;1600px&quot; /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Complex Multi Type</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const ComplexMultiType = () =&gt; &lt;GeoJsonViewer
+    data={complexMultiType}
+    height=&quot;600px&quot;
+    geoJsonStyle={{
+      fillColor: &quot;rgba(0, 6, 103, 0.15)&quot;,
+      lineColor: &quot;#000667&quot;,
+      lineWidth: 3,
+      pointRadius: 7,
+      pointColor: &quot;#df3c1b&quot;,
+      pointStrokeColor: &quot;#000667&quot;,
+      pointStrokeWidth: 2,
+    }} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Layer Toggle</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithLayerToggle = () =&gt; &lt;ViewBoundsProvider&gt;
+    &lt;BaseLayersProvider&gt;
+        &lt;BuiltInLayersProvider&gt;
+            &lt;CustomLayersProvider&gt;
+                &lt;GeoJsonViewer data={sampleGeoJson as FeatureCollection} /&gt;
+            &lt;/CustomLayersProvider&gt;
+        &lt;/BuiltInLayersProvider&gt;
+    &lt;/BaseLayersProvider&gt;
+&lt;/ViewBoundsProvider&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Interactive</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Interactive = () =&gt; &lt;GeoJsonViewer
+    data={interactiveData}
+    height=&quot;500px&quot;
+    hoverable
+    selectable
+    hoverContent={{
+      harbor: (feature) =&gt; (
+        &lt;div style={{ padding: &quot;4px 0&quot; }}&gt;
+          &lt;div style={{ fontWeight: 600, color: &quot;#0062ba&quot; }}&gt;🏭 Havn&lt;/div&gt;
+          &lt;div&gt;{feature.properties?.name}&lt;/div&gt;
+          &lt;div style={{ fontSize: &quot;0.85em&quot;, color: &quot;#666&quot; }}&gt;
+            Kapasitet: {feature.properties?.capacity} skip
+          &lt;/div&gt;
+          &lt;div style={{ fontSize: &quot;0.85em&quot;, color: &quot;#666&quot; }}&gt;
+            Status: {feature.properties?.status}
+          &lt;/div&gt;
+        &lt;/div&gt;
+      ),
+      lighthouse: (feature) =&gt; (
+        &lt;div style={{ padding: &quot;4px 0&quot; }}&gt;
+          &lt;div style={{ fontWeight: 600, color: &quot;#df3c1b&quot; }}&gt;🏠 Fyrtårn&lt;/div&gt;
+          &lt;div&gt;{feature.properties?.name}&lt;/div&gt;
+          &lt;div style={{ fontSize: &quot;0.85em&quot;, color: &quot;#666&quot; }}&gt;
+            Etablert: {feature.properties?.established}
+          &lt;/div&gt;
+          &lt;div style={{ fontSize: &quot;0.85em&quot;, color: &quot;#666&quot; }}&gt;
+            Høyde: {feature.properties?.height}m
+          &lt;/div&gt;
+        &lt;/div&gt;
+      ),
+      shipping_lane: (feature) =&gt; (
+        &lt;div style={{ padding: &quot;4px 0&quot; }}&gt;
+          &lt;div style={{ fontWeight: 600, color: &quot;#000667&quot; }}&gt;🚢 Skipslei&lt;/div&gt;
+          &lt;div&gt;{feature.properties?.name}&lt;/div&gt;
+          &lt;div style={{ fontSize: &quot;0.85em&quot;, color: &quot;#666&quot; }}&gt;
+            Dybde: {feature.properties?.depth}m
+          &lt;/div&gt;
+          &lt;div style={{ fontSize: &quot;0.85em&quot;, color: &quot;#666&quot; }}&gt;
+            Trafikk: {feature.properties?.traffic}
+          &lt;/div&gt;
+        &lt;/div&gt;
+      ),
+    }}
+    onSelect={(features) =&gt; {
+      console.log(&quot;Selection changed:&quot;, features);
+    }}
+    onHover={(feature) =&gt; {
+      if (feature) {
+        console.log(&quot;Hovering:&quot;, feature.properties?.name);
+      }
+    }} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Selection Demo</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const SelectionDemo = () =&gt; &lt;GeoJsonViewer
+    data={interactiveData}
+    height=&quot;500px&quot;
+    selectable
+    onSelect={(features) =&gt; {
+      if (features &amp;&amp; features.length &gt; 0) {
+        const names = features.map((f) =&gt; f.properties?.name).join(&quot;, &quot;);
+        alert(`Selected: ${names}\n\nUse Ctrl/Cmd + Click to multi-select.`);
+      } else {
+        console.log(&quot;Selection cleared&quot;);
+      }
+    }} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Hover Only</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const HoverOnly = () =&gt; &lt;GeoJsonViewer
+    data={interactiveData}
+    height=&quot;500px&quot;
+    hoverable
+    selectable={false}
+    onHover={(feature) =&gt; {
+      if (feature) {
+        console.log(&quot;Hovering:&quot;, feature.properties?.name);
+      }
+    }} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Non Interactive</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const NonInteractive = () =&gt; &lt;GeoJsonViewer
+    data={interactiveData}
+    height=&quot;500px&quot;
+    hoverable={false}
+    selectable={false} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Coordinate Click</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const CoordinateClick = () =&gt; &lt;ViewBoundsProvider&gt;
+    &lt;BaseLayersProvider&gt;
+        &lt;WmsCatalogLayersProvider
+            capabilitiesUrl=&quot;https://services.kystverket.no/wms.ashx?service=WMS&amp;request=GetCapabilities&quot;
+            attribution=&#39;&amp;copy; &lt;a href=&quot;https://www.kystverket.no/&quot;&gt;Kystverket&lt;/a&gt;&#39;&gt;
+            &lt;CustomLayersProvider&gt;
+                &lt;GeoJsonViewer
+                    data={pointCollection}
+                    height=&quot;500px&quot;
+                    showLayerToggle
+                    onCoordinateClick={(result) =&gt; {
+                      console.log(&quot;Coordinate clicked:&quot;, result.coordinate);
+                      console.log(&quot;WMS layer results:&quot;, result.layerResults);
+                      for (const layer of result.layerResults) {
+                        console.log(`  ${layer.layerName}:`, layer.html);
+                      }
+                    }} /&gt;
+            &lt;/CustomLayersProvider&gt;
+        &lt;/WmsCatalogLayersProvider&gt;
+    &lt;/BaseLayersProvider&gt;
+&lt;/ViewBoundsProvider&gt;;</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  no-error 
+  no-info 
+  no-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="LayerToggle">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-ok"></span> LayerToggle</h2>
+      <div class="badges">
+        <label for="c-4-kart-layertoggle-props" class="badge ok as-toggle">2 prop types</label>
+        
+        <label for="c-4-kart-layertoggle-stories" class="badge ok as-toggle">4 stories</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/LayerToggle/LayerToggle.stories.tsx">kart-layertoggle · ./src/components/LayerToggle/LayerToggle.stories.tsx</div>
+    
+    <div class="hint">LayerToggle — a map overlay control that lets users turn map layers on and off. Place this component **inside** the map container element (the same `&lt;div&gt;` whose ref is `mapContainerRef`) so it is positioned over the map. It reads all available layers from `useMapLayers` and groups them by category.</div>
+    <div class="kv"><span class="chip">example:  ```tsx &lt;div ref={mapContainerRef} className={styles.mapContainer}&gt; &lt;LayerToggle /&gt; &lt;/div&gt; ```</span></div>
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  
+  
+  <input id="c-4-kart-layertoggle-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  <input id="c-4-kart-layertoggle-props" class="tg tg-props" type="checkbox" hidden />
+
+  <div class="panels">
+    
+    
+    
+        <div class="panel panel-props">
+          <div class="note ok">
+            <div class="row">
+              <span class="ex-name">Prop types <small>(react-docgen)</small></span>
+              <span class="badge ok">2 prop types</span>
+            </div>
+            <pre><code>Component: src/components/LayerToggle/LayerToggle.tsx::LayerToggle</code></pre>
+            <pre><code>Props:</code></pre>
+            <pre><code>/**
+ * Additional CSS class applied to the root element.
+ */
+className?: string
+
+/**
+ * Whether the panel starts open. Defaults to `false`.
+ */
+defaultOpen?: boolean = false</code></pre>
+          </div>
+        </div>
+    
+        <div class="panel panel-stories">
+          
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import {
+    BaseLayersProvider,
+    BuiltInLayersProvider,
+    CustomLayersProvider,
+    LayerToggle,
+    ViewBoundsProvider,
+    WmsCatalogLayersProvider,
+} from "@kystverket/styrbord-kart";</code></pre>
+              </div>
+          
+          
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Default</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">Default — collapsed, with built-in layers available.</div>
+              <pre><code>const Default = () =&gt; (
+  &lt;ViewBoundsProvider&gt;
+    &lt;BaseLayersProvider&gt;
+      &lt;WmsCatalogLayersProvider
+        capabilitiesUrl=&quot;https://services.kystverket.no/wms.ashx?service=WMS&amp;request=GetCapabilities&quot;
+        attribution=&#39;&amp;copy; &lt;a href=&quot;https://www.kystverket.no/&quot;&gt;Kystverket&lt;/a&gt;&#39;
+      &gt;
+        &lt;MapWithLayerToggle /&gt;
+      &lt;/WmsCatalogLayersProvider&gt;
+    &lt;/BaseLayersProvider&gt;
+  &lt;/ViewBoundsProvider&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Start Open</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">Starts open so layers are immediately visible.</div>
+              <pre><code>const StartOpen = () =&gt; (
+  &lt;ViewBoundsProvider&gt;
+    &lt;BaseLayersProvider&gt;
+      &lt;BuiltInLayersProvider&gt;
+        &lt;CustomLayersProvider&gt;
+          &lt;MapWithLayerToggle defaultOpen /&gt;
+        &lt;/CustomLayersProvider&gt;
+      &lt;/BuiltInLayersProvider&gt;
+    &lt;/BaseLayersProvider&gt;
+  &lt;/ViewBoundsProvider&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Filtered Layers</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">Only a subset of built-in layers (using include filter).</div>
+              <pre><code>const FilteredLayers = () =&gt; (
+  &lt;ViewBoundsProvider&gt;
+    &lt;BaseLayersProvider&gt;
+      &lt;BuiltInLayersProvider include={[&quot;Havnedata&quot;, &quot;Bilder&quot;]}&gt;
+        &lt;CustomLayersProvider&gt;
+          &lt;MapWithLayerToggle defaultOpen /&gt;
+        &lt;/CustomLayersProvider&gt;
+      &lt;/BuiltInLayersProvider&gt;
+    &lt;/BaseLayersProvider&gt;
+  &lt;/ViewBoundsProvider&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Multiple Base Layers</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              <div class="hint">Multiple base layers — demonstrates the radio-button base layer switcher.</div>
+              <pre><code>const MultipleBaseLayers = () =&gt; (
+  &lt;ViewBoundsProvider&gt;
+    &lt;BaseLayersProvider
+      baseLayers={[
+        KARTVERKET_TOPO_BASE_LAYER,
+        KARTVERKET_SEA_BASE_LAYER,
+        KARTVERKET_GRAATONE_BASE_LAYER,
+      ]}
+    &gt;
+      &lt;BuiltInLayersProvider&gt;
+        &lt;CustomLayersProvider&gt;
+          &lt;MapWithLayerToggle defaultOpen /&gt;
+        &lt;/CustomLayersProvider&gt;
+      &lt;/BuiltInLayersProvider&gt;
+    &lt;/BaseLayersProvider&gt;
+  &lt;/ViewBoundsProvider&gt;
+);</code></pre>
+            </div>
+        </div>
+    
+  </div>
+</article>
+<article
+  class="card 
+  has-error 
+  has-info 
+  has-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="Wrapper">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-err"></span> Wrapper</h2>
+      <div class="badges">
+        <label for="c-5-kart-geojsonannotater-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-5-kart-geojsonannotater-info" class="badge info as-toggle">1 info</label>
+        <label for="c-5-kart-geojsonannotater-stories" class="badge err as-toggle">1/1 story errors</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/GeoJsonAnnotater/GeoJsonAnnotater.stories.tsx">kart-geojsonannotater · ./src/components/GeoJsonAnnotater/GeoJsonAnnotater.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  <input id="c-5-kart-geojsonannotater-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-5-kart-geojsonannotater-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-5-kart-geojsonannotater-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  
+
+  <div class="panels">
+    
+        <div class="panel panel-err">
+          
+    <div class="note err">
+      <div class="note-title">Prop type error</div>
+      <div class="note-body"><pre><code>No component file found for the &quot;Wrapper&quot; component.
+  27 | };
+  28 |
+&gt; 29 | const meta = {
+     | ^
+  30 |   title: &quot;Kart/GeoJsonAnnotater&quot;,
+  31 |   component: Wrapper,
+  32 |   decorators: [StyrbordDecorator],
+
+./src/components/GeoJsonAnnotater/GeoJsonAnnotater.stories.tsx:
+import { FeatureCollection, Geometry } from &quot;geojson&quot;;
+import type { Meta, StoryObj } from &quot;@storybook/react-vite&quot;;
+import { useState } from &quot;react&quot;;
+import { GeoJsonAnnotater, GeoJsonAnnotaterProps } from &quot;~/main&quot;;
+import StyrbordDecorator from &quot;../../../storybook/styrbordDecorator&quot;;
+
+const Wrapper = (props: GeoJsonAnnotaterProps) =&gt; {
+  const [data, setData] = useState&lt;FeatureCollection&lt;Geometry&gt;&gt;(
+    structuredClone(props.data),
+  );
+
+  const onChange = (d: FeatureCollection&lt;Geometry&gt;) =&gt; {
+    setData(d);
+    props.onChange(d);
+  };
+
+  return (
+    &lt;&gt;
+      &lt;GeoJsonAnnotater
+        data={data}
+        onChange={onChange}
+        annotations={props.annotations}
+      /&gt;
+      &lt;pre&gt;{JSON.stringify(data, null, 2)}&lt;/pre&gt;
+    &lt;/&gt;
+  );
+};
+
+const meta = {
+  title: &quot;Kart/GeoJsonAnnotater&quot;,
+  component: Wrapper,
+  decorators: [StyrbordDecorator],
+  tags: [&quot;autodocs&quot;],
+  argTypes: {},
+} satisfies Meta&lt;typeof Wrapper&gt;;
+
+export default meta;
+
+type Story = StoryObj&lt;typeof meta&gt;;
+
+const defaultProps: GeoJsonAnnotaterProps = {
+  data: {
+    type: &quot;FeatureCollection&quot;,
+    features: [
+      {
+        type: &quot;Feature&quot;,
+        properties: {
+          nummer: 1,
+          beskrivelse: &quot;Dette er en beskrivelse&quot;,
+        },
+        geometry: {
+          type: &quot;Point&quot;,
+          coordinates: [10.0, 10.0],
+        },
+      },
+    ],
+  },
+  onChange: () =&gt; console.log(&quot;clicked onChange&quot;),
+  annotations: [{ name: &quot;beskrivelse&quot;, type: &quot;text&quot; }],
+};
+
+export const Default: Story = {
+  args: defaultProps,
+};
+</code></pre></div>
+    </div>
+        </div>
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+    
+        <div class="panel panel-stories">
+          
+            <div class="note err">
+              <div class="row">
+                <span class="ex-name">Default</span>
+                <span class="badge err">story error</span>
+              </div>
+              
+              
+              
+              <pre><code>Could not generate snippet without component name.</code></pre>
+            </div>
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { GeoJsonAnnotater } from "@kystverket/styrbord-kart";</code></pre>
+              </div>
+          
+          
+        </div>
+    
+  </div>
+</article>
+    </div>
+    <div class="error-groups" role="region" aria-label="Prop type error groups">
+        <section class="group">
+          <input id="no-component-import-found-toggle" class="group-tg" type="checkbox" hidden />
+          <label for="no-component-import-found-toggle" class="group-header">
+            <span class="caret">▸</span>
+            <span class="group-title">No component import found</span>
+            <span class="group-count">1</span>
+          </label>
+          <div class="group-cards">
+<article
+  class="card 
+  has-error 
+  has-info 
+  has-story-error
+  no-doc-error"
+  role="listitem"
+  aria-label="Wrapper">
+  <div class="head">
+    <div class="title">
+      <h2><span class="status-dot dot-err"></span> Wrapper</h2>
+      <div class="badges">
+        <label for="c-error-0-kart-geojsonannotater-err" class="badge err as-toggle">prop type error</label>
+        <label for="c-error-0-kart-geojsonannotater-info" class="badge info as-toggle">1 info</label>
+        <label for="c-error-0-kart-geojsonannotater-stories" class="badge err as-toggle">1/1 story errors</label>
+        
+      </div>
+    </div>
+    <div class="meta" title="./src/components/GeoJsonAnnotater/GeoJsonAnnotater.stories.tsx">kart-geojsonannotater · ./src/components/GeoJsonAnnotater/GeoJsonAnnotater.stories.tsx</div>
+    
+    
+    
+  </div>
+
+  <!-- ⬇️ Hidden toggles must be siblings BEFORE .panels -->
+  <input id="c-error-0-kart-geojsonannotater-err" class="tg tg-err" type="checkbox" hidden />
+  <input id="c-error-0-kart-geojsonannotater-info" class="tg tg-info" type="checkbox" hidden />
+  <input id="c-error-0-kart-geojsonannotater-stories" class="tg tg-stories" type="checkbox" hidden />
+  
+  
+
+  <div class="panels">
+    
+        <div class="panel panel-err">
+          
+    <div class="note err">
+      <div class="note-title">Prop type error</div>
+      <div class="note-body"><pre><code>No component file found for the &quot;Wrapper&quot; component.
+  27 | };
+  28 |
+&gt; 29 | const meta = {
+     | ^
+  30 |   title: &quot;Kart/GeoJsonAnnotater&quot;,
+  31 |   component: Wrapper,
+  32 |   decorators: [StyrbordDecorator],
+
+./src/components/GeoJsonAnnotater/GeoJsonAnnotater.stories.tsx:
+import { FeatureCollection, Geometry } from &quot;geojson&quot;;
+import type { Meta, StoryObj } from &quot;@storybook/react-vite&quot;;
+import { useState } from &quot;react&quot;;
+import { GeoJsonAnnotater, GeoJsonAnnotaterProps } from &quot;~/main&quot;;
+import StyrbordDecorator from &quot;../../../storybook/styrbordDecorator&quot;;
+
+const Wrapper = (props: GeoJsonAnnotaterProps) =&gt; {
+  const [data, setData] = useState&lt;FeatureCollection&lt;Geometry&gt;&gt;(
+    structuredClone(props.data),
+  );
+
+  const onChange = (d: FeatureCollection&lt;Geometry&gt;) =&gt; {
+    setData(d);
+    props.onChange(d);
+  };
+
+  return (
+    &lt;&gt;
+      &lt;GeoJsonAnnotater
+        data={data}
+        onChange={onChange}
+        annotations={props.annotations}
+      /&gt;
+      &lt;pre&gt;{JSON.stringify(data, null, 2)}&lt;/pre&gt;
+    &lt;/&gt;
+  );
+};
+
+const meta = {
+  title: &quot;Kart/GeoJsonAnnotater&quot;,
+  component: Wrapper,
+  decorators: [StyrbordDecorator],
+  tags: [&quot;autodocs&quot;],
+  argTypes: {},
+} satisfies Meta&lt;typeof Wrapper&gt;;
+
+export default meta;
+
+type Story = StoryObj&lt;typeof meta&gt;;
+
+const defaultProps: GeoJsonAnnotaterProps = {
+  data: {
+    type: &quot;FeatureCollection&quot;,
+    features: [
+      {
+        type: &quot;Feature&quot;,
+        properties: {
+          nummer: 1,
+          beskrivelse: &quot;Dette er en beskrivelse&quot;,
+        },
+        geometry: {
+          type: &quot;Point&quot;,
+          coordinates: [10.0, 10.0],
+        },
+      },
+    ],
+  },
+  onChange: () =&gt; console.log(&quot;clicked onChange&quot;),
+  annotations: [{ name: &quot;beskrivelse&quot;, type: &quot;text&quot; }],
+};
+
+export const Default: Story = {
+  args: defaultProps,
+};
+</code></pre></div>
+    </div>
+        </div>
+    
+        <div class="panel panel-info">
+          
+    <div class="note info">
+      <div class="note-title">Info</div>
+      <div class="note-body">No description found. Write a jsdoc comment such as /** Component description */.</div>
+    </div>
+        </div>
+    
+    
+        <div class="panel panel-stories">
+          
+            <div class="note err">
+              <div class="row">
+                <span class="ex-name">Default</span>
+                <span class="badge err">story error</span>
+              </div>
+              
+              
+              
+              <pre><code>Could not generate snippet without component name.</code></pre>
+            </div>
+          
+          
+          <div class="note ok">
+                <div class="row">
+                  <span class="ex-name">Imports</span>
+                </div>
+                <pre><code>import { GeoJsonAnnotater } from "@kystverket/styrbord-kart";</code></pre>
+              </div>
+          
+          
+        </div>
+    
+  </div>
+</article></div>
+        </section>
+      </div>
     <h2 class="section-title">Unattached Docs</h2>
     <div class="grid" role="list">
       
