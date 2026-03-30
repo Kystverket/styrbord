@@ -304,8 +304,14 @@ export function useTerraDraw({
       draw.setMode(initialMode);
       setActiveModeState(initialMode);
 
-      // Listen for changes
+      // Listen for changes — suppress during line/polygon drawing so
+      // intermediate vertices are not emitted.  The completed geometry
+      // is emitted from the "finish" handler instead.
       draw.on("change", () => {
+        const currentMode = draw.getMode();
+        if (currentMode === "linestring" || currentMode === "polygon") {
+          return;
+        }
         emitSnapshot();
       });
 
@@ -346,6 +352,9 @@ export function useTerraDraw({
               }
             }
 
+            // Emit after cleanup so only the new feature is included.
+            emitSnapshot();
+
             // Re-activate drawing mode so the user can draw another feature.
             const drawingMode = modes[0];
             if (d.getMode() !== drawingMode) {
@@ -353,6 +362,10 @@ export function useTerraDraw({
               setActiveModeState(drawingMode);
             }
           });
+        } else {
+          // Emit the completed feature for line/polygon drawings
+          // (suppressed in the change handler during drawing).
+          emitSnapshot();
         }
       });
 
