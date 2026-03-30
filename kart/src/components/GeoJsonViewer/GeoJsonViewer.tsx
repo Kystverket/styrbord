@@ -25,6 +25,7 @@ import {
   addHighlightLayers,
   updateHoverHighlight,
   updateSelectionHighlight,
+  addLabelLayer,
 } from "./GeoJsonViewer.utils";
 import { LayerToggle } from "../LayerToggle/LayerToggle";
 import { GeoJsonViewerHoverPopup } from "./GeoJsonViewerHoverPopup";
@@ -59,6 +60,7 @@ export function GeoJsonViewer({
   hoverContent,
   onCoordinateClick,
   showCenterAction,
+  labelProperty = "nummer",
 }: GeoJsonViewerProps) {
   const layerStyle: Required<GeoJsonStyle> = {
     ...DEFAULT_STYLE,
@@ -237,6 +239,11 @@ export function GeoJsonViewer({
         // Add highlight layers for hover and selection effects
         addHighlightLayers(map, layerStyle);
 
+        // Add label layer if a property key is specified
+        if (labelProperty) {
+          addLabelLayer(map, labelProperty);
+        }
+
         // Mark layers as ready for interaction
         setLayersReady(true);
 
@@ -290,7 +297,7 @@ export function GeoJsonViewer({
       setLayersReady(false);
       removeLayers(map);
     };
-  }, [fc, mapRef, mapReady]);
+  }, [fc, mapRef, mapReady, labelProperty]);
 
   return (
     <div

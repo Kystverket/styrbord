@@ -95,4 +95,8 @@ export interface GeoJsonEditorProps extends MapBaseProps {
    * `CoordinateDirectionField` (with `modes: ['directional-point']`).
    */
   singleFeature?: boolean;
+
+  getLabel?: (
+    feature: Feature<Geometry, GeoJsonProperties>,
+  ) => string | number | null | undefined;
 }

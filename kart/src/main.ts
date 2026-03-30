@@ -24,6 +24,9 @@ export type {
 export { GeoJsonAnnotater } from "./components/GeoJsonAnnotater/GeoJsonAnnotater";
 export type { GeoJsonAnnotaterProps } from "./components/GeoJsonAnnotater/GeoJsonAnnotater";
 
+export { MapField } from "./components/MapField/MapField";
+export type { MapFieldProps } from "./components/MapField/MapField.types";
+
 export { LayerToggle } from "./components/LayerToggle/LayerToggle";
 export type { LayerToggleProps } from "./components/LayerToggle/LayerToggle.types";
 

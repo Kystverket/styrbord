@@ -84,4 +84,10 @@ export interface GeoJsonViewerProps extends MapBaseProps {
    * coordinate and WMS GetFeatureInfo results for all visible WMS catalog layers.
    */
   onCoordinateClick?: (result: CoordinateClickResult) => void;
+
+  /**
+   * Feature property key whose value is rendered as a label next to each feature.
+   * Set to `false` to disable labels. Defaults to `"nummer"`.
+   */
+  labelProperty?: string | false;
 }
