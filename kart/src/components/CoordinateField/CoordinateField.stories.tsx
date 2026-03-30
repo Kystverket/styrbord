@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import StyrbordDecorator from '../../../storybook/styrbordDecorator';
-import { CoordinatePicker } from './CoordinatePicker';
+import { CoordinateField } from './CoordinateField';
 import type { CoordinateGeoJSON } from '~/utility/types';
-import type { CoordinatePickerProps } from './CoordinatePicker.types';
+import type { CoordinateFieldProps } from './CoordinateField.types';
 
 const meta = {
-  title: 'Kart/CoordinatePicker',
-  component: CoordinatePicker,
+  title: 'Kart/CoordinateField',
+  component: CoordinateField,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],
   parameters: {
@@ -22,16 +22,16 @@ const meta = {
       },
     },
   },
-} satisfies Meta<typeof CoordinatePicker>;
+} satisfies Meta<typeof CoordinateField>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 /** Wrapper that provides controlled state for stories. */
-const Controlled = (props: Partial<CoordinatePickerProps> & { initialValue?: CoordinateGeoJSON }) => {
+const Controlled = (props: Partial<CoordinateFieldProps> & { initialValue?: CoordinateGeoJSON }) => {
   const { initialValue, ...rest } = props;
   const [value, setValue] = useState<CoordinateGeoJSON | undefined>(initialValue);
-  return <CoordinatePicker value={value} onChange={setValue} {...rest} />;
+  return <CoordinateField value={value} onChange={setValue} {...rest} />;
 };
 
 const noop = () => {};
@@ -54,7 +54,7 @@ const ControlledTemplate = () => {
 
   return (
     <div style={{ maxWidth: 700 }}>
-      <CoordinatePicker label="Skiltplassering" value={value} onChange={setValue} showCenterAction />
+      <CoordinateField label="Skiltplassering" value={value} onChange={setValue} showCenterAction />
       <pre
         style={{
           marginTop: 16,

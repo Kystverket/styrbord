@@ -102,7 +102,7 @@ export function MapCenterAction({ mapRef, visible }: MapCenterActionProps) {
     //
     // 3. click — MapLibre's map event system listens for DOM click events to
     //    fire map.on('click'). This is needed for onMapClick in components
-    //    like CoordinatePicker that don't use terra-draw.
+    //    like CoordinateField that don't use terra-draw.
     const shared: PointerEventInit = {
       clientX: centerX,
       clientY: centerY,

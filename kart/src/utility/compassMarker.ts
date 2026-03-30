@@ -1,7 +1,7 @@
 /**
  * Shared SVG assets and positioning helpers for compass-needle markers.
  *
- * Used by both the `useCompassMarker` hook (CoordinateDirectionPicker) and
+ * Used by both the `useCompassMarker` hook (CoordinateDirectionField) and
  * the `useDirectionalPoints` hook (GeoJsonEditor directional-point mode).
  */
 

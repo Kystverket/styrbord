@@ -18,7 +18,7 @@ export type CoordinateDirectionGeoJSON = CoordinateGeoJSON & {
   };
 };
 
-export interface CoordinateDirectionPickerProps extends MapPickerBaseProps {
+export interface CoordinateDirectionFieldProps extends MapPickerBaseProps {
   /** Controlled value. */
   value: CoordinateDirectionGeoJSON | undefined;
   /** Called when the user changes the coordinate or direction. */

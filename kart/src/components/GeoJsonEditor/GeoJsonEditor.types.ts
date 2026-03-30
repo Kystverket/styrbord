@@ -81,8 +81,8 @@ export interface GeoJsonEditorProps extends MapBaseProps {
    * - Placing a new feature automatically replaces the existing one.
    *
    * This allows GeoJsonEditor to be used as a drop-in replacement for
-   * `CoordinatePicker` (with `modes: ['point']`) or
-   * `CoordinateDirectionPicker` (with `modes: ['directional-point']`).
+   * `CoordinateField` (with `modes: ['point']`) or
+   * `CoordinateDirectionField` (with `modes: ['directional-point']`).
    */
   singleFeature?: boolean;
 }

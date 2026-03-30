@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import StyrbordDecorator from '../../../storybook/styrbordDecorator';
-import { CoordinateDirectionPicker } from './CoordinateDirectionPicker';
-import type { CoordinateDirectionGeoJSON, CoordinateDirectionPickerProps } from './CoordinateDirectionPicker.types';
+import { CoordinateDirectionField } from './CoordinateDirectionField';
+import type { CoordinateDirectionGeoJSON, CoordinateDirectionFieldProps } from './CoordinateDirectionField.types';
 
 const meta = {
-  title: 'Kart/CoordinateDirectionPicker',
-  component: CoordinateDirectionPicker,
+  title: 'Kart/CoordinateDirectionField',
+  component: CoordinateDirectionField,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],
   parameters: {
@@ -18,16 +18,16 @@ const meta = {
       },
     },
   },
-} satisfies Meta<typeof CoordinateDirectionPicker>;
+} satisfies Meta<typeof CoordinateDirectionField>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 /** Wrapper that provides controlled state for stories. */
-const Controlled = (props: Partial<CoordinateDirectionPickerProps> & { initialValue?: CoordinateDirectionGeoJSON }) => {
+const Controlled = (props: Partial<CoordinateDirectionFieldProps> & { initialValue?: CoordinateDirectionGeoJSON }) => {
   const { initialValue, ...rest } = props;
   const [value, setValue] = useState<CoordinateDirectionGeoJSON | undefined>(initialValue);
-  return <CoordinateDirectionPicker value={value} onChange={setValue} {...rest} />;
+  return <CoordinateDirectionField value={value} onChange={setValue} {...rest} />;
 };
 
 const noop = () => {};
@@ -53,7 +53,7 @@ const ControlledTemplate = () => {
 
   return (
     <div style={{ maxWidth: 700 }}>
-      <CoordinateDirectionPicker label="Skiltplassering" value={value} onChange={setValue} />
+      <CoordinateDirectionField label="Skiltplassering" value={value} onChange={setValue} />
       <pre
         style={{
           marginTop: 16,

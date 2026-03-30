@@ -19,7 +19,7 @@ export interface MapBaseProps {
 
 /**
  * Common props shared by all map-based picker components
- * (CoordinatePicker, CoordinateDirectionPicker, etc.).
+ * (CoordinateField, CoordinateDirectionField, etc.).
  */
 export interface MapPickerBaseProps extends MapBaseProps {
   /** Label displayed above the component. */

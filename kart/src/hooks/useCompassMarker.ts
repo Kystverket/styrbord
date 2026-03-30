@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 import maplibregl from 'maplibre-gl';
-import type { CoordinateDirectionValue } from '~/components/CoordinateDirectionPicker/CoordinateDirectionPicker.types';
+import type { CoordinateDirectionValue } from '~/components/CoordinateDirectionField/CoordinateDirectionField.types';
 import { clampDirection } from '~/utility/coordinate';
 import { createCompassMarkerElement, positionHandle } from '~/utility/compassMarker';
 

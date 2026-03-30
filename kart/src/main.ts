@@ -1,12 +1,12 @@
-export { CoordinateDirectionPicker } from './components/CoordinateDirectionPicker/CoordinateDirectionPicker';
+export { CoordinateDirectionField } from './components/CoordinateDirectionField/CoordinateDirectionField';
 export type {
-  CoordinateDirectionPickerProps,
+  CoordinateDirectionFieldProps,
   CoordinateDirectionValue,
   Coordinate,
-} from './components/CoordinateDirectionPicker/CoordinateDirectionPicker.types';
+} from './components/CoordinateDirectionField/CoordinateDirectionField.types';
 
-export { CoordinatePicker } from './components/CoordinatePicker/CoordinatePicker';
-export type { CoordinatePickerProps } from './components/CoordinatePicker/CoordinatePicker.types';
+export { CoordinateField } from './components/CoordinateField/CoordinateField';
+export type { CoordinateFieldProps } from './components/CoordinateField/CoordinateField.types';
 export type { CoordinateGeoJSON } from './utility/types';
 
 export { GeoJsonViewer } from './components/GeoJsonViewer/GeoJsonViewer';

@@ -10,8 +10,8 @@ Komponentene er laget for å passe sammen med `@kystverket/styrbord`.
 
 Biblioteket eksporterer blant annet:
 
-- `CoordinateDirectionPicker`
-- `CoordinatePicker`
+- `CoordinateDirectionField`
+- `CoordinateField`
 - `GeoJsonViewer`
 - `GeoJsonEditor`
 - `GeoJsonAnnotater`
@@ -38,7 +38,7 @@ import '@kystverket/styrbord-kart/style.css';
 Importering av enkeltkomponenter.
 
 ```js
-import { GeoJsonViewer, GeoJsonEditor, CoordinatePicker } from '@kystverket/styrbord-kart';
+import { GeoJsonViewer, GeoJsonEditor, CoordinateField } from '@kystverket/styrbord-kart';
 ```
 
 Et enkelt eksempel med visning av GeoJSON.

@@ -1,19 +1,19 @@
-import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useState } from 'react';
 import { Box, NumberInput, ValidationMessage } from '@kystverket/styrbord';
 import type { FeatureCollection, Point } from 'geojson';
 
-import type { CoordinateDirectionGeoJSON, CoordinateDirectionPickerProps } from './CoordinateDirectionPicker.types';
-import { clampDirection, clampLatitude, clampLongitude } from '~/utility/coordinate';
-import { getUuid } from '~/utility/uuid';
+import type { CoordinateFieldProps } from './CoordinateField.types';
+import type { CoordinateGeoJSON } from '~/utility/types';
+import { clampLatitude, clampLongitude } from '~/utility/coordinate';
 import { GeoJsonEditor } from '~/components/GeoJsonEditor/GeoJsonEditor';
 
 /**
- * CoordinateDirectionPicker — select a geographic coordinate and a facing
- * direction (0–360°) via an interactive map or manual input fields.
+ * CoordinateField — select a geographic coordinate via an interactive map
+ * or manual input fields.
  *
- * Internally delegates to GeoJsonEditor in single-feature directional-point mode.
+ * Internally delegates to GeoJsonEditor in single-feature point mode.
  */
-export function CoordinateDirectionPicker({
+export function CoordinateField({
   value,
   onChange,
   error,
@@ -21,11 +21,8 @@ export function CoordinateDirectionPicker({
   className,
   height,
   showCenterAction,
-}: CoordinateDirectionPickerProps) {
+}: CoordinateFieldProps) {
   const id = useId();
-
-  // Stable ID for the directional-point feature
-  const directionalIdRef = useRef(getUuid());
 
   // ----- GeoJsonEditor value bridge -----
   const editorValue = useMemo<FeatureCollection | undefined>(() => {
@@ -36,11 +33,7 @@ export function CoordinateDirectionPicker({
         {
           type: 'Feature',
           geometry: value.geometry,
-          properties: {
-            mode: 'directional-point' as const,
-            direction: value.properties.direction,
-            id: directionalIdRef.current,
-          },
+          properties: {},
         },
       ],
     };
@@ -48,18 +41,11 @@ export function CoordinateDirectionPicker({
 
   const handleEditorChange = useCallback(
     (fc: FeatureCollection) => {
-      const dirFeature = fc.features.find((f) => f.properties?.mode === 'directional-point');
-      if (dirFeature) {
-        // Keep the id for future round-trips
-        if (dirFeature.properties?.id) {
-          directionalIdRef.current = dirFeature.properties.id;
-        }
-        const geo: CoordinateDirectionGeoJSON = {
+      if (fc.features.length > 0) {
+        const feature = fc.features[0];
+        const geo: CoordinateGeoJSON = {
           type: 'Feature',
-          geometry: dirFeature.geometry as Point,
-          properties: {
-            direction: dirFeature.properties?.direction ?? 0,
-          },
+          geometry: feature.geometry as Point,
         };
         onChange(geo);
       }
@@ -70,63 +56,36 @@ export function CoordinateDirectionPicker({
   // ----- Input number state (synced to/from value, committed on blur) -----
   const [latValue, setLatValue] = useState<number | undefined>(value?.geometry.coordinates[1] ?? undefined);
   const [lonValue, setLonValue] = useState<number | undefined>(value?.geometry.coordinates[0] ?? undefined);
-  const [dirValue, setDirValue] = useState<number | undefined>(value?.properties.direction ?? undefined);
 
   useEffect(() => {
     const coords = value?.geometry.coordinates;
     setLatValue(coords ? coords[1] : undefined);
     setLonValue(coords ? coords[0] : undefined);
-    setDirValue(value?.properties.direction ?? undefined);
   }, [value]);
 
   // ----- Input handlers -----
-  const emitUpdate = useCallback(
-    (geo: CoordinateDirectionGeoJSON) => {
-      onChange(geo);
-    },
-    [onChange],
-  );
-
   const commitLatLon = useCallback(
     (lat: number | undefined, lon: number | undefined) => {
       if (lat == null && lon == null) return;
       if (lat != null && lon != null) {
-        const geo: CoordinateDirectionGeoJSON = {
+        const geo: CoordinateGeoJSON = {
           type: 'Feature',
           geometry: {
             type: 'Point',
             coordinates: [clampLongitude(lon), clampLatitude(lat)],
           },
-          properties: {
-            direction: value?.properties.direction ?? 0,
-          },
         };
-        emitUpdate(geo);
+        onChange(geo);
       }
     },
-    [value?.properties.direction, emitUpdate],
-  );
-
-  const commitDirection = useCallback(
-    (dir: number | undefined) => {
-      if (!value) return;
-      const geo: CoordinateDirectionGeoJSON = {
-        type: 'Feature',
-        geometry: value.geometry,
-        properties: {
-          direction: dir != null ? Math.round(clampDirection(dir)) : 0,
-        },
-      };
-      emitUpdate(geo);
-    },
-    [value, emitUpdate],
+    [onChange],
   );
 
   return (
     <Box gap={16} className={[className].filter(Boolean).join(' ')}>
       <GeoJsonEditor
         singleFeature
-        modes={['directional-point']}
+        modes={['point']}
         value={editorValue}
         onChange={handleEditorChange}
         disabled={disabled}
@@ -134,7 +93,7 @@ export function CoordinateDirectionPicker({
         showCenterAction={showCenterAction}
       />
 
-      {/* Coordinate + direction inputs */}
+      {/* Coordinate inputs */}
       <Box horizontal gap={16}>
         <NumberInput
           id={`${id}-lat`}
@@ -157,19 +116,6 @@ export function CoordinateDirectionPicker({
           onChange={(v) => setLonValue(v)}
           onBlur={() => commitLatLon(latValue, lonValue)}
         />
-
-        <NumberInput
-          id={`${id}-dir`}
-          inputMode="decimal"
-          label="Retning (grader)"
-          value={dirValue ?? null}
-          disabled={disabled}
-          placeholder="0–360"
-          min={0}
-          max={360}
-          onChange={(v) => setDirValue(v)}
-          onBlur={() => commitDirection(dirValue)}
-        />
       </Box>
 
       {error && <ValidationMessage>{error}</ValidationMessage>}
@@ -177,4 +123,4 @@ export function CoordinateDirectionPicker({
   );
 }
 
-export default CoordinateDirectionPicker;
+export default CoordinateField;

@@ -52,6 +52,7 @@ There are no meaningful tests in either workspace (`test` scripts are no-ops).
 ### `base` — Design System Components
 
 **Component categories** (`base/src/components/`):
+
 - `kystverket/` — Kystverket-specific components (marked ⚓ in Storybook): `Alert`, `Box`, `Button`, `Datepicker`, `FileUploader`, `Footer`, `Header`, `Icon`, `Logo`, `PageHeading`, `RichTextArea`, `Stepper`, `Summary`, `Tabs`, etc.
 - `designsystemet/` — Extended/overridden Designsystemet components (marked 🌈+⚓): `Button`, `TextInput`, `NumberInput`, `Select`, `Tabs`, `Tag`, etc.
 - `deprecated/` — Components being phased out, exported with a `Deprecated` prefix.
@@ -63,15 +64,17 @@ There are no meaningful tests in either workspace (`test` scripts are no-ops).
 ### `kart` — Map Components
 
 **Components** (`kart/src/components/`):
+
 - `GeoJsonEditor` — Core drawing/editing component using terra-draw. Supports `point`, `linestring`, `polygon` draw modes, hover, select, and `singleFeature` mode.
 - `GeoJsonViewer` — Read-only GeoJSON map display.
 - `GeoJsonAnnotater` — GeoJSON with annotation capability.
-- `CoordinatePicker` — Selects a single coordinate via map click or numeric inputs. Internally delegates to `GeoJsonEditor` in single-feature point mode.
-- `CoordinateDirectionPicker` — Like `CoordinatePicker` but also captures a direction angle.
+- `CoordinateField` — Selects a single coordinate via map click or numeric inputs. Internally delegates to `GeoJsonEditor` in single-feature point mode.
+- `CoordinateDirectionField` — Like `CoordinateField` but also captures a direction angle.
 - `LayerToggle` — UI for toggling overlay layers on/off.
 - `shared/MapCenterAction` — Shared action button for centering the map.
 
 **Key hooks** (`kart/src/hooks/`):
+
 - `useMaplibreMap` — Creates and manages a MapLibre GL map instance. Reads all layer contexts and `ViewBoundsContext`.
 - `useMapLayers` — Manages overlay layer visibility.
 - `useCompassMarker`, `usePointMarker` — Add marker overlays to a map.
@@ -80,6 +83,7 @@ There are no meaningful tests in either workspace (`test` scripts are no-ops).
 
 **Layer system** (`kart/src/utility/`):
 Four React contexts control which map layers are loaded by `useMaplibreMap`:
+
 - `BaseLayersContext` / `BaseLayersProvider` — Mutually exclusive background layers (one active at a time).
 - `BuiltInLayersContext` / `BuiltInLayersProvider` — Pre-defined overlay layers (see `layers.builtIn.ts`). Filterable via `include`/`exclude` config.
 - `CustomLayersContext` / `CustomLayersProvider` — Application-defined overlay layers.

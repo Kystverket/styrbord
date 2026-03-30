@@ -294,9 +294,7 @@ const HoverTemplate: StoryFn<typeof GeoJsonEditor> = () => {
           ),
         }}
         onHover={(feature) => setHoveredName(feature?.properties?.name ?? null)}
-        onSelect={(features) =>
-          setSelectedNames(features?.map((f) => f.properties?.name ?? 'ukjent') ?? [])
-        }
+        onSelect={(features) => setSelectedNames(features?.map((f) => f.properties?.name ?? 'ukjent') ?? [])}
       />
       <div
         style={{
@@ -311,8 +309,7 @@ const HoverTemplate: StoryFn<typeof GeoJsonEditor> = () => {
           <strong>Hover:</strong> {hoveredName ?? '–'}
         </div>
         <div>
-          <strong>Valgt:</strong>{' '}
-          {selectedNames.length > 0 ? selectedNames.join(', ') : '–'}
+          <strong>Valgt:</strong> {selectedNames.length > 0 ? selectedNames.join(', ') : '–'}
         </div>
       </div>
     </div>
@@ -353,7 +350,7 @@ export const WithLayerToggle: Story = {
  * `singleFeature` hides the toolbar and auto-activates the first mode. Placing
  * a new feature replaces the previous one. Useful as a drop-in picker.
  *
- * This variant uses `point` mode — equivalent to `CoordinatePicker`.
+ * This variant uses `point` mode — equivalent to `CoordinateField`.
  */
 const SingleFeatureTemplate: StoryFn<typeof GeoJsonEditor> = () => {
   const [data, setData] = useState<FeatureCollection>({
@@ -387,7 +384,7 @@ export const SingleFeaturePoint: Story = {
 
 /**
  * `singleFeature` with `directional-point` mode — equivalent to
- * `CoordinateDirectionPicker`. Click the map to place a point, then drag the
+ * `CoordinateDirectionField`. Click the map to place a point, then drag the
  * direction handle to set the bearing.
  */
 const SingleDirectionalTemplate: StoryFn<typeof GeoJsonEditor> = () => {
@@ -398,12 +395,7 @@ const SingleDirectionalTemplate: StoryFn<typeof GeoJsonEditor> = () => {
 
   return (
     <div>
-      <GeoJsonEditor
-        singleFeature
-        modes={['directional-point']}
-        value={data}
-        onChange={setData}
-      />
+      <GeoJsonEditor singleFeature modes={['directional-point']} value={data} onChange={setData} />
       <pre
         style={{
           marginTop: 16,
