@@ -429,7 +429,14 @@ export function GeoJsonEditor({
   // Sync external value changes into terra-draw and directional markers.
   // Skips round-trips caused by our own onChange calls.
   useEffect(() => {
-    if (!terraDrawReady) return;
+    if (!terraDrawReady) {
+      // Reset the round-trip guard when terra-draw is not ready (e.g. after
+      // Strict Mode cleanup destroys and re-creates the instance). Without
+      // this, the stale `true` value from the previous mount would cause the
+      // next sync to be skipped, leaving the new instance with no features.
+      isInternalChangeRef.current = false;
+      return;
+    }
 
     if (isInternalChangeRef.current) {
       isInternalChangeRef.current = false;
