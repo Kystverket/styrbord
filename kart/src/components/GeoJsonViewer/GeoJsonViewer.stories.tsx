@@ -17,6 +17,12 @@ const meta = {
   tags: ["autodocs", "kyv"],
   parameters: {
     layout: "padded",
+    docs: {
+      story: {
+        inline: false,
+        iframeHeight: "600px",
+      },
+    },
   },
 } satisfies Meta<typeof GeoJsonViewer>;
 

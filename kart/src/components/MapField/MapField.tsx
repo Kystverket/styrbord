@@ -54,7 +54,7 @@ export function MapField({
   });
 
   return (
-    <Field>
+    <div>
       {label && (
         <Label>
           <LabelContent text={label} required={required} optional={optional} />
@@ -71,6 +71,6 @@ export function MapField({
         />
       )}
       {error && <ValidationMessage>{error}</ValidationMessage>}
-    </Field>
+    </div>
   );
 }
