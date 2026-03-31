@@ -395,27 +395,42 @@ export function useTerraDraw({
       setIsReady(true);
     };
 
-    // In MapLibre v5+, loadJSON defers style parsing to the next animation
-    // frame, so the style may not be ready immediately after map creation.
-    // map.getStyle() returns undefined when the style structure hasn't loaded
-    // yet (without throwing), so use it as a lightweight readiness check.
-    // On subsequent effect runs the style is always loaded, so initDraw()
-    // executes immediately.
-    let onLoad: (() => void) | null = null;
+    // In MapLibre v5+ the empty inline style is parsed asynchronously, so
+    // addSource/addLayer may throw "Style is not done loading" if called
+    // before parsing completes.  We wait for `map.loaded()` which becomes
+    // true once the style and all sources have finished loading.
+    //
+    // Because the "load" event can fire between the `loaded()` check and the
+    // listener registration (classic race), we re-check inside a
+    // requestAnimationFrame — by then the style is guaranteed to be parsed
+    // for a trivial empty style.
+    let cancelled = false;
 
-    if (map.getStyle()) {
+    const tryInit = () => {
+      if (cancelled || drawRef.current) return;
       initDraw();
+    };
+
+    if (map.loaded()) {
+      tryInit();
     } else {
-      onLoad = () => {
-        if (!drawRef.current) initDraw();
+      const onLoad = () => {
+        if (!cancelled) tryInit();
       };
       map.once("load", onLoad);
+
+      // Safety net: if "load" already fired before the listener was
+      // attached, schedule a fallback on the next frame.
+      requestAnimationFrame(() => {
+        if (!cancelled && !drawRef.current && map.loaded()) {
+          map.off("load", onLoad);
+          tryInit();
+        }
+      });
     }
 
     return () => {
-      if (onLoad) {
-        map.off("load", onLoad);
-      }
+      cancelled = true;
       const draw = drawRef.current;
       if (draw) {
         try {
