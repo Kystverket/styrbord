@@ -266,12 +266,15 @@ export function GeoJsonEditor({
     [setTerraActiveMode, directionalPoints],
   );
 
-  // Keep combinedMode in sync with terra-draw's mode changes (e.g. auto-deselect)
+  // Keep combinedMode in sync with terra-draw's mode changes (e.g. auto-deselect).
+  // Only react to terraActiveMode changes — not combinedMode — to avoid a
+  // feedback loop where a deliberate setCombinedMode is immediately reverted
+  // when terraActiveMode hasn't updated yet (e.g. draw not ready).
   useEffect(() => {
-    if (combinedMode !== "directional-point") {
-      setCombinedMode(terraActiveMode);
-    }
-  }, [terraActiveMode, combinedMode]);
+    setCombinedMode((prev) =>
+      prev === "directional-point" ? prev : terraActiveMode,
+    );
+  }, [terraActiveMode]);
 
   // Combined selection state
   const hasSelection = terraHasSelection || directionalPoints.hasSelection;
@@ -695,7 +698,7 @@ export function GeoJsonEditor({
         .join(" ")}
     >
       <div ref={mapContainerRef} className={mapStyles.mapContainer}>
-        {!disabled && !singleFeature && (
+        {!disabled && !singleFeature && terraDrawReady && (
           <GeoJsonEditorToolbar
             modes={modes}
             activeMode={combinedMode}
