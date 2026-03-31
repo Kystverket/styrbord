@@ -1,6 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
-import "maplibre-gl/dist/maplibre-gl.css";
 import type { Coordinate } from "~/utility/types";
 import {
   clampLatitude,
@@ -296,15 +295,6 @@ export function useMaplibreMap({
       }
 
       // 2. Add new layers / update visibility
-      // Insert overlay layers below terra-draw's drawing layers (prefixed
-      // "td-") so that drawn features always remain visible on top of
-      // overlay/WMS layers.  When terra-draw hasn't started yet the
-      // value is undefined and addLayer appends at the top (terra-draw
-      // will later add its own layers above).
-      const firstTdLayerId = map
-        .getStyle()
-        .layers?.find((l) => l.id.startsWith("td-"))?.id;
-
       for (const def of allDefs) {
         const isOnMap = previousIds.has(def.id);
         const shouldBeVisible = allVisibleIds.has(def.id);
@@ -319,7 +309,7 @@ export function useMaplibreMap({
           // Add layers
           for (const layerSpec of def.layers) {
             if (!map.getLayer(layerSpec.id)) {
-              map.addLayer(layerSpec, firstTdLayerId);
+              map.addLayer(layerSpec);
             }
             map.setLayoutProperty(
               layerSpec.id,

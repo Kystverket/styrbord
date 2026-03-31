@@ -1,5 +1,7 @@
 import { PartialStoryFn } from "storybook/internal/types";
 
+import "./storybook-style.scss";
+
 import {
   STYRBORD_KART_TRANSLATIONS_NAMESPACE,
   StyrbordKartTranslations,
