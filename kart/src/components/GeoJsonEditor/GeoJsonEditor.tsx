@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useMemo, useState, useCallback, useRef } from "react";
 import type {
   FeatureCollection,
@@ -698,7 +700,7 @@ export function GeoJsonEditor({
         .join(" ")}
     >
       <div ref={mapContainerRef} className={mapStyles.mapContainer}>
-        {!disabled && !singleFeature && terraDrawReady && (
+        {!disabled && !singleFeature && (
           <GeoJsonEditorToolbar
             modes={modes}
             activeMode={combinedMode}

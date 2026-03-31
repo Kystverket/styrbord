@@ -395,15 +395,18 @@ export function useTerraDraw({
       setIsReady(true);
     };
 
-    // Initialise when the map style is loaded
-    if (map.isStyleLoaded()) {
-      initDraw();
-    } else {
-      map.on("load", initDraw);
-    }
+    // Always attempt initialisation immediately. The map was created with an
+    // inline empty style that is parsed synchronously, so addSource/addLayer
+    // are safe to call as soon as `mapReady` is true.
+    //
+    // We must NOT use `map.isStyleLoaded()` here because it returns `false`
+    // while ANY tile source is still loading (including base-layer tiles added
+    // by a preceding effect). Falling through to `map.on("load", …)` would
+    // then silently fail because the one-shot "load" event already fired for
+    // the initial inline style.
+    initDraw();
 
     return () => {
-      map.off("load", initDraw);
       const draw = drawRef.current;
       if (draw) {
         try {

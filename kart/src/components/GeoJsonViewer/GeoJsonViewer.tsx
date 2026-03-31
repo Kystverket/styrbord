@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useMemo, useState, useCallback, useRef } from "react";
 import type { GeoJSONSource } from "maplibre-gl";
 import type maplibregl from "maplibre-gl";
