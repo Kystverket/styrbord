@@ -576,13 +576,13 @@
 <header>
   <div class="wrap">
     <h1>Manifest Debugger</h1>
-    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">1/7 prop type error</a><a class="filter-pill info" data-k="infos" href="#filter-infos">2/7 infos</a><a class="filter-pill err" data-k="story-errors" href="#filter-story-errors">1/45 story errors</a><a class="filter-pill ok" data-k="docs" href="#filter-docs">1 doc ok</a></div>
+    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">1/7 prop type error</a><a class="filter-pill info" data-k="infos" href="#filter-infos">2/7 infos</a><a class="filter-pill err" data-k="story-errors" href="#filter-story-errors">1/47 story errors</a><a class="filter-pill ok" data-k="docs" href="#filter-docs">1 doc ok</a></div>
   </div>
 </header>
 <main>
   <div class="wrap">
     <div class="note info" style="margin-bottom: 16px;">
-            <strong>Tip:</strong> You are using <code>react-docgen</code> (the default). Generation took <strong>0.9s</strong>. For higher quality prop types, consider switching to <code>react-docgen-typescript</code> in your <code>main.ts</code>:
+            <strong>Tip:</strong> You are using <code>react-docgen</code> (the default). Generation took <strong>0.8s</strong>. For higher quality prop types, consider switching to <code>react-docgen-typescript</code> in your <code>main.ts</code>:
             <pre><code>typescript: {
   reactDocgen: 'react-docgen-typescript',
 }</code></pre>
@@ -1422,7 +1422,7 @@ value?: | Feature&lt;Geometry, GeoJsonProperties&gt;
       <div class="badges">
         <label for="c-3-kart-geojsonviewer-props" class="badge ok as-toggle">16 prop types</label>
         
-        <label for="c-3-kart-geojsonviewer-stories" class="badge ok as-toggle">12 stories</label>
+        <label for="c-3-kart-geojsonviewer-stories" class="badge ok as-toggle">14 stories</label>
         
       </div>
     </div>
@@ -1458,6 +1458,10 @@ className?: string
 
 /**
  * GeoJSON data to display on the map. Accepts a Feature or FeatureCollection.
+ * 
+ * Individual features can include {@link FeatureStyleProperties} in their
+ * `properties` object to override the global `geoJsonStyle` defaults on a
+ * per-feature basis (e.g. different fill colors per polygon).
  */
 data: | Feature&lt;Geometry, GeoJsonProperties&gt;
 | FeatureCollection&lt;Geometry, GeoJsonProperties&gt;
@@ -1798,6 +1802,57 @@ showLayerToggle?: boolean = true</code></pre>
         &lt;/WmsCatalogLayersProvider&gt;
     &lt;/BaseLayersProvider&gt;
 &lt;/ViewBoundsProvider&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Per Feature Styling</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const PerFeatureStyling = () =&gt; &lt;GeoJsonViewer
+    data={perFeatureStyledData}
+    height=&quot;600px&quot;
+    hoverable
+    selectable
+    getLabel={(feature) =&gt; feature.properties?.name ?? null} /&gt;;</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">Ismeldinger</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const Ismeldinger = () =&gt; &lt;GeoJsonViewer
+    data={issoner as FeatureCollection}
+    height=&quot;500px&quot;
+    hoverable
+    hoverContent={{
+      _: (feature) =&gt; (
+        &lt;div style={{ padding: &quot;4px 0&quot; }}&gt;
+          &lt;div&gt;{feature.properties?.name}&lt;/div&gt;
+          &lt;div style={{ fontSize: &quot;0.85em&quot;, color: &quot;#666&quot; }}&gt;
+            Kode: {feature.properties?.kode}
+          &lt;/div&gt;
+          {feature.properties?.tidspunkt &amp;&amp; (
+            &lt;div style={{ fontSize: &quot;0.85em&quot;, color: &quot;#666&quot; }}&gt;
+              Tidspunkt: {feature.properties?.tidspunkt}
+            &lt;/div&gt;
+          )}
+          {feature.properties?.kommentar &amp;&amp; (
+            &lt;div style={{ fontSize: &quot;0.85em&quot;, color: &quot;#666&quot; }}&gt;
+              Kommentar: {feature.properties?.kommentar}
+            &lt;/div&gt;
+          )}
+        &lt;/div&gt;
+      ),
+    }}
+    onHover={(feature) =&gt; {
+      if (feature) {
+        console.log(&quot;Hovering:&quot;, feature.properties?.name);
+      }
+    }} /&gt;;</code></pre>
             </div>
         </div>
     
