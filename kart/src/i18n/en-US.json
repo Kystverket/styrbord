@@ -30,6 +30,7 @@
   },
   "toolbar": {
     "delete": "Delete selected",
+    "import": "Import GeoJSON",
     "select": "Select/edit"
   }
 }

@@ -1,6 +1,12 @@
 import { useEffect, useMemo, useState, useCallback, useRef } from "react";
 import type { GeoJSONSource } from "maplibre-gl";
 import type maplibregl from "maplibre-gl";
+import type {
+  Feature,
+  FeatureCollection,
+  Geometry,
+  GeoJsonProperties,
+} from "geojson";
 
 import styles from "~/components/shared/MapPicker.module.css";
 import type { GeoJsonStyle, GeoJsonViewerProps } from "./GeoJsonViewer.types";
@@ -20,12 +26,12 @@ import {
   POINT_STROKE_LAYER,
   SOURCE_ID,
   INTERACTIVE_LAYERS,
+  LABEL_LAYER,
   removeLayers,
   toFeatureCollection,
   addHighlightLayers,
   updateHoverHighlight,
   updateSelectionHighlight,
-  addLabelLayer,
 } from "./GeoJsonViewer.utils";
 import { LayerToggle } from "../LayerToggle/LayerToggle";
 import { GeoJsonViewerHoverPopup } from "./GeoJsonViewerHoverPopup";
@@ -34,6 +40,12 @@ import { MapCenterAction } from "../shared/MapCenterAction";
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
+
+const LABEL_SOURCE = "geojson-viewer-labels";
+
+/** Stable default for the `getLabel` prop — avoids a new function reference on every render. */
+const DEFAULT_GET_LABEL = (feature: Feature<Geometry, GeoJsonProperties>) =>
+  feature.properties?.nummer ? `#${feature.properties.nummer}` : undefined;
 
 /**
  * GeoJsonViewer — display GeoJSON data on an interactive Kartverket map.
@@ -60,7 +72,7 @@ export function GeoJsonViewer({
   hoverContent,
   onCoordinateClick,
   showCenterAction,
-  labelProperty = "nummer",
+  getLabel = DEFAULT_GET_LABEL,
 }: GeoJsonViewerProps) {
   const layerStyle: Required<GeoJsonStyle> = {
     ...DEFAULT_STYLE,
@@ -239,11 +251,6 @@ export function GeoJsonViewer({
         // Add highlight layers for hover and selection effects
         addHighlightLayers(map, layerStyle);
 
-        // Add label layer if a property key is specified
-        if (labelProperty) {
-          addLabelLayer(map, labelProperty);
-        }
-
         // Mark layers as ready for interaction
         setLayersReady(true);
 
@@ -297,7 +304,96 @@ export function GeoJsonViewer({
       setLayersReady(false);
       removeLayers(map);
     };
-  }, [fc, mapRef, mapReady, labelProperty]);
+  }, [fc, mapRef, mapReady]);
+
+  // ----- Feature labels -----
+  // Renders a symbol layer with labels computed via getLabel().
+  // Uses a dedicated GeoJSON source so label text can be computed dynamically.
+  const getLabelRef = useRef(getLabel);
+  getLabelRef.current = getLabel;
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapReady) return;
+
+    const ensureLayer = () => {
+      if (!map.getSource(LABEL_SOURCE)) {
+        map.addSource(LABEL_SOURCE, {
+          type: "geojson",
+          data: { type: "FeatureCollection", features: [] },
+        });
+      }
+      if (!map.getLayer(LABEL_LAYER)) {
+        map.addLayer({
+          id: LABEL_LAYER,
+          type: "symbol",
+          source: LABEL_SOURCE,
+          layout: {
+            "text-field": ["get", "_label"],
+            "text-size": 16,
+            "text-anchor": "left",
+            "text-offset": [1.2, 0],
+            "text-allow-overlap": true,
+            "text-optional": false,
+          },
+          paint: {
+            "text-color": "#1a1a1a",
+            "text-halo-color": "#ffffff",
+            "text-halo-width": 2,
+          },
+        });
+      }
+    };
+
+    if (map.isStyleLoaded()) {
+      ensureLayer();
+    } else {
+      map.once("load", ensureLayer);
+    }
+
+    return () => {
+      try {
+        if (map.getLayer(LABEL_LAYER)) map.removeLayer(LABEL_LAYER);
+        if (map.getSource(LABEL_SOURCE)) map.removeSource(LABEL_SOURCE);
+      } catch {
+        // map may already be destroyed
+      }
+    };
+  }, [mapRef, mapReady]);
+
+  // Update label data whenever fc or getLabel changes.
+  useEffect(() => {
+    const map = mapRef.current;
+    const currentGetLabel = getLabelRef.current;
+    if (!map || !mapReady || !currentGetLabel) return;
+
+    const labelledFc: FeatureCollection =
+      fc && fc.features.length > 0
+        ? {
+            type: "FeatureCollection",
+            features: fc.features.map((feature) => ({
+              ...feature,
+              properties: {
+                ...feature.properties,
+                _label: currentGetLabel(feature) ?? "",
+              },
+            })),
+          }
+        : { type: "FeatureCollection", features: [] };
+
+    const updateData = () => {
+      const src = map.getSource(LABEL_SOURCE) as maplibregl.GeoJSONSource;
+      if (src) {
+        src.setData(labelledFc as GeoJSON.FeatureCollection);
+      }
+    };
+
+    if (map.isStyleLoaded()) {
+      updateData();
+    } else {
+      map.once("load", updateData);
+    }
+  }, [mapRef, mapReady, fc]);
 
   return (
     <div

@@ -7,6 +7,8 @@ import type {
 import type { ReactNode } from "react";
 import type maplibregl from "maplibre-gl";
 
+import type { ImportErrorReason } from "./GeoJsonEditorToolbar";
+
 import type { MapBaseProps } from "../shared/MapPicker.types";
 import type { InteractiveFeature } from "~/hooks/useFeatureInteraction";
 import type { CoordinateClickResult } from "~/utility/wmsGetFeatureInfo";
@@ -82,6 +84,12 @@ export interface GeoJsonEditorProps extends MapBaseProps {
    * results for all visible WMS catalog layers.
    */
   onCoordinateClick?: (result: CoordinateClickResult) => void;
+
+  /**
+   * Called when a GeoJSON file import fails.
+   * Receives a machine-readable reason and a human-readable detail message.
+   */
+  onImportError?: (reason: ImportErrorReason, detail: string) => void;
 
   /**
    * When `true`, only one feature can exist at a time. The feature type is

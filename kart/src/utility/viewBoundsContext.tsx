@@ -1,6 +1,10 @@
 import React, { createContext, ReactNode } from "react";
 import type { Coordinate } from "~/utility/types";
-import { DEFAULT_CENTER, DEFAULT_ZOOM } from "~/utility/mapStyle";
+import {
+  DEFAULT_BOUNDS,
+  DEFAULT_CENTER,
+  DEFAULT_ZOOM,
+} from "~/utility/mapStyle";
 
 interface ViewBoundsContextProps {
   viewBounds?: number[][][] | undefined;
@@ -9,12 +13,15 @@ interface ViewBoundsContextProps {
   defaultCenter: Coordinate;
   /** Default zoom level of all maps inside this provider. */
   defaultZoom: number;
+  /** Default bounds used to fit the map on init. Defaults to mainland Norway. */
+  defaultBounds: [[number, number], [number, number]];
 }
 
 export const ViewBoundsContext = createContext<ViewBoundsContextProps>({
   setViewBounds: (_viewBounds: number[][][] | undefined) => {},
   defaultCenter: DEFAULT_CENTER,
   defaultZoom: DEFAULT_ZOOM,
+  defaultBounds: DEFAULT_BOUNDS,
 });
 
 export interface ViewBoundsProviderProps {
@@ -23,12 +30,15 @@ export interface ViewBoundsProviderProps {
   defaultCenter?: Coordinate;
   /** Initial zoom level of the map. Defaults to 5. */
   defaultZoom?: number;
+  /** Initial bounds used to fit the map on init. Defaults to mainland Norway. */
+  defaultBounds?: [[number, number], [number, number]];
 }
 
 export const ViewBoundsProvider = ({
   children,
   defaultCenter = DEFAULT_CENTER,
   defaultZoom = DEFAULT_ZOOM,
+  defaultBounds = DEFAULT_BOUNDS,
 }: ViewBoundsProviderProps) => {
   const [viewBounds, setViewBounds] = React.useState<number[][][] | undefined>(
     undefined,
@@ -45,6 +55,7 @@ export const ViewBoundsProvider = ({
         setViewBounds: updateViewBounds,
         defaultCenter,
         defaultZoom,
+        defaultBounds,
       }}
     >
       {children}

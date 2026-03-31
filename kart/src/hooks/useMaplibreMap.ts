@@ -50,8 +50,7 @@ export function useMaplibreMap({
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const [mapReady, setMapReady] = useState(false);
-  const { viewBounds, defaultCenter, defaultZoom } =
-    useContext(ViewBoundsContext);
+  const { viewBounds, defaultBounds } = useContext(ViewBoundsContext);
 
   // ----- Layer contexts (all optional — graceful when no provider is present) -----
   const baseCtx = useContext(BaseLayersContext);
@@ -108,17 +107,24 @@ export function useMaplibreMap({
     const createMap = () => {
       if (mapRef.current) return; // guard against double-create (e.g. React StrictMode)
 
-      const center: [number, number] = initialCoordinate
-        ? [initialCoordinate.longitude, initialCoordinate.latitude]
-        : [defaultCenter.longitude, defaultCenter.latitude];
-
-      const map = new maplibregl.Map({
+      const mapOptions: maplibregl.MapOptions = {
         container,
         style: EMPTY_STYLE,
-        center,
-        zoom: initialCoordinate ? 14 : defaultZoom,
         attributionControl: {},
-      });
+      };
+
+      if (initialCoordinate) {
+        mapOptions.center = [
+          initialCoordinate.longitude,
+          initialCoordinate.latitude,
+        ];
+        mapOptions.zoom = 14;
+      } else {
+        mapOptions.bounds = defaultBounds;
+        mapOptions.fitBoundsOptions = { padding: 20 };
+      }
+
+      const map = new maplibregl.Map(mapOptions);
 
       mapRef.current = map;
       setMapReady(true);

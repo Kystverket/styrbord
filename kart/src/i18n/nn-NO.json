@@ -30,6 +30,7 @@
   },
   "toolbar": {
     "delete": "Slett valt",
+    "import": "Importer GeoJSON",
     "select": "Vel/rediger"
   }
 }

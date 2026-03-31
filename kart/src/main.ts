@@ -20,6 +20,7 @@ export type {
   GeoJsonEditorProps,
   DrawMode,
 } from "./components/GeoJsonEditor/GeoJsonEditor.types";
+export type { ImportErrorReason } from "./components/GeoJsonEditor/GeoJsonEditorToolbar";
 
 export { GeoJsonAnnotater } from "./components/GeoJsonAnnotater/GeoJsonAnnotater";
 export type { GeoJsonAnnotaterProps } from "./components/GeoJsonAnnotater/GeoJsonAnnotater";
@@ -59,6 +60,7 @@ export { buildGetFeatureInfoUrl } from "./utility/wmsGetFeatureInfo";
 export {
   EMPTY_STYLE,
   KARTVERKET_TOPO_BASE_LAYER,
+  DEFAULT_BOUNDS,
   DEFAULT_CENTER,
   DEFAULT_ZOOM,
 } from "./utility/mapStyle";

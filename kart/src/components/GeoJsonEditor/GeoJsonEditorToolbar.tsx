@@ -1,4 +1,5 @@
-import type { ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
+import type { FeatureCollection } from "geojson";
 import styles from "./GeoJsonEditor.module.css";
 import type { DrawMode } from "./GeoJsonEditor.types";
 import { useTranslation } from "~/translations";
@@ -80,6 +81,18 @@ const DirectionalPointIcon = () => (
   </svg>
 );
 
+const ImportIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    height="20px"
+    viewBox="0 -960 960 960"
+    width="20px"
+    fill="currentColor"
+  >
+    <path d="M440-200h80v-167l64 64 56-57-160-160-160 160 57 56 63-63v167ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z" />
+  </svg>
+);
+
 // ---------------------------------------------------------------------------
 // Icons map
 // ---------------------------------------------------------------------------
@@ -99,6 +112,92 @@ const MODE_LABEL_KEYS: Record<DrawMode, string> = {
 };
 
 // ---------------------------------------------------------------------------
+// GeoJSON file import helper
+// ---------------------------------------------------------------------------
+
+export type ImportErrorReason =
+  | "invalid-json"
+  | "not-geojson"
+  | "empty-collection";
+
+type ParseResult =
+  | { ok: true; data: FeatureCollection }
+  | { ok: false; reason: ImportErrorReason; detail: string };
+
+function parseGeoJsonFile(text: string): ParseResult {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(text);
+  } catch (e) {
+    return {
+      ok: false,
+      reason: "invalid-json",
+      detail: e instanceof Error ? e.message : String(e),
+    };
+  }
+
+  if (typeof parsed !== "object" || parsed === null) {
+    return {
+      ok: false,
+      reason: "not-geojson",
+      detail: `Expected a JSON object but got ${parsed === null ? "null" : typeof parsed}`,
+    };
+  }
+
+  const obj = parsed as Record<string, unknown>;
+
+  if (obj.type === "FeatureCollection" && Array.isArray(obj.features)) {
+    const fc = obj as unknown as FeatureCollection;
+    if (fc.features.length === 0) {
+      return {
+        ok: false,
+        reason: "empty-collection",
+        detail: "FeatureCollection contains no features",
+      };
+    }
+    return { ok: true, data: fc };
+  }
+
+  if (obj.type === "Feature" && obj.geometry) {
+    return {
+      ok: true,
+      data: {
+        type: "FeatureCollection",
+        features: [obj as unknown as FeatureCollection["features"][number]],
+      },
+    };
+  }
+
+  // Bare Geometry object — wrap it
+  if (
+    typeof obj.type === "string" &&
+    (obj.coordinates || obj.geometries) &&
+    !obj.features
+  ) {
+    return {
+      ok: true,
+      data: {
+        type: "FeatureCollection",
+        features: [
+          {
+            type: "Feature",
+            properties: {},
+            geometry:
+              obj as unknown as FeatureCollection["features"][number]["geometry"],
+          },
+        ],
+      },
+    };
+  }
+
+  return {
+    ok: false,
+    reason: "not-geojson",
+    detail: `Unrecognised GeoJSON type: ${typeof obj.type === "string" ? obj.type : "(missing)"}`,
+  };
+}
+
+// ---------------------------------------------------------------------------
 // Toolbar
 // ---------------------------------------------------------------------------
 
@@ -110,6 +209,8 @@ interface GeoJsonEditorToolbarProps {
   editable: boolean;
   onSetMode: (mode: string) => void;
   onDelete: () => void;
+  onImport: (data: FeatureCollection) => void;
+  onImportError?: (reason: ImportErrorReason, detail: string) => void;
 }
 
 export function GeoJsonEditorToolbar({
@@ -120,11 +221,52 @@ export function GeoJsonEditorToolbar({
   editable,
   onSetMode,
   onDelete,
+  onImport,
+  onImportError,
 }: GeoJsonEditorToolbarProps) {
   const { t } = useTranslation();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const text = reader.result;
+      if (typeof text !== "string") return;
+
+      const result = parseGeoJsonFile(text);
+      if (result.ok) {
+        onImport(result.data);
+      } else {
+        console.warn(
+          `GeoJsonEditor: import failed (${result.reason}) — ${result.detail}`,
+        );
+        onImportError?.(result.reason, result.detail);
+      }
+    };
+    reader.onerror = () => {
+      const detail = reader.error?.message ?? "Unknown read error";
+      console.warn(`GeoJsonEditor: failed to read file — ${detail}`);
+      onImportError?.("invalid-json", detail);
+    };
+    reader.readAsText(file);
+
+    // Reset so re-selecting the same file triggers onChange again
+    e.target.value = "";
+  };
 
   return (
     <div className={styles.toolbar}>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".geojson,.json,application/geo+json,application/json"
+        style={{ display: "none" }}
+        onChange={handleFileChange}
+      />
+
       {modes.map((mode) => {
         const Icon = MODE_ICONS[mode];
         const isActive = activeMode === mode;
@@ -144,6 +286,17 @@ export function GeoJsonEditorToolbar({
           </button>
         );
       })}
+
+      <div className={styles.toolbarDivider} />
+      <button
+        type="button"
+        title={t("toolbar.import")}
+        aria-label={t("toolbar.import")}
+        className={styles.toolbarButton}
+        onClick={() => fileInputRef.current?.click()}
+      >
+        <ImportIcon />
+      </button>
 
       {editable && (
         <>
