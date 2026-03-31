@@ -922,7 +922,7 @@ value: CoordinateGeoJSON | undefined</code></pre>
     <div class="title">
       <h2><span class="status-dot dot-ok"></span> GeoJsonEditor</h2>
       <div class="badges">
-        <label for="c-2-kart-geojsoneditor-props" class="badge ok as-toggle">19 prop types</label>
+        <label for="c-2-kart-geojsoneditor-props" class="badge ok as-toggle">20 prop types</label>
         
         <label for="c-2-kart-geojsoneditor-stories" class="badge ok as-toggle">14 stories</label>
         
@@ -949,7 +949,7 @@ value: CoordinateGeoJSON | undefined</code></pre>
           <div class="note ok">
             <div class="row">
               <span class="ex-name">Prop types <small>(react-docgen)</small></span>
-              <span class="badge ok">19 prop types</span>
+              <span class="badge ok">20 prop types</span>
             </div>
             <pre><code>Component: src/components/GeoJsonEditor/GeoJsonEditor.tsx::GeoJsonEditor</code></pre>
             <pre><code>Props:</code></pre>
@@ -986,7 +986,8 @@ fitBoundsPadding?: number = 40
 
 getLabel?: (
   feature: Feature&lt;Geometry, GeoJsonProperties&gt;,
-) =&gt; string | number | null | undefined = (feature) =&gt; `#${feature.properties?.nummer}`
+) =&gt; string | number | null | undefined = (feature: Feature&lt;Geometry, GeoJsonProperties&gt;) =&gt;
+feature.properties?.nummer ? `#${feature.properties.nummer}` : undefined
 
 /**
  * Height of the map container. Defaults to `&quot;400px&quot;`.
@@ -1033,6 +1034,12 @@ onHover?: (
   feature: InteractiveFeature | null,
   event: maplibregl.MapMouseEvent | null,
 ) =&gt; void
+
+/**
+ * Called when a GeoJSON file import fails.
+ * Receives a machine-readable reason and a human-readable detail message.
+ */
+onImportError?: (reason: ImportErrorReason, detail: string) =&gt; void
 
 /**
  * Called when the selection changes (via click or terra-draw selection).
@@ -1477,6 +1484,16 @@ fitBoundsPadding?: number = 40
 geoJsonStyle?: GeoJsonStyle
 
 /**
+ * Function that computes a label for each feature. Return `null` or
+ * `undefined` to skip labelling a feature. Defaults to showing
+ * `#&lt;nummer&gt;` when a `nummer` property exists.
+ */
+getLabel?: (
+  feature: Feature&lt;Geometry, GeoJsonProperties&gt;,
+) =&gt; string | number | null | undefined = (feature: Feature&lt;Geometry, GeoJsonProperties&gt;) =&gt;
+feature.properties?.nummer ? `#${feature.properties.nummer}` : undefined
+
+/**
  * Height of the map container. Defaults to `&quot;400px&quot;`.
  */
 height?: string
@@ -1494,12 +1511,6 @@ hoverable?: boolean = true
  * If a feature&#39;s type is not in this map, the default content (type name) is shown.
  */
 hoverContent?: Record&lt;string, (feature: InteractiveFeature) =&gt; ReactNode&gt;
-
-/**
- * Feature property key whose value is rendered as a label next to each feature.
- * Set to `false` to disable labels. Defaults to `&quot;nummer&quot;`.
- */
-labelProperty?: string | false = &quot;nummer&quot;
 
 /**
  * Called when the user clicks on the map. The result includes the clicked
