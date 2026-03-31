@@ -50,8 +50,7 @@ export function useMaplibreMap({
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const [mapReady, setMapReady] = useState(false);
-  const { viewBounds, defaultCenter, defaultZoom, defaultBounds } =
-    useContext(ViewBoundsContext);
+  const { viewBounds, defaultBounds } = useContext(ViewBoundsContext);
 
   // ----- Layer contexts (all optional — graceful when no provider is present) -----
   const baseCtx = useContext(BaseLayersContext);
