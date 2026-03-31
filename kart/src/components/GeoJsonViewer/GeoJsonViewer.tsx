@@ -32,6 +32,7 @@ import {
   addHighlightLayers,
   updateHoverHighlight,
   updateSelectionHighlight,
+  featureExpr,
 } from "./GeoJsonViewer.utils";
 import { LayerToggle } from "../LayerToggle/LayerToggle";
 import { GeoJsonViewerHoverPopup } from "./GeoJsonViewerHoverPopup";
@@ -197,14 +198,20 @@ export function GeoJsonViewer({
           map.addSource(SOURCE_ID, { type: "geojson", data: fc });
         }
 
-        // Add layers (idempotent — skipped if they already exist)
+        // Add layers (idempotent — skipped if they already exist).
+        // Paint properties use data-driven expressions so that individual
+        // features can override the global style via their `properties`
+        // (e.g. `properties.fillColor`, `properties.lineColor`).
         if (!map.getLayer(FILL_LAYER)) {
           map.addLayer({
             id: FILL_LAYER,
             type: "fill",
             source: SOURCE_ID,
             layout: { visibility: "visible" },
-            paint: { "fill-color": layerStyle.fillColor },
+            paint: {
+              "fill-color": featureExpr("fillColor", layerStyle.fillColor),
+              "fill-opacity": featureExpr("fillOpacity", 1),
+            },
           });
         }
 
@@ -215,8 +222,8 @@ export function GeoJsonViewer({
             source: SOURCE_ID,
             layout: { visibility: "visible" },
             paint: {
-              "line-color": layerStyle.lineColor,
-              "line-width": layerStyle.lineWidth,
+              "line-color": featureExpr("lineColor", layerStyle.lineColor),
+              "line-width": featureExpr("lineWidth", layerStyle.lineWidth),
             },
           });
         }
@@ -228,9 +235,15 @@ export function GeoJsonViewer({
             source: SOURCE_ID,
             layout: { visibility: "visible" },
             paint: {
-              "circle-radius":
-                layerStyle.pointRadius + layerStyle.pointStrokeWidth,
-              "circle-color": layerStyle.pointStrokeColor,
+              "circle-radius": [
+                "+",
+                featureExpr("pointRadius", layerStyle.pointRadius),
+                featureExpr("pointStrokeWidth", layerStyle.pointStrokeWidth),
+              ] as unknown as maplibregl.ExpressionSpecification,
+              "circle-color": featureExpr(
+                "pointStrokeColor",
+                layerStyle.pointStrokeColor,
+              ),
             },
           });
         }
@@ -242,8 +255,11 @@ export function GeoJsonViewer({
             source: SOURCE_ID,
             layout: { visibility: "visible" },
             paint: {
-              "circle-radius": layerStyle.pointRadius,
-              "circle-color": layerStyle.pointColor,
+              "circle-radius": featureExpr(
+                "pointRadius",
+                layerStyle.pointRadius,
+              ),
+              "circle-color": featureExpr("pointColor", layerStyle.pointColor),
             },
           });
         }

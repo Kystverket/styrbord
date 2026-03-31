@@ -60,6 +60,25 @@ export const SELECTED_COLOR = "#0062ba";
 export const SELECTED_GLOW_COLOR = "rgba(0, 98, 186, 0.5)";
 
 // ---------------------------------------------------------------------------
+// Data-driven styling helpers
+// ---------------------------------------------------------------------------
+
+/**
+ * Build a MapLibre expression that reads a feature property and falls back to
+ * a default value when the property is not present.
+ *
+ * This enables per-feature styling: consumers can set e.g.
+ * `properties.fillColor = "#ff0000"` on individual features to override the
+ * global default.
+ */
+export function featureExpr(
+  propertyName: string,
+  fallback: string | number,
+): maplibregl.ExpressionSpecification {
+  return ["coalesce", ["get", propertyName], fallback];
+}
+
+// ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 

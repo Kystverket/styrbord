@@ -8,6 +8,7 @@ import { BaseLayersProvider } from "~/utility/baseLayersContext";
 import { BuiltInLayersProvider } from "~/utility/builtInLayersContext";
 import { WmsCatalogLayersProvider } from "~/utility/wmsCatalogLayersContext";
 import { CustomLayersProvider } from "~/utility/customLayersContext";
+import issoner from "./issoner.json";
 
 const meta = {
   title: "Kart/GeoJsonViewer",
@@ -568,6 +569,191 @@ export const CoordinateClick: Story = {
         story:
           "Click on the map to trigger `onCoordinateClick`. Enable WMS catalog layers via the layer toggle, then click to see GetFeatureInfo results logged to the console. Open the browser console or the Storybook Actions panel to see the output.",
       },
+    },
+  },
+};
+
+// ---- Per-feature styling ----
+// Each feature carries its own style properties, overriding the global defaults.
+const perFeatureStyledData: FeatureCollection = {
+  type: "FeatureCollection",
+  features: [
+    {
+      id: 1,
+      type: "Feature",
+      properties: {
+        name: "Grønt område – Stavanger",
+        fillColor: "rgba(34, 139, 34, 0.3)",
+        lineColor: "#228b22",
+        lineWidth: 3,
+      },
+      geometry: {
+        type: "Polygon",
+        coordinates: [
+          [
+            [5.726, 58.975],
+            [5.726, 58.969],
+            [5.738, 58.969],
+            [5.738, 58.975],
+            [5.726, 58.975],
+          ],
+        ],
+      },
+    },
+    {
+      id: 2,
+      type: "Feature",
+      properties: {
+        name: "Raudt område – Bergen",
+        fillColor: "rgba(220, 20, 60, 0.3)",
+        fillOpacity: 0.4,
+        lineColor: "#dc143c",
+        lineWidth: 2,
+      },
+      geometry: {
+        type: "Polygon",
+        coordinates: [
+          [
+            [5.308, 60.401],
+            [5.308, 60.393],
+            [5.321, 60.393],
+            [5.321, 60.401],
+            [5.308, 60.401],
+          ],
+        ],
+      },
+    },
+    {
+      id: 3,
+      type: "Feature",
+      properties: {
+        name: "Blå rute – Skagerrak",
+        lineColor: "#1e90ff",
+        lineWidth: 4,
+      },
+      geometry: {
+        type: "LineString",
+        coordinates: [
+          [10.757, 59.912],
+          [10.22, 59.13],
+          [9.61, 58.68],
+          [8.76, 58.46],
+        ],
+      },
+    },
+    {
+      id: 4,
+      type: "Feature",
+      properties: {
+        name: "Oransje rute – Vestlandet",
+        lineColor: "#ff8c00",
+        lineWidth: 5,
+      },
+      geometry: {
+        type: "LineString",
+        coordinates: [
+          [5.733, 58.973],
+          [5.322, 60.391],
+          [5.018, 62.335],
+        ],
+      },
+    },
+    {
+      id: 5,
+      type: "Feature",
+      properties: {
+        name: "Lindesnes fyr",
+        pointColor: "#ff4500",
+        pointRadius: 10,
+        pointStrokeColor: "#ffffff",
+        pointStrokeWidth: 3,
+      },
+      geometry: { type: "Point", coordinates: [7.0485, 57.9825] },
+    },
+    {
+      id: 6,
+      type: "Feature",
+      properties: {
+        name: "Runde fyr",
+        pointColor: "#9400d3",
+        pointRadius: 8,
+        pointStrokeColor: "#ffffff",
+        pointStrokeWidth: 2,
+      },
+      geometry: { type: "Point", coordinates: [5.018, 62.335] },
+    },
+    {
+      id: 7,
+      type: "Feature",
+      properties: {
+        name: "Standardområde – Tromsø (bruker global stil)",
+      },
+      geometry: {
+        type: "Polygon",
+        coordinates: [
+          [
+            [18.94, 69.655],
+            [18.94, 69.645],
+            [18.97, 69.645],
+            [18.97, 69.655],
+            [18.94, 69.655],
+          ],
+        ],
+      },
+    },
+  ],
+};
+
+export const PerFeatureStyling: Story = {
+  args: {
+    data: perFeatureStyledData,
+    height: "600px",
+    hoverable: true,
+    selectable: true,
+    getLabel: (feature) => feature.properties?.name ?? null,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Demonstrates per-feature styling. Each feature carries style overrides " +
+          "(`fillColor`, `lineColor`, `lineWidth`, `pointColor`, `pointRadius`, etc.) " +
+          "in its `properties` object. Features without style properties fall back to " +
+          "the global `geoJsonStyle` defaults. The Tromsø polygon uses the default style.",
+      },
+    },
+  },
+};
+
+export const Ismeldinger: Story = {
+  args: {
+    data: issoner as FeatureCollection,
+    height: "500px",
+    hoverable: true,
+    hoverContent: {
+      _: (feature) => (
+        <div style={{ padding: "4px 0" }}>
+          <div>{feature.properties?.name}</div>
+          <div style={{ fontSize: "0.85em", color: "#666" }}>
+            Kode: {feature.properties?.kode}
+          </div>
+          {feature.properties?.tidspunkt && (
+            <div style={{ fontSize: "0.85em", color: "#666" }}>
+              Tidspunkt: {feature.properties?.tidspunkt}
+            </div>
+          )}
+          {feature.properties?.kommentar && (
+            <div style={{ fontSize: "0.85em", color: "#666" }}>
+              Kommentar: {feature.properties?.kommentar}
+            </div>
+          )}
+        </div>
+      ),
+    },
+    onHover: (feature) => {
+      if (feature) {
+        console.log("Hovering:", feature.properties?.name);
+      }
     },
   },
 };

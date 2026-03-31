@@ -12,7 +12,46 @@ import type { InteractiveFeature } from "~/hooks/useFeatureInteraction";
 import type { CoordinateClickResult } from "~/utility/wmsGetFeatureInfo";
 
 /**
+ * Per-feature style properties that can be set on individual GeoJSON feature
+ * `properties` to override the global `geoJsonStyle` defaults.
+ *
+ * Any feature that does **not** include a given property will fall back to
+ * the corresponding value from the `geoJsonStyle` prop (or its default).
+ *
+ * @example
+ * ```json
+ * {
+ *   "type": "Feature",
+ *   "properties": { "fillColor": "#ff0000", "fillOpacity": 0.5 },
+ *   "geometry": { "type": "Polygon", "coordinates": [...] }
+ * }
+ * ```
+ */
+export interface FeatureStyleProperties {
+  /** Fill color for this polygon feature. */
+  fillColor?: string;
+  /** Fill opacity for this polygon feature (0–1). */
+  fillOpacity?: number;
+  /** Line/outline color for this feature. */
+  lineColor?: string;
+  /** Line width in pixels for this feature. */
+  lineWidth?: number;
+  /** Point circle color for this feature. */
+  pointColor?: string;
+  /** Point circle radius in pixels for this feature. */
+  pointRadius?: number;
+  /** Point circle stroke color for this feature. */
+  pointStrokeColor?: string;
+  /** Point circle stroke width in pixels for this feature. */
+  pointStrokeWidth?: number;
+}
+
+/**
  * Styling options for the GeoJSON layers rendered on the map.
+ *
+ * These values serve as defaults for all features. Individual features can
+ * override them by setting the corresponding {@link FeatureStyleProperties}
+ * on their `properties` object.
  */
 export interface GeoJsonStyle {
   /** Fill color for polygons. Defaults to `"rgba(0, 6, 103, 0.2)"`. */
@@ -32,7 +71,13 @@ export interface GeoJsonStyle {
 }
 
 export interface GeoJsonViewerProps extends MapBaseProps {
-  /** GeoJSON data to display on the map. Accepts a Feature or FeatureCollection. */
+  /**
+   * GeoJSON data to display on the map. Accepts a Feature or FeatureCollection.
+   *
+   * Individual features can include {@link FeatureStyleProperties} in their
+   * `properties` object to override the global `geoJsonStyle` defaults on a
+   * per-feature basis (e.g. different fill colors per polygon).
+   */
   data:
     | Feature<Geometry, GeoJsonProperties>
     | FeatureCollection<Geometry, GeoJsonProperties>;

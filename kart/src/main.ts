@@ -13,6 +13,7 @@ export { GeoJsonViewer } from "./components/GeoJsonViewer/GeoJsonViewer";
 export type {
   GeoJsonViewerProps,
   GeoJsonStyle,
+  FeatureStyleProperties,
 } from "./components/GeoJsonViewer/GeoJsonViewer.types";
 
 export { GeoJsonEditor } from "./components/GeoJsonEditor/GeoJsonEditor";

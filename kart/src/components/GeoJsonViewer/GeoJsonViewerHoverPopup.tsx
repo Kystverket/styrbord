@@ -25,7 +25,7 @@ export function GeoJsonViewerHoverPopup({
   position,
   hoverContent,
 }: GeoJsonViewerHoverPopupProps) {
-  const featureType = feature.properties?.type as string | undefined;
+  const featureType = (feature.properties?.type as string | undefined) ?? "_";
 
   // Get custom render function for this feature type
   const renderFn = featureType ? hoverContent?.[featureType] : undefined;
