@@ -115,31 +115,68 @@ const MODE_LABEL_KEYS: Record<DrawMode, string> = {
 // GeoJSON file import helper
 // ---------------------------------------------------------------------------
 
-function parseGeoJsonFile(text: string): FeatureCollection | null {
+export type ImportErrorReason =
+  | "invalid-json"
+  | "not-geojson"
+  | "empty-collection";
+
+type ParseResult =
+  | { ok: true; data: FeatureCollection }
+  | { ok: false; reason: ImportErrorReason; detail: string };
+
+function parseGeoJsonFile(text: string): ParseResult {
+  let parsed: unknown;
   try {
-    const parsed: unknown = JSON.parse(text);
-    if (typeof parsed !== "object" || parsed === null) return null;
+    parsed = JSON.parse(text);
+  } catch (e) {
+    return {
+      ok: false,
+      reason: "invalid-json",
+      detail: e instanceof Error ? e.message : String(e),
+    };
+  }
 
-    const obj = parsed as Record<string, unknown>;
+  if (typeof parsed !== "object" || parsed === null) {
+    return {
+      ok: false,
+      reason: "not-geojson",
+      detail: `Expected a JSON object but got ${parsed === null ? "null" : typeof parsed}`,
+    };
+  }
 
-    if (obj.type === "FeatureCollection" && Array.isArray(obj.features)) {
-      return obj as unknown as FeatureCollection;
-    }
+  const obj = parsed as Record<string, unknown>;
 
-    if (obj.type === "Feature" && obj.geometry) {
+  if (obj.type === "FeatureCollection" && Array.isArray(obj.features)) {
+    const fc = obj as unknown as FeatureCollection;
+    if (fc.features.length === 0) {
       return {
-        type: "FeatureCollection",
-        features: [obj as unknown as FeatureCollection["features"][number]],
+        ok: false,
+        reason: "empty-collection",
+        detail: "FeatureCollection contains no features",
       };
     }
+    return { ok: true, data: fc };
+  }
 
-    // Bare Geometry object — wrap it
-    if (
-      typeof obj.type === "string" &&
-      (obj.coordinates || obj.geometries) &&
-      !obj.features
-    ) {
-      return {
+  if (obj.type === "Feature" && obj.geometry) {
+    return {
+      ok: true,
+      data: {
+        type: "FeatureCollection",
+        features: [obj as unknown as FeatureCollection["features"][number]],
+      },
+    };
+  }
+
+  // Bare Geometry object — wrap it
+  if (
+    typeof obj.type === "string" &&
+    (obj.coordinates || obj.geometries) &&
+    !obj.features
+  ) {
+    return {
+      ok: true,
+      data: {
         type: "FeatureCollection",
         features: [
           {
@@ -149,13 +186,15 @@ function parseGeoJsonFile(text: string): FeatureCollection | null {
               obj as unknown as FeatureCollection["features"][number]["geometry"],
           },
         ],
-      };
-    }
-
-    return null;
-  } catch {
-    return null;
+      },
+    };
   }
+
+  return {
+    ok: false,
+    reason: "not-geojson",
+    detail: `Unrecognised GeoJSON type: ${typeof obj.type === "string" ? obj.type : "(missing)"}`,
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -171,6 +210,7 @@ interface GeoJsonEditorToolbarProps {
   onSetMode: (mode: string) => void;
   onDelete: () => void;
   onImport: (data: FeatureCollection) => void;
+  onImportError?: (reason: ImportErrorReason, detail: string) => void;
 }
 
 export function GeoJsonEditorToolbar({
@@ -182,6 +222,7 @@ export function GeoJsonEditorToolbar({
   onSetMode,
   onDelete,
   onImport,
+  onImportError,
 }: GeoJsonEditorToolbarProps) {
   const { t } = useTranslation();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -195,12 +236,20 @@ export function GeoJsonEditorToolbar({
       const text = reader.result;
       if (typeof text !== "string") return;
 
-      const fc = parseGeoJsonFile(text);
-      if (fc && fc.features.length > 0) {
-        onImport(fc);
+      const result = parseGeoJsonFile(text);
+      if (result.ok) {
+        onImport(result.data);
       } else {
-        console.warn("GeoJsonEditor: imported file is not valid GeoJSON");
+        console.warn(
+          `GeoJsonEditor: import failed (${result.reason}) — ${result.detail}`,
+        );
+        onImportError?.(result.reason, result.detail);
       }
+    };
+    reader.onerror = () => {
+      const detail = reader.error?.message ?? "Unknown read error";
+      console.warn(`GeoJsonEditor: failed to read file — ${detail}`);
+      onImportError?.("invalid-json", detail);
     };
     reader.readAsText(file);
 

@@ -35,6 +35,9 @@ const ALL_MODES: DrawMode[] = ["point", "linestring", "polygon"];
 const DEFAULT_GET_LABEL = (feature: Feature<Geometry, GeoJsonProperties>) =>
   feature.properties?.nummer ? `#${feature.properties.nummer}` : undefined;
 
+const LABEL_SOURCE = "geojson-editor-labels";
+const LABEL_LAYER = "geojson-editor-label";
+
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
@@ -66,6 +69,7 @@ export function GeoJsonEditor({
   onSelect,
   hoverContent,
   onCoordinateClick,
+  onImportError,
   showCenterAction,
   singleFeature = false,
   getLabel = DEFAULT_GET_LABEL,
@@ -293,11 +297,54 @@ export function GeoJsonEditor({
 
   const { replaceFeatures: replaceDirectionalFeatures } = directionalPoints;
 
+  // Label ref and updater need to be defined before handleImport
+  const getLabelRef = useRef(getLabel);
+  getLabelRef.current = getLabel;
+
+  /**
+   * Push label data into the MapLibre source for the given FeatureCollection.
+   * Called both from the fc-driven effect and directly after import so labels
+   * appear immediately without waiting for a value round-trip.
+   */
+  const updateLabelSource = useCallback(
+    (data: FeatureCollection | undefined) => {
+      const map = mapRef.current;
+      const currentGetLabel = getLabelRef.current;
+      if (!map || !mapReady || !currentGetLabel) return;
+
+      const labelledFc: FeatureCollection =
+        data && data.features.length > 0
+          ? {
+              type: "FeatureCollection",
+              features: data.features.map((feature) => ({
+                ...feature,
+                properties: {
+                  ...feature.properties,
+                  _label: currentGetLabel(feature) ?? "",
+                },
+              })),
+            }
+          : { type: "FeatureCollection", features: [] };
+
+      const doUpdate = () => {
+        const src = map.getSource(LABEL_SOURCE) as maplibregl.GeoJSONSource;
+        if (src) {
+          src.setData(labelledFc);
+        }
+      };
+
+      if (map.isStyleLoaded()) {
+        doUpdate();
+      } else {
+        map.once("load", doUpdate);
+      }
+    },
+    [mapRef, mapReady],
+  );
+
   // ----- Import GeoJSON from file -----
   const handleImport = useCallback(
     (imported: FeatureCollection) => {
-      if (!onChange) return;
-
       const existingTerraFeatures = terraDrawResult.getSnapshot();
       const existingDirFeatures = directionalPoints.getFeatures();
 
@@ -333,12 +380,21 @@ export function GeoJsonEditor({
       replaceDirectionalFeatures(allDirFeatures);
 
       // Emit combined to notify parent
-      isInternalChangeRef.current = true;
       const combined: FeatureCollection = {
         type: "FeatureCollection",
         features: [...allTerraFeatures, ...allDirFeatures],
       };
-      onChange(ensureCollectionConsistency(combined));
+
+      const consistent = ensureCollectionConsistency(combined);
+
+      if (onChange) {
+        isInternalChangeRef.current = true;
+        onChange(consistent);
+      }
+
+      // Update labels immediately so they appear without waiting for
+      // a value round-trip through the parent.
+      updateLabelSource(consistent);
 
       // Fit map to bounds of the full collection after import
       const map = mapRef.current;
@@ -359,6 +415,7 @@ export function GeoJsonEditor({
       directionalPoints,
       replaceTerraDraw,
       replaceDirectionalFeatures,
+      updateLabelSource,
       mapRef,
       fitBoundsPadding,
     ],
@@ -496,15 +553,10 @@ export function GeoJsonEditor({
   //
   // The label layer/source are created once and only torn down on unmount.
   // Data updates go through `setData` to avoid the remove/add flicker.
-  const getLabelRef = useRef(getLabel);
-  getLabelRef.current = getLabel;
 
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !mapReady) return;
-
-    const LABEL_SOURCE = "geojson-editor-labels";
-    const LABEL_LAYER = "geojson-editor-label";
 
     const ensureLayer = () => {
       if (!map.getSource(LABEL_SOURCE)) {
@@ -553,39 +605,8 @@ export function GeoJsonEditor({
 
   // Update label data whenever fc or getLabel changes — no teardown, just setData.
   useEffect(() => {
-    const map = mapRef.current;
-    const currentGetLabel = getLabelRef.current;
-    if (!map || !mapReady || !currentGetLabel) return;
-
-    const LABEL_SOURCE = "geojson-editor-labels";
-
-    const labelledFc: FeatureCollection =
-      fc && fc.features.length > 0
-        ? {
-            type: "FeatureCollection",
-            features: fc.features.map((feature) => ({
-              ...feature,
-              properties: {
-                ...feature.properties,
-                _label: currentGetLabel(feature) ?? "",
-              },
-            })),
-          }
-        : { type: "FeatureCollection", features: [] };
-
-    const updateData = () => {
-      const src = map.getSource(LABEL_SOURCE) as maplibregl.GeoJSONSource;
-      if (src) {
-        src.setData(labelledFc);
-      }
-    };
-
-    if (map.isStyleLoaded()) {
-      updateData();
-    } else {
-      map.once("load", updateData);
-    }
-  }, [mapRef, mapReady, fc]);
+    updateLabelSource(fc);
+  }, [updateLabelSource, fc]);
 
   // Hover detection for terra-draw features
   useEffect(() => {
@@ -684,6 +705,7 @@ export function GeoJsonEditor({
             onSetMode={setActiveMode}
             onDelete={deleteSelected}
             onImport={handleImport}
+            onImportError={onImportError}
           />
         )}
         {showLayerToggle && <LayerToggle />}

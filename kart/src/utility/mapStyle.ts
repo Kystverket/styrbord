@@ -9,6 +9,12 @@ export const DEFAULT_CENTER: Coordinate = { latitude: 65.0, longitude: 14.0 };
 /** Default zoom level for the overview map. */
 export const DEFAULT_ZOOM = 5;
 
+/** Bounding box covering mainland Norway: [[west, south], [east, north]]. */
+export const DEFAULT_BOUNDS: [[number, number], [number, number]] = [
+  [3.0, 57.5],
+  [32.0, 71.5],
+];
+
 /**
  * An empty style used as the initial MapLibre style.
  *
