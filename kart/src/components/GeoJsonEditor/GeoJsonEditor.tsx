@@ -1,36 +1,32 @@
-"use client";
+'use client';
 
-import { useEffect, useMemo, useCallback, useRef } from "react";
-import type {
-  FeatureCollection,
-  Feature,
-  Geometry,
-  GeoJsonProperties,
-} from "geojson";
+import { useEffect, useMemo, useCallback, useRef } from 'react';
+import type { FeatureCollection, Feature, Geometry, GeoJsonProperties } from 'geojson';
 
-import mapStyles from "~/components/shared/MapPicker.module.css";
-import editorStyles from "./GeoJsonEditor.module.css";
-import { useMaplibreMap } from "~/hooks/useMaplibreMap";
-import { computeBounds } from "~/utility/geojson";
-import { toFeatureCollection } from "../GeoJsonViewer/GeoJsonViewer.utils";
-import type { DrawMode, GeoJsonEditorProps } from "./GeoJsonEditor.types";
-import { useTerraDraw } from "./useTerraDraw";
-import { GeoJsonEditorToolbar } from "./GeoJsonEditorToolbar";
-import { LayerToggle } from "../LayerToggle/LayerToggle";
-import { ensureCollectionConsistency } from "~/utility/collection";
-import { GeoJsonViewerHoverPopup } from "../GeoJsonViewer/GeoJsonViewerHoverPopup";
-import { MapCenterAction } from "../shared/MapCenterAction";
-import { useCoordinateClick } from "./useCoordinateClick";
-import { useEditorHover } from "./useEditorHover";
-import { useFeatureLabels } from "./useFeatureLabels";
-import { useDisabledLayers } from "./useDisabledLayers";
-import { useFitBounds } from "./useFitBounds";
+import mapStyles from '~/components/shared/MapPicker.module.css';
+import editorStyles from './GeoJsonEditor.module.css';
+import { useMaplibreMap } from '~/hooks/useMaplibreMap';
+import { computeBounds } from '~/utility/geojson';
+import { toFeatureCollection } from '../GeoJsonViewer/GeoJsonViewer.utils';
+import type { DrawMode, GeoJsonEditorProps } from './GeoJsonEditor.types';
+import { useTerraDraw } from './useTerraDraw';
+import { GeoJsonEditorToolbar } from './GeoJsonEditorToolbar';
+import { LayerToggle } from '../LayerToggle/LayerToggle';
+import { ensureCollectionConsistency } from '~/utility/collection';
+import { GeoJsonViewerHoverPopup } from '../GeoJsonViewer/GeoJsonViewerHoverPopup';
+import { MapCenterAction } from '../shared/MapCenterAction';
+import { useCoordinateClick } from './useCoordinateClick';
+import { useEditorHover } from './useEditorHover';
+import { useFeatureLabels } from './useFeatureLabels';
+import { useDisabledLayers } from './useDisabledLayers';
+import { useFitBounds } from './useFitBounds';
+import { useDirectionArrow } from '~/hooks/useDirectionArrow';
 
 // ---------------------------------------------------------------------------
 // Defaults
 // ---------------------------------------------------------------------------
 
-const ALL_MODES: DrawMode[] = ["point", "linestring", "polygon"];
+const ALL_MODES: DrawMode[] = ['point', 'linestring', 'polygon'];
 
 /** Stable default for the `getLabel` prop — avoids a new function reference on every render. */
 const DEFAULT_GET_LABEL = (feature: Feature<Geometry, GeoJsonProperties>) =>
@@ -71,6 +67,7 @@ export function GeoJsonEditor({
   showCenterAction,
   singleFeature = false,
   getLabel = DEFAULT_GET_LABEL,
+  showDirectionArrows = false,
 }: GeoJsonEditorProps) {
   const { mapContainerRef, mapRef, mapReady } = useMaplibreMap({
     disabled,
@@ -80,13 +77,14 @@ export function GeoJsonEditor({
   // Tracks whether the last onChange was fired by this component (to skip the round-trip reload).
   const isInternalChangeRef = useRef(false);
 
+  // Ref so terra-draw's onChange can update the label source immediately,
+  // without waiting for the React state round-trip (which causes a one-click lag).
+  const updateLabelSourceRef = useRef<((data: FeatureCollection | undefined) => void) | null>(null);
+
   // Memoise modes key so that a new but identical array reference from the
   // parent does not cause terra-draw to be torn down and recreated.
-  const terraDrawModesKey = modes.join(",");
-  const terraDrawModes = useMemo(
-    () => terraDrawModesKey.split(",").filter(Boolean) as DrawMode[],
-    [terraDrawModesKey],
-  );
+  const terraDrawModesKey = modes.join(',');
+  const terraDrawModes = useMemo(() => terraDrawModesKey.split(',').filter(Boolean) as DrawMode[], [terraDrawModesKey]);
 
   const terraDrawResult = useTerraDraw({
     mapRef,
@@ -98,22 +96,19 @@ export function GeoJsonEditor({
     singleFeature,
     onChange: (data) => {
       if (!onChange) return;
+      const consistentData = ensureCollectionConsistency(data);
       isInternalChangeRef.current = true;
-      onChange(ensureCollectionConsistency(data));
+      onChange(consistentData);
+      // Update the label source immediately so it doesn't lag behind by one render cycle.
+      updateLabelSourceRef.current?.(consistentData);
     },
     onSelect,
   });
 
-  const {
-    activeMode,
-    setActiveMode,
-    deleteSelected,
-    hasSelection,
-    isReady: terraDrawReady,
-  } = terraDrawResult;
+  const { activeMode, setActiveMode, deleteSelected, hasSelection, isReady: terraDrawReady } = terraDrawResult;
 
   // Keep activeModeRef in sync so the click/hover hooks can check it.
-  const activeModeRef = useRef<string>("static");
+  const activeModeRef = useRef<string>('static');
   activeModeRef.current = activeMode;
 
   const { replaceFeatures: replaceTerraDraw } = terraDrawResult as unknown as {
@@ -121,10 +116,7 @@ export function GeoJsonEditor({
   };
 
   // Normalise incoming value
-  const fc = useMemo(
-    () => (value ? toFeatureCollection(value) : undefined),
-    [value],
-  );
+  const fc = useMemo(() => (value ? toFeatureCollection(value) : undefined), [value]);
 
   // ----- Extracted hooks -----
   useCoordinateClick({
@@ -151,9 +143,14 @@ export function GeoJsonEditor({
     getLabel,
   });
 
+  // Keep ref in sync so the terra-draw onChange callback always has the latest function.
+  updateLabelSourceRef.current = updateLabelSource;
+
   useDisabledLayers({ mapRef, mapReady, disabled, fc });
 
   useFitBounds({ mapRef, mapReady, fc, fitBounds, fitBoundsPadding });
+
+  useDirectionArrow({ mapRef, mapReady, fc, enabled: showDirectionArrows });
 
   // ----- Import GeoJSON from file -----
   const handleImport = useCallback(
@@ -172,12 +169,12 @@ export function GeoJsonEditor({
       const allFeatures = [...existingFeatures, ...importedFeatures];
 
       replaceTerraDraw({
-        type: "FeatureCollection",
+        type: 'FeatureCollection',
         features: allFeatures,
       });
 
       const combined: FeatureCollection = {
-        type: "FeatureCollection",
+        type: 'FeatureCollection',
         features: allFeatures,
       };
 
@@ -202,14 +199,7 @@ export function GeoJsonEditor({
         }
       }
     },
-    [
-      onChange,
-      terraDrawResult,
-      replaceTerraDraw,
-      updateLabelSource,
-      mapRef,
-      fitBoundsPadding,
-    ],
+    [onChange, terraDrawResult, replaceTerraDraw, updateLabelSource, mapRef, fitBoundsPadding],
   );
 
   // Sync external value changes into terra-draw.
@@ -225,15 +215,11 @@ export function GeoJsonEditor({
       return;
     }
 
-    replaceTerraDraw(fc ?? { type: "FeatureCollection", features: [] });
+    replaceTerraDraw(fc ?? { type: 'FeatureCollection', features: [] });
   }, [fc, replaceTerraDraw, terraDrawReady]);
 
   return (
-    <div
-      className={[editorStyles.editorWrapper, className]
-        .filter(Boolean)
-        .join(" ")}
-    >
+    <div className={[editorStyles.editorWrapper, className].filter(Boolean).join(' ')}>
       <div ref={mapContainerRef} className={mapStyles.mapContainer}>
         {!disabled && !singleFeature && (
           <GeoJsonEditorToolbar
@@ -253,21 +239,15 @@ export function GeoJsonEditor({
           <MapCenterAction
             mapRef={mapRef}
             visible={
-              showCenterAction &&
-              (activeMode === "point" ||
-                activeMode === "linestring" ||
-                activeMode === "polygon")
+              showCenterAction && (activeMode === 'point' || activeMode === 'linestring' || activeMode === 'polygon')
             }
           />
         )}
         {hoverable && hoveredFeature && hoverPosition && (
-          <GeoJsonViewerHoverPopup
-            feature={hoveredFeature}
-            position={hoverPosition}
-            hoverContent={hoverContent}
-          />
+          <GeoJsonViewerHoverPopup feature={hoveredFeature} position={hoverPosition} hoverContent={hoverContent} />
         )}
       </div>
+      {JSON.stringify(fc, null, 2)} {/* DEBUG: show current GeoJSON value */}
     </div>
   );
 }

@@ -131,6 +131,12 @@ export interface GeoJsonViewerProps extends MapBaseProps {
   onCoordinateClick?: (result: CoordinateClickResult) => void;
 
   /**
+   * Show rotated direction arrows for point features that have a
+   * `properties.direction` value (0–360°). Defaults to `false`.
+   */
+  showDirectionArrows?: boolean;
+
+  /**
    * Function that computes a label for each feature. Return `null` or
    * `undefined` to skip labelling a feature. Defaults to showing
    * `#<nummer>` when a `nummer` property exists.

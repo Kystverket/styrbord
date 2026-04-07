@@ -39,6 +39,7 @@ import {
 import { LayerToggle } from "../LayerToggle/LayerToggle";
 import { GeoJsonViewerHoverPopup } from "./GeoJsonViewerHoverPopup";
 import { MapCenterAction } from "../shared/MapCenterAction";
+import { useDirectionArrow } from "~/hooks/useDirectionArrow";
 
 // ---------------------------------------------------------------------------
 // Component
@@ -76,6 +77,7 @@ export function GeoJsonViewer({
   onCoordinateClick,
   showCenterAction,
   getLabel = DEFAULT_GET_LABEL,
+  showDirectionArrows = false,
 }: GeoJsonViewerProps) {
   const layerStyle: Required<GeoJsonStyle> = {
     ...DEFAULT_STYLE,
@@ -122,6 +124,8 @@ export function GeoJsonViewer({
     coordinate: clickedCoordinate,
     enabled: !!onCoordinateClick,
   });
+
+  useDirectionArrow({ mapRef, mapReady, fc, enabled: showDirectionArrows });
 
   useEffect(() => {
     if (featureInfoResult) {

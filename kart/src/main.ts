@@ -2,7 +2,9 @@ import "./css/index.scss";
 
 export { CoordinateField } from "./components/CoordinateField/CoordinateField";
 export type { CoordinateFieldProps } from "./components/CoordinateField/CoordinateField.types";
-export type { CoordinateGeoJSON } from "./utility/types";
+export { CoordinateDirectionField } from "./components/CoordinateDirectionField/CoordinateDirectionField";
+export type { CoordinateDirectionFieldProps } from "./components/CoordinateDirectionField/CoordinateDirectionField.types";
+export type { CoordinateGeoJSON, CoordinateDirectionGeoJSON } from "./utility/types";
 
 export { GeoJsonViewer } from "./components/GeoJsonViewer/GeoJsonViewer";
 export type {

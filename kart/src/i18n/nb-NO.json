@@ -8,7 +8,9 @@
     "latitude": "Breddegrad",
     "latitudePlaceholder": "f.eks. 63.4305",
     "longitude": "Lengdegrad",
-    "longitudePlaceholder": "f.eks. 10.3951"
+    "longitudePlaceholder": "f.eks. 10.3951",
+    "direction": "Retning",
+    "directionPlaceholder": "0–360"
   },
   "layers": {
     "backgroundMaps": "Bakgrunnskart",

@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useId, useMemo, useState } from "react";
-import { Box, NumberInput, ValidationMessage } from "@kystverket/styrbord";
-import type { FeatureCollection, Point } from "geojson";
+import { useCallback, useId } from 'react';
+import { Box, NumberInput, ValidationMessage } from '@kystverket/styrbord';
+import type { FeatureCollection } from 'geojson';
 
-import type { CoordinateFieldProps } from "./CoordinateField.types";
-import type { CoordinateGeoJSON } from "~/utility/types";
-import { clampLatitude, clampLongitude } from "~/utility/coordinate";
-import { GeoJsonEditor } from "~/components/GeoJsonEditor/GeoJsonEditor";
-import { useTranslation } from "~/translations";
+import type { CoordinateFieldProps } from './CoordinateField.types';
+import type { CoordinateGeoJSON } from '~/utility/types';
+import { clampLatitude, clampLongitude } from '~/utility/coordinate';
+import { GeoJsonEditor } from '~/components/GeoJsonEditor/GeoJsonEditor';
+import { useTranslation } from '~/translations';
 
 /**
  * CoordinateField — select a geographic coordinate via an interactive map
@@ -26,73 +26,47 @@ export function CoordinateField({
   const id = useId();
   const { t } = useTranslation();
 
-  // ----- GeoJsonEditor value bridge -----
-  const editorValue = useMemo<FeatureCollection | undefined>(() => {
-    if (!value) return undefined;
-    return {
-      type: "FeatureCollection",
-      features: [
-        {
-          type: "Feature",
-          geometry: value.geometry,
-          properties: {},
-        },
-      ],
-    };
-  }, [value]);
-
   const handleEditorChange = useCallback(
     (fc: FeatureCollection) => {
       if (fc.features.length > 0) {
-        const feature = fc.features[0];
-        const geo: CoordinateGeoJSON = {
-          type: "Feature",
-          geometry: feature.geometry as Point,
-        };
-        onChange(geo);
+        onChange(fc.features[0] as CoordinateGeoJSON);
       }
     },
     [onChange],
   );
 
-  // ----- Input number state (synced to/from value, committed on blur) -----
-  const [latValue, setLatValue] = useState<number | undefined>(
-    value?.geometry.coordinates[1] ?? undefined,
-  );
-  const [lonValue, setLonValue] = useState<number | undefined>(
-    value?.geometry.coordinates[0] ?? undefined,
-  );
-
-  useEffect(() => {
-    const coords = value?.geometry.coordinates;
-    setLatValue(coords ? coords[1] : undefined);
-    setLonValue(coords ? coords[0] : undefined);
-  }, [value]);
+  const latitude = value?.geometry.coordinates[1];
+  const longitude = value?.geometry.coordinates[0];
 
   // ----- Input handlers -----
   const commitLatLon = useCallback(
     (lat: number | undefined, lon: number | undefined) => {
-      if (lat == null && lon == null) return;
-      if (lat != null && lon != null) {
-        const geo: CoordinateGeoJSON = {
-          type: "Feature",
-          geometry: {
-            type: "Point",
-            coordinates: [clampLongitude(lon), clampLatitude(lat)],
-          },
-        };
-        onChange(geo);
-      }
+      const geo: CoordinateGeoJSON = {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [lon ? clampLongitude(lon) : 0, lat ? clampLatitude(lat) : 0],
+        },
+        properties: { ...value?.properties },
+      };
+      onChange(geo);
     },
-    [onChange],
+    [onChange, value],
   );
 
   return (
-    <Box gap={16} className={[className].filter(Boolean).join(" ")}>
+    <Box gap={16} className={[className].filter(Boolean).join(' ')}>
       <GeoJsonEditor
         singleFeature
-        modes={["point"]}
-        value={editorValue}
+        modes={['point']}
+        value={
+          value
+            ? {
+                type: 'FeatureCollection',
+                features: [{ type: 'Feature', geometry: value.geometry, properties: value.properties }],
+              }
+            : undefined
+        }
         onChange={handleEditorChange}
         disabled={disabled}
         height={height}
@@ -104,23 +78,21 @@ export function CoordinateField({
         <NumberInput
           id={`${id}-lat`}
           inputMode="decimal"
-          label={t("fields.latitude")}
-          value={latValue ?? null}
+          label={t('fields.latitude')}
+          value={latitude ?? null}
           disabled={disabled}
-          placeholder={t("fields.latitudePlaceholder")}
-          onChange={(v) => setLatValue(v)}
-          onBlur={() => commitLatLon(latValue, lonValue)}
+          placeholder={t('fields.latitudePlaceholder')}
+          onChange={(v) => commitLatLon(v, longitude)}
         />
 
         <NumberInput
           id={`${id}-lon`}
           inputMode="decimal"
-          label={t("fields.longitude")}
-          value={lonValue ?? null}
+          label={t('fields.longitude')}
+          value={longitude ?? null}
           disabled={disabled}
-          placeholder={t("fields.longitudePlaceholder")}
-          onChange={(v) => setLonValue(v)}
-          onBlur={() => commitLatLon(latValue, lonValue)}
+          placeholder={t('fields.longitudePlaceholder')}
+          onChange={(v) => commitLatLon(latitude, v)}
         />
       </Box>
 

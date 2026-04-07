@@ -106,4 +106,10 @@ export interface GeoJsonEditorProps extends MapBaseProps {
   getLabel?: (
     feature: Feature<Geometry, GeoJsonProperties>,
   ) => string | number | null | undefined;
+
+  /**
+   * Show rotated direction arrows for point features that have a
+   * `properties.direction` value (0–360°). Defaults to `false`.
+   */
+  showDirectionArrows?: boolean;
 }

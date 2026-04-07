@@ -8,7 +8,9 @@
     "latitude": "Latitude",
     "latitudePlaceholder": "e.g. 63.4305",
     "longitude": "Longitude",
-    "longitudePlaceholder": "e.g. 10.3951"
+    "longitudePlaceholder": "e.g. 10.3951",
+    "direction": "Direction",
+    "directionPlaceholder": "0–360"
   },
   "layers": {
     "backgroundMaps": "Background maps",
