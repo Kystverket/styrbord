@@ -1,13 +1,10 @@
 {
   "drawMode": {
-    "directionalPoint": "Draw directional point",
     "linestring": "Draw line",
     "point": "Draw point",
     "polygon": "Draw polygon"
   },
   "fields": {
-    "direction": "Direction (degrees)",
-    "directionPlaceholder": "0–360",
     "latitude": "Latitude",
     "latitudePlaceholder": "e.g. 63.4305",
     "longitude": "Longitude",

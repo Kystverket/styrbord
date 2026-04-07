@@ -2,11 +2,6 @@
  * Shared coordinate math utilities.
  */
 
-/** Normalise an angle to the 0–360 range. */
-export function clampDirection(deg: number): number {
-  return ((deg % 360) + 360) % 360;
-}
-
 /** Clamp latitude to the valid WGS-84 range. */
 export function clampLatitude(lat: number): number {
   return Math.max(-90, Math.min(90, lat));

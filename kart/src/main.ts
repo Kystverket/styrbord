@@ -1,12 +1,5 @@
 import "./css/index.scss";
 
-export { CoordinateDirectionField } from "./components/CoordinateDirectionField/CoordinateDirectionField";
-export type {
-  CoordinateDirectionFieldProps,
-  CoordinateDirectionValue,
-  Coordinate,
-} from "./components/CoordinateDirectionField/CoordinateDirectionField.types";
-
 export { CoordinateField } from "./components/CoordinateField/CoordinateField";
 export type { CoordinateFieldProps } from "./components/CoordinateField/CoordinateField.types";
 export type { CoordinateGeoJSON } from "./utility/types";
@@ -40,8 +33,6 @@ export type { MapCenterActionProps } from "./components/shared/MapCenterAction";
 // Hooks
 export { useMaplibreMap } from "./hooks/useMaplibreMap";
 export type { UseMaplibreMapOptions } from "./hooks/useMaplibreMap";
-export { useCompassMarker } from "./hooks/useCompassMarker";
-export type { UseCompassMarkerOptions } from "./hooks/useCompassMarker";
 export { usePointMarker } from "./hooks/usePointMarker";
 export type { UsePointMarkerOptions } from "./hooks/usePointMarker";
 export { useMapLayers } from "./hooks/useMapLayers";
@@ -68,7 +59,6 @@ export {
   DEFAULT_ZOOM,
 } from "./utility/mapStyle";
 export {
-  clampDirection,
   clampLatitude,
   clampLongitude,
   roundToDecimals,

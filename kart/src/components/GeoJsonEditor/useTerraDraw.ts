@@ -21,9 +21,6 @@ import { TerraDrawMapLibreGLAdapter } from "terra-draw-maplibre-gl-adapter";
 import type { DrawMode } from "./GeoJsonEditor.types";
 import { toFeatureCollection } from "../GeoJsonViewer/GeoJsonViewer.utils";
 
-/** Drawing modes that terra-draw handles natively. */
-type TerraDrawableMode = Exclude<DrawMode, "directional-point">;
-
 /**
  * Map a GeoJSON geometry type to the corresponding terra-draw drawing mode.
  * Falls back to `'static'` for unsupported geometry types or when the mode
@@ -31,9 +28,9 @@ type TerraDrawableMode = Exclude<DrawMode, "directional-point">;
  */
 function getModeForGeometry(
   geometry: Geometry,
-  registeredModes: TerraDrawableMode[],
+  registeredModes: DrawMode[],
 ): string {
-  let mode: TerraDrawableMode | undefined;
+  let mode: DrawMode | undefined;
   switch (geometry.type) {
     case "Point":
     case "MultiPoint":
@@ -66,7 +63,7 @@ export interface UseTerraDrawOptions {
   mapRef: MutableRefObject<MaplibreMap | null>;
   /** Must be `true` before terra-draw will initialise (set by `useMaplibreMap`). */
   mapReady: boolean;
-  modes: TerraDrawableMode[];
+  modes: DrawMode[];
   editable: boolean;
   deletable: boolean;
   disabled: boolean;
@@ -223,6 +220,8 @@ export function useTerraDraw({
                 coordinatePointWidth: 5,
               },
             });
+          default:
+            throw new Error(`Unknown draw mode: ${m}`);
         }
       });
 

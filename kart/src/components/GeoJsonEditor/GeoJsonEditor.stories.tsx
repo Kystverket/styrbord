@@ -75,31 +75,6 @@ const norwegianCoastData: FeatureCollection = {
   ],
 };
 
-/** Two directional-point features (e.g. vessels with a heading). */
-const directionalData: FeatureCollection = {
-  type: "FeatureCollection",
-  features: [
-    {
-      type: "Feature",
-      properties: {
-        mode: "directional-point",
-        direction: 45,
-        name: "MS Nordlys",
-      },
-      geometry: { type: "Point", coordinates: [10.3951, 63.4305] },
-    },
-    {
-      type: "Feature",
-      properties: {
-        mode: "directional-point",
-        direction: 200,
-        name: "MS Trollfjord",
-      },
-      geometry: { type: "Point", coordinates: [5.3221, 60.3913] },
-    },
-  ],
-};
-
 // ---------------------------------------------------------------------------
 // 1. Empty editor – all modes
 // ---------------------------------------------------------------------------
@@ -184,57 +159,8 @@ export const PolygonsOnly: Story = {
   args: { modes: ["polygon"] },
 };
 
-/**
- * Only directional-point mode. Each placed point stores a `direction` angle
- * (0–360°) that can be used to represent headings, bearings, etc.
- */
-export const DirectionalPointsOnly: Story = {
-  args: { modes: ["directional-point"] },
-};
-
 // ---------------------------------------------------------------------------
-// 5. Directional points – pre-loaded and controlled
-// ---------------------------------------------------------------------------
-
-/**
- * Pre-loaded directional points with `fitBounds`. Includes all four modes so
- * you can mix regular and directional points in one editor.
- */
-const DirectionalControlledTemplate: StoryFn<typeof GeoJsonEditor> = () => {
-  const [data, setData] = useState<FeatureCollection>(directionalData);
-
-  return (
-    <div>
-      <GeoJsonEditor
-        value={data}
-        onChange={setData}
-        modes={["point", "directional-point", "linestring", "polygon"]}
-        fitBounds
-        showCenterAction
-      />
-      <pre
-        style={{
-          marginTop: 16,
-          padding: 12,
-          background: "#f5f5f5",
-          borderRadius: 8,
-          fontSize: "0.8rem",
-          maxHeight: 280,
-          overflow: "auto",
-        }}
-      >
-        {JSON.stringify(data, null, 2)}
-      </pre>
-    </div>
-  );
-};
-
-export const DirectionalControlled: Story = {
-  render: DirectionalControlledTemplate,
-};
-
-// ---------------------------------------------------------------------------
-// 6. Read-only (disabled)
+// 5. Read-only (disabled)
 // ---------------------------------------------------------------------------
 
 /**
@@ -389,46 +315,6 @@ const SingleFeatureTemplate: StoryFn<typeof GeoJsonEditor> = () => {
 
 export const SingleFeaturePoint: Story = {
   render: SingleFeatureTemplate,
-};
-
-/**
- * `singleFeature` with `directional-point` mode — equivalent to
- * `CoordinateDirectionField`. Click the map to place a point, then drag the
- * direction handle to set the bearing.
- */
-const SingleDirectionalTemplate: StoryFn<typeof GeoJsonEditor> = () => {
-  const [data, setData] = useState<FeatureCollection>({
-    type: "FeatureCollection",
-    features: [],
-  });
-
-  return (
-    <div>
-      <GeoJsonEditor
-        singleFeature
-        modes={["directional-point"]}
-        value={data}
-        onChange={setData}
-      />
-      <pre
-        style={{
-          marginTop: 16,
-          padding: 12,
-          background: "#f5f5f5",
-          borderRadius: 8,
-          fontSize: "0.8rem",
-          maxHeight: 180,
-          overflow: "auto",
-        }}
-      >
-        {JSON.stringify(data, null, 2)}
-      </pre>
-    </div>
-  );
-};
-
-export const SingleFeatureDirectionalPoint: Story = {
-  render: SingleDirectionalTemplate,
 };
 
 /** `singleFeature` with `polygon` mode — only one polygon at a time. */

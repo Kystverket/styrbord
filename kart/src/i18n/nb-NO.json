@@ -1,13 +1,10 @@
 {
   "drawMode": {
-    "directionalPoint": "Tegn retningspunkt",
     "linestring": "Tegn linje",
     "point": "Tegn punkt",
     "polygon": "Tegn polygon"
   },
   "fields": {
-    "direction": "Retning (grader)",
-    "directionPlaceholder": "0–360",
     "latitude": "Breddegrad",
     "latitudePlaceholder": "f.eks. 63.4305",
     "longitude": "Lengdegrad",

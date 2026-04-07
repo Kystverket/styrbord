@@ -14,7 +14,7 @@ import type { InteractiveFeature } from "~/hooks/useFeatureInteraction";
 import type { CoordinateClickResult } from "~/utility/wmsGetFeatureInfo";
 
 /** Drawing modes available in the editor toolbar. */
-export type DrawMode = "point" | "linestring" | "polygon" | "directional-point";
+export type DrawMode = "point" | "linestring" | "polygon";
 
 export interface GeoJsonEditorProps extends MapBaseProps {
   /** Current GeoJSON value (controlled). Accepts a Feature or FeatureCollection. */
@@ -99,8 +99,7 @@ export interface GeoJsonEditorProps extends MapBaseProps {
    * - Placing a new feature automatically replaces the existing one.
    *
    * This allows GeoJsonEditor to be used as a drop-in replacement for
-   * `CoordinateField` (with `modes: ['point']`) or
-   * `CoordinateDirectionField` (with `modes: ['directional-point']`).
+   * `CoordinateField` (with `modes: ['point']`).
    */
   singleFeature?: boolean;
 
