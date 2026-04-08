@@ -185,6 +185,17 @@ InDropdown.parameters = {
   },
 };
 
+export const WithTooltip: Story = () => (
+  <>
+    <Avatar aria-label="Ola Nordmann" tooltip="Ola Nordmann">
+      ON
+    </Avatar>
+    <Avatar aria-label="Kari Nordmann" tooltip="Kari Nordmann" data-color="success">
+      KN
+    </Avatar>
+  </>
+);
+
 export const AsLink: Story = () => (
   <a href="#">
     <Avatar aria-label="Ola Nordmann" />
