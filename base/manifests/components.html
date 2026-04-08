@@ -576,7 +576,7 @@
 <header>
   <div class="wrap">
     <h1>Manifest Debugger</h1>
-    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">13/75 prop type errors</a><a class="filter-pill info" data-k="infos" href="#filter-infos">75/75 infos</a><a class="filter-pill err" data-k="story-errors" href="#filter-story-errors">68/427 story errors</a><a class="filter-pill ok" data-k="docs" href="#filter-docs">1 doc ok</a></div>
+    <div class="summary"><a class="filter-pill all" data-k="all" href="#filter-all">All</a><a class="filter-pill err" data-k="errors" href="#filter-errors">13/75 prop type errors</a><a class="filter-pill info" data-k="infos" href="#filter-infos">75/75 infos</a><a class="filter-pill err" data-k="story-errors" href="#filter-story-errors">68/428 story errors</a><a class="filter-pill ok" data-k="docs" href="#filter-docs">1 doc ok</a></div>
   </div>
 </header>
 <main>
@@ -867,7 +867,7 @@ width?: &#39;content&#39; | &#39;md&#39; | &#39;full&#39; = &#39;content&#39;</c
       <div class="badges">
         <label for="c-2-components-avatar-props" class="badge ok as-toggle">2 prop types</label>
         <label for="c-2-components-avatar-info" class="badge info as-toggle">1 info</label>
-        <label for="c-2-components-avatar-stories" class="badge ok as-toggle">10 stories</label>
+        <label for="c-2-components-avatar-stories" class="badge ok as-toggle">11 stories</label>
         
       </div>
     </div>
@@ -1121,6 +1121,24 @@ data-size?: any = &#39;md&#39;</code></pre>
       &lt;/Dropdown.List&gt;
     &lt;/Dropdown&gt;
   &lt;/Dropdown.TriggerContext&gt;
+);</code></pre>
+            </div>
+            <div class="note ok">
+              <div class="row">
+                <span class="ex-name">With Tooltip</span>
+                <span class="badge ok">story ok</span>
+              </div>
+              
+              
+              <pre><code>const WithTooltip = () =&gt; (
+  &lt;&gt;
+    &lt;Avatar aria-label=&quot;Ola Nordmann&quot; tooltip=&quot;Ola Nordmann&quot;&gt;
+      ON
+    &lt;/Avatar&gt;
+    &lt;Avatar aria-label=&quot;Kari Nordmann&quot; tooltip=&quot;Kari Nordmann&quot; data-color=&quot;success&quot;&gt;
+      KN
+    &lt;/Avatar&gt;
+  &lt;/&gt;
 );</code></pre>
             </div>
             <div class="note ok">
