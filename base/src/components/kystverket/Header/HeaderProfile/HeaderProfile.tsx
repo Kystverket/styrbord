@@ -1,22 +1,18 @@
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
 import { Avatar, Box, Button, Divider, HeaderProps, Icon, Paragraph } from '~/main';
 import classes from './HeaderProfile.module.css';
+import { HeaderContext } from '../headerContext';
 
 type HeaderProfileProps = {
   isProfileOpen: boolean;
   toggleProfileOpen: () => void;
   closeProfile: () => void;
-} & Required<Pick<HeaderProps, 'profile' | 'linkComponent'>>;
+} & Required<Pick<HeaderProps, 'profile'>>;
 
-export function HeaderProfile({
-  profile,
-  isProfileOpen,
-  toggleProfileOpen,
-  closeProfile,
-  linkComponent: LinkComponent,
-}: HeaderProfileProps) {
+export function HeaderProfile({ profile, isProfileOpen, toggleProfileOpen, closeProfile }: HeaderProfileProps) {
   const profileRef = useRef<HTMLDivElement>(null);
+  const { LinkComponent } = useContext(HeaderContext);
 
   useOnClickOutsideAndEscape(profileRef, closeProfile);
 

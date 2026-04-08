@@ -1,17 +1,11 @@
-import { Box, Button, Icon, Link, Logo, LogoVariant } from '~/main';
+import { Box, Button, Icon, Logo, LogoVariant } from '~/main';
 import classes from './Header.module.css';
-import { ReactNode, useCallback, useState } from 'react';
+import { ReactNode, useCallback, useContext, useState } from 'react';
 import { Label, Paragraph } from '@digdir/designsystemet-react';
 import { IconId } from '../Icon/icon.types';
 import { useTranslation } from '~/translations';
 import { HeaderProfile } from '~/components/kystverket/Header/HeaderProfile/HeaderProfile';
-
-export type HeaderLinkComponentProps = {
-  className?: string;
-  href?: string;
-  children: ReactNode;
-  onClick?: () => void;
-};
+import { HeaderContext } from './headerContext';
 
 export interface HeaderProps {
   /**
@@ -91,7 +85,6 @@ export interface HeaderProps {
      */
     logoutHandler: () => void;
   };
-  linkComponent?: React.FC<HeaderLinkComponentProps>;
 }
 
 export function Header({
@@ -99,9 +92,9 @@ export function Header({
   logo: { title = undefined, variant = 'blue-horizontal', url },
   links,
   profile,
-  linkComponent: LinkComponent = Link,
 }: HeaderProps) {
   const { t } = useTranslation();
+  const { LinkComponent } = useContext(HeaderContext);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -160,7 +153,6 @@ export function Header({
               isProfileOpen={isProfileOpen}
               toggleProfileOpen={toggleProfileOpen}
               closeProfile={closeProfile}
-              linkComponent={LinkComponent}
             />
           )}
         </Box>
