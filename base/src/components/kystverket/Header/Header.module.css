@@ -1,34 +1,4 @@
 @layer styrbord-modules {
-  /* 64rem (1024px): upwards tablet */
-  /* 37.5rem (600px): upwards phone */
-
-  /* ========================= */
-  /* Header Container & Layout */
-  /* ========================= */
-  .headerContainer {
-    container: header / inline-size;
-    position: relative;
-    height: fit-content;
-    min-height: 72px;
-    border-bottom: 1px solid var(--ds-color-neutral-surface-tinted);
-    border-bottom-right-radius: var(--ds-border-radius-small);
-    border-bottom-left-radius: var(--ds-border-radius-small);
-    background-color: var(--ds-color-neutral-background-default);
-  }
-
-  .headerFlex {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-
-    @container header (width < 37.5rem) {
-      flex-direction: column;
-      padding-bottom: var(--ds-size-3);
-      gap: 12px;
-    }
-  }
-
   .logo {
     flex-shrink: 0;
     @container header (width < 37.5rem) {
@@ -47,10 +17,6 @@
     &:active {
       background-color: inherit;
     }
-
-    @container header (width < 37.5rem) {
-      margin-top: 10px;
-    }
   }
 
   .titleText {
@@ -61,16 +27,17 @@
     letter-spacing: 0.1em !important;
     text-transform: uppercase;
   }
-
-  /* ========================= */
-  /* Buttons & Menu            */
-  /* ========================= */
-  .buttonsContainer {
-    padding: 4px;
-    gap: var(--spacing-16);
+  .headerContainer {
+    container: header / inline-size;
+    position: relative;
+    height: fit-content;
+    min-height: 72px;
+    border-bottom: 1px solid var(--ds-color-neutral-surface-tinted);
+    border-bottom-right-radius: var(--ds-border-radius-small);
+    border-bottom-left-radius: var(--ds-border-radius-small);
+    background-color: var(--ds-color-neutral-background-default);
   }
-
-  .navLinkButton {
+  .mainLinkButton {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -89,64 +56,21 @@
     &:active {
       background-color: var(--ds-color-surface-active);
     }
+  }
 
-    @container header (width < 64rem) {
-      flex-direction: column;
-    }
-
-    @container header (width < 37.5rem) {
-      /* Logic: If any buttons, makes the Header bigger to look better */
+  @container header (width < 64rem) {
+    .smallScreenHide {
       display: none;
-      /* margin-bottom: 16px; */
     }
   }
 
-  .mobileMenuToggle {
-    display: none;
-    flex-direction: column;
-    padding: var(--ds-size-3) var(--ds-size-4);
-
-    @container header (width < 37.5rem) {
-      display: flex;
+  @container header (width >= 64rem) {
+    .notSmallScreenHide {
+      display: none;
     }
   }
 
-  .mobileMenuItem {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: 100%;
-    padding: var(--ds-size-5) var(--ds-size-4);
-    gap: var(--ds-size-2);
-    border-radius: var(--ds-border-radius-md);
-    font-weight: var(--ds-font-weight-regular);
-    text-decoration: none;
-
-    &:hover {
-      background-color: var(--ds-color-surface-hover);
-    }
-    &:active {
-      background-color: var(--ds-color-surface-active);
-    }
-  }
-
-  .mobileMenuDropdown {
-    display: none;
-    z-index: 999;
-    position: absolute;
-    top: 100%;
-    left: 0;
-
-    background-color: var(--ds-color-surface-default);
-
-    @container header (width < 37.5rem) {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      padding-inline: var(--ds-size-2);
-      padding-block: var(--ds-size-3);
-      border-top: 1px solid var(--ds-color-neutral-surface-hover);
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12);
-    }
+  .dropdownButton {
+    padding: var(--ds-size-2) var(--ds-size-2);
   }
 }

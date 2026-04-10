@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Header } from './Header';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
+import { ApplicationHeaderContext } from './headerContext';
 
 const meta = {
   title: 'Page/Header',
@@ -8,11 +9,6 @@ const meta = {
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],
   argTypes: {
-    children: {
-      control: {
-        type: 'object',
-      },
-    },
     logo: {
       control: {
         type: 'object',
@@ -25,12 +21,83 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const defaultProps: Story['args'] = {
-  logo: { url: '/' },
+export const Saksbehandling: Story = {
+  args: {
+    logo: { variant: 'saksbehandling', url: '/' },
+    applications: [
+      { id: 'sak', name: 'Saksbehandling', icon: 'data_table' },
+      { id: 'is', name: 'Ismelding', icon: 'severe_cold' },
+      { id: 'hoer', name: 'Høring', icon: 'export_notes' },
+      { id: 'dev', name: 'Utvikling', icon: 'anchor' },
+    ],
+    links: [
+      {
+        applicationId: 'sak',
+        position: 'main',
+        label: 'Arbeidsliste',
+        url: '#',
+      },
+      {
+        applicationId: 'sak',
+        position: 'main',
+        label: 'Alle saker',
+        url: '#',
+      },
+      {
+        applicationId: 'dev',
+        position: 'main',
+        label: 'Innsendinger',
+        url: '#',
+      },
+      {
+        applicationId: 'dev',
+        position: 'main',
+        label: 'Tilbakemeldinger',
+        url: '#',
+      },
+      {
+        applicationId: 'hoer',
+        position: 'main',
+        label: 'Høring',
+        url: '#',
+      },
+      {
+        applicationId: 'is',
+        position: 'main',
+        label: 'Ismelding',
+        url: '#',
+      },
+      {
+        position: 'main',
+        label: 'Saksbehandlere',
+        url: '#',
+      },
+      {
+        position: 'profile',
+        icon: 'person',
+        label: 'Min side',
+        url: '#',
+      },
+    ],
+    person: {
+      name: 'Ola Nordmann',
+      department: 'Hav- og kystforvaltning',
+    },
+    logoutHandler: () => alert('Logger ut'),
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ marginBottom: '150px' }}>
+        <ApplicationHeaderContext.Provider value={{ applicationId: 'sak' }}>
+          <Story />
+        </ApplicationHeaderContext.Provider>
+      </div>
+    ),
+  ],
 };
 
-export const Default: Story = {
-  args: defaultProps,
+const defaultProps: Story['args'] = {
+  logo: { variant: 'blue-horizontal', url: '#' },
 };
 
 export const Kystverket: Story = {
@@ -57,10 +124,6 @@ export const Pfsa: Story = {
   args: { ...defaultProps, logo: { ...defaultProps.logo, variant: 'pfsa' } },
 };
 
-export const Saksbehandling: Story = {
-  args: { ...defaultProps, logo: { ...defaultProps.logo, variant: 'saksbehandling' } },
-};
-
 export const Selvbetjening: Story = {
   args: { ...defaultProps, logo: { ...defaultProps.logo, variant: 'selvbetjening' } },
 };
@@ -72,11 +135,9 @@ export const medProfilOgMenyItems: Story = {
       { icon: 'anchor', label: 'Kystverket', url: 'https://kystverket.no' },
       { icon: 'settings', label: 'Settings', url: '#' },
     ],
-    profile: {
+    person: {
       name: 'Ola Nordmann',
       department: 'Hav- og kystforvaltning',
-      logoutHandler: () => alert('Logger ut'),
-      initials: 'ON',
     },
   },
   decorators: [
@@ -101,11 +162,9 @@ export const medMenyItems: Story = {
 export const medProfil: Story = {
   args: {
     ...defaultProps,
-    profile: {
+    person: {
       name: 'Ola Nordmann',
       department: 'Hav- og kystforvaltning',
-      logoutHandler: () => alert('Logger ut'),
-      initials: 'ON',
     },
   },
   decorators: [
@@ -120,16 +179,15 @@ export const medProfil: Story = {
 export const medProfilLenker: Story = {
   args: {
     ...defaultProps,
-    profile: {
+    links: [
+      ...(defaultProps.links || []),
+      { position: 'profile', icon: 'anchor', label: 'Kystverket', url: 'https://kystverket.no' },
+      { position: 'profile', icon: 'settings', label: 'Settings', url: '#' },
+    ],
+    person: {
       name: 'Ola Nordmann',
-      // department: 'Hav- og kystforvaltning',
-      logoutHandler: () => alert('Logger ut'),
-      initials: 'ON',
-      links: [
-        { icon: 'anchor', label: 'Kystverket', url: 'https://kystverket.no' },
-        { icon: 'settings', label: 'Settings', url: '#' },
-      ],
     },
+    logoutHandler: () => alert('Logger ut'),
   },
   decorators: [
     (Story) => (

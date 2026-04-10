@@ -1,13 +1,13 @@
 import { Box, Button, Icon, Dropdown } from '~/main';
-import classes from './ApplicationHeader.module.css';
+import classes from './Header.module.css';
 import { useRef, useState } from 'react';
 import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
-import { ApplicationHeaderProps, HeaderLinkItem } from './ApplicationHeader';
+import { HeaderProps, HeaderLinkItem } from './Header';
 import { v4 } from 'uuid';
 
-export type ApplicationHeaderAppsProps = Pick<ApplicationHeaderProps, 'links' | 'applications'>;
+export type HeaderAppsProps = Pick<HeaderProps, 'links' | 'applications'>;
 
-export function ApplicationHeaderApps({ links, applications }: ApplicationHeaderAppsProps) {
+export function HeaderApps({ links, applications }: HeaderAppsProps) {
   const appsButtonRef = useRef<HTMLDivElement>(null);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);

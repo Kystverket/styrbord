@@ -1,23 +1,17 @@
 import { Box, Button, Icon, Dialog, Avatar, Label, Divider } from '~/main';
-import classes from './ApplicationHeader.module.css';
+import classes from './Header.module.css';
 import { useContext, useRef, useState } from 'react';
 import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
-import { ApplicationHeaderProps, HeaderLinkItem, MainLinkItem, nameToInitials } from './ApplicationHeader';
+import { HeaderProps, HeaderLinkItem, MainLinkItem, nameToInitials } from './Header';
 import { v4 } from 'uuid';
-import { ApplicationHeaderContext } from '../Header/headerContext';
+import { ApplicationHeaderContext } from './headerContext';
 
-export type ApplicationHeaderMobileProps = Pick<
-  ApplicationHeaderProps,
-  'logoutHandler' | 'person' | 'slots' | 'links' | 'applications'
+export type HeaderMobileProps = Pick<
+  HeaderProps,
+  'logoutHandler' | 'loginHandler' | 'person' | 'slots' | 'links' | 'applications'
 >;
 
-export function ApplicationHeaderMobile({
-  logoutHandler,
-  person,
-  slots,
-  links,
-  applications,
-}: ApplicationHeaderMobileProps) {
+export function HeaderMobile({ logoutHandler, loginHandler, person, slots, links, applications }: HeaderMobileProps) {
   const { applicationId: currentApplicationId } = useContext(ApplicationHeaderContext);
   const appsButtonRef = useRef<HTMLDivElement>(null);
 
@@ -29,6 +23,10 @@ export function ApplicationHeaderMobile({
   const openMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  if ((!links || links.length === 0) && !loginHandler && !logoutHandler) {
+    return null;
+  }
 
   useOnClickOutsideAndEscape(appsButtonRef, closeMenu);
 
@@ -82,11 +80,15 @@ export function ApplicationHeaderMobile({
               {(slots?.preLinks || slots?.postLinks || mainLinks.length > 0) && (
                 <>
                   <Box horizontal align="center" width="full" gap={8}>
-                    <Divider />
-                    {applications && applications.length > 1 && (
+                    {person && (
                       <>
-                        <Icon material="menu" aria-hidden />
                         <Divider />
+                        {applications && applications.length > 1 && (
+                          <>
+                            <Icon material="menu" aria-hidden />
+                            <Divider />
+                          </>
+                        )}
                       </>
                     )}
                     {slots?.widgets}
@@ -130,7 +132,7 @@ export function ApplicationHeaderMobile({
                     {profileLinks.map((link, index) => (
                       <MainLinkItem key={index} {...link} />
                     ))}
-                    {logoutHandler && (
+                    {logoutHandler && person && (
                       <Button asChild>
                         <a
                           href="#"
@@ -142,6 +144,21 @@ export function ApplicationHeaderMobile({
                         >
                           <Icon material="logout" />
                           Logg ut
+                        </a>
+                      </Button>
+                    )}
+                    {loginHandler && !person && (
+                      <Button asChild>
+                        <a
+                          href="#"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            loginHandler?.();
+                            closeMenu();
+                          }}
+                        >
+                          <Icon material="login" />
+                          Logg inn
                         </a>
                       </Button>
                     )}

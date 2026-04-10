@@ -1,13 +1,13 @@
 import { Box, Button, Icon, Dropdown, Avatar, Label, Divider } from '~/main';
-import classes from './ApplicationHeader.module.css';
+import classes from './Header.module.css';
 import { useRef, useState } from 'react';
 import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
-import { ApplicationHeaderProps, nameToInitials } from './ApplicationHeader';
+import { HeaderProps, nameToInitials } from './Header';
 import { v4 } from 'uuid';
 
-export type ApplicationHeaderProfileProps = Pick<ApplicationHeaderProps, 'links' | 'person' | 'logoutHandler'>;
+export type HeaderProfileProps = Pick<HeaderProps, 'links' | 'person' | 'logoutHandler'>;
 
-export function ApplicationHeaderProfile({ links, person, logoutHandler }: ApplicationHeaderProfileProps) {
+export function HeaderProfile({ links, person, logoutHandler }: HeaderProfileProps) {
   const profileButtonRef = useRef<HTMLDivElement>(null);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -78,21 +78,23 @@ export function ApplicationHeaderProfile({ links, person, logoutHandler }: Appli
                 </Dropdown.Button>
               </Dropdown.Item>
             ))}
-            <Dropdown.Item>
-              <Dropdown.Button asChild>
-                <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    logoutHandler?.();
-                    closeMenu();
-                  }}
-                >
-                  <Icon material="logout" />
-                  Logg ut
-                </a>
-              </Dropdown.Button>
-            </Dropdown.Item>
+            {logoutHandler && person && (
+              <Dropdown.Item>
+                <Dropdown.Button asChild>
+                  <a
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      logoutHandler?.();
+                      closeMenu();
+                    }}
+                  >
+                    <Icon material="logout" />
+                    Logg ut
+                  </a>
+                </Dropdown.Button>
+              </Dropdown.Item>
+            )}
           </Dropdown.List>
         </Dropdown>
       </Dropdown.TriggerContext>
