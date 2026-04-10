@@ -4,10 +4,12 @@ import { useRef, useState } from 'react';
 import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
 import { HeaderProps, HeaderLinkItem } from './Header';
 import { v4 } from 'uuid';
+import { useTranslation } from '~/translations';
 
 export type HeaderAppsProps = Pick<HeaderProps, 'links' | 'applications'>;
 
 export function HeaderApps({ links, applications }: HeaderAppsProps) {
+  const { t } = useTranslation();
   const appsButtonRef = useRef<HTMLDivElement>(null);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -38,7 +40,7 @@ export function HeaderApps({ links, applications }: HeaderAppsProps) {
     <div ref={appsButtonRef}>
       <Dropdown.TriggerContext>
         <Button popoverTarget={id} className={classes.dropdownButton} variant="ghost" onClick={openMenu}>
-          <Box horizontal gap={16} align="center">
+          <Box horizontal gap={16} align="center" aria-label={t('header.openApplications')}>
             <Icon material="apps" aria-hidden />
           </Box>
         </Button>

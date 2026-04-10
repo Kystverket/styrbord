@@ -4,10 +4,12 @@ import { useRef, useState } from 'react';
 import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
 import { HeaderProps, nameToInitials } from './Header';
 import { v4 } from 'uuid';
+import { useTranslation } from '~/translations';
 
 export type HeaderProfileProps = Pick<HeaderProps, 'links' | 'person' | 'logoutHandler'>;
 
 export function HeaderProfile({ links, person, logoutHandler }: HeaderProfileProps) {
+  const { t } = useTranslation();
   const profileButtonRef = useRef<HTMLDivElement>(null);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,7 +34,13 @@ export function HeaderProfile({ links, person, logoutHandler }: HeaderProfilePro
   return (
     <div ref={profileButtonRef}>
       <Dropdown.TriggerContext>
-        <Button popoverTarget={id} className={classes.dropdownButton} variant="ghost" onClick={() => openMenu()}>
+        <Button
+          popoverTarget={id}
+          className={classes.dropdownButton}
+          variant="ghost"
+          onClick={() => openMenu()}
+          aria-label={t('header.openProfileMenu')}
+        >
           <Box horizontal gap={4} align="center">
             <Avatar
               aria-label={`${person.name} profile picture`}
@@ -90,7 +98,7 @@ export function HeaderProfile({ links, person, logoutHandler }: HeaderProfilePro
                     }}
                   >
                     <Icon material="logout" />
-                    Logg ut
+                    {t('header.logout')}
                   </a>
                 </Dropdown.Button>
               </Dropdown.Item>

@@ -104,7 +104,7 @@ export function Header({
       >
         <Box horizontal align="center" gap={16}>
           <LinkComponent className={classes.logoLink} href={url}>
-            <Logo className={classes.logo} variant={variant} height={47} alt={t('header-alt-text')} />
+            <Logo className={classes.logo} variant={variant} height={47} alt={title ?? t('header.alt-text')} />
             {title && <Label className={classes.titleText}>{title}</Label>}
           </LinkComponent>
         </Box>
@@ -138,8 +138,8 @@ export function Header({
                   }}
                   className={classes.mainLinkButton}
                 >
-                  {<Icon material="login" />}
-                  <Paragraph>{t('header-login')}</Paragraph>
+                  <Icon material="login" />
+                  <Paragraph>{t('header.login')}</Paragraph>
                 </LinkComponent>
               )}
             </Box>

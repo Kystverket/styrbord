@@ -5,6 +5,7 @@ import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
 import { HeaderProps, HeaderLinkItem, MainLinkItem, nameToInitials } from './Header';
 import { v4 } from 'uuid';
 import { ApplicationHeaderContext } from './headerContext';
+import { useTranslation } from '~/translations';
 
 export type HeaderMobileProps = Pick<
   HeaderProps,
@@ -12,6 +13,7 @@ export type HeaderMobileProps = Pick<
 >;
 
 export function HeaderMobile({ logoutHandler, loginHandler, person, slots, links, applications }: HeaderMobileProps) {
+  const { t } = useTranslation();
   const { applicationId: currentApplicationId } = useContext(ApplicationHeaderContext);
   const appsButtonRef = useRef<HTMLDivElement>(null);
 
@@ -51,7 +53,13 @@ export function HeaderMobile({ logoutHandler, loginHandler, person, slots, links
   return (
     <div ref={appsButtonRef}>
       <Dialog.TriggerContext>
-        <Button popoverTarget={id} className={classes.dropdownButton} variant="ghost" onClick={openMenu}>
+        <Button
+          popoverTarget={id}
+          className={classes.dropdownButton}
+          variant="ghost"
+          onClick={openMenu}
+          aria-label={t('header.openMenu')}
+        >
           <Box horizontal gap={16} align="center">
             <Icon material="menu" aria-hidden />
           </Box>
@@ -143,7 +151,7 @@ export function HeaderMobile({ logoutHandler, loginHandler, person, slots, links
                           }}
                         >
                           <Icon material="logout" />
-                          Logg ut
+                          {t('header.logout')}
                         </a>
                       </Button>
                     )}
@@ -158,7 +166,7 @@ export function HeaderMobile({ logoutHandler, loginHandler, person, slots, links
                           }}
                         >
                           <Icon material="login" />
-                          Logg inn
+                          {t('header.login')}
                         </a>
                       </Button>
                     )}
