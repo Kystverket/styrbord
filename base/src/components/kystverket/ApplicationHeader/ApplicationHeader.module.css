@@ -17,10 +17,6 @@
     &:active {
       background-color: inherit;
     }
-
-    @container header (width < 37.5rem) {
-      margin-top: 10px;
-    }
   }
 
   .titleText {
@@ -60,28 +56,21 @@
     &:active {
       background-color: var(--ds-color-surface-active);
     }
+  }
 
-    @container header (width < 64rem) {
-      flex-direction: column;
-    }
-
-    @container header (width < 37.5rem) {
-      /* Logic: If any buttons, makes the Header bigger to look better */
+  @container header (width < 64rem) {
+    .smallScreenHide {
       display: none;
-      /* margin-bottom: 16px; */
     }
   }
 
-  .headerFlex {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-
-    @container header (width < 37.5rem) {
-      flex-direction: column;
-      padding-bottom: var(--ds-size-3);
-      gap: 12px;
+  @container header (width >= 64rem) {
+    .notSmallScreenHide {
+      display: none;
     }
+  }
+
+  .dropdownButton {
+    padding: var(--ds-size-2) var(--ds-size-2);
   }
 }

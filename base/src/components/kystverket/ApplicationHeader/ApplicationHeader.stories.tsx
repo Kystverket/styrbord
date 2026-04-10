@@ -34,35 +34,50 @@ export const Saksbehandling: Story = {
       {
         applicationId: 'sak',
         position: 'main',
-        link: { icon: 'data_table', label: 'Arbeidsliste', href: '#' },
+        label: 'Arbeidsliste',
+        url: '#',
       },
       {
         applicationId: 'sak',
         position: 'main',
-        link: { icon: 'data_table', label: 'Alle saker', href: '#' },
+        label: 'Alle saker',
+        url: '#',
       },
       {
         applicationId: 'dev',
         position: 'main',
-        link: { icon: 'inbox', label: 'Innsendinger', href: '#' },
+        label: 'Innsendinger',
+        url: '#',
       },
       {
         applicationId: 'dev',
         position: 'main',
-        link: { icon: 'article', label: 'Tilbakemeldinger', href: '#' },
+        label: 'Tilbakemeldinger',
+        url: '#',
       },
       {
         applicationId: 'hoer',
         position: 'main',
-        link: { icon: 'export_notes', label: 'Høring', href: '#' },
+        label: 'Høring',
+        url: '#',
       },
       {
         applicationId: 'is',
         position: 'main',
-        link: { icon: 'severe_cold', label: 'Ismelding', href: '#' },
+        label: 'Ismelding',
+        url: '#',
       },
-      { position: 'profile', link: { icon: 'person', label: 'Min side', href: '#' } },
-      { position: 'main', link: { icon: 'groups', label: 'Saksbehandlere', href: '#' } },
+      {
+        position: 'main',
+        label: 'Saksbehandlere',
+        url: '#',
+      },
+      {
+        position: 'profile',
+        icon: 'person',
+        label: 'Min side',
+        url: '#',
+      },
     ],
     person: {
       name: 'Ola Nordmann',
@@ -76,6 +91,108 @@ export const Saksbehandling: Story = {
         <ApplicationHeaderContext.Provider value={{ applicationId: 'sak' }}>
           <Story />
         </ApplicationHeaderContext.Provider>
+      </div>
+    ),
+  ],
+};
+
+const defaultProps: Story['args'] = {
+  logo: { variant: 'blue-horizontal', url: '#' },
+  logoutHandler: () => alert('Logger ut'),
+};
+
+export const Kystverket: Story = {
+  args: { ...defaultProps, logo: { ...defaultProps.logo, variant: 'blue-horizontal' } },
+};
+
+export const MedUndertittel: Story = {
+  args: { ...defaultProps, logo: { ...defaultProps.logo, title: 'Styrbord' } },
+};
+
+export const Datakatalog: Story = {
+  args: { ...defaultProps, logo: { ...defaultProps.logo, variant: 'datakatalog' } },
+};
+
+export const Fyr: Story = {
+  args: { ...defaultProps, logo: { ...defaultProps.logo, variant: 'fyr' } },
+};
+
+export const Hais: Story = {
+  args: { ...defaultProps, logo: { ...defaultProps.logo, variant: 'hais' } },
+};
+
+export const Pfsa: Story = {
+  args: { ...defaultProps, logo: { ...defaultProps.logo, variant: 'pfsa' } },
+};
+
+export const Selvbetjening: Story = {
+  args: { ...defaultProps, logo: { ...defaultProps.logo, variant: 'selvbetjening' } },
+};
+
+export const medProfilOgMenyItems: Story = {
+  args: {
+    ...defaultProps,
+    links: [
+      { icon: 'anchor', label: 'Kystverket', url: 'https://kystverket.no' },
+      { icon: 'settings', label: 'Settings', url: '#' },
+    ],
+    person: {
+      name: 'Ola Nordmann',
+      department: 'Hav- og kystforvaltning',
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ marginBottom: '300px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+};
+
+export const medMenyItems: Story = {
+  args: {
+    ...defaultProps,
+    links: [
+      { icon: 'anchor', label: 'Kystverket', url: 'https://kystverket.no' },
+      { icon: 'settings', label: 'Settings', url: '#' },
+    ],
+  },
+};
+
+export const medProfil: Story = {
+  args: {
+    ...defaultProps,
+    person: {
+      name: 'Ola Nordmann',
+      department: 'Hav- og kystforvaltning',
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ marginBottom: '150px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+};
+
+export const medProfilLenker: Story = {
+  args: {
+    ...defaultProps,
+    links: [
+      ...(defaultProps.links || []),
+      { position: 'profile', icon: 'anchor', label: 'Kystverket', url: 'https://kystverket.no' },
+      { position: 'profile', icon: 'settings', label: 'Settings', url: '#' },
+    ],
+    person: {
+      name: 'Ola Nordmann',
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ marginBottom: '300px' }}>
+        <Story />
       </div>
     ),
   ],
