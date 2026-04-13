@@ -1,3 +1,5 @@
+import "./css/index.scss";
+
 export { CoordinateDirectionField } from "./components/CoordinateDirectionField/CoordinateDirectionField";
 export type {
   CoordinateDirectionFieldProps,

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Avatar as DsAvatar, AvatarProps as DsAvatarProps, MergeRight } from '@digdir/designsystemet-react';
+import { Avatar as DsAvatar, AvatarProps as DsAvatarProps, MergeRight, Tooltip } from '@digdir/designsystemet-react';
 import classes from './Avatar.module.scss';
 
 type AriaLabel = {
@@ -18,6 +18,10 @@ export type AvatarProps = MergeRight<
     'data-size'?: '2xs' | '3xs' | DsAvatarProps['data-size'];
     'data-color-variant'?: 'base' | 'surface-tinted';
     border?: 'solid' | 'dashed' | 'dotted' | 'double' | 'none';
+    /**
+     * Tooltip text to display on hover.
+     */
+    tooltip?: string;
   }
 >;
 
@@ -26,6 +30,7 @@ export const Avatar: FC<AvatarProps> = ({
   'data-color-variant': colorVariant = 'base',
   border: borderStyle,
   className,
+  tooltip,
   ...rest
 }) => {
   const classList = [className];
@@ -45,5 +50,11 @@ export const Avatar: FC<AvatarProps> = ({
   }
 
   const props = { 'data-size': size, className: classList.join(' '), ...rest } as DsAvatarProps;
-  return <DsAvatar {...props} />;
+  const avatar = <DsAvatar {...props} />;
+
+  if (tooltip) {
+    return <Tooltip content={tooltip}>{avatar}</Tooltip>;
+  }
+
+  return avatar;
 };

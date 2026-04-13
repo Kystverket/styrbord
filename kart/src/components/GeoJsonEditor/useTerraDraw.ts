@@ -395,18 +395,27 @@ export function useTerraDraw({
       setIsReady(true);
     };
 
-    // Always attempt initialisation immediately. The map was created with an
-    // inline empty style that is parsed synchronously, so addSource/addLayer
-    // are safe to call as soon as `mapReady` is true.
-    //
-    // We must NOT use `map.isStyleLoaded()` here because it returns `false`
-    // while ANY tile source is still loading (including base-layer tiles added
-    // by a preceding effect). Falling through to `map.on("load", …)` would
-    // then silently fail because the one-shot "load" event already fired for
-    // the initial inline style.
-    initDraw();
+    // In MapLibre v5+, loadJSON defers style parsing to the next animation
+    // frame, so the style may not be ready immediately after map creation.
+    // map.getStyle() returns undefined when the style structure hasn't loaded
+    // yet (without throwing), so use it as a lightweight readiness check.
+    // On subsequent effect runs the style is always loaded, so initDraw()
+    // executes immediately.
+    let onLoad: (() => void) | null = null;
+
+    if (map.getStyle()) {
+      initDraw();
+    } else {
+      onLoad = () => {
+        if (!drawRef.current) initDraw();
+      };
+      map.once("load", onLoad);
+    }
 
     return () => {
+      if (onLoad) {
+        map.off("load", onLoad);
+      }
       const draw = drawRef.current;
       if (draw) {
         try {
