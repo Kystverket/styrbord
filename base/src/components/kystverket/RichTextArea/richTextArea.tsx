@@ -47,6 +47,12 @@ type ToolbarCommand<T = unknown> = { key: CmdKey<T>; value?: T };
 
 const normalizeMarkdownBreakTags = (value: string) => value.replace(/<br\s*\/?>/gi, '\n\n');
 
+const blockedCommonmarkGroups = new Set(['CodeBlock', 'InlineCode', 'Blockquote', 'Hr', 'Html']);
+const richTextCommonmarkPlugins = commonmark.filter((plugin) => {
+  const group = plugin.meta?.group ?? '';
+  return !blockedCommonmarkGroups.has(group);
+});
+
 const RichTextAreaContainer = ({
   value,
   onChange,
@@ -157,7 +163,7 @@ const RichTextAreaContainer = ({
             updateToolbarState(listenerContext);
           });
         })
-        .use(commonmark)
+        .use(richTextCommonmarkPlugins)
         .use(history)
         .use(listener),
     [disabled],
