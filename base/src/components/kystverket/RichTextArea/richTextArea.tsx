@@ -149,7 +149,6 @@ const RichTextAreaContainer = ({
               return;
             }
 
-            console.log('Markdown oppdatert:', normalizedMarkdown);
             lastKnownMarkdownRef.current = normalizedMarkdown;
             latestOnChangeRef.current(normalizedMarkdown);
             updateToolbarState(_ctx);
