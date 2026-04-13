@@ -45,6 +45,8 @@ export type RichTextAreaProps = {
 
 type ToolbarCommand<T = unknown> = { key: CmdKey<T>; value?: T };
 
+const normalizeMarkdownBreakTags = (value: string) => value.replace(/<br\s*\/?>/gi, '\n\n');
+
 const RichTextAreaContainer = ({
   value,
   onChange,
@@ -56,7 +58,7 @@ const RichTextAreaContainer = ({
   required = false,
   error,
 }: RichTextAreaProps) => {
-  const normalizedValue = value ?? '';
+  const normalizedValue = normalizeMarkdownBreakTags(value ?? '');
   const latestOnChangeRef = useRef(onChange);
   const lastKnownMarkdownRef = useRef(normalizedValue);
 
@@ -140,12 +142,16 @@ const RichTextAreaContainer = ({
             },
           }));
           ctx.get(listenerCtx).markdownUpdated((_ctx, markdown) => {
-            if (markdown === lastKnownMarkdownRef.current) {
+            const normalizedMarkdown = normalizeMarkdownBreakTags(markdown);
+
+            if (normalizedMarkdown === lastKnownMarkdownRef.current) {
               updateToolbarState(_ctx);
               return;
             }
-            lastKnownMarkdownRef.current = markdown;
-            latestOnChangeRef.current(markdown);
+
+            console.log('Markdown oppdatert:', normalizedMarkdown);
+            lastKnownMarkdownRef.current = normalizedMarkdown;
+            latestOnChangeRef.current(normalizedMarkdown);
             updateToolbarState(_ctx);
           });
           ctx.get(listenerCtx).selectionUpdated((listenerContext) => {
