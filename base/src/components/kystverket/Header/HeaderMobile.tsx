@@ -90,7 +90,7 @@ export function HeaderMobile({ logoutHandler, loginHandler, profile, slots, link
               <Box>
                 {slots?.preLinks}
                 {mainLinks.map((link, index) => (
-                  <MainLinkItem key={index} {...link} />
+                  <MainLinkItem key={index} {...link} onClick={closeMenu} />
                 ))}
                 {slots?.postLinks}
               </Box>
@@ -99,7 +99,13 @@ export function HeaderMobile({ logoutHandler, loginHandler, profile, slots, link
           {applications && applications.length > 1 && (
             <Dialog.Block>
               {applications.map((app) => (
-                <MainLinkItem key={app.id} icon={app.icon} label={app.name} url={firstLinkPerApplication[app.id].url} />
+                <MainLinkItem
+                  key={app.id}
+                  icon={app.icon}
+                  label={app.name}
+                  url={firstLinkPerApplication[app.id].url}
+                  onClick={closeMenu}
+                />
               ))}
             </Dialog.Block>
           )}
@@ -107,7 +113,7 @@ export function HeaderMobile({ logoutHandler, loginHandler, profile, slots, link
             <Dialog.Block>
               <Box horizontal wrap align="center" gap={16} justify="between" width="full">
                 {profileLinks.map((link, index) => (
-                  <MainLinkItem key={index} {...link} />
+                  <MainLinkItem key={index} {...link} onClick={closeMenu} />
                 ))}
                 {logoutHandler && profile && (
                   <Button asChild>

@@ -49,7 +49,7 @@ export function HeaderApps({ links, applications }: HeaderAppsProps) {
             {applications.map((app) => (
               <Dropdown.Item key={app.id}>
                 <Dropdown.Button asChild>
-                  <LinkComponent href={firstLinkPerApplication[app.id]?.url ?? '#'}>
+                  <LinkComponent href={firstLinkPerApplication[app.id]?.url ?? '#'} onClick={closeMenu}>
                     {app.icon && <Icon material={app.icon} aria-hidden />}
                     {app.name}
                   </LinkComponent>

@@ -76,7 +76,7 @@ export function HeaderProfile({ links, profile, logoutHandler }: HeaderProfilePr
               <Dropdown.Item key={index}>
                 <Dropdown.Button asChild>
                   {link.url ? (
-                    <LinkComponent href={link.url}>
+                    <LinkComponent href={link.url} onClick={closeMenu}>
                       {link.icon && <Icon material={link.icon} aria-hidden />}
                       {link.label}
                     </LinkComponent>
@@ -89,17 +89,17 @@ export function HeaderProfile({ links, profile, logoutHandler }: HeaderProfilePr
             {logoutHandler && profile && (
               <Dropdown.Item>
                 <Dropdown.Button asChild>
-                  <a
+                  <LinkComponent
                     href="#"
                     onClick={(e) => {
-                      e.preventDefault();
+                      e?.preventDefault();
                       logoutHandler?.();
                       closeMenu();
                     }}
                   >
                     <Icon material="logout" />
                     {t('header.logout')}
-                  </a>
+                  </LinkComponent>
                 </Dropdown.Button>
               </Dropdown.Item>
             )}

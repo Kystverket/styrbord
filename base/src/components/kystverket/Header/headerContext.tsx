@@ -5,7 +5,7 @@ export type HeaderLinkComponentProps = {
   className?: string;
   href?: string;
   children: ReactNode;
-  onClick?: () => void;
+  onClick?: (e?: React.UIEvent | undefined) => void;
 };
 
 export interface HeaderContextProps {

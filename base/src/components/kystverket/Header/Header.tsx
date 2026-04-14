@@ -19,6 +19,10 @@ export type HeaderLinkItem = {
   children?: ReactNode;
 };
 
+export type HeaderLinkItemWithOnClick = HeaderLinkItem & {
+  onClick?: (e?: React.UIEvent | undefined) => void;
+};
+
 export type HeaderApplication = {
   id: string;
   name: string;
@@ -59,12 +63,12 @@ export const nameToInitials = (name?: string): string => {
   return parts[0].charAt(0).toUpperCase() + parts[parts.length - 1].charAt(0).toUpperCase();
 };
 
-export function MainLinkItem(props: HeaderLinkItem) {
+export function MainLinkItem(props: HeaderLinkItemWithOnClick) {
   const { LinkComponent } = useContext(HeaderContext);
 
   if (props.url) {
     return (
-      <LinkComponent href={props.url} className={classes.mainLinkButton}>
+      <LinkComponent href={props.url} className={classes.mainLinkButton} onClick={props.onClick}>
         {props.icon && <Icon material={props.icon} />}
         <Paragraph>{props.label}</Paragraph>
       </LinkComponent>
