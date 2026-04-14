@@ -1,4 +1,4 @@
-import { Box, Icon, IconId, Logo, LogoVariant, Label, Paragraph } from '~/main';
+import { Box, Icon, IconId, Logo, LogoVariant, Label, Paragraph, AvatarProps } from '~/main';
 import classes from './Header.module.css';
 import { Fragment, ReactNode, useContext } from 'react';
 import { useTranslation } from '~/translations';
@@ -6,6 +6,7 @@ import { ApplicationHeaderContext, HeaderContext } from './headerContext';
 import { HeaderApps } from './HeaderApps';
 import { HeaderProfile } from './HeaderProfile';
 import { HeaderMobile } from './HeaderMobile';
+import { BoxWidthProp } from '../Box/box';
 
 export type HeaderPosition = 'main' | 'profile';
 
@@ -32,9 +33,10 @@ export interface HeaderProps {
   };
   applications?: HeaderApplication[];
   links?: HeaderLinkItem[];
-  person?: HeaderPersona;
+  profile?: HeaderProfile;
   loginHandler?: () => void;
   logoutHandler?: () => void;
+  width?: BoxWidthProp;
   slots?: {
     preLinks?: ReactNode;
     postLinks?: ReactNode;
@@ -42,9 +44,10 @@ export interface HeaderProps {
   };
 }
 
-type HeaderPersona = {
+type HeaderProfile = {
   name: string;
   department?: string;
+  avatarStyle?: Pick<AvatarProps, 'data-color' | 'data-color-variant' | 'border'>;
 };
 
 export const nameToInitials = (name?: string): string => {
@@ -75,7 +78,8 @@ export function Header({
   logo: { title = undefined, variant = 'blue-horizontal', url },
   links,
   slots,
-  person,
+  width = 'container',
+  profile,
   applications,
   loginHandler,
   logoutHandler,
@@ -93,15 +97,7 @@ export function Header({
 
   return (
     <Box horizontal justify="center" align="center" className={classes.headerContainer}>
-      <Box
-        className={classes.headerFlex}
-        horizontal
-        gap={12}
-        align="center"
-        justify="between"
-        px={16}
-        width="container"
-      >
+      <Box className={classes.headerFlex} horizontal gap={12} align="center" justify="between" px={16} width={width}>
         <Box horizontal align="center" gap={16}>
           <LinkComponent className={classes.logoLink} href={url}>
             <Logo className={classes.logo} variant={variant} height={47} alt={title ?? t('header.alt-text')} />
@@ -122,7 +118,7 @@ export function Header({
               <HeaderMobile
                 links={links}
                 applications={applications}
-                person={person}
+                profile={profile}
                 loginHandler={loginHandler}
                 logoutHandler={logoutHandler}
               />
@@ -130,8 +126,8 @@ export function Header({
             <Box horizontal gap={0} align="center" className={classes.smallScreenHide}>
               <HeaderApps links={links} applications={applications} />
               {slots?.widgets}
-              {person && <HeaderProfile links={links} person={person} logoutHandler={logoutHandler} />}
-              {loginHandler && !person && (
+              {profile && <HeaderProfile links={links} profile={profile} logoutHandler={logoutHandler} />}
+              {loginHandler && !profile && (
                 <LinkComponent
                   onClick={() => {
                     loginHandler?.();

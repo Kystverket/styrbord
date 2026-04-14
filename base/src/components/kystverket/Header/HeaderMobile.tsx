@@ -9,10 +9,10 @@ import { useTranslation } from '~/translations';
 
 export type HeaderMobileProps = Pick<
   HeaderProps,
-  'logoutHandler' | 'loginHandler' | 'person' | 'slots' | 'links' | 'applications'
+  'logoutHandler' | 'loginHandler' | 'profile' | 'slots' | 'links' | 'applications'
 >;
 
-export function HeaderMobile({ logoutHandler, loginHandler, person, slots, links, applications }: HeaderMobileProps) {
+export function HeaderMobile({ logoutHandler, loginHandler, profile, slots, links, applications }: HeaderMobileProps) {
   const { t } = useTranslation();
   const { applicationId: currentApplicationId } = useContext(ApplicationHeaderContext);
   const appsButtonRef = useRef<HTMLDivElement>(null);
@@ -67,19 +67,21 @@ export function HeaderMobile({ logoutHandler, loginHandler, person, slots, links
         <Dialog id={id} open={isMenuOpen} onClose={() => setIsMenuOpen(false)}>
           <Dialog.Block>
             <Box gap={8}>
-              {person && (
-                <Box horizontal align="center" p={8} gap={8} px={12}>
+              {profile && (
+                <Box horizontal align="center" p={8} gap={12} px={12}>
                   <Avatar
-                    aria-label={`${person.name} profile picture`}
-                    data-color={'primary'}
+                    aria-label={`${profile.name} profile picture`}
                     data-size="2xs"
-                    initials={nameToInitials(person.name)}
+                    initials={nameToInitials(profile.name)}
+                    {...(profile.avatarStyle || { 'data-color': 'success' })}
                   />
                   <Box className={classes.profileMeta}>
-                    <Label className={`${classes.profileDisplayName} ${classes.truncateOverflow}`}>{person.name}</Label>
-                    {person.department && (
+                    <Label className={`${classes.profileDisplayName} ${classes.truncateOverflow}`}>
+                      {profile.name}
+                    </Label>
+                    {profile.department && (
                       <Label data-size="sm" className={`${classes.profileDepartment} ${classes.truncateOverflow}`}>
-                        {person.department}
+                        {profile.department}
                       </Label>
                     )}
                   </Box>
@@ -88,7 +90,7 @@ export function HeaderMobile({ logoutHandler, loginHandler, person, slots, links
               {(slots?.preLinks || slots?.postLinks || mainLinks.length > 0) && (
                 <>
                   <Box horizontal align="center" width="full" gap={8}>
-                    {person && (
+                    {profile && (
                       <>
                         <Divider />
                         {applications && applications.length > 1 && (
@@ -140,7 +142,7 @@ export function HeaderMobile({ logoutHandler, loginHandler, person, slots, links
                     {profileLinks.map((link, index) => (
                       <MainLinkItem key={index} {...link} />
                     ))}
-                    {logoutHandler && person && (
+                    {logoutHandler && profile && (
                       <Button asChild>
                         <a
                           href="#"
@@ -155,7 +157,7 @@ export function HeaderMobile({ logoutHandler, loginHandler, person, slots, links
                         </a>
                       </Button>
                     )}
-                    {loginHandler && !person && (
+                    {loginHandler && !profile && (
                       <Button asChild>
                         <a
                           href="#"

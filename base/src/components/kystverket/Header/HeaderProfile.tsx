@@ -6,9 +6,9 @@ import { HeaderProps, nameToInitials } from './Header';
 import { v4 } from 'uuid';
 import { useTranslation } from '~/translations';
 
-export type HeaderProfileProps = Pick<HeaderProps, 'links' | 'person' | 'logoutHandler'>;
+export type HeaderProfileProps = Pick<HeaderProps, 'links' | 'profile' | 'logoutHandler'>;
 
-export function HeaderProfile({ links, person, logoutHandler }: HeaderProfileProps) {
+export function HeaderProfile({ links, profile, logoutHandler }: HeaderProfileProps) {
   const { t } = useTranslation();
   const profileButtonRef = useRef<HTMLDivElement>(null);
 
@@ -21,7 +21,7 @@ export function HeaderProfile({ links, person, logoutHandler }: HeaderProfilePro
     setIsMenuOpen(!isMenuOpen);
   };
 
-  if (!person) {
+  if (!profile) {
     return null;
   }
 
@@ -43,10 +43,10 @@ export function HeaderProfile({ links, person, logoutHandler }: HeaderProfilePro
         >
           <Box horizontal gap={4} align="center">
             <Avatar
-              aria-label={`${person.name} profile picture`}
-              data-color={'primary'}
+              aria-label={`${profile.name} profile picture`}
               data-size="2xs"
-              initials={nameToInitials(person.name)}
+              initials={nameToInitials(profile.name)}
+              {...(profile.avatarStyle || { 'data-color': 'success' })}
             />
             <Icon material="keyboard_arrow_down" aria-hidden />
           </Box>
@@ -54,18 +54,18 @@ export function HeaderProfile({ links, person, logoutHandler }: HeaderProfilePro
         <Dropdown id={id} open={isMenuOpen} data-color="neutral">
           <Dropdown.List>
             <Dropdown.Item>
-              <Box horizontal align="center" p={8} gap={8} px={12}>
+              <Box horizontal align="center" p={8} gap={12} px={12}>
                 <Avatar
-                  aria-label={`${person.name} profile picture`}
-                  data-color={'primary'}
+                  aria-label={`${profile.name} profile picture`}
                   data-size="2xs"
-                  initials={nameToInitials(person.name)}
+                  initials={nameToInitials(profile.name)}
+                  {...(profile.avatarStyle || { 'data-color': 'success' })}
                 />
                 <Box className={classes.profileMeta}>
-                  <Label className={`${classes.profileDisplayName} ${classes.truncateOverflow}`}>{person.name}</Label>
-                  {person.department && (
+                  <Label className={`${classes.profileDisplayName} ${classes.truncateOverflow}`}>{profile.name}</Label>
+                  {profile.department && (
                     <Label data-size="sm" className={`${classes.profileDepartment} ${classes.truncateOverflow}`}>
-                      {person.department}
+                      {profile.department}
                     </Label>
                   )}
                 </Box>
@@ -86,7 +86,7 @@ export function HeaderProfile({ links, person, logoutHandler }: HeaderProfilePro
                 </Dropdown.Button>
               </Dropdown.Item>
             ))}
-            {logoutHandler && person && (
+            {logoutHandler && profile && (
               <Dropdown.Item>
                 <Dropdown.Button asChild>
                   <a
