@@ -1,6 +1,6 @@
-import { Box, Button, Icon, Dropdown, Avatar, Label, Divider } from '~/main';
+import { Box, Button, Icon, Dropdown, Avatar, Label, Divider, HeaderContext } from '~/main';
 import classes from './Header.module.css';
-import { useId, useRef, useState } from 'react';
+import { useContext, useId, useRef, useState } from 'react';
 import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
 import { HeaderProps, nameToInitials } from './Header';
 import { useTranslation } from '~/translations';
@@ -10,6 +10,7 @@ export type HeaderProfileProps = Pick<HeaderProps, 'links' | 'profile' | 'logout
 export function HeaderProfile({ links, profile, logoutHandler }: HeaderProfileProps) {
   const { t } = useTranslation();
   const profileButtonRef = useRef<HTMLDivElement>(null);
+  const { LinkComponent } = useContext(HeaderContext);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -75,10 +76,10 @@ export function HeaderProfile({ links, profile, logoutHandler }: HeaderProfilePr
               <Dropdown.Item key={index}>
                 <Dropdown.Button asChild>
                   {link.url ? (
-                    <a href={link.url}>
+                    <LinkComponent href={link.url}>
                       {link.icon && <Icon material={link.icon} aria-hidden />}
                       {link.label}
-                    </a>
+                    </LinkComponent>
                   ) : (
                     link.children
                   )}

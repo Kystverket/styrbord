@@ -1,6 +1,6 @@
-import { Box, Button, Icon, Dropdown } from '~/main';
+import { Box, Button, Icon, Dropdown, HeaderContext } from '~/main';
 import classes from './Header.module.css';
-import { useId, useRef, useState } from 'react';
+import { useContext, useId, useRef, useState } from 'react';
 import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
 import { HeaderProps, HeaderLinkItem } from './Header';
 import { useTranslation } from '~/translations';
@@ -10,6 +10,7 @@ export type HeaderAppsProps = Pick<HeaderProps, 'links' | 'applications'>;
 export function HeaderApps({ links, applications }: HeaderAppsProps) {
   const { t } = useTranslation();
   const appsButtonRef = useRef<HTMLDivElement>(null);
+  const { LinkComponent } = useContext(HeaderContext);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -48,10 +49,10 @@ export function HeaderApps({ links, applications }: HeaderAppsProps) {
             {applications.map((app) => (
               <Dropdown.Item key={app.id}>
                 <Dropdown.Button asChild>
-                  <a href={firstLinkPerApplication[app.id]?.url ?? '#'}>
+                  <LinkComponent href={firstLinkPerApplication[app.id]?.url ?? '#'}>
                     {app.icon && <Icon material={app.icon} aria-hidden />}
                     {app.name}
-                  </a>
+                  </LinkComponent>
                 </Dropdown.Button>
               </Dropdown.Item>
             ))}

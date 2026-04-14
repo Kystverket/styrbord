@@ -116,11 +116,12 @@ export function Header({
           <Box horizontal gap={0} align="center">
             <div className={classes.notSmallScreenHide + ' mobile-menu'}>
               <HeaderMobile
-                links={links}
                 applications={applications}
-                profile={profile}
+                links={links}
                 loginHandler={loginHandler}
                 logoutHandler={logoutHandler}
+                profile={profile}
+                slots={slots}
               />
             </div>
             <Box horizontal gap={0} align="center" className={classes.smallScreenHide}>
