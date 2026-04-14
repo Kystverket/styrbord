@@ -73,6 +73,10 @@ import { useStyrbordTranslation } from '~/i18n/translations';
 const { t } = useStyrbordTranslation();
 ```
 
+### 2026-04-14 -- v1.5.0
+
+- Oppdatert Header til å støtte 'applikasjoner' og endring i props i retning av noe enklere.
+
 ### 2025-11-11 -- v1.2.1
 
 - Oppdatert Alert til å ikke være egenprodusert, men istedet være en variant av Alert fra Designsystemet. Deler av interfacet endres til å være likere Designsystemet (size).
