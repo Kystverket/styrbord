@@ -21,6 +21,8 @@
     { "key": "footer.copyright", "checks": ["untranslated"], "languages": ["nn-NO"] },
     { "key": "footer.links.arealplanlegging", "checks": ["untranslated"], "languages": ["nn-NO"] },
     { "key": "footer.links.presse", "checks": ["untranslated"], "languages": ["nn-NO"] },
-    { "key": "footer.links.sjotrafikksentralen", "checks": ["untranslated"], "languages": ["nn-NO"] }
+    { "key": "footer.links.sjotrafikksentralen", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "header.login", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "header.logout", "checks": ["untranslated"], "languages": ["nn-NO"] }
   ]
 }
