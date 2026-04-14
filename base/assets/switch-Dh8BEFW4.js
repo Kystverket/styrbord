@@ -1,2 +1,0 @@
-'use client';
-import{j as r}from"./jsx-runtime-D_zvdyIk.js";import{r as d}from"./iframe-1YTc_OCA.js";import{ah as m,ai as p}from"./SlotDialog-B4AtNLLD.js";import{L as h}from"./label-DKq9gewL.js";const S=d.forwardRef(function({"data-size":i,children:l,className:s,description:t,label:e,position:a,style:o,...c},n){return r.jsxs(m,{className:s,"data-position":a,"data-size":i,style:o,children:[r.jsx(p,{type:"checkbox",role:"switch",ref:n,...c}),!!e&&r.jsx(h,{weight:"regular",children:e}),!!t&&r.jsx("div",{"data-field":"description",children:t})]})});export{S};
