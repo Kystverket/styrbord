@@ -1,4 +1,4 @@
-import { Box, Button, Icon, Dialog, Avatar, Label, Divider } from '~/main';
+import { Box, Button, Icon, Dialog, Avatar, Label } from '~/main';
 import classes from './Header.module.css';
 import { useContext, useRef, useState } from 'react';
 import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
@@ -64,119 +64,85 @@ export function HeaderMobile({ logoutHandler, loginHandler, profile, slots, link
             <Icon material="menu" aria-hidden />
           </Box>
         </Button>
-        <Dialog id={id} open={isMenuOpen} onClose={() => setIsMenuOpen(false)}>
-          <Dialog.Block>
-            <Box gap={8}>
-              {profile && (
-                <Box horizontal align="center" p={8} gap={12} px={12}>
-                  <Avatar
-                    aria-label={`${profile.name} profile picture`}
-                    data-size="2xs"
-                    initials={nameToInitials(profile.name)}
-                    {...(profile.avatarStyle || { 'data-color': 'success' })}
-                  />
-                  <Box className={classes.profileMeta}>
-                    <Label className={`${classes.profileDisplayName} ${classes.truncateOverflow}`}>
-                      {profile.name}
+        <Dialog id={id} open={isMenuOpen} onClose={() => setIsMenuOpen(false)} placement="right">
+          {profile && (
+            <Dialog.Block>
+              <Box horizontal align="center" p={8} gap={12} px={12}>
+                <Avatar
+                  aria-label={`${profile.name} profile picture`}
+                  data-size="2xs"
+                  initials={nameToInitials(profile.name)}
+                  {...(profile.avatarStyle || { 'data-color': 'success' })}
+                />
+                <Box className={classes.profileMeta}>
+                  <Label className={`${classes.profileDisplayName} ${classes.truncateOverflow}`}>{profile.name}</Label>
+                  {profile.department && (
+                    <Label data-size="sm" className={`${classes.profileDepartment} ${classes.truncateOverflow}`}>
+                      {profile.department}
                     </Label>
-                    {profile.department && (
-                      <Label data-size="sm" className={`${classes.profileDepartment} ${classes.truncateOverflow}`}>
-                        {profile.department}
-                      </Label>
-                    )}
-                  </Box>
+                  )}
                 </Box>
-              )}
-              {(slots?.preLinks || slots?.postLinks || mainLinks.length > 0) && (
-                <>
-                  <Box horizontal align="center" width="full" gap={8}>
-                    {profile && (
-                      <>
-                        <Divider />
-                        {applications && applications.length > 1 && (
-                          <>
-                            <Icon material="menu" aria-hidden />
-                            <Divider />
-                          </>
-                        )}
-                      </>
-                    )}
-                    {slots?.widgets}
-                  </Box>
-                  <Box horizontal wrap align="center" width="full">
-                    {slots?.preLinks}
-                    {mainLinks.map((link, index) => (
-                      <MainLinkItem key={index} {...link} />
-                    ))}
-                    {slots?.postLinks}
-                  </Box>
-                </>
-              )}
-              {applications && applications.length > 1 && (
-                <>
-                  <Box horizontal align="center" width="full" gap={8}>
-                    <Divider />
-                    <Icon material="apps" aria-hidden />
-                    <Divider />
-                  </Box>
-                  <Box horizontal align="center" width="full">
-                    <Box horizontal wrap align="center" width="full">
-                      {applications.map((app) => (
-                        <MainLinkItem
-                          key={app.id}
-                          icon={app.icon}
-                          label={app.name}
-                          url={firstLinkPerApplication[app.id].url}
-                        />
-                      ))}
-                    </Box>
-                  </Box>
-                </>
-              )}
-              {(logoutHandler || profileLinks.length > 0) && (
-                <>
-                  <Box horizontal align="center" width="full" gap={8}>
-                    <Divider />
-                  </Box>
-                  <Box horizontal wrap align="center" gap={16} justify="between" width="full">
-                    {profileLinks.map((link, index) => (
-                      <MainLinkItem key={index} {...link} />
-                    ))}
-                    {logoutHandler && profile && (
-                      <Button asChild>
-                        <a
-                          href="#"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            logoutHandler?.();
-                            closeMenu();
-                          }}
-                        >
-                          <Icon material="logout" />
-                          {t('header.logout')}
-                        </a>
-                      </Button>
-                    )}
-                    {loginHandler && !profile && (
-                      <Button asChild>
-                        <a
-                          href="#"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            loginHandler?.();
-                            closeMenu();
-                          }}
-                        >
-                          <Icon material="login" />
-                          {t('header.login')}
-                        </a>
-                      </Button>
-                    )}
-                  </Box>
-                </>
-              )}
-            </Box>
-          </Dialog.Block>
+                {slots?.widgets}
+              </Box>
+            </Dialog.Block>
+          )}
+          {(slots?.preLinks || slots?.postLinks || mainLinks.length > 0) && (
+            <Dialog.Block>
+              <Box>
+                {slots?.preLinks}
+                {mainLinks.map((link, index) => (
+                  <MainLinkItem key={index} {...link} />
+                ))}
+                {slots?.postLinks}
+              </Box>
+            </Dialog.Block>
+          )}
+          {applications && applications.length > 1 && (
+            <Dialog.Block>
+              {applications.map((app) => (
+                <MainLinkItem key={app.id} icon={app.icon} label={app.name} url={firstLinkPerApplication[app.id].url} />
+              ))}
+            </Dialog.Block>
+          )}
+          {(logoutHandler || profileLinks.length > 0) && (
+            <Dialog.Block>
+              <Box horizontal wrap align="center" gap={16} justify="between" width="full">
+                {profileLinks.map((link, index) => (
+                  <MainLinkItem key={index} {...link} />
+                ))}
+                {logoutHandler && profile && (
+                  <Button asChild>
+                    <a
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        logoutHandler?.();
+                        closeMenu();
+                      }}
+                    >
+                      <Icon material="logout" />
+                      {t('header.logout')}
+                    </a>
+                  </Button>
+                )}
+                {loginHandler && !profile && (
+                  <Button asChild>
+                    <a
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        loginHandler?.();
+                        closeMenu();
+                      }}
+                    >
+                      <Icon material="login" />
+                      {t('header.login')}
+                    </a>
+                  </Button>
+                )}
+              </Box>
+            </Dialog.Block>
+          )}
         </Dialog>
       </Dialog.TriggerContext>
     </div>
