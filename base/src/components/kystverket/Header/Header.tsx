@@ -126,7 +126,7 @@ export function Header({
             <Box horizontal gap={0} align="center" className={classes.smallScreenHide}>
               <HeaderApps links={links} applications={applications} />
               {slots?.widgets}
-              {profile && <HeaderProfile links={links} profile={profile} logoutHandler={logoutHandler} />}
+              <HeaderProfile links={links} profile={profile} logoutHandler={logoutHandler} />
               {loginHandler && !profile && (
                 <LinkComponent
                   onClick={() => {

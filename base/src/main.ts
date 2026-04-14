@@ -1,6 +1,5 @@
 import './css/index.scss';
 import '@material-symbols/font-400/outlined.css';
-import { HeaderContext } from './components/kystverket/Header/headerContext';
 
 export type { SupportedLanguage, ScreenSize } from './utils/types';
 

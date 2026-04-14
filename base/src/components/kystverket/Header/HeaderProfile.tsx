@@ -1,9 +1,8 @@
 import { Box, Button, Icon, Dropdown, Avatar, Label, Divider } from '~/main';
 import classes from './Header.module.css';
-import { useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
 import { HeaderProps, nameToInitials } from './Header';
-import { v4 } from 'uuid';
 import { useTranslation } from '~/translations';
 
 export type HeaderProfileProps = Pick<HeaderProps, 'links' | 'profile' | 'logoutHandler'>;
@@ -21,15 +20,15 @@ export function HeaderProfile({ links, profile, logoutHandler }: HeaderProfilePr
     setIsMenuOpen(!isMenuOpen);
   };
 
-  if (!profile) {
-    return null;
-  }
-
   const profileLinks = links?.filter((link) => 'position' in link && link.position === 'profile') || [];
 
   useOnClickOutsideAndEscape(profileButtonRef, closeMenu);
 
-  const id = v4();
+  const id = useId();
+
+  if (!profile) {
+    return null;
+  }
 
   return (
     <div ref={profileButtonRef}>
