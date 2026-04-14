@@ -1,9 +1,8 @@
 import { Box, Button, Icon, Dialog, Avatar, Label } from '~/main';
 import classes from './Header.module.css';
-import { useContext, useRef, useState } from 'react';
+import { useContext, useId, useRef, useState } from 'react';
 import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
 import { HeaderProps, HeaderLinkItem, MainLinkItem, nameToInitials } from './Header';
-import { v4 } from 'uuid';
 import { ApplicationHeaderContext } from './headerContext';
 import { useTranslation } from '~/translations';
 
@@ -26,10 +25,6 @@ export function HeaderMobile({ logoutHandler, loginHandler, profile, slots, link
     setIsMenuOpen(!isMenuOpen);
   };
 
-  if ((!links || links.length === 0) && !loginHandler && !logoutHandler) {
-    return null;
-  }
-
   useOnClickOutsideAndEscape(appsButtonRef, closeMenu);
 
   const firstLinkPerApplication: Record<string, HeaderLinkItem> = {};
@@ -48,7 +43,11 @@ export function HeaderMobile({ logoutHandler, loginHandler, profile, slots, link
 
   const profileLinks = links?.filter((link) => 'position' in link && link.position === 'profile') || [];
 
-  const id = v4();
+  const id = useId();
+
+  if ((!links || links.length === 0) && !loginHandler && !logoutHandler) {
+    return null;
+  }
 
   return (
     <div ref={appsButtonRef}>

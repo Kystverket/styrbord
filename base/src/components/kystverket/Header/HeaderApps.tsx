@@ -1,9 +1,8 @@
 import { Box, Button, Icon, Dropdown } from '~/main';
 import classes from './Header.module.css';
-import { useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
 import { HeaderProps, HeaderLinkItem } from './Header';
-import { v4 } from 'uuid';
 import { useTranslation } from '~/translations';
 
 export type HeaderAppsProps = Pick<HeaderProps, 'links' | 'applications'>;
@@ -21,10 +20,6 @@ export function HeaderApps({ links, applications }: HeaderAppsProps) {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  if (!applications || applications.length < 1) {
-    return null;
-  }
-
   useOnClickOutsideAndEscape(appsButtonRef, closeMenu);
 
   const firstLinkPerApplication: Record<string, HeaderLinkItem> = {};
@@ -34,7 +29,11 @@ export function HeaderApps({ links, applications }: HeaderAppsProps) {
     }
   });
 
-  const id = v4();
+  const id = useId();
+
+  if (!applications || applications.length < 1) {
+    return null;
+  }
 
   return (
     <div ref={appsButtonRef}>
