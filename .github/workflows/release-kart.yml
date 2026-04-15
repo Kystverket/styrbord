@@ -49,7 +49,7 @@ jobs:
           npm ci --ignore-scripts
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - run: npm run build
+      - run: npm run build -w kart
       - run: npm publish --workspace kart
   publish-to-npmjs:
     runs-on: ubuntu-latest

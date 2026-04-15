@@ -43,6 +43,13 @@
       "sjotrafikksentralen": "Sjøtrafikksentralen"
     }
   },
+  "header": {
+    "login": "Logg inn",
+    "logout": "Logg ut",
+    "openApplicationsMenu": "Opne applikasjonsmeny",
+    "openMenu": "Opne meny",
+    "openProfileMenu": "Opne profilmeny"
+  },
   "header-alt-text": "Til framsida",
   "kystverket": "Kystverket",
   "loading": "Lastar",
