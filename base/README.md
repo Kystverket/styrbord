@@ -41,6 +41,25 @@ Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.
 
 ## Endringslogg
 
+### 2026-04-14 -- v1.5.0
+
+- Oppdatert Header til å støtte 'applikasjoner'. For å overstyre LinkComponent som brukes (for å slippe full reload i f.eks. NextJS) kan man wrapper Header med HeaderContext.
+
+```ts
+<HeaderContext.Provider value={{ LinkComponent: Link }}>
+  <Header
+    logo={{ variant: 'selvbetjening', url: '/' + language }}
+    slots={{ postLinks: <LanguageSwitcher language={language} /> }}
+  />
+</HeaderContext.Provider>
+```
+
+Alle linker er nå plassert i links propertyen. Linker som skal plasseres under profile må ha `position="profile"`. Det er slots for å sette inn egne komponenter i menyen som ikke er en link (for eksempel varselsbjelle).
+
+Header bruker nå hamburger-ikon for mobilmeny.
+
+Fullt navn vises ikke lenger, kun initialer. Initialer blir automatisk lagd basert på navn.
+
 ### 2026-03-10 -- v1.4.0
 
 Endret fra StyrbordTranslationContext til å bruke @kystverket/sprak-react.
@@ -72,10 +91,6 @@ import { useStyrbordTranslation } from '~/i18n/translations';
 ...
 const { t } = useStyrbordTranslation();
 ```
-
-### 2026-04-14 -- v1.5.0
-
-- Oppdatert Header til å støtte 'applikasjoner' og endring i props i retning av noe enklere.
 
 ### 2025-11-11 -- v1.2.1
 
