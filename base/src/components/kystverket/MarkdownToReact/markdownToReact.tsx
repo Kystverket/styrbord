@@ -7,7 +7,7 @@ export type MarkdownToReactProps = {
 
 // Overskrifter (h1-h6) rendres som <Paragraph> med tanke på dokumenthierarki (enn så lenge, dette må vi komme tilbake til etter hvert)
 const MarkdownToReact = ({ markdown }: MarkdownToReactProps) => {
-  const renderedMarkdown = markdown.replaceAll(/\n{2}/g, '\n\n&nbsp;\n\n');
+  const renderedMarkdown = markdown.replaceAll(/\n{3,}/g, '\n\n\u00A0\n\n');
   return (
     <div className={styles.markdownToReact}>
       <ReactMarkdown

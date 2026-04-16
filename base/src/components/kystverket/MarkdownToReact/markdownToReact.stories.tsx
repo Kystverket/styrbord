@@ -77,7 +77,15 @@ export const Combined: Story = {
 
 Denne komponenten lar deg **rendere markdown** som React-komponenter.
 
+
+# Overskrift 1
+
 ## Funksjoner
+
+
+
+
+litt mellom
 
 - Støtter *kursiv* og **fet** tekst
 - Lister (ordnet og uordnet)
