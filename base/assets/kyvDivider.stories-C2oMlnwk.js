@@ -1,0 +1,3 @@
+import{K as a}from"./kyvDivider-GkhM6YIE.js";import{S as s}from"./styrbordDecorator-DBjaXX5y.js";import"./jsx-runtime-D_zvdyIk.js";import"./iframe-ewzt6dkP.js";import"./preload-helper-Dp1pzeXC.js";import"./translations-OfVzj5SL.js";const u={title:"Components/KyvDivider",component:a,decorators:[s],tags:["autodocs","kyv"],argTypes:{}},r={args:{}};var o,t,e;r.parameters={...r.parameters,docs:{...(o=r.parameters)==null?void 0:o.docs,source:{originalSource:`{
+  args: {}
+}`,...(e=(t=r.parameters)==null?void 0:t.docs)==null?void 0:e.source}}};const f=["Default"];export{r as Default,f as __namedExportsOrder,u as default};
