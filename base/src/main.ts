@@ -84,6 +84,9 @@ export type { FooterProps } from './components/kystverket/Footer/Footer';
 export { Header } from './components/kystverket/Header/Header';
 export type { HeaderProps } from './components/kystverket/Header/Header';
 
+export { HeaderContext, ApplicationHeaderContext } from './components/kystverket/Header/headerContext';
+export type { HeaderContextProps, ApplicationHeaderContextProps } from './components/kystverket/Header/headerContext';
+
 export { Datepicker, type DatepickerProps } from './components/kystverket/Datepicker/Datepicker';
 
 export { DateTimePicker, type DateTimePickerProps } from './components/kystverket/DateTimePicker/DateTimePicker';

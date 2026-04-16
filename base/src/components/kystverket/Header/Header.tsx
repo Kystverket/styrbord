@@ -1,186 +1,151 @@
-import { Box, Button, Icon, Link, Logo, LogoVariant } from '~/main';
+import { Box, Icon, IconId, Logo, LogoVariant, Label, Paragraph, AvatarProps } from '~/main';
 import classes from './Header.module.css';
-import { ReactNode, useCallback, useState } from 'react';
-import { Label, Paragraph } from '@digdir/designsystemet-react';
-import { IconId } from '../Icon/icon.types';
+import { Fragment, ReactNode, useContext } from 'react';
 import { useTranslation } from '~/translations';
-import { HeaderProfile } from '~/components/kystverket/Header/HeaderProfile/HeaderProfile';
+import { ApplicationHeaderContext, HeaderContext } from './headerContext';
+import { HeaderApps } from './HeaderApps';
+import { HeaderProfile } from './HeaderProfile';
+import { HeaderMobile } from './HeaderMobile';
+import { BoxWidthProp } from '../Box/box';
 
-export type HeaderLinkComponentProps = {
-  className?: string;
-  href?: string;
-  children: ReactNode;
-  onClick?: () => void;
+export type HeaderPosition = 'main' | 'profile';
+
+export type HeaderLinkItem = {
+  applicationId?: string;
+  position?: HeaderPosition;
+  icon?: IconId;
+  label: string;
+  url: string;
+  children?: ReactNode;
+};
+
+export type HeaderLinkItemWithOnClick = HeaderLinkItem & {
+  onClick?: (e?: React.UIEvent | undefined) => void;
+};
+
+export type HeaderApplication = {
+  id: string;
+  name: string;
+  icon?: IconId;
 };
 
 export interface HeaderProps {
-  /**
-   * Utvidelse for å legge til ekstra innhold i headeren.
-   * @default undefined
-   */
-  children?: ReactNode;
-  /**
-   * Spesifiserer logovarianten som brukes (standard: Kystverket) med en eventuell ekstra undertittel og navigeringslenke ved klikk
-   */
   logo: {
-    /**
-     * Undertittel for logoen.
-     * @default undefined
-     */
     title?: string;
-    /**
-     * URL for logoen.
-     */
     url: string;
-    /**
-     * Logovariant.
-     * @default 'blue-horizontal'
-     */
     variant?: LogoVariant;
   };
-  /**
-   * links - En kolleksjon av lenker
-   * @default undefined
-   */
-  links?: {
-    /**
-     * icon - Typed til IconId
-     */
-    icon: IconId;
-    /**
-     * label
-     */
-    label: string;
-    /**
-     * url
-     */
-    url: string;
-  }[];
-  profile?: {
-    /**
-     * name
-     */
-    name: string;
-    /**
-     * department
-     */
-    department?: string;
-    /**
-     * initials. Keep it to `2` characters
-     */
-    initials: string;
-    /**
-     * logoutHandler
-     */
-    links?: {
-      /**
-       * icon - Typed til IconId
-       */
-      icon: IconId;
-      /**
-       * label
-       */
-      label: string;
-      /**
-       * url
-       */
-      url: string;
-    }[];
-    /**
-     * logoutHandler
-     */
-    logoutHandler: () => void;
+  applications?: HeaderApplication[];
+  links?: HeaderLinkItem[];
+  profile?: HeaderProfile;
+  loginHandler?: () => void;
+  logoutHandler?: () => void;
+  width?: BoxWidthProp;
+  slots?: {
+    preLinks?: ReactNode;
+    postLinks?: ReactNode;
+    widgets?: ReactNode;
   };
-  linkComponent?: React.FC<HeaderLinkComponentProps>;
+}
+
+type HeaderProfile = {
+  name: string;
+  department?: string;
+  avatarStyle?: Pick<AvatarProps, 'data-color' | 'data-color-variant' | 'border'>;
+};
+
+export const nameToInitials = (name?: string): string => {
+  if (!name) return '';
+
+  const parts = name.split(' ');
+  if (parts.length === 0) return '';
+  if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
+  return parts[0].charAt(0).toUpperCase() + parts[parts.length - 1].charAt(0).toUpperCase();
+};
+
+export function MainLinkItem(props: HeaderLinkItemWithOnClick) {
+  const { LinkComponent } = useContext(HeaderContext);
+
+  if (props.url) {
+    return (
+      <LinkComponent href={props.url} className={classes.mainLinkButton} onClick={props.onClick}>
+        {props.icon && <Icon material={props.icon} />}
+        <Paragraph>{props.label}</Paragraph>
+      </LinkComponent>
+    );
+  }
+
+  return <Fragment>{props.children}</Fragment>;
 }
 
 export function Header({
-  children = undefined,
   logo: { title = undefined, variant = 'blue-horizontal', url },
   links,
+  slots,
+  width = 'container',
   profile,
-  linkComponent: LinkComponent = Link,
+  applications,
+  loginHandler,
+  logoutHandler,
 }: HeaderProps) {
   const { t } = useTranslation();
+  const { LinkComponent } = useContext(HeaderContext);
+  const { applicationId: currentApplicationId } = useContext(ApplicationHeaderContext);
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
-
-  const toggleMenuOpen = useCallback(() => {
-    setIsMenuOpen((prev) => {
-      if (!prev) setIsProfileOpen(false); // Close profile if opening menu
-      return !prev;
-    });
-  }, [setIsMenuOpen, setIsProfileOpen]);
-
-  const toggleProfileOpen = useCallback(() => {
-    setIsProfileOpen((prev) => {
-      if (!prev) setIsMenuOpen(false); // Close menu if opening profile
-      return !prev;
-    });
-  }, [setIsProfileOpen, setIsMenuOpen]);
-
-  const closeProfile = useCallback(() => setIsProfileOpen(false), []);
+  const mainLinks =
+    links?.filter(
+      (link) =>
+        !('position' in link) ||
+        (link.position === 'main' && (!link.applicationId || link.applicationId === currentApplicationId)),
+    ) || [];
 
   return (
     <Box horizontal justify="center" align="center" className={classes.headerContainer}>
-      <Box className={classes.headerFlex} px={16} width="container">
-        {/* Logo */}
+      <Box className={classes.headerFlex} horizontal gap={12} align="center" justify="between" px={16} width={width}>
         <Box horizontal align="center" gap={16}>
           <LinkComponent className={classes.logoLink} href={url}>
-            <Logo className={classes.logo} variant={variant} height={47} alt={t('header-alt-text')} />
+            <Logo className={classes.logo} variant={variant} height={47} alt={title ?? t('header.alt-text')} />
             {title && <Label className={classes.titleText}>{title}</Label>}
           </LinkComponent>
         </Box>
-        {/*End Of Logo */}
 
-        <Box horizontal gap={16}>
-          {/* Links */}
-          {links && (
-            <>
-              {links.map((link, index) => (
-                <LinkComponent key={index} href={link.url} className={classes.navLinkButton}>
-                  <Icon material={link.icon} />
-                  <Paragraph>{link.label}</Paragraph>
-                </LinkComponent>
-              ))}
-              <Button onClick={toggleMenuOpen} variant="ghost" className={classes.mobileMenuToggle}>
-                <Icon material="menu"></Icon>
-                Meny
-              </Button>
-            </>
-          )}
-          {/* End of Links */}
-          {/* Logic: checks name because component 
-          can in theory be rendered without name and with profile, 
-          and it looks weird without name and initials */}
-          {!!profile?.name && (
-            <HeaderProfile
-              profile={profile}
-              isProfileOpen={isProfileOpen}
-              toggleProfileOpen={toggleProfileOpen}
-              closeProfile={closeProfile}
-              linkComponent={LinkComponent}
-            />
-          )}
-        </Box>
-      </Box>
-
-      <Box className={classes.buttonsContainer}>
-        {/*Logic: Hamburger menu for the links when header width is down to phone-size*/}
-        {links && isMenuOpen && (
-          <Box justify="start" className={`${classes.mobileMenuDropdown}`}>
-            {links.map((link, index) => (
-              <Button key={index} variant="ghost" asChild>
-                <LinkComponent href={link.url} className={classes.mobileMenuItem}>
-                  <Icon material={link.icon} />
-                  {link.label}
-                </LinkComponent>
-              </Button>
+        <Box horizontal gap={12} align="center" className="">
+          <Box horizontal gap={12} align="center" className={classes.smallScreenHide}>
+            {slots?.preLinks}
+            {mainLinks.map((link, index) => (
+              <MainLinkItem key={index} {...link} />
             ))}
+            {slots?.postLinks}
           </Box>
-        )}
-        {children}
+          <Box horizontal gap={0} align="center">
+            <div className={classes.notSmallScreenHide + ' mobile-menu'}>
+              <HeaderMobile
+                applications={applications}
+                links={links}
+                loginHandler={loginHandler}
+                logoutHandler={logoutHandler}
+                profile={profile}
+                slots={slots}
+              />
+            </div>
+            <Box horizontal gap={0} align="center" className={classes.smallScreenHide}>
+              <HeaderApps links={links} applications={applications} />
+              {slots?.widgets}
+              <HeaderProfile links={links} profile={profile} logoutHandler={logoutHandler} />
+              {loginHandler && !profile && (
+                <LinkComponent
+                  onClick={() => {
+                    loginHandler?.();
+                  }}
+                  className={classes.mainLinkButton}
+                >
+                  <Icon material="login" />
+                  <Paragraph>{t('header.login')}</Paragraph>
+                </LinkComponent>
+              )}
+            </Box>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );

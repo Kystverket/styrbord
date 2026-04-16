@@ -67,6 +67,6 @@ jobs:
           npm ci --ignore-scripts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: npm run lint:check
-      - run: npm run pretty:check
-      - run: npm run build
+      - run: npm run lint:check -w base
+      - run: npm run pretty:check -w base
+      - run: npm run build -w base
