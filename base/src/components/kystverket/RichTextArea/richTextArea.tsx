@@ -154,7 +154,6 @@ const RichTextAreaContainer = ({
               updateToolbarState(_ctx);
               return;
             }
-
             lastKnownMarkdownRef.current = normalizedMarkdown;
             latestOnChangeRef.current(normalizedMarkdown);
             updateToolbarState(_ctx);
