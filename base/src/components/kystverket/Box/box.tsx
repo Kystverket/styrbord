@@ -25,6 +25,8 @@ const getSpacingCss = (key: SpacingKey, value?: Spacing): Record<string, string>
 
 type WrapType = boolean | 'reverse';
 
+export type BoxWidthProp = 'auto' | 'fit' | 'full' | 'container' | 'form' | 'form-sidebar';
+
 export interface BaseBoxProps {
   className?: string;
   align?: 'normal' | 'start' | 'center' | 'end' | 'stretch';
@@ -34,7 +36,7 @@ export interface BaseBoxProps {
   grow?: boolean | number;
   shrink?: boolean | number;
   basis?: string;
-  width?: 'auto' | 'fit' | 'full' | 'container' | 'form' | 'form-sidebar';
+  width?: BoxWidthProp;
   show?: ScreenSize;
   hide?: ScreenSize;
   font?: {
