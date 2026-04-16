@@ -1,9 +1,5 @@
-.markdownToReact p {
-  margin: 0 0 0.5rem;
-}
-
-.markdownToReact p:last-child {
-  margin-bottom: 0;
+.markdownToReact p:not(:last-child) {
+  margin-bottom: 0.5rem;
 }
 
 .markdownToReact ul,
