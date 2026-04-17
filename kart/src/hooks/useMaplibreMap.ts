@@ -148,6 +148,13 @@ export function useMaplibreMap({
       ext?.loseContext();
       mapRef.current = null;
       setMapReady(false);
+      // Reset layer-tracking refs so the new map instance starts with a clean
+      // slate. Without this, React StrictMode's double-invocation (setup →
+      // cleanup → setup) would leave stale refs from the first map, causing
+      // syncBaseLayer / syncLayers to early-return and skip applying layers
+      // to the newly created map.
+      appliedBaseLayerRef.current = null;
+      appliedLayerIdsRef.current = new Set();
     };
 
     // Create the map immediately if the container is already visible; otherwise
@@ -259,6 +266,10 @@ export function useMaplibreMap({
     } else {
       map.once("load", syncBaseLayer);
     }
+
+    return () => {
+      map.off("load", syncBaseLayer);
+    };
   }, [baseCtx.activeBaseLayerId, baseCtx.availableBaseLayers, mapReady]);
 
   // ----- Sync overlay layers to the MapLibre instance -----
@@ -339,6 +350,10 @@ export function useMaplibreMap({
     } else {
       map.once("load", syncLayers);
     }
+
+    return () => {
+      map.off("load", syncLayers);
+    };
   }, [
     builtInCtx.availableLayers,
     builtInCtx.visibleLayerIds,
