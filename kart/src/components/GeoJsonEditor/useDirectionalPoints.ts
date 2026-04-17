@@ -171,6 +171,8 @@ export function useDirectionalPoints({
           (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
           e.stopPropagation();
           e.preventDefault();
+          // Emit once when the rotation gesture ends instead of on every move.
+          onChangeRef.current?.();
         }
       };
 
@@ -230,6 +232,8 @@ export function useDirectionalPoints({
           e.stopPropagation();
           e.preventDefault();
           map.dragPan.enable();
+          // Emit once when the drag gesture ends instead of on every move.
+          onChangeRef.current?.();
         }
       };
 
@@ -288,6 +292,9 @@ export function useDirectionalPoints({
   }, []);
 
   // ----- Helper: update direction of a feature -----
+  // NOTE: does NOT call onChange — callers are responsible for emitting once
+  // at the end of the gesture (pointer-up) so React is not re-rendered on
+  // every pointermove frame during a rotation drag.
   const updateDirection = useCallback((id: string, direction: number) => {
     featuresRef.current = featuresRef.current.map((f) =>
       f.properties.id === id
@@ -297,13 +304,15 @@ export function useDirectionalPoints({
           }
         : f,
     );
-    // Update visual
+    // Update visual immediately via direct DOM — no React re-render needed.
     const entry = markersRef.current.find((m) => m.featureId === id);
     if (entry) positionHandle(entry.compass, entry.handle, direction);
-    onChangeRef.current?.();
   }, []);
 
   // ----- Helper: update position of a feature -----
+  // NOTE: does NOT call onChange — callers are responsible for emitting once
+  // at the end of the gesture (pointer-up) so React is not re-rendered on
+  // every pointermove frame during a position drag.
   const updatePosition = useCallback((id: string, lng: number, lat: number) => {
     featuresRef.current = featuresRef.current.map((f) =>
       f.properties.id === id
@@ -313,10 +322,9 @@ export function useDirectionalPoints({
           }
         : f,
     );
-    // Update marker position
+    // Update marker position immediately via direct DOM — no React re-render needed.
     const entry = markersRef.current.find((m) => m.featureId === id);
     if (entry) entry.marker.setLngLat([lng, lat]);
-    onChangeRef.current?.();
   }, []);
 
   // ----- Map click handler: place new directional point -----
