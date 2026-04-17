@@ -48,7 +48,14 @@ export function useMaplibreMap({
 }: UseMaplibreMapOptions = {}) {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
-  const [mapReady, setMapReady] = useState(false);
+  // mapVersion is an incrementing counter: 0 = no map, positive = map instance N.
+  // Using a counter (rather than boolean) ensures effects always see a deps change
+  // when the map is recreated — React 18 may batch setMapVersion(0)+setMapVersion(N)
+  // into a single render, so a boolean would stay `true` and effects would never
+  // re-run for the new map instance.
+  const mapVersionRef = useRef(0);
+  const [mapVersion, setMapVersion] = useState(0);
+  const mapReady = mapVersion > 0;
   const { viewBounds, defaultBounds } = useContext(ViewBoundsContext);
 
   // ----- Layer contexts (all optional — graceful when no provider is present) -----
@@ -89,7 +96,7 @@ export function useMaplibreMap({
       map.doubleClickZoom.enable();
       map.touchZoomRotate.enable();
     }
-  }, [disabled, mapReady]);
+  }, [disabled, mapVersion]);
 
   // ----- Apply height to the container -----
   useEffect(() => {
@@ -106,9 +113,22 @@ export function useMaplibreMap({
     const createMap = () => {
       if (mapRef.current) return; // guard against double-create (e.g. React StrictMode)
 
+      // Resolve the initial base layer so we can bake it into the style.
+      // This avoids a race where the "load" event fires before the
+      // base-layer sync effect runs, leaving the map with a blank canvas.
+      const initialBase = baseCtx.availableBaseLayers.find(
+        (l) => l.id === baseCtx.activeBaseLayerId,
+      );
+
+      const initialStyle: maplibregl.StyleSpecification = {
+        ...EMPTY_STYLE,
+        sources: initialBase ? { ...initialBase.sources } : {},
+        layers: initialBase ? [...initialBase.layers] : [],
+      };
+
       const mapOptions: maplibregl.MapOptions = {
         container,
-        style: EMPTY_STYLE,
+        style: initialStyle,
         attributionControl: {},
       };
 
@@ -125,8 +145,13 @@ export function useMaplibreMap({
 
       const map = new maplibregl.Map(mapOptions);
 
+      // Record that the initial base layer is already on the map, so the
+      // base-layer sync effect won't try to re-add it.
+      appliedBaseLayerRef.current = initialBase ?? null;
+
       mapRef.current = map;
-      setMapReady(true);
+      mapVersionRef.current += 1;
+      setMapVersion(mapVersionRef.current);
 
       map.on("click", (e: maplibregl.MapMouseEvent) => {
         if (disabledRef.current) return;
@@ -147,12 +172,7 @@ export function useMaplibreMap({
       map.remove();
       ext?.loseContext();
       mapRef.current = null;
-      setMapReady(false);
-      // Reset layer-tracking refs so the new map instance starts with a clean
-      // slate. Without this, React StrictMode's double-invocation (setup →
-      // cleanup → setup) would leave stale refs from the first map, causing
-      // syncBaseLayer / syncLayers to early-return and skip applying layers
-      // to the newly created map.
+      setMapVersion(0);
       appliedBaseLayerRef.current = null;
       appliedLayerIdsRef.current = new Set();
     };
@@ -216,7 +236,7 @@ export function useMaplibreMap({
       ],
       { padding: 20, duration: 300 },
     );
-  }, [viewBounds, mapReady]);
+  }, [viewBounds, mapVersion]);
 
   // ----- Sync base layer to the MapLibre instance -----
   const appliedBaseLayerRef = useRef<BaseLayerDefinition | null>(null);
@@ -270,7 +290,7 @@ export function useMaplibreMap({
     return () => {
       map.off("load", syncBaseLayer);
     };
-  }, [baseCtx.activeBaseLayerId, baseCtx.availableBaseLayers, mapReady]);
+  }, [baseCtx.activeBaseLayerId, baseCtx.availableBaseLayers, mapVersion]);
 
   // ----- Sync overlay layers to the MapLibre instance -----
   const appliedLayerIdsRef = useRef<Set<string>>(new Set());
@@ -361,7 +381,7 @@ export function useMaplibreMap({
     customCtx.visibleLayerIds,
     wmsCatalogCtx.layers,
     wmsCatalogCtx.visibleLayerIds,
-    mapReady,
+    mapVersion,
   ]);
 
   // ----- Easter egg: hidden rounded triangle at deep zoom -----
@@ -403,9 +423,9 @@ export function useMaplibreMap({
     } else {
       map.once("load", addEasterEgg);
     }
-  }, [mapReady]);
+  }, [mapVersion]);
 
-  return { mapContainerRef, mapRef, mapReady };
+  return { mapContainerRef, mapRef, mapReady, mapVersion };
 }
 
 // ---------------------------------------------------------------------------

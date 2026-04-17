@@ -64,8 +64,8 @@ type AnyTerraDrawMode =
 
 export interface UseTerraDrawOptions {
   mapRef: MutableRefObject<MaplibreMap | null>;
-  /** Must be `true` before terra-draw will initialise (set by `useMaplibreMap`). */
-  mapReady: boolean;
+  /** Increments each time the map is (re)created. `0` means no map yet. */
+  mapVersion: number;
   modes: TerraDrawableMode[];
   editable: boolean;
   deletable: boolean;
@@ -99,7 +99,7 @@ export interface UseTerraDrawResult {
 
 export function useTerraDraw({
   mapRef,
-  mapReady,
+  mapVersion,
   modes,
   editable,
   deletable,
@@ -163,7 +163,7 @@ export function useTerraDraw({
   // ---- Initialize / tear down terra-draw ----
   useEffect(() => {
     const map = mapRef.current;
-    if (!map || !mapReady || disabled) return;
+    if (!map || !mapVersion || disabled) return;
 
     const initDraw = () => {
       if (drawRef.current) return; // already initialised
@@ -430,7 +430,7 @@ export function useTerraDraw({
     };
   }, [
     mapRef,
-    mapReady,
+    mapVersion,
     disabled,
     modes,
     editable,

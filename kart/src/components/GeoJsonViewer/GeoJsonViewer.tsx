@@ -108,7 +108,7 @@ export function GeoJsonViewer({
     [onCoordinateClick],
   );
 
-  const { mapContainerRef, mapRef, mapReady } = useMaplibreMap({
+  const { mapContainerRef, mapRef, mapReady, mapVersion } = useMaplibreMap({
     disabled,
     height,
     onMapClick: onCoordinateClick ? handleMapClick : undefined,
@@ -185,10 +185,7 @@ export function GeoJsonViewer({
   // ----- Single effect: add / update GeoJSON source + layers -----
   useEffect(() => {
     const map = mapRef.current;
-    if (!map) {
-      console.warn("[GeoJsonViewer] mapRef.current is null — effect skipped");
-      return;
-    }
+    if (!map) return;
 
     const setup = () => {
       try {
@@ -288,41 +285,27 @@ export function GeoJsonViewer({
         // on top of the raster base tiles.
         map.resize();
         map.triggerRepaint();
-
-        // Diagnostic — check the browser console to verify layers exist
-        // and features were parsed by the source.
-        console.info(
-          "[GeoJsonViewer] layers:",
-          map.getStyle().layers.map((l) => l.id),
-          "| source features:",
-          map.querySourceFeatures(SOURCE_ID).length,
-        );
-      } catch (err) {
-        console.error("[GeoJsonViewer] Error adding source/layers:", err);
+      } catch {
+        // map may already be destroyed
       }
     };
 
-    // Catch any internal MapLibre errors
-    const onError = (e: unknown) =>
-      console.error("[GeoJsonViewer] Map error:", e);
-    map.on("error", onError);
-
-    // Use map.on (not .once) so map.off reliably removes the exact handler.
-    map.on("load", setup);
-
-    // Also try immediately — covers the case where the map already loaded
-    // (e.g. data prop changed after initial mount).
+    // Run setup as soon as the style is ready. isStyleLoaded() handles the
+    // case where "load" already fired; once("load") handles the case where
+    // it hasn't.  The base layer is now baked into the initial style by
+    // useMaplibreMap so there is no ordering race.
     if (map.isStyleLoaded()) {
       setup();
+    } else {
+      map.once("load", setup);
     }
 
     return () => {
-      map.off("error", onError);
       map.off("load", setup);
       setLayersReady(false);
       removeLayers(map);
     };
-  }, [fc, mapRef, mapReady]);
+  }, [fc, mapVersion]);
 
   // ----- Feature labels -----
   // Renders a symbol layer with labels computed via getLabel().
@@ -370,6 +353,7 @@ export function GeoJsonViewer({
     }
 
     return () => {
+      map.off("load", ensureLayer);
       try {
         if (map.getLayer(LABEL_LAYER)) map.removeLayer(LABEL_LAYER);
         if (map.getSource(LABEL_SOURCE)) map.removeSource(LABEL_SOURCE);
@@ -377,7 +361,7 @@ export function GeoJsonViewer({
         // map may already be destroyed
       }
     };
-  }, [mapRef, mapReady]);
+  }, [mapVersion]);
 
   // Update label data whenever fc or getLabel changes.
   useEffect(() => {
@@ -411,7 +395,7 @@ export function GeoJsonViewer({
     } else {
       map.once("load", updateData);
     }
-  }, [mapRef, mapReady, fc]);
+  }, [mapVersion, fc]);
 
   return (
     <div

@@ -76,7 +76,7 @@ export function GeoJsonEditor({
   singleFeature = false,
   getLabel = DEFAULT_GET_LABEL,
 }: GeoJsonEditorProps) {
-  const { mapContainerRef, mapRef, mapReady } = useMaplibreMap({
+  const { mapContainerRef, mapRef, mapReady, mapVersion } = useMaplibreMap({
     disabled,
     height,
   });
@@ -183,7 +183,7 @@ export function GeoJsonEditor({
 
   const terraDrawResult = useTerraDraw({
     mapRef,
-    mapReady,
+    mapVersion,
     modes: terraDrawModes,
     editable,
     deletable,

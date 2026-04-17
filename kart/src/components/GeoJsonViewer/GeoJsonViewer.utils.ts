@@ -102,7 +102,7 @@ export function toFeatureCollection(
 /** Remove all GeoJSON layers and the source from the map, ignoring errors. */
 export function removeLayers(map: maplibregl.Map) {
   try {
-    for (const id of [...ALL_LAYERS, ...HIGHLIGHT_LAYERS, LABEL_LAYER]) {
+    for (const id of [...ALL_LAYERS, ...HIGHLIGHT_LAYERS]) {
       if (map.getLayer(id)) map.removeLayer(id);
     }
     if (map.getSource(SOURCE_ID)) map.removeSource(SOURCE_ID);
