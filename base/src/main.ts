@@ -49,6 +49,9 @@ export type { BoxProps } from './components/kystverket/Box/box';
 export { default as Stepper } from './components/kystverket/Stepper/stepper';
 export type { StepperProps } from './components/kystverket/Stepper/stepper';
 
+export { default as KystverketSpinner } from './components/kystverket/KystverketSpinner/KystverketSpinner';
+export type { KystverketSpinnerProps } from './components/kystverket/KystverketSpinner/KystverketSpinner';
+
 export { default as LabelContent, type LabelContentProps } from './components/kystverket/LabelContent/labelContent';
 
 export { default as Icon } from './components/kystverket/Icon/icon';
