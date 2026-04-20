@@ -23,8 +23,7 @@ export const DEFAULT_BOUNDS: [[number, number], [number, number]] = [
  */
 export const EMPTY_STYLE: maplibregl.StyleSpecification = {
   version: 8,
-  glyphs:
-    "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
+  glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
   sources: {},
   layers: [],
 };
