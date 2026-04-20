@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import KystverketSpinner from './KystverketSpinner';
+import KyvSpinner from './KyvSpinner';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Components/KystverketSpinner',
-  component: KystverketSpinner,
+  title: 'Components/KyvSpinner',
+  component: KyvSpinner,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],
   parameters: {
@@ -32,7 +32,7 @@ Komponenten har \`role="status"\` og \`aria-label\` (standard: "Laster"). Animas
       options: ['sm', 'md', 'lg'],
     },
   },
-} satisfies Meta<typeof KystverketSpinner>;
+} satisfies Meta<typeof KyvSpinner>;
 
 export default meta;
 
@@ -53,9 +53,9 @@ export const Large: Story = {
 export const AllSizes: Story = {
   render: () => (
     <div style={{ display: 'flex', alignItems: 'flex-end', gap: '2rem' }}>
-      <KystverketSpinner size="sm" />
-      <KystverketSpinner size="md" />
-      <KystverketSpinner size="lg" />
+      <KyvSpinner size="sm" />
+      <KyvSpinner size="md" />
+      <KyvSpinner size="lg" />
     </div>
   ),
 };

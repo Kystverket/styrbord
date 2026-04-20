@@ -6,11 +6,24 @@
     align-items: center;
   }
 
+  .container.sm .row {
+    width: 6rem;
+    height: 6rem;
+  }
+
+  .container.md .row {
+    width: 12rem;
+    height: 12rem;
+  }
+
+  .container.lg .row {
+    width: 18rem;
+    height: 18rem;
+  }
+
   /* ── Layout row: [left beam] [lighthouse] [right beam] ── */
   .row {
     position: relative;
-    width: 400px;
-    height: 400px;
   }
 
   .lighthouse {
@@ -61,23 +74,6 @@
     animation: sweep 3s ease-in-out infinite;
   }
 
-  /* ── Wave strip ── */
-  .wavesContainer {
-    overflow: hidden;
-    height: 1rem;
-    /* Match the full row width (both beams + lighthouse) */
-    width: 100%;
-    color: var(--kyv-spinner-color);
-  }
-
-  .waves {
-    /* Doubled width for seamless horizontal scroll loop */
-    width: 200%;
-    height: 100%;
-    fill: currentColor;
-    animation: wave-scroll 3s linear infinite;
-  }
-
   /* ── Keyframes ── */
   @keyframes sweep {
     0% {
@@ -126,19 +122,10 @@
     }
   }
 
-  @keyframes wave-scroll {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .beamLeft,
     .beamRight,
-    .waves {
+    .flash {
       animation: none;
     }
 

@@ -32,7 +32,7 @@ export { FilePreviewer, type FilePreviewerProps } from './components/kystverket/
 
 export { StyrbordTranslations } from './translations';
 
-export { default as KyvDivider } from './components/kystverket/KyvDivider/kyvDivider';
+export { default as KyvDivider } from './components/kystverket/KyvDivider/KyvDivider';
 
 export { PageHeading } from './components/kystverket/PageHeading/PageHeading';
 export type { PageHeadingProps } from './components/kystverket/PageHeading/PageHeading';
@@ -49,8 +49,8 @@ export type { BoxProps } from './components/kystverket/Box/box';
 export { default as Stepper } from './components/kystverket/Stepper/stepper';
 export type { StepperProps } from './components/kystverket/Stepper/stepper';
 
-export { default as KystverketSpinner } from './components/kystverket/KystverketSpinner/KystverketSpinner';
-export type { KystverketSpinnerProps } from './components/kystverket/KystverketSpinner/KystverketSpinner';
+export { default as KyvSpinner } from './components/kystverket/KyvSpinner/KyvSpinner';
+export type { KystverketSpinnerProps } from './components/kystverket/KyvSpinner/KyvSpinner';
 
 export { default as LabelContent, type LabelContentProps } from './components/kystverket/LabelContent/labelContent';
 
