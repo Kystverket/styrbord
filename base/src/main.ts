@@ -50,7 +50,7 @@ export { default as Stepper } from './components/kystverket/Stepper/stepper';
 export type { StepperProps } from './components/kystverket/Stepper/stepper';
 
 export { default as KyvSpinner } from './components/kystverket/KyvSpinner/KyvSpinner';
-export type { KystverketSpinnerProps } from './components/kystverket/KyvSpinner/KyvSpinner';
+export type { KyvSpinnerProps } from './components/kystverket/KyvSpinner/KyvSpinner';
 
 export { default as LabelContent, type LabelContentProps } from './components/kystverket/LabelContent/labelContent';
 
