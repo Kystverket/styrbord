@@ -48,6 +48,7 @@ export const iconIdList = [
   'format_align_center',
   'format_align_left',
   'format_align_right',
+  'forward',
   'globe_uk',
   'groups',
   'image',
