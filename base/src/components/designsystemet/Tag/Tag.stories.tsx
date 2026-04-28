@@ -184,7 +184,27 @@ export const RoundedWithIconColors: StoryFn<typeof Tag> = ({ ...rest }) => {
   );
 };
 
-WithIconColors.parameters = {
+RoundedWithIconColors.parameters = {
+  customStyles: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: 'var(--ds-size-2)',
+  },
+};
+
+export const RoundedWithIconPlainColors: StoryFn<typeof Tag> = ({ ...rest }) => {
+  return (
+    <>
+      {colorVariants.map((color) => (
+        <Tag key={color} rounded icon="info" plainBackground data-color={color as TagProps['data-color']} {...rest}>
+          {color}
+        </Tag>
+      ))}
+    </>
+  );
+};
+
+RoundedWithIconPlainColors.parameters = {
   customStyles: {
     display: 'flex',
     flexWrap: 'wrap',
