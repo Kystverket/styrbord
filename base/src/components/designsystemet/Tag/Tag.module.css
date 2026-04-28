@@ -36,4 +36,14 @@
     padding-right: var(--ds-size-4);
     height: var(--ds-size-8);
   }
+
+  .withIcon {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-size-1);
+  }
+
+  .plainBackground {
+    background-color: var(--ds-color-neutral-surface-default);
+  }
 }
