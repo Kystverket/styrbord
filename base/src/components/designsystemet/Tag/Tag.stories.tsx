@@ -127,3 +127,67 @@ export const RoundedWithBorders: StoryFn<typeof Tag> = ({ ...rest }) => {
     </>
   );
 };
+
+export const WithIcon: Story = {
+  args: {
+    children: 'Status',
+    icon: 'check_circle',
+  },
+};
+
+export const PlainBackground: Story = {
+  args: {
+    children: 'Status',
+    plainBackground: true,
+  },
+};
+
+export const PlainBackgroundRoundedWithIcon: Story = {
+  args: {
+    children: 'Status',
+    icon: 'check_circle',
+    plainBackground: true,
+    rounded: true,
+    'data-color': 'accent',
+  },
+};
+
+export const WithIconColors: StoryFn<typeof Tag> = ({ ...rest }) => {
+  return (
+    <>
+      {colorVariants.map((color) => (
+        <Tag key={color} icon="info" data-color={color as TagProps['data-color']} {...rest}>
+          {color}
+        </Tag>
+      ))}
+    </>
+  );
+};
+
+WithIconColors.parameters = {
+  customStyles: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: 'var(--ds-size-2)',
+  },
+};
+
+export const RoundedWithIconColors: StoryFn<typeof Tag> = ({ ...rest }) => {
+  return (
+    <>
+      {colorVariants.map((color) => (
+        <Tag key={color} rounded icon="info" bordered data-color={color as TagProps['data-color']} {...rest}>
+          {color}
+        </Tag>
+      ))}
+    </>
+  );
+};
+
+WithIconColors.parameters = {
+  customStyles: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: 'var(--ds-size-2)',
+  },
+};
