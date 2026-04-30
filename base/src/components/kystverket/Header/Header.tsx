@@ -101,7 +101,7 @@ export function Header({
 
   return (
     <Box horizontal justify="center" align="center" className={classes.headerContainer}>
-      <Box className={classes.headerFlex} horizontal gap={12} align="center" justify="between" px={16} width={width}>
+      <Box className={classes.headerInlinePadding} horizontal gap={12} align="center" justify="between" width={width}>
         <Box horizontal align="center" gap={16}>
           <LinkComponent className={classes.logoLink} href={url}>
             <Logo className={classes.logo} variant={variant} height={47} alt={title ?? t('header.alt-text')} />
