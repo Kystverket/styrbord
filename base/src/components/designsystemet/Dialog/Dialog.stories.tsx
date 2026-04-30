@@ -290,3 +290,29 @@ export const DialogNonModal: StoryFn<typeof Dialog> = () => {
 DialogNonModal.parameters = {
   customStyles: { padding: 'var(--ds-size-18)' },
 };
+
+export const NestedDialogs: StoryFn<typeof Dialog> = () => {
+  const innerDialogRef = useRef<HTMLDialogElement>(null);
+
+  return (
+    <Dialog.TriggerContext>
+      <Dialog.Trigger>Open Outer Dialog</Dialog.Trigger>
+      <Dialog>
+        <Heading style={{ marginBottom: 'var(--ds-size-2)' }}>Outer dialog</Heading>
+        <Paragraph style={{ marginBottom: 'var(--ds-size-4)' }}>
+          This is the outer dialog. You can open another dialog from here.
+        </Paragraph>
+        <Button onClick={() => innerDialogRef.current?.showModal()}>Open Inner Dialog</Button>
+        <Dialog ref={innerDialogRef}>
+          <Heading style={{ marginBottom: 'var(--ds-size-2)' }}>Inner dialog</Heading>
+          <Paragraph style={{ marginBottom: 'var(--ds-size-4)' }}>
+            This dialog was opened from within the outer dialog.
+          </Paragraph>
+          <Button variant="outline" onClick={() => innerDialogRef.current?.close()}>
+            Close
+          </Button>
+        </Dialog>
+      </Dialog>
+    </Dialog.TriggerContext>
+  );
+};

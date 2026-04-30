@@ -1,7 +1,25 @@
 import type { Preview } from '@storybook/react-vite';
 import { themes } from 'storybook/theming';
+import StyrbordDecorator from '../storybook/styrbordDecorator';
 
 import '../storybook/storybook-style.scss';
+
+export const globalTypes = {
+  locale: {
+    name: 'Locale',
+    description: 'Internationalization locale',
+    toolbar: {
+      icon: 'globe',
+      items: [
+        { value: 'nb-NO', title: 'Norsk bokmål' },
+        { value: 'nn-NO', title: 'Norsk nynorsk' },
+        { value: 'en-US', title: 'Engelsk' },
+      ],
+      showName: true,
+      dynamicTitle: true,
+    },
+  },
+};
 
 const preview: Preview = {
   parameters: {
@@ -23,6 +41,7 @@ const preview: Preview = {
   },
 
   tags: ['autodocs'],
+  decorators: [StyrbordDecorator],
 };
 
 export default preview;

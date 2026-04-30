@@ -19,6 +19,13 @@
     }
   }
 
+  .headerInlinePadding {
+    padding-inline: var(--ds-size-9);
+    @container header (width < 80rem) {
+      padding-inline: var(--ds-size-5);
+    }
+  }
+
   .titleText {
     display: inline-block;
     color: var(--ds-color-primary-base-default);
