@@ -44,13 +44,13 @@
     }
   },
   "header": {
+    "logo-alt-text": "To the front page",
     "login": "Log in",
     "logout": "Log out",
     "openApplicationsMenu": "Open applications menu",
     "openMenu": "Open menu",
     "openProfileMenu": "Open profile menu"
   },
-  "header-alt-text": "To the front page",
   "kystverket": "Norwegian coastal administration",
   "loading": "Loading",
   "organisasjonsnummer": "Organization number",

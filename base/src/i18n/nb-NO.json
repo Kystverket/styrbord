@@ -44,13 +44,13 @@
     }
   },
   "header": {
+    "alt-text": "Til forsiden",
     "login": "Logg inn",
     "logout": "Logg ut",
     "openApplicationsMenu": "Åpne applikasjonsmeny",
     "openMenu": "Åpne meny",
     "openProfileMenu": "Åpne profilmeny"
   },
-  "header-alt-text": "Til forsiden",
   "kystverket": "Kystverket",
   "loading": "Laster",
   "organisasjonsnummer": "Organisasjonsnummer",
