@@ -44,7 +44,7 @@
     }
   },
   "header": {
-    "logo-alt-text": "To the front page",
+    "alt-text": "To the front page",
     "login": "Log in",
     "logout": "Log out",
     "openApplicationsMenu": "Open applications menu",
