@@ -17,6 +17,7 @@ import DigitaleReferanseruter from './svg/digitale_referanseruter.svg?react';
 import Navigasjonsvarsler from './svg/navigasjonsvarsler.svg?react';
 import NavigasjonsvarslerFarget from './svg/navigasjonsvarsler_farget.svg?react';
 import DigitaleFyrlykter from './svg/digitale_fyrlykter.svg?react';
+import Fyr from './svg/fyr.svg?react';
 import SeLosbestilling from './svg/se_losbestilling.svg?react';
 import Lavutslipp from './svg/lavutslipp.svg?react';
 import Maru from './svg/MarU.svg?react';
@@ -262,6 +263,9 @@ export const ImageFarvannsskiltOgNavinnretninger = (props: SvgImageProps) => {
   return <FarvannsskiltOgNavinnretninger {...getImageProps({ name: 'farvannsskilt_og_navinnretninger', ...props })} />;
 };
 
+export const ImageFyr = (props: SvgImageProps) => {
+  return <Fyr {...getImageProps({ name: 'fyr', ...props })} />;
+};
 export const ImageFarvannsskiltOgNavinnretningerFarget = (props: SvgImageProps) => {
   return (
     <FarvannsskiltOgNavinnretningerFarget

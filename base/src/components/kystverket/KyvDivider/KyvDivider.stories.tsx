@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
-import KyvDivider from './kyvDivider';
+import KyvDivider from './KyvDivider';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {

@@ -1,0 +1,139 @@
+@layer styrbord-modules {
+  .container {
+    --kyv-spinner-color: var(--ds-color-accent-base-default, #005b99);
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .container.sm .row {
+    width: 6rem;
+    height: 6rem;
+  }
+
+  .container.md .row {
+    width: 12rem;
+    height: 12rem;
+  }
+
+  .container.lg .row {
+    width: 18rem;
+    height: 18rem;
+  }
+
+  /* ── Layout row: [left beam] [lighthouse] [right beam] ── */
+  .row {
+    position: relative;
+  }
+
+  .lighthouse {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+
+  .beamLeft,
+  .beamRight,
+  .flash {
+    position: absolute;
+    flex-shrink: 0;
+    width: 35%;
+    height: 8%;
+    position: absolute;
+    top: 30%;
+    border-radius: 1px;
+  }
+
+  .flash {
+    left: 30%;
+    width: 40%;
+    background: linear-gradient(to left, transparent, var(--kyv-spinner-color), transparent);
+    animation: sweepalt 3s ease-in-out infinite;
+    animation-delay: -1.5s;
+    z-index: 2;
+  }
+
+  .beamLeft {
+    left: 13%;
+    transform-origin: right center;
+    background: linear-gradient(to left, var(--kyv-spinner-color), transparent);
+    animation: sweep 3s ease-in-out infinite;
+    /* Offset by half the period so beams are always in opposite phases */
+    animation-delay: -1.5s;
+  }
+
+  .beamRight {
+    left: 52%;
+    transform-origin: left center;
+    transform: scaleX(-1);
+    background: linear-gradient(to right, var(--kyv-spinner-color), transparent);
+    animation: sweep 3s ease-in-out infinite;
+  }
+
+  /* ── Keyframes ── */
+  @keyframes sweep {
+    0% {
+      transform: scaleX(0);
+      opacity: 0;
+    }
+    15% {
+      transform: scaleX(0);
+      opacity: 0;
+    }
+    50% {
+      transform: scaleX(1);
+      opacity: 0.85;
+    }
+    85% {
+      transform: scaleX(0);
+      opacity: 0;
+    }
+    100% {
+      transform: scaleX(0);
+      opacity: 0;
+    }
+  }
+
+  /* ── Keyframes ── */
+  @keyframes sweepalt {
+    0% {
+      transform: scaleX(0);
+      opacity: 0;
+    }
+    20% {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+    30% {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scaleX(0);
+      opacity: 0;
+    }
+    100% {
+      transform: scaleX(0);
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .beamLeft,
+    .beamRight,
+    .flash {
+      animation: none;
+    }
+
+    /* Show beams statically at half extension when motion is reduced */
+    .beamLeft,
+    .beamRight {
+      transform: scaleX(0.5);
+      opacity: 0.4;
+    }
+  }
+}
