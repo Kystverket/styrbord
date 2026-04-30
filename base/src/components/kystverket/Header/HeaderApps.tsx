@@ -39,8 +39,14 @@ export function HeaderApps({ links, applications }: HeaderAppsProps) {
   return (
     <div ref={appsButtonRef}>
       <Dropdown.TriggerContext>
-        <Button popoverTarget={id} className={classes.dropdownButton} variant="ghost" onClick={openMenu}>
-          <Box horizontal gap={16} align="center" aria-label={t('header.openApplications')}>
+        <Button
+          popoverTarget={id}
+          className={classes.dropdownButton}
+          variant="ghost"
+          onClick={openMenu}
+          aria-label={t('header.openApplicationsMenu')}
+        >
+          <Box horizontal gap={16} align="center">
             <Icon material="apps" aria-hidden />
           </Box>
         </Button>
