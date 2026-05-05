@@ -45,9 +45,21 @@
   background-color: var(--ds-color-neutral-surface-active);
 }
 
+.table.cell-padding-sm tbody td {
+  padding-block: var(--ds-size-3);
+  padding-inline: var(--ds-size-4);
+}
+
 .table.cell-padding-md tbody td {
-  padding-top: var(--ds-size-4);
-  padding-bottom: var(--ds-size-4);
+  padding-block: var(--ds-size-4);
+  padding-inline: var(--ds-size-5);
+}
+
+.table.cell-padding-lg tbody td {
+  padding-top: var(--ds-size-5);
+  padding-bottom: var(--ds-size-5);
+  padding-left: var(--ds-size-6);
+  padding-right: var(--ds-size-6);
 }
 
 .radius-sm {
