@@ -5,7 +5,7 @@ export type TableProps = DsTableProps & {
   radius?: 'none' | 'sm' | 'md' | 'lg';
   header?: true | 'transparent' | 'opaque';
   body?: 'transparent' | 'white';
-  'cell-padding'?: 'sm' | 'md';
+  'cell-padding'?: 'sm' | 'md' | 'lg';
 };
 
 const Table = ({
