@@ -106,7 +106,7 @@ export const WithPortal: Story = {
   args: {
     ...defaultProps,
     withPortal: true,
-  }
+  },
 };
 
 export const WithYearAndMonthDropdown: Story = {
