@@ -102,6 +102,13 @@ export const WithMinAndMaxDate: Story = {
   },
 };
 
+export const WithPortal: Story = {
+  args: {
+    ...defaultProps,
+    withPortal: true,
+  },
+};
+
 export const WithYearAndMonthDropdown: Story = {
   args: {
     ...defaultProps,

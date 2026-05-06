@@ -4,6 +4,10 @@
   width: 100%;
 }
 
+.inputWrapper :global(input) {
+  padding-right: 2.5rem;
+}
+
 .inputIcon {
   position: absolute;
   right: 0.75rem;
@@ -11,10 +15,4 @@
   transform: translateY(-50%);
   color: var(--color-neutral-text-subtle);
   pointer-events: none;
-}
-
-/* Allow datepicker popup to escape dialog boundaries */
-:global(.react-datepicker-popper) {
-  z-index: 9999 !important;
-  position: fixed !important;
 }
