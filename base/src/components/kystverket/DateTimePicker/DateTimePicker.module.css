@@ -15,6 +15,10 @@
   width: 100%;
 }
 
+.inputWrapper :global(input) {
+  padding-right: 2.5rem;
+}
+
 .inputIcon {
   position: absolute;
   right: 0.75rem;
