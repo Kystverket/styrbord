@@ -109,6 +109,10 @@ export const iconIdList = [
   'undo',
   'redo',
   'visibility',
+  'left_panel_close',
+  'left_panel_open',
+  'right_panel_close',
+  'right_panel_open',
 ] as const;
 
 export type IconId = (typeof iconIdList)[number];
