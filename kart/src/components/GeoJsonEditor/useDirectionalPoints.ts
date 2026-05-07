@@ -115,6 +115,7 @@ export function useDirectionalPoints({
     (feature: DirectionalPointFeature) => {
       const map = mapRef.current;
       if (!map) return;
+      if (typeof document === "undefined") return;
 
       const { container, compass, handle } = createCompassMarkerElement();
       const [lng, lat] = feature.geometry.coordinates;

@@ -109,6 +109,8 @@ export function useMaplibreMap({
   useEffect(() => {
     const container = mapContainerRef.current;
     if (!container || mapRef.current) return;
+    if (typeof document === "undefined") return;
+    if (typeof window === "undefined") return;
 
     const createMap = () => {
       if (mapRef.current) return; // guard against double-create (e.g. React StrictMode)

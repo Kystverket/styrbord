@@ -64,6 +64,8 @@ export function useCompassMarker({
   const getOrCreateMarkerElement = useCallback(() => {
     if (markerElRef.current) return markerElRef.current;
 
+    if (typeof document === "undefined") return;
+
     const { container, compass, handle } = createCompassMarkerElement();
     compassElRef.current = compass;
     handleElRef.current = handle;
