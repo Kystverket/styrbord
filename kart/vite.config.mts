@@ -39,6 +39,7 @@ export default defineConfig({
         "react-dom",
         "@digdir/designsystemet-react",
         "@kystverket/sprak-react",
+        "@kystverket/styrbord",
         "maplibre-gl",
         "terra-draw",
         "terra-draw-maplibre-gl-adapter",
