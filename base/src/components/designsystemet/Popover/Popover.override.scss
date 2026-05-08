@@ -6,7 +6,13 @@
     padding-block: var(--ds-size-4);
     box-shadow: var(--ds-shadow-lg);
   }
+
   [data-popover='inline'] {
-    text-decoration-color: var(--ds-color-main-surface-tinted);
+    text-decoration-color: var(--ds-color-primary-border-default);
+  }
+
+  /* Highlight the inline trigger when its popover is open */
+  :has(> .ds-popover:popover-open) [data-popover='inline'] {
+    background-color: var(--ds-color-primary-surface-tinted);
   }
 }
