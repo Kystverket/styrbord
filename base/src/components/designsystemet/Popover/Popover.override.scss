@@ -1,0 +1,12 @@
+@layer styrbord-modules {
+  .ds-popover {
+    border-color: var(--ds-color-border-subtle);
+    border-radius: var(--ds-border-radius-lg);
+    padding-inline: var(--ds-size-5);
+    padding-block: var(--ds-size-4);
+    box-shadow: var(--ds-shadow-lg);
+  }
+  [data-popover='inline'] {
+    text-decoration-color: var(--ds-color-main-surface-tinted);
+  }
+}

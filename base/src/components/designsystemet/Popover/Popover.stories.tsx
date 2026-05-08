@@ -9,13 +9,6 @@ export default {
   component: Popover,
   tags: ['autodocs', 'ds'],
   parameters: {
-    layout: 'fullscreen',
-    customStyles: {
-      display: 'flex',
-      placeItems: 'end',
-      placeContent: 'center',
-      padding: '1rem 2rem',
-    },
     chromatic: {
       disableSnapshot: false,
     },
@@ -204,6 +197,37 @@ export const Controlled: StoryFn<typeof Popover> = () => {
 Controlled.parameters = {
   customStyles: {
     padding: '8rem 6rem 1rem',
+  },
+};
+
+export const Sizes: StoryFn<typeof Popover> = () => {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => setOpen(true), []);
+
+  return (
+    <Box gap={64} align="start" px={64}>
+      {(['sm', 'md', 'lg'] as const).map((size) => (
+        <Popover.TriggerContext key={size}>
+          <Popover.Trigger>popover</Popover.Trigger>
+          <Popover open={open} placement="top" autoPlacement={false} data-size={size}>
+            {size}
+          </Popover>
+        </Popover.TriggerContext>
+      ))}
+    </Box>
+  );
+};
+Sizes.play = () => {};
+Sizes.parameters = {
+  customStyles: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, 1fr)',
+    gap: 'var(--ds-size-2)',
+    height: '100%',
+    width: '100%',
+    placeItems: 'center',
+    padding: '5rem 3rem',
   },
 };
 
