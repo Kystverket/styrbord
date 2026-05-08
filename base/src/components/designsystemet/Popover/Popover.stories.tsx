@@ -9,13 +9,6 @@ export default {
   component: Popover,
   tags: ['autodocs', 'ds'],
   parameters: {
-    layout: 'fullscreen',
-    customStyles: {
-      display: 'flex',
-      placeItems: 'end',
-      placeContent: 'center',
-      padding: '1rem 2rem',
-    },
     chromatic: {
       disableSnapshot: false,
     },
@@ -23,6 +16,37 @@ export default {
       description: {
         component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/popover/overview)',
       },
+    },
+  },
+  argTypes: {
+    'data-color': {
+      control: 'select',
+      options: [undefined, 'neutral', 'accent', 'danger', 'info', 'warning', 'success'],
+    },
+    'data-size': {
+      control: 'radio',
+      options: ['sm', 'md', 'lg'],
+    },
+    placement: {
+      control: 'select',
+      options: [
+        'top',
+        'top-start',
+        'top-end',
+        'bottom',
+        'bottom-start',
+        'bottom-end',
+        'left',
+        'left-start',
+        'left-end',
+        'right',
+        'right-start',
+        'right-end',
+      ],
+    },
+    variant: {
+      control: 'radio',
+      options: [undefined, 'tinted'],
     },
   },
   play: async (ctx) => {
@@ -36,21 +60,28 @@ export default {
 } satisfies Meta;
 
 export const Preview: StoryFn<typeof Popover> = (args) => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Popover.TriggerContext>
-      <Popover.Trigger>My trigger!</Popover.Trigger>
-      <Popover {...args}>popover content</Popover>
-    </Popover.TriggerContext>
+    <Box gap={8} align="start">
+      <Paragraph>
+        This popover is kept open for testing purposes. Normally, it closes when clicking outside of it.
+      </Paragraph>
+      <Popover.TriggerContext>
+        <Popover.Trigger onClick={() => setOpen((prev) => !prev)}>My trigger!</Popover.Trigger>
+        <Popover open={open} {...args}>
+          popover content
+        </Popover>
+      </Popover.TriggerContext>
+    </Box>
   );
 };
 
 Preview.args = {
   placement: 'top',
-};
-Preview.parameters = {
-  customStyles: {
-    paddingTop: '5rem',
-  },
+  'data-size': 'md',
+  'data-color': undefined,
+  variant: undefined,
 };
 
 export const Interactive: StoryFn<typeof Popover> = () => {
@@ -85,25 +116,23 @@ Interactive.parameters = {
 
 export const DottedUnderline: StoryFn<typeof Popover> = () => {
   return (
-    <>
-      <Popover.TriggerContext>
+    <Popover.TriggerContext>
+      <Paragraph>
+        Vi bruker <Popover.Trigger inline>design tokens</Popover.Trigger> for å sikre at vi har en konsistent design.
+      </Paragraph>
+      <Popover data-color="neutral">
         <Paragraph>
-          Vi bruker <Popover.Trigger inline>design tokens</Popover.Trigger> for å sikre at vi har en konsistent design.
+          <strong
+            style={{
+              display: 'block',
+            }}
+          >
+            Design tokens
+          </strong>
+          Design tokens er en samling av variabler som definerer designet i et designsystem.
         </Paragraph>
-        <Popover data-color="neutral">
-          <Paragraph>
-            <strong
-              style={{
-                display: 'block',
-              }}
-            >
-              Design tokens
-            </strong>
-            Design tokens er en samling av variabler som definerer designet i et designsystem.
-          </Paragraph>
-        </Popover>
-      </Popover.TriggerContext>
-    </>
+      </Popover>
+    </Popover.TriggerContext>
   );
 };
 DottedUnderline.parameters = {
@@ -168,18 +197,6 @@ Variants.parameters = {
     padding: '5rem 1rem',
   },
 };
-Variants.play = () => {};
-Variants.parameters = {
-  customStyles: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(4, 1fr)',
-    gap: 'var(--ds-size-2)',
-    height: '100%',
-    width: '100%',
-    placeItems: 'center',
-    padding: '5rem 3rem',
-  },
-};
 
 export const Controlled: StoryFn<typeof Popover> = () => {
   const [open, setOpen] = useState(false);
@@ -207,6 +224,25 @@ Controlled.parameters = {
   },
 };
 
+export const Sizes: StoryFn<typeof Popover> = () => {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => setOpen(true), []);
+
+  return (
+    <Box gap={64} align="start" px={64}>
+      {(['sm', 'md', 'lg'] as const).map((size) => (
+        <Popover.TriggerContext key={size}>
+          <Popover.Trigger>popover</Popover.Trigger>
+          <Popover open={open} placement="top" autoPlacement={false} data-size={size}>
+            {size}
+          </Popover>
+        </Popover.TriggerContext>
+      ))}
+    </Box>
+  );
+};
+
 export const WithoutContext: StoryFn<typeof Popover> = () => {
   const [open, setOpen] = useState(false);
 
@@ -228,9 +264,4 @@ export const WithoutContext: StoryFn<typeof Popover> = () => {
       </Popover>
     </>
   );
-};
-WithoutContext.parameters = {
-  customStyles: {
-    padding: '8rem 6rem 1rem',
-  },
 };
