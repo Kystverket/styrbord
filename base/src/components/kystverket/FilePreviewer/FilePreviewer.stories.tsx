@@ -2,13 +2,12 @@ import type { Meta, StoryFn } from '@storybook/react-vite';
 import { FilePreviewRef, FilePreviewerDialogProps } from './dialog/FilePreviewer-dialog';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
-import { Box, Button } from '~/main';
+import { Box, Button, FilePreviewer } from '~/main';
 import { useRef } from 'react';
 
 import atlas from '@assets/img/atlas/atlas 1.jpeg';
 import pikekyst from '@assets/documents/Pikekyst Oppskrift.pdf';
 import geojson from '@assets/documents/geojson.json';
-import { FilePreviewer } from '~/main';
 
 const defaultProps: FilePreviewerDialogProps = {
   animation: 'none',
@@ -39,13 +38,6 @@ const meta = {
   component: FilePreviewer,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv', 'beta'],
-  parameters: {
-    docs: {
-      source: {
-        type: 'code',
-      },
-    },
-  },
   args: {
     animation: 'slide',
     files: defaultProps.files,
