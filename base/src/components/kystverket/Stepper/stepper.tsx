@@ -123,7 +123,7 @@ const Stepper = ({
           classes['step-container'],
           classes[`orientation-${orientation}`],
           classes[`orientation-${forceOrientation ? 'forced' : 'auto'}`],
-          classes[`item-orientation-${itemOrientation ?? 'horizontal'}`],
+          classes[`item-orientation-${itemOrientation}`],
         ].join(' ')}
       >
         {steps
@@ -143,7 +143,7 @@ const Stepper = ({
           })
           .map((item, index) => (
             <React.Fragment key={item.label}>
-              {index > 0 && <span className={[classes.divider].join(' ')} />}
+              {index > 0 && <span className={[classes.divider].join(' ')} aria-hidden="true" />}
               <StepItem {...item} />
             </React.Fragment>
           ))}
