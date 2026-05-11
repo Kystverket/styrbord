@@ -1,5 +1,5 @@
 import React from 'react';
-import cls from './stepper.module.css';
+import classes from './stepper.module.css';
 import { Icon, IconId } from '~/main';
 
 export const stepItemColorOptions = ['auto', 'primary', 'accent', 'neutral', 'success', 'danger', 'error', 'info'];
@@ -18,6 +18,7 @@ interface StepItemProps extends StepItem {
   placement: 'before' | 'current' | 'after';
   index: number;
   labels: 'always' | 'never';
+  itemOrientation?: 'horizontal' | 'vertical';
 }
 
 export interface StepperProps {
@@ -26,6 +27,8 @@ export interface StepperProps {
   'data-size'?: 'sm' | 'md' | 'lg';
   labels?: 'always' | 'current' | 'never';
   orientation?: 'horizontal' | 'vertical';
+  itemOrientation?: 'horizontal' | 'vertical';
+
   forceOrientation?: boolean;
 }
 
@@ -39,6 +42,7 @@ const StepItem = ({
   labels,
   onClick,
   index,
+  itemOrientation = 'horizontal',
 }: StepItemProps) => {
   const autoColor = placement === 'current' || onClick ? 'primary' : 'neutral';
   if (dataColor === 'auto') dataColor = autoColor;
@@ -48,23 +52,28 @@ const StepItem = ({
 
   let iconContent = <span>{index}</span>;
   if (icon === 'auto') {
-    iconContent = placement === 'before' ? <Icon material="check" className={cls.stepperIcon} /> : <span>{index}</span>;
+    iconContent =
+      placement === 'before' ? <Icon material="check" className={classes.stepperIcon} /> : <span>{index}</span>;
   } else if (icon === 'index') {
     iconContent = <span>{index}</span>;
   } else {
-    iconContent = <Icon material={icon} className={cls.stepperIcon} />;
+    iconContent = <Icon material={icon} className={classes.stepperIcon} />;
   }
 
   const content = (
     <>
-      <span className={cls.icon}>{iconContent}</span>
-      {labels === 'always' && <span className={cls.label}>{label}</span>}
+      <span className={classes.icon}>{iconContent}</span>
+      {labels === 'always' && <span className={classes.label}>{label}</span>}
     </>
   );
 
-  const classNames = [cls.step, cls[`is-${placement}`], cls[`has-style-${style}`], onClick ? cls.clickable : ''].join(
-    ' ',
-  );
+  const classNames = [
+    classes.step,
+    classes[`item-orientation-${itemOrientation}`],
+    classes[`is-${placement}`],
+    classes[`has-style-${style}`],
+    onClick ? classes.clickable : '',
+  ].join(' ');
 
   if (onClick) {
     return (
@@ -104,15 +113,17 @@ const Stepper = ({
   labels = 'always',
   orientation = 'horizontal',
   forceOrientation = false,
+  itemOrientation,
   'data-size': dataSize,
 }: StepperProps) => {
   return (
-    <div className={[cls['step-outer-container']].join(' ')} data-size={dataSize}>
+    <div className={[classes['step-outer-container']].join(' ')} data-size={dataSize}>
       <div
         className={[
-          cls['step-container'],
-          cls[`orientation-${orientation}`],
-          cls[`orientation-${forceOrientation ? 'forced' : 'auto'}`],
+          classes['step-container'],
+          classes[`orientation-${orientation}`],
+          classes[`orientation-${forceOrientation ? 'forced' : 'auto'}`],
+          classes[`item-orientation-${itemOrientation ?? 'horizontal'}`],
         ].join(' ')}
       >
         {steps
@@ -121,6 +132,7 @@ const Stepper = ({
               ...item,
               index: index + 1,
               placement: calcPlacement(step, index),
+              itemOrientation,
             };
           })
           .map<StepItemProps>((item) => {
@@ -131,7 +143,7 @@ const Stepper = ({
           })
           .map((item, index) => (
             <React.Fragment key={item.label}>
-              {index > 0 && <span className={[cls.divider].join(' ')} />}
+              {index > 0 && <span className={[classes.divider].join(' ')} />}
               <StepItem {...item} />
             </React.Fragment>
           ))}
