@@ -113,7 +113,7 @@ const Stepper = ({
   labels = 'always',
   orientation = 'horizontal',
   forceOrientation = false,
-  itemOrientation,
+  itemOrientation = 'horizontal',
   'data-size': dataSize,
 }: StepperProps) => {
   return (
