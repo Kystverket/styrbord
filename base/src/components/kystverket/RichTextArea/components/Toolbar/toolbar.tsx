@@ -12,6 +12,7 @@ type ToolbarProps = {
   isBulletListActive: boolean;
   isOrderedListActive: boolean;
   isLinkActive: boolean;
+  canUploadImage?: boolean;
   selectedFormat: BlockType;
   linkPopoverTarget?: string;
   onBold: () => void;
@@ -22,6 +23,7 @@ type ToolbarProps = {
   onRedo: () => void;
   onFormatChange: (format: BlockType) => void;
   onLink: () => void;
+  onImageUpload?: () => void;
 };
 
 type ToolbarButtonProps = {
@@ -56,6 +58,7 @@ export const Toolbar = ({
   isBulletListActive,
   isOrderedListActive,
   isLinkActive,
+  canUploadImage = false,
   selectedFormat,
   linkPopoverTarget,
   onBulletList,
@@ -66,6 +69,7 @@ export const Toolbar = ({
   onRedo,
   onFormatChange,
   onLink,
+  onImageUpload,
 }: ToolbarProps) => {
   return (
     <div className={styles.toolbar} role="toolbar" aria-label="Rich text formatting">
@@ -101,6 +105,9 @@ export const Toolbar = ({
           popoverTarget={linkPopoverTarget}
           onClick={onLink}
         />
+        {canUploadImage && onImageUpload ? (
+          <ToolbarButton label="Image" icon="image" disabled={disabled} onClick={onImageUpload} />
+        ) : null}
         <select
           className={styles.toolbarSelect}
           disabled={disabled}

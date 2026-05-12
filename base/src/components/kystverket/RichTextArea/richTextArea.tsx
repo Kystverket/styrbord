@@ -2,21 +2,10 @@
 
 import { useEffect, useId, useRef } from 'react';
 import { Milkdown, MilkdownProvider, useEditor } from '@milkdown/react';
-import { Editor, commandsCtx, defaultValueCtx, editorViewCtx, editorViewOptionsCtx, rootCtx } from '@milkdown/core';
-import type { CmdKey } from '@milkdown/core';
-import type { Ctx } from '@milkdown/ctx';
-import { undoCommand, redoCommand } from '@milkdown/plugin-history';
-import {
-  commonmark,
-  liftListItemCommand,
-  toggleEmphasisCommand,
-  toggleStrongCommand,
-  wrapInBulletListCommand,
-  wrapInOrderedListCommand,
-  wrapInHeadingCommand,
-  turnIntoTextCommand,
-} from '@milkdown/preset-commonmark';
-import { history } from '@milkdown/plugin-history';
+import { Editor, defaultValueCtx, editorViewCtx, editorViewOptionsCtx, rootCtx } from '@milkdown/core';
+import { imageInlineComponent, inlineImageConfig } from '@milkdown/components/image-inline';
+import type { InlineImageConfig } from '@milkdown/components/image-inline';
+import { history, redoCommand, undoCommand } from '@milkdown/plugin-history';
 import { listener, listenerCtx } from '@milkdown/plugin-listener';
 import { replaceAll } from '@milkdown/utils';
 import '@milkdown/prose/view/style/prosemirror.css';
@@ -25,37 +14,35 @@ import classes from './richTextArea.module.css';
 
 import { Fieldset, LabelContent, ValidationMessage } from '~/main';
 import LinkEditor from './components/LinkEditor/linkEditor';
-import { BlockType, Toolbar } from './components/Toolbar/toolbar';
-import { normalizeHref } from './utils/linkUtils';
+import { Toolbar } from './components/Toolbar/toolbar';
+import { replaceUrlsWithRefs } from './utils/linkUtils';
 import { useRichTextToolbarState } from './hooks/useRichTextToolbarState';
 import { useRichTextLinkEditor } from './hooks/useRichTextLinkEditor';
-
-export type RichTextAreaProps = {
-  value: string | null | undefined;
-  onChange: (markdown: string) => void;
-  placeholder?: string;
-  disabled?: boolean;
-  className?: string;
-  label?: string;
-  description?: string | React.ReactNode;
-  optional?: boolean | string | undefined;
-  required?: boolean | string | undefined;
-  error?: string;
-};
-
-type ToolbarCommand<T = unknown> = { key: CmdKey<T>; value?: T };
-
-const normalizeMarkdownBreakTags = (value: string) => value.replace(/<br\s*\/?>/gi, '\n\n');
-
-const blockedCommonmarkGroups = new Set(['CodeBlock', 'InlineCode', 'Blockquote', 'Hr', 'Html']);
-const richTextCommonmarkPlugins = commonmark.filter((plugin) => {
-  const group = plugin.meta?.group ?? '';
-  return !blockedCommonmarkGroups.has(group);
-});
+import { useRichTextImageUpload } from './hooks/useRichTextImageUpload';
+import {
+  useRichTextCommands,
+  toggleStrongCommand,
+  toggleEmphasisCommand,
+  wrapInBulletListCommand,
+  wrapInOrderedListCommand,
+} from './hooks/useRichTextCommands';
+import {
+  normalizeMarkdownBreakTags,
+  richTextCommonmarkPlugins,
+  createRichTextAreaEditorEditable,
+  handleRichTextAreaEditorClick,
+  handleRichTextAreaEditorKeydown,
+  createRichTextAreaEditorPaste,
+  createRichTextAreaEditorDrop,
+} from './richTextArea.editor';
+import type { ImageInsertHandler, RichTextAreaProps } from './richTextArea.types';
+export type { RichTextAreaProps };
 
 const RichTextAreaContainer = ({
   value,
   onChange,
+  className,
+  onUpload,
   placeholder,
   disabled = false,
   label,
@@ -66,96 +53,54 @@ const RichTextAreaContainer = ({
 }: RichTextAreaProps) => {
   const normalizedValue = normalizeMarkdownBreakTags(value ?? '');
   const latestOnChangeRef = useRef(onChange);
+  const latestOnUploadRef = useRef(onUpload);
   const lastKnownMarkdownRef = useRef(normalizedValue);
-
-  const { toolbarState, updateToolbarState } = useRichTextToolbarState();
-
-  const linkEditorAnchorId = `rich-text-link-editor-${useId().replace(/:/g, '')}`;
+  const imageInputRef = useRef<HTMLInputElement | null>(null);
 
   latestOnChangeRef.current = onChange;
+  latestOnUploadRef.current = onUpload;
+
+  // Owned here so useEditor config can close over them before useRichTextImageUpload is called.
+  const sasToRefMap = useRef(new Map<string, string>());
+  const insertImageFromFileRef = useRef<ImageInsertHandler>(() => {});
+  const inlineImageConfigUpdaterRef = useRef<(config: InlineImageConfig) => InlineImageConfig>((c) => c);
+
+  const { toolbarState, updateToolbarState } = useRichTextToolbarState();
+  const linkEditorAnchorId = `rich-text-link-editor-${useId().replaceAll(':', '')}`;
+
+  const dispatchImageFromFile = (file: File) => insertImageFromFileRef.current(file);
+  const updateInlineImageConfig = (config: InlineImageConfig) => inlineImageConfigUpdaterRef.current(config);
 
   // Oppretter Milkdown-editor med schema, historikk og listeners.
+  // Refs above are populated before Milkdown's useEffect runs, so closures here are safe.
   const { loading, get } = useEditor(
     (root) =>
       Editor.make()
-
         .config((ctx) => {
           ctx.set(rootCtx, root);
           ctx.set(defaultValueCtx, normalizedValue);
+          ctx.update(inlineImageConfig.key, updateInlineImageConfig);
           ctx.update(editorViewOptionsCtx, (prev = {}) => ({
             ...prev,
-            editable: () => !disabled,
+            editable: createRichTextAreaEditorEditable(disabled),
             handleDOMEvents: {
               ...prev.handleDOMEvents,
-              click: (_view, event) => {
-                const target = event.target;
-
-                if (!(target instanceof HTMLElement)) {
-                  return false;
-                }
-                const anchor = target.closest('a[href]');
-
-                if (!anchor) {
-                  return false;
-                }
-
-                const href = anchor.getAttribute('href');
-
-                if (!href) {
-                  return false;
-                }
-
-                event.preventDefault();
-                window.open(normalizeHref(href), '_blank', 'noopener,noreferrer');
-                return true;
-              },
-              keydown: (view, event) => {
-                if (event.key !== ' ' || event.ctrlKey || event.metaKey || event.altKey) {
-                  return false;
-                }
-
-                const { state } = view;
-                const { selection } = state;
-                const linkMarkType = state.schema.marks.link;
-
-                if (!linkMarkType || !selection.empty) {
-                  return false;
-                }
-
-                const { from, $from } = selection;
-                const nodeBefore = $from.nodeBefore;
-                const nodeAfter = $from.nodeAfter;
-
-                const linkInCursorMarks = linkMarkType.isInSet(state.storedMarks ?? $from.marks());
-                const linkOnNodeBefore = !!(nodeBefore?.isText && linkMarkType.isInSet(nodeBefore.marks));
-
-                if (!linkInCursorMarks && !linkOnNodeBefore) {
-                  return false;
-                }
-
-                if (nodeAfter?.isText && linkMarkType.isInSet(nodeAfter.marks)) {
-                  return false;
-                }
-
-                event.preventDefault();
-
-                const tr = state.tr.setStoredMarks([]).insertText(' ', from, from);
-
-                view.dispatch(tr);
-
-                return true;
-              },
+              click: handleRichTextAreaEditorClick,
+              keydown: handleRichTextAreaEditorKeydown,
+              paste: createRichTextAreaEditorPaste(Boolean(latestOnUploadRef.current), dispatchImageFromFile),
+              drop: createRichTextAreaEditorDrop(Boolean(latestOnUploadRef.current), dispatchImageFromFile),
             },
           }));
           ctx.get(listenerCtx).markdownUpdated((_ctx, markdown) => {
             const normalizedMarkdown = normalizeMarkdownBreakTags(markdown);
+            const transformedMarkdown = replaceUrlsWithRefs(normalizedMarkdown, sasToRefMap.current);
 
-            if (normalizedMarkdown === lastKnownMarkdownRef.current) {
+            if (transformedMarkdown === lastKnownMarkdownRef.current) {
               updateToolbarState(_ctx);
               return;
             }
-            lastKnownMarkdownRef.current = normalizedMarkdown;
-            latestOnChangeRef.current(normalizedMarkdown);
+            lastKnownMarkdownRef.current = transformedMarkdown;
+            latestOnChangeRef.current(transformedMarkdown);
             updateToolbarState(_ctx);
           });
           ctx.get(listenerCtx).selectionUpdated((listenerContext) => {
@@ -163,10 +108,35 @@ const RichTextAreaContainer = ({
           });
         })
         .use(richTextCommonmarkPlugins)
+        .use(imageInlineComponent)
         .use(history)
         .use(listener),
     [disabled],
   );
+
+  const imageUpload = useRichTextImageUpload({
+    disabled,
+    get,
+    updateToolbarState,
+    latestOnUploadRef,
+    sasToRefMap,
+  });
+
+  // Sync stable refs so useEditor closures always call the latest implementations.
+  insertImageFromFileRef.current = imageUpload.insertImageFromFile;
+  inlineImageConfigUpdaterRef.current = imageUpload.inlineImageConfig;
+
+  const { executeInEditor, runCommand, toggleList, handleFormatChange } = useRichTextCommands({
+    disabled,
+    get,
+    updateToolbarState,
+  });
+
+  const { linkEditorOpen, linkEditorState, closeLinkEditor, openLinkEditor, handleLinkSave, handleLinkRemove } =
+    useRichTextLinkEditor({
+      disabled,
+      executeInEditor,
+    });
 
   // Synker ekstern verdi til editor ved endringer.
   useEffect(() => {
@@ -207,75 +177,18 @@ const RichTextAreaContainer = ({
     });
   }, [get]);
 
-  // Felles flyt for alle toolbar-kommandoer.
-  const executeInEditor = (fn: (ctx: Ctx) => void) => {
-    if (disabled) return;
-    const editor = get();
-    if (!editor) return;
-    editor.action((ctx) => {
-      ctx.get(editorViewCtx).focus();
-      fn(ctx);
-      updateToolbarState(ctx);
-    });
-  };
-
-  // Kjører toolbar-kommando og oppdaterer knappestatus.
-  const runCommand = <T,>(command: ToolbarCommand<T>) => {
-    executeInEditor((ctx) => {
-      const commands = ctx.get(commandsCtx);
-      commands.call(command.key, command.value);
-    });
-  };
-
-  // Kjører flere toolbar-kommandoer i rekkefølge og oppdaterer knappestatus.
-  const runCommands = (commandsToRun: ToolbarCommand<unknown>[]) => {
-    executeInEditor((ctx) => {
-      const commands = ctx.get(commandsCtx);
-      commandsToRun.forEach((command) => commands.call(command.key, command.value));
-    });
-  };
-
-  const { linkEditorOpen, linkEditorState, closeLinkEditor, openLinkEditor, handleLinkSave, handleLinkRemove } =
-    useRichTextLinkEditor({
-      disabled,
-      executeInEditor,
-    });
-
-  // Håndterer toggling av listeformatering
-  const toggleList = ({
-    isTargetListActive,
-    isOtherListActive,
-    wrapCommand,
-  }: {
-    isTargetListActive: boolean;
-    isOtherListActive: boolean;
-    wrapCommand: ToolbarCommand<unknown>;
-  }) => {
-    if (isTargetListActive) {
-      runCommand(liftListItemCommand);
+  const openImageFilePicker = () => {
+    if (disabled || loading || !onUpload || imageUpload.isUploadingImage) {
       return;
     }
 
-    if (isOtherListActive) {
-      runCommands([liftListItemCommand, wrapCommand]);
-      return;
-    }
-
-    runCommand(wrapCommand);
-  };
-
-  const handleFormatChange = (format: BlockType) => {
-    if (format === 'paragraph') {
-      runCommand(turnIntoTextCommand);
-    } else {
-      runCommand({ key: wrapInHeadingCommand.key, value: parseInt(format.slice(1), 10) });
-    }
+    imageInputRef.current?.click();
   };
 
   const showPlaceholder = !normalizedValue && Boolean(placeholder);
 
   return (
-    <Fieldset>
+    <Fieldset className={className}>
       {label && (
         <Fieldset.Legend>
           <LabelContent text={label} required={required} optional={optional} />
@@ -294,18 +207,20 @@ const RichTextAreaContainer = ({
             .join(' ')}
         >
           <Toolbar
-            disabled={disabled || loading}
+            disabled={disabled || loading || imageUpload.isUploadingImage}
             isBoldActive={toolbarState.isBoldActive}
             isItalicActive={toolbarState.isItalicActive}
             isBulletListActive={toolbarState.isBulletListActive}
             isOrderedListActive={toolbarState.isOrderedListActive}
             selectedFormat={toolbarState.selectedFormat}
             isLinkActive={toolbarState.isLinkActive}
+            canUploadImage={Boolean(onUpload)}
             onBold={() => runCommand(toggleStrongCommand)}
             onItalic={() => runCommand(toggleEmphasisCommand)}
             onUndo={() => runCommand(undoCommand)}
             onRedo={() => runCommand(redoCommand)}
             onLink={openLinkEditor}
+            onImageUpload={openImageFilePicker}
             linkPopoverTarget={linkEditorAnchorId}
             onBulletList={() =>
               toggleList({
@@ -322,6 +237,16 @@ const RichTextAreaContainer = ({
               })
             }
             onFormatChange={handleFormatChange}
+          />
+          <input
+            ref={imageInputRef}
+            type="file"
+            accept="image/*"
+            hidden
+            disabled={disabled || loading || imageUpload.isUploadingImage || !onUpload}
+            onChange={(event) => {
+              void imageUpload.handleImageFileInputChange(event);
+            }}
           />
 
           <div
