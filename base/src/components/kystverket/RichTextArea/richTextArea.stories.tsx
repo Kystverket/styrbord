@@ -94,7 +94,7 @@ export const WithImageRef: Story = {
   args: {
     ...defaultArgs,
     label: 'Rikt tekstfelt med bildereferanse',
-    description: 'Last opp et bilde — markdownutdata vil inneholde en stabil referanse, ikke en SAS-URL.',
+    description: 'Last opp et bilde — markdownutdata vil inneholde en stabil referanse til bildet,.',
 
     onUpload: async (file) => {
       const src = await fileToDataUrl(file);
@@ -104,45 +104,41 @@ export const WithImageRef: Story = {
     },
   },
   render: (args) => {
-    const WithImageRefStory = () => {
-      const [value, setValue] = useState(args.value ?? '');
-      const [markdownOutput, setMarkdownOutput] = useState('');
+    const [value, setValue] = useState(args.value ?? '');
+    const [markdownOutput, setMarkdownOutput] = useState('');
 
-      return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <RichTextArea
-            {...args}
-            value={value}
-            onChange={(nextMarkdown) => {
-              setValue(nextMarkdown);
-              setMarkdownOutput(nextMarkdown);
-              args.onChange(nextMarkdown);
-            }}
-          />
-          {markdownOutput && (
-            <div>
-              <p style={{ marginBottom: '0.25rem', fontWeight: 'bold', fontSize: '0.875rem' }}>
-                Markdown sendt til onChange:
-              </p>
-              <pre
-                style={{
-                  background: '#f4f4f4',
-                  border: '1px solid #ddd',
-                  borderRadius: '4px',
-                  padding: '0.75rem',
-                  fontSize: '0.8rem',
-                  whiteSpace: 'pre-wrap',
-                  wordBreak: 'break-all',
-                }}
-              >
-                {markdownOutput}
-              </pre>
-            </div>
-          )}
-        </div>
-      );
-    };
-
-    return <WithImageRefStory />;
+    return (
+      <>
+        <RichTextArea
+          {...args}
+          value={value}
+          onChange={(nextMarkdown) => {
+            setValue(nextMarkdown);
+            setMarkdownOutput(nextMarkdown);
+            args.onChange(nextMarkdown);
+          }}
+        />
+        {markdownOutput && (
+          <div style={{ marginTop: '12px' }}>
+            <p style={{ marginBottom: '0.25rem', fontWeight: 'bold', fontSize: '0.875rem' }}>
+              Markdown sendt til onChange:
+            </p>
+            <pre
+              style={{
+                background: '#f4f4f4',
+                border: '1px solid #ddd',
+                borderRadius: '4px',
+                padding: '0.75rem',
+                fontSize: '0.8rem',
+                whiteSpace: 'pre-wrap',
+                wordBreak: 'break-all',
+              }}
+            >
+              {markdownOutput}
+            </pre>
+          </div>
+        )}
+      </>
+    );
   },
 };
