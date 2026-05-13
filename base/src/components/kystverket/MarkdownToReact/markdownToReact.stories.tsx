@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import MarkdownToReact from './markdownToReact';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
+import { ResolvedImageRef } from '~/components/kystverket/MarkdownToReact/markdownToReact';
 
 const meta = {
   title: 'Components/MarkdownToReact',
@@ -101,5 +102,28 @@ const App = () => (
   <MarkdownToReact markdown="**Hei verden!**" />
 );
 \`\`\``,
+  },
+};
+
+export const ResolveImageRefExample: Story = {
+  args: {
+    markdown: `
+# Noe kul markdown
+
+## Med et bilde som ikke resolver
+![Et bilde av en skillingsbolle på havet](image://128asdnsaj-dnb1-asj1-9d11-sajdnj1jo)
+
+## og et bilde som resolver!
+![Atlas.png](image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69)
+`,
+    resolveImageRef: (ref: string) => {
+      const imageRefMap: Record<string, ResolvedImageRef> = {
+        'image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69': {
+          src: '/assets/img/atlas/atlas%201.jpeg',
+        },
+      };
+
+      return imageRefMap[ref] ?? ref;
+    },
   },
 };
