@@ -1,97 +1,62 @@
-import { createElement, HTMLProps, useState, useEffect } from 'react';
-import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import { Field, Input, Label, ValidationMessage } from '@digdir/designsystemet-react';
-import { Icon, LabelContent } from '~/main';
-import classes from './Datepicker.module.css';
-
-import { nb } from 'date-fns/locale/nb';
-
-registerLocale('nb', nb);
+import { InputSize, LabelContent } from '~/main';
+import { inputSizeClass } from '~/utils/input/input';
 
 export interface DatepickerProps {
+  className?: string;
+  loading?: boolean;
+  size?: InputSize;
   optional?: boolean | string | undefined;
   required?: boolean | string | undefined;
   label: string;
-  dateFormat?: string;
   description?: string;
   error?: string;
   onBlur?: () => void;
   value: Date | undefined;
   onChange?: (date: Date | undefined) => void;
-  showYearDropdown?: boolean;
-  showMonthDropdown?: boolean;
-  showCalendarIcon?: boolean;
-  minDate?: Date; // Minimum selectable date. Dates before this will be greyed out and non-selectable.
-  maxDate?: Date; // Maximum selectable date. Dates after this will be greyed out and non-selectable.
-  popperPlacement?: 'top' | 'bottom' | 'left' | 'right'; // Controls where the calendar popup appears
-  withPortal?: boolean; // Use portal for calendar popup (good for dialogs and mobile)
-  disabled?: boolean; // Disable the datepicker
+  minDate?: Date;
+  maxDate?: Date;
+  disabled?: boolean;
 }
 
-const CustomInput = (props: HTMLProps<HTMLInputElement> & { showCalendarIcon: boolean }) => {
-  const { showCalendarIcon, ...inputProps } = props;
-
-  if (showCalendarIcon) {
-    return (
-      <div className={classes.inputWrapper}>
-        <Input {...inputProps} inputMode="numeric" type="text" />
-        <Icon className={classes.inputIcon} material="calendar_month" aria-hidden="true" />
-      </div>
-    );
-  }
-  return <Input {...inputProps} inputMode="numeric" type="text" />;
+const toDateString = (date: Date | undefined): string => {
+  if (!date) return '';
+  const y = date.getFullYear().toString().padStart(4, '0');
+  const m = (date.getMonth() + 1).toString().padStart(2, '0');
+  const d = date.getDate().toString().padStart(2, '0');
+  return `${y}-${m}-${d}`;
 };
 
 export const Datepicker = ({
-  value,
+  size = 'full',
+  className,
+  label,
+  loading,
+  required,
+  optional,
   onChange,
-  dateFormat = 'dd.MM.yyyy',
-  showCalendarIcon = true,
+  value,
   minDate,
   maxDate,
-  popperPlacement = 'top',
-  withPortal,
-  showMonthDropdown,
-  showYearDropdown,
   ...props
 }: DatepickerProps) => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    // Sjekk om vi er på mobil
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768 || /Mobi|Android/i.test(navigator.userAgent));
-    };
-
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  const usePortal = isMobile && (withPortal ?? false);
-
   return (
-    <Field>
+    <Field className={`${className} ${inputSizeClass(size)}`}>
       <Label style={{ display: 'block', width: 'fit-content' }}>
-        <LabelContent text={props.label} required={props.required} optional={props.optional} />
+        <LabelContent text={label} required={required} optional={optional} loading={loading} />
       </Label>
       {props.description && <Field.Description>{props.description}</Field.Description>}
-      <ReactDatePicker
-        locale={'nb'}
-        selected={value}
-        dateFormat={dateFormat}
-        placeholderText="dd.mm.åååå"
-        onChange={(date) => onChange?.(date ?? undefined)}
-        customInput={createElement(CustomInput, { showCalendarIcon })}
-        minDate={minDate}
-        maxDate={maxDate}
+      <Input
+        type="date"
+        value={toDateString(value)}
+        min={toDateString(minDate)}
+        max={toDateString(maxDate)}
         disabled={props.disabled}
-        dropdownMode="select"
-        showYearDropdown={showYearDropdown}
-        showMonthDropdown={showMonthDropdown}
         onBlur={props.onBlur}
-        popperPlacement={popperPlacement}
-        {...(usePortal && { withPortal: true, fixedHeight: true })}
+        onChange={(e) => {
+          const val = e.target.value;
+          onChange?.(val ? new Date(val + 'T00:00:00') : undefined);
+        }}
       />
       {props.error && <ValidationMessage>{props.error}</ValidationMessage>}
     </Field>

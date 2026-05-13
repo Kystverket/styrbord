@@ -4,7 +4,6 @@
 
 @layer reset {
   @include meta.load-css('reset');
-  @include meta.load-css('react-datepicker/dist/react-datepicker.css');
 }
 
 @layer dsno {
@@ -27,7 +26,6 @@
   @include meta.load-css('../components/designsystemet/Tooltip/Tooltip.override.scss');
   @include meta.load-css('../components/designsystemet/Avatar/Avatar.override.scss');
   @include meta.load-css('../components/designsystemet/Dropdown/Dropdown.override.scss');
-  @include meta.load-css('../components/kystverket/Datepicker/Datepicker.override.scss');
   @include meta.load-css('../components/designsystemet/Popover/Popover.override.scss');
 }
 
