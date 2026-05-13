@@ -1,3 +1,0 @@
-import{S as o}from"./iframe-C7tA2xSz.js";import{D as s}from"./Details-3HQoGh0z.js";import"./preload-helper-Dp1pzeXC.js";import"./tooltip-ZhU706QZ.js";import"./index-tUJvpiO3.js";import"./index-C1wVKGee.js";const u={title:"Deprecated/Details",component:s,decorators:[o],tags:["autodocs","deprecated"],argTypes:{}},c={summary:"Details header",children:"Details content"},r={args:c};var e,t,a;r.parameters={...r.parameters,docs:{...(e=r.parameters)==null?void 0:e.docs,source:{originalSource:`{
-  args: defaultArgs
-}`,...(a=(t=r.parameters)==null?void 0:t.docs)==null?void 0:a.source}}};const D=["Default"];export{r as Default,D as __namedExportsOrder,u as default};
