@@ -20,6 +20,10 @@
     justify-content: start;
     align-items: start;
   }
+  .step-container.orientation-vertical.item-orientation-vertical {
+    width: fit-content;
+    align-items: center;
+  }
   .step {
     display: flex;
     flex-direction: row;
@@ -27,7 +31,11 @@
     gap: 0.5rem;
     color: var(--ds-color-grey-70);
     flex: 0 0 auto;
-    padding: 0.5rem;
+    padding: 0.1rem 0.5rem;
+  }
+  .step.item-orientation-vertical {
+    flex-direction: column;
+    height: 100%;
   }
   .step .icon {
     display: flex;
@@ -43,12 +51,12 @@
     line-height: 0;
     user-select: none;
   }
+
   .step .icon > * {
     font-weight: var(--ds-font-weight-medium);
     font-size: var(--ds-body-sm-font-size);
     line-height: var(--ds-body-sm-line-height);
     letter-spacing: var(--ds-body-sm-letter-spacing);
-    line-height: 0;
   }
   .step.has-style-subtle .icon {
     border: var(--ds-border-width-default) solid var(--ds-color-surface-tinted);
@@ -68,12 +76,21 @@
     margin-left: 1.5rem;
     background-color: var(--ds-color-primary-border-default);
   }
+  .step-container.orientation-vertical.item-orientation-vertical .divider {
+    margin-left: 0;
+  }
+
   .label {
     font-weight: var(--ds-font-weight-medium);
     font-size: var(--ds-body-md-font-size);
     line-height: var(--ds-body-md-line-height);
     letter-spacing: var(--ds-body-md-letter-spacing);
     color: var(--ds-color-neutral-text-subtle);
+  }
+  .step.item-orientation-vertical .label {
+    min-width: min-content;
+    max-width: 8ch;
+    text-align: center;
   }
   .step.clickable .label,
   .step.is-current .label {
@@ -92,15 +109,11 @@
   .step.clickable:focus-visible:not(.is-current) .label {
     text-decoration: underline;
   }
-  .step {
-    padding: 0.1rem 0.5rem;
-  }
-
   @container stepContainer (min-width: 600px) {
     .step-container:not(.orientation-vertical) {
       flex-direction: row;
       justify-content: space-between;
-      align-items: center;
+      align-items: stretch;
       row-gap: 0.5rem;
     }
 
@@ -109,12 +122,13 @@
       height: 1px;
       flex: 1;
       margin-left: 0;
+      margin-top: var(--ds-body-md-font-size);
     }
   }
   .step-container.orientation-horizontal.orientation-forced {
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: stretch;
     row-gap: 0.5rem;
   }
 
