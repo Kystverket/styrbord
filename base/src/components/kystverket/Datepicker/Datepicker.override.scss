@@ -9,11 +9,8 @@
 .react-datepicker {
   font-family: var(--kystverket-font-family, 'Museo sans');
   font-weight: 500;
-  border: none;
-  box-shadow:
-    0 0 1px 0 rgba(0, 0, 0, 0.14),
-    0 2px 4px 0 rgba(0, 0, 0, 0.12),
-    0 4px 8px 0 rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--ds-color-neutral-surface-hover);
+  box-shadow: var(--ds-shadow-lg);
 }
 
 .react-datepicker .react-datepicker__day--selected {

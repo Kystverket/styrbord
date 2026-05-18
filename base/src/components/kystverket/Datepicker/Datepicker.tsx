@@ -1,4 +1,4 @@
-import { createElement, HTMLProps, useState, useEffect } from 'react';
+import { createElement, HTMLProps } from 'react';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import { Field, Input, Label, ValidationMessage } from '@digdir/designsystemet-react';
 import { Icon, LabelContent } from '~/main';
@@ -55,21 +55,6 @@ export const Datepicker = ({
   showYearDropdown,
   ...props
 }: DatepickerProps) => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    // Sjekk om vi er på mobil
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768 || /Mobi|Android/i.test(navigator.userAgent));
-    };
-
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  const usePortal = isMobile && (withPortal ?? false);
-
   return (
     <Field>
       <Label style={{ display: 'block', width: 'fit-content' }}>
@@ -80,18 +65,19 @@ export const Datepicker = ({
         locale={'nb'}
         selected={value}
         dateFormat={dateFormat}
-        placeholderText="dd.mm.åååå"
+        placeholderText="DD.MM.YYYY"
         onChange={(date) => onChange?.(date ?? undefined)}
         customInput={createElement(CustomInput, { showCalendarIcon })}
         minDate={minDate}
         maxDate={maxDate}
         disabled={props.disabled}
         dropdownMode="select"
+        formatWeekDay={(day) => day.slice(0, 3)}
         showYearDropdown={showYearDropdown}
         showMonthDropdown={showMonthDropdown}
         onBlur={props.onBlur}
         popperPlacement={popperPlacement}
-        {...(usePortal && { withPortal: true, fixedHeight: true })}
+        withPortal={withPortal ?? false}
       />
       {props.error && <ValidationMessage>{props.error}</ValidationMessage>}
     </Field>

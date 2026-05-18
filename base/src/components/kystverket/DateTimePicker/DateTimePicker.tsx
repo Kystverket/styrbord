@@ -72,7 +72,8 @@ export const DateTimePicker = ({
         showMonthDropdown={showMonthDropdown}
         disabled={props.disabled}
         dropdownMode="select"
-        placeholderText="dd.mm.åååå, tt:mm"
+        formatWeekDay={(day) => day.slice(0, 3)}
+        placeholderText="DD.MM.YYYY, HH:mm"
         timeInputLabel={timeInputLabel}
         minDate={minDate}
         maxDate={maxDate}
