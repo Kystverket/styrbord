@@ -12,7 +12,7 @@ type UseRichTextImageUploadParams = {
   disabled: boolean;
   get: () => Editor | undefined;
   updateToolbarState: (ctx: Ctx) => void;
-  latestOnUploadRef: React.RefObject<UploadImageFn | undefined>;
+  latestOnUploadRef: React.RefObject<UploadImageFn | undefined> | undefined;
   sasToRefMap: React.RefObject<Map<string, string>>;
 };
 
@@ -20,7 +20,7 @@ type UseRichTextImageUploadReturn = {
   isUploadingImage: boolean;
   inlineImageConfig: (config: InlineImageConfig) => InlineImageConfig;
   insertImageFromFile: (file: File) => void;
-  handleImageFileInputChange: (event: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
+  handleImageFileInputChange: (event: React.ChangeEvent<HTMLInputElement>) => Promise<{ success: boolean }>;
 };
 
 const normalizeUploadResult = (
@@ -60,7 +60,7 @@ export const useRichTextImageUpload = ({
   const [isUploadingImage, setIsUploadingImage] = useState(false);
 
   const uploadImage = async (file: File): Promise<ImageUploadResult | null> => {
-    const upload = latestOnUploadRef.current;
+    const upload = latestOnUploadRef?.current;
 
     if (!upload) {
       return null;
@@ -84,9 +84,9 @@ export const useRichTextImageUpload = ({
     });
   };
 
-  const handleImageInsertFromFile = async (file: File) => {
+  const handleImageInsertFromFile = async (file: File): Promise<boolean> => {
     if (disabled || isUploadingImage) {
-      return;
+      return false;
     }
 
     setIsUploadingImage(true);
@@ -95,7 +95,7 @@ export const useRichTextImageUpload = ({
       const uploadedImage = await uploadImage(file);
 
       if (!uploadedImage) {
-        return;
+        return false;
       }
 
       if (uploadedImage.ref) {
@@ -103,6 +103,9 @@ export const useRichTextImageUpload = ({
       }
 
       insertImageNode({ src: uploadedImage.src, alt: uploadedImage.alt, title: uploadedImage.title });
+      return true;
+    } catch {
+      return false;
     } finally {
       setIsUploadingImage(false);
     }
@@ -112,15 +115,18 @@ export const useRichTextImageUpload = ({
     void handleImageInsertFromFile(file);
   };
 
-  const handleImageFileInputChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageFileInputChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): Promise<{ success: boolean }> => {
     const file = event.target.files?.[0];
     event.target.value = '';
 
     if (!file) {
-      return;
+      return { success: true };
     }
+    const result = await handleImageInsertFromFile(file);
 
-    await handleImageInsertFromFile(file);
+    return { success: result };
   };
 
   return {

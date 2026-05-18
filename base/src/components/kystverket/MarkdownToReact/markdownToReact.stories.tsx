@@ -123,7 +123,7 @@ export const ResolveImageRefExample: Story = {
         },
       };
 
-      return imageRefMap[ref] ?? ref;
+      return imageRefMap[ref];
     },
   },
 };

@@ -3,7 +3,7 @@ import type { CmdKey } from '@milkdown/core';
 export type RichTextAreaProps = {
   value: string | null | undefined;
   onChange: (markdown: string) => void;
-  onUpload?: (file: File) => Promise<{ src: string; ref?: string; alt?: string; title?: string } | string>;
+  onUpload?: UploadImageFn;
   placeholder?: string;
   disabled?: boolean;
   className?: string;

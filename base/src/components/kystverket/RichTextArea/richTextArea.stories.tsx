@@ -88,7 +88,7 @@ export const WithError: Story = {
  * - `ref` — a stable opaque ID (e.g. Azure blob path / UUID) stored in the markdown instead of the SAS URL
  *
  * The `onChange` output will contain `![alt](image://uuid-...)` rather than the raw data URL,
- * which is what a `MarkdownToReact` or similar renderers renderer would receive and resolve to a fresh SAS URL at render time.
+ * which is what a `MarkdownToReact` or similar renderers would receive where you implement a resolver function to provide a SAS URI or similar.
  */
 export const WithImageRef: Story = {
   args: {

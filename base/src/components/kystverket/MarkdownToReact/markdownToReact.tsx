@@ -7,7 +7,7 @@ export type MarkdownToReactProps = {
   resolveImageRef?: (ref: string) => ResolvedImageRef;
 };
 
-export type ResolvedImageRef = { src: string; alt?: string } | string;
+export type ResolvedImageRef = { src: string; alt?: string } | undefined;
 
 const replaceResolvedImageRefs = (markdown: string, resolveImageRef: (ref: string) => ResolvedImageRef) => {
   const imageRegex = /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g;
@@ -15,9 +15,7 @@ const replaceResolvedImageRefs = (markdown: string, resolveImageRef: (ref: strin
   return markdown.replace(imageRegex, (fullMatch, alt: string, src: string, title: string | undefined) => {
     const resolvedImageRef = resolveImageRef(src);
 
-    if (!resolvedImageRef) {
-      return fullMatch;
-    }
+    if (resolvedImageRef === undefined) return fullMatch;
 
     const resolvedSrc = typeof resolvedImageRef === 'string' ? resolvedImageRef : resolvedImageRef.src;
     const resolvedAlt = typeof resolvedImageRef === 'string' ? alt : (resolvedImageRef.alt ?? alt);

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useId, useRef } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { Milkdown, MilkdownProvider, useEditor } from '@milkdown/react';
 import { Editor, defaultValueCtx, editorViewCtx, editorViewOptionsCtx, rootCtx } from '@milkdown/core';
 import { imageInlineComponent, inlineImageConfig } from '@milkdown/components/image-inline';
@@ -41,7 +41,6 @@ export type { RichTextAreaProps };
 const RichTextAreaContainer = ({
   value,
   onChange,
-  className,
   onUpload,
   placeholder,
   disabled = false,
@@ -49,8 +48,11 @@ const RichTextAreaContainer = ({
   description,
   optional = false,
   required = false,
-  error,
+  error: externalError,
 }: RichTextAreaProps) => {
+  const [internalError, setInternalError] = useState<string | undefined>(undefined);
+  const displayedError = externalError ?? internalError;
+
   const normalizedValue = normalizeMarkdownBreakTags(value ?? '');
   const latestOnChangeRef = useRef(onChange);
   const latestOnUploadRef = useRef(onUpload);
@@ -188,7 +190,7 @@ const RichTextAreaContainer = ({
   const showPlaceholder = !normalizedValue && Boolean(placeholder);
 
   return (
-    <Fieldset className={className}>
+    <Fieldset>
       {label && (
         <Fieldset.Legend>
           <LabelContent text={label} required={required} optional={optional} />
@@ -200,7 +202,7 @@ const RichTextAreaContainer = ({
         <div
           className={[
             classes.editorWrapper,
-            error && classes.editorWrapperError,
+            displayedError && classes.editorWrapperError,
             disabled && classes.editorWrapperDisabled,
           ]
             .filter(Boolean)
@@ -244,8 +246,10 @@ const RichTextAreaContainer = ({
             accept="image/*"
             hidden
             disabled={disabled || loading || imageUpload.isUploadingImage || !onUpload}
-            onChange={(event) => {
-              void imageUpload.handleImageFileInputChange(event);
+            onChange={async (event) => {
+              setInternalError(undefined);
+              const { success } = await imageUpload.handleImageFileInputChange(event);
+              setInternalError(success ? undefined : 'Image failed to upload');
             }}
           />
 
@@ -271,7 +275,7 @@ const RichTextAreaContainer = ({
             onClose={closeLinkEditor}
           />
         </div>
-        {error && <ValidationMessage className={classes.error}>{error}</ValidationMessage>}
+        {displayedError && <ValidationMessage className={classes.error}>{displayedError}</ValidationMessage>}
       </div>
     </Fieldset>
   );
