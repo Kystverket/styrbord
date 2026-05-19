@@ -1,83 +1,64 @@
-import { createElement, HTMLProps } from 'react';
-import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import { Field, Input, Label, ValidationMessage } from '@digdir/designsystemet-react';
-import { Icon, LabelContent } from '~/main';
-import classes from './DateTimePicker.module.css';
-
-import { nb } from 'date-fns/locale/nb';
-
-registerLocale('nb', nb);
+import { LabelContent } from '~/main';
+import { InputSize, inputSizeClass } from '~/utils/input/input';
 
 export interface DateTimePickerProps {
+  className?: string;
   optional?: boolean | string | undefined;
   required?: boolean | string | undefined;
   label: string;
-  dateTimeFormat?: string;
   description?: string;
   error?: string;
+  loading?: boolean;
   onBlur?: () => void;
   value: Date | undefined;
-  timeInputLabel?: string;
-  showMonthDropdown?: boolean;
-  showYearDropdown?: boolean;
   onChange?: (date: Date | undefined) => void;
-  showCalendarIcon?: boolean;
-  minDate?: Date; // Minimum selectable date. Dates before this will be greyed out and non-selectable.
-  maxDate?: Date; // Maximum selectable date. Dates after this will be greyed out and non-selectable.
-  disabled?: boolean; // Disable the datepicker
-  withPortal?: boolean;
+  minDate?: Date;
+  maxDate?: Date;
+  size?: InputSize;
+  disabled?: boolean;
 }
 
-const CustomInput = (props: HTMLProps<HTMLInputElement> & { showCalendarIcon: boolean }) => {
-  const { showCalendarIcon, ...inputProps } = props;
-
-  if (showCalendarIcon) {
-    return (
-      <div className={classes.inputWrapper}>
-        <Input {...inputProps} inputMode="numeric" type="text" />
-        <Icon className={classes.inputIcon} material="calendar_month" aria-hidden="true" />
-      </div>
-    );
-  }
-  return <Input {...inputProps} inputMode="numeric" type="text" />;
+const toDateTimeString = (date: Date | undefined): string => {
+  if (!date) return '';
+  const y = date.getFullYear().toString().padStart(4, '0');
+  const mo = (date.getMonth() + 1).toString().padStart(2, '0');
+  const d = date.getDate().toString().padStart(2, '0');
+  const h = date.getHours().toString().padStart(2, '0');
+  const mi = date.getMinutes().toString().padStart(2, '0');
+  return `${y}-${mo}-${d}T${h}:${mi}`;
 };
 
 export const DateTimePicker = ({
-  value,
+  size = 'full',
+  className,
+  label,
+  loading,
+  required,
+  optional,
   onChange,
-  dateTimeFormat = 'dd.MM.yyyy, HH:mm',
-  timeInputLabel = 'Time: ',
-  showCalendarIcon = true,
+  value,
   minDate,
   maxDate,
-  withPortal,
-  showMonthDropdown,
-  showYearDropdown,
   ...props
 }: DateTimePickerProps) => {
   return (
-    <Field className={classes.input}>
+    <Field className={`${className} ${inputSizeClass(size)}`}>
       <Label style={{ display: 'block', width: 'fit-content' }}>
-        <LabelContent text={props.label} required={props.required} optional={props.optional} />
+        <LabelContent text={label} required={required} optional={optional} loading={loading} />
       </Label>
       {props.description && <Field.Description>{props.description}</Field.Description>}
-      <ReactDatePicker
-        locale={'nb'}
-        selected={value}
-        dateFormat={dateTimeFormat}
-        onChange={(date) => onChange?.(date ?? undefined)}
-        customInput={createElement(CustomInput, { showCalendarIcon })}
-        showTimeInput
-        showYearDropdown={showYearDropdown}
-        showMonthDropdown={showMonthDropdown}
+      <Input
+        type="datetime-local"
+        value={toDateTimeString(value)}
+        min={toDateTimeString(minDate)}
+        max={toDateTimeString(maxDate)}
         disabled={props.disabled}
-        dropdownMode="select"
-        placeholderText="dd.mm.åååå, tt:mm"
-        timeInputLabel={timeInputLabel}
-        minDate={minDate}
-        maxDate={maxDate}
         onBlur={props.onBlur}
-        withPortal={withPortal ?? false}
+        onChange={(e) => {
+          const val = e.target.value;
+          onChange?.(val ? new Date(val) : undefined);
+        }}
       />
       {props.error && <ValidationMessage>{props.error}</ValidationMessage>}
     </Field>

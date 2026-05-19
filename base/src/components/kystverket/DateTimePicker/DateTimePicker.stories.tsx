@@ -17,19 +17,7 @@ const Wrapper = (props: DateTimePickerProps) => {
 const meta = {
   title: 'Form/DateTimePicker',
   component: Wrapper,
-  decorators: [
-    StyrbordDecorator,
-    (Story) => (
-      <div
-        style={{
-          margin: '0 auto',
-          width: 'fit-content',
-        }}
-      >
-        <Story />
-      </div>
-    ),
-  ],
+  decorators: [StyrbordDecorator, (Story) => <Story />],
   tags: ['autodocs', 'kyv'],
   argTypes: {},
 } satisfies Meta<typeof Wrapper>;
@@ -47,9 +35,6 @@ const defaultProps: DateTimePickerProps = {
 
 export const Default: Story = {
   args: defaultProps,
-};
-export const WithoutCalendarIcon: Story = {
-  args: { ...defaultProps, showCalendarIcon: false },
 };
 
 export const Optional: Story = {
@@ -102,21 +87,6 @@ export const WithMinAndMaxDate: Story = {
   },
 };
 
-export const WithPortal: Story = {
-  args: {
-    ...defaultProps,
-    withPortal: true,
-  },
-};
-
-export const WithYearAndMonthDropdown: Story = {
-  args: {
-    ...defaultProps,
-    showYearDropdown: true,
-    showMonthDropdown: true,
-    value: new Date(),
-    minDate: new Date(2015, 1, 1),
-    maxDate: new Date(),
-    description: 'Også begrenset med minDate og maxDate',
-  },
+export const Disabled: Story = {
+  args: { ...defaultProps, value: new Date(), disabled: true },
 };

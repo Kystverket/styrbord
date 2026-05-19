@@ -41,6 +41,10 @@ Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.
 
 ## Endringslogg
 
+### 2026-05-19 -- v1.7.0
+
+Etter mange problemer med implementasjon og styling av en DatePicker har vi gått til en native datepicker. Noen attributter på datepicker er ikke lenger nødvendige eller tilgjengelige.
+
 ### 2026-04-14 -- v1.5.0
 
 - Oppdatert Header til å støtte 'applikasjoner'. For å overstyre LinkComponent som brukes (for å slippe full reload i f.eks. NextJS) kan man wrapper Header med HeaderContext.
