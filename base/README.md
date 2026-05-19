@@ -41,7 +41,7 @@ Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.
 
 ## Endringslogg
 
-### 2026-05-13 -- v1.7.0
+### 2026-05-19 -- v1.7.0
 
 Etter mange problemer med implementasjon og styling av en DatePicker har vi gått til en native datepicker. Noen attributter på datepicker er ikke lenger nødvendige eller tilgjengelige.
 
