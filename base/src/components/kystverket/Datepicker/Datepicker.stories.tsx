@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Datepicker, DatepickerProps } from './Datepicker';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
-import { useState, useRef } from 'react';
-import { Dialog, Button, Heading } from '~/main';
+import { useState } from 'react';
 
 const Wrapper = (props: DatepickerProps) => {
   const [value, setValue] = useState<Date | undefined>(props.value);
@@ -18,19 +17,7 @@ const Wrapper = (props: DatepickerProps) => {
 const meta = {
   title: 'Form/Datepicker',
   component: Wrapper,
-  decorators: [
-    StyrbordDecorator,
-    (Story) => (
-      <div
-        style={{
-          margin: '0 auto',
-          width: 'fit-content',
-        }}
-      >
-        <Story />
-      </div>
-    ),
-  ],
+  decorators: [StyrbordDecorator, (Story) => <Story />],
   tags: ['autodocs', 'kyv'],
   argTypes: {},
 } satisfies Meta<typeof Wrapper>;
@@ -48,9 +35,6 @@ const defaultProps: DatepickerProps = {
 
 export const Default: Story = {
   args: defaultProps,
-};
-export const WithoutCalendarIcon: Story = {
-  args: { ...defaultProps, showCalendarIcon: false },
 };
 
 export const WithoutDescription: Story = {
@@ -101,74 +85,6 @@ export const WithMinAndMaxDate: Story = {
   },
 };
 
-export const PopperPlacement: Story = {
-  args: {
-    ...defaultProps,
-    label: 'Plassering av popup',
-    description: 'Endre plassering av kalender-popup via "popperPlacement" prop',
-    popperPlacement: 'top',
-  },
-  argTypes: {
-    popperPlacement: {
-      control: { type: 'select' },
-      options: ['top', 'bottom', 'left', 'right'],
-    },
-  },
-  decorators: [
-    StyrbordDecorator,
-    (Story) => (
-      <div
-        style={{
-          minHeight: '400px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <div style={{}}>
-          <Story />
-        </div>
-      </div>
-    ),
-  ],
-};
-
-export const InDialogNearEdge: Story = {
-  args: {
-    ...defaultProps,
-    withPortal: true,
-  },
-  decorators: [
-    StyrbordDecorator,
-    (Story) => {
-      const dialogRef = useRef<HTMLDialogElement>(null);
-
-      return (
-        <>
-          <Button onClick={() => dialogRef.current?.showModal()}>Åpne Dialog</Button>
-          <Dialog ref={dialogRef} style={{ maxWidth: '400px', maxHeight: '200px' }}>
-            <Heading style={{ marginBottom: '16px' }}>Dialog med Datepicker</Heading>
-            <div style={{ marginBottom: '24px' }}>
-              <Story />
-            </div>
-            <Button variant="filled" onClick={() => dialogRef.current?.close()}>
-              Lukk Dialog
-            </Button>
-          </Dialog>
-        </>
-      );
-    },
-  ],
-};
-
-export const WithYearAndMonthDropdown: Story = {
-  args: {
-    ...defaultProps,
-    showYearDropdown: true,
-    showMonthDropdown: true,
-    value: new Date(),
-    minDate: new Date(2015, 1, 1),
-    maxDate: new Date(),
-    description: 'Også begrenset med minDate og maxDate',
-  },
+export const Disabled: Story = {
+  args: { ...defaultProps, value: new Date(), disabled: true },
 };
