@@ -20,7 +20,7 @@ const preview: Preview = {
         method: "alphabetical",
         order: [
           "Readme",
-          "Designsystemet Showcase",
+          "Demosider",
           "Typography",
           "Page",
           "Helpers",
