@@ -68,6 +68,7 @@
   .sidebar-container {
     color: #2a2b35;
   }
+
   .sidebar-container .sidebar-header a {
     font-size: 20px;
   }
@@ -137,11 +138,22 @@
       [data-selected="true"]
     )[data-nodetype="group"] {
     background: revert !important;
-    &:hover {
-      background: #d4f2fd !important;
-    }
-    &:focus {
-      background: #d4f2fd !important;
-    }
+  }
+
+  [data-ref-id="storybook_internal"]:not(
+      [data-selected="true"]
+    )[data-nodetype="component"]:hover,
+  [data-ref-id="storybook_internal"]:not(
+      [data-selected="true"]
+    )[data-nodetype="group"]:hover {
+    background: #d4f2fd !important;
+  }
+  [data-ref-id="storybook_internal"]:not(
+      [data-selected="true"]
+    )[data-nodetype="component"]:focus,
+  [data-ref-id="storybook_internal"]:not(
+      [data-selected="true"]
+    )[data-nodetype="group"]:focus {
+    background: #d4f2fd !important;
   }
 </style>
