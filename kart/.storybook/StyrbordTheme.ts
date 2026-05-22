@@ -6,7 +6,9 @@ export default create({
   brandUrl: ".",
   brandImage: "https://www.kystverket.no/UI/Icons/logo.svg",
   brandTarget: "_self",
-  colorPrimary: "#000067",
+  colorPrimary: "#000667",
+
+  appBg: "#f9f6f3",
   appBorderRadius: 2,
   inputBorderRadius: 2,
 });
