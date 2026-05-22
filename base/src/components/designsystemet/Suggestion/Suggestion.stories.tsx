@@ -1,6 +1,15 @@
-import { Suggestion, Button, Divider, Field, Label, Paragraph } from '~/main';
+import { Alert, Suggestion, Button, Divider, Field, Label, Paragraph } from '~/main';
 import { useState } from 'react';
 import { Meta } from '@storybook/react-vite';
+
+const DevelopmentNotice = () => (
+  <Alert
+    title="Under utvikling"
+    level="warning"
+    text="Komponenten er fortsatt under utvikling og kan endre seg."
+    style={{ marginBottom: 'var(--ds-size-6)' }}
+  />
+);
 
 export default {
   title: 'Components/Suggestion',
@@ -20,6 +29,7 @@ export const Preview = () => {
   const DATA_PLACES = ['Sogndal', 'Oslo', 'Brønnøysund', 'Stavanger', 'Trondheim', 'Bergen', 'Lillestrøm'];
   return (
     <Field>
+      <DevelopmentNotice />
       <Label>Velg en destinasjon</Label>
       <Suggestion>
         <Suggestion.Input />
@@ -42,6 +52,7 @@ export const Multiple = () => {
   const DATA_PLACES = ['Sogndal', 'Oslo', 'Brønnøysund', 'Stavanger', 'Trondheim', 'Bergen', 'Lillestrøm'];
   return (
     <Field>
+      <DevelopmentNotice />
       <Label>Velg en destinasjon</Label>
       <Suggestion multiple>
         <Suggestion.Input />
@@ -61,6 +72,7 @@ export const Filter = () => {
   const DATA_PLACES = ['Sogndal', 'Oslo', 'Brønnøysund', 'Stavanger', 'Trondheim', 'Bergen', 'Lillestrøm'];
   return (
     <Field>
+      <DevelopmentNotice />
       <Label>Skriv inn et tall mellom 1-6</Label>
       <Suggestion filter={false}>
         <Suggestion.Input />
@@ -84,6 +96,7 @@ export const ControlledMultiple = () => {
 
   return (
     <>
+      <DevelopmentNotice />
       <Field>
         <Label>Velg destinasjoner</Label>
         <Suggestion
@@ -123,6 +136,7 @@ export const Creatable = () => {
   const DATA_PLACES = ['Sogndal', 'Oslo', 'Brønnøysund', 'Stavanger', 'Trondheim', 'Bergen', 'Lillestrøm'];
   return (
     <Field>
+      <DevelopmentNotice />
       <Label>Velg destinasjon</Label>
       <Suggestion creatable multiple>
         <Suggestion.Input />

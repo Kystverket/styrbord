@@ -1,15 +1,6 @@
-.ds-suggestion :is(u-datalist, datalist) {
-}
-
 :is(.ds-suggestion :is(u-datalist, datalist)) > u-option {
   color: var(--ds-color-neutral-text-default);
   & :not(:nth-child(0)) {
     color: var(--ds-color-neutral-text-subtle);
   }
-}
-
-[selected]:is(:is(.ds-suggestion :is(u-datalist, datalist)) > u-option)::before {
-  background-color: black;
-
-  // background: red;
 }
