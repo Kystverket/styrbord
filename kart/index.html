@@ -76,7 +76,7 @@
   }
 
   #root > div {
-    padding: 35px 21px !important;
+    padding: 21px !important;
   }
 
   #storybook-explorer-menu button,
@@ -149,7 +149,7 @@
   .sidebar-container .sidebar-subheading,
   .sidebar-container .search-result-item--label > * {
     color: inherit;
-    font-size: 16px;
+    font-size: 14px !important;
     letter-spacing: 0;
     line-height: 1.5;
     text-transform: none;
@@ -176,7 +176,15 @@
     position: relative;
     border: 1px solid #bbbbc1 !important;
     border-radius: 2px !important;
+    margin: 0 0 0 8px !important;
+    height: 42px !important;
   }
+
+  .search-field.search-field:focus-within {
+    outline: 2px solid #000667 !important;
+    border-color: #000667 !important;
+  }
+
   .search-field.search-field #storybook-explorer-searchfield {
     font: inherit;
   }
@@ -187,7 +195,7 @@
       #storybook-explorer-searchfield:placeholder-shown
     )::before {
     content: "Søk...";
-    margin-left: 32px;
+    margin-left: 32px !important;
     opacity: 0.8;
     position: absolute;
   }
