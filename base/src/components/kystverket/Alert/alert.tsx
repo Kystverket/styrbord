@@ -30,7 +30,7 @@ const Alert = ({
   const classNames = [classes.alert, className, classes['width-' + width]];
 
   return (
-    <DsAlert className={classNames.join(' ')} data-color={dataColor}>
+    <DsAlert className={classNames.join(' ')} style={props.style} data-color={dataColor}>
       <Box horizontal justify="between" align="start" gap={8}>
         <Box horizontal align="start" gap={8}>
           <Box gap={4}>
