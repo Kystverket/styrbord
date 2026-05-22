@@ -41,6 +41,10 @@ Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.
 
 ## Endringslogg
 
+### 2026-05-22 -- v1.7.2
+
+Lagt inn bildehåndtering i RichTextArea og MarkdownToReact. Du laster opp bildet selv og legger inn en referanse-lenke i markdownen. Lenken tolkes i MarkdownToReact, slik at markdownen holdes så liten som mulig.
+
 ### 2026-05-19 -- v1.7.0
 
 Etter mange problemer med implementasjon og styling av en DatePicker har vi gått til en native datepicker. Noen attributter på datepicker er ikke lenger nødvendige eller tilgjengelige.
@@ -148,17 +152,3 @@ Arbeid for å gjøre Styrbord mindre forskjellig fra Designsystemet. Dette gjør
 - Tillater ikke lenger å sende en boolsk verdi til error attributter i input-komponenter.
 
 Komponentene `<Button>`, `<Tabs>`, `<Select>`, `<NumberInput>`, `<TextInput>` og `<TextArea>` overskriver fortsatt noen Designsystem-komponenter med mer eller mindre inkompatible interface.
-
-### 2025-06-17
-
-Vi har fjernet alle egne tittelkomponenter og henviser istedet til Designsystemets `Heading`-komponent.
-
-- `Display size="lg"` ➡️ `Heading data-size="2xl"`
-- `Display size="md"` ➡️ `Heading data-size="xl"`
-- `Display size="sm"` ➡️ `Heading data-size="lg"`
-- `Headline size="lg"` ➡️ `Heading data-size="md"`
-- `Headline size="md"` ➡️ `Heading data-size="sm"`
-- `Headline size="sm"` ➡️ `Heading data-size="xs"`
-- `Title size="lg"` ➡️ `Heading data-size="sm"`
-- `Title size="md"` ➡️ `Heading data-size="xs"`
-- `Title size="sm"` ➡️ `Heading data-size="2xs"`

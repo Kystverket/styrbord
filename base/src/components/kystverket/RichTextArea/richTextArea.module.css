@@ -83,6 +83,21 @@
   outline-offset: 2px;
 }
 
+.editor :global(.ProseMirror .milkdown-image-inline img) {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  border-radius: var(--ds-border-radius-sm);
+  cursor: pointer;
+}
+
+.editor :global(.ProseMirror .milkdown-image-inline:hover img) {
+  outline-color: var(--ds-color-info-border-subtle);
+}
+
+.editor :global(.ProseMirror .milkdown-image-inline.selected img) {
+  outline-color: var(--ds-color-info-border-default);
+}
+
 .placeholder {
   position: absolute;
   inset: 0.625rem 0.75rem auto;
