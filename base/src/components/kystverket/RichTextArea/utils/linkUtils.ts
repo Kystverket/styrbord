@@ -14,6 +14,25 @@ export const normalizeHref = (rawHref: string) => {
   return `https://${href}`;
 };
 
+export const replaceUrlsWithRefs = (markdown: string, sasToRefMap: Map<string, string>): string => {
+  if (sasToRefMap.size === 0) {
+    return markdown;
+  }
+
+  // Match image syntax: ![alt](url) or ![alt](url "title")
+  // URL lookup is a plain Map.get — no regex created from the URL itself
+  return markdown.replace(
+    /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g,
+    (match, alt: string, url: string, title: string | undefined) => {
+      const ref = sasToRefMap.get(url);
+      if (!ref) {
+        return match;
+      }
+      return title ? `![${alt}](${ref} "${title}")` : `![${alt}](${ref})`;
+    },
+  );
+};
+
 export const getSelectionLinkRange = (state: EditorState) => {
   const { from, to, empty, $from } = state.selection;
   const linkMarkType = state.schema.marks.link;
