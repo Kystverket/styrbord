@@ -1,7 +1,7 @@
 import { Textfield } from '@digdir/designsystemet-react';
 import type { Meta, StoryFn } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ComponentRef } from 'react';
 
 import { Button, ErrorSummary } from '~/main';
 
@@ -74,7 +74,7 @@ WithForm.decorators = [
 
 export const ShowHideReact: Story = () => {
   const [show, setShow] = useState(false);
-  const summaryRef = useRef<HTMLDivElement>(null);
+  const summaryRef = useRef<ComponentRef<typeof ErrorSummary>>(null);
   useEffect(() => {
     if (show) {
       summaryRef.current?.focus();
