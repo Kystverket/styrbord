@@ -9,7 +9,7 @@ export type FileInfo = {
   /** @deprecated Use `fileSizeInBytes` instead. */
   fileSize?: string;
   buttons?: ButtonOptions;
-} & (PdfFile | ImageFile | JsonFile);
+} & (PdfFile | ImageFile | JsonFile | TextFile);
 
 type PdfFile = {
   contentType: 'pdf';
@@ -18,6 +18,11 @@ type PdfFile = {
 
 type ImageFile = {
   contentType: 'image';
+  src: string;
+};
+
+type TextFile = {
+  contentType: 'txt';
   src: string;
 };
 
@@ -35,4 +40,5 @@ export const defaultButtonsByType: Record<FileInfo['contentType'], ButtonOptions
   pdf: { showDownload: true, showOpenInNew: true },
   image: { showDownload: true, showOpenInNew: true },
   json: { showDownload: true, showOpenInNew: true },
+  txt: { showDownload: true, showOpenInNew: false },
 };

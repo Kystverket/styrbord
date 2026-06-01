@@ -18,11 +18,13 @@ export const FileRenderer = ({
     if (file.contentType === 'image') return <ImageThumbnail file={file} className={className} />;
     if (file.contentType === 'json') return <JsonThumbnail />;
     if (file.contentType === 'pdf') return <PdfThumbnail />;
+    if (file.contentType === 'txt') return <TextThumbnail />;
   }
 
   if (file.contentType === 'image') return <ImageDisplay file={file} className={className} />; //No tabindex because there's no interactive elements in the img
   if (file.contentType === 'json') return <JsonDisplay tabIndex={tabIndex} file={file} className={className} />;
   if (file.contentType === 'pdf') return <PdfDisplay tabIndex={tabIndex} file={file} className={className} />;
+  if (file.contentType === 'txt') return <TextDisplay tabIndex={tabIndex} file={file} className={className} />;
 };
 
 /**
@@ -87,7 +89,7 @@ function JsonDisplay({
     <pre
       onDoubleClick={handleOnDoubleClick}
       onKeyDown={handleKeyDown}
-      className={`${classes.previewFile} ${classes.JsonPreview} ${className || ''}`}
+      className={`${classes.previewFile} ${classes.PreviewTextBlock} ${className || ''}`}
       tabIndex={tabIndex ?? 0}
     >
       {JSON.stringify(jsonData, null, 2)}
@@ -114,3 +116,60 @@ const PdfDisplay = ({
 }) => {
   return <embed tabIndex={tabIndex} className={`${classes.previewFile} ${className || ''}`} src={file.src} />;
 };
+
+/**
+ * TEXTFILE
+ */
+
+const TextThumbnail = () => {
+  return <Icon size="3xl" material="text_snippet" />;
+};
+
+function TextDisplay({
+  file,
+  className,
+  tabIndex,
+}: {
+  file: FileInfoByContentType<'txt'>;
+  className?: string;
+  tabIndex?: number;
+}) {
+  const [textContent, setTextContent] = useState<string>('');
+  const selectAllText = (element: HTMLPreElement) => {
+    if (typeof document === 'undefined') return;
+    const selection = window.getSelection();
+    const range = document.createRange();
+    range.selectNodeContents(element);
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+  };
+
+  const handleOnDoubleClick = (e: React.MouseEvent<HTMLPreElement>) => {
+    selectAllText(e.currentTarget);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLPreElement>) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'a') {
+      e.preventDefault();
+      selectAllText(e.currentTarget);
+    }
+  };
+
+  useEffect(() => {
+    if (file.src)
+      fetch(file.src)
+        .then((res) => res.text())
+        .then((data) => setTextContent(data));
+  }, [file.src]);
+
+  return (
+    <pre
+      onDoubleClick={handleOnDoubleClick}
+      onKeyDown={handleKeyDown}
+      className={`${classes.previewFile} ${classes.PreviewTextBlock} ${classes.txtPreview} ${className || ''}`}
+      tabIndex={tabIndex ?? 0}
+    >
+      {textContent}
+    </pre>
+  );
+}

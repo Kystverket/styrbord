@@ -8,6 +8,7 @@ import { useRef } from 'react';
 import atlas from '@assets/img/atlas/atlas 1.jpeg';
 import pikekyst from '@assets/documents/Pikekyst Oppskrift.pdf';
 import geojson from '@assets/documents/geojson.json';
+import tekstfil from '@assets/documents/tekstfil.txt';
 
 const defaultProps: FilePreviewerDialogProps = {
   animation: 'none',
@@ -29,6 +30,12 @@ const defaultProps: FilePreviewerDialogProps = {
       fileName: 'Kartdata.json',
       fileSizeInBytes: 1000,
       data: geojson,
+    },
+    {
+      contentType: 'txt',
+      fileName: 'tekstfil.txt',
+      fileSizeInBytes: 700,
+      src: tekstfil,
     },
   ],
 };
