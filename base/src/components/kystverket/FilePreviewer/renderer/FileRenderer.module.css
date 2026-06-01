@@ -26,7 +26,7 @@
   object-fit: contain;
 }
 
-.JsonPreview {
+.PreviewTextBlock {
   background-color: #1e1e1e;
   color: #d4d4d4;
   overflow: auto;
@@ -35,4 +35,11 @@
   font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
   margin: 0;
   outline: none;
+}
+
+.txtPreview {
+  padding: 8px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }

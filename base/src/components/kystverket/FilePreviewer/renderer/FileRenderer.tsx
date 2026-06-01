@@ -89,7 +89,7 @@ function JsonDisplay({
     <pre
       onDoubleClick={handleOnDoubleClick}
       onKeyDown={handleKeyDown}
-      className={`${classes.previewFile} ${classes.JsonPreview} ${className || ''}`}
+      className={`${classes.previewFile} ${classes.PreviewTextBlock} ${className || ''}`}
       tabIndex={tabIndex ?? 0}
     >
       {JSON.stringify(jsonData, null, 2)}
@@ -166,7 +166,7 @@ function TextDisplay({
     <pre
       onDoubleClick={handleOnDoubleClick}
       onKeyDown={handleKeyDown}
-      className={`${classes.previewFile} ${classes.JsonPreview} ${className || ''}`}
+      className={`${classes.previewFile} ${classes.PreviewTextBlock} ${classes.txtPreview} ${className || ''}`}
       tabIndex={tabIndex ?? 0}
     >
       {textContent}
