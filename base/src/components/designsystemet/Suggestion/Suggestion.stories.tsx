@@ -93,34 +93,6 @@ export const Multiple: Story = {
   },
 };
 
-export const Filter: Story = {
-  args: {
-    label: 'Skriv inn et tall mellom 1-6',
-    filter: false,
-  },
-  render: (args) => {
-    const DATA_PLACES = ['Sogndal', 'Oslo', 'Brønnøysund', 'Stavanger', 'Trondheim', 'Bergen', 'Lillestrøm'];
-
-    return (
-      <>
-        <DevelopmentNotice />
-        <Suggestion {...args}>
-          <Suggestion.Input />
-          <Suggestion.Clear />
-          <Suggestion.List>
-            <Suggestion.Empty>Ingen treff</Suggestion.Empty>
-            {DATA_PLACES.map((label) => (
-              <Suggestion.Option key={label} value={label.toLowerCase()}>
-                {label}
-              </Suggestion.Option>
-            ))}
-          </Suggestion.List>
-        </Suggestion>
-      </>
-    );
-  },
-};
-
 export const ControlledMultiple: Story = {
   args: {
     label: 'Velg destinasjoner',
