@@ -4,12 +4,40 @@ import { FileUploaderContext } from './FileUploader.context';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 import { useState } from 'react';
-import { FileInfo, UploadFileResult } from './FileUploader.types';
+import { ExtraFileInfo, FileInfo, UploadFileResult } from './FileUploader.types';
 import { v4 as uuidv4 } from 'uuid';
 
 import cat1 from '/assets/img/cats/Cat 1.jpg';
 import cat2 from '/assets/img/cats/Cat 2.jpg';
 import samplePdf from '/assets/documents/Pikekyst Oppskrift.pdf';
+
+const deriveFileInfosFromStorageIds = async (): Promise<ExtraFileInfo[]> => {
+  return new Promise((resolve) => {
+    // Simulate loading delay
+    setTimeout(() => {
+      resolve([
+        {
+          storageId: '1',
+          thumbnailUri: cat1,
+          previewUri: cat1,
+          sizeInBytes: 9281231,
+        },
+        {
+          storageId: '2',
+          thumbnailUri: cat2,
+          previewUri: cat2,
+          sizeInBytes: 192811,
+        },
+        {
+          storageId: '3',
+          thumbnailUri: undefined,
+          previewUri: samplePdf,
+          sizeInBytes: 12122,
+        },
+      ]);
+    }, 1000);
+  });
+};
 
 const Wrapper = (props: FileUploaderProps) => {
   const [value, setValue] = useState<FileInfo[]>([...props.files]);
@@ -46,7 +74,6 @@ const defaultProps: FileUploaderProps = {
       contentType: 'text/plain',
       contextId: '214b3c2e-1f4d-4f8a-9b6c-5d7e8f9a0b1c',
       storageId: '1',
-      sizeInBytes: 92881,
     },
 
     {
@@ -55,16 +82,13 @@ const defaultProps: FileUploaderProps = {
       contentType: 'text/plain',
       contextId: '214b3c2e-1f4d-4f3a-9b6c-5d7e8f9a0b1c',
       storageId: '1',
-      sizeInBytes: 12122,
     },
     {
       fileName: 'file3.jpeg',
       status: 'uploaded',
       contentType: 'image/jpeg',
-      thumbnailUri: cat1,
       contextId: '214b3c2e-1f4d-4f8a-a127-5d7e8f9a0b1c',
       storageId: '1',
-      sizeInBytes: 9281231,
     },
   ],
   maxFiles: 5,
@@ -86,25 +110,20 @@ const existingFilesProvider = async (): Promise<ExistingFilesProviderItem[]> => 
           storageId: 'storage-id-1',
           contentType: 'application/pdf',
           status: 'uploaded',
-          sizeInBytes: 5818,
         },
         {
           contextId: 'existing-2',
           fileName: 'image1.jpg',
           storageId: 'storage-id-2',
           contentType: 'image/jpeg',
-          thumbnailUri: cat1,
           status: 'uploaded',
-          sizeInBytes: 17863,
         },
         {
           contextId: 'existing-3',
           fileName: 'screenshot.png',
           storageId: 'storage-id-3',
           contentType: 'image/png',
-          thumbnailUri: cat2,
           status: 'uploaded',
-          sizeInBytes: 192811,
         },
       ],
     },
@@ -118,16 +137,13 @@ const existingFilesProvider = async (): Promise<ExistingFilesProviderItem[]> => 
           storageId: 'storage-id-test2-1',
           contentType: 'application/pdf',
           status: 'uploaded',
-          sizeInBytes: 5818,
         },
         {
           contextId: 'existing-test2-2',
           fileName: 'image1.jpg',
           storageId: 'storage-id-test2-2',
           contentType: 'image/jpeg',
-          thumbnailUri: cat1,
           status: 'uploaded',
-          sizeInBytes: 17863,
         },
         {
           contextId: 'existing-test2-3',
@@ -135,16 +151,13 @@ const existingFilesProvider = async (): Promise<ExistingFilesProviderItem[]> => 
           storageId: 'storage-id-test2-3',
           contentType: 'application/pdf',
           status: 'uploaded',
-          sizeInBytes: 5818,
         },
         {
           contextId: 'existing-test2-4',
           fileName: 'screenshot.png',
           storageId: 'storage-id-test2-4',
           contentType: 'image/png',
-          thumbnailUri: cat2,
           status: 'uploaded',
-          sizeInBytes: 192811,
         },
       ],
     },
@@ -241,6 +254,7 @@ export const withFileSizeLimit: Story = {
         value={{
           uploadFile: uploadFileWithSizeLimit,
           deleteFile: deleteFile,
+          deriveFileInfosFromStorageIds,
         }}
       >
         <Story />
@@ -251,6 +265,51 @@ export const withFileSizeLimit: Story = {
     ...defaultProps,
     description: 'Filer som er større enn 10MB vil bli avvist',
     files: [],
+  },
+};
+
+export const withPreviews: Story = {
+  decorators: [
+    (Story) => (
+      <FileUploaderContext.Provider
+        value={{
+          uploadFile: uploadFileWithSizeLimit,
+          deleteFile: deleteFile,
+          deriveFileInfosFromStorageIds,
+        }}
+      >
+        <Story />
+      </FileUploaderContext.Provider>
+    ),
+  ],
+  args: {
+    ...defaultProps,
+    allowFilePreview: true,
+    description: 'Filer som er større enn 10MB vil bli avvist',
+    files: [
+      {
+        fileName: 'cat1.jpg',
+        status: 'uploaded',
+        contentType: 'image/jpeg',
+        contextId: '214b3c2e-1f4d-4f8a-9b6c-5d7e8f9xxb1c',
+        storageId: '1',
+      },
+
+      {
+        fileName: 'cat2.jpg',
+        status: 'uploaded',
+        contentType: 'image/jpeg',
+        contextId: '214b3c2e-1f4d-4f3a-9b6c-5d7e8fdsd0b1c',
+        storageId: '2',
+      },
+      {
+        fileName: 'file3.pdf',
+        status: 'uploaded',
+        contentType: 'application/pdf',
+        contextId: '214b3c2e-1f4d-4f8a-a127-5d7e8ffff1c',
+        storageId: '3',
+      },
+    ],
   },
 };
 
@@ -308,34 +367,27 @@ export const WithFilePreview: Story = {
         contentType: 'application/pdf',
         contextId: 'preview-pdf-1',
         storageId: '1',
-        previewUri: samplePdf,
-        sizeInBytes: 92881,
       },
       {
         fileName: 'file3.jpeg',
         status: 'uploaded',
         contentType: 'image/jpeg',
-        thumbnailUri: cat1,
         contextId: 'preview-img-1',
-        storageId: '1',
-        sizeInBytes: 9281231,
+        storageId: '2',
       },
       {
         fileName: 'file4.jpeg',
         status: 'uploaded',
         contentType: 'image/jpeg',
-        thumbnailUri: cat2,
         contextId: 'preview-img-2',
-        storageId: '1',
-        sizeInBytes: 192811,
+        storageId: '3',
       },
       {
         fileName: 'readme.txt',
         status: 'uploaded',
         contentType: 'text/plain',
         contextId: 'preview-txt-1',
-        storageId: '1',
-        sizeInBytes: 12122,
+        storageId: '4',
       },
     ],
   },

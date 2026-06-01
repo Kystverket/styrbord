@@ -5,11 +5,15 @@ export type FileInfo = {
   fileName: string;
   storageId?: string;
   contentType: string;
-  thumbnailUri?: string;
-  previewUri?: string;
   status: FileStatus;
   exif?: Exif;
   error?: string;
+};
+
+export type ExtraFileInfo = {
+  storageId?: string;
+  thumbnailUri?: string;
+  previewUri?: string;
   sizeInBytes?: number;
 };
 

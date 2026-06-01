@@ -20,17 +20,13 @@ export const onFilesChanged = (
   // Add accepted files with uploading status
   acceptedFiles.forEach((fileAndExif) => {
     const contextId = v4();
-    const blobUrl = URL.createObjectURL(fileAndExif.file);
-    const isImage = fileAndExif.file.type.startsWith('image/');
+
     newFilesState.push({
       contextId,
       fileName: fileAndExif.file.name,
       status: 'uploading',
-      thumbnailUri: isImage ? blobUrl : undefined,
-      previewUri: blobUrl,
       contentType: fileAndExif.file.type,
       exif: fileAndExif.exif,
-      sizeInBytes: fileAndExif.file.size,
     });
 
     fileObjectsByContextId[contextId] = fileAndExif.file;
@@ -45,7 +41,6 @@ export const onFilesChanged = (
       contentType: rejection.file.file.type,
       exif: rejection.file.exif,
       error: t(`errors.${rejection.reason}`),
-      sizeInBytes: rejection.file.file.size,
     });
   });
 

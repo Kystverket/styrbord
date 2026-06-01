@@ -1,4 +1,4 @@
-import { FileInfo } from '../FileUploader.types';
+import { ExtraFileInfo, FileInfo } from '../FileUploader.types';
 import { Box, Button, Icon, Paragraph, Spinner, ValidationMessage } from '~/main';
 import classes from './FileUploaderItem.module.css';
 import { MaterialIconProps } from '~/components/kystverket/Icon/icon';
@@ -6,6 +6,7 @@ import { convertBytesToReadable } from '~/utils/convertBytesToReadable';
 
 type FileUploaderItemProps = {
   file: FileInfo;
+  extraInfo?: ExtraFileInfo;
   t: (key: string) => string;
   onDeleteFile: (file: FileInfo) => void;
   onPreviewFile?: () => void;
@@ -18,12 +19,12 @@ export const getPrefixIcon = (contentType: FileInfo['contentType']): MaterialIco
   return 'anchor';
 };
 
-export function FileUploaderItem({ file, t, onDeleteFile, onPreviewFile }: FileUploaderItemProps) {
+export function FileUploaderItem({ file, extraInfo, t, onDeleteFile, onPreviewFile }: FileUploaderItemProps) {
   return (
     <Box className={classes.itemWrapper}>
       <Box className={classes.filePreview}>
-        {file.thumbnailUri ? (
-          <img src={file.thumbnailUri} alt={file.fileName || t('unknownFilename')} />
+        {extraInfo?.thumbnailUri ? (
+          <img src={extraInfo.thumbnailUri} alt={file.fileName || t('unknownFilename')} />
         ) : (
           <Icon size="lg" material={getPrefixIcon(file.contentType)} />
         )}
@@ -31,7 +32,7 @@ export function FileUploaderItem({ file, t, onDeleteFile, onPreviewFile }: FileU
       <Box className={classes.fileData}>
         <Paragraph className={classes.title}>{file.fileName}</Paragraph>
         <Paragraph className={classes.subtitle} data-size="sm">
-          {file.status === 'uploading' ? t('uploading') : convertBytesToReadable(file.sizeInBytes)}
+          {file.status === 'uploading' ? t('uploading') : convertBytesToReadable(extraInfo?.sizeInBytes)}
         </Paragraph>
         {file.status === 'error' && <ValidationMessage>{file.error}</ValidationMessage>}
       </Box>
