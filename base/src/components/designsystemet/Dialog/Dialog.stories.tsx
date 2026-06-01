@@ -1,4 +1,4 @@
-import { Dialog, Heading, Paragraph, Button, Field, EXPERIMENTAL_Suggestion as Suggestion } from '~/main';
+import { Dialog, Heading, Paragraph, Button, Field, EXPERIMENTAL_Suggestion as Suggestion, Box } from '~/main';
 import type { Meta, StoryFn } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
 import { useRef, useState } from 'react';
@@ -292,23 +292,44 @@ DialogNonModal.parameters = {
 };
 
 export const NestedDialogs: StoryFn<typeof Dialog> = () => {
+  const outerDialogRef = useRef<HTMLDialogElement>(null);
   const innerDialogRef = useRef<HTMLDialogElement>(null);
 
   return (
     <Dialog.TriggerContext>
       <Dialog.Trigger>Open Outer Dialog</Dialog.Trigger>
-      <Dialog>
+      <Dialog
+        id={'OuterDialog'}
+        ref={outerDialogRef}
+        onClose={() => {
+          outerDialogRef.current?.close();
+        }}
+      >
         <Heading style={{ marginBottom: 'var(--ds-size-2)' }}>Outer dialog</Heading>
         <Paragraph style={{ marginBottom: 'var(--ds-size-4)' }}>
           This is the outer dialog. You can open another dialog from here.
         </Paragraph>
-        <Button onClick={() => innerDialogRef.current?.showModal()}>Open Inner Dialog</Button>
-        <Dialog ref={innerDialogRef}>
+        <Box horizontal gap={8}>
+          <Button variant="filled" onClick={() => innerDialogRef.current?.showModal()}>
+            Open Inner Dialog
+          </Button>
+          <Button command="close" commandFor="OuterDialog">
+            Close
+          </Button>
+        </Box>
+
+        <Dialog
+          id="InnerDialog"
+          ref={innerDialogRef}
+          onClose={() => {
+            innerDialogRef.current?.close();
+          }}
+        >
           <Heading style={{ marginBottom: 'var(--ds-size-2)' }}>Inner dialog</Heading>
           <Paragraph style={{ marginBottom: 'var(--ds-size-4)' }}>
             This dialog was opened from within the outer dialog.
           </Paragraph>
-          <Button variant="outline" onClick={() => innerDialogRef.current?.close()}>
+          <Button variant="outline" command="close" commandFor="InnerDialog">
             Close
           </Button>
         </Dialog>
