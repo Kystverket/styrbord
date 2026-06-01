@@ -1,5 +1,19 @@
-import { forwardRef, useImperativeHandle, useState } from 'react';
-import { Box, FileInfo, Button, Checkbox, Dialog, DialogBlock, Heading, Paragraph, Spinner, Card, Icon } from '~/main';
+import { forwardRef, useContext, useEffect, useImperativeHandle, useState } from 'react';
+import {
+  Box,
+  FileInfo,
+  Button,
+  Checkbox,
+  Dialog,
+  DialogBlock,
+  Heading,
+  Paragraph,
+  Spinner,
+  Card,
+  Icon,
+  ExtraFileInfo,
+  FileUploaderContext,
+} from '~/main';
 import classes from './ExistingFilesDialog.module.css';
 import { convertBytesToReadable } from '~/utils/convertBytesToReadable';
 import { ExistingFilesProviderItem } from '~/components/kystverket/FileUploader/FileUploader';
@@ -20,6 +34,7 @@ export interface ExistingFilesDialogHandle {
 export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, ExistingFilesDialogProps>(
   function ExistingFilesDialog({ t, existingFiles, existingFilesProvider, onConfirm }, ref) {
     const [loadingAllExistingFiles, setLoadingAllExistingFiles] = useState(false);
+    const fileUploaderContext = useContext(FileUploaderContext);
 
     const [existingFilesCollection, setExistingFilesCollection] = useState<ExistingFilesProviderItem[]>([]);
     const [selectedFileCollection, setSelectedFileCollection] = useState<ExistingFilesProviderItem>();
@@ -27,6 +42,35 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
     const [selectedExistingFiles, setSelectedExistingFiles] = useState<Record<string, boolean>>({});
 
     const [dialogElement, setDialogElement] = useState<HTMLDialogElement | null>(null);
+
+    const [storageIdToExtraFileInfo, setStorageIdToExtraFileInfo] = useState<Map<string, ExtraFileInfo>>(new Map());
+
+    useEffect(() => {
+      if (!existingFilesCollection || existingFilesCollection.length === 0) {
+        setStorageIdToExtraFileInfo(new Map());
+      }
+
+      const fetchPreviewFiles = async () => {
+        if (!fileUploaderContext.deriveFileInfosFromStorageIds) return;
+
+        const extraInfoMap = new Map<string, ExtraFileInfo>();
+
+        const storageIds = new Set(
+          existingFilesCollection
+            .flatMap((f) => f.files)
+            .filter((f) => f.storageId)
+            .map((f) => f.storageId!) as string[],
+        );
+        const extraFileInfos = await fileUploaderContext.deriveFileInfosFromStorageIds([...storageIds]);
+        extraFileInfos.forEach((info) => {
+          if (info.storageId) {
+            extraInfoMap.set(info.storageId, info);
+          }
+        });
+        setStorageIdToExtraFileInfo(extraInfoMap);
+      };
+      fetchPreviewFiles();
+    }, [existingFilesCollection]);
 
     useImperativeHandle(
       ref,
@@ -140,6 +184,7 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
                     <ExistingFileItem
                       key={file.storageId}
                       file={file}
+                      extraInfo={file.storageId ? storageIdToExtraFileInfo.get(file.storageId) : undefined}
                       handleExistingFileCheckboxChange={handleExistingFileCheckboxChange}
                       selectedExistingFiles={selectedExistingFiles}
                       t={t}
@@ -206,12 +251,19 @@ function ExistingFilesListCard({ existingFilesProviderItem, onClick }: ExistingF
 
 interface ExistingFileItemProps {
   file: FileInfo;
+  extraInfo?: ExtraFileInfo;
   handleExistingFileCheckboxChange: (storageId: string, checked: boolean) => void;
   selectedExistingFiles: Record<string, boolean>;
 
   t: (key: string) => string;
 }
-function ExistingFileItem({ file, handleExistingFileCheckboxChange, selectedExistingFiles, t }: ExistingFileItemProps) {
+function ExistingFileItem({
+  file,
+  extraInfo,
+  handleExistingFileCheckboxChange,
+  selectedExistingFiles,
+  t,
+}: ExistingFileItemProps) {
   if (file.storageId === undefined) return;
 
   return (
@@ -242,16 +294,16 @@ function ExistingFileItem({ file, handleExistingFileCheckboxChange, selectedExis
       />
       <Box gap={12} horizontal>
         <Box className={classes.filePreview}>
-          {file.thumbnailUri ? (
-            <img src={file.thumbnailUri} alt={file.fileName || t('unknownFilename')} />
+          {extraInfo?.thumbnailUri ? (
+            <img src={extraInfo.thumbnailUri} alt={file.fileName || t('unknownFilename')} />
           ) : (
             <Icon size="lg" material={getPrefixIcon(file.contentType)} />
           )}
         </Box>
         <Box gap={2}>
           <Paragraph className={classes.fileName}>{file.fileName || t('unknownFilename')}</Paragraph>
-          {file.sizeInBytes && (
-            <Paragraph className={classes.subtitle}>{convertBytesToReadable(file.sizeInBytes)}</Paragraph>
+          {extraInfo?.sizeInBytes && (
+            <Paragraph className={classes.subtitle}>{convertBytesToReadable(extraInfo.sizeInBytes)}</Paragraph>
           )}
         </Box>
       </Box>
