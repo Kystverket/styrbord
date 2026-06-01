@@ -1,6 +1,7 @@
-import { Alert, Suggestion, Button, Divider, Field, Label, Paragraph } from '~/main';
+import { Alert, Suggestion, Button, Divider, Paragraph } from '~/main';
+import type { SuggestionItem, SuggestionMultipleProps } from '~/main';
 import { useState } from 'react';
-import { Meta } from '@storybook/react-vite';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const DevelopmentNotice = () => (
   <Alert
@@ -11,10 +12,19 @@ const DevelopmentNotice = () => (
   />
 );
 
-export default {
+type MultipleSuggestionProps = SuggestionMultipleProps & {
+  label: string;
+  error?: string;
+};
+
+const meta = {
   title: 'Components/Suggestion',
   component: Suggestion,
   tags: ['autodocs', 'ds-override'],
+  args: {
+    label: '',
+    error: '',
+  },
   parameters: {
     docs: {
       description: {
@@ -23,86 +33,83 @@ export default {
       },
     },
   },
-} as Meta;
+} satisfies Meta<typeof Suggestion>;
 
-export const Preview = () => {
-  const DATA_PLACES = ['Sogndal', 'Oslo', 'Brønnøysund', 'Stavanger', 'Trondheim', 'Bergen', 'Lillestrøm'];
-  return (
-    <Field>
-      <DevelopmentNotice />
-      <Label>Velg en destinasjon</Label>
-      <Suggestion>
-        <Suggestion.Input />
-        <Suggestion.Clear />
-        <Suggestion.List>
-          <Suggestion.Empty>Ingen treff</Suggestion.Empty>
-          {DATA_PLACES.map((place) => (
-            <Suggestion.Option key={place} label={place} value={place}>
-              {place}
-              <div>Kommune</div>
-            </Suggestion.Option>
-          ))}
-        </Suggestion.List>
-      </Suggestion>
-    </Field>
-  );
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Preview: Story = {
+  args: {
+    label: 'Velg en destinasjon',
+  },
+  render: (args) => {
+    const DATA_PLACES = ['Sogndal', 'Oslo', 'Brønnøysund', 'Stavanger', 'Trondheim', 'Bergen', 'Lillestrøm'];
+
+    return (
+      <>
+        <DevelopmentNotice />
+        <Suggestion {...args}>
+          <Suggestion.Input />
+          <Suggestion.Clear />
+          <Suggestion.List>
+            <Suggestion.Empty>Ingen treff</Suggestion.Empty>
+            {DATA_PLACES.map((place) => (
+              <Suggestion.Option key={place} label={place} value={place}>
+                {place}
+                <div>Kommune</div>
+              </Suggestion.Option>
+            ))}
+          </Suggestion.List>
+        </Suggestion>
+      </>
+    );
+  },
 };
 
-export const Multiple = () => {
-  const DATA_PLACES = ['Sogndal', 'Oslo', 'Brønnøysund', 'Stavanger', 'Trondheim', 'Bergen', 'Lillestrøm'];
-  return (
-    <Field>
-      <DevelopmentNotice />
-      <Label>Velg en destinasjon</Label>
-      <Suggestion multiple>
-        <Suggestion.Input />
-        <Suggestion.Clear />
-        <Suggestion.List>
-          <Suggestion.Empty>Ingen treff</Suggestion.Empty>
-          {DATA_PLACES.map((place) => (
-            <Suggestion.Option key={place}>{place}</Suggestion.Option>
-          ))}
-        </Suggestion.List>
-      </Suggestion>
-    </Field>
-  );
+export const Multiple: Story = {
+  args: {
+    label: 'Velg en destinasjon',
+    multiple: true,
+  },
+  render: (args) => {
+    const DATA_PLACES = ['Sogndal', 'Oslo', 'Brønnøysund', 'Stavanger', 'Trondheim', 'Bergen', 'Lillestrøm'];
+
+    return (
+      <>
+        <DevelopmentNotice />
+        <Suggestion {...args}>
+          <Suggestion.Input />
+          <Suggestion.Clear />
+          <Suggestion.List>
+            <Suggestion.Empty>Ingen treff</Suggestion.Empty>
+            {DATA_PLACES.map((place) => (
+              <Suggestion.Option key={place}>{place}</Suggestion.Option>
+            ))}
+          </Suggestion.List>
+        </Suggestion>
+      </>
+    );
+  },
 };
 
-export const Filter = () => {
-  const DATA_PLACES = ['Sogndal', 'Oslo', 'Brønnøysund', 'Stavanger', 'Trondheim', 'Bergen', 'Lillestrøm'];
-  return (
-    <Field>
-      <DevelopmentNotice />
-      <Label>Skriv inn et tall mellom 1-6</Label>
-      <Suggestion filter={false}>
-        <Suggestion.Input />
-        <Suggestion.Clear />
-        <Suggestion.List>
-          <Suggestion.Empty>Ingen treff</Suggestion.Empty>
-          {DATA_PLACES.map((label) => (
-            <Suggestion.Option key={label} value={label.toLowerCase()}>
-              {label}
-            </Suggestion.Option>
-          ))}
-        </Suggestion.List>
-      </Suggestion>
-    </Field>
-  );
-};
+export const ControlledMultiple: Story = {
+  args: {
+    label: 'Velg destinasjoner',
+    multiple: true,
+  },
+  render: function Render(args) {
+    const DATA_PLACES = ['Sogndal', 'Oslo', 'Brønnøysund', 'Stavanger', 'Trondheim', 'Bergen', 'Lillestrøm'];
+    const multipleArgs = args as MultipleSuggestionProps;
+    const [selected, setSelected] = useState<string[]>(['Oslo']);
 
-export const ControlledMultiple = () => {
-  const DATA_PLACES = ['Sogndal', 'Oslo', 'Brønnøysund', 'Stavanger', 'Trondheim', 'Bergen', 'Lillestrøm'];
-  const [selected, setSelected] = useState<string[]>(['Oslo']);
-
-  return (
-    <>
-      <DevelopmentNotice />
-      <Field>
-        <Label>Velg destinasjoner</Label>
+    return (
+      <>
+        <DevelopmentNotice />
         <Suggestion
-          multiple
+          {...multipleArgs}
           selected={selected}
-          onSelectedChange={(items) => setSelected(items.map((item) => item.value))}
+          onSelectedChange={(items: SuggestionItem[]) => setSelected(items.map((item) => item.value))}
         >
           <Suggestion.Input />
           <Suggestion.Clear />
@@ -116,38 +123,45 @@ export const ControlledMultiple = () => {
             ))}
           </Suggestion.List>
         </Suggestion>
-      </Field>
-      <Divider style={{ marginTop: 'var(--ds-size-4)' }} />
+        <Divider style={{ marginTop: 'var(--ds-size-4)' }} />
 
-      <Paragraph style={{ margin: 'var(--ds-size-2) 0' }}>Valgte reisemål: {selected.join(', ')}</Paragraph>
+        <Paragraph style={{ margin: 'var(--ds-size-2) 0' }}>Valgte reisemål: {selected.join(', ')}</Paragraph>
 
-      <Button
-        onClick={() => {
-          setSelected(['Sogndal', 'Stavanger']);
-        }}
-      >
-        Sett reisemål til Sogndal, Stavanger
-      </Button>
-    </>
-  );
+        <Button
+          onClick={() => {
+            setSelected(['Sogndal', 'Stavanger']);
+          }}
+        >
+          Sett reisemål til Sogndal, Stavanger
+        </Button>
+      </>
+    );
+  },
 };
 
-export const Creatable = () => {
-  const DATA_PLACES = ['Sogndal', 'Oslo', 'Brønnøysund', 'Stavanger', 'Trondheim', 'Bergen', 'Lillestrøm'];
-  return (
-    <Field>
-      <DevelopmentNotice />
-      <Label>Velg destinasjon</Label>
-      <Suggestion creatable multiple>
-        <Suggestion.Input />
-        <Suggestion.Clear />
-        <Suggestion.List>
-          <Suggestion.Empty>Ingen treff, trykk enter for å legge til</Suggestion.Empty>
-          {DATA_PLACES.map((place) => (
-            <Suggestion.Option key={place}>{place}</Suggestion.Option>
-          ))}
-        </Suggestion.List>
-      </Suggestion>
-    </Field>
-  );
+export const Creatable: Story = {
+  args: {
+    label: 'Velg destinasjon',
+    creatable: true,
+    multiple: true,
+  },
+  render: (args) => {
+    const DATA_PLACES = ['Sogndal', 'Oslo', 'Brønnøysund', 'Stavanger', 'Trondheim', 'Bergen', 'Lillestrøm'];
+
+    return (
+      <>
+        <DevelopmentNotice />
+        <Suggestion {...args}>
+          <Suggestion.Input />
+          <Suggestion.Clear />
+          <Suggestion.List>
+            <Suggestion.Empty>Ingen treff, trykk enter for å legge til</Suggestion.Empty>
+            {DATA_PLACES.map((place) => (
+              <Suggestion.Option key={place}>{place}</Suggestion.Option>
+            ))}
+          </Suggestion.List>
+        </Suggestion>
+      </>
+    );
+  },
 };

@@ -149,6 +149,9 @@ export { IdProvider, useIdProvider } from './utils/idContext';
 
 export { SlotDialog, type SlotDialogProps } from './components/kystverket/SlotDialog/SlotDialog';
 
+export { Suggestion } from './components/designsystemet/Suggestion/Suggestion';
+export type { SuggestionProps } from './components/designsystemet/Suggestion/Suggestion';
+
 //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 //
 // RE-EKSPORT AV DESIGNSYSTEMET
@@ -159,8 +162,6 @@ export { SlotDialog, type SlotDialogProps } from './components/kystverket/SlotDi
 // Alt eksporteres nå eksplisitt.
 //
 //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
-
-export { EXPERIMENTAL_Suggestion as Suggestion } from '@digdir/designsystemet-react';
 
 export {
   RovingFocusItem,
@@ -296,7 +297,6 @@ export type {
   SuggestionListProps,
   SuggestionMultipleProps,
   SuggestionOptionProps,
-  SuggestionProps,
   SuggestionSingleProps,
 } from '@digdir/designsystemet-react';
 export {
