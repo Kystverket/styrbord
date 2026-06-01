@@ -93,6 +93,7 @@ export const iconIdList = [
   'severe_cold',
   'source_environment',
   'stylus',
+  'text_snippet',
   'timeline',
   'upload',
   'video_library',
