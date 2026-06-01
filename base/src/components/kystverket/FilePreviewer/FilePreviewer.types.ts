@@ -40,5 +40,5 @@ export const defaultButtonsByType: Record<FileInfo['contentType'], ButtonOptions
   pdf: { showDownload: true, showOpenInNew: true },
   image: { showDownload: true, showOpenInNew: true },
   json: { showDownload: true, showOpenInNew: true },
-  txt: { showDownload: true, showOpenInNew: true },
+  txt: { showDownload: true, showOpenInNew: false },
 };
