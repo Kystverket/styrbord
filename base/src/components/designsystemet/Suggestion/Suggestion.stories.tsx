@@ -14,8 +14,6 @@ const DevelopmentNotice = () => (
 
 type MultipleSuggestionProps = SuggestionMultipleProps & {
   label: string;
-  required?: boolean;
-  optional?: boolean;
   error?: string;
 };
 
@@ -25,8 +23,6 @@ const meta = {
   tags: ['autodocs', 'ds-override'],
   args: {
     label: '',
-    required: false,
-    optional: false,
     error: '',
   },
   parameters: {

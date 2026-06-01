@@ -9,8 +9,8 @@ import { LabelContent } from '~/main';
 
 export type SuggestionProps = {
   label: string;
-  required?: boolean;
-  optional?: boolean;
+  required?: boolean | string;
+  optional?: boolean | string;
   error?: string;
 } & DsSuggestionProps;
 
