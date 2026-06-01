@@ -11,15 +11,17 @@ export const openFileInNewTab = (file: FileInfo) => {
   }
 
   // JSON can be provided either as src or as in-memory data.
-  if ('src' in file && file.src) {
-    window.open(file.src, '_blank', 'noopener,noreferrer');
-    return;
+  if (file.contentType === 'json') {
+    if (file.src) {
+      window.open(file.src, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
+    const jsonString = JSON.stringify(file.data, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    window.open(url, '_blank', 'noopener,noreferrer');
+    setTimeout(() => URL.revokeObjectURL(url), 100);
   }
-
-  const jsonString = JSON.stringify(file.data, null, 2);
-  const blob = new Blob([jsonString], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-
-  window.open(url, '_blank', 'noopener,noreferrer');
-  setTimeout(() => URL.revokeObjectURL(url), 100);
 };
