@@ -1,7 +1,7 @@
 'use client';
 
-import { ReactNode, useContext, useMemo, useRef, useState } from 'react';
-import { Exif, FileInfo } from './FileUploader.types';
+import { ReactNode, useContext, useEffect, useRef, useState } from 'react';
+import { Exif, ExtraFileInfo, FileInfo } from './FileUploader.types';
 import { Field, Label, Spinner, ValidationMessage } from '@digdir/designsystemet-react';
 import classes from './FileUploader.module.css';
 import { Icon, LabelContent } from '~/main';
@@ -95,37 +95,68 @@ export const FileUploader = ({
   const fileCameraInputRef = useRef<HTMLInputElement>(null);
   const dialogRef = useRef<ExistingFilesDialogHandle>(null);
   const [previewStartIndex, setPreviewStartIndex] = useState<number | null>(null);
+  const [previewFiles, setPreviewFiles] = useState<PreviewFileInfo[]>([]);
+  const [storageIdToPreviewIndex, setStorageIdToPreviewIndex] = useState<Map<string, number>>(new Map());
+  const [storageIdToExtraFileInfo, setStorageIdToExtraFileInfo] = useState<Map<string, ExtraFileInfo>>(new Map());
 
-  const { previewFiles, contextIdToPreviewIndex } = useMemo(() => {
-    if (!allowFilePreview) {
-      return { previewFiles: [] as PreviewFileInfo[], contextIdToPreviewIndex: new Map<string, number>() };
+  useEffect(() => {
+    if (!allowFilePreview || !fileUploaderContext.deriveFileInfosFromStorageIds) {
+      setPreviewFiles([]);
+      setStorageIdToPreviewIndex(new Map());
+      setStorageIdToExtraFileInfo(new Map());
     }
-    const result: PreviewFileInfo[] = [];
-    const indexMap = new Map<string, number>();
-    files.forEach((file) => {
-      if (file.status !== 'uploaded') {
-        return;
-      }
-      const src = file.previewUri || file.thumbnailUri;
-      if (file.contentType.startsWith('image/') && src) {
-        indexMap.set(file.contextId, result.length);
-        result.push({
-          fileName: file.fileName,
-          fileSizeInBytes: file.sizeInBytes,
-          contentType: 'image',
-          src,
-        });
-      } else if ((file.contentType === 'application/pdf' || file.contentType.endsWith('/pdf')) && src) {
-        indexMap.set(file.contextId, result.length);
-        result.push({
-          fileName: file.fileName,
-          fileSizeInBytes: file.sizeInBytes,
-          contentType: 'pdf',
-          src,
-        });
-      }
-    });
-    return { previewFiles: result, contextIdToPreviewIndex: indexMap };
+
+    const fetchPreviewFiles = async () => {
+      if (!fileUploaderContext.deriveFileInfosFromStorageIds) return;
+
+      const result: PreviewFileInfo[] = [];
+      const indexMap = new Map<string, number>();
+      const extraInfoMap = new Map<string, ExtraFileInfo>();
+
+      const storageIds = files
+        .filter((f) => f.status === 'uploaded' && f.storageId)
+        .map((f) => f.storageId!) as string[];
+      const extraFileInfos = await fileUploaderContext.deriveFileInfosFromStorageIds(storageIds);
+      extraFileInfos.forEach((info) => {
+        if (info.storageId) {
+          extraInfoMap.set(info.storageId, info);
+        }
+      });
+
+      files.forEach((file) => {
+        if (file.status !== 'uploaded') {
+          return;
+        }
+        const extraInfo = file.storageId ? extraInfoMap.get(file.storageId) : undefined;
+        const src = extraInfo?.thumbnailUri || extraInfo?.previewUri;
+
+        if (!src || !extraInfo?.storageId) {
+          return;
+        }
+
+        let previewContentType: 'image' | 'pdf' | null = null;
+
+        if (file.contentType.startsWith('image/')) {
+          previewContentType = 'image';
+        } else if (file.contentType === 'application/pdf' || file.contentType.endsWith('/pdf')) {
+          previewContentType = 'pdf';
+        }
+
+        if (previewContentType) {
+          indexMap.set(extraInfo.storageId, result.length);
+          result.push({
+            fileName: file.fileName,
+            fileSizeInBytes: extraInfo?.sizeInBytes,
+            contentType: previewContentType,
+            src,
+          });
+        }
+      });
+      setPreviewFiles(result);
+      setStorageIdToPreviewIndex(indexMap);
+      setStorageIdToExtraFileInfo(extraInfoMap);
+    };
+    fetchPreviewFiles();
   }, [allowFilePreview, files]);
 
   const onUploadFile = (uploadedFiles: File[]) => {
@@ -196,11 +227,12 @@ export const FileUploader = ({
               <FileUploaderItem
                 key={file.contextId}
                 file={file}
+                extraInfo={file.storageId ? storageIdToExtraFileInfo.get(file.storageId) : undefined}
                 t={t}
                 onDeleteFile={onDeleteFile}
                 onPreviewFile={
-                  allowFilePreview && contextIdToPreviewIndex.has(file.contextId)
-                    ? () => setPreviewStartIndex(contextIdToPreviewIndex.get(file.contextId)!)
+                  allowFilePreview && file.storageId && storageIdToPreviewIndex.has(file.storageId)
+                    ? () => setPreviewStartIndex(storageIdToPreviewIndex.get(file.storageId!)!)
                     : undefined
                 }
               />
