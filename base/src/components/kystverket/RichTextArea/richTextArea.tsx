@@ -67,6 +67,7 @@ const RichTextAreaContainer = ({
   const latestOnChangeRef = useRef(onChange);
   const latestOnUploadRef = useRef(onUpload);
   const lastKnownMarkdownRef = useRef(normalizedValue);
+  const lastSyncedEditorMarkdownRef = useRef(editorMarkdown);
   const imageInputRef = useRef<HTMLInputElement | null>(null);
 
   latestOnChangeRef.current = onChange;
@@ -156,7 +157,7 @@ const RichTextAreaContainer = ({
       return;
     }
 
-    if (normalizedValue === lastKnownMarkdownRef.current) {
+    if (normalizedValue === lastKnownMarkdownRef.current && editorMarkdown === lastSyncedEditorMarkdownRef.current) {
       return;
     }
 
@@ -171,6 +172,7 @@ const RichTextAreaContainer = ({
     }
 
     lastKnownMarkdownRef.current = normalizedValue;
+    lastSyncedEditorMarkdownRef.current = editorMarkdown;
     editor.action(replaceAll(editorMarkdown));
   }, [editorMarkdown, get, normalizedValue]);
 
