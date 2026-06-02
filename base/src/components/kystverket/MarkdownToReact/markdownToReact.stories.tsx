@@ -3,6 +3,8 @@ import MarkdownToReact from './markdownToReact';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { ResolvedImageRef } from '~/components/kystverket/MarkdownToReact/markdownToReact';
 
+import atlas from '@assets/img/atlas/atlas 1.jpeg';
+
 const meta = {
   title: 'Components/MarkdownToReact',
   component: MarkdownToReact,
@@ -119,7 +121,7 @@ export const ResolveImageRefExample: Story = {
     resolveImageRef: (ref: string) => {
       const imageRefMap: Record<string, ResolvedImageRef> = {
         'image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69': {
-          src: '/assets/img/atlas/atlas%201.jpeg',
+          src: atlas,
         },
       };
 

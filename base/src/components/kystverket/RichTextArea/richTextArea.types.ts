@@ -1,9 +1,20 @@
 import type { CmdKey } from '@milkdown/core';
 
-export type RichTextAreaProps = {
+// resolveImageRef?: (ref: string) => ResolvedImageRef;
+
+type ImageHandlersBoth = {
+  onUpload: UploadImageFn;
+  resolveImageRef: (ref: string) => string | null;
+};
+
+type ImageHandlersNeither = {
+  onUpload?: never;
+  resolveImageRef?: never;
+};
+
+type RichTextAreaBaseProps = {
   value: string | null | undefined;
   onChange: (markdown: string) => void;
-  onUpload?: UploadImageFn;
   placeholder?: string;
   disabled?: boolean;
   className?: string;
@@ -13,6 +24,8 @@ export type RichTextAreaProps = {
   required?: boolean | string;
   error?: string;
 };
+
+export type RichTextAreaProps = RichTextAreaBaseProps & (ImageHandlersBoth | ImageHandlersNeither);
 
 export type ToolbarCommand<T = unknown> = { key: CmdKey<T>; value?: T };
 
