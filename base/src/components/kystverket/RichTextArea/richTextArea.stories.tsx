@@ -108,7 +108,7 @@ export const WithImageRef: Story = {
 
       return imageRefMap[ref]?.src;
     },
-    onUpload: async (file) => {
+    onImageUpload: async (file) => {
       const src = await fileToDataUrl(file);
       // Simulate a stable blob reference that would be generated server-side
       const ref = `image://${crypto.randomUUID()}`;

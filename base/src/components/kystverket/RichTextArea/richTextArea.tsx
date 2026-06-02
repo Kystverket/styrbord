@@ -44,7 +44,7 @@ export type { RichTextAreaProps };
 const RichTextAreaContainer = ({
   value,
   onChange,
-  onUpload,
+  onImageUpload: onUpload,
   resolveImageRef,
   placeholder,
   disabled = false,

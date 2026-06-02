@@ -46,7 +46,6 @@ const normalizeUploadResult = (
     src: result.src,
     ref: result.ref,
     alt: result.alt ?? file.name.replace(/\.[^.]+$/, ''),
-    title: result.title,
   };
 };
 
@@ -102,7 +101,7 @@ export const useRichTextImageUpload = ({
         sasToRefMap.current.set(uploadedImage.src, uploadedImage.ref);
       }
 
-      insertImageNode({ src: uploadedImage.src, alt: uploadedImage.alt, title: uploadedImage.title });
+      insertImageNode({ src: uploadedImage.src, alt: uploadedImage.alt });
       return true;
     } catch {
       return false;
