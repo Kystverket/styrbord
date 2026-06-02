@@ -10,7 +10,7 @@ export default tseslint.config(
   css.configs['flat/recommended'],
   eslint.configs.recommended,
   tseslint.configs.recommended,
-  defineConfig([globalIgnores(['dist/', 'node_modules/'])]),
+  defineConfig([globalIgnores(['dist/', 'node_modules/', 'scripts/'])]),
   {
     plugins: {
       css,

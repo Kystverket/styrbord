@@ -4,6 +4,13 @@ import '@material-symbols/font-400/outlined.css';
 export type { SupportedLanguage, ScreenSize } from './utils/types';
 
 //^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\
+//  Data
+//^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\
+
+export { AIS_SHIP_TYPES, getShipTypeByAisCode, getShipTypeById } from './data/ais/shipTypes';
+export type { AisShipType, AisShipTypeId, AisCode } from './data/ais/shipTypes';
+
+//^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\
 //  Komponenter som er på vei ut
 //^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\
 
