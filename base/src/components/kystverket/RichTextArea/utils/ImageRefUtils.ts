@@ -54,8 +54,9 @@ export const convertFromRefToImage = (
  * @returns
  */
 export const replaceImageUrlsWithRefs = (markdown: string, sasToRefMap: Map<string, string>): string =>
-  markdown.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (match, altText: string, url: string) => {
+  markdown.replace(/!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g, (match, altText: string, url: string, title: string | undefined) => {
     const ref = sasToRefMap.get(url);
     if (!ref) return match;
-    return `![${altText}](${ref})`;
+    const titlePart = title ? ` "${title}"` : '';
+    return `![${altText}](${ref}${titlePart})`;
   });
