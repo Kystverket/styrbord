@@ -11,9 +11,9 @@ export type RichTextAreaProps = {
   optional?: boolean | string;
   required?: boolean | string;
   error?: string;
-  /** For when image is uploaded, to give it a ref*/
+  /** For when image is uploaded, to give it a ref */
   onImageUpload?: UploadImageFn;
-  resolveImageRef?: (ref: string) => string | null;
+  resolveImageRef?: (ref: string) => string | null | undefined;
 };
 
 export type ToolbarCommand<T = unknown> = { key: CmdKey<T>; value?: T };
