@@ -28,9 +28,9 @@ export const convertFromRefToImage = (
   resolveImageRef: (ref: string) => ResolvedImageRef,
   urlToRefMap?: Map<string, string>,
 ) => {
-  const imageRegex = /!\[([^\]]*)\]\(([^)\s]+)\)/g;
+  const imageRegex = /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g;
 
-  return markdown.replace(imageRegex, (fullMatch, alt: string, ref: string) => {
+  return markdown.replace(imageRegex, (fullMatch, alt: string, ref: string, title: string | undefined) => {
     const resolvedImageRef = resolveImageRef(ref);
 
     if (resolvedImageRef === undefined || resolvedImageRef === null) {
@@ -39,10 +39,11 @@ export const convertFromRefToImage = (
 
     const resolvedSrc = typeof resolvedImageRef === 'string' ? resolvedImageRef : resolvedImageRef.src;
     const resolvedAlt = typeof resolvedImageRef === 'string' ? alt : (resolvedImageRef.alt ?? alt);
+    const titlePart = title ? ` "${title}"` : '';
 
     urlToRefMap?.set(resolvedSrc, ref);
 
-    return `![${resolvedAlt}](${resolvedSrc})`;
+    return `![${resolvedAlt}](${resolvedSrc}${titlePart})`;
   });
 };
 
