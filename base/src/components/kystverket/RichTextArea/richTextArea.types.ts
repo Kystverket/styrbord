@@ -1,7 +1,5 @@
 import type { CmdKey } from '@milkdown/core';
 
-// resolveImageRef?: (ref: string) => ResolvedImageRef;
-
 export type RichTextAreaProps = {
   value: string | null | undefined;
   onChange: (markdown: string) => void;
