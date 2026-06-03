@@ -1,5 +1,0 @@
-import"./Suggestion-C8EOn4LU.js";import"./Details-DNl6zwsR.js";import"./iframe-BDxoVDdX.js";import"./KyvDivider-SdM6OWbD.js";import"./typography-CkpgsSVj.js";import"./KyvSpinner-5SeP4zXD.js";import"./skillingsbuoye-B6rGWs6C.js";import"./Logo-B08AGk3V.js";import{V as s}from"./tooltip-CCz55JOJ.js";import"./preload-helper-Dp1pzeXC.js";import"./index-C0467pyr.js";import"./index-S9dY7n8I.js";const f={title:"Components/ValidationMessage",component:s,tags:["autodocs","ds"],parameters:{docs:{description:{component:"[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/validation-message/overview)"}}}},e={args:{children:"Dette er en valideringsmelding."}};var t,o,r;e.parameters={...e.parameters,docs:{...(t=e.parameters)==null?void 0:t.docs,source:{originalSource:`{
-  args: {
-    children: 'Dette er en valideringsmelding.'
-  }
-}`,...(r=(o=e.parameters)==null?void 0:o.docs)==null?void 0:r.source}}};const h=["Preview"];export{e as Preview,h as __namedExportsOrder,f as default};
