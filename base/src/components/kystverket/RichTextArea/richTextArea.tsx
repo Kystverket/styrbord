@@ -15,7 +15,6 @@ import classes from './richTextArea.module.css';
 import { Fieldset, LabelContent, ValidationMessage } from '~/main';
 import LinkEditor from './components/LinkEditor/linkEditor';
 import { Toolbar } from './components/Toolbar/toolbar';
-import { replaceUrlsWithRefs } from './utils/linkUtils';
 import { useRichTextToolbarState } from './hooks/useRichTextToolbarState';
 import { useRichTextLinkEditor } from './hooks/useRichTextLinkEditor';
 import { useRichTextImageUpload } from './hooks/useRichTextImageUpload';
@@ -36,12 +35,17 @@ import {
   createRichTextAreaEditorDrop,
 } from './richTextArea.editor';
 import type { ImageInsertHandler, RichTextAreaProps } from './richTextArea.types';
+import {
+  convertFromRefToImage,
+  replaceImageUrlsWithRefs,
+} from '~/components/kystverket/RichTextArea/utils/ImageRefUtils';
 export type { RichTextAreaProps };
 
 const RichTextAreaContainer = ({
   value,
   onChange,
-  onUpload,
+  onImageUpload: onUpload,
+  resolveImageRef,
   placeholder,
   disabled = false,
   label,
@@ -53,17 +57,22 @@ const RichTextAreaContainer = ({
   const [internalError, setInternalError] = useState<string | undefined>(undefined);
   const displayedError = externalError ?? internalError;
 
+  // Owned here so useEditor config can close over them before useRichTextImageUpload is called.
+  const sasToRefMap = useRef(new Map<string, string>());
+
   const normalizedValue = normalizeMarkdownBreakTags(value ?? '');
+  const editorMarkdown = resolveImageRef
+    ? convertFromRefToImage(normalizedValue, resolveImageRef, sasToRefMap.current)
+    : normalizedValue;
   const latestOnChangeRef = useRef(onChange);
   const latestOnUploadRef = useRef(onUpload);
   const lastKnownMarkdownRef = useRef(normalizedValue);
+  const lastSyncedEditorMarkdownRef = useRef(editorMarkdown);
   const imageInputRef = useRef<HTMLInputElement | null>(null);
 
   latestOnChangeRef.current = onChange;
   latestOnUploadRef.current = onUpload;
 
-  // Owned here so useEditor config can close over them before useRichTextImageUpload is called.
-  const sasToRefMap = useRef(new Map<string, string>());
   const insertImageFromFileRef = useRef<ImageInsertHandler>(() => {});
   const inlineImageConfigUpdaterRef = useRef<(config: InlineImageConfig) => InlineImageConfig>((c) => c);
 
@@ -80,7 +89,7 @@ const RichTextAreaContainer = ({
       Editor.make()
         .config((ctx) => {
           ctx.set(rootCtx, root);
-          ctx.set(defaultValueCtx, normalizedValue);
+          ctx.set(defaultValueCtx, editorMarkdown);
           ctx.update(inlineImageConfig.key, updateInlineImageConfig);
           ctx.update(editorViewOptionsCtx, (prev = {}) => ({
             ...prev,
@@ -95,7 +104,7 @@ const RichTextAreaContainer = ({
           }));
           ctx.get(listenerCtx).markdownUpdated((_ctx, markdown) => {
             const normalizedMarkdown = normalizeMarkdownBreakTags(markdown);
-            const transformedMarkdown = replaceUrlsWithRefs(normalizedMarkdown, sasToRefMap.current);
+            const transformedMarkdown = replaceImageUrlsWithRefs(normalizedMarkdown, sasToRefMap.current);
 
             if (transformedMarkdown === lastKnownMarkdownRef.current) {
               updateToolbarState(_ctx);
@@ -148,7 +157,7 @@ const RichTextAreaContainer = ({
       return;
     }
 
-    if (normalizedValue === lastKnownMarkdownRef.current) {
+    if (normalizedValue === lastKnownMarkdownRef.current && editorMarkdown === lastSyncedEditorMarkdownRef.current) {
       return;
     }
 
@@ -163,8 +172,9 @@ const RichTextAreaContainer = ({
     }
 
     lastKnownMarkdownRef.current = normalizedValue;
-    editor.action(replaceAll(normalizedValue));
-  }, [get, normalizedValue]);
+    lastSyncedEditorMarkdownRef.current = editorMarkdown;
+    editor.action(replaceAll(editorMarkdown));
+  }, [editorMarkdown, get, normalizedValue]);
 
   // Sett knappestatus når editoren er tilgjengelig.
   useEffect(() => {

@@ -3,7 +3,6 @@ import type { CmdKey } from '@milkdown/core';
 export type RichTextAreaProps = {
   value: string | null | undefined;
   onChange: (markdown: string) => void;
-  onUpload?: UploadImageFn;
   placeholder?: string;
   disabled?: boolean;
   className?: string;
@@ -12,13 +11,16 @@ export type RichTextAreaProps = {
   optional?: boolean | string;
   required?: boolean | string;
   error?: string;
+  /** For when image is uploaded, to give it a ref */
+  onImageUpload?: UploadImageFn;
+  resolveImageRef?: (ref: string) => string | null | undefined;
 };
 
 export type ToolbarCommand<T = unknown> = { key: CmdKey<T>; value?: T };
 
-export type ImageMarkdown = { src: string; alt?: string; title?: string };
+export type ImageMarkdown = { src: string; alt?: string };
 
-export type ImageUploadResult = { src: string; ref?: string; alt?: string; title?: string };
+export type ImageUploadResult = { src: string; ref?: string; alt?: string };
 
 export type ImageInsertHandler = (file: File) => void;
 

@@ -4,6 +4,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { RichTextArea, RichTextAreaProps } from './richTextArea';
 
+import atlas from '@assets/img/atlas/atlas 1.jpeg';
+
 const meta = {
   title: 'Form/RichTextArea/RichTextArea',
   component: RichTextArea,
@@ -93,10 +95,20 @@ export const WithError: Story = {
 export const WithImageRef: Story = {
   args: {
     ...defaultArgs,
+
+    value: '![bilde.png](image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69)',
     label: 'Rikt tekstfelt med bildereferanse',
     description: 'Last opp et bilde — markdownutdata vil inneholde en stabil referanse til bildet,.',
+    resolveImageRef: (ref: string) => {
+      const imageRefMap: Record<string, { src: string }> = {
+        'image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69': {
+          src: atlas,
+        },
+      };
 
-    onUpload: async (file) => {
+      return imageRefMap[ref]?.src;
+    },
+    onImageUpload: async (file) => {
       const src = await fileToDataUrl(file);
       // Simulate a stable blob reference that would be generated server-side
       const ref = `image://${crypto.randomUUID()}`;
