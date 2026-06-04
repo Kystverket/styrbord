@@ -2,14 +2,18 @@ import { MaybePromise } from '~/utils/utility.types';
 
 type ResolvedImageRef = { src: string; alt?: string } | string | null | undefined;
 
+const imageRegex = /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g;
+
+export const getImageRefsFromMarkdown = (markdown: string): string[] =>
+  Array.from(new Set(Array.from(markdown.matchAll(imageRegex), ([, , ref]) => ref)));
+
 export const convertFromRefToImage = async (
   markdown: string,
   resolveImageRefs: (refs: string[]) => MaybePromise<Record<string, ResolvedImageRef>>,
   urlToRefMap?: Map<string, string>,
   previousRefToUrlMap?: Map<string, string>,
 ) => {
-  const imageRegex = /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g;
-  const uniqueRefs = Array.from(new Set(Array.from(markdown.matchAll(imageRegex), ([, , ref]) => ref)));
+  const uniqueRefs = getImageRefsFromMarkdown(markdown);
 
   const resolvedImageRefs = await resolveImageRefs(uniqueRefs);
 

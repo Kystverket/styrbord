@@ -86,12 +86,15 @@ export const WithError: Story = {
 /**
  * Demonstrates stable image references in markdown.
  *
- * `onUpload` returns both:
+ * `onImageUpload` returns both:
  * - `src` — a data URL used by the editor to display the image immediately
- * - `ref` — a stable opaque ID (e.g. Azure blob path / UUID) stored in the markdown instead of the SAS URL
+ * - `ref` — a stable opaque ID (e.g. Azure blob path / UUID) stored in the markdown instead of the SAS URL.
+ *
+ * `onImageRemove` is called with the stable ref when an image is removed from the editor,
+ * so a backend can delete the persisted image resource.
  *
  * The `onChange` output will contain `![alt](image://uuid-...)` rather than the raw data URL,
- * which is what a `MarkdownToReact` or similar renderers would receive where you implement a resolver function to provide a SAS URI or similar.
+ * and a `MarkdownToReact` resolver can map that ref to a displayable URL.
  */
 export const WithImageRef: Story = {
   args: {
@@ -119,6 +122,9 @@ Bilde av Atlas
       // Simulate a stable blob reference that would be generated server-side
       const ref = `image://${crypto.randomUUID()}`;
       return { src, ref, alt: file.name };
+    },
+    onImageRemove: async (ref: string) => {
+      alert('Removed image ' + ref);
     },
   },
   render: (args) => {

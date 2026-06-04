@@ -34,12 +34,34 @@ import {
   createRichTextAreaEditorPaste,
   createRichTextAreaEditorDrop,
 } from './richTextArea.editor';
-import type { ImageInsertHandler, ImageUploadResult, RichTextAreaProps } from './richTextArea.types';
+import type { ImageInsertHandler, RichTextAreaProps } from './richTextArea.types';
 import {
   convertFromRefToImage,
+  getImageRefsFromMarkdown,
   replaceImageUrlsWithRefs,
 } from '~/components/kystverket/RichTextArea/utils/ImageRefUtils';
 export type { RichTextAreaProps };
+
+const notifyRemovedManagedImages = (
+  previousMarkdown: string,
+  currentMarkdown: string,
+  sasToRefMap: Map<string, string>,
+  onImageRemove?: (ref: string) => unknown,
+) => {
+  if (!onImageRemove) {
+    return;
+  }
+
+  const previousRefs = new Set(getImageRefsFromMarkdown(previousMarkdown));
+  const currentRefs = new Set(getImageRefsFromMarkdown(currentMarkdown));
+  const managedRefs = new Set(sasToRefMap.values());
+
+  for (const ref of previousRefs) {
+    if (!currentRefs.has(ref) && managedRefs.has(ref)) {
+      onImageRemove(ref);
+    }
+  }
+};
 
 const RichTextAreaContainer = ({
   value,
@@ -64,15 +86,15 @@ const RichTextAreaContainer = ({
   const normalizedValue = normalizeMarkdownBreakTags(value ?? '');
   const [editorMarkdown, setEditorMarkdown] = useState(normalizedValue);
   const latestOnChangeRef = useRef(onChange);
-  const latestOnUploadRef = useRef<(file: File) => Promise<ImageUploadResult | string | null>>(async (file) =>
-    onImageUpload ? onImageUpload(file) : null,
-  );
+  const latestOnUploadRef = useRef(onImageUpload);
+  const latestOnRemoveRef = useRef(onImageRemove);
   const lastKnownMarkdownRef = useRef(normalizedValue);
   const lastSyncedEditorMarkdownRef = useRef(normalizedValue);
   const imageInputRef = useRef<HTMLInputElement | null>(null);
 
   latestOnChangeRef.current = onChange;
-  latestOnUploadRef.current = async (file) => (onImageUpload ? onImageUpload(file) : null);
+  latestOnUploadRef.current = onImageUpload;
+  latestOnRemoveRef.current = onImageRemove;
 
   // Resolve stable image refs to display URLs before markdown is loaded into the editor.
   useEffect(() => {
@@ -143,11 +165,20 @@ const RichTextAreaContainer = ({
           ctx.get(listenerCtx).markdownUpdated((_ctx, markdown) => {
             const normalizedMarkdown = normalizeMarkdownBreakTags(markdown);
             const transformedMarkdown = replaceImageUrlsWithRefs(normalizedMarkdown, sasToRefMap.current);
+            const previousMarkdown = lastKnownMarkdownRef.current;
 
-            if (transformedMarkdown === lastKnownMarkdownRef.current) {
+            if (transformedMarkdown === previousMarkdown) {
               updateToolbarState(_ctx);
               return;
             }
+
+            notifyRemovedManagedImages(
+              previousMarkdown,
+              transformedMarkdown,
+              sasToRefMap.current,
+              latestOnRemoveRef.current,
+            );
+
             lastKnownMarkdownRef.current = transformedMarkdown;
             latestOnChangeRef.current(transformedMarkdown);
             updateToolbarState(_ctx);
