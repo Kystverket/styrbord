@@ -5,6 +5,7 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { RichTextArea, RichTextAreaProps } from './richTextArea';
 
 import atlas from '@assets/img/atlas/atlas 1.jpeg';
+import { ResolvedImageRef } from '~/components/kystverket/RichTextArea/richTextArea.types';
 
 const meta = {
   title: 'Form/RichTextArea/RichTextArea',
@@ -85,34 +86,45 @@ export const WithError: Story = {
 /**
  * Demonstrates stable image references in markdown.
  *
- * `onUpload` returns both:
+ * `onImageUpload` returns both:
  * - `src` — a data URL used by the editor to display the image immediately
- * - `ref` — a stable opaque ID (e.g. Azure blob path / UUID) stored in the markdown instead of the SAS URL
+ * - `ref` — a stable opaque ID (e.g. Azure blob path / UUID) stored in the markdown instead of the SAS URL.
+ *
+ * `onImageRemove` is called with the stable ref when an image is removed from the editor,
+ * so a backend can delete the persisted image resource.
  *
  * The `onChange` output will contain `![alt](image://uuid-...)` rather than the raw data URL,
- * which is what a `MarkdownToReact` or similar renderers would receive where you implement a resolver function to provide a SAS URI or similar.
+ * and a `MarkdownToReact` resolver can map that ref to a displayable URL.
  */
 export const WithImageRef: Story = {
   args: {
     ...defaultArgs,
 
-    value: '![bilde.png](image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69)',
+    value: `
+Bilde av Atlas
+![Bilde_av_atlas.png](image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69)`,
     label: 'Rikt tekstfelt med bildereferanse',
-    description: 'Last opp et bilde — markdownutdata vil inneholde en stabil referanse til bildet,.',
-    resolveImageRef: (ref: string) => {
-      const imageRefMap: Record<string, { src: string }> = {
+    description: 'Last opp et bilde — markdownutdata vil inneholde en stabil referanse til bildet.',
+    resolveImageRefs: async () => {
+      const imageRefMap: Record<string, ResolvedImageRef> = {
         'image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69': {
           src: atlas,
         },
       };
 
-      return imageRefMap[ref]?.src;
+      await new Promise<void>((resolve) => {
+        setTimeout(resolve, 1000);
+      });
+      return imageRefMap;
     },
     onImageUpload: async (file) => {
       const src = await fileToDataUrl(file);
       // Simulate a stable blob reference that would be generated server-side
       const ref = `image://${crypto.randomUUID()}`;
       return { src, ref, alt: file.name };
+    },
+    onImageRemove: async (ref: string) => {
+      alert('Removed image ' + ref);
     },
   },
   render: (args) => {

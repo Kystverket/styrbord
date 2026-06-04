@@ -108,6 +108,7 @@ const App = () => (
 };
 
 export const ResolveImageRefExample: Story = {
+  parameters: { docs: { source: { type: 'code' } } },
   args: {
     markdown: `
 # Noe kul markdown
@@ -118,14 +119,14 @@ export const ResolveImageRefExample: Story = {
 ## og et bilde som resolver!
 ![Atlas.png](image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69)
 `,
-    resolveImageRef: (ref: string) => {
+    resolveImageRefs: () => {
       const imageRefMap: Record<string, ResolvedImageRef> = {
         'image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69': {
           src: atlas,
         },
       };
 
-      return imageRefMap[ref];
+      return imageRefMap;
     },
   },
 };

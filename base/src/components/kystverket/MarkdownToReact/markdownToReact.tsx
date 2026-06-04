@@ -1,21 +1,30 @@
+import { useEffect, useMemo, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import styles from './markdownToReact.module.css';
 import { Link, Paragraph } from '~/main';
+import { MaybePromise } from '~/utils/utility.types';
+
+type ResolvedImageRefs = Record<string, ResolvedImageRef>;
 
 export type MarkdownToReactProps = {
   markdown: string;
-  resolveImageRef?: (ref: string) => ResolvedImageRef;
+  /** Optional sync/async resolver that receives all refs found in markdown. */
+
+  resolveImageRefs?: (refs?: string[]) => MaybePromise<ResolvedImageRefs>;
 };
 
-export type ResolvedImageRef = { src: string; alt?: string } | undefined;
+export type ResolvedImageRef = { src: string; alt?: string } | string | null | undefined;
 
-const replaceResolvedImageRefs = (markdown: string, resolveImageRef: (ref: string) => ResolvedImageRef) => {
-  const imageRegex = /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g;
+const imageRegex = /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g;
 
+const getUniqueImageRefs = (markdown: string): string[] =>
+  Array.from(new Set(Array.from(markdown.matchAll(imageRegex), ([, , src]) => src)));
+
+const replaceResolvedImageRefs = (markdown: string, resolvedImageRefs: ResolvedImageRefs) => {
   return markdown.replace(imageRegex, (fullMatch, alt: string, src: string, title: string | undefined) => {
-    const resolvedImageRef = resolveImageRef(src);
+    const resolvedImageRef = resolvedImageRefs[src];
 
-    if (resolvedImageRef === undefined) return fullMatch;
+    if (resolvedImageRef === undefined || resolvedImageRef === null) return fullMatch;
 
     const resolvedSrc = typeof resolvedImageRef === 'string' ? resolvedImageRef : resolvedImageRef.src;
     const resolvedAlt = typeof resolvedImageRef === 'string' ? alt : (resolvedImageRef.alt ?? alt);
@@ -26,12 +35,43 @@ const replaceResolvedImageRefs = (markdown: string, resolveImageRef: (ref: strin
 };
 
 // Overskrifter (h1-h6) rendres som <Paragraph> med tanke på dokumenthierarki (enn så lenge, dette må vi komme tilbake til etter hvert)
-const MarkdownToReact = ({ markdown, resolveImageRef }: MarkdownToReactProps) => {
-  let renderedMarkdown = markdown.replaceAll(/\n{3,}/g, '\n\n\u00A0\n\n');
+const MarkdownToReact = ({ markdown, resolveImageRefs }: MarkdownToReactProps) => {
+  const normalizedMarkdown = useMemo(() => markdown.replaceAll(/\n{3,}/g, '\n\n\u00A0\n\n'), [markdown]);
+  const [renderedMarkdown, setRenderedMarkdown] = useState(normalizedMarkdown);
 
-  if (typeof resolveImageRef === 'function') {
-    renderedMarkdown = replaceResolvedImageRefs(renderedMarkdown, resolveImageRef);
-  }
+  useEffect(() => {
+    const uniqueRefs = getUniqueImageRefs(normalizedMarkdown);
+    let isCancelled = false;
+
+    if (!resolveImageRefs || uniqueRefs.length === 0) {
+      setRenderedMarkdown(normalizedMarkdown);
+      return;
+    }
+
+    const resolve = async () => {
+      try {
+        const resolvedImageRefs = await resolveImageRefs(uniqueRefs);
+
+        if (isCancelled) {
+          return;
+        }
+
+        setRenderedMarkdown(replaceResolvedImageRefs(normalizedMarkdown, resolvedImageRefs));
+      } catch {
+        if (isCancelled) {
+          return;
+        }
+
+        setRenderedMarkdown(normalizedMarkdown);
+      }
+    };
+
+    void resolve();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [normalizedMarkdown, resolveImageRefs]);
 
   return (
     <div className={styles.markdownToReact}>
