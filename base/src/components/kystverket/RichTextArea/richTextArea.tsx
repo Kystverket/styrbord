@@ -2,11 +2,9 @@
 
 import { useEffect, useId, useRef, useState } from 'react';
 import { Milkdown, MilkdownProvider, useEditor } from '@milkdown/react';
-import { Editor, defaultValueCtx, editorViewCtx, editorViewOptionsCtx, rootCtx } from '@milkdown/core';
-import { imageInlineComponent, inlineImageConfig } from '@milkdown/components/image-inline';
+import { editorViewCtx } from '@milkdown/core';
 import type { InlineImageConfig } from '@milkdown/components/image-inline';
-import { history, redoCommand, undoCommand } from '@milkdown/plugin-history';
-import { listener, listenerCtx } from '@milkdown/plugin-listener';
+import { redoCommand, undoCommand } from '@milkdown/plugin-history';
 import { replaceAll } from '@milkdown/utils';
 import '@milkdown/prose/view/style/prosemirror.css';
 
@@ -18,6 +16,7 @@ import { Toolbar } from './components/Toolbar/toolbar';
 import { useRichTextToolbarState } from './hooks/useRichTextToolbarState';
 import { useRichTextLinkEditor } from './hooks/useRichTextLinkEditor';
 import { useRichTextImageUpload } from './hooks/useRichTextImageUpload';
+import { useRichTextImagePicker } from './hooks/useRichTextImagePicker';
 import {
   useRichTextCommands,
   toggleStrongCommand,
@@ -25,15 +24,8 @@ import {
   wrapInBulletListCommand,
   wrapInOrderedListCommand,
 } from './hooks/useRichTextCommands';
-import {
-  normalizeMarkdownBreakTags,
-  richTextCommonmarkPlugins,
-  createRichTextAreaEditorEditable,
-  handleRichTextAreaEditorClick,
-  handleRichTextAreaEditorKeydown,
-  createRichTextAreaEditorPaste,
-  createRichTextAreaEditorDrop,
-} from './richTextArea.editor';
+import { normalizeMarkdownBreakTags } from './richTextArea.editor';
+import { createRichTextAreaEditor } from './richTextArea.editorFactory';
 import type { ImageInsertHandler, RichTextAreaProps } from './richTextArea.types';
 import {
   convertFromRefToImage,
@@ -79,9 +71,6 @@ const RichTextAreaContainer = ({
   required = false,
   error: externalError,
 }: RichTextAreaProps) => {
-  const [internalError, setInternalError] = useState<string | undefined>(undefined);
-  const displayedError = externalError ?? internalError;
-
   // Owned here so useEditor config can close over them before useRichTextImageUpload is called.
   const sasToRefMap = useRef(new Map<string, string>());
 
@@ -92,7 +81,7 @@ const RichTextAreaContainer = ({
   const latestOnRemoveRef = useRef(onImageRemove);
   const lastKnownMarkdownRef = useRef(normalizedValue);
   const lastSyncedEditorMarkdownRef = useRef(normalizedValue);
-  const imageInputRef = useRef<HTMLInputElement | null>(null);
+  const pendingImageSelectionRef = useRef<{ from: number; to: number } | null>(null);
 
   latestOnChangeRef.current = onChange;
   latestOnUploadRef.current = onImageUpload;
@@ -161,51 +150,36 @@ const RichTextAreaContainer = ({
   // Refs above are populated before Milkdown's useEffect runs, so closures here are safe.
   const { loading, get } = useEditor(
     (root) =>
-      Editor.make()
-        .config((ctx) => {
-          ctx.set(rootCtx, root);
-          ctx.set(defaultValueCtx, editorMarkdown);
-          ctx.update(inlineImageConfig.key, updateInlineImageConfig);
-          ctx.update(editorViewOptionsCtx, (prev = {}) => ({
-            ...prev,
-            editable: createRichTextAreaEditorEditable(disabled),
-            handleDOMEvents: {
-              ...prev.handleDOMEvents,
-              click: handleRichTextAreaEditorClick,
-              keydown: handleRichTextAreaEditorKeydown,
-              paste: createRichTextAreaEditorPaste(Boolean(latestOnUploadRef.current), dispatchImageFromFile),
-              drop: createRichTextAreaEditorDrop(Boolean(latestOnUploadRef.current), dispatchImageFromFile),
-            },
-          }));
-          ctx.get(listenerCtx).markdownUpdated((_ctx, markdown) => {
-            const normalizedMarkdown = normalizeMarkdownBreakTags(markdown);
-            const transformedMarkdown = replaceImageUrlsWithRefs(normalizedMarkdown, sasToRefMap.current);
-            const previousMarkdown = lastKnownMarkdownRef.current;
+      createRichTextAreaEditor({
+        root,
+        disabled,
+        editorMarkdown,
+        canUploadImage: Boolean(latestOnUploadRef.current),
+        dispatchImageFromFile,
+        updateInlineImageConfig,
+        updateToolbarState,
+        onMarkdownUpdated: (ctx, markdown) => {
+          const normalizedMarkdown = normalizeMarkdownBreakTags(markdown);
+          const transformedMarkdown = replaceImageUrlsWithRefs(normalizedMarkdown, sasToRefMap.current);
+          const previousMarkdown = lastKnownMarkdownRef.current;
 
-            if (transformedMarkdown === previousMarkdown) {
-              updateToolbarState(_ctx);
-              return;
-            }
+          if (transformedMarkdown === previousMarkdown) {
+            updateToolbarState(ctx);
+            return;
+          }
 
-            notifyRemovedManagedImages(
-              previousMarkdown,
-              transformedMarkdown,
-              sasToRefMap.current,
-              latestOnRemoveRef.current,
-            );
+          notifyRemovedManagedImages(
+            previousMarkdown,
+            transformedMarkdown,
+            sasToRefMap.current,
+            latestOnRemoveRef.current,
+          );
 
-            lastKnownMarkdownRef.current = transformedMarkdown;
-            latestOnChangeRef.current(transformedMarkdown);
-            updateToolbarState(_ctx);
-          });
-          ctx.get(listenerCtx).selectionUpdated((listenerContext) => {
-            updateToolbarState(listenerContext);
-          });
-        })
-        .use(richTextCommonmarkPlugins)
-        .use(imageInlineComponent)
-        .use(history)
-        .use(listener),
+          lastKnownMarkdownRef.current = transformedMarkdown;
+          latestOnChangeRef.current(transformedMarkdown);
+          updateToolbarState(ctx);
+        },
+      }),
     [disabled],
   );
 
@@ -215,7 +189,20 @@ const RichTextAreaContainer = ({
     updateToolbarState,
     latestOnUploadRef,
     sasToRefMap,
+    pendingImageSelectionRef,
   });
+
+  const imagePicker = useRichTextImagePicker({
+    disabled,
+    loading,
+    canUploadImage: Boolean(onImageUpload),
+    isUploadingImage: imageUpload.isUploadingImage,
+    get,
+    pendingImageSelectionRef,
+    onImageFileInputChange: imageUpload.handleImageFileInputChange,
+  });
+
+  const displayedError = externalError ?? imagePicker.imageUploadError;
 
   // Sync stable refs so useEditor closures always call the latest implementations.
   insertImageFromFileRef.current = imageUpload.insertImageFromFile;
@@ -273,14 +260,6 @@ const RichTextAreaContainer = ({
     });
   }, [get]);
 
-  const openImageFilePicker = () => {
-    if (disabled || loading || !onImageUpload || imageUpload.isUploadingImage) {
-      return;
-    }
-
-    imageInputRef.current?.click();
-  };
-
   const showPlaceholder = !normalizedValue && Boolean(placeholder);
 
   return (
@@ -316,7 +295,7 @@ const RichTextAreaContainer = ({
             onUndo={() => runCommand(undoCommand)}
             onRedo={() => runCommand(redoCommand)}
             onLink={openLinkEditor}
-            onImageUpload={openImageFilePicker}
+            onImageUpload={imagePicker.openImageFilePicker}
             linkPopoverTarget={linkEditorAnchorId}
             onBulletList={() =>
               toggleList({
@@ -335,16 +314,12 @@ const RichTextAreaContainer = ({
             onFormatChange={handleFormatChange}
           />
           <input
-            ref={imageInputRef}
+            ref={imagePicker.imageInputRef}
             type="file"
             accept="image/*"
             hidden
             disabled={disabled || loading || imageUpload.isUploadingImage || !onImageUpload}
-            onChange={async (event) => {
-              setInternalError(undefined);
-              const { success } = await imageUpload.handleImageFileInputChange(event);
-              setInternalError(success ? undefined : 'Image failed to upload');
-            }}
+            onChange={imagePicker.handleImageFileInputChange}
           />
 
           <div

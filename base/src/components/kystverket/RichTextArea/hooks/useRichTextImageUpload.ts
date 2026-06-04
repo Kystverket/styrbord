@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { commandsCtx } from '@milkdown/core';
+import { commandsCtx, editorViewCtx } from '@milkdown/core';
 import type { Editor } from '@milkdown/core';
 import { insertImageCommand } from '@milkdown/preset-commonmark';
 import type { Ctx } from '@milkdown/ctx';
 import type { InlineImageConfig } from '@milkdown/components/image-inline';
+import { TextSelection } from '@milkdown/prose/state';
 
 import type { ImageMarkdown, ImageUploadResult, UploadImageFn } from '../richTextArea.types';
 import { createRichTextAreaInlineImageConfig } from '../richTextArea.editor';
@@ -14,6 +15,7 @@ type UseRichTextImageUploadParams = {
   updateToolbarState: (ctx: Ctx) => void;
   latestOnUploadRef: React.RefObject<UploadImageFn | undefined> | undefined;
   sasToRefMap: React.RefObject<Map<string, string>>;
+  pendingImageSelectionRef: React.RefObject<{ from: number; to: number } | null>;
 };
 
 type UseRichTextImageUploadReturn = {
@@ -55,6 +57,7 @@ export const useRichTextImageUpload = ({
   updateToolbarState,
   latestOnUploadRef,
   sasToRefMap,
+  pendingImageSelectionRef,
 }: UseRichTextImageUploadParams): UseRichTextImageUploadReturn => {
   const [isUploadingImage, setIsUploadingImage] = useState(false);
 
@@ -77,8 +80,24 @@ export const useRichTextImageUpload = ({
     }
 
     editor.action((ctx) => {
+      const view = ctx.get(editorViewCtx);
+      const selection = pendingImageSelectionRef.current;
+      const maxPos = view.state.doc.content.size;
+
+      view.focus();
+
+      if (selection) {
+        const clampedFrom = Math.min(Math.max(selection.from, 0), maxPos);
+        const clampedTo = Math.min(Math.max(selection.to, 0), maxPos);
+        const from = Math.min(clampedFrom, clampedTo);
+        const to = Math.max(clampedFrom, clampedTo);
+        view.dispatch(view.state.tr.setSelection(TextSelection.create(view.state.doc, from, to)));
+      }
+
       const commands = ctx.get(commandsCtx);
       commands.call(insertImageCommand.key, image);
+
+      pendingImageSelectionRef.current = null;
       updateToolbarState(ctx);
     });
   };
