@@ -41,6 +41,7 @@ const MarkdownToReact = ({ markdown, resolveImageRefs }: MarkdownToReactProps) =
 
   useEffect(() => {
     const uniqueRefs = getUniqueImageRefs(normalizedMarkdown);
+    let isCancelled = false;
 
     if (!resolveImageRefs || uniqueRefs.length === 0) {
       setRenderedMarkdown(normalizedMarkdown);
@@ -48,10 +49,28 @@ const MarkdownToReact = ({ markdown, resolveImageRefs }: MarkdownToReactProps) =
     }
 
     const resolve = async () => {
-      const resolvedImageRefs = await resolveImageRefs(uniqueRefs);
-      setRenderedMarkdown(replaceResolvedImageRefs(normalizedMarkdown, resolvedImageRefs));
+      try {
+        const resolvedImageRefs = await resolveImageRefs(uniqueRefs);
+
+        if (isCancelled) {
+          return;
+        }
+
+        setRenderedMarkdown(replaceResolvedImageRefs(normalizedMarkdown, resolvedImageRefs));
+      } catch {
+        if (isCancelled) {
+          return;
+        }
+
+        setRenderedMarkdown(normalizedMarkdown);
+      }
     };
-    resolve();
+
+    void resolve();
+
+    return () => {
+      isCancelled = true;
+    };
   }, [normalizedMarkdown, resolveImageRefs]);
 
   return (

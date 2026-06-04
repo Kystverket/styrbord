@@ -58,7 +58,9 @@ const notifyRemovedManagedImages = (
 
   for (const ref of previousRefs) {
     if (!currentRefs.has(ref) && managedRefs.has(ref)) {
-      onImageRemove(ref);
+      void Promise.resolve(onImageRemove(ref)).catch(() => {
+        // Ignore remove failures here; callers should handle retry/logging
+      });
     }
   }
 };
@@ -107,23 +109,36 @@ const RichTextAreaContainer = ({
         return;
       }
 
-      const previousRefToUrlMap = new Map<string, string>(
-        Array.from(sasToRefMap.current.entries(), ([src, ref]) => [ref, src]),
-      );
-      const nextSasToRefMap = new Map<string, string>();
-      const resolvedMarkdown = await convertFromRefToImage(
-        normalizedValue,
-        resolveImageRefs,
-        nextSasToRefMap,
-        previousRefToUrlMap,
-      );
+      try {
+        const previousRefToUrlMap = new Map<string, string>(
+          Array.from(sasToRefMap.current.entries(), ([src, ref]) => [ref, src]),
+        );
+        const nextSasToRefMap = new Map<string, string>();
+        const resolvedMarkdown = await convertFromRefToImage(
+          normalizedValue,
+          resolveImageRefs,
+          nextSasToRefMap,
+          previousRefToUrlMap,
+        );
 
-      if (isCancelled) {
-        return;
+        if (isCancelled) {
+          return;
+        }
+
+        sasToRefMap.current.clear();
+        for (const [src, ref] of nextSasToRefMap.entries()) {
+          sasToRefMap.current.set(src, ref);
+        }
+
+        setEditorMarkdown(resolvedMarkdown);
+      } catch {
+        if (isCancelled) {
+          return;
+        }
+
+        sasToRefMap.current.clear();
+        setEditorMarkdown(normalizedValue);
       }
-
-      sasToRefMap.current = nextSasToRefMap;
-      setEditorMarkdown(resolvedMarkdown);
     };
 
     void resolveImages();

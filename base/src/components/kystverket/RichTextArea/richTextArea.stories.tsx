@@ -104,7 +104,7 @@ export const WithImageRef: Story = {
 Bilde av Atlas
 ![Bilde_av_atlas.png](image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69)`,
     label: 'Rikt tekstfelt med bildereferanse',
-    description: 'Last opp et bilde — markdownutdata vil inneholde en stabil referanse til bildet,.',
+    description: 'Last opp et bilde — markdownutdata vil inneholde en stabil referanse til bildet.',
     resolveImageRefs: async () => {
       const imageRefMap: Record<string, ResolvedImageRef> = {
         'image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69': {
