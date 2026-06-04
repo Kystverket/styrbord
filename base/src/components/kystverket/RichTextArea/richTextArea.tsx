@@ -34,7 +34,7 @@ import {
   createRichTextAreaEditorPaste,
   createRichTextAreaEditorDrop,
 } from './richTextArea.editor';
-import type { ImageInsertHandler, RichTextAreaProps } from './richTextArea.types';
+import type { ImageInsertHandler, ImageUploadResult, RichTextAreaProps } from './richTextArea.types';
 import {
   convertFromRefToImage,
   replaceImageUrlsWithRefs,
@@ -44,8 +44,9 @@ export type { RichTextAreaProps };
 const RichTextAreaContainer = ({
   value,
   onChange,
-  onImageUpload: onUpload,
-  resolveImageRef,
+  onImageUpload,
+  onImageRemove,
+  resolveImageRefs,
   placeholder,
   disabled = false,
   label,
@@ -61,17 +62,54 @@ const RichTextAreaContainer = ({
   const sasToRefMap = useRef(new Map<string, string>());
 
   const normalizedValue = normalizeMarkdownBreakTags(value ?? '');
-  const editorMarkdown = resolveImageRef
-    ? convertFromRefToImage(normalizedValue, resolveImageRef, sasToRefMap.current)
-    : normalizedValue;
+  const [editorMarkdown, setEditorMarkdown] = useState(normalizedValue);
   const latestOnChangeRef = useRef(onChange);
-  const latestOnUploadRef = useRef(onUpload);
+  const latestOnUploadRef = useRef<(file: File) => Promise<ImageUploadResult | string | null>>(async (file) =>
+    onImageUpload ? onImageUpload(file) : null,
+  );
   const lastKnownMarkdownRef = useRef(normalizedValue);
-  const lastSyncedEditorMarkdownRef = useRef(editorMarkdown);
+  const lastSyncedEditorMarkdownRef = useRef(normalizedValue);
   const imageInputRef = useRef<HTMLInputElement | null>(null);
 
   latestOnChangeRef.current = onChange;
-  latestOnUploadRef.current = onUpload;
+  latestOnUploadRef.current = async (file) => (onImageUpload ? onImageUpload(file) : null);
+
+  // Resolve stable image refs to display URLs before markdown is loaded into the editor.
+  useEffect(() => {
+    let isCancelled = false;
+
+    const resolveImages = async () => {
+      if (!resolveImageRefs) {
+        sasToRefMap.current.clear();
+        setEditorMarkdown(normalizedValue);
+        return;
+      }
+
+      const previousRefToUrlMap = new Map<string, string>(
+        Array.from(sasToRefMap.current.entries(), ([src, ref]) => [ref, src]),
+      );
+      const nextSasToRefMap = new Map<string, string>();
+      const resolvedMarkdown = await convertFromRefToImage(
+        normalizedValue,
+        resolveImageRefs,
+        nextSasToRefMap,
+        previousRefToUrlMap,
+      );
+
+      if (isCancelled) {
+        return;
+      }
+
+      sasToRefMap.current = nextSasToRefMap;
+      setEditorMarkdown(resolvedMarkdown);
+    };
+
+    void resolveImages();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [normalizedValue, resolveImageRefs]);
 
   const insertImageFromFileRef = useRef<ImageInsertHandler>(() => {});
   const inlineImageConfigUpdaterRef = useRef<(config: InlineImageConfig) => InlineImageConfig>((c) => c);
@@ -190,7 +228,7 @@ const RichTextAreaContainer = ({
   }, [get]);
 
   const openImageFilePicker = () => {
-    if (disabled || loading || !onUpload || imageUpload.isUploadingImage) {
+    if (disabled || loading || !onImageUpload || imageUpload.isUploadingImage) {
       return;
     }
 
@@ -226,7 +264,7 @@ const RichTextAreaContainer = ({
             isOrderedListActive={toolbarState.isOrderedListActive}
             selectedFormat={toolbarState.selectedFormat}
             isLinkActive={toolbarState.isLinkActive}
-            canUploadImage={Boolean(onUpload)}
+            canUploadImage={Boolean(onImageUpload)}
             onBold={() => runCommand(toggleStrongCommand)}
             onItalic={() => runCommand(toggleEmphasisCommand)}
             onUndo={() => runCommand(undoCommand)}
@@ -255,7 +293,7 @@ const RichTextAreaContainer = ({
             type="file"
             accept="image/*"
             hidden
-            disabled={disabled || loading || imageUpload.isUploadingImage || !onUpload}
+            disabled={disabled || loading || imageUpload.isUploadingImage || !onImageUpload}
             onChange={async (event) => {
               setInternalError(undefined);
               const { success } = await imageUpload.handleImageFileInputChange(event);

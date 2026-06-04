@@ -1,17 +1,31 @@
+import { MaybePromise } from '~/utils/utility.types';
+
 type ResolvedImageRef = { src: string; alt?: string } | string | null | undefined;
 
-export const convertFromRefToImage = (
+export const convertFromRefToImage = async (
   markdown: string,
-  resolveImageRef: (ref: string) => ResolvedImageRef,
+  resolveImageRefs: (refs: string[]) => MaybePromise<Record<string, ResolvedImageRef>>,
   urlToRefMap?: Map<string, string>,
+  previousRefToUrlMap?: Map<string, string>,
 ) => {
   const imageRegex = /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g;
+  const uniqueRefs = Array.from(new Set(Array.from(markdown.matchAll(imageRegex), ([, , ref]) => ref)));
+
+  const resolvedImageRefs = await resolveImageRefs(uniqueRefs);
 
   return markdown.replace(imageRegex, (fullMatch, alt: string, ref: string, title: string | undefined) => {
-    const resolvedImageRef = resolveImageRef(ref);
+    const resolvedImageRef = resolvedImageRefs[ref];
 
     if (resolvedImageRef === undefined || resolvedImageRef === null) {
-      return fullMatch;
+      const fallbackSrc = previousRefToUrlMap?.get(ref);
+
+      if (!fallbackSrc) {
+        return fullMatch;
+      }
+
+      const titlePart = title ? ` "${title}"` : '';
+      urlToRefMap?.set(fallbackSrc, ref);
+      return `![${alt}](${fallbackSrc}${titlePart})`;
     }
 
     const resolvedSrc = typeof resolvedImageRef === 'string' ? resolvedImageRef : resolvedImageRef.src;
