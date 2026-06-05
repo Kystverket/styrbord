@@ -208,13 +208,9 @@ export type {
 export { Chip, ChipButton, ChipCheckbox, ChipRadio, ChipRemovable } from '@digdir/designsystemet-react';
 export type { DetailsContentProps, DetailsProps, DetailsSummaryProps } from '@digdir/designsystemet-react';
 export { Details, DetailsContent, DetailsSummary } from '@digdir/designsystemet-react';
-export type {
-  DialogBlockProps,
-  DialogProps,
-  DialogTriggerContextProps,
-  DialogTriggerProps,
-} from '@digdir/designsystemet-react';
-export { Dialog, DialogBlock, DialogTrigger, DialogTriggerContext } from '@digdir/designsystemet-react';
+export type { DialogBlockProps, DialogTriggerContextProps, DialogTriggerProps } from '@digdir/designsystemet-react';
+export { DialogBlock, DialogTrigger, DialogTriggerContext } from '@digdir/designsystemet-react';
+export { Dialog, type DialogProps, type DialogSize } from '~/components/designsystemet/Dialog/Dialog';
 export type { DividerProps } from '@digdir/designsystemet-react';
 export { Divider } from '@digdir/designsystemet-react';
 export type {
