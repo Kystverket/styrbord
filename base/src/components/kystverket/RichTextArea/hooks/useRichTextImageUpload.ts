@@ -6,7 +6,7 @@ import type { Ctx } from '@milkdown/ctx';
 import type { InlineImageConfig } from '@milkdown/components/image-inline';
 import { TextSelection } from '@milkdown/prose/state';
 
-import type { ImageMarkdown, ImageUploadResult, UploadImageFn } from '../richTextArea.types';
+import type { ImageUploadResult, ResolvedImageRef, UploadImageFn } from '../richTextArea.types';
 import { createRichTextAreaInlineImageConfig } from '../richTextArea.editor';
 
 type UseRichTextImageUploadParams = {
@@ -72,7 +72,7 @@ export const useRichTextImageUpload = ({
     return normalizeUploadResult(result, file);
   };
 
-  const insertImageNode = (image: ImageMarkdown) => {
+  const insertImageNode = (image: ResolvedImageRef) => {
     const editor = get();
 
     if (!editor) {
@@ -120,7 +120,7 @@ export const useRichTextImageUpload = ({
         sasToRefMap.current.set(uploadedImage.src, uploadedImage.ref);
       }
 
-      insertImageNode({ src: uploadedImage.src, alt: uploadedImage.alt });
+      insertImageNode({ previewUri: uploadedImage.src, alt: uploadedImage.alt });
       return true;
     } catch {
       return false;

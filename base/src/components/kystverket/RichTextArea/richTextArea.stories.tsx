@@ -5,7 +5,6 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { RichTextArea, RichTextAreaProps } from './richTextArea';
 
 import atlas from '@assets/img/atlas/atlas 1.jpeg';
-import { ResolvedImageRef } from '~/components/kystverket/RichTextArea/richTextArea.types';
 
 const meta = {
   title: 'Form/RichTextArea/RichTextArea',
@@ -105,17 +104,13 @@ Bilde av Atlas
 ![Bilde_av_atlas.png](image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69)`,
     label: 'Rikt tekstfelt med bildereferanse',
     description: 'Last opp et bilde — markdownutdata vil inneholde en stabil referanse til bildet.',
-    resolveImageRefs: async () => {
-      const imageRefMap: Record<string, ResolvedImageRef> = {
-        'image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69': {
-          src: atlas,
-        },
-      };
+    resolveImageRefs: async (_refs) => {
+      const resolvedImageRefs = [{ storageId: 'image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69', previewUri: atlas }];
 
       await new Promise<void>((resolve) => {
         setTimeout(resolve, 1000);
       });
-      return imageRefMap;
+      return resolvedImageRefs;
     },
     onImageUpload: async (file) => {
       const src = await fileToDataUrl(file);

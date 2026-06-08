@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import MarkdownToReact from './markdownToReact';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
-import { ResolvedImageRef } from '~/components/kystverket/MarkdownToReact/markdownToReact';
 
 import atlas from '@assets/img/atlas/atlas 1.jpeg';
 
@@ -119,14 +118,14 @@ export const ResolveImageRefExample: Story = {
 ## og et bilde som resolver!
 ![Atlas.png](image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69)
 `,
-    resolveImageRefs: () => {
-      const imageRefMap: Record<string, ResolvedImageRef> = {
-        'image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69': {
-          src: atlas,
+    resolveImageRefs: (_refs) => {
+      return [
+        {
+          storageId: 'image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69',
+          previewUri: atlas,
+          alt: 'Adding on some alternative text',
         },
-      };
-
-      return imageRefMap;
+      ];
     },
   },
 };

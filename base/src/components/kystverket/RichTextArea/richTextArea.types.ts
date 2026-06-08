@@ -1,4 +1,5 @@
 import type { CmdKey } from '@milkdown/core';
+import { ExtraFileInfo } from '~/main';
 import { MaybePromise } from '~/utils/utility.types';
 
 export type RichTextAreaProps = {
@@ -16,14 +17,13 @@ export type RichTextAreaProps = {
   onImageUpload?: (file: File) => Promise<ImageUploadResult | null>;
   /** Optional remove handler for deleting persisted images by stable ref. */
   onImageRemove?: (ref: string) => Promise<void>;
-  /** Optional resolver that maps image refs in markdown to renderable image sources. */
-  resolveImageRefs?: (refs?: string[]) => MaybePromise<Record<string, ResolvedImageRef>>;
+  /** Optional resolver that returns image metadata for markdown refs (storageIds). */
+  resolveImageRefs?: (refs: string[]) => MaybePromise<ResolvedImageRef[]>;
 };
 
 export type ToolbarCommand<T = unknown> = { key: CmdKey<T>; value?: T };
 
-export type ImageMarkdown = { src: string; alt?: string };
-export type ResolvedImageRef = ImageMarkdown | undefined;
+export type ResolvedImageRef = Pick<ExtraFileInfo, 'storageId' | 'previewUri'> & { alt?: string };
 
 export type ImageUploadResult = { src: string; ref?: string; alt?: string };
 

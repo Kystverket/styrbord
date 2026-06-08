@@ -1,6 +1,6 @@
 import { MaybePromise } from '~/utils/utility.types';
 
-type ResolvedImageRef = { src: string; alt?: string } | string | null | undefined;
+type ResolvedImageRef = { storageId?: string; previewUri?: string; alt?: string };
 
 const imageRegex = /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g;
 
@@ -9,18 +9,23 @@ export const getImageRefsFromMarkdown = (markdown: string): string[] =>
 
 export const convertFromRefToImage = async (
   markdown: string,
-  resolveImageRefs: (refs: string[]) => MaybePromise<Record<string, ResolvedImageRef>>,
+  resolveImageRefs: (refs: string[]) => MaybePromise<ResolvedImageRef[]>,
   urlToRefMap?: Map<string, string>,
   previousRefToUrlMap?: Map<string, string>,
 ) => {
   const uniqueRefs = getImageRefsFromMarkdown(markdown);
 
   const resolvedImageRefs = await resolveImageRefs(uniqueRefs);
+  const resolvedImageRefMap = new Map<string, ResolvedImageRef>(
+    resolvedImageRefs
+      .filter((resolvedImageRef) => resolvedImageRef.storageId)
+      .map((resolvedImageRef) => [resolvedImageRef.storageId!, resolvedImageRef]),
+  );
 
   return markdown.replace(imageRegex, (fullMatch, alt: string, ref: string, title: string | undefined) => {
-    const resolvedImageRef = resolvedImageRefs[ref];
+    const resolvedImageRef = resolvedImageRefMap.get(ref);
 
-    if (resolvedImageRef === undefined || resolvedImageRef === null) {
+    if (resolvedImageRef === undefined || resolvedImageRef.previewUri === undefined) {
       const fallbackSrc = previousRefToUrlMap?.get(ref);
 
       if (!fallbackSrc) {
@@ -32,8 +37,8 @@ export const convertFromRefToImage = async (
       return `![${alt}](${fallbackSrc}${titlePart})`;
     }
 
-    const resolvedSrc = typeof resolvedImageRef === 'string' ? resolvedImageRef : resolvedImageRef.src;
-    const resolvedAlt = typeof resolvedImageRef === 'string' ? alt : (resolvedImageRef.alt ?? alt);
+    const resolvedSrc = resolvedImageRef.previewUri;
+    const resolvedAlt = resolvedImageRef.alt ?? alt;
     const titlePart = title ? ` "${title}"` : '';
 
     urlToRefMap?.set(resolvedSrc, ref);

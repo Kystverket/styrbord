@@ -3,31 +3,33 @@ import ReactMarkdown from 'react-markdown';
 import styles from './markdownToReact.module.css';
 import { Link, Paragraph } from '~/main';
 import { MaybePromise } from '~/utils/utility.types';
-
-type ResolvedImageRefs = Record<string, ResolvedImageRef>;
+import { ResolvedImageRef } from '~/components/kystverket/RichTextArea/richTextArea.types';
 
 export type MarkdownToReactProps = {
   markdown: string;
   /** Optional sync/async resolver that receives all refs found in markdown. */
-
-  resolveImageRefs?: (refs?: string[]) => MaybePromise<ResolvedImageRefs>;
+  resolveImageRefs?: (refs: string[]) => MaybePromise<ResolvedImageRef[]>;
 };
-
-export type ResolvedImageRef = { src: string; alt?: string } | string | null | undefined;
 
 const imageRegex = /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g;
 
 const getUniqueImageRefs = (markdown: string): string[] =>
   Array.from(new Set(Array.from(markdown.matchAll(imageRegex), ([, , src]) => src)));
 
-const replaceResolvedImageRefs = (markdown: string, resolvedImageRefs: ResolvedImageRefs) => {
+const replaceResolvedImageRefs = (markdown: string, resolvedImageRefs: ResolvedImageRef[]) => {
+  const resolvedImageRefMap = new Map<string, ResolvedImageRef>(
+    resolvedImageRefs
+      .filter((resolvedImageRef) => resolvedImageRef.storageId)
+      .map((resolvedImageRef) => [resolvedImageRef.storageId!, resolvedImageRef]),
+  );
+
   return markdown.replace(imageRegex, (fullMatch, alt: string, src: string, title: string | undefined) => {
-    const resolvedImageRef = resolvedImageRefs[src];
+    const resolvedImageRef = resolvedImageRefMap.get(src);
 
-    if (resolvedImageRef === undefined || resolvedImageRef === null) return fullMatch;
+    if (!resolvedImageRef?.previewUri) return fullMatch;
 
-    const resolvedSrc = typeof resolvedImageRef === 'string' ? resolvedImageRef : resolvedImageRef.src;
-    const resolvedAlt = typeof resolvedImageRef === 'string' ? alt : (resolvedImageRef.alt ?? alt);
+    const resolvedSrc = resolvedImageRef.previewUri;
+    const resolvedAlt = resolvedImageRef.alt ?? alt;
     const titlePart = title ? ` "${title}"` : '';
 
     return `![${resolvedAlt}](${resolvedSrc}${titlePart})`;
