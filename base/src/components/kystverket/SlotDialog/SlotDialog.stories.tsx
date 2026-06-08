@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react-vite';
 import { useRef, useState } from 'react';
-import { Box, Button, Input, Label, Paragraph, SlotDialog } from '~/main';
+import { Box, Button, Input, Label, Paragraph, SlotDialog, type DialogSize } from '~/main';
 
 export default {
   title: 'Components/SlotDialog',
@@ -179,5 +179,41 @@ export const MultiplePages: StoryFn<typeof SlotDialog> = (args) => {
         </SlotDialog.Buttons>
       </SlotDialog>
     </>
+  );
+};
+
+export const Sizes: StoryFn<typeof SlotDialog> = () => {
+  const [openSize, setOpenSize] = useState<DialogSize | null>(null);
+
+  return (
+    <Box horizontal gap={8}>
+      {(['sm', 'md', 'lg'] as DialogSize[]).map((size) => (
+        <Button key={size} onClick={() => setOpenSize(size)}>
+          Open {size}
+        </Button>
+      ))}
+      {(['sm', 'md', 'lg'] as DialogSize[]).map((size) => (
+        <SlotDialog
+          key={size}
+          size={size}
+          open={openSize === size}
+          onClose={() => setOpenSize(null)}
+          title={`Dialog — ${size}`}
+        >
+          <Paragraph>
+            Some random filler text that fills the entire width to test that it wraps correctly or that it at least
+            looks nice
+          </Paragraph>
+          <SlotDialog.Buttons>
+            <Button variant="filled" onClick={() => setOpenSize(null)}>
+              Confirm
+            </Button>
+            <Button variant="outline" onClick={() => setOpenSize(null)}>
+              Cancel
+            </Button>
+          </SlotDialog.Buttons>
+        </SlotDialog>
+      ))}
+    </Box>
   );
 };
