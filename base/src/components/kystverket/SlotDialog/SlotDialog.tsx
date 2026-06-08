@@ -1,5 +1,5 @@
 import { ReactNode, useContext } from 'react';
-import { Box, Dialog, Heading, Paragraph } from '~/main';
+import { Box, Dialog, Heading, Paragraph, type DialogSize } from '~/main';
 import classes from './SlotDialog.module.css';
 import { SlotDialogButtons } from '~/components/kystverket/SlotDialog/Buttons/SlotDialogButtons';
 import {
@@ -14,17 +14,34 @@ export interface SlotDialogProps {
 
   /**Should be enabled with long content */
   longContent?: boolean;
+  size?: DialogSize;
   title: string;
   subtitle?: string;
   children: ReactNode;
 }
 
-function SlotDialogRoot({ title, subtitle, open, onClose, ref, children, longContent }: SlotDialogProps) {
+function SlotDialogRoot({
+  title,
+  subtitle,
+  open,
+  onClose,
+  ref,
+  children,
+  longContent,
+  size,
+}: Readonly<SlotDialogProps>) {
   const DialogBlockClasses = `${classes.dialogBlockBase} ${longContent ? classes.longContent : ''}`;
 
   return (
     <SlotDialogButtonsProvider>
-      <Dialog open={open} onClose={onClose} ref={ref} className={classes.slotDialogOverrides} closedby="any">
+      <Dialog
+        open={open}
+        onClose={onClose}
+        ref={ref}
+        size={size}
+        className={classes.slotDialogOverrides}
+        closedby="any"
+      >
         <Box gap={4} className={`${classes.headerBlock} ${DialogBlockClasses}`}>
           {!!subtitle && <Paragraph>{subtitle}</Paragraph>}
           <Heading>{title}</Heading>
@@ -38,7 +55,7 @@ function SlotDialogRoot({ title, subtitle, open, onClose, ref, children, longCon
   );
 }
 
-function SlotDialogButtonsBlock({ className }: { className: string }) {
+function SlotDialogButtonsBlock({ className }: Readonly<{ className: string }>) {
   const { buttons } = useContext(SlotDialogButtonsContainerContext);
 
   if (!buttons) {
