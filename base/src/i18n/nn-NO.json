@@ -52,6 +52,10 @@
     "openProfileMenu": "Opne profilmeny"
   },
   "kystverket": "Kystverket",
+  "labelContent": {
+    "optional": "Valfritt",
+    "required": "Må fyllast ut"
+  },
   "loading": "Lastar",
   "organisasjonsnummer": "Organisasjonsnummer",
   "sentralbord": "Sentralbord"

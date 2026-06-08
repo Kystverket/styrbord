@@ -52,6 +52,10 @@
     "openProfileMenu": "Open profile menu"
   },
   "kystverket": "Norwegian coastal administration",
+  "labelContent": {
+    "optional": "Optional",
+    "required": "Required"
+  },
   "loading": "Loading",
   "organisasjonsnummer": "Organization number",
   "sentralbord": "Switchboard"
