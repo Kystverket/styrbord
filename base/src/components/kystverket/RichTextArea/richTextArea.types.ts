@@ -1,5 +1,4 @@
 import type { CmdKey } from '@milkdown/core';
-import { ExtraFileInfo } from '~/main';
 import { MaybePromise } from '~/utils/utility.types';
 
 export type RichTextAreaProps = {
@@ -23,7 +22,7 @@ export type RichTextAreaProps = {
 
 export type ToolbarCommand<T = unknown> = { key: CmdKey<T>; value?: T };
 
-export type ResolvedImageRef = Pick<ExtraFileInfo, 'storageId' | 'previewUri'> & { alt?: string };
+export type ResolvedImageRef = { storageId: string; previewUri: string; alt?: string };
 
 export type ImageUploadResult = { src: string; ref?: string; alt?: string };
 

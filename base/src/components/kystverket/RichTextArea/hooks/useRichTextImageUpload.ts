@@ -72,7 +72,7 @@ export const useRichTextImageUpload = ({
     return normalizeUploadResult(result, file);
   };
 
-  const insertImageNode = (image: ResolvedImageRef) => {
+  const insertImageNode = (image: Omit<ResolvedImageRef, 'storageId'>) => {
     const editor = get();
 
     if (!editor) {

@@ -1,6 +1,5 @@
+import { ResolvedImageRef } from '~/components/kystverket/RichTextArea/richTextArea.types';
 import { MaybePromise } from '~/utils/utility.types';
-
-type ResolvedImageRef = { storageId?: string; previewUri?: string; alt?: string };
 
 const imageRegex = /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g;
 
