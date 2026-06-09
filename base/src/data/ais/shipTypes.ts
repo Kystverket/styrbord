@@ -96,29 +96,31 @@ export const AIS_SHIP_TYPES = [
   },
 ] as const satisfies readonly AisShipType[];
 
-export type AisShipTypeId = (typeof AIS_SHIP_TYPES)[number]['id'];
+export type AisShipTypeEntry = (typeof AIS_SHIP_TYPES)[number];
 
-export type AisCode = (typeof AIS_SHIP_TYPES)[number]['aisCodes'][number];
+export type AisShipTypeId = AisShipTypeEntry['id'];
 
-const _byAisCode = new Map<string, (typeof AIS_SHIP_TYPES)[number]>();
+export type AisCode = AisShipTypeEntry['aisCodes'][number];
+
+const _byAisCode = new Map<string, AisShipTypeEntry>();
 for (const entry of AIS_SHIP_TYPES) {
   for (const code of entry.aisCodes) {
     _byAisCode.set(code, entry);
   }
 }
 
-const _byId = new Map<AisShipTypeId, (typeof AIS_SHIP_TYPES)[number]>(
+const _byId = new Map<AisShipTypeId, AisShipTypeEntry>(
   AIS_SHIP_TYPES.map((entry) => [entry.id, entry]),
 );
 
 export function getShipTypeByAisCode(
   code: string | number,
-): (typeof AIS_SHIP_TYPES)[number] | undefined {
+): AisShipTypeEntry | undefined {
   return _byAisCode.get(String(code));
 }
 
 export function getShipTypeById(
   id: AisShipTypeId,
-): (typeof AIS_SHIP_TYPES)[number] | undefined {
+): AisShipTypeEntry | undefined {
   return _byId.get(id);
 }
