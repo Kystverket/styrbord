@@ -58,5 +58,11 @@
   },
   "loading": "Loading",
   "organisasjonsnummer": "Organization number",
-  "sentralbord": "Switchboard"
+  "sentralbord": "Switchboard",
+  "sideSheet": {
+    "back": "Back",
+    "close": "Close",
+    "pin": "Pin to side",
+    "unpin": "Unpin from side"
+  }
 }

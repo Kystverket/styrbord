@@ -149,6 +149,15 @@ export { IdProvider, useIdProvider } from './utils/idContext';
 
 export { SlotDialog, type SlotDialogProps } from './components/kystverket/SlotDialog/SlotDialog';
 
+export { SideSheet, type SideSheetProps } from './components/kystverket/SideSheet/SideSheet';
+export type {
+  SideSheetSize,
+  SideSheetPlacement,
+  SideSheetMode,
+  SideSheetHeadingSize,
+  SideSheetLayoutProps,
+} from './components/kystverket/SideSheet/SideSheet.types';
+
 export { Suggestion } from './components/designsystemet/Suggestion/Suggestion';
 export type { SuggestionProps } from './components/designsystemet/Suggestion/Suggestion';
 

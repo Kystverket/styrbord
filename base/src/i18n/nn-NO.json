@@ -58,5 +58,11 @@
   },
   "loading": "Lastar",
   "organisasjonsnummer": "Organisasjonsnummer",
-  "sentralbord": "Sentralbord"
+  "sentralbord": "Sentralbord",
+  "sideSheet": {
+    "back": "Tilbake",
+    "close": "Lukk",
+    "pin": "Fest til sida",
+    "unpin": "Løsne frå sida"
+  }
 }
