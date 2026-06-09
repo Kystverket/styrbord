@@ -5,6 +5,9 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { RichTextArea, RichTextAreaProps } from './richTextArea';
 
 import atlas from '@assets/img/atlas/atlas 1.jpeg';
+import { ExtraFileInfo, UploadFileResult } from '../FileUploader/FileUploader.types';
+import { FileUploaderContext } from '../FileUploader/FileUploader.context';
+import { v4 as uuidv4 } from 'uuid';
 
 const meta = {
   title: 'Form/RichTextArea/RichTextArea',
@@ -38,6 +41,36 @@ const defaultArgs: RichTextAreaProps = {
   label: 'Rikt tekstfelt',
   description: 'Dette er et tekstfelt som støtter rik tekstformatering.',
   optional: 'Valgfritt',
+};
+
+const deriveFileInfosFromStorageIds = async (): Promise<ExtraFileInfo[]> => {
+  return new Promise((resolve) => {
+    // Simulate loading delay
+    setTimeout(() => {
+      resolve([{ storageId: 'image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69', previewUri: atlas }]);
+    }, 1000);
+  });
+};
+
+const uploadFile = async (): Promise<UploadFileResult> => {
+  return new Promise<UploadFileResult>((resolve) => {
+    // Simulate loading delay
+    setTimeout(() => {
+      resolve({
+        storageId: uuidv4(),
+        success: true,
+      });
+    }, 1500);
+  });
+};
+
+const deleteFile = async (): Promise<void> => {
+  return new Promise((resolve) => {
+    // Simulate loading delay
+    setTimeout(() => {
+      resolve();
+    }, 1000);
+  });
 };
 
 const renderInteractive: Story['render'] = (args) => {
@@ -104,14 +137,6 @@ Bilde av Atlas
 ![Bilde_av_atlas.png](image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69)`,
     label: 'Rikt tekstfelt med bildereferanse',
     description: 'Last opp et bilde — markdownutdata vil inneholde en stabil referanse til bildet.',
-    deriveFileInfosFromStorageIds: async (_refs) => {
-      const resolvedImageRefs = [{ storageId: 'image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69', previewUri: atlas }];
-
-      await new Promise<void>((resolve) => {
-        setTimeout(resolve, 1000);
-      });
-      return resolvedImageRefs;
-    },
     onImageUpload: async (file) => {
       const src = await fileToDataUrl(file);
       // Simulate a stable blob reference that would be generated server-side
@@ -127,7 +152,13 @@ Bilde av Atlas
     const [markdownOutput, setMarkdownOutput] = useState('');
 
     return (
-      <>
+      <FileUploaderContext.Provider
+        value={{
+          uploadFile,
+          deleteFile,
+          deriveFileInfosFromStorageIds,
+        }}
+      >
         <RichTextArea
           {...args}
           value={value}
@@ -157,7 +188,7 @@ Bilde av Atlas
             </pre>
           </div>
         )}
-      </>
+      </FileUploaderContext.Provider>
     );
   },
 };

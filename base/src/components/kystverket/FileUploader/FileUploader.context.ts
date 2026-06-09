@@ -25,7 +25,7 @@ const deleteFileDummy = async (): Promise<void> => {
 };
 
 export interface FileUploaderContextProps {
-  deriveFileInfosFromStorageIds?: DeriveFileInfosFromStorageIds;
+  deriveFileInfosFromStorageIds: DeriveFileInfosFromStorageIds;
   uploadFile: (file: FormData) => Promise<UploadFileResult>;
   deleteFile: (fileId: string) => Promise<void>;
 }
@@ -33,4 +33,5 @@ export interface FileUploaderContextProps {
 export const FileUploaderContext = createContext<FileUploaderContextProps>({
   uploadFile: uploadFileDummy,
   deleteFile: deleteFileDummy,
+  deriveFileInfosFromStorageIds: async () => [],
 });

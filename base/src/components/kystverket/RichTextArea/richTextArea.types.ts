@@ -1,5 +1,4 @@
 import type { CmdKey } from '@milkdown/core';
-import { DeriveFileInfosFromStorageIds } from '~/utils/fileInfoResolver';
 
 export type RichTextAreaProps = {
   value: string | null | undefined;
@@ -16,8 +15,6 @@ export type RichTextAreaProps = {
   onImageUpload?: OnImageUploadFn;
   /** Optional remove handler for deleting persisted images by stable ref. */
   onImageRemove?: (ref: string) => Promise<void>;
-  /** Optional resolver that returns image metadata for markdown refs (storageIds). */
-  deriveFileInfosFromStorageIds?: DeriveFileInfosFromStorageIds;
 };
 
 export type ToolbarCommand<T = unknown> = { key: CmdKey<T>; value?: T };
