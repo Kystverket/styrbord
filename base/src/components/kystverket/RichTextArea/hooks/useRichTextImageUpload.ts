@@ -1,19 +1,25 @@
 import { useState } from 'react';
 import { commandsCtx, editorViewCtx } from '@milkdown/core';
 import type { Editor } from '@milkdown/core';
-import { insertImageCommand } from '@milkdown/preset-commonmark';
+import { insertImageCommand, UpdateImageCommandPayload } from '@milkdown/preset-commonmark';
 import type { Ctx } from '@milkdown/ctx';
 import type { InlineImageConfig } from '@milkdown/components/image-inline';
 import { TextSelection } from '@milkdown/prose/state';
+import {
+  createStorageIdToExtraFileInfoMap,
+  DeriveFileInfosFromStorageIds,
+  getExtraFileInfoPreviewUri,
+} from '~/utils/fileInfoResolver';
 
-import type { ImageUploadResult, ResolvedImageRef, UploadImageFn } from '../richTextArea.types';
+import type { FileUploaderStyleImageUploadResult, ImageUploadResult, OnImageUploadFn } from '../richTextArea.types';
 import { createRichTextAreaInlineImageConfig } from '../richTextArea.editor';
 
 type UseRichTextImageUploadParams = {
   disabled: boolean;
   get: () => Editor | undefined;
   updateToolbarState: (ctx: Ctx) => void;
-  latestOnUploadRef: React.RefObject<UploadImageFn | undefined> | undefined;
+  latestOnUploadRef: React.RefObject<OnImageUploadFn | undefined> | undefined;
+  deriveFileInfosFromStorageIds?: DeriveFileInfosFromStorageIds;
   sasToRefMap: React.RefObject<Map<string, string>>;
   pendingImageSelectionRef: React.RefObject<{ from: number; to: number } | null>;
 };
@@ -25,10 +31,23 @@ type UseRichTextImageUploadReturn = {
   handleImageFileInputChange: (event: React.ChangeEvent<HTMLInputElement>) => Promise<{ success: boolean }>;
 };
 
-const normalizeUploadResult = (
-  result: Awaited<ReturnType<NonNullable<UploadImageFn>>> | null,
+const isImageUploadResult = (
+  result: ImageUploadResult | FileUploaderStyleImageUploadResult,
+): result is ImageUploadResult => {
+  return 'src' in result;
+};
+
+const isFileUploaderStyleImageUploadResult = (
+  result: ImageUploadResult | FileUploaderStyleImageUploadResult,
+): result is FileUploaderStyleImageUploadResult => {
+  return 'storageId' in result;
+};
+
+const normalizeUploadResult = async (
+  result: Awaited<ReturnType<NonNullable<OnImageUploadFn>>> | null,
   file: File,
-): ImageUploadResult | null => {
+  deriveFileInfosFromStorageIds?: DeriveFileInfosFromStorageIds,
+): Promise<ImageUploadResult | null> => {
   if (!result) {
     return null;
   }
@@ -40,7 +59,28 @@ const normalizeUploadResult = (
     };
   }
 
-  if (!result.src) {
+  if (isFileUploaderStyleImageUploadResult(result)) {
+    if (!result.success || !result.storageId || !deriveFileInfosFromStorageIds) {
+      return null;
+    }
+
+    const extraFileInfos = await deriveFileInfosFromStorageIds([result.storageId]);
+    const storageIdToExtraFileInfo = createStorageIdToExtraFileInfoMap(extraFileInfos);
+    const extraFileInfo = storageIdToExtraFileInfo.get(result.storageId);
+    const previewUri = getExtraFileInfoPreviewUri(extraFileInfo);
+
+    if (!previewUri) {
+      return null;
+    }
+
+    return {
+      src: previewUri,
+      ref: result.storageId,
+      alt: file.name.replace(/\.[^.]+$/, ''),
+    };
+  }
+
+  if (!isImageUploadResult(result) || !result.src) {
     return null;
   }
 
@@ -56,6 +96,7 @@ export const useRichTextImageUpload = ({
   get,
   updateToolbarState,
   latestOnUploadRef,
+  deriveFileInfosFromStorageIds,
   sasToRefMap,
   pendingImageSelectionRef,
 }: UseRichTextImageUploadParams): UseRichTextImageUploadReturn => {
@@ -69,10 +110,10 @@ export const useRichTextImageUpload = ({
     }
 
     const result = await upload(file);
-    return normalizeUploadResult(result, file);
+    return normalizeUploadResult(result, file, deriveFileInfosFromStorageIds);
   };
 
-  const insertImageNode = (image: Omit<ResolvedImageRef, 'storageId'>) => {
+  const insertImageNode = (image: UpdateImageCommandPayload) => {
     const editor = get();
 
     if (!editor) {
@@ -120,7 +161,7 @@ export const useRichTextImageUpload = ({
         sasToRefMap.current.set(uploadedImage.src, uploadedImage.ref);
       }
 
-      insertImageNode({ previewUri: uploadedImage.src, alt: uploadedImage.alt });
+      insertImageNode({ src: uploadedImage.src, alt: uploadedImage.alt });
       return true;
     } catch {
       return false;
