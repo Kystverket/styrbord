@@ -9,7 +9,7 @@ import {
   Spinner,
   Card,
   Icon,
-  ExtraFileInfo,
+  type ExtraFileInfo,
   FileUploaderContext,
   SlotDialog,
 } from '~/main';

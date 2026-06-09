@@ -7,7 +7,7 @@ import type { InlineImageConfig } from '@milkdown/components/image-inline';
 import { TextSelection } from '@milkdown/prose/state';
 import {
   createStorageIdToExtraFileInfoMap,
-  DeriveFileInfosFromStorageIds,
+  type DeriveFileInfosFromStorageIds,
   getExtraFileInfoPreviewUri,
 } from '~/utils/fileInfoResolver';
 

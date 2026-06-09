@@ -1,5 +1,5 @@
-import { ExtraFileInfo } from '~/components/kystverket/FileUploader/FileUploader.types';
-import { MaybePromise } from '~/utils/utility.types';
+import { type ExtraFileInfo } from '~/components/kystverket/FileUploader/FileUploader.types';
+import { type MaybePromise } from '~/utils/utility.types';
 
 export type DeriveFileInfosFromStorageIds = (storageIds: string[]) => MaybePromise<ExtraFileInfo[]>;
 

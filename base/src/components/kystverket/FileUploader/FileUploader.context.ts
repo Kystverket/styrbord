@@ -1,5 +1,4 @@
 import { createContext } from 'react';
-import { createContext } from 'react';
 import { FileInfo, UploadFileResult } from './FileUploader.types';
 import { v4 as uuidv4 } from 'uuid';
 import type { DeriveFileInfosFromStorageIds } from '~/utils/fileInfoResolver';

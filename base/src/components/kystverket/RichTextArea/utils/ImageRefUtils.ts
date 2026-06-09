@@ -1,6 +1,6 @@
 import {
   createStorageIdToExtraFileInfoMap,
-  DeriveFileInfosFromStorageIds,
+  type DeriveFileInfosFromStorageIds,
   getExtraFileInfoPreviewUri,
 } from '~/utils/fileInfoResolver';
 

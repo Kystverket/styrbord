@@ -1,32 +1,35 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import styles from './markdownToReact.module.css';
 import { Link, Paragraph } from '~/main';
-import { DeriveFileInfosFromStorageIds } from '~/utils/fileInfoResolver';
 import { convertFromRefToImage } from '~/components/kystverket/RichTextArea/utils/ImageRefUtils';
+import { FileUploaderContext } from '~/components/kystverket/FileUploader/FileUploader.context';
 
 export type MarkdownToReactProps = {
   markdown: string;
-  /** Optional sync/async resolver that receives all refs found in markdown. */
-  deriveFileInfosFromStorageIds?: DeriveFileInfosFromStorageIds;
 };
 
 // Overskrifter (h1-h6) rendres som <Paragraph> med tanke på dokumenthierarki (enn så lenge, dette må vi komme tilbake til etter hvert)
-const MarkdownToReact = ({ markdown, deriveFileInfosFromStorageIds }: MarkdownToReactProps) => {
+const MarkdownToReact = ({ markdown }: MarkdownToReactProps) => {
+  const fileUploaderContext = useContext(FileUploaderContext);
+
   const normalizedMarkdown = useMemo(() => markdown.replaceAll(/\n{3,}/g, '\n\n\u00A0\n\n'), [markdown]);
   const [renderedMarkdown, setRenderedMarkdown] = useState(normalizedMarkdown);
 
   useEffect(() => {
     let isCancelled = false;
 
-    if (!deriveFileInfosFromStorageIds) {
+    if (!fileUploaderContext.deriveFileInfosFromStorageIds) {
       setRenderedMarkdown(normalizedMarkdown);
       return;
     }
 
     const resolve = async () => {
       try {
-        const resolvedMarkdown = await convertFromRefToImage(normalizedMarkdown, deriveFileInfosFromStorageIds);
+        const resolvedMarkdown = await convertFromRefToImage(
+          normalizedMarkdown,
+          fileUploaderContext.deriveFileInfosFromStorageIds,
+        );
 
         if (isCancelled) {
           return;
@@ -47,7 +50,7 @@ const MarkdownToReact = ({ markdown, deriveFileInfosFromStorageIds }: MarkdownTo
     return () => {
       isCancelled = true;
     };
-  }, [normalizedMarkdown, deriveFileInfosFromStorageIds]);
+  }, [normalizedMarkdown, fileUploaderContext.deriveFileInfosFromStorageIds]);
 
   return (
     <div className={styles.markdownToReact}>
