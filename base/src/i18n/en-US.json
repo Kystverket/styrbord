@@ -60,9 +60,10 @@
   "organisasjonsnummer": "Organization number",
   "sentralbord": "Switchboard",
   "sideSheet": {
-    "back": "Back",
-    "close": "Close",
-    "pin": "Pin to side",
-    "unpin": "Unpin from side"
+    "back": "Go back",
+    "close": "Close side panel",
+    "openInNewTab": "Open in new tab",
+    "pin": "Pin side panel",
+    "unpin": "Unpin side panel"
   }
 }

@@ -1,6 +1,6 @@
 import { forwardRef, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { Heading } from '@digdir/designsystemet-react';
-import { Box } from '~/main';
+import { Box, Button } from '~/main';
 import { useTranslation } from '~/translations';
 import Icon from '~/components/kystverket/Icon/icon';
 import { SideSheetButtonsContext, SideSheetButtonsProvider } from './Buttons/ButtonsContext';
@@ -71,7 +71,7 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
     onPinnedChange,
     backdrop = true,
     title,
-    headingSize = 'md',
+    headingSize = 'xs',
     showCloseButton = true,
     showBackButton = false,
     onBack,
@@ -165,10 +165,7 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
     .join(' ');
 
   function getPinIcon() {
-    if (placement === 'left') {
-      return isPinned ? 'left_panel_close' : 'left_panel_open';
-    }
-    return isPinned ? 'right_panel_close' : 'right_panel_open';
+    return isPinned ? 'keep_off' : 'keep';
   }
 
   return (
@@ -193,9 +190,15 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
         <header className={classes.header}>
           <div className={classes.headerRow}>
             {showBackButton && (
-              <button type="button" className={classes.iconButton} onClick={onBack} aria-label={t('sideSheet.back')}>
+              <Button
+                variant="ghost"
+                size="sm"
+                icon
+                onClick={onBack}
+                aria-label={t('sideSheet.back')}
+              >
                 <Icon material="arrow_back" size="md" />
-              </button>
+              </Button>
             )}
 
             {title !== undefined && (
@@ -210,26 +213,28 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
               {headerAction}
 
               {pinnable && (
-                <button
-                  type="button"
-                  className={classes.iconButton}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  icon
                   onClick={handlePinToggle}
                   aria-label={isPinned ? t('sideSheet.unpin') : t('sideSheet.pin')}
                   aria-pressed={isPinned}
                 >
                   <Icon material={getPinIcon()} size="md" />
-                </button>
+                </Button>
               )}
 
               {showCloseButton && (
-                <button
-                  type="button"
-                  className={classes.iconButton}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  icon
                   onClick={onClose}
                   aria-label={t('sideSheet.close')}
                 >
                   <Icon material="close" size="md" />
-                </button>
+                </Button>
               )}
             </div>
           </div>

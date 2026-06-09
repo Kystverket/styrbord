@@ -51,21 +51,15 @@ export const OpenInNewWindow: StoryFn<typeof SideSheet> = (args) => {
         onClose={() => setOpen(false)}
         title="Heading"
         headerAction={
-          <button
-            type="button"
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: '4px',
-              display: 'inline-flex',
-              alignItems: 'center',
-            }}
-            aria-label="Åpne i nytt vindu"
+          <Button
+            variant="ghost"
+            size="sm"
+            icon
+            aria-label="Åpne i ny fane"
             onClick={() => window.open('https://vg.no', '_blank')}
           >
-            <Icon material="open_in_new" size="md" aria-hidden />
-          </button>
+            <Icon material="open_in_new" size="md" />
+          </Button>
         }
       >
         <Paragraph>Side sheet content with an "open in new window" action in the header.</Paragraph>

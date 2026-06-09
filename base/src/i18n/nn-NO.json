@@ -60,9 +60,10 @@
   "organisasjonsnummer": "Organisasjonsnummer",
   "sentralbord": "Sentralbord",
   "sideSheet": {
-    "back": "Tilbake",
-    "close": "Lukk",
-    "pin": "Fest til sida",
-    "unpin": "Løsne frå sida"
+    "back": "Gå tilbake",
+    "close": "Lukk sidepanel",
+    "openInNewTab": "Opne i ny fane",
+    "pin": "Fest sidepanel",
+    "unpin": "Løysne sidepanel"
   }
 }
