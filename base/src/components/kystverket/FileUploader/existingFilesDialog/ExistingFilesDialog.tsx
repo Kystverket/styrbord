@@ -4,8 +4,6 @@ import {
   FileInfo,
   Button,
   Checkbox,
-  Dialog,
-  DialogBlock,
   Heading,
   Paragraph,
   Spinner,
@@ -13,10 +11,12 @@ import {
   Icon,
   ExtraFileInfo,
   FileUploaderContext,
+  SlotDialog,
 } from '~/main';
 import classes from './ExistingFilesDialog.module.css';
 import { convertBytesToReadable } from '~/utils/convertBytesToReadable';
 import { ExistingFilesProviderItem } from '~/components/kystverket/FileUploader/FileUploader';
+import { createStorageIdToExtraFileInfoMap } from '~/utils/fileInfoResolver';
 import { getPrefixIcon } from '~/components/kystverket/FileUploader/item/FileUploaderItem';
 
 type ExistingFilesDialogProps = {
@@ -53,8 +53,6 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
       const fetchPreviewFiles = async () => {
         if (!fileUploaderContext.deriveFileInfosFromStorageIds) return;
 
-        const extraInfoMap = new Map<string, ExtraFileInfo>();
-
         const storageIds = new Set(
           existingFilesCollection
             .flatMap((f) => f.files)
@@ -62,11 +60,7 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
             .map((f) => f.storageId!) as string[],
         );
         const extraFileInfos = await fileUploaderContext.deriveFileInfosFromStorageIds([...storageIds]);
-        extraFileInfos.forEach((info) => {
-          if (info.storageId) {
-            extraInfoMap.set(info.storageId, info);
-          }
-        });
+        const extraInfoMap = createStorageIdToExtraFileInfoMap(extraFileInfos);
         setStorageIdToExtraFileInfo(extraInfoMap);
       };
       fetchPreviewFiles();
@@ -142,15 +136,8 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
     const handleCancelExistingFiles = () => dialogElement?.close();
 
     return (
-      <Dialog ref={setDialogElement} closedby="any">
-        <DialogBlock>
-          <Heading level={2} data-size="sm">
-            {t('existingFiles.dialogTitle')}
-          </Heading>
-        </DialogBlock>
-
-        {/* CONTENT BLOCK */}
-        <DialogBlock className={classes.dialogContent}>
+      <SlotDialog longContent title={t('existingFiles.dialogTitle')} ref={setDialogElement}>
+        <>
           {loadingAllExistingFiles && (
             <Box horizontal align="center" justify="center">
               <Spinner aria-label={t('loading')} />
@@ -205,18 +192,18 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
                 ))}
             </Box>
           )}
-        </DialogBlock>
-        <DialogBlock>
-          <Box horizontal gap={16}>
-            <Button variant="filled" onClick={handleConfirmExistingFiles}>
-              {t('existingFiles.dialogConfirm')}
-            </Button>
-            <Button variant="outline" onClick={handleCancelExistingFiles}>
-              {t('existingFiles.dialogCancel')}
-            </Button>
-          </Box>
-        </DialogBlock>
-      </Dialog>
+          <SlotDialog.Buttons>
+            <Box horizontal gap={16}>
+              <Button variant="filled" onClick={handleConfirmExistingFiles}>
+                {t('existingFiles.dialogConfirm')}
+              </Button>
+              <Button variant="outline" onClick={handleCancelExistingFiles}>
+                {t('existingFiles.dialogCancel')}
+              </Button>
+            </Box>
+          </SlotDialog.Buttons>
+        </>
+      </SlotDialog>
     );
   },
 );
