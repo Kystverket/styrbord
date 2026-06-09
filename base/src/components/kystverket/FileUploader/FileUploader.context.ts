@@ -1,8 +1,8 @@
 import { createContext } from 'react';
+import { createContext } from 'react';
 import { FileInfo, UploadFileResult } from './FileUploader.types';
 import { v4 as uuidv4 } from 'uuid';
-import { DeriveFileInfosFromStorageIds } from '~/utils/fileInfoResolver';
-
+import type { DeriveFileInfosFromStorageIds } from '~/utils/fileInfoResolver';
 export type FileChangeCallback = (files: FileInfo[]) => void;
 
 const uploadFileDummy = async (): Promise<UploadFileResult> => {
