@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import MarkdownToReact from './markdownToReact';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { FileUploaderContext } from '../FileUploader/FileUploader.context';
-import { ExtraFileInfo } from '../FileUploader/FileUploader.types';
+import { ExtraFileInfo, UploadFileResult } from '../FileUploader/FileUploader.types';
+import { v4 as uuidv4 } from 'uuid';
 
 import atlas from '@assets/img/atlas/atlas 1.jpeg';
 
@@ -31,6 +32,17 @@ const deriveFileInfosFromStorageIds = async (): Promise<ExtraFileInfo[]> => {
       ]);
     }, 300);
   });
+};
+
+const uploadFile = async (): Promise<UploadFileResult> => {
+  return {
+    storageId: uuidv4(),
+    success: true,
+  };
+};
+
+const deleteFile = async (): Promise<void> => {
+  return;
 };
 
 export const Default: Story = {
@@ -130,6 +142,8 @@ export const ResolveImageRefExample: Story = {
   render: (args) => (
     <FileUploaderContext.Provider
       value={{
+        uploadFile,
+        deleteFile,
         deriveFileInfosFromStorageIds,
       }}
     >
