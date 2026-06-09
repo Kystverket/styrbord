@@ -109,21 +109,13 @@ const App = () => (
 export const ResolveImageRefExample: Story = {
   parameters: { docs: { source: { type: 'code' } } },
   args: {
-    markdown: `
-# Noe kul markdown
-
-## Med et bilde som ikke resolver
-![Et bilde av en skillingsbolle på havet](image://128asdnsaj-dnb1-asj1-9d11-sajdnj1jo)
-
-## og et bilde som resolver!
-![Atlas.png](image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69)
-`,
-    resolveImageRefs: (_refs) => {
+    markdown:
+      '\n# Noe kul markdown\n\n## Med et bilde som ikke resolver\n![Et bilde av en skillingsbolle på havet](image://128asdnsaj-dnb1-asj1-9d11-sajdnj1jo)\n\n## og et bilde som resolver!\n![Atlas.png](image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69)\n',
+    deriveFileInfosFromStorageIds: (_refs) => {
       return [
         {
           storageId: 'image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69',
           previewUri: atlas,
-          alt: 'Adding on some alternative text',
         },
       ];
     },

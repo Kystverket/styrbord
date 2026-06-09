@@ -1,6 +1,7 @@
 import { createContext } from 'react';
-import { ExtraFileInfo, FileInfo, UploadFileResult } from './FileUploader.types';
+import { FileInfo, UploadFileResult } from './FileUploader.types';
 import { v4 as uuidv4 } from 'uuid';
+import { DeriveFileInfosFromStorageIds } from '~/utils/fileInfoResolver';
 
 export type FileChangeCallback = (files: FileInfo[]) => void;
 
@@ -24,7 +25,7 @@ const deleteFileDummy = async (): Promise<void> => {
 };
 
 export interface FileUploaderContextProps {
-  deriveFileInfosFromStorageIds?: (storageId: string[]) => Promise<ExtraFileInfo[]>;
+  deriveFileInfosFromStorageIds?: DeriveFileInfosFromStorageIds;
   uploadFile: (file: FormData) => Promise<UploadFileResult>;
   deleteFile: (fileId: string) => Promise<void>;
 }

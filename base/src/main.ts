@@ -104,6 +104,7 @@ export {
   type FileUploaderContextProps,
 } from './components/kystverket/FileUploader/FileUploader.context';
 export type * from './components/kystverket/FileUploader/FileUploader.types';
+export type { DeriveFileInfosFromStorageIds } from './utils/fileInfoResolver';
 
 export { default as CardTitle, type CardTitleProps } from './components/designsystemet/CardTitle/CardTitle';
 

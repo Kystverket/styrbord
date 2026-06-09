@@ -62,7 +62,7 @@ const RichTextAreaContainer = ({
   onChange,
   onImageUpload,
   onImageRemove,
-  resolveImageRefs,
+  deriveFileInfosFromStorageIds,
   placeholder,
   disabled = false,
   label,
@@ -92,7 +92,7 @@ const RichTextAreaContainer = ({
     let isCancelled = false;
 
     const resolveImages = async () => {
-      if (!resolveImageRefs) {
+      if (!deriveFileInfosFromStorageIds) {
         sasToRefMap.current.clear();
         setEditorMarkdown(normalizedValue);
         return;
@@ -105,7 +105,7 @@ const RichTextAreaContainer = ({
         const nextSasToRefMap = new Map<string, string>();
         const resolvedMarkdown = await convertFromRefToImage(
           normalizedValue,
-          resolveImageRefs,
+          deriveFileInfosFromStorageIds,
           nextSasToRefMap,
           previousRefToUrlMap,
         );
@@ -135,7 +135,7 @@ const RichTextAreaContainer = ({
     return () => {
       isCancelled = true;
     };
-  }, [normalizedValue, resolveImageRefs]);
+  }, [normalizedValue, deriveFileInfosFromStorageIds]);
 
   const insertImageFromFileRef = useRef<ImageInsertHandler>(() => {});
   const inlineImageConfigUpdaterRef = useRef<(config: InlineImageConfig) => InlineImageConfig>((c) => c);
@@ -188,6 +188,7 @@ const RichTextAreaContainer = ({
     get,
     updateToolbarState,
     latestOnUploadRef,
+    deriveFileInfosFromStorageIds,
     sasToRefMap,
     pendingImageSelectionRef,
   });

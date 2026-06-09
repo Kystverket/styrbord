@@ -104,7 +104,7 @@ Bilde av Atlas
 ![Bilde_av_atlas.png](image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69)`,
     label: 'Rikt tekstfelt med bildereferanse',
     description: 'Last opp et bilde — markdownutdata vil inneholde en stabil referanse til bildet.',
-    resolveImageRefs: async (_refs) => {
+    deriveFileInfosFromStorageIds: async (_refs) => {
       const resolvedImageRefs = [{ storageId: 'image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69', previewUri: atlas }];
 
       await new Promise<void>((resolve) => {

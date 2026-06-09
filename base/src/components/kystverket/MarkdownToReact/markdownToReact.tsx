@@ -2,63 +2,37 @@ import { useEffect, useMemo, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import styles from './markdownToReact.module.css';
 import { Link, Paragraph } from '~/main';
-import { MaybePromise } from '~/utils/utility.types';
-import { ResolvedImageRef } from '~/components/kystverket/RichTextArea/richTextArea.types';
+import { DeriveFileInfosFromStorageIds } from '~/utils/fileInfoResolver';
+import { convertFromRefToImage } from '~/components/kystverket/RichTextArea/utils/ImageRefUtils';
 
 export type MarkdownToReactProps = {
   markdown: string;
   /** Optional sync/async resolver that receives all refs found in markdown. */
-  resolveImageRefs?: (refs: string[]) => MaybePromise<ResolvedImageRef[]>;
-};
-
-const imageRegex = /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g;
-
-const getUniqueImageRefs = (markdown: string): string[] =>
-  Array.from(new Set(Array.from(markdown.matchAll(imageRegex), ([, , src]) => src)));
-
-const replaceResolvedImageRefs = (markdown: string, resolvedImageRefs: ResolvedImageRef[]) => {
-  const resolvedImageRefMap = new Map<string, ResolvedImageRef>(
-    resolvedImageRefs
-      .filter((resolvedImageRef) => resolvedImageRef.storageId)
-      .map((resolvedImageRef) => [resolvedImageRef.storageId!, resolvedImageRef]),
-  );
-
-  return markdown.replace(imageRegex, (fullMatch, alt: string, src: string, title: string | undefined) => {
-    const resolvedImageRef = resolvedImageRefMap.get(src);
-
-    if (!resolvedImageRef?.previewUri) return fullMatch;
-
-    const resolvedSrc = resolvedImageRef.previewUri;
-    const resolvedAlt = resolvedImageRef.alt ?? alt;
-    const titlePart = title ? ` "${title}"` : '';
-
-    return `![${resolvedAlt}](${resolvedSrc}${titlePart})`;
-  });
+  deriveFileInfosFromStorageIds?: DeriveFileInfosFromStorageIds;
 };
 
 // Overskrifter (h1-h6) rendres som <Paragraph> med tanke på dokumenthierarki (enn så lenge, dette må vi komme tilbake til etter hvert)
-const MarkdownToReact = ({ markdown, resolveImageRefs }: MarkdownToReactProps) => {
+const MarkdownToReact = ({ markdown, deriveFileInfosFromStorageIds }: MarkdownToReactProps) => {
   const normalizedMarkdown = useMemo(() => markdown.replaceAll(/\n{3,}/g, '\n\n\u00A0\n\n'), [markdown]);
   const [renderedMarkdown, setRenderedMarkdown] = useState(normalizedMarkdown);
 
   useEffect(() => {
-    const uniqueRefs = getUniqueImageRefs(normalizedMarkdown);
     let isCancelled = false;
 
-    if (!resolveImageRefs || uniqueRefs.length === 0) {
+    if (!deriveFileInfosFromStorageIds) {
       setRenderedMarkdown(normalizedMarkdown);
       return;
     }
 
     const resolve = async () => {
       try {
-        const resolvedImageRefs = await resolveImageRefs(uniqueRefs);
+        const resolvedMarkdown = await convertFromRefToImage(normalizedMarkdown, deriveFileInfosFromStorageIds);
 
         if (isCancelled) {
           return;
         }
 
-        setRenderedMarkdown(replaceResolvedImageRefs(normalizedMarkdown, resolvedImageRefs));
+        setRenderedMarkdown(resolvedMarkdown);
       } catch {
         if (isCancelled) {
           return;
@@ -73,7 +47,7 @@ const MarkdownToReact = ({ markdown, resolveImageRefs }: MarkdownToReactProps) =
     return () => {
       isCancelled = true;
     };
-  }, [normalizedMarkdown, resolveImageRefs]);
+  }, [normalizedMarkdown, deriveFileInfosFromStorageIds]);
 
   return (
     <div className={styles.markdownToReact}>
