@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react-vite';
 import { useState } from 'react';
-import { Button, Icon, Paragraph, SideSheet } from '~/main';
+import { Button, Icon, Paragraph, SideSheet, Tooltip } from '~/main';
 
 export default {
   title: 'Components/SideSheet',
@@ -51,15 +51,17 @@ export const OpenInNewWindow: StoryFn<typeof SideSheet> = (args) => {
         onClose={() => setOpen(false)}
         title="Heading"
         headerAction={
-          <Button
-            variant="ghost"
-            size="sm"
-            icon
-            aria-label="Åpne i ny fane"
-            onClick={() => window.open('https://vg.no', '_blank')}
-          >
-            <Icon material="open_in_new" size="md" />
-          </Button>
+          <Tooltip content="Åpne i ny fane" placement="bottom">
+            <Button
+              variant="ghost"
+              size="sm"
+              icon
+              aria-label="Åpne i ny fane"
+              onClick={() => window.open('https://vg.no', '_blank')}
+            >
+              <Icon material="open_in_new" size="md" />
+            </Button>
+          </Tooltip>
         }
       >
         <Paragraph>Side sheet content with an "open in new window" action in the header.</Paragraph>

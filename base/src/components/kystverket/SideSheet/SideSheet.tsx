@@ -1,6 +1,6 @@
 import { forwardRef, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { Heading } from '@digdir/designsystemet-react';
-import { Box, Button } from '~/main';
+import { Box, Button, Tooltip } from '~/main';
 import { useTranslation } from '~/translations';
 import Icon from '~/components/kystverket/Icon/icon';
 import { SideSheetButtonsContext, SideSheetButtonsProvider } from './Buttons/ButtonsContext';
@@ -87,7 +87,6 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
   const { t } = useTranslation();
   const inLayout = useSideSheetLayoutContext();
 
-  // ── Pinned state (controlled / uncontrolled) ─────────────────────────────
   const isControlled = pinnedProp !== undefined;
   const [pinnedState, setPinnedState] = useState<boolean>(
     defaultPinned === undefined ? mode === 'push' : defaultPinned,
@@ -190,15 +189,11 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
         <header className={classes.header}>
           <div className={classes.headerRow}>
             {showBackButton && (
-              <Button
-                variant="ghost"
-                size="sm"
-                icon
-                onClick={onBack}
-                aria-label={t('sideSheet.back')}
-              >
-                <Icon material="arrow_back" size="md" />
-              </Button>
+              <Tooltip content={t('sideSheet.back')} placement="bottom">
+                <Button variant="ghost" size="sm" icon onClick={onBack} aria-label={t('sideSheet.back')}>
+                  <Icon material="arrow_back" size="md" />
+                </Button>
+              </Tooltip>
             )}
 
             {title !== undefined && (
@@ -213,28 +208,26 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
               {headerAction}
 
               {pinnable && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  icon
-                  onClick={handlePinToggle}
-                  aria-label={isPinned ? t('sideSheet.unpin') : t('sideSheet.pin')}
-                  aria-pressed={isPinned}
-                >
-                  <Icon material={getPinIcon()} size="md" />
-                </Button>
+                <Tooltip content={isPinned ? t('sideSheet.unpin') : t('sideSheet.pin')} placement="bottom">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    icon
+                    onClick={handlePinToggle}
+                    aria-label={isPinned ? t('sideSheet.unpin') : t('sideSheet.pin')}
+                    aria-pressed={isPinned}
+                  >
+                    <Icon material={getPinIcon()} size="md" />
+                  </Button>
+                </Tooltip>
               )}
 
               {showCloseButton && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  icon
-                  onClick={onClose}
-                  aria-label={t('sideSheet.close')}
-                >
-                  <Icon material="close" size="md" />
-                </Button>
+                <Tooltip content={t('sideSheet.close')} placement="bottom">
+                  <Button variant="ghost" size="sm" icon onClick={onClose} aria-label={t('sideSheet.close')}>
+                    <Icon material="close" size="md" />
+                  </Button>
+                </Tooltip>
               )}
             </div>
           </div>

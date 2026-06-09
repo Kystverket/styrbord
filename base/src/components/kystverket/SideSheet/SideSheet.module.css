@@ -94,9 +94,11 @@
 
   .push.placement-left {
     order: -1;
+    border-right: 1px solid var(--ds-color-neutral-border-subtle);
   }
   .push.placement-right {
     order: 1;
+    border-left: 1px solid var(--ds-color-neutral-border-subtle);
   }
 
   @media (prefers-reduced-motion: reduce) {
