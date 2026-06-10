@@ -23,6 +23,9 @@
     { "key": "footer.links.presse", "checks": ["untranslated"], "languages": ["nn-NO"] },
     { "key": "footer.links.sjotrafikksentralen", "checks": ["untranslated"], "languages": ["nn-NO"] },
     { "key": "header.login", "checks": ["untranslated"], "languages": ["nn-NO"] },
-    { "key": "header.logout", "checks": ["untranslated"], "languages": ["nn-NO"] }
+    { "key": "header.logout", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "sideSheet.back", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "sideSheet.close", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "sideSheet.pin", "checks": ["untranslated"], "languages": ["nn-NO"] }
   ]
 }
