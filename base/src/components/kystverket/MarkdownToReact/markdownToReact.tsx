@@ -1,62 +1,41 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import styles from './markdownToReact.module.css';
 import { Link, Paragraph } from '~/main';
-import { MaybePromise } from '~/utils/utility.types';
-
-type ResolvedImageRefs = Record<string, ResolvedImageRef>;
+import { convertFromRefToImage } from '~/components/kystverket/RichTextArea/utils/ImageRefUtils';
+import { FileUploaderContext } from '~/components/kystverket/FileUploader/FileUploader.context';
 
 export type MarkdownToReactProps = {
   markdown: string;
-  /** Optional sync/async resolver that receives all refs found in markdown. */
-
-  resolveImageRefs?: (refs?: string[]) => MaybePromise<ResolvedImageRefs>;
-};
-
-export type ResolvedImageRef = { src: string; alt?: string } | string | null | undefined;
-
-const imageRegex = /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g;
-
-const getUniqueImageRefs = (markdown: string): string[] =>
-  Array.from(new Set(Array.from(markdown.matchAll(imageRegex), ([, , src]) => src)));
-
-const replaceResolvedImageRefs = (markdown: string, resolvedImageRefs: ResolvedImageRefs) => {
-  return markdown.replace(imageRegex, (fullMatch, alt: string, src: string, title: string | undefined) => {
-    const resolvedImageRef = resolvedImageRefs[src];
-
-    if (resolvedImageRef === undefined || resolvedImageRef === null) return fullMatch;
-
-    const resolvedSrc = typeof resolvedImageRef === 'string' ? resolvedImageRef : resolvedImageRef.src;
-    const resolvedAlt = typeof resolvedImageRef === 'string' ? alt : (resolvedImageRef.alt ?? alt);
-    const titlePart = title ? ` "${title}"` : '';
-
-    return `![${resolvedAlt}](${resolvedSrc}${titlePart})`;
-  });
 };
 
 // Overskrifter (h1-h6) rendres som <Paragraph> med tanke på dokumenthierarki (enn så lenge, dette må vi komme tilbake til etter hvert)
-const MarkdownToReact = ({ markdown, resolveImageRefs }: MarkdownToReactProps) => {
+const MarkdownToReact = ({ markdown }: MarkdownToReactProps) => {
+  const fileUploaderContext = useContext(FileUploaderContext);
+
   const normalizedMarkdown = useMemo(() => markdown.replaceAll(/\n{3,}/g, '\n\n\u00A0\n\n'), [markdown]);
   const [renderedMarkdown, setRenderedMarkdown] = useState(normalizedMarkdown);
 
   useEffect(() => {
-    const uniqueRefs = getUniqueImageRefs(normalizedMarkdown);
     let isCancelled = false;
 
-    if (!resolveImageRefs || uniqueRefs.length === 0) {
+    if (!fileUploaderContext.deriveFileInfosFromStorageIds) {
       setRenderedMarkdown(normalizedMarkdown);
       return;
     }
 
     const resolve = async () => {
       try {
-        const resolvedImageRefs = await resolveImageRefs(uniqueRefs);
+        const resolvedMarkdown = await convertFromRefToImage(
+          normalizedMarkdown,
+          fileUploaderContext.deriveFileInfosFromStorageIds,
+        );
 
         if (isCancelled) {
           return;
         }
 
-        setRenderedMarkdown(replaceResolvedImageRefs(normalizedMarkdown, resolvedImageRefs));
+        setRenderedMarkdown(resolvedMarkdown);
       } catch {
         if (isCancelled) {
           return;
@@ -71,7 +50,7 @@ const MarkdownToReact = ({ markdown, resolveImageRefs }: MarkdownToReactProps) =
     return () => {
       isCancelled = true;
     };
-  }, [normalizedMarkdown, resolveImageRefs]);
+  }, [normalizedMarkdown, fileUploaderContext.deriveFileInfosFromStorageIds]);
 
   return (
     <div className={styles.markdownToReact}>

@@ -1,26 +1,44 @@
-import { MaybePromise } from '~/utils/utility.types';
-
-type ResolvedImageRef = { src: string; alt?: string } | string | null | undefined;
+import {
+  createStorageIdToExtraFileInfoMap,
+  type DeriveFileInfosFromStorageIds,
+  getExtraFileInfoPreviewUri,
+} from '~/utils/fileInfoResolver';
 
 const imageRegex = /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g;
+const imageRefPrefix = 'image://';
+
+const toStorageId = (ref: string): string => {
+  if (ref.startsWith(imageRefPrefix)) {
+    return ref.slice(imageRefPrefix.length);
+  }
+
+  return ref;
+};
 
 export const getImageRefsFromMarkdown = (markdown: string): string[] =>
   Array.from(new Set(Array.from(markdown.matchAll(imageRegex), ([, , ref]) => ref)));
 
 export const convertFromRefToImage = async (
   markdown: string,
-  resolveImageRefs: (refs: string[]) => MaybePromise<Record<string, ResolvedImageRef>>,
+  deriveFileInfosFromStorageIds: DeriveFileInfosFromStorageIds,
   urlToRefMap?: Map<string, string>,
   previousRefToUrlMap?: Map<string, string>,
 ) => {
   const uniqueRefs = getImageRefsFromMarkdown(markdown);
 
-  const resolvedImageRefs = await resolveImageRefs(uniqueRefs);
+  if (uniqueRefs.length === 0) {
+    return markdown;
+  }
+
+  const storageIds = Array.from(new Set(uniqueRefs.map((ref) => toStorageId(ref)).filter(Boolean)));
+  const derivedFileInfos = await deriveFileInfosFromStorageIds(storageIds);
+  const storageIdToExtraFileInfo = createStorageIdToExtraFileInfoMap(derivedFileInfos);
 
   return markdown.replace(imageRegex, (fullMatch, alt: string, ref: string, title: string | undefined) => {
-    const resolvedImageRef = resolvedImageRefs[ref];
+    const extraFileInfo = storageIdToExtraFileInfo.get(toStorageId(ref)) || storageIdToExtraFileInfo.get(ref);
+    const resolvedSrc = getExtraFileInfoPreviewUri(extraFileInfo);
 
-    if (resolvedImageRef === undefined || resolvedImageRef === null) {
+    if (!resolvedSrc) {
       const fallbackSrc = previousRefToUrlMap?.get(ref);
 
       if (!fallbackSrc) {
@@ -32,13 +50,11 @@ export const convertFromRefToImage = async (
       return `![${alt}](${fallbackSrc}${titlePart})`;
     }
 
-    const resolvedSrc = typeof resolvedImageRef === 'string' ? resolvedImageRef : resolvedImageRef.src;
-    const resolvedAlt = typeof resolvedImageRef === 'string' ? alt : (resolvedImageRef.alt ?? alt);
     const titlePart = title ? ` "${title}"` : '';
 
     urlToRefMap?.set(resolvedSrc, ref);
 
-    return `![${resolvedAlt}](${resolvedSrc}${titlePart})`;
+    return `![${alt}](${resolvedSrc}${titlePart})`;
   });
 };
 
