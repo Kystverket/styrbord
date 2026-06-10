@@ -52,7 +52,7 @@ export interface SideSheetProps {
   /** Sheet heading text. */
   title?: ReactNode;
 
-  /** Font size of the heading. Default: `'md'`. */
+  /** Font size of the heading. Default: `'xs'`. */
   headingSize?: SideSheetHeadingSize;
 
   /** Show the close (×) button. Default: `true`. */

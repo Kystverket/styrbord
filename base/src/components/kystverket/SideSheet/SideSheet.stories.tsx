@@ -57,7 +57,7 @@ export const OpenInNewWindow: StoryFn<typeof SideSheet> = (args) => {
               size="sm"
               icon
               aria-label="Åpne i ny fane"
-              onClick={() => window.open('https://vg.no', '_blank')}
+              onClick={() => window.open('https://vg.no', '_blank', 'noopener,noreferrer')}
             >
               <Icon material="open_in_new" size="md" />
             </Button>

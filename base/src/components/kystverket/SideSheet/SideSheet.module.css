@@ -87,18 +87,20 @@
     width: 0 !important;
     overflow: hidden;
 
-    & .body {
-      overflow: hidden;
+    & .header,
+    & .body,
+    & .footer {
+      visibility: hidden;
     }
   }
 
   .push.placement-left {
     order: -1;
-    border-right: 1px solid var(--ds-color-neutral-border-subtle);
+    border-right: 1px solid var(--ds-color-neutral-surface-hover);
   }
   .push.placement-right {
     order: 1;
-    border-left: 1px solid var(--ds-color-neutral-border-subtle);
+    border-left: 1px solid var(--ds-color-neutral-surface-hover);
   }
 
   @media (prefers-reduced-motion: reduce) {
