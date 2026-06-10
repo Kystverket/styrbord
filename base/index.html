@@ -77,6 +77,10 @@
 
   #root > div {
     padding: 21px !important;
+    /* Fjerne padding siden ui blir sær på mobil ellers*/
+    @media (width < 600px) {
+      padding-inline: 0 !important;
+    }
   }
 
   #storybook-explorer-menu button,
@@ -110,6 +114,9 @@
   .css-1s8d7l5 {
     padding: 0 !important;
     padding-right: 21px !important;
+    @media (width < 600px) {
+      padding: 16px 12px 20px !important;
+    }
   }
 
   .sidebar-container.sidebar-container .sidebar-header ~ *, /* Hide install guide for authors */
