@@ -17,6 +17,7 @@ import { FileUploadActions } from '~/components/kystverket/FileUploader/fileUplo
 import { useTranslation } from '~/translations';
 import { FilePreviewerDialog } from '../FilePreviewer/dialog/FilePreviewer-dialog';
 import { FileInfo as PreviewFileInfo } from '../FilePreviewer/FilePreviewer.types';
+import { createStorageIdToExtraFileInfoMap, getExtraFileInfoPreviewUri } from '~/utils/fileInfoResolver';
 
 // Remove all exif data except latitude and longitude
 const pruneUnwantedExifData = (exif: Exif): Exif | undefined => {
@@ -111,24 +112,19 @@ export const FileUploader = ({
 
       const result: PreviewFileInfo[] = [];
       const indexMap = new Map<string, number>();
-      const extraInfoMap = new Map<string, ExtraFileInfo>();
 
       const storageIds = files
         .filter((f) => f.status === 'uploaded' && f.storageId)
         .map((f) => f.storageId!) as string[];
       const extraFileInfos = await fileUploaderContext.deriveFileInfosFromStorageIds(storageIds);
-      extraFileInfos.forEach((info) => {
-        if (info.storageId) {
-          extraInfoMap.set(info.storageId, info);
-        }
-      });
+      const extraInfoMap = createStorageIdToExtraFileInfoMap(extraFileInfos);
 
       files.forEach((file) => {
         if (file.status !== 'uploaded') {
           return;
         }
         const extraInfo = file.storageId ? extraInfoMap.get(file.storageId) : undefined;
-        const src = extraInfo?.thumbnailUri || extraInfo?.previewUri;
+        const src = getExtraFileInfoPreviewUri(extraInfo, { preferThumbnail: true });
 
         if (!src || !extraInfo?.storageId) {
           return;

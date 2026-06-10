@@ -340,6 +340,7 @@ export const withFileScanFailed: Story = {
     (Story) => (
       <FileUploaderContext.Provider
         value={{
+          deriveFileInfosFromStorageIds,
           uploadFile: uploadFileWithFileScan,
           deleteFile: deleteFile,
         }}
