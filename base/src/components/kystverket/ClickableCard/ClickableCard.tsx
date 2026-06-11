@@ -2,24 +2,21 @@ import { Box, Heading, Icon } from '~/main';
 import classes from './ClickableCard.module.css';
 import type { ClickableCardProps } from './ClickableCard.types';
 
-const ClickableCard = ({
-  heading,
-  description,
-  children,
-  variant = 'default',
-  color = 'neutral',
-  headingLevel = 2,
-  headingSize = 'sm',
-  icon,
-  chevron = true,
-  showBorder = true,
-  href,
-  target,
-  rel,
-  onClick,
-  className = '',
-  'aria-label': ariaLabel,
-}: ClickableCardProps) => {
+const ClickableCard = (props: ClickableCardProps) => {
+  const {
+    heading,
+    description,
+    children,
+    variant = 'default',
+    color = 'neutral',
+    headingLevel = 2,
+    headingSize = 'sm',
+    icon,
+    chevron = true,
+    showBorder = true,
+    className = '',
+    'aria-label': ariaLabel,
+  } = props;
   const dataColor = color === 'main' ? 'primary' : 'neutral';
 
   const cardClasses = [classes.card, showBorder ? classes.bordered : '', className].filter(Boolean).join(' ');
@@ -38,17 +35,18 @@ const ClickableCard = ({
     </>
   );
 
-  if (href) {
+  if (typeof props.href === 'string') {
+    const effectiveRel = props.target === '_blank' ? (props.rel ?? 'noopener noreferrer') : props.rel;
     return (
       <a
-        href={href}
-        target={target}
-        rel={rel}
+        href={props.href}
+        target={props.target}
+        rel={effectiveRel}
         className={cardClasses}
         data-color={dataColor}
         data-variant={variant}
         aria-label={ariaLabel}
-        onClick={onClick as React.MouseEventHandler<HTMLAnchorElement>}
+        onClick={props.onClick}
       >
         {inner}
       </a>
@@ -62,7 +60,7 @@ const ClickableCard = ({
       data-color={dataColor}
       data-variant={variant}
       aria-label={ariaLabel}
-      onClick={onClick as React.MouseEventHandler<HTMLButtonElement>}
+      onClick={props.onClick}
     >
       {inner}
     </button>

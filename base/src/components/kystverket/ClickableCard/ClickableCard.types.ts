@@ -1,10 +1,10 @@
-import type { IconId } from '~/main';
+import type { IconId } from '../Icon/icon.types';
 
 export type ClickableCardColor = 'neutral' | 'main';
 export type ClickableCardVariant = 'default' | 'tinted';
 export type ClickableCardHeadingSize = '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
-export interface ClickableCardProps {
+type ClickableCardBaseProps = {
   heading: string;
   description?: string;
   children?: React.ReactNode;
@@ -15,10 +15,20 @@ export interface ClickableCardProps {
   icon?: IconId;
   chevron?: boolean;
   showBorder?: boolean;
-  href?: string;
-  target?: string;
-  rel?: string;
-  onClick?: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
   className?: string;
   'aria-label'?: string;
-}
+};
+
+type ClickableCardLinkProps = ClickableCardBaseProps & {
+  href: string;
+  target?: string;
+  rel?: string;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
+};
+
+type ClickableCardButtonProps = ClickableCardBaseProps & {
+  href?: never;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+};
+
+export type ClickableCardProps = ClickableCardLinkProps | ClickableCardButtonProps;
