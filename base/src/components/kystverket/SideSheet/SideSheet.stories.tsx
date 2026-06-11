@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react-vite';
 import { useState } from 'react';
-import { Button, Icon, Paragraph, SideSheet, Tooltip } from '~/main';
+import { Button, Icon, Paragraph, SideSheet, Tabs, Tooltip } from '~/main';
 
 export default {
   title: 'Components/SideSheet',
@@ -54,6 +54,7 @@ export const OpenInNewWindow: StoryFn<typeof SideSheet> = (args) => {
           <Tooltip content="Åpne i ny fane" placement="bottom">
             <Button
               variant="ghost"
+              color="neutral"
               size="sm"
               icon
               aria-label="Åpne i ny fane"
@@ -347,3 +348,48 @@ export const TwoSheets: StoryFn<typeof SideSheet> = () => {
   );
 };
 TwoSheets.storyName = 'To paneler (venstre + høyre)';
+
+export const WithTabs: StoryFn<typeof SideSheet> = (args) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <SideSheet.Layout style={{ minHeight: '400px' }}>
+      <PageContent onOpen={() => setOpen(true)} />
+      <SideSheet {...args} open={open} onClose={() => setOpen(false)} title="Heading" headerDivider={false}>
+        <div style={{ marginTop: 'calc(-1 * var(--ds-size-7))' }}>
+          <Tabs defaultValue="info">
+            <Tabs.List>
+              <Tabs.Tab value="info">Info</Tabs.Tab>
+              <Tabs.Tab value="details">Detaljer</Tabs.Tab>
+              <Tabs.Tab value="history">Historikk</Tabs.Tab>
+            </Tabs.List>
+            <Tabs.Panel value="info">
+              <Paragraph>
+                Her vises generell informasjon om objektet. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </Paragraph>
+              <Paragraph>
+                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+              </Paragraph>
+            </Tabs.Panel>
+            <Tabs.Panel value="details">
+              <Paragraph>Her vises detaljert informasjon om objektet.</Paragraph>
+              <Paragraph>
+                Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec velit
+                neque, auctor sit amet aliquam vel.
+              </Paragraph>
+            </Tabs.Panel>
+            <Tabs.Panel value="history">
+              <Paragraph>Endringshistorikk for objektet.</Paragraph>
+              {Array.from({ length: 5 }, (_, i) => (
+                <Paragraph key={i}>
+                  {new Date(2025, 11 - i, 10 - i).toLocaleDateString('nb-NO')} — Endring {i + 1}
+                </Paragraph>
+              ))}
+            </Tabs.Panel>
+          </Tabs>
+        </div>
+      </SideSheet>
+    </SideSheet.Layout>
+  );
+};
+WithTabs.storyName = 'Med Tabs';

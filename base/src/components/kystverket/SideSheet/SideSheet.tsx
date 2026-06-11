@@ -190,7 +190,14 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
           <div className={classes.headerRow}>
             {showBackButton && (
               <Tooltip content={t('sideSheet.back')} placement="bottom">
-                <Button variant="ghost" size="sm" icon onClick={onBack} aria-label={t('sideSheet.back')}>
+                <Button
+                  variant="ghost"
+                  color="neutral"
+                  size="sm"
+                  icon
+                  onClick={onBack}
+                  aria-label={t('sideSheet.back')}
+                >
                   <Icon material="arrow_back" size="md" />
                 </Button>
               </Tooltip>
@@ -211,6 +218,7 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
                 <Tooltip content={isPinned ? t('sideSheet.unpin') : t('sideSheet.pin')} placement="bottom">
                   <Button
                     variant="ghost"
+                    color="neutral"
                     size="sm"
                     icon
                     onClick={handlePinToggle}
@@ -224,7 +232,14 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
 
               {showCloseButton && (
                 <Tooltip content={t('sideSheet.close')} placement="bottom">
-                  <Button variant="ghost" size="sm" icon onClick={onClose} aria-label={t('sideSheet.close')}>
+                  <Button
+                    variant="ghost"
+                    color="neutral"
+                    size="sm"
+                    icon
+                    onClick={onClose}
+                    aria-label={t('sideSheet.close')}
+                  >
                     <Icon material="close" size="md" />
                   </Button>
                 </Tooltip>
