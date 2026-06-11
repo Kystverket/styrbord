@@ -69,11 +69,11 @@ export type {
   LabelTypographyProps,
 } from './components/kystverket/Typography/typography';
 
-export { default as BorderedToggleGroup } from './components/kystverket/BorderedToggleGroup/borderedToggleGroup';
-export type { BorderedToggleGroupProps } from './components/kystverket/BorderedToggleGroup/borderedToggleGroup';
+export { default as BorderedToggleGroup } from './components/deprecated/BorderedToggleGroup/borderedToggleGroup';
+export type { BorderedToggleGroupProps } from './components/deprecated/BorderedToggleGroup/borderedToggleGroup';
 
-export { default as BorderedRadioGroup } from './components/kystverket/BorderedRadioGroup/borderedRadioGroup';
-export type { BorderedRadioGroupProps } from './components/kystverket/BorderedRadioGroup/borderedRadioGroup';
+export { default as BorderedRadioGroup } from './components/deprecated/BorderedRadioGroup/borderedRadioGroup';
+export type { BorderedRadioGroupProps } from './components/deprecated/BorderedRadioGroup/borderedRadioGroup';
 
 export { Summary } from './components/kystverket/Summary/summary';
 export type { SummaryProps, SummaryRowProps } from './components/kystverket/Summary/summary.types';

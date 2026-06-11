@@ -15,10 +15,10 @@ const Wrapper = ({ values: propValues, ...props }: BorderedToggleGroupProps) => 
 };
 
 const meta = {
-  title: 'Form/BorderedToggleGroup',
+  title: 'Deprecated/BorderedToggleGroup',
   component: Wrapper,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ['autodocs', 'deprecated'],
   argTypes: {},
 } satisfies Meta<typeof Wrapper>;
 

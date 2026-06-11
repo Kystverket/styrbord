@@ -5,10 +5,10 @@ import { Box } from '~/main';
 import { useState } from 'react';
 
 const meta = {
-  title: 'Form/BorderedRadioGroup',
+  title: 'Deprecated/BorderedRadioGroup',
   component: BorderedRadioGroup,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ['autodocs', 'deprecated'],
   argTypes: {},
 } satisfies Meta<typeof BorderedRadioGroup>;
 
