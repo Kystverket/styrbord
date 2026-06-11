@@ -1,0 +1,13 @@
+@layer styrbord-modules {
+  .toggleGroup {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--ds-size-2);
+  }
+
+  @media screen and (max-width: 600px) {
+    .toggleGroup {
+      grid-template-columns: 1fr;
+    }
+  }
+}
