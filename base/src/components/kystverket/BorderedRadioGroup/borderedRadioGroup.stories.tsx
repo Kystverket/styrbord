@@ -5,7 +5,7 @@ import { Box } from '~/main';
 import { useState } from 'react';
 
 const meta = {
-  title: 'Form/BorderedRadioGroup',
+  title: 'Components/BorderedRadioGroup',
   component: BorderedRadioGroup,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],

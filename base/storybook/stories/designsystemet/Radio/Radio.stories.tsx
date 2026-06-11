@@ -83,3 +83,13 @@ export const Inline: StoryFn<typeof Fieldset> = () => (
     </div>
   </Fieldset>
 );
+
+export const Outline: StoryFn<typeof Fieldset> = () => (
+  <Fieldset>
+    <Fieldset.Legend>Kontaktes på e-post?</Fieldset.Legend>
+    <Fieldset.Description>Bekreft om du ønsker å bli kontaktet per e-post.</Fieldset.Description>
+
+    <Radio variant="outline" name="my-inline" label="Ja" value="ja" />
+    <Radio variant="outline" name="my-inline" label="Nei" value="nei" />
+  </Fieldset>
+);
