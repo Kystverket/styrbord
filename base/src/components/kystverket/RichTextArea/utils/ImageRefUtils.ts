@@ -5,9 +5,9 @@ import {
 } from '~/utils/fileInfoResolver';
 
 const imageRegex = /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g;
-const imageRefPrefix = 'image://';
+export const imageRefPrefix = 'image://';
 
-const toStorageId = (ref: string): string => {
+export const normalizeImageRef = (ref: string): string => {
   if (ref.startsWith(imageRefPrefix)) {
     return ref.slice(imageRefPrefix.length);
   }
@@ -30,12 +30,13 @@ export const convertFromRefToImage = async (
     return markdown;
   }
 
-  const storageIds = Array.from(new Set(uniqueRefs.map((ref) => toStorageId(ref)).filter(Boolean)));
+  const storageIds = Array.from(new Set(uniqueRefs.map((ref) => normalizeImageRef(ref)).filter(Boolean)));
   const derivedFileInfos = await deriveFileInfosFromStorageIds(storageIds);
   const storageIdToExtraFileInfo = createStorageIdToExtraFileInfoMap(derivedFileInfos);
 
   return markdown.replace(imageRegex, (fullMatch, alt: string, ref: string, title: string | undefined) => {
-    const extraFileInfo = storageIdToExtraFileInfo.get(toStorageId(ref)) || storageIdToExtraFileInfo.get(ref);
+    const normalizedRef = normalizeImageRef(ref);
+    const extraFileInfo = storageIdToExtraFileInfo.get(normalizedRef) || storageIdToExtraFileInfo.get(ref);
     const resolvedSrc = getExtraFileInfoPreviewUri(extraFileInfo);
 
     if (!resolvedSrc) {
@@ -63,8 +64,14 @@ export const replaceImageUrlsWithRefs = (markdown: string, sasToRefMap: Map<stri
     /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g,
     (match, altText: string, url: string, title: string | undefined) => {
       const ref = sasToRefMap.get(url);
-      if (!ref) return match;
+      const normalizedRef = normalizeImageRef(url);
+
+      if (!ref && normalizedRef === url) {
+        return match;
+      }
+
+      const resolvedRef = ref ?? normalizedRef;
       const titlePart = title ? ` "${title}"` : '';
-      return `![${altText}](${ref}${titlePart})`;
+      return `![${altText}](${resolvedRef}${titlePart})`;
     },
   );
