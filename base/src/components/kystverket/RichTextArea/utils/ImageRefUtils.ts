@@ -7,14 +7,6 @@ import {
 const imageRegex = /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g;
 export const imageRefPrefix = 'image://';
 
-export const normalizeImageRef = (ref: string): string => {
-  if (ref.startsWith(imageRefPrefix)) {
-    return ref.slice(imageRefPrefix.length);
-  }
-
-  return ref;
-};
-
 export const getImageRefsFromMarkdown = (markdown: string): string[] =>
   Array.from(new Set(Array.from(markdown.matchAll(imageRegex), ([, , ref]) => ref)));
 
@@ -30,12 +22,12 @@ export const convertFromRefToImage = async (
     return markdown;
   }
 
-  const storageIds = Array.from(new Set(uniqueRefs.map((ref) => normalizeImageRef(ref)).filter(Boolean)));
+  const storageIds = Array.from(new Set(uniqueRefs.filter(Boolean)));
   const derivedFileInfos = await deriveFileInfosFromStorageIds(storageIds);
   const storageIdToExtraFileInfo = createStorageIdToExtraFileInfoMap(derivedFileInfos);
 
   return markdown.replace(imageRegex, (fullMatch, alt: string, ref: string, title: string | undefined) => {
-    const normalizedRef = normalizeImageRef(ref);
+    const normalizedRef = ref;
     const extraFileInfo = storageIdToExtraFileInfo.get(normalizedRef) || storageIdToExtraFileInfo.get(ref);
     const resolvedSrc = getExtraFileInfoPreviewUri(extraFileInfo);
 
@@ -64,7 +56,7 @@ export const replaceImageUrlsWithRefs = (markdown: string, sasToRefMap: Map<stri
     /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g,
     (match, altText: string, url: string, title: string | undefined) => {
       const ref = sasToRefMap.get(url);
-      const normalizedRef = normalizeImageRef(url);
+      const normalizedRef = url;
 
       if (!ref && normalizedRef === url) {
         return match;

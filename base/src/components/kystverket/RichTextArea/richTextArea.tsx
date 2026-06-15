@@ -30,7 +30,6 @@ import type { ImageInsertHandler, RichTextAreaProps } from './richTextArea.types
 import {
   convertFromRefToImage,
   getImageRefsFromMarkdown,
-  normalizeImageRef,
   replaceImageUrlsWithRefs,
 } from '~/components/kystverket/RichTextArea/utils/ImageRefUtils';
 export type { RichTextAreaProps };
@@ -122,7 +121,6 @@ const RichTextAreaContainer = ({
         for (const [src, ref] of nextSasToRefMap.entries()) {
           sasToRefMap.current.set(src, ref);
           refToPreviewMap.current.set(ref, src);
-          refToPreviewMap.current.set(normalizeImageRef(ref), src);
         }
 
         setEditorMarkdown(resolvedMarkdown);
