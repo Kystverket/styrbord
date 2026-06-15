@@ -1,0 +1,10 @@
+@layer styrbord-modules {
+  .layout {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    overflow: hidden;
+    min-height: 0;
+    flex: 1;
+  }
+}
