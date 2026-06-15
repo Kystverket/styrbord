@@ -1,0 +1,107 @@
+@layer styrbord-modules {
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-size-2);
+    padding: var(--ds-size-6);
+    border-radius: var(--ds-border-radius-xl);
+    border: var(--ds-border-width-default) solid transparent;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    text-decoration: none;
+    background-color: transparent;
+    font-family: inherit;
+    font-size: inherit;
+  }
+
+  .card:focus-visible {
+    outline: 3px solid var(--ds-color-focus-outer);
+    outline-offset: var(--ds-size-1);
+  }
+
+  .card[data-color='neutral'] {
+    --_border-color: var(--ds-color-neutral-border-subtle);
+    --_icon-color: var(--ds-color-neutral-border-strong);
+    color: var(--ds-color-neutral-text-default);
+  }
+
+  .card[data-color='primary'] {
+    --_border-color: var(--ds-color-primary-border-subtle);
+    --_icon-color: var(--ds-color-primary-border-default);
+    color: var(--ds-color-primary-text-default);
+  }
+
+  /* neutral + default */
+  .card[data-color='neutral'][data-variant='default'] {
+    --_bg: var(--ds-color-neutral-surface-default);
+    --_bg-hover: var(--ds-color-neutral-background-tinted);
+  }
+
+  /* neutral + tinted */
+  .card[data-color='neutral'][data-variant='tinted'] {
+    --_bg: var(--ds-color-neutral-background-tinted);
+    --_bg-hover: var(--ds-color-neutral-surface-tinted);
+  }
+
+  /* main + default */
+  .card[data-color='primary'][data-variant='default'] {
+    --_bg: #fff;
+    --_bg-hover: #f5fcff;
+  }
+
+  /* main + tinted */
+  .card[data-color='primary'][data-variant='tinted'] {
+    --_bg: var(--ds-color-primary-background-tinted);
+    --_bg-hover: var(--ds-color-primary-surface-tinted);
+  }
+
+  .card {
+    background-color: var(--_bg);
+  }
+
+  .card:hover {
+    background-color: var(--_bg-hover);
+  }
+
+  .bordered {
+    border-color: var(--_border-color);
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-size-3);
+  }
+
+  .iconLeft {
+    flex-shrink: 0;
+    color: var(--_icon-color);
+  }
+
+  .heading {
+    flex: 1;
+    margin: 0;
+    color: inherit;
+  }
+
+  .chevron {
+    flex-shrink: 0;
+    color: var(--_icon-color);
+  }
+
+  .description {
+    margin: 0;
+    color: inherit;
+    font-size: var(--ds-font-size-sm);
+    line-height: var(--ds-line-height-md);
+  }
+
+  .slot {
+    border: 2px dashed var(--ds-color-neutral-border-subtle);
+    border-radius: var(--ds-border-radius-sm);
+    padding: var(--ds-size-3);
+    text-align: center;
+    color: var(--ds-color-neutral-text-subtle);
+  }
+}

@@ -108,6 +108,13 @@ export type { DeriveFileInfosFromStorageIds } from './utils/fileInfoResolver';
 
 export { default as CardTitle, type CardTitleProps } from './components/designsystemet/CardTitle/CardTitle';
 
+export { default as ClickableCard } from './components/kystverket/ClickableCard/ClickableCard';
+export type {
+  ClickableCardProps,
+  ClickableCardColor,
+  ClickableCardVariant,
+} from './components/kystverket/ClickableCard/ClickableCard.types';
+
 //^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\
 //  Komponenter fra Designsystemet
 //^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\
