@@ -72,6 +72,7 @@ const RichTextAreaContainer = ({
 }: RichTextAreaProps) => {
   // Owned here so useEditor config can close over them before useRichTextImageUpload is called.
   const sasToRefMap = useRef(new Map<string, string>());
+  const refToPreviewMap = useRef(new Map<string, string>());
   const fileUploaderContext = useContext(FileUploaderContext);
 
   const normalizedValue = normalizeMarkdownBreakTags(value ?? '');
@@ -94,6 +95,7 @@ const RichTextAreaContainer = ({
     const resolveImages = async () => {
       if (!fileUploaderContext.deriveFileInfosFromStorageIds) {
         sasToRefMap.current.clear();
+        refToPreviewMap.current.clear();
         setEditorMarkdown(normalizedValue);
         return;
       }
@@ -115,8 +117,10 @@ const RichTextAreaContainer = ({
         }
 
         sasToRefMap.current.clear();
+        refToPreviewMap.current.clear();
         for (const [src, ref] of nextSasToRefMap.entries()) {
           sasToRefMap.current.set(src, ref);
+          refToPreviewMap.current.set(ref, src);
         }
 
         setEditorMarkdown(resolvedMarkdown);
@@ -126,6 +130,7 @@ const RichTextAreaContainer = ({
         }
 
         sasToRefMap.current.clear();
+        refToPreviewMap.current.clear();
         setEditorMarkdown(normalizedValue);
       }
     };
@@ -190,6 +195,7 @@ const RichTextAreaContainer = ({
     latestOnUploadRef,
     deriveFileInfosFromStorageIds: fileUploaderContext.deriveFileInfosFromStorageIds,
     sasToRefMap,
+    refToPreviewMap,
     pendingImageSelectionRef,
   });
 

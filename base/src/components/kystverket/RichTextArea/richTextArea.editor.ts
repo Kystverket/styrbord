@@ -113,7 +113,11 @@ export const createRichTextAreaEditorDrop = (canUploadImage: boolean, insertImag
   };
 };
 
-export const createRichTextAreaInlineImageUpload = (uploadImage: UploadImageFn, sasToRefMap: Map<string, string>) => {
+export const createRichTextAreaInlineImageUpload = (
+  uploadImage: UploadImageFn,
+  sasToRefMap: Map<string, string>,
+  refToPreviewMap: Map<string, string>,
+) => {
   return async (file: File) => {
     const uploadedImage = await uploadImage(file);
     if (!uploadedImage) {
@@ -124,14 +128,33 @@ export const createRichTextAreaInlineImageUpload = (uploadImage: UploadImageFn, 
     }
     if (uploadedImage.ref) {
       sasToRefMap.set(uploadedImage.src, uploadedImage.ref);
+      refToPreviewMap.set(uploadedImage.ref, uploadedImage.src);
+      return uploadedImage.ref;
     }
     return uploadedImage.src;
   };
 };
 
-export const createRichTextAreaInlineImageConfig = (uploadImage: UploadImageFn, sasToRefMap: Map<string, string>) => {
+export const createRichTextAreaInlineImageConfig = (
+  uploadImage: UploadImageFn,
+  sasToRefMap: Map<string, string>,
+  refToPreviewMap: Map<string, string>,
+) => {
   return (config: InlineImageConfig) => ({
     ...config,
-    onUpload: createRichTextAreaInlineImageUpload(uploadImage, sasToRefMap),
+    onUpload: createRichTextAreaInlineImageUpload(uploadImage, sasToRefMap, refToPreviewMap),
+    proxyDomURL: async (url: string) => {
+      const previewUrl = refToPreviewMap.get(url);
+
+      if (previewUrl) {
+        return previewUrl;
+      }
+
+      if (config.proxyDomURL) {
+        return config.proxyDomURL(url);
+      }
+
+      return url;
+    },
   });
 };

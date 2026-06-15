@@ -21,6 +21,7 @@ type UseRichTextImageUploadParams = {
   latestOnUploadRef: React.RefObject<OnImageUploadFn | undefined> | undefined;
   deriveFileInfosFromStorageIds?: DeriveFileInfosFromStorageIds;
   sasToRefMap: React.RefObject<Map<string, string>>;
+  refToPreviewMap: React.RefObject<Map<string, string>>;
   pendingImageSelectionRef: React.RefObject<{ from: number; to: number } | null>;
 };
 
@@ -98,6 +99,7 @@ export const useRichTextImageUpload = ({
   latestOnUploadRef,
   deriveFileInfosFromStorageIds,
   sasToRefMap,
+  refToPreviewMap,
   pendingImageSelectionRef,
 }: UseRichTextImageUploadParams): UseRichTextImageUploadReturn => {
   const [isUploadingImage, setIsUploadingImage] = useState(false);
@@ -159,9 +161,10 @@ export const useRichTextImageUpload = ({
 
       if (uploadedImage.ref) {
         sasToRefMap.current.set(uploadedImage.src, uploadedImage.ref);
+        refToPreviewMap.current.set(uploadedImage.ref, uploadedImage.src);
       }
 
-      insertImageNode({ src: uploadedImage.src, alt: uploadedImage.alt });
+      insertImageNode({ src: uploadedImage.ref ?? uploadedImage.src, alt: uploadedImage.alt });
       return true;
     } catch {
       return false;
@@ -190,7 +193,7 @@ export const useRichTextImageUpload = ({
 
   return {
     isUploadingImage,
-    inlineImageConfig: createRichTextAreaInlineImageConfig(uploadImage, sasToRefMap.current),
+    inlineImageConfig: createRichTextAreaInlineImageConfig(uploadImage, sasToRefMap.current, refToPreviewMap.current),
     insertImageFromFile,
     handleImageFileInputChange,
   };
