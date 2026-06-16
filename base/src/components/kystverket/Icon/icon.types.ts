@@ -55,6 +55,8 @@ export const iconIdList = [
   'inbox',
   'info',
   'info_i',
+  'keep',
+  'keep_off',
   'keyboard_arrow_down',
   'keyboard_arrow_up',
   'language',

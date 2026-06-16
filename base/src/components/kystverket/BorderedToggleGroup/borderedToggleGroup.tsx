@@ -36,12 +36,12 @@ const BorderedToggleGroup = (props: BorderedToggleGroupProps) => {
             readOnly={props.readonly}
             disabled={props.disabled}
             checked={el.value}
+            aria-invalid={hasError ? true : undefined}
             label={el.label}
             onChange={(e) => {
               const newValue = e.target.checked;
               props.onChanges?.(props.values.map((v) => (v.key === el.key ? { ...v, value: newValue } : v)));
               props.onChange?.({ ...el, value: newValue });
-              console.log('onChange', { ...el, value: newValue });
             }}
             onBlur={() => props.onBlur?.()}
           />

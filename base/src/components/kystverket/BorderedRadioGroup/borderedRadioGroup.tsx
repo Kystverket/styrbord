@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { Fieldset, LabelContent, Radio, ValidationMessage } from '~/main';
 import classes from '../BorderedToggleGroup/borderedGroup.module.css';
 import { BorderedGroupProps } from '../BorderedToggleGroup/borderedGroup.types';
@@ -14,6 +15,8 @@ export type BorderedRadioGroupProps = BorderedGroupProps & {
 };
 
 const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
+  const generatedId = useId();
+  const groupName = props.id ?? generatedId;
   const errorText = typeof props.error === 'string' && props.error.length > 0 ? props.error : undefined;
   const hasError = !!props.error;
 
@@ -23,11 +26,11 @@ const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
         <LabelContent text={props.label} required={props.required} optional={props.optional} />
       </Fieldset.Legend>
       {props.description && <Fieldset.Description>{props.description}</Fieldset.Description>}
-      <div id={props.id} className={classes.toggleGroup} data-color={hasError ? 'danger' : undefined}>
+      <div id={groupName} className={classes.toggleGroup} data-color={hasError ? 'danger' : undefined}>
         {props.options.map((el) => (
           <Radio
             key={String(el.value)}
-            name={props.id}
+            name={groupName}
             variant="outline"
             readOnly={props.readonly}
             disabled={props.disabled}
@@ -36,6 +39,7 @@ const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
             value={String(el.value)}
             onChange={() => props.onChange?.(el.value)}
             onBlur={() => props.onBlur?.()}
+            aria-invalid={hasError ? true : undefined}
           />
         ))}
       </div>

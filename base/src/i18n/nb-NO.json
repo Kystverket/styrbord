@@ -58,5 +58,12 @@
   },
   "loading": "Laster",
   "organisasjonsnummer": "Organisasjonsnummer",
-  "sentralbord": "Sentralbord"
+  "sentralbord": "Sentralbord",
+  "sideSheet": {
+    "back": "Gå tilbake",
+    "close": "Lukk sidepanel",
+    "openInNewTab": "Åpne i ny fane",
+    "pin": "Fest sidepanel",
+    "unpin": "Løsne sidepanel"
+  }
 }

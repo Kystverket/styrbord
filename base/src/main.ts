@@ -108,6 +108,13 @@ export type { DeriveFileInfosFromStorageIds } from './utils/fileInfoResolver';
 
 export { default as CardTitle, type CardTitleProps } from './components/designsystemet/CardTitle/CardTitle';
 
+export { default as ClickableCard } from './components/kystverket/ClickableCard/ClickableCard';
+export type {
+  ClickableCardProps,
+  ClickableCardColor,
+  ClickableCardVariant,
+} from './components/kystverket/ClickableCard/ClickableCard.types';
+
 //^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\
 //  Komponenter fra Designsystemet
 //^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\
@@ -149,6 +156,15 @@ export type { AvatarProps } from './components/designsystemet/Avatar/Avatar';
 export { IdProvider, useIdProvider } from './utils/idContext';
 
 export { SlotDialog, type SlotDialogProps } from './components/kystverket/SlotDialog/SlotDialog';
+
+export { SideSheet, type SideSheetProps } from './components/kystverket/SideSheet/SideSheet';
+export type {
+  SideSheetSize,
+  SideSheetPlacement,
+  SideSheetMode,
+  SideSheetHeadingSize,
+  SideSheetLayoutProps,
+} from './components/kystverket/SideSheet/SideSheet.types';
 
 export { Suggestion } from './components/designsystemet/Suggestion/Suggestion';
 export type { SuggestionProps } from './components/designsystemet/Suggestion/Suggestion';
