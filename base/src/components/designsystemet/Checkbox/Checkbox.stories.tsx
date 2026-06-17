@@ -386,3 +386,18 @@ export const ContentEx3: StoryFn<typeof Fieldset> = () => (
     <Checkbox label="Kolleger" value="kolleger" />
   </Fieldset>
 );
+
+export const Outline: StoryFn<typeof Fieldset> = () => (
+  <Fieldset style={{ maxHeight: '300px' }}>
+    <Fieldset.Legend>Hva liker du best med jobben din?</Fieldset.Legend>
+
+    <Checkbox label="Selvstendige oppgaver" value="selvstendige" variant="outline" />
+    <Checkbox label="Møter" value="moter" variant="outline" />
+    <Checkbox label="Lunsj" value="lunsj" variant="outline" />
+    <Checkbox label="Kolleger" value="kolleger" variant="outline" />
+    <Checkbox label="Selvstendige oppgaver" value="selvstendige" variant="outline" />
+    <Checkbox label="Møter" value="moter" variant="outline" />
+    <Checkbox label="Lunsj" value="lunsj" variant="outline" />
+    <Checkbox label="Kolleger" value="kolleger" variant="outline" />
+  </Fieldset>
+);
