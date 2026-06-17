@@ -108,6 +108,9 @@ export type { DeriveFileInfosFromStorageIds } from './utils/fileInfoResolver';
 
 export { default as CardTitle, type CardTitleProps } from './components/designsystemet/CardTitle/CardTitle';
 
+export { default as CompactDetails } from './components/kystverket/CompactDetails/CompactDetails';
+export type { CompactDetailsProps } from './components/kystverket/CompactDetails/CompactDetails.types';
+
 export { default as ClickableCard } from './components/kystverket/ClickableCard/ClickableCard';
 export type {
   ClickableCardProps,

@@ -1,0 +1,30 @@
+@layer styrbord-modules {
+  .compact.compact {
+    --dsc-details-border-block-width: 0;
+    --dsc-details-background: transparent;
+    --dsc-details-summary-background: transparent;
+    --dsc-details-summary-background--open: transparent;
+    --dsc-details-summary-background--hover: var(--ds-color-primary-surface-tinted);
+    --dsc-details-summary-color: var(--ds-color-primary-text-default);
+    --dsc-details-size: var(--ds-size-9);
+    --dsc-details-icon-size: var(--ds-size-5);
+    --dsc-details-icon-gap: var(--ds-size-1);
+    --dsc-details-padding: var(--ds-size-0) var(--ds-size-0);
+    background: transparent;
+  }
+
+  /* label */
+  .compact > :is(summary, u-summary) {
+    width: fit-content;
+    flex-direction: row-reverse;
+    border-radius: var(--ds-border-radius-md);
+  }
+
+  /* left-hand border */
+  .compact > :not(summary, u-summary) {
+    margin: var(--ds-size-2) 0 0;
+    padding-left: var(--ds-size-5);
+    border-left: var(--ds-border-width-default) solid var(--ds-color-neutral-border-subtle);
+    color: var(--ds-color-neutral-text-default);
+  }
+}
