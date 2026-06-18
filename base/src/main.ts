@@ -156,6 +156,9 @@ export { default as Table } from './components/designsystemet/Table/Table';
 export { Avatar } from './components/designsystemet/Avatar/Avatar';
 export type { AvatarProps } from './components/designsystemet/Avatar/Avatar';
 
+export { AvatarStack } from './components/designsystemet/AvatarStack/AvatarStack';
+export type { AvatarStackProps } from './components/designsystemet/AvatarStack/AvatarStack';
+
 export { IdProvider, useIdProvider } from './utils/idContext';
 
 export { SlotDialog, type SlotDialogProps } from './components/kystverket/SlotDialog/SlotDialog';
