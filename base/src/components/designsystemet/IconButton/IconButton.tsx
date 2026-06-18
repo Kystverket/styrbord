@@ -1,16 +1,21 @@
-import { ButtonProps as DsButtonProps } from '@digdir/designsystemet-react';
 import { CSSProperties, FC } from 'react';
-import { Button } from '../Button/Button';
+import { Button, ButtonProps } from '../Button/Button';
 
-export type IconButtonProps = {
-  variant?: 'filled' | 'subtle' | 'outline' | 'ghost' | 'dashed';
-  color?: 'primary' | 'neutral' | 'danger';
-  size?: 'sm' | 'md' | 'lg';
-  disabled?: boolean;
-} & Omit<DsButtonProps, 'variant' | 'data-color' | 'data-size' | 'disabled' | 'icon'>;
+const iconSizeBySize: Record<NonNullable<ButtonProps['size']>, string> = {
+  sm: 'var(--ds-size-7)',
+  md: 'var(--ds-size-8)',
+  lg: 'var(--ds-size-9)',
+};
 
-export const IconButton: FC<IconButtonProps> = ({ style, ...props }) => {
-  const iconSizeStyle = { ...style, '--icon-size': 'var(--ds-size-8)' } as CSSProperties;
+export type IconButtonProps = Omit<ButtonProps, 'text' | 'icon'> & {
+  'aria-label': string;
+};
 
-  return <Button {...props} icon style={iconSizeStyle} />;
+export const IconButton: FC<IconButtonProps> = ({ size = 'md', style, ...props }) => {
+  const iconSizeStyle = {
+    '--icon-size': iconSizeBySize[size],
+    ...style,
+  } as CSSProperties;
+
+  return <Button {...props} size={size} icon style={iconSizeStyle} />;
 };

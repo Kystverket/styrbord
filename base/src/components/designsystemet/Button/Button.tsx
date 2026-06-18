@@ -1,4 +1,4 @@
-import { Button as DsButton, ButtonProps as DsButtonProps } from '@digdir/designsystemet-react';
+import { Button as DsButton, ButtonProps as DsButtonProps, Tooltip } from '@digdir/designsystemet-react';
 import classes from './Button.module.scss';
 import { Children, FC, Fragment, isValidElement, ReactNode } from 'react';
 
@@ -22,6 +22,7 @@ export type ButtonProps = {
   text?: string;
   href?: string;
   target?: string;
+  tooltip?: string;
 } & Omit<DsButtonProps, 'variant' | 'data-color' | 'data-size' | 'disabled'>;
 
 export const Button: FC<ButtonProps> = ({
@@ -31,6 +32,7 @@ export const Button: FC<ButtonProps> = ({
   text = undefined,
   href = undefined,
   target = '_blank',
+  tooltip = undefined,
   ...props
 }) => {
   const propsToOverride: DsButtonProps = { ...props };
@@ -85,5 +87,11 @@ export const Button: FC<ButtonProps> = ({
     propsToOverride.children = wrapTextNodes(propsToOverride.children, classes.textContent);
   }
 
-  return <DsButton {...propsToOverride} />;
+  const button = <DsButton {...propsToOverride} />;
+
+  if (tooltip) {
+    return <Tooltip content={tooltip}>{button}</Tooltip>;
+  }
+
+  return button;
 };

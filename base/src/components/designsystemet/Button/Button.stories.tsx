@@ -89,3 +89,7 @@ export const WithIcon: Story = {
     ),
   },
 };
+
+export const WithTooltip: Story = {
+  args: { ...defaultProps, variant: 'filled', tooltip: 'Lagre endringene dine' },
+};

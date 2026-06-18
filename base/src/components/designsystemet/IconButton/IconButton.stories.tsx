@@ -29,3 +29,39 @@ export const Default: Story = {
     children: <Icon material="file_save" />,
   },
 };
+
+export const Small: Story = {
+  args: {
+    variant: 'filled',
+    size: 'sm',
+    'aria-label': 'Lagre',
+    children: <Icon material="file_save" />,
+  },
+};
+
+export const Medium: Story = {
+  args: {
+    variant: 'filled',
+    size: 'md',
+    'aria-label': 'Lagre',
+    children: <Icon material="file_save" />,
+  },
+};
+
+export const Large: Story = {
+  args: {
+    variant: 'filled',
+    size: 'lg',
+    'aria-label': 'Lagre',
+    children: <Icon material="file_save" />,
+  },
+};
+
+export const WithTooltip: Story = {
+  args: {
+    variant: 'filled',
+    'aria-label': 'Lagre',
+    tooltip: 'Lagre',
+    children: <Icon material="file_save" />,
+  },
+};
