@@ -125,6 +125,9 @@ export type {
 export { Button } from './components/designsystemet/Button/Button';
 export type { ButtonProps } from './components/designsystemet/Button/Button';
 
+export { IconButton } from './components/designsystemet/IconButton/IconButton';
+export type { IconButtonProps } from './components/designsystemet/IconButton/IconButton';
+
 export { TextInput } from './components/designsystemet/TextInput/TextInput';
 export type { TextInputProps } from './components/designsystemet/TextInput/TextInput';
 
@@ -155,6 +158,9 @@ export { default as Table } from './components/designsystemet/Table/Table';
 
 export { Avatar } from './components/designsystemet/Avatar/Avatar';
 export type { AvatarProps } from './components/designsystemet/Avatar/Avatar';
+
+export { AvatarStack } from './components/designsystemet/AvatarStack/AvatarStack';
+export type { AvatarStackProps } from './components/designsystemet/AvatarStack/AvatarStack';
 
 export { IdProvider, useIdProvider } from './utils/idContext';
 

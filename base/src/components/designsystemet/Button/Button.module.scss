@@ -4,7 +4,13 @@
 
 .paddingOverrides {
   // Original er --dsc-button-padding
-  --dsc-button-padding: var(--ds-size-2) var(--ds-size-5);
+  --dsc-button-padding: var(--ds-size-2) var(--ds-size-3);
+  --dsc-button-gap: 0;
+  --icon-size: var(--ds-size-7);
+}
+
+.textContent {
+  padding-inline: var(--ds-size-2);
 }
 
 // SORT ORDER -- RESEMBLES FIGMA
