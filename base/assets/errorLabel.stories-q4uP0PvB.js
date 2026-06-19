@@ -1,8 +1,0 @@
-import{S as n,j as d}from"./iframe-DK5dEU_T.js";import{E as i}from"./Dialog-zZ5xCL_M.js";import"./preload-helper-Dp1pzeXC.js";import"./tooltip-D4eBqIkM.js";import"./index-C5UTOXtQ.js";import"./index-Bc_WZJyY.js";import"./Details-CD6budJ1.js";import"./KyvDivider-Opvml3pP.js";import"./typography-CFZQZNJV.js";import"./KyvSpinner-B-iyOzsS.js";import"./skillingsbuoye-Cir70yIb.js";import"./Logo-DNI2wfDb.js";const L={title:"Deprecated/ErrorLabel",component:i,decorators:[n],tags:["autodocs","deprecated"],argTypes:{}},c={error:"I am an error",children:d.jsx("input",{type:"text"})},r={args:c},o={args:{...c,error:void 0}};var e,t,a;r.parameters={...r.parameters,docs:{...(e=r.parameters)==null?void 0:e.docs,source:{originalSource:`{
-  args: defaultProps
-}`,...(a=(t=r.parameters)==null?void 0:t.docs)==null?void 0:a.source}}};var s,p,m;o.parameters={...o.parameters,docs:{...(s=o.parameters)==null?void 0:s.docs,source:{originalSource:`{
-  args: {
-    ...defaultProps,
-    error: undefined
-  }
-}`,...(m=(p=o.parameters)==null?void 0:p.docs)==null?void 0:m.source}}};const N=["Default","NoError"];export{r as Default,o as NoError,N as __namedExportsOrder,L as default};
