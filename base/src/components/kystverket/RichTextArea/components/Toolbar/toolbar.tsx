@@ -1,4 +1,4 @@
-import { Button, Icon } from '~/main';
+import { Button, IconButton, Icon } from '~/main';
 import type { IconId } from '~/main';
 import styles from './toolbar.module.css';
 
@@ -44,13 +44,11 @@ type ToolbarButtonProps = {
 };
 
 const ToolbarButton = ({ id, popoverTarget, label, icon, active, disabled, onClick }: ToolbarButtonProps) => (
-  <Button
+  <IconButton
     id={id}
-    icon
     variant="ghost"
     color="neutral"
     size="sm"
-    className={styles.toolbarButton}
     onClick={onClick}
     disabled={disabled}
     popoverTarget={popoverTarget}
@@ -58,7 +56,7 @@ const ToolbarButton = ({ id, popoverTarget, label, icon, active, disabled, onCli
     aria-pressed={active}
   >
     <Icon material={icon} size="sm" />
-  </Button>
+  </IconButton>
 );
 
 type FormatSelectProps = {

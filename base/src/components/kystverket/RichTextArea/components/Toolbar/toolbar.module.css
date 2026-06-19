@@ -10,8 +10,8 @@
 
 .divider {
   width: 1px;
-  height: 1.25rem;
-  margin-inline: calc(var(--ds-size-2) - var(--ds-size-1));
+  height: 24px;
+  margin-inline: var(--ds-size-2);
   background: var(--ds-color-neutral-border-subtle);
 }
 
@@ -53,4 +53,12 @@
 .formatField:has(.formatSelect:focus-visible) .formatButton {
   outline: 3px solid var(--ds-color-focus-outer);
   outline-offset: 3px;
+}
+
+.formatField:not(:has(.formatSelect:disabled)):hover .formatButton {
+  background: var(--ds-color-neutral-surface-hover);
+}
+
+.formatField:not(:has(.formatSelect:disabled)):active .formatButton {
+  background: var(--ds-color-neutral-surface-active);
 }
