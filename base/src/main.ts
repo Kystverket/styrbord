@@ -111,8 +111,19 @@ export {
   type FileUploaderContextProps,
 } from './components/kystverket/FileUploader/FileUploader.context';
 export type * from './components/kystverket/FileUploader/FileUploader.types';
+export type { DeriveFileInfosFromStorageIds } from './utils/fileInfoResolver';
 
 export { default as CardTitle, type CardTitleProps } from './components/designsystemet/CardTitle/CardTitle';
+
+export { default as CompactDetails } from './components/kystverket/CompactDetails/CompactDetails';
+export type { CompactDetailsProps } from './components/kystverket/CompactDetails/CompactDetails.types';
+
+export { default as ClickableCard } from './components/kystverket/ClickableCard/ClickableCard';
+export type {
+  ClickableCardProps,
+  ClickableCardColor,
+  ClickableCardVariant,
+} from './components/kystverket/ClickableCard/ClickableCard.types';
 
 //^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\
 //  Komponenter fra Designsystemet
@@ -120,6 +131,9 @@ export { default as CardTitle, type CardTitleProps } from './components/designsy
 
 export { Button } from './components/designsystemet/Button/Button';
 export type { ButtonProps } from './components/designsystemet/Button/Button';
+
+export { IconButton } from './components/designsystemet/IconButton/IconButton';
+export type { IconButtonProps } from './components/designsystemet/IconButton/IconButton';
 
 export { TextInput } from './components/designsystemet/TextInput/TextInput';
 export type { TextInputProps } from './components/designsystemet/TextInput/TextInput';
@@ -152,9 +166,21 @@ export { default as Table } from './components/designsystemet/Table/Table';
 export { Avatar } from './components/designsystemet/Avatar/Avatar';
 export type { AvatarProps } from './components/designsystemet/Avatar/Avatar';
 
+export { AvatarStack } from './components/designsystemet/AvatarStack/AvatarStack';
+export type { AvatarStackProps } from './components/designsystemet/AvatarStack/AvatarStack';
+
 export { IdProvider, useIdProvider } from './utils/idContext';
 
 export { SlotDialog, type SlotDialogProps } from './components/kystverket/SlotDialog/SlotDialog';
+
+export { SideSheet, type SideSheetProps } from './components/kystverket/SideSheet/SideSheet';
+export type {
+  SideSheetSize,
+  SideSheetPlacement,
+  SideSheetMode,
+  SideSheetHeadingSize,
+  SideSheetLayoutProps,
+} from './components/kystverket/SideSheet/SideSheet.types';
 
 export { Suggestion } from './components/designsystemet/Suggestion/Suggestion';
 export type { SuggestionProps } from './components/designsystemet/Suggestion/Suggestion';
@@ -215,13 +241,9 @@ export type {
 export { Chip, ChipButton, ChipCheckbox, ChipRadio, ChipRemovable } from '@digdir/designsystemet-react';
 export type { DetailsContentProps, DetailsProps, DetailsSummaryProps } from '@digdir/designsystemet-react';
 export { Details, DetailsContent, DetailsSummary } from '@digdir/designsystemet-react';
-export type {
-  DialogBlockProps,
-  DialogProps,
-  DialogTriggerContextProps,
-  DialogTriggerProps,
-} from '@digdir/designsystemet-react';
-export { Dialog, DialogBlock, DialogTrigger, DialogTriggerContext } from '@digdir/designsystemet-react';
+export type { DialogBlockProps, DialogTriggerContextProps, DialogTriggerProps } from '@digdir/designsystemet-react';
+export { DialogBlock, DialogTrigger, DialogTriggerContext } from '@digdir/designsystemet-react';
+export { Dialog, type DialogProps, type DialogSize } from '~/components/designsystemet/Dialog/Dialog';
 export type { DividerProps } from '@digdir/designsystemet-react';
 export { Divider } from '@digdir/designsystemet-react';
 export type {

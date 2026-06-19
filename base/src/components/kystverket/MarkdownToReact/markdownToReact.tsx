@@ -1,37 +1,56 @@
+import { useContext, useEffect, useMemo, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import styles from './markdownToReact.module.css';
 import { Link, Paragraph } from '~/main';
+import { convertFromRefToImage } from '~/components/kystverket/RichTextArea/utils/ImageRefUtils';
+import { FileUploaderContext } from '~/components/kystverket/FileUploader/FileUploader.context';
 
 export type MarkdownToReactProps = {
   markdown: string;
-  resolveImageRef?: (ref: string) => ResolvedImageRef;
-};
-
-export type ResolvedImageRef = { src: string; alt?: string } | undefined;
-
-const replaceResolvedImageRefs = (markdown: string, resolveImageRef: (ref: string) => ResolvedImageRef) => {
-  const imageRegex = /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g;
-
-  return markdown.replace(imageRegex, (fullMatch, alt: string, src: string, title: string | undefined) => {
-    const resolvedImageRef = resolveImageRef(src);
-
-    if (resolvedImageRef === undefined) return fullMatch;
-
-    const resolvedSrc = typeof resolvedImageRef === 'string' ? resolvedImageRef : resolvedImageRef.src;
-    const resolvedAlt = typeof resolvedImageRef === 'string' ? alt : (resolvedImageRef.alt ?? alt);
-    const titlePart = title ? ` "${title}"` : '';
-
-    return `![${resolvedAlt}](${resolvedSrc}${titlePart})`;
-  });
 };
 
 // Overskrifter (h1-h6) rendres som <Paragraph> med tanke på dokumenthierarki (enn så lenge, dette må vi komme tilbake til etter hvert)
-const MarkdownToReact = ({ markdown, resolveImageRef }: MarkdownToReactProps) => {
-  let renderedMarkdown = markdown.replaceAll(/\n{3,}/g, '\n\n\u00A0\n\n');
+const MarkdownToReact = ({ markdown }: MarkdownToReactProps) => {
+  const fileUploaderContext = useContext(FileUploaderContext);
 
-  if (typeof resolveImageRef === 'function') {
-    renderedMarkdown = replaceResolvedImageRefs(renderedMarkdown, resolveImageRef);
-  }
+  const normalizedMarkdown = useMemo(() => markdown.replaceAll(/\n{3,}/g, '\n\n\u00A0\n\n'), [markdown]);
+  const [renderedMarkdown, setRenderedMarkdown] = useState(normalizedMarkdown);
+
+  useEffect(() => {
+    let isCancelled = false;
+
+    if (!fileUploaderContext.deriveFileInfosFromStorageIds) {
+      setRenderedMarkdown(normalizedMarkdown);
+      return;
+    }
+
+    const resolve = async () => {
+      try {
+        const resolvedMarkdown = await convertFromRefToImage(
+          normalizedMarkdown,
+          fileUploaderContext.deriveFileInfosFromStorageIds,
+        );
+
+        if (isCancelled) {
+          return;
+        }
+
+        setRenderedMarkdown(resolvedMarkdown);
+      } catch {
+        if (isCancelled) {
+          return;
+        }
+
+        setRenderedMarkdown(normalizedMarkdown);
+      }
+    };
+
+    void resolve();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [normalizedMarkdown, fileUploaderContext.deriveFileInfosFromStorageIds]);
 
   return (
     <div className={styles.markdownToReact}>

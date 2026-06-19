@@ -1,19 +1,28 @@
 import { useState } from 'react';
-import { commandsCtx } from '@milkdown/core';
+import { commandsCtx, editorViewCtx } from '@milkdown/core';
 import type { Editor } from '@milkdown/core';
-import { insertImageCommand } from '@milkdown/preset-commonmark';
+import { insertImageCommand, UpdateImageCommandPayload } from '@milkdown/preset-commonmark';
 import type { Ctx } from '@milkdown/ctx';
 import type { InlineImageConfig } from '@milkdown/components/image-inline';
+import { TextSelection } from '@milkdown/prose/state';
+import {
+  createStorageIdToExtraFileInfoMap,
+  type DeriveFileInfosFromStorageIds,
+  getExtraFileInfoPreviewUri,
+} from '~/utils/fileInfoResolver';
 
-import type { ImageMarkdown, ImageUploadResult, UploadImageFn } from '../richTextArea.types';
+import type { FileUploaderStyleImageUploadResult, ImageUploadResult, OnImageUploadFn } from '../richTextArea.types';
 import { createRichTextAreaInlineImageConfig } from '../richTextArea.editor';
 
 type UseRichTextImageUploadParams = {
   disabled: boolean;
   get: () => Editor | undefined;
   updateToolbarState: (ctx: Ctx) => void;
-  latestOnUploadRef: React.RefObject<UploadImageFn | undefined> | undefined;
+  latestOnUploadRef: React.RefObject<OnImageUploadFn | undefined> | undefined;
+  deriveFileInfosFromStorageIds?: DeriveFileInfosFromStorageIds;
   sasToRefMap: React.RefObject<Map<string, string>>;
+  refToPreviewMap: React.RefObject<Map<string, string>>;
+  pendingImageSelectionRef: React.RefObject<{ from: number; to: number } | null>;
 };
 
 type UseRichTextImageUploadReturn = {
@@ -23,10 +32,23 @@ type UseRichTextImageUploadReturn = {
   handleImageFileInputChange: (event: React.ChangeEvent<HTMLInputElement>) => Promise<{ success: boolean }>;
 };
 
-const normalizeUploadResult = (
-  result: Awaited<ReturnType<NonNullable<UploadImageFn>>> | null,
+const isImageUploadResult = (
+  result: ImageUploadResult | FileUploaderStyleImageUploadResult,
+): result is ImageUploadResult => {
+  return 'src' in result;
+};
+
+const isFileUploaderStyleImageUploadResult = (
+  result: ImageUploadResult | FileUploaderStyleImageUploadResult,
+): result is FileUploaderStyleImageUploadResult => {
+  return 'storageId' in result;
+};
+
+const normalizeUploadResult = async (
+  result: Awaited<ReturnType<NonNullable<OnImageUploadFn>>> | null,
   file: File,
-): ImageUploadResult | null => {
+  deriveFileInfosFromStorageIds?: DeriveFileInfosFromStorageIds,
+): Promise<ImageUploadResult | null> => {
   if (!result) {
     return null;
   }
@@ -38,7 +60,28 @@ const normalizeUploadResult = (
     };
   }
 
-  if (!result.src) {
+  if (isFileUploaderStyleImageUploadResult(result)) {
+    if (!result.success || !result.storageId || !deriveFileInfosFromStorageIds) {
+      return null;
+    }
+
+    const extraFileInfos = await deriveFileInfosFromStorageIds([result.storageId]);
+    const storageIdToExtraFileInfo = createStorageIdToExtraFileInfoMap(extraFileInfos);
+    const extraFileInfo = storageIdToExtraFileInfo.get(result.storageId);
+    const previewUri = getExtraFileInfoPreviewUri(extraFileInfo);
+
+    if (!previewUri) {
+      return null;
+    }
+
+    return {
+      src: previewUri,
+      ref: result.storageId,
+      alt: file.name.replace(/\.[^.]+$/, ''),
+    };
+  }
+
+  if (!isImageUploadResult(result) || !result.src) {
     return null;
   }
 
@@ -46,7 +89,6 @@ const normalizeUploadResult = (
     src: result.src,
     ref: result.ref,
     alt: result.alt ?? file.name.replace(/\.[^.]+$/, ''),
-    title: result.title,
   };
 };
 
@@ -55,7 +97,10 @@ export const useRichTextImageUpload = ({
   get,
   updateToolbarState,
   latestOnUploadRef,
+  deriveFileInfosFromStorageIds,
   sasToRefMap,
+  refToPreviewMap,
+  pendingImageSelectionRef,
 }: UseRichTextImageUploadParams): UseRichTextImageUploadReturn => {
   const [isUploadingImage, setIsUploadingImage] = useState(false);
 
@@ -67,10 +112,10 @@ export const useRichTextImageUpload = ({
     }
 
     const result = await upload(file);
-    return normalizeUploadResult(result, file);
+    return normalizeUploadResult(result, file, deriveFileInfosFromStorageIds);
   };
 
-  const insertImageNode = (image: ImageMarkdown) => {
+  const insertImageNode = (image: UpdateImageCommandPayload) => {
     const editor = get();
 
     if (!editor) {
@@ -78,8 +123,24 @@ export const useRichTextImageUpload = ({
     }
 
     editor.action((ctx) => {
+      const view = ctx.get(editorViewCtx);
+      const selection = pendingImageSelectionRef.current;
+      const maxPos = view.state.doc.content.size;
+
+      view.focus();
+
+      if (selection) {
+        const clampedFrom = Math.min(Math.max(selection.from, 0), maxPos);
+        const clampedTo = Math.min(Math.max(selection.to, 0), maxPos);
+        const from = Math.min(clampedFrom, clampedTo);
+        const to = Math.max(clampedFrom, clampedTo);
+        view.dispatch(view.state.tr.setSelection(TextSelection.create(view.state.doc, from, to)));
+      }
+
       const commands = ctx.get(commandsCtx);
       commands.call(insertImageCommand.key, image);
+
+      pendingImageSelectionRef.current = null;
       updateToolbarState(ctx);
     });
   };
@@ -100,9 +161,10 @@ export const useRichTextImageUpload = ({
 
       if (uploadedImage.ref) {
         sasToRefMap.current.set(uploadedImage.src, uploadedImage.ref);
+        refToPreviewMap.current.set(uploadedImage.ref, uploadedImage.src);
       }
 
-      insertImageNode({ src: uploadedImage.src, alt: uploadedImage.alt, title: uploadedImage.title });
+      insertImageNode({ src: uploadedImage.ref ?? uploadedImage.src, alt: uploadedImage.alt });
       return true;
     } catch {
       return false;
@@ -131,7 +193,7 @@ export const useRichTextImageUpload = ({
 
   return {
     isUploadingImage,
-    inlineImageConfig: createRichTextAreaInlineImageConfig(uploadImage, sasToRefMap.current),
+    inlineImageConfig: createRichTextAreaInlineImageConfig(uploadImage, sasToRefMap.current, refToPreviewMap.current),
     insertImageFromFile,
     handleImageFileInputChange,
   };

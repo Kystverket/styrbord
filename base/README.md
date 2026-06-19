@@ -41,6 +41,10 @@ Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.
 
 ## Endringslogg
 
+### 2026-06-09 -- v1.9.0
+
+Oppdatert RichTextArea og MarkdownToReact til å bruke FileUploader sin context for å håndtere henting av fil-informasjon gjennom `deriveFileInfosFromStorageIds`
+
 ### 2026-05-22 -- v1.7.2
 
 Lagt inn bildehåndtering i RichTextArea og MarkdownToReact. Du laster opp bildet selv og legger inn en referanse-lenke i markdownen. Lenken tolkes i MarkdownToReact, slik at markdownen holdes så liten som mulig.

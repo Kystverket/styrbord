@@ -1,13 +1,14 @@
 // Basisstil for alle tab-knapper
-:is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) button {
+:is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) button,
+:is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) > [role='tab'],
+:is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) > u-tab {
   font-weight: 500;
-  padding: 9px 3px 9px 3px;
-  margin-right: 21px;
-
-  &:last-child {
-    margin-right: 0;
-  }
+  padding-inline: 0;
   gap: 7px;
+}
+
+:is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) button {
+  padding-block: 9px;
 }
 
 // Aktiv tab - tekstfarge på den valgte taben
@@ -39,4 +40,5 @@
 // Tab-listen (container) - tillater overflow slik at understrek ikke klippes
 :is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) {
   overflow: initial !important;
+  gap: var(--ds-size-6);
 }

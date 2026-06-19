@@ -52,7 +52,18 @@
     "openProfileMenu": "Opne profilmeny"
   },
   "kystverket": "Kystverket",
+  "labelContent": {
+    "optional": "Valfritt",
+    "required": "Må fyllast ut"
+  },
   "loading": "Lastar",
   "organisasjonsnummer": "Organisasjonsnummer",
-  "sentralbord": "Sentralbord"
+  "sentralbord": "Sentralbord",
+  "sideSheet": {
+    "back": "Gå tilbake",
+    "close": "Lukk sidepanel",
+    "openInNewTab": "Opne i ny fane",
+    "pin": "Fest sidepanel",
+    "unpin": "Løysne sidepanel"
+  }
 }

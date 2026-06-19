@@ -4,6 +4,11 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { RichTextArea, RichTextAreaProps } from './richTextArea';
 
+import atlas from '@assets/img/atlas/atlas 1.jpeg';
+import { ExtraFileInfo, UploadFileResult } from '../FileUploader/FileUploader.types';
+import { FileUploaderContext } from '../FileUploader/FileUploader.context';
+import { v4 as uuidv4 } from 'uuid';
+
 const meta = {
   title: 'Form/RichTextArea/RichTextArea',
   component: RichTextArea,
@@ -36,6 +41,36 @@ const defaultArgs: RichTextAreaProps = {
   label: 'Rikt tekstfelt',
   description: 'Dette er et tekstfelt som støtter rik tekstformatering.',
   optional: 'Valgfritt',
+};
+
+const deriveFileInfosFromStorageIds = async (): Promise<ExtraFileInfo[]> => {
+  return new Promise((resolve) => {
+    // Simulate loading delay
+    setTimeout(() => {
+      resolve([{ storageId: 'image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69', previewUri: atlas }]);
+    }, 1000);
+  });
+};
+
+const uploadFile = async (): Promise<UploadFileResult> => {
+  return new Promise<UploadFileResult>((resolve) => {
+    // Simulate loading delay
+    setTimeout(() => {
+      resolve({
+        storageId: uuidv4(),
+        success: true,
+      });
+    }, 1500);
+  });
+};
+
+const deleteFile = async (): Promise<void> => {
+  return new Promise((resolve) => {
+    // Simulate loading delay
+    setTimeout(() => {
+      resolve();
+    }, 1000);
+  });
 };
 
 const renderInteractive: Story['render'] = (args) => {
@@ -83,24 +118,33 @@ export const WithError: Story = {
 /**
  * Demonstrates stable image references in markdown.
  *
- * `onUpload` returns both:
+ * `onImageUpload` returns both:
  * - `src` — a data URL used by the editor to display the image immediately
- * - `ref` — a stable opaque ID (e.g. Azure blob path / UUID) stored in the markdown instead of the SAS URL
+ * - `ref` — a stable opaque ID (e.g. Azure blob path / UUID) stored in the markdown instead of the SAS URL.
+ *
+ * `onImageRemove` is called with the stable ref when an image is removed from the editor,
+ * so a backend can delete the persisted image resource.
  *
  * The `onChange` output will contain `![alt](image://uuid-...)` rather than the raw data URL,
- * which is what a `MarkdownToReact` or similar renderers would receive where you implement a resolver function to provide a SAS URI or similar.
+ * and a `MarkdownToReact` resolver can map that ref to a displayable URL.
  */
 export const WithImageRef: Story = {
   args: {
     ...defaultArgs,
-    label: 'Rikt tekstfelt med bildereferanse',
-    description: 'Last opp et bilde — markdownutdata vil inneholde en stabil referanse til bildet,.',
 
-    onUpload: async (file) => {
+    value: `
+Bilde av Atlas
+![Bilde_av_atlas.png](image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69)`,
+    label: 'Rikt tekstfelt med bildereferanse',
+    description: 'Last opp et bilde — markdownutdata vil inneholde en stabil referanse til bildet.',
+    onImageUpload: async (file) => {
       const src = await fileToDataUrl(file);
       // Simulate a stable blob reference that would be generated server-side
       const ref = `image://${crypto.randomUUID()}`;
       return { src, ref, alt: file.name };
+    },
+    onImageRemove: async (ref: string) => {
+      alert('Removed image ' + ref);
     },
   },
   render: (args) => {
@@ -108,7 +152,13 @@ export const WithImageRef: Story = {
     const [markdownOutput, setMarkdownOutput] = useState('');
 
     return (
-      <>
+      <FileUploaderContext.Provider
+        value={{
+          uploadFile,
+          deleteFile,
+          deriveFileInfosFromStorageIds,
+        }}
+      >
         <RichTextArea
           {...args}
           value={value}
@@ -138,7 +188,7 @@ export const WithImageRef: Story = {
             </pre>
           </div>
         )}
-      </>
+      </FileUploaderContext.Provider>
     );
   },
 };

@@ -1,6 +1,18 @@
-import { Button as DsButton, ButtonProps as DsButtonProps } from '@digdir/designsystemet-react';
+import { Button as DsButton, ButtonProps as DsButtonProps, Tooltip } from '@digdir/designsystemet-react';
 import classes from './Button.module.scss';
-import { FC } from 'react';
+import { Children, FC, Fragment, isValidElement, ReactNode } from 'react';
+
+function wrapTextNodes(children: ReactNode, className: string): ReactNode {
+  return Children.map(children, (child) => {
+    if (typeof child === 'string' || typeof child === 'number') {
+      return <span className={className}>{child}</span>;
+    }
+    if (isValidElement(child) && child.type === Fragment) {
+      return wrapTextNodes((child.props as { children?: ReactNode }).children, className);
+    }
+    return child;
+  });
+}
 
 export type ButtonProps = {
   variant?: 'filled' | 'subtle' | 'outline' | 'ghost' | 'dashed';
@@ -10,6 +22,7 @@ export type ButtonProps = {
   text?: string;
   href?: string;
   target?: string;
+  tooltip?: string;
 } & Omit<DsButtonProps, 'variant' | 'data-color' | 'data-size' | 'disabled'>;
 
 export const Button: FC<ButtonProps> = ({
@@ -19,12 +32,11 @@ export const Button: FC<ButtonProps> = ({
   text = undefined,
   href = undefined,
   target = '_blank',
+  tooltip = undefined,
   ...props
 }) => {
   const propsToOverride: DsButtonProps = { ...props };
-  if (!props.icon) {
-    propsToOverride.className = [propsToOverride.className, classes.paddingOverrides].join(' ');
-  }
+  propsToOverride.className = [propsToOverride.className, classes.paddingOverrides].join(' ');
 
   switch (variant) {
     case 'filled':
@@ -58,20 +70,28 @@ export const Button: FC<ButtonProps> = ({
   if (text && href) {
     propsToOverride.children = (
       <a href={href} target={target} rel="noreferrer">
-        {text}
+        <span className={classes.textContent}>{text}</span>
       </a>
     );
     propsToOverride.asChild = true;
   } else if (text) {
-    propsToOverride.children = text;
+    propsToOverride.children = <span className={classes.textContent}>{text}</span>;
   } else if (href) {
     propsToOverride.children = (
       <a href={href} target={target} rel="noreferrer">
-        {propsToOverride.children}
+        {wrapTextNodes(propsToOverride.children, classes.textContent)}
       </a>
     );
     propsToOverride.asChild = true;
+  } else {
+    propsToOverride.children = wrapTextNodes(propsToOverride.children, classes.textContent);
   }
 
-  return <DsButton {...propsToOverride} />;
+  const button = <DsButton {...propsToOverride} />;
+
+  if (tooltip) {
+    return <Tooltip content={tooltip}>{button}</Tooltip>;
+  }
+
+  return button;
 };

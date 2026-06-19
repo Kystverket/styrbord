@@ -3,7 +3,6 @@ import type { CmdKey } from '@milkdown/core';
 export type RichTextAreaProps = {
   value: string | null | undefined;
   onChange: (markdown: string) => void;
-  onUpload?: UploadImageFn;
   placeholder?: string;
   disabled?: boolean;
   className?: string;
@@ -12,13 +11,23 @@ export type RichTextAreaProps = {
   optional?: boolean | string;
   required?: boolean | string;
   error?: string;
+  /** Optional upload handler that returns a display src and optional stable image ref. */
+  onImageUpload?: OnImageUploadFn;
+  /** Optional remove handler for deleting persisted images by stable ref. */
+  onImageRemove?: (ref: string) => Promise<void>;
 };
 
 export type ToolbarCommand<T = unknown> = { key: CmdKey<T>; value?: T };
 
-export type ImageMarkdown = { src: string; alt?: string; title?: string };
+export type ResolvedImageRef = { storageId: string; previewUri: string; alt?: string };
 
-export type ImageUploadResult = { src: string; ref?: string; alt?: string; title?: string };
+export type ImageUploadResult = { src: string; ref?: string; alt?: string };
+
+export type FileUploaderStyleImageUploadResult = { storageId: string; success: boolean; error?: string };
+
+export type OnImageUploadFn = (
+  file: File,
+) => Promise<ImageUploadResult | FileUploaderStyleImageUploadResult | string | null>;
 
 export type ImageInsertHandler = (file: File) => void;
 
