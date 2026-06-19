@@ -52,6 +52,7 @@ const ToolbarButton = ({ id, popoverTarget, label, icon, active, disabled, onCli
     onClick={onClick}
     disabled={disabled}
     popoverTarget={popoverTarget}
+    className={styles.toolbarButton}
     aria-label={label}
     aria-pressed={active}
   >
