@@ -1,71 +1,64 @@
-/* Toolbar-container med ramme og avrunding */
 .toolbar {
   display: flex;
-  justify-content: space-between;
-  border-radius: 0;
+  align-items: center;
   flex-wrap: wrap;
+  gap: var(--ds-size-1);
+  padding: var(--ds-size-2);
   border: 0;
-  border-bottom: 1px solid var(--ds-color-neutral-border-subtle);
+  border-bottom: 1px solid var(--ds-color-neutral-surface-hover);
 }
 
-.toolbarGroup {
+.divider {
+  width: 1px;
+  height: 24px;
+  margin-inline: var(--ds-size-2);
+  background: var(--ds-color-neutral-border-subtle);
+}
+
+.undoRedoGroup {
   display: flex;
   align-items: center;
-  padding: 0.25rem;
-  flex-wrap: wrap;
+  gap: var(--ds-size-1);
+  margin-left: auto;
 }
 
-.toolbarButton {
-  color: var(--ds-color-neutral-text-subtle);
-  border-radius: var(--ds-border-radius-md);
-  margin: 0.25rem;
-  min-width: 1.75rem;
-  height: 1.75rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 0.5rem;
-  cursor: pointer;
-}
-
-.toolbarSelect {
-  color: var(--ds-color-neutral-text-subtle);
-  border-radius: var(--ds-border-radius-md);
-  margin: 0.25rem;
-  min-width: 6.5rem;
-  height: 1.75rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 0.5rem;
-  cursor: pointer;
-}
-
-.toolbarButton:hover:not(:disabled) {
-  background: var(--ds-color-neutral-surface-hover);
-}
-
-.toolbarSelect:hover:not(:disabled):not(:focus) {
-  background: var(--ds-color-neutral-surface-hover);
-}
-
-.toolbarButton[aria-pressed='true']:not(:disabled),
-.toolbarSelect[aria-pressed='true']:not(:disabled) {
+.toolbarButton[aria-pressed='true']:not(:disabled) {
   background: var(--ds-color-neutral-surface-active);
   color: var(--ds-color-neutral-text-default);
 }
 
-.toolbarButton:focus-visible {
-  outline: 3px solid var(--ds-color-focus-outer);
-  outline-offset: 3px;
+.formatField {
+  position: relative;
+  display: inline-flex;
 }
 
-.toolbarSelect:focus-visible {
-  outline: 3px solid var(--ds-color-focus-outer);
-  outline-offset: 3px;
+.formatButton {
+  pointer-events: none;
 }
 
-.toolbarButton:disabled {
-  opacity: 0.6;
+.formatSelect {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.formatSelect:disabled {
   cursor: not-allowed;
+}
+
+.formatField:has(.formatSelect:focus-visible) .formatButton {
+  outline: 3px solid var(--ds-color-focus-outer);
+  outline-offset: 3px;
+}
+
+.formatField:not(:has(.formatSelect:disabled)):hover .formatButton {
+  background: var(--ds-color-neutral-surface-hover);
+}
+
+.formatField:not(:has(.formatSelect:disabled)):active .formatButton {
+  background: var(--ds-color-neutral-surface-active);
 }
