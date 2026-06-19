@@ -125,6 +125,9 @@ export type {
 export { Button } from './components/designsystemet/Button/Button';
 export type { ButtonProps } from './components/designsystemet/Button/Button';
 
+export { IconButton } from './components/designsystemet/IconButton/IconButton';
+export type { IconButtonProps } from './components/designsystemet/IconButton/IconButton';
+
 export { TextInput } from './components/designsystemet/TextInput/TextInput';
 export type { TextInputProps } from './components/designsystemet/TextInput/TextInput';
 

@@ -90,6 +90,6 @@ export const WithIcon: Story = {
   },
 };
 
-export const IconButton: Story = {
-  args: { ...defaultProps, variant: 'filled', icon: true, children: <Icon material="file_save" /> },
+export const WithTooltip: Story = {
+  args: { ...defaultProps, variant: 'filled', tooltip: 'Lagre endringene dine' },
 };

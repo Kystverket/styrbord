@@ -30,8 +30,8 @@ const Icon = ({ material, filled = false, className = '', size = 'md', title }: 
     classNames.push(classes.filled);
   }
 
-  style['fontSize'] = iconSizes[size];
-  style['height'] = iconSizes[size];
+  style['fontSize'] = `var(--icon-size, ${iconSizes[size]})`;
+  style['height'] = `var(--icon-size, ${iconSizes[size]})`;
 
   return (
     <span title={title} aria-hidden style={style} className={classNames.join(' ')}>
