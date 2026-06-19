@@ -11,8 +11,26 @@ export const AIS_SHIP_TYPES = [
     id: 'passasjer',
     label: 'Passasjer',
     aisCodes: [
-      '40', '41', '42', '43', '44', '45', '46', '47', '48', '49',
-      '60', '61', '62', '63', '64', '65', '66', '67', '68', '69',
+      '40',
+      '41',
+      '42',
+      '43',
+      '44',
+      '45',
+      '46',
+      '47',
+      '48',
+      '49',
+      '60',
+      '61',
+      '62',
+      '63',
+      '64',
+      '65',
+      '66',
+      '67',
+      '68',
+      '69',
     ],
     color: '#085382',
     borderColor: '#022C55',
@@ -34,10 +52,7 @@ export const AIS_SHIP_TYPES = [
   {
     id: 'frakt',
     label: 'Frakt',
-    aisCodes: [
-      '33', '34', '53', '54',
-      '70', '71', '72', '73', '74', '75', '76', '77', '78', '79',
-    ],
+    aisCodes: ['33', '34', '53', '54', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79'],
     color: '#58A752',
     borderColor: '#0C6F06',
   },
@@ -87,9 +102,29 @@ export const AIS_SHIP_TYPES = [
     id: 'ukjent',
     label: 'Ukjent',
     aisCodes: [
-      '20', '21', '22', '23', '24', '25', '26', '27', '28', '29',
-      '56', '57', '59',
-      '90', '91', '92', '93', '94', '95', '96', '97', '98', '99',
+      '20',
+      '21',
+      '22',
+      '23',
+      '24',
+      '25',
+      '26',
+      '27',
+      '28',
+      '29',
+      '56',
+      '57',
+      '59',
+      '90',
+      '91',
+      '92',
+      '93',
+      '94',
+      '95',
+      '96',
+      '97',
+      '98',
+      '99',
     ],
     color: '#CCCCCC',
     borderColor: '#404040',
@@ -109,18 +144,12 @@ for (const entry of AIS_SHIP_TYPES) {
   }
 }
 
-const _byId = new Map<AisShipTypeId, AisShipTypeEntry>(
-  AIS_SHIP_TYPES.map((entry) => [entry.id, entry]),
-);
+const _byId = new Map<AisShipTypeId, AisShipTypeEntry>(AIS_SHIP_TYPES.map((entry) => [entry.id, entry]));
 
-export function getShipTypeByAisCode(
-  code: string | number,
-): AisShipTypeEntry | undefined {
+export function getShipTypeByAisCode(code: string | number): AisShipTypeEntry | undefined {
   return _byAisCode.get(String(code));
 }
 
-export function getShipTypeById(
-  id: AisShipTypeId,
-): AisShipTypeEntry | undefined {
+export function getShipTypeById(id: AisShipTypeId): AisShipTypeEntry | undefined {
   return _byId.get(id);
 }
