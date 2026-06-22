@@ -7,7 +7,7 @@ import classes from './FileUploader.module.css';
 import { Icon, LabelContent } from '~/main';
 import exifr from 'exifr';
 import { FileUploaderContext } from './FileUploader.context';
-import { useFileRetrieverContext } from './FileRetriever.context';
+import { FileRetrieverContext } from './FileRetriever.context';
 import { FileUploaderItem } from './item/FileUploaderItem';
 import { onFilesChanged } from '~/components/kystverket/FileUploader/FileUploaderHelpers';
 import {
@@ -93,7 +93,7 @@ export const FileUploader = ({
   const t = scopedT('fileUploader');
 
   const fileUploaderContext = useContext(FileUploaderContext);
-  const { deriveFileInfosFromStorageIds } = useFileRetrieverContext();
+  const fileRetrieverContext = useContext(FileRetrieverContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const fileCameraInputRef = useRef<HTMLInputElement>(null);
   const dialogRef = useRef<ExistingFilesDialogHandle>(null);
@@ -103,7 +103,7 @@ export const FileUploader = ({
   const [storageIdToExtraFileInfo, setStorageIdToExtraFileInfo] = useState<Map<string, ExtraFileInfo>>(new Map());
 
   useEffect(() => {
-    if (!allowFilePreview) {
+    if (!allowFilePreview || !fileRetrieverContext) {
       setPreviewFiles([]);
       setStorageIdToPreviewIndex(new Map());
       setStorageIdToExtraFileInfo(new Map());
@@ -117,7 +117,7 @@ export const FileUploader = ({
       const storageIds = files
         .filter((f) => f.status === 'uploaded' && f.storageId)
         .map((f) => f.storageId!) as string[];
-      const extraFileInfos = await deriveFileInfosFromStorageIds(storageIds);
+      const extraFileInfos = await fileRetrieverContext.deriveFileInfosFromStorageIds(storageIds);
       const extraInfoMap = createStorageIdToExtraFileInfoMap(extraFileInfos);
 
       files.forEach((file) => {
@@ -154,7 +154,7 @@ export const FileUploader = ({
       setStorageIdToExtraFileInfo(extraInfoMap);
     };
     void fetchPreviewFiles();
-  }, [allowFilePreview, files, deriveFileInfosFromStorageIds]);
+  }, [allowFilePreview, files, fileRetrieverContext]);
 
   const onUploadFile = (uploadedFiles: File[]) => {
     Promise.all(

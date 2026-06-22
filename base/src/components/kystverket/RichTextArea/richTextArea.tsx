@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useId, useRef, useState } from 'react';
+import { useContext, useEffect, useId, useRef, useState } from 'react';
 import { Milkdown, MilkdownProvider, useEditor } from '@milkdown/react';
 import { editorViewCtx } from '@milkdown/core';
 import type { InlineImageConfig } from '@milkdown/components/image-inline';
@@ -11,7 +11,7 @@ import '@milkdown/prose/view/style/prosemirror.css';
 import classes from './richTextArea.module.css';
 
 import { Fieldset, LabelContent, ValidationMessage } from '~/main';
-import { useFileRetrieverContext } from '../FileUploader/FileRetriever.context';
+import { FileRetrieverContext } from '../FileUploader/FileRetriever.context';
 import LinkEditor from './components/LinkEditor/linkEditor';
 import { Toolbar } from './components/Toolbar/toolbar';
 import { useRichTextToolbarState } from './hooks/useRichTextToolbarState';
@@ -33,6 +33,7 @@ import {
   getImageRefsFromMarkdown,
   replaceImageUrlsWithRefs,
 } from '~/components/kystverket/RichTextArea/utils/ImageRefUtils';
+import type { DeriveFileInfosFromStorageIds } from '~/utils/fileInfoResolver';
 export type { RichTextAreaProps };
 
 const notifyRemovedManagedImages = (
@@ -74,7 +75,22 @@ const RichTextAreaContainer = ({
   // Owned here so useEditor config can close over them before useRichTextImageUpload is called.
   const sasToRefMap = useRef(new Map<string, string>());
   const refToPreviewMap = useRef(new Map<string, string>());
-  const { deriveFileInfosFromStorageIds } = useFileRetrieverContext();
+  const fileRetrieverContext = useContext(FileRetrieverContext);
+  const hasLoggedMissingFileResolverRef = useRef(false);
+
+  const deriveFileInfosFromStorageIds: DeriveFileInfosFromStorageIds = (storageIds) => {
+    if (!fileRetrieverContext) {
+      if (!hasLoggedMissingFileResolverRef.current && storageIds.length > 0) {
+        console.error(
+          'RichTextArea: image upload/ref support is enabled but FileRetrieverContext.Provider is missing. Provide a file resolver to enable image reference resolution.',
+        );
+        hasLoggedMissingFileResolverRef.current = true;
+      }
+      return [];
+    }
+
+    return fileRetrieverContext.deriveFileInfosFromStorageIds(storageIds);
+  };
 
   const normalizedValue = normalizeMarkdownBreakTags(value ?? '');
   const [editorMarkdown, setEditorMarkdown] = useState(normalizedValue);
@@ -134,7 +150,7 @@ const RichTextAreaContainer = ({
     return () => {
       isCancelled = true;
     };
-  }, [normalizedValue, deriveFileInfosFromStorageIds]);
+  }, [normalizedValue, fileRetrieverContext]);
 
   const insertImageFromFileRef = useRef<ImageInsertHandler>(() => {});
   const inlineImageConfigUpdaterRef = useRef<(config: InlineImageConfig) => InlineImageConfig>((c) => c);
