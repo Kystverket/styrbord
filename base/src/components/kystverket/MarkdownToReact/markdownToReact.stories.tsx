@@ -1,16 +1,22 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import MarkdownToReact from './markdownToReact';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
-import { FileUploaderContext } from '../FileUploader/FileUploader.context';
-import { ExtraFileInfo, UploadFileResult } from '../FileUploader/FileUploader.types';
-import { v4 as uuidv4 } from 'uuid';
+import { FileRetrieverContext } from '../FileUploader/FileRetriever.context';
+import { ExtraFileInfo } from '../FileUploader/FileUploader.types';
 
 import atlas from '@assets/img/atlas/atlas 1.jpeg';
 
 const meta = {
   title: 'Components/MarkdownToReact',
   component: MarkdownToReact,
-  decorators: [StyrbordDecorator],
+  decorators: [
+    (Story) => (
+      <FileRetrieverContext.Provider value={{ deriveFileInfosFromStorageIds }}>
+        <Story />
+      </FileRetrieverContext.Provider>
+    ),
+    StyrbordDecorator,
+  ],
   tags: ['autodocs', 'kyv', 'beta'],
   argTypes: {
     markdown: { control: 'text' },
@@ -32,17 +38,6 @@ const deriveFileInfosFromStorageIds = async (): Promise<ExtraFileInfo[]> => {
       ]);
     }, 300);
   });
-};
-
-const uploadFile = async (): Promise<UploadFileResult> => {
-  return {
-    storageId: uuidv4(),
-    success: true,
-  };
-};
-
-const deleteFile = async (): Promise<void> => {
-  return;
 };
 
 export const Default: Story = {
@@ -139,15 +134,5 @@ export const ResolveImageRefExample: Story = {
     markdown:
       '\n# Noe kul markdown\n\n## Med et bilde som ikke resolver\n![Et bilde av en skillingsbolle på havet](image://128asdnsaj-dnb1-asj1-9d11-sajdnj1jo)\n\n## og et bilde som resolver!\n![Atlas.png](image://86062b3c-ebc8-48d0-9d08-8c282f5d8c69)\n',
   },
-  render: (args) => (
-    <FileUploaderContext.Provider
-      value={{
-        uploadFile,
-        deleteFile,
-        deriveFileInfosFromStorageIds,
-      }}
-    >
-      <MarkdownToReact {...args} />
-    </FileUploaderContext.Provider>
-  ),
+  render: (args) => <MarkdownToReact {...args} />,
 };

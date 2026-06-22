@@ -1,7 +1,6 @@
 import { createContext } from 'react';
 import { FileInfo, UploadFileResult } from './FileUploader.types';
 import { v4 as uuidv4 } from 'uuid';
-import type { DeriveFileInfosFromStorageIds } from '~/utils/fileInfoResolver';
 export type FileChangeCallback = (files: FileInfo[]) => void;
 
 const uploadFileDummy = async (): Promise<UploadFileResult> => {
@@ -24,7 +23,6 @@ const deleteFileDummy = async (): Promise<void> => {
 };
 
 export interface FileUploaderContextProps {
-  deriveFileInfosFromStorageIds: DeriveFileInfosFromStorageIds;
   uploadFile: (file: FormData) => Promise<UploadFileResult>;
   deleteFile: (fileId: string) => Promise<void>;
 }
@@ -32,5 +30,4 @@ export interface FileUploaderContextProps {
 export const FileUploaderContext = createContext<FileUploaderContextProps>({
   uploadFile: uploadFileDummy,
   deleteFile: deleteFileDummy,
-  deriveFileInfosFromStorageIds: async () => [],
 });
