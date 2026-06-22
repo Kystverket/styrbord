@@ -1,6 +1,6 @@
 'use client';
 
-import { useContext, useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { Milkdown, MilkdownProvider, useEditor } from '@milkdown/react';
 import { editorViewCtx } from '@milkdown/core';
 import type { InlineImageConfig } from '@milkdown/components/image-inline';
@@ -11,7 +11,7 @@ import '@milkdown/prose/view/style/prosemirror.css';
 import classes from './richTextArea.module.css';
 
 import { Fieldset, LabelContent, ValidationMessage } from '~/main';
-import { FileRetrieverContext } from '../FileUploader/FileRetriever.context';
+import { useFileRetrieverContext } from '../FileUploader/FileRetriever.context';
 import LinkEditor from './components/LinkEditor/linkEditor';
 import { Toolbar } from './components/Toolbar/toolbar';
 import { useRichTextToolbarState } from './hooks/useRichTextToolbarState';
@@ -74,7 +74,7 @@ const RichTextAreaContainer = ({
   // Owned here so useEditor config can close over them before useRichTextImageUpload is called.
   const sasToRefMap = useRef(new Map<string, string>());
   const refToPreviewMap = useRef(new Map<string, string>());
-  const fileRetrieverContext = useContext(FileRetrieverContext);
+  const { deriveFileInfosFromStorageIds } = useFileRetrieverContext();
 
   const normalizedValue = normalizeMarkdownBreakTags(value ?? '');
   const [editorMarkdown, setEditorMarkdown] = useState(normalizedValue);
@@ -94,13 +94,6 @@ const RichTextAreaContainer = ({
     let isCancelled = false;
 
     const resolveImages = async () => {
-      if (!fileRetrieverContext.deriveFileInfosFromStorageIds) {
-        sasToRefMap.current.clear();
-        refToPreviewMap.current.clear();
-        setEditorMarkdown(normalizedValue);
-        return;
-      }
-
       try {
         const previousRefToUrlMap = new Map<string, string>(
           Array.from(sasToRefMap.current.entries(), ([src, ref]) => [ref, src]),
@@ -108,7 +101,7 @@ const RichTextAreaContainer = ({
         const nextSasToRefMap = new Map<string, string>();
         const resolvedMarkdown = await convertFromRefToImage(
           normalizedValue,
-          fileRetrieverContext.deriveFileInfosFromStorageIds,
+          deriveFileInfosFromStorageIds,
           nextSasToRefMap,
           previousRefToUrlMap,
         );
@@ -141,7 +134,7 @@ const RichTextAreaContainer = ({
     return () => {
       isCancelled = true;
     };
-  }, [normalizedValue, fileRetrieverContext.deriveFileInfosFromStorageIds]);
+  }, [normalizedValue, deriveFileInfosFromStorageIds]);
 
   const insertImageFromFileRef = useRef<ImageInsertHandler>(() => {});
   const inlineImageConfigUpdaterRef = useRef<(config: InlineImageConfig) => InlineImageConfig>((c) => c);
@@ -194,7 +187,7 @@ const RichTextAreaContainer = ({
     get,
     updateToolbarState,
     latestOnUploadRef,
-    deriveFileInfosFromStorageIds: fileRetrieverContext.deriveFileInfosFromStorageIds,
+    deriveFileInfosFromStorageIds,
     sasToRefMap,
     refToPreviewMap,
     pendingImageSelectionRef,

@@ -1,4 +1,4 @@
-import { forwardRef, useContext, useEffect, useImperativeHandle, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import {
   Box,
   FileInfo,
@@ -10,9 +10,9 @@ import {
   Card,
   Icon,
   type ExtraFileInfo,
-  FileRetrieverContext,
   SlotDialog,
 } from '~/main';
+import { useFileRetrieverContext } from '~/components/kystverket/FileUploader/FileRetriever.context';
 import classes from './ExistingFilesDialog.module.css';
 import { convertBytesToReadable } from '~/utils/convertBytesToReadable';
 import { ExistingFilesProviderItem } from '~/components/kystverket/FileUploader/FileUploader';
@@ -34,7 +34,7 @@ export interface ExistingFilesDialogHandle {
 export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, ExistingFilesDialogProps>(
   function ExistingFilesDialog({ t, existingFiles, existingFilesProvider, onConfirm }, ref) {
     const [loadingAllExistingFiles, setLoadingAllExistingFiles] = useState(false);
-    const fileRetrieverContext = useContext(FileRetrieverContext);
+    const { deriveFileInfosFromStorageIds } = useFileRetrieverContext();
 
     const [existingFilesCollection, setExistingFilesCollection] = useState<ExistingFilesProviderItem[]>([]);
     const [selectedFileCollection, setSelectedFileCollection] = useState<ExistingFilesProviderItem>();
@@ -51,20 +51,18 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
       }
 
       const fetchPreviewFiles = async () => {
-        if (!fileRetrieverContext.deriveFileInfosFromStorageIds) return;
-
         const storageIds = new Set(
           existingFilesCollection
             .flatMap((f) => f.files)
             .filter((f) => f.storageId)
             .map((f) => f.storageId!) as string[],
         );
-        const extraFileInfos = await fileRetrieverContext.deriveFileInfosFromStorageIds([...storageIds]);
+        const extraFileInfos = await deriveFileInfosFromStorageIds([...storageIds]);
         const extraInfoMap = createStorageIdToExtraFileInfoMap(extraFileInfos);
         setStorageIdToExtraFileInfo(extraInfoMap);
       };
-      fetchPreviewFiles();
-    }, [existingFilesCollection]);
+      void fetchPreviewFiles();
+    }, [existingFilesCollection, deriveFileInfosFromStorageIds]);
 
     useImperativeHandle(
       ref,
