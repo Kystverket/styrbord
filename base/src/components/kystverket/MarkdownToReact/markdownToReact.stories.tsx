@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import MarkdownToReact from './markdownToReact';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { FileUploaderContext } from '../FileUploader/FileUploader.context';
+import { FileRetrieverContext } from '../FileUploader/FileRetriever.context';
 import { ExtraFileInfo, UploadFileResult } from '../FileUploader/FileUploader.types';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -144,10 +145,11 @@ export const ResolveImageRefExample: Story = {
       value={{
         uploadFile,
         deleteFile,
-        deriveFileInfosFromStorageIds,
       }}
     >
-      <MarkdownToReact {...args} />
+      <FileRetrieverContext.Provider value={{ deriveFileInfosFromStorageIds }}>
+        <MarkdownToReact {...args} />
+      </FileRetrieverContext.Provider>
     </FileUploaderContext.Provider>
   ),
 };

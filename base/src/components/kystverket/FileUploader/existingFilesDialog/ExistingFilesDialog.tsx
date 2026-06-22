@@ -10,7 +10,7 @@ import {
   Card,
   Icon,
   type ExtraFileInfo,
-  FileUploaderContext,
+  FileRetrieverContext,
   SlotDialog,
 } from '~/main';
 import classes from './ExistingFilesDialog.module.css';
@@ -34,7 +34,7 @@ export interface ExistingFilesDialogHandle {
 export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, ExistingFilesDialogProps>(
   function ExistingFilesDialog({ t, existingFiles, existingFilesProvider, onConfirm }, ref) {
     const [loadingAllExistingFiles, setLoadingAllExistingFiles] = useState(false);
-    const fileUploaderContext = useContext(FileUploaderContext);
+    const fileRetrieverContext = useContext(FileRetrieverContext);
 
     const [existingFilesCollection, setExistingFilesCollection] = useState<ExistingFilesProviderItem[]>([]);
     const [selectedFileCollection, setSelectedFileCollection] = useState<ExistingFilesProviderItem>();
@@ -51,7 +51,7 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
       }
 
       const fetchPreviewFiles = async () => {
-        if (!fileUploaderContext.deriveFileInfosFromStorageIds) return;
+        if (!fileRetrieverContext.deriveFileInfosFromStorageIds) return;
 
         const storageIds = new Set(
           existingFilesCollection
@@ -59,7 +59,7 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
             .filter((f) => f.storageId)
             .map((f) => f.storageId!) as string[],
         );
-        const extraFileInfos = await fileUploaderContext.deriveFileInfosFromStorageIds([...storageIds]);
+        const extraFileInfos = await fileRetrieverContext.deriveFileInfosFromStorageIds([...storageIds]);
         const extraInfoMap = createStorageIdToExtraFileInfoMap(extraFileInfos);
         setStorageIdToExtraFileInfo(extraInfoMap);
       };

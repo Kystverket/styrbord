@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ExistingFilesProviderItem, FileUploader, FileUploaderProps } from './FileUploader';
 import { FileUploaderContext } from './FileUploader.context';
+import { FileRetrieverContext } from './FileRetriever.context';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 import { useState } from 'react';
@@ -254,10 +255,11 @@ export const withFileSizeLimit: Story = {
         value={{
           uploadFile: uploadFileWithSizeLimit,
           deleteFile: deleteFile,
-          deriveFileInfosFromStorageIds,
         }}
       >
-        <Story />
+        <FileRetrieverContext.Provider value={{ deriveFileInfosFromStorageIds }}>
+          <Story />
+        </FileRetrieverContext.Provider>
       </FileUploaderContext.Provider>
     ),
   ],
@@ -275,10 +277,11 @@ export const withPreviews: Story = {
         value={{
           uploadFile: uploadFileWithSizeLimit,
           deleteFile: deleteFile,
-          deriveFileInfosFromStorageIds,
         }}
       >
-        <Story />
+        <FileRetrieverContext.Provider value={{ deriveFileInfosFromStorageIds }}>
+          <Story />
+        </FileRetrieverContext.Provider>
       </FileUploaderContext.Provider>
     ),
   ],
@@ -340,12 +343,13 @@ export const withFileScanFailed: Story = {
     (Story) => (
       <FileUploaderContext.Provider
         value={{
-          deriveFileInfosFromStorageIds,
           uploadFile: uploadFileWithFileScan,
           deleteFile: deleteFile,
         }}
       >
-        <Story />
+        <FileRetrieverContext.Provider value={{ deriveFileInfosFromStorageIds }}>
+          <Story />
+        </FileRetrieverContext.Provider>
       </FileUploaderContext.Provider>
     ),
   ],

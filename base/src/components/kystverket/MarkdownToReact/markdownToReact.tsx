@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import styles from './markdownToReact.module.css';
 import { Link, Paragraph } from '~/main';
 import { convertFromRefToImage } from '~/components/kystverket/RichTextArea/utils/ImageRefUtils';
-import { FileUploaderContext } from '~/components/kystverket/FileUploader/FileUploader.context';
+import { FileRetrieverContext } from '~/components/kystverket/FileUploader/FileRetriever.context';
 
 export type MarkdownToReactProps = {
   markdown: string;
@@ -11,7 +11,7 @@ export type MarkdownToReactProps = {
 
 // Overskrifter (h1-h6) rendres som <Paragraph> med tanke på dokumenthierarki (enn så lenge, dette må vi komme tilbake til etter hvert)
 const MarkdownToReact = ({ markdown }: MarkdownToReactProps) => {
-  const fileUploaderContext = useContext(FileUploaderContext);
+  const fileRetrieverContext = useContext(FileRetrieverContext);
 
   const normalizedMarkdown = useMemo(() => markdown.replaceAll(/\n{3,}/g, '\n\n\u00A0\n\n'), [markdown]);
   const [renderedMarkdown, setRenderedMarkdown] = useState(normalizedMarkdown);
@@ -19,7 +19,7 @@ const MarkdownToReact = ({ markdown }: MarkdownToReactProps) => {
   useEffect(() => {
     let isCancelled = false;
 
-    if (!fileUploaderContext.deriveFileInfosFromStorageIds) {
+    if (!fileRetrieverContext.deriveFileInfosFromStorageIds) {
       setRenderedMarkdown(normalizedMarkdown);
       return;
     }
@@ -28,7 +28,7 @@ const MarkdownToReact = ({ markdown }: MarkdownToReactProps) => {
       try {
         const resolvedMarkdown = await convertFromRefToImage(
           normalizedMarkdown,
-          fileUploaderContext.deriveFileInfosFromStorageIds,
+          fileRetrieverContext.deriveFileInfosFromStorageIds,
         );
 
         if (isCancelled) {
@@ -50,7 +50,7 @@ const MarkdownToReact = ({ markdown }: MarkdownToReactProps) => {
     return () => {
       isCancelled = true;
     };
-  }, [normalizedMarkdown, fileUploaderContext.deriveFileInfosFromStorageIds]);
+  }, [normalizedMarkdown, fileRetrieverContext.deriveFileInfosFromStorageIds]);
 
   return (
     <div className={styles.markdownToReact}>

@@ -10,7 +10,8 @@ import '@milkdown/prose/view/style/prosemirror.css';
 
 import classes from './richTextArea.module.css';
 
-import { Fieldset, FileUploaderContext, LabelContent, ValidationMessage } from '~/main';
+import { Fieldset, LabelContent, ValidationMessage } from '~/main';
+import { FileRetrieverContext } from '../FileUploader/FileRetriever.context';
 import LinkEditor from './components/LinkEditor/linkEditor';
 import { Toolbar } from './components/Toolbar/toolbar';
 import { useRichTextToolbarState } from './hooks/useRichTextToolbarState';
@@ -73,7 +74,7 @@ const RichTextAreaContainer = ({
   // Owned here so useEditor config can close over them before useRichTextImageUpload is called.
   const sasToRefMap = useRef(new Map<string, string>());
   const refToPreviewMap = useRef(new Map<string, string>());
-  const fileUploaderContext = useContext(FileUploaderContext);
+  const fileRetrieverContext = useContext(FileRetrieverContext);
 
   const normalizedValue = normalizeMarkdownBreakTags(value ?? '');
   const [editorMarkdown, setEditorMarkdown] = useState(normalizedValue);
@@ -93,7 +94,7 @@ const RichTextAreaContainer = ({
     let isCancelled = false;
 
     const resolveImages = async () => {
-      if (!fileUploaderContext.deriveFileInfosFromStorageIds) {
+      if (!fileRetrieverContext.deriveFileInfosFromStorageIds) {
         sasToRefMap.current.clear();
         refToPreviewMap.current.clear();
         setEditorMarkdown(normalizedValue);
@@ -107,7 +108,7 @@ const RichTextAreaContainer = ({
         const nextSasToRefMap = new Map<string, string>();
         const resolvedMarkdown = await convertFromRefToImage(
           normalizedValue,
-          fileUploaderContext.deriveFileInfosFromStorageIds,
+          fileRetrieverContext.deriveFileInfosFromStorageIds,
           nextSasToRefMap,
           previousRefToUrlMap,
         );
@@ -140,7 +141,7 @@ const RichTextAreaContainer = ({
     return () => {
       isCancelled = true;
     };
-  }, [normalizedValue, fileUploaderContext.deriveFileInfosFromStorageIds]);
+  }, [normalizedValue, fileRetrieverContext.deriveFileInfosFromStorageIds]);
 
   const insertImageFromFileRef = useRef<ImageInsertHandler>(() => {});
   const inlineImageConfigUpdaterRef = useRef<(config: InlineImageConfig) => InlineImageConfig>((c) => c);
@@ -193,7 +194,7 @@ const RichTextAreaContainer = ({
     get,
     updateToolbarState,
     latestOnUploadRef,
-    deriveFileInfosFromStorageIds: fileUploaderContext.deriveFileInfosFromStorageIds,
+    deriveFileInfosFromStorageIds: fileRetrieverContext.deriveFileInfosFromStorageIds,
     sasToRefMap,
     refToPreviewMap,
     pendingImageSelectionRef,

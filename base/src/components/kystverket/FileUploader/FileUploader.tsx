@@ -7,6 +7,7 @@ import classes from './FileUploader.module.css';
 import { Icon, LabelContent } from '~/main';
 import exifr from 'exifr';
 import { FileUploaderContext } from './FileUploader.context';
+import { FileRetrieverContext } from './FileRetriever.context';
 import { FileUploaderItem } from './item/FileUploaderItem';
 import { onFilesChanged } from '~/components/kystverket/FileUploader/FileUploaderHelpers';
 import {
@@ -92,6 +93,7 @@ export const FileUploader = ({
   const t = scopedT('fileUploader');
 
   const fileUploaderContext = useContext(FileUploaderContext);
+  const fileRetrieverContext = useContext(FileRetrieverContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const fileCameraInputRef = useRef<HTMLInputElement>(null);
   const dialogRef = useRef<ExistingFilesDialogHandle>(null);
@@ -101,14 +103,14 @@ export const FileUploader = ({
   const [storageIdToExtraFileInfo, setStorageIdToExtraFileInfo] = useState<Map<string, ExtraFileInfo>>(new Map());
 
   useEffect(() => {
-    if (!allowFilePreview || !fileUploaderContext.deriveFileInfosFromStorageIds) {
+    if (!allowFilePreview || !fileRetrieverContext.deriveFileInfosFromStorageIds) {
       setPreviewFiles([]);
       setStorageIdToPreviewIndex(new Map());
       setStorageIdToExtraFileInfo(new Map());
     }
 
     const fetchPreviewFiles = async () => {
-      if (!fileUploaderContext.deriveFileInfosFromStorageIds) return;
+      if (!fileRetrieverContext.deriveFileInfosFromStorageIds) return;
 
       const result: PreviewFileInfo[] = [];
       const indexMap = new Map<string, number>();
@@ -116,7 +118,7 @@ export const FileUploader = ({
       const storageIds = files
         .filter((f) => f.status === 'uploaded' && f.storageId)
         .map((f) => f.storageId!) as string[];
-      const extraFileInfos = await fileUploaderContext.deriveFileInfosFromStorageIds(storageIds);
+      const extraFileInfos = await fileRetrieverContext.deriveFileInfosFromStorageIds(storageIds);
       const extraInfoMap = createStorageIdToExtraFileInfoMap(extraFileInfos);
 
       files.forEach((file) => {
