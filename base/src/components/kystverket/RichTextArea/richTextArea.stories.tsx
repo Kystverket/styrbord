@@ -13,7 +13,14 @@ import { v4 as uuidv4 } from 'uuid';
 const meta = {
   title: 'Form/RichTextArea/RichTextArea',
   component: RichTextArea,
-  decorators: [StyrbordDecorator],
+  decorators: [
+    (Story) => (
+      <FileRetrieverContext.Provider value={{ deriveFileInfosFromStorageIds }}>
+        <Story />
+      </FileRetrieverContext.Provider>
+    ),
+    StyrbordDecorator,
+  ],
   tags: ['autodocs', 'kyv', 'beta'],
 } satisfies Meta<typeof RichTextArea>;
 

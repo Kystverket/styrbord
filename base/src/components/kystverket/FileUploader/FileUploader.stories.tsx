@@ -54,7 +54,14 @@ const Wrapper = (props: FileUploaderProps) => {
 const meta = {
   title: 'Form/FileUploader',
   component: Wrapper,
-  decorators: [StyrbordDecorator],
+  decorators: [
+    (Story) => (
+      <FileRetrieverContext.Provider value={{ deriveFileInfosFromStorageIds }}>
+        <Story />
+      </FileRetrieverContext.Provider>
+    ),
+    StyrbordDecorator,
+  ],
   tags: ['autodocs', 'kyv', 'beta'],
   argTypes: {},
 } satisfies Meta<typeof Wrapper>;
