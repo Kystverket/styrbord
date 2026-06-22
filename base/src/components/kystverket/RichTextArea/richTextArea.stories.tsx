@@ -7,12 +7,20 @@ import { RichTextArea, RichTextAreaProps } from './richTextArea';
 import atlas from '@assets/img/atlas/atlas 1.jpeg';
 import { ExtraFileInfo, UploadFileResult } from '../FileUploader/FileUploader.types';
 import { FileUploaderContext } from '../FileUploader/FileUploader.context';
+import { FileRetrieverContext } from '../FileUploader/FileRetriever.context';
 import { v4 as uuidv4 } from 'uuid';
 
 const meta = {
   title: 'Form/RichTextArea/RichTextArea',
   component: RichTextArea,
-  decorators: [StyrbordDecorator],
+  decorators: [
+    (Story) => (
+      <FileRetrieverContext.Provider value={{ deriveFileInfosFromStorageIds }}>
+        <Story />
+      </FileRetrieverContext.Provider>
+    ),
+    StyrbordDecorator,
+  ],
   tags: ['autodocs', 'kyv', 'beta'],
 } satisfies Meta<typeof RichTextArea>;
 
@@ -156,38 +164,39 @@ Bilde av Atlas
         value={{
           uploadFile,
           deleteFile,
-          deriveFileInfosFromStorageIds,
         }}
       >
-        <RichTextArea
-          {...args}
-          value={value}
-          onChange={(nextMarkdown) => {
-            setValue(nextMarkdown);
-            setMarkdownOutput(nextMarkdown);
-            args.onChange(nextMarkdown);
-          }}
-        />
-        {markdownOutput && (
-          <div style={{ marginTop: '12px' }}>
-            <p style={{ marginBottom: '0.25rem', fontWeight: 'bold', fontSize: '0.875rem' }}>
-              Markdown sendt til onChange:
-            </p>
-            <pre
-              style={{
-                background: '#f4f4f4',
-                border: '1px solid #ddd',
-                borderRadius: '4px',
-                padding: '0.75rem',
-                fontSize: '0.8rem',
-                whiteSpace: 'pre-wrap',
-                wordBreak: 'break-all',
-              }}
-            >
-              {markdownOutput}
-            </pre>
-          </div>
-        )}
+        <FileRetrieverContext.Provider value={{ deriveFileInfosFromStorageIds }}>
+          <RichTextArea
+            {...args}
+            value={value}
+            onChange={(nextMarkdown) => {
+              setValue(nextMarkdown);
+              setMarkdownOutput(nextMarkdown);
+              args.onChange(nextMarkdown);
+            }}
+          />
+          {markdownOutput && (
+            <div style={{ marginTop: '12px' }}>
+              <p style={{ marginBottom: '0.25rem', fontWeight: 'bold', fontSize: '0.875rem' }}>
+                Markdown sendt til onChange:
+              </p>
+              <pre
+                style={{
+                  background: '#f4f4f4',
+                  border: '1px solid #ddd',
+                  borderRadius: '4px',
+                  padding: '0.75rem',
+                  fontSize: '0.8rem',
+                  whiteSpace: 'pre-wrap',
+                  wordBreak: 'break-all',
+                }}
+              >
+                {markdownOutput}
+              </pre>
+            </div>
+          )}
+        </FileRetrieverContext.Provider>
       </FileUploaderContext.Provider>
     );
   },
