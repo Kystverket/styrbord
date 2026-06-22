@@ -32,15 +32,17 @@
 
   .rounded {
     border-radius: var(--ds-border-radius-full);
-    padding-left: var(--ds-size-4);
-    padding-right: var(--ds-size-4);
+    padding-inline: var(--ds-size-3);
     height: var(--ds-size-8);
   }
 
   .withIcon {
     display: inline-flex;
     align-items: center;
-    gap: var(--ds-size-1);
+  }
+
+  .tagText {
+    padding-inline: var(--ds-size-1);
   }
 
   .plainBackground {

@@ -35,7 +35,7 @@ const Tag = ({
   return (
     <DsTag className={classNames.join(' ')} {...props}>
       {icon && <Icon material={icon} size="xs" />}
-      {children}
+      <span className={classes.tagText}>{children}</span>
     </DsTag>
   );
 };
