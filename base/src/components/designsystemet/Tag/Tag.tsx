@@ -29,9 +29,6 @@ const Tag = ({
   if (plainBackground) {
     classNames.push(classes.plainBackground);
   }
-  if (icon) {
-    classNames.push(classes.withIcon);
-  }
   return (
     <DsTag className={classNames.join(' ')} {...props}>
       {icon && <Icon material={icon} size="xs" />}

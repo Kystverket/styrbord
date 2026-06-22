@@ -36,11 +36,6 @@
     height: var(--ds-size-8);
   }
 
-  .withIcon {
-    display: inline-flex;
-    align-items: center;
-  }
-
   .tagText {
     padding-inline: var(--ds-size-1);
   }
