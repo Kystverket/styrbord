@@ -105,7 +105,6 @@ export {
 } from './components/kystverket/FileUploader/FileUploader.context';
 export {
   FileRetrieverContext,
-  useFileRetrieverContext,
   type FileRetrieverContextProps,
 } from './components/kystverket/FileUploader/FileRetriever.context';
 export type * from './components/kystverket/FileUploader/FileUploader.types';

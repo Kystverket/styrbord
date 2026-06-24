@@ -41,6 +41,10 @@ Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.
 
 ## Endringslogg
 
+### 2026-06-22 -- v1.9.9
+
+Lagt inn en ny context for å hente filer som er lastet opp til RichTextArea, MarkdownToReact og FileUploader kalt `FileRetrieverContext`. Uten en provider til denne så vil komponentene fortsatt fungere, men preview av opplastede/refererte filer vil ikke bli vist.
+
 ### 2026-06-09 -- v1.9.0
 
 Oppdatert RichTextArea og MarkdownToReact til å bruke FileUploader sin context for å håndtere henting av fil-informasjon gjennom `deriveFileInfosFromStorageIds`

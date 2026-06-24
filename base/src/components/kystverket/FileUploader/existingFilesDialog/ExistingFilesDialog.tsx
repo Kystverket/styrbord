@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import { forwardRef, useContext, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import {
   Box,
   FileInfo,
@@ -12,8 +12,8 @@ import {
   type ExtraFileInfo,
   SlotDialog,
 } from '~/main';
-import { useFileRetrieverContext } from '~/components/kystverket/FileUploader/FileRetriever.context';
 import classes from './ExistingFilesDialog.module.css';
+import { FileRetrieverContext } from '../FileRetriever.context';
 import { convertBytesToReadable } from '~/utils/convertBytesToReadable';
 import { ExistingFilesProviderItem } from '~/components/kystverket/FileUploader/FileUploader';
 import { createStorageIdToExtraFileInfoMap } from '~/utils/fileInfoResolver';
@@ -34,7 +34,6 @@ export interface ExistingFilesDialogHandle {
 export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, ExistingFilesDialogProps>(
   function ExistingFilesDialog({ t, existingFiles, existingFilesProvider, onConfirm }, ref) {
     const [loadingAllExistingFiles, setLoadingAllExistingFiles] = useState(false);
-    const { deriveFileInfosFromStorageIds } = useFileRetrieverContext();
 
     const [existingFilesCollection, setExistingFilesCollection] = useState<ExistingFilesProviderItem[]>([]);
     const [selectedFileCollection, setSelectedFileCollection] = useState<ExistingFilesProviderItem>();
@@ -45,9 +44,23 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
 
     const [storageIdToExtraFileInfo, setStorageIdToExtraFileInfo] = useState<Map<string, ExtraFileInfo>>(new Map());
 
+    const fileRetrieverContext = useContext(FileRetrieverContext);
+    const hasLoggedMissingFileResolverRef = useRef(false);
+
     useEffect(() => {
       if (!existingFilesCollection || existingFilesCollection.length === 0) {
         setStorageIdToExtraFileInfo(new Map());
+      }
+
+      if (!fileRetrieverContext) {
+        const storageIds = existingFilesCollection.flatMap((f) => f.files).filter((f) => f.storageId);
+        if (!hasLoggedMissingFileResolverRef.current && storageIds.length > 0) {
+          console.error(
+            'ExistingFilesDialog: file preview support is enabled but FileRetrieverContext.Provider is missing. Provide a file resolver to enable file preview.',
+          );
+          hasLoggedMissingFileResolverRef.current = true;
+        }
+        return;
       }
 
       const fetchPreviewFiles = async () => {
@@ -57,12 +70,12 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
             .filter((f) => f.storageId)
             .map((f) => f.storageId!) as string[],
         );
-        const extraFileInfos = await deriveFileInfosFromStorageIds([...storageIds]);
+        const extraFileInfos = await fileRetrieverContext.deriveFileInfosFromStorageIds([...storageIds]);
         const extraInfoMap = createStorageIdToExtraFileInfoMap(extraFileInfos);
         setStorageIdToExtraFileInfo(extraInfoMap);
       };
       void fetchPreviewFiles();
-    }, [existingFilesCollection, deriveFileInfosFromStorageIds]);
+    }, [existingFilesCollection, fileRetrieverContext]);
 
     useImperativeHandle(
       ref,

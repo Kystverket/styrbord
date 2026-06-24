@@ -129,7 +129,7 @@ const existingFilesProvider = async (): Promise<ExistingFilesProviderItem[]> => 
         {
           contextId: 'existing-3',
           fileName: 'screenshot.png',
-          storageId: 'storage-id-3',
+          storageId: '1',
           contentType: 'image/png',
           status: 'uploaded',
         },
@@ -149,7 +149,7 @@ const existingFilesProvider = async (): Promise<ExistingFilesProviderItem[]> => 
         {
           contextId: 'existing-test2-2',
           fileName: 'image1.jpg',
-          storageId: 'storage-id-test2-2',
+          storageId: '2',
           contentType: 'image/jpeg',
           status: 'uploaded',
         },
@@ -163,7 +163,7 @@ const existingFilesProvider = async (): Promise<ExistingFilesProviderItem[]> => 
         {
           contextId: 'existing-test2-4',
           fileName: 'screenshot.png',
-          storageId: 'storage-id-test2-4',
+          storageId: '3',
           contentType: 'image/png',
           status: 'uploaded',
         },
