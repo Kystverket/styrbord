@@ -34,6 +34,7 @@ import {
   replaceImageUrlsWithRefs,
 } from '~/components/kystverket/RichTextArea/utils/ImageRefUtils';
 import type { DeriveFileInfosFromStorageIds } from '~/utils/fileInfoResolver';
+import { BottomToolbar } from '~/components/kystverket/RichTextArea/components/BottomToolbar/bottomToolbar';
 export type { RichTextAreaProps };
 
 const notifyRemovedManagedImages = (
@@ -360,7 +361,9 @@ const RichTextAreaContainer = ({
             onRemove={handleLinkRemove}
             onClose={closeLinkEditor}
           />
+          <BottomToolbar />
         </div>
+
         {displayedError && <ValidationMessage className={classes.error}>{displayedError}</ValidationMessage>}
       </div>
     </Fieldset>
