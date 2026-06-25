@@ -15,6 +15,14 @@
 .ds-chip [type='checkbox'] {
   --_size: calc(var(--dsc-input-size--toggle) - var(--ds-size-1));
 
+  //These custom overrides are to avoid the checkmark looking off on these sizes
+  &[value='sm'] {
+    --_size: 13px;
+  }
+  &[value='lg'] {
+    --_size: 17px;
+  }
+
   height: var(--_size);
   width: var(--_size);
   margin-inline: var(--ds-size-1);
@@ -31,6 +39,7 @@
   margin-inline: var(--ds-size-1);
 }
 
+// Removable chip
 .ds-chip[data-removable]:after {
   --_size: calc(var(--dsc-chip-icon-size) - var(--ds-size-2));
   height: var(--_size);
