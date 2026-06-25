@@ -156,8 +156,8 @@ Bilde av Atlas
     },
   },
   render: (args) => {
-    const [value, setValue] = useState(args.value ?? '');
-    const [markdownOutput, setMarkdownOutput] = useState('');
+    const [value, setValue] = useState(args.value ?? ''); // NOSONAR
+    const [markdownOutput, setMarkdownOutput] = useState(''); // NOSONAR
 
     return (
       <FileUploaderContext.Provider

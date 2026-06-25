@@ -1,0 +1,36 @@
+.ds-chip {
+  gap: 0;
+}
+
+[data-color-scheme='dark'] .ds-chip {
+  font-weight: var(--ds-font-weight-bold);
+}
+
+.ds-chip > span {
+  padding-inline: var(--ds-size-1);
+}
+
+// Beware of Hacky fixes to shrink the size of checkbox, radio and cross for removable.
+// All to provide a better visual experience
+.ds-chip [type='checkbox'] {
+  --_size: calc(var(--dsc-input-size--toggle) - var(--ds-size-1));
+
+  height: var(--_size);
+  width: var(--_size);
+  margin-inline: var(--ds-size-1);
+}
+
+.ds-chip [type='radio'] {
+  --_size: calc(var(--dsc-input-size--toggle) - var(--ds-size-1));
+
+  height: var(--_size);
+  width: var(--_size);
+  margin-inline: var(--ds-size-1);
+}
+
+.ds-chip[data-removable]:after {
+  --_size: calc(var(--dsc-chip-icon-size) - var(--ds-size-2));
+  height: var(--_size);
+  width: var(--_size);
+  margin-inline: 1px;
+}
