@@ -1,4 +1,5 @@
-.wrapper {
-  /* height: 70px; */
-  /* background-color: red; */
+.separator {
+  width: 1px;
+  background-color: var(--ds-color-neutral-surface-hover);
+  margin-block: 6px;
 }

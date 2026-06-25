@@ -70,6 +70,7 @@ export const iconIdList = [
   'mail',
   'map',
   'map_pin_heart',
+  'match_case',
   'menu',
   'mode_cool',
   'more_vert',

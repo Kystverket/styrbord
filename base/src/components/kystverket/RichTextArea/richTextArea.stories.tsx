@@ -9,6 +9,7 @@ import { ExtraFileInfo, UploadFileResult } from '../FileUploader/FileUploader.ty
 import { FileUploaderContext } from '../FileUploader/FileUploader.context';
 import { FileRetrieverContext } from '../FileUploader/FileRetriever.context';
 import { v4 as uuidv4 } from 'uuid';
+import { Box, Chip } from '~/main';
 
 const meta = {
   title: 'Form/RichTextArea/RichTextArea',
@@ -28,27 +29,14 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const fileToDataUrl = (file: File) =>
-  new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (typeof reader.result === 'string') {
-        resolve(reader.result);
-        return;
-      }
-
-      reject(new Error('Could not read image file'));
-    };
-    reader.onerror = () => reject(reader.error ?? new Error('Could not read image file'));
-    reader.readAsDataURL(file);
-  });
+const fileToPreviewUrl = (file: File): string => URL.createObjectURL(file);
 
 const defaultArgs: RichTextAreaProps = {
   value: '',
   onChange: () => {},
   label: 'Rikt tekstfelt',
   description: 'Dette er et tekstfelt som støtter rik tekstformatering.',
-  optional: 'Valgfritt',
+  // optional: 'Valgfritt',
 };
 
 const deriveFileInfosFromStorageIds = async (): Promise<ExtraFileInfo[]> => {
@@ -137,6 +125,14 @@ export const WithError: Story = {
  * and a `MarkdownToReact` resolver can map that ref to a displayable URL.
  */
 export const WithImageRef: Story = {
+  parameters: {
+    docs: {
+      source: {
+        // Prevent Storybook from pretty-printing runtime-heavy render output for this interactive story.
+        type: 'code',
+      },
+    },
+  },
   args: {
     ...defaultArgs,
 
@@ -146,7 +142,7 @@ Bilde av Atlas
     label: 'Rikt tekstfelt med bildereferanse',
     description: 'Last opp et bilde — markdownutdata vil inneholde en stabil referanse til bildet.',
     onImageUpload: async (file) => {
-      const src = await fileToDataUrl(file);
+      const src = fileToPreviewUrl(file);
       // Simulate a stable blob reference that would be generated server-side
       const ref = `image://${crypto.randomUUID()}`;
       return { src, ref, alt: file.name };
@@ -174,6 +170,154 @@ Bilde av Atlas
               setValue(nextMarkdown);
               setMarkdownOutput(nextMarkdown);
               args.onChange(nextMarkdown);
+            }}
+            bottomToolbar={{
+              left: [
+                {
+                  icon: 'add',
+                  ariaLabel: 'abc',
+                  id: 'abc',
+                  onClick: () => {
+                    alert('BOO');
+                  },
+                },
+              ],
+              right: [
+                {
+                  label: 'Avbryt',
+                  id: 'a',
+                  color: 'neutral',
+                  variant: 'ghost',
+                  onClick: () => {
+                    alert('Avbryt');
+                  },
+                },
+                {
+                  label: 'Lagre',
+                  variant: 'filled',
+                  id: 'a',
+                  onClick: () => {
+                    alert('Lagre');
+                  },
+                },
+              ],
+              above: (
+                <Box horizontal>
+                  <Chip.Removable>@Admin Etternavn</Chip.Removable>
+                  <Chip.Removable>@Saksbehandler Etternavn</Chip.Removable>
+                </Box>
+              ),
+              middle: <Chip.Radio>Marker som konklusjon</Chip.Radio>,
+            }}
+          />
+          {markdownOutput && (
+            <div style={{ marginTop: '12px' }}>
+              <p style={{ marginBottom: '0.25rem', fontWeight: 'bold', fontSize: '0.875rem' }}>
+                Markdown sendt til onChange:
+              </p>
+              <pre
+                style={{
+                  background: '#f4f4f4',
+                  border: '1px solid #ddd',
+                  borderRadius: '4px',
+                  padding: '0.75rem',
+                  fontSize: '0.8rem',
+                  whiteSpace: 'pre-wrap',
+                  wordBreak: 'break-all',
+                }}
+              >
+                {markdownOutput}
+              </pre>
+            </div>
+          )}
+        </FileRetrieverContext.Provider>
+      </FileUploaderContext.Provider>
+    );
+  },
+};
+
+export const WithBottomToolbar: Story = {
+  parameters: {
+    docs: {
+      source: {
+        // Prevent Storybook from pretty-printing runtime-heavy render output for this interactive story.
+        type: 'code',
+      },
+    },
+  },
+  args: {
+    ...defaultArgs,
+
+    value: ``,
+    label: 'Rikt tekstfelt med bottomToolbar',
+    description: ' ',
+    onImageUpload: async (file) => {
+      const src = fileToPreviewUrl(file);
+      // Simulate a stable blob reference that would be generated server-side
+      const ref = `image://${crypto.randomUUID()}`;
+      return { src, ref, alt: file.name };
+    },
+    onImageRemove: async (ref: string) => {
+      alert('Removed image ' + ref);
+    },
+  },
+  render: (args) => {
+    const [value, setValue] = useState(args.value ?? '');
+    const [markdownOutput, setMarkdownOutput] = useState('');
+
+    return (
+      <FileUploaderContext.Provider
+        value={{
+          uploadFile,
+          deleteFile,
+        }}
+      >
+        <FileRetrieverContext.Provider value={{ deriveFileInfosFromStorageIds }}>
+          <RichTextArea
+            {...args}
+            value={value}
+            onChange={(nextMarkdown) => {
+              setValue(nextMarkdown);
+              setMarkdownOutput(nextMarkdown);
+              args.onChange(nextMarkdown);
+            }}
+            bottomToolbar={{
+              left: [
+                {
+                  icon: 'add',
+                  ariaLabel: 'abc',
+                  id: 'abc',
+                  onClick: () => {
+                    alert('BOO');
+                  },
+                },
+              ],
+              right: [
+                {
+                  label: 'Avbryt',
+                  id: 'a',
+                  color: 'neutral',
+                  variant: 'ghost',
+                  onClick: () => {
+                    alert('Avbryt');
+                  },
+                },
+                {
+                  label: 'Lagre',
+                  variant: 'filled',
+                  id: 'a',
+                  onClick: () => {
+                    alert('Lagre');
+                  },
+                },
+              ],
+              above: (
+                <Box horizontal>
+                  <Chip.Removable>@Admin Etternavn</Chip.Removable>
+                  <Chip.Removable>@Saksbehandler Etternavn</Chip.Removable>
+                </Box>
+              ),
+              middle: <Chip.Radio>Marker som konklusjon</Chip.Radio>,
             }}
           />
           {markdownOutput && (
