@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import styles from './markdownToReact.module.css';
 import { Link, Paragraph } from '~/main';
 import { convertFromRefToImage } from '~/components/kystverket/RichTextArea/utils/ImageRefUtils';
-import { useFileRetrieverContext } from '~/components/kystverket/FileUploader/FileRetriever.context';
+import { FileRetrieverContext } from '~/components/kystverket/FileUploader/FileRetriever.context';
+import type { DeriveFileInfosFromStorageIds } from '~/utils/fileInfoResolver';
 
 export type MarkdownToReactProps = {
   markdown: string;
@@ -11,7 +12,23 @@ export type MarkdownToReactProps = {
 
 // Overskrifter (h1-h6) rendres som <Paragraph> med tanke på dokumenthierarki (enn så lenge, dette må vi komme tilbake til etter hvert)
 const MarkdownToReact = ({ markdown }: MarkdownToReactProps) => {
-  const { deriveFileInfosFromStorageIds } = useFileRetrieverContext();
+  const fileRetrieverContext = useContext(FileRetrieverContext);
+  const hasLoggedMissingFileResolverRef = useRef(false);
+
+  const deriveFileInfosFromStorageIds: DeriveFileInfosFromStorageIds = (storageIds) => {
+    if (!fileRetrieverContext) {
+      if (!hasLoggedMissingFileResolverRef.current && storageIds.length > 0) {
+        console.error(
+          'MarkdownToReact: image reference resolution needs FileRetrieverContext.Provider, but none is mounted.',
+        );
+        hasLoggedMissingFileResolverRef.current = true;
+      }
+
+      return [];
+    }
+
+    return fileRetrieverContext.deriveFileInfosFromStorageIds(storageIds);
+  };
 
   const normalizedMarkdown = useMemo(() => markdown.replaceAll(/\n{3,}/g, '\n\n\u00A0\n\n'), [markdown]);
   const [renderedMarkdown, setRenderedMarkdown] = useState(normalizedMarkdown);
@@ -42,7 +59,7 @@ const MarkdownToReact = ({ markdown }: MarkdownToReactProps) => {
     return () => {
       isCancelled = true;
     };
-  }, [normalizedMarkdown, deriveFileInfosFromStorageIds]);
+  }, [normalizedMarkdown, fileRetrieverContext]);
 
   return (
     <div className={styles.markdownToReact}>
