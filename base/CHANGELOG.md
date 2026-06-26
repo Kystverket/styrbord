@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.10.0...styrbord-v1.11.0) (2026-06-26)
+
+
+### Features
+
+* **base:** add Storybook story for styrbord-tokens color values ([#240](https://github.com/Kystverket/styrbord/issues/240)) ([96192a8](https://github.com/Kystverket/styrbord/commit/96192a8e896569c7482c2a9c998bb15fc7e4465a))
+
 ## [1.10.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.9.11...styrbord-v1.10.0) (2026-06-26)
 
 
