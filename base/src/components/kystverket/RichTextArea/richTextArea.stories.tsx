@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
@@ -28,8 +28,6 @@ const meta = {
 export default meta;
 
 type Story = StoryObj<typeof meta>;
-
-const fileToPreviewUrl = (file: File): string => URL.createObjectURL(file);
 
 const defaultArgs: RichTextAreaProps = {
   value: '',
@@ -143,7 +141,7 @@ Bilde av Atlas
     label: 'Rikt tekstfelt med bildereferanse',
     description: 'Last opp et bilde — markdownutdata vil inneholde en stabil referanse til bildet.',
     onImageUpload: async (file) => {
-      const src = fileToPreviewUrl(file);
+      const src = URL.createObjectURL(file);
       // Simulate a stable blob reference that would be generated server-side
       const ref = `image://${crypto.randomUUID()}`;
       return { src, ref, alt: file.name };
@@ -155,6 +153,22 @@ Bilde av Atlas
   render: (args) => {
     const [value, setValue] = useState(args.value ?? ''); // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
     const [markdownOutput, setMarkdownOutput] = useState(''); // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
+    const objectUrlsRef = useRef<Set<string>>(new Set()); // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
+
+    useEffect(() => {
+      // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
+      return () => {
+        // Cleanup: revoke all object URLs on unmount
+        objectUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+      };
+    }, []);
+
+    const handleImageUpload = async (file: File) => {
+      const src = URL.createObjectURL(file);
+      objectUrlsRef.current.add(src);
+      const ref = `image://${crypto.randomUUID()}`;
+      return { src, ref, alt: file.name };
+    };
 
     return (
       <FileUploaderContext.Provider
@@ -166,6 +180,7 @@ Bilde av Atlas
         <FileRetrieverContext.Provider value={{ deriveFileInfosFromStorageIds }}>
           <RichTextArea
             {...args}
+            onImageUpload={handleImageUpload}
             value={value}
             onChange={(nextMarkdown) => {
               setValue(nextMarkdown);
@@ -213,9 +228,9 @@ export const WithBottomToolbar: Story = {
 
     value: ``,
     label: 'Rikt tekstfelt med bottomToolbar',
-    description: ' ',
+    description: undefined,
     onImageUpload: async (file) => {
-      const src = fileToPreviewUrl(file);
+      const src = URL.createObjectURL(file);
       // Simulate a stable blob reference that would be generated server-side
       const ref = `image://${crypto.randomUUID()}`;
       return { src, ref, alt: file.name };
@@ -228,6 +243,21 @@ export const WithBottomToolbar: Story = {
     const [value, setValue] = useState(args.value ?? ''); // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
     const [markdownOutput, setMarkdownOutput] = useState(''); // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
     const [isMarkedAsConclusion, setIsMarkedAsConclusion] = useState(false); // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
+    const objectUrlsRef = useRef<Set<string>>(new Set()); // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
+
+    useEffect(() => {
+      return () => {
+        // Cleanup: revoke all object URLs on unmount
+        objectUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+      };
+    }, []);
+
+    const handleImageUpload = async (file: File) => {
+      const src = URL.createObjectURL(file);
+      objectUrlsRef.current.add(src);
+      const ref = `image://${crypto.randomUUID()}`;
+      return { src, ref, alt: file.name };
+    };
 
     return (
       <FileUploaderContext.Provider
@@ -239,6 +269,7 @@ export const WithBottomToolbar: Story = {
         <FileRetrieverContext.Provider value={{ deriveFileInfosFromStorageIds }}>
           <RichTextArea
             {...args}
+            onImageUpload={handleImageUpload}
             value={value}
             onChange={(nextMarkdown) => {
               setValue(nextMarkdown);
