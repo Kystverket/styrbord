@@ -104,3 +104,39 @@ Use `createSimpleLayer()` from `layers.helpers.ts` to create `LayerDefinition` o
 ### Build output
 
 Both packages export from `dist/style.js` (types at `dist/src/main.d.ts`, CSS at `dist/style.css`). All peer dependencies are externalized during build — they are never bundled.
+
+## Commit conventions
+
+This project uses **conventional commits**. Every commit message must follow the format:
+
+```text
+<type>(<scope>): <description>
+```
+
+**Scope is required** and must be either `base` or `kart`. This is enforced on PR titles by `amannn/action-semantic-pull-request` in `.github/workflows/lint.yml`.
+
+Examples:
+
+```text
+feat(base): add NumberInput component
+fix(kart): correct marker offset on retina displays
+chore(base): bump designsystemet to 1.16
+refactor(kart): extract useTerraDraw into shared hook
+```
+
+Common types: `feat`, `fix`, `chore`, `refactor`, `docs`, `style`, `test`.
+
+A `feat` commit triggers a minor version bump; `fix` triggers a patch bump; a breaking change (`feat!` or `BREAKING CHANGE:` in the footer) triggers a major bump. release-please reads these to determine version increments automatically.
+
+## Versioning and releases
+
+Releases are managed by **release-please** via `.github/workflows/release-please.yml`. The two packages are versioned independently:
+
+- `@kystverket/styrbord` (path: `base`) — current version tracked in `.release-please-manifest.json`
+- `@kystverket/styrbord-kart` (path: `kart`) — current version tracked in `.release-please-manifest.json`
+
+Configuration is in `release-please-config.json`. When commits land on `main`, release-please opens or updates a release PR per package. Merging that PR tags the release and triggers the publish workflow.
+
+**Do not manually bump versions in `package.json`** — release-please owns that. Do not edit `.release-please-manifest.json` by hand either.
+
+On release, each package is published to both **GitHub Packages** (`npm.pkg.github.com`) and **npmjs.org** (via tokenless OIDC). Only the package that has a new release is published — the other is left untouched.
