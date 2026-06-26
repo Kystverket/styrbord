@@ -1,0 +1,46 @@
+.ds-chip {
+  gap: 0;
+}
+
+[data-color-scheme='dark'] .ds-chip {
+  font-weight: var(--ds-font-weight-medium);
+}
+
+.ds-chip > span {
+  padding-inline: var(--ds-size-1);
+}
+
+// Hacky fixes to shrink the size of checkbox, radio and cross for removable.
+// Done to avoid having to completely remake the components
+.ds-chip [type='checkbox'] {
+  --_size: calc(var(--dsc-input-size--toggle) - var(--ds-size-1));
+  width: var(--_size);
+  height: var(--_size);
+  margin-inline: var(--ds-size-1);
+}
+// These custom overrides are to avoid the checkmark looking off on these sizes
+.ds-chip[data-size='sm'] [type='checkbox'] {
+  --_size: 13px;
+}
+.ds-chip[data-size='lg'] [type='checkbox'] {
+  --_size: 17px;
+}
+.ds-chip .ds-input[type='checkbox']:checked:not([role='switch']) {
+  background-image: url("data:image/svg+xml,%3csvg width='14' height='11' viewBox='0 0 14 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M13.1543 1.48804L12.4854 2.2312L5.79492 9.6687L5.05078 10.4949L4.30762 9.6687L0.765625 5.7312L0.0966797 4.98804L1.58301 3.65015L2.25195 4.39331L5.05078 7.50366L10.998 0.893311L11.667 0.150146L13.1543 1.48804Z' fill='black'/%3e%3c/svg%3e");
+}
+
+//Radio
+.ds-chip [type='radio'] {
+  --_size: calc(var(--dsc-input-size--toggle) - var(--ds-size-1));
+  width: var(--_size);
+  height: var(--_size);
+  margin-inline: var(--ds-size-1);
+}
+
+// Removable chip
+.ds-chip[data-removable]:after {
+  --_size: calc(var(--dsc-chip-icon-size) - var(--ds-size-2));
+  width: var(--_size);
+  height: var(--_size);
+  margin-inline: 1px;
+}

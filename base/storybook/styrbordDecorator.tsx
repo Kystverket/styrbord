@@ -6,9 +6,12 @@ import { SprakProvider } from '@kystverket/sprak-react';
 
 const StyrbordDecorator = (Story: PartialStoryFn, context: StoryContext) => {
   const locale = context.globals?.locale ?? 'nb-NO';
+  const colorScheme = context.globals?.colorScheme ?? 'light';
+
   document.documentElement.lang = locale;
+
   return (
-    <div>
+    <div data-color-scheme={colorScheme}>
       <SprakProvider locale={locale} defaultNamespace={STYRBORD_TRANSLATIONS_NAMESPACE}>
         <StyrbordTranslations>
           <Story />
