@@ -153,8 +153,8 @@ Bilde av Atlas
     },
   },
   render: (args) => {
-    const [value, setValue] = useState(args.value ?? ''); //NOSONAR storybook renders this as normal react
-    const [markdownOutput, setMarkdownOutput] = useState(''); //NOSONAR storybook renders this as normal react
+    const [value, setValue] = useState(args.value ?? ''); // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
+    const [markdownOutput, setMarkdownOutput] = useState(''); // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
 
     return (
       <FileUploaderContext.Provider
@@ -230,9 +230,9 @@ export const WithBottomToolbar: Story = {
     },
   },
   render: (args) => {
-    const [value, setValue] = useState(args.value ?? ''); //NOSONAR storybook renders this as normal react
-    const [markdownOutput, setMarkdownOutput] = useState(''); //NOSONAR storybook renders this as normal react
-    const [isMarkedAsConclusion, setIsMarkedAsConclusion] = useState(false); //NOSONAR storybook renders this as normal react
+    const [value, setValue] = useState(args.value ?? ''); // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
+    const [markdownOutput, setMarkdownOutput] = useState(''); // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
+    const [isMarkedAsConclusion, setIsMarkedAsConclusion] = useState(false); // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
 
     return (
       <FileUploaderContext.Provider

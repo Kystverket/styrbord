@@ -28,6 +28,7 @@
   @include meta.load-css('../components/designsystemet/Dropdown/Dropdown.override.scss');
   @include meta.load-css('../components/designsystemet/Popover/Popover.override.scss');
   @include meta.load-css('../components/designsystemet/Suggestion/Suggestion.override.scss');
+  @include meta.load-css('../components/designsystemet/Chip/Chip.override.scss');
 }
 
 // Override popover max-width fra 300px til 400px for LinkEditor brukstilfelle

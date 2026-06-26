@@ -19,6 +19,19 @@ export const globalTypes = {
       dynamicTitle: true,
     },
   },
+  colorScheme: {
+    name: 'Color scheme',
+    description: 'Applies data-color-scheme to the story wrapper',
+    toolbar: {
+      icon: 'mirror',
+      items: [
+        { value: 'light', title: 'Light' },
+        { value: 'dark', title: 'Dark' },
+      ],
+      showName: true,
+      dynamicTitle: true,
+    },
+  },
 };
 
 const preview: Preview = {

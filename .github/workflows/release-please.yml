@@ -7,6 +7,9 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  pages: write
+  id-token: write
+  packages: write
 
 jobs:
   release-please:
@@ -97,3 +100,35 @@ jobs:
       - name: Clear auth token for OIDC
         run: echo "NODE_AUTH_TOKEN=" >> $GITHUB_ENV
       - run: npm publish -w kart --access public
+
+  deploy-storybook:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.base_release_created == 'true' || needs.release-please.outputs.kart_release_created == 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      packages: read
+      contents: write
+      pages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
+      - name: Installere dependencies
+        run: |
+          npm ci --ignore-scripts
+      - name: Bygge base pakke
+        run: |
+          npm run build --workspace base
+      - name: Eksportere statisk data
+        run: node --experimental-strip-types ./base/scripts/export-ship-types-json.mjs
+      - name: Bygge Storybooks
+        run: |
+          npm run storybook:build
+          cp -r ./base/storybook-static ./github-pages-root/base
+          cp -r ./kart/storybook-static ./github-pages-root/kart
+      - name: Laste opp til GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: ./github-pages-root
