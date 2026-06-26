@@ -10,7 +10,7 @@ import '@milkdown/prose/view/style/prosemirror.css';
 
 import classes from './richTextArea.module.css';
 
-import { Button, Fieldset, Icon, LabelContent, ValidationMessage } from '~/main';
+import { Fieldset, LabelContent, ValidationMessage } from '~/main';
 import { FileRetrieverContext } from '../FileUploader/FileRetriever.context';
 import LinkEditor from './components/LinkEditor/linkEditor';
 import { Toolbar } from './components/Toolbar/toolbar';
@@ -34,7 +34,6 @@ import {
   replaceImageUrlsWithRefs,
 } from '~/components/kystverket/RichTextArea/utils/ImageRefUtils';
 import type { DeriveFileInfosFromStorageIds } from '~/utils/fileInfoResolver';
-import { BottomToolbar } from '~/components/kystverket/RichTextArea/components/BottomToolbar/bottomToolbar';
 export type { RichTextAreaProps };
 
 const notifyRemovedManagedImages = (
@@ -69,7 +68,7 @@ const RichTextAreaContainer = ({
   disabled = false,
   label,
   description,
-  bottomToolbar,
+  children,
   optional = false,
   required = false,
   error: externalError,
@@ -222,7 +221,6 @@ const RichTextAreaContainer = ({
   });
 
   const displayedError = externalError ?? imagePicker.imageUploadError;
-  const [isTopToolbarVisible, setIsTopToolbarVisible] = useState(true);
 
   // Sync stable refs so useEditor closures always call the latest implementations.
   insertImageFromFileRef.current = imageUpload.insertImageFromFile;
@@ -301,38 +299,38 @@ const RichTextAreaContainer = ({
             .filter(Boolean)
             .join(' ')}
         >
-          {isTopToolbarVisible && (
-            <Toolbar
-              disabled={disabled || loading || imageUpload.isUploadingImage}
-              isBoldActive={toolbarState.isBoldActive}
-              isItalicActive={toolbarState.isItalicActive}
-              isBulletListActive={toolbarState.isBulletListActive}
-              isOrderedListActive={toolbarState.isOrderedListActive}
-              selectedFormat={toolbarState.selectedFormat}
-              isLinkActive={toolbarState.isLinkActive}
-              onBold={() => runCommand(toggleStrongCommand)}
-              onItalic={() => runCommand(toggleEmphasisCommand)}
-              onUndo={() => runCommand(undoCommand)}
-              onRedo={() => runCommand(redoCommand)}
-              onLink={openLinkEditor}
-              linkPopoverTarget={linkEditorAnchorId}
-              onBulletList={() =>
-                toggleList({
-                  isTargetListActive: toolbarState.isBulletListActive,
-                  isOtherListActive: toolbarState.isOrderedListActive,
-                  wrapCommand: wrapInBulletListCommand,
-                })
-              }
-              onOrderedList={() =>
-                toggleList({
-                  isTargetListActive: toolbarState.isOrderedListActive,
-                  isOtherListActive: toolbarState.isBulletListActive,
-                  wrapCommand: wrapInOrderedListCommand,
-                })
-              }
-              onFormatChange={handleFormatChange}
-            />
-          )}
+          <Toolbar
+            disabled={disabled || loading || imageUpload.isUploadingImage}
+            isBoldActive={toolbarState.isBoldActive}
+            isItalicActive={toolbarState.isItalicActive}
+            isBulletListActive={toolbarState.isBulletListActive}
+            isOrderedListActive={toolbarState.isOrderedListActive}
+            selectedFormat={toolbarState.selectedFormat}
+            isLinkActive={toolbarState.isLinkActive}
+            canUploadImage={Boolean(onImageUpload)}
+            onBold={() => runCommand(toggleStrongCommand)}
+            onItalic={() => runCommand(toggleEmphasisCommand)}
+            onUndo={() => runCommand(undoCommand)}
+            onRedo={() => runCommand(redoCommand)}
+            onLink={openLinkEditor}
+            linkPopoverTarget={linkEditorAnchorId}
+            onImageUpload={() => imagePicker.openImageFilePicker()}
+            onBulletList={() =>
+              toggleList({
+                isTargetListActive: toolbarState.isBulletListActive,
+                isOtherListActive: toolbarState.isOrderedListActive,
+                wrapCommand: wrapInBulletListCommand,
+              })
+            }
+            onOrderedList={() =>
+              toggleList({
+                isTargetListActive: toolbarState.isOrderedListActive,
+                isOtherListActive: toolbarState.isBulletListActive,
+                wrapCommand: wrapInOrderedListCommand,
+              })
+            }
+            onFormatChange={handleFormatChange}
+          />
           <input
             ref={imagePicker.imageInputRef}
             type="file"
@@ -363,64 +361,7 @@ const RichTextAreaContainer = ({
             onRemove={handleLinkRemove}
             onClose={closeLinkEditor}
           />
-          {(Boolean(bottomToolbar) || Boolean(onImageUpload)) && (
-            <BottomToolbar
-              left={
-                <>
-                  <Button
-                    title={isTopToolbarVisible ? 'Skjul toppverktøylinje' : 'Vis toppverktøylinje'}
-                    aria-label={isTopToolbarVisible ? 'Skjul toppverktøylinje' : 'Vis toppverktøylinje'}
-                    aria-pressed={isTopToolbarVisible}
-                    icon
-                    size="sm"
-                    variant="ghost"
-                    color="neutral"
-                    onClick={() => setIsTopToolbarVisible((prev) => !prev)}
-                  >
-                    <Icon material="match_case" />
-                  </Button>
-
-                  {Boolean(onImageUpload) && (
-                    <Button
-                      title="Last opp bilde"
-                      variant="ghost"
-                      size="sm"
-                      color="neutral"
-                      icon
-                      onClick={() => imagePicker.openImageFilePicker()}
-                    >
-                      <Icon material="image" />
-                    </Button>
-                  )}
-                  {bottomToolbar?.left?.map((item) => (
-                    <Button
-                      key={'bottomToolbar-left-' + item.ariaLabel}
-                      variant="ghost"
-                      color="neutral"
-                      size="sm"
-                      title={item.ariaLabel}
-                      aria-label={item.ariaLabel}
-                      icon
-                      onClick={item.onClick}
-                    >
-                      <Icon material={item.icon} />
-                    </Button>
-                  ))}
-                </>
-              }
-              above={bottomToolbar?.above}
-              middle={bottomToolbar?.middle}
-              right={
-                <>
-                  {bottomToolbar?.right?.map(({ label: buttonLabel, ...rest }) => (
-                    <Button key={'bottomToolbar-right-' + buttonLabel} size="sm" {...rest}>
-                      {buttonLabel}
-                    </Button>
-                  ))}
-                </>
-              }
-            />
-          )}
+          {Boolean(children) && <div>{children}</div>}
         </div>
 
         {displayedError && <ValidationMessage className={classes.error}>{displayedError}</ValidationMessage>}

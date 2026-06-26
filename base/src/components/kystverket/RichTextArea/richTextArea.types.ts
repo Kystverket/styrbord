@@ -1,5 +1,5 @@
 import type { CmdKey } from '@milkdown/core';
-import { BottomToolbarConfig } from '~/components/kystverket/RichTextArea/components/BottomToolbar/bottomToolbar.types';
+import type { ReactNode } from 'react';
 
 export type RichTextAreaProps = {
   value: string | null | undefined;
@@ -12,7 +12,7 @@ export type RichTextAreaProps = {
   optional?: boolean | string;
   required?: boolean | string;
   error?: string;
-  bottomToolbar?: BottomToolbarConfig;
+  children?: ReactNode;
   /** Optional upload handler that returns a display src and optional stable image ref. */
   onImageUpload?: OnImageUploadFn;
   /** Optional remove handler for deleting persisted images by stable ref. */

@@ -4,6 +4,7 @@ export const iconIdList = [
   'add_location',
   'add_location_alt',
   'adjust',
+  'alternate_email',
   'anchor',
   'apps',
   'archive',

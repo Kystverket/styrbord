@@ -18,6 +18,7 @@ const meta = {
     onRedo: { action: 'onRedo' },
     onFormatChange: { action: 'onFormatChange' },
     onLink: { action: 'onLink' },
+    onImageUpload: { action: 'onImageUpload' },
   },
 } satisfies Meta<typeof Toolbar>;
 

@@ -21,6 +21,7 @@ type ToolbarProps = {
   isLinkActive: boolean;
   selectedFormat: BlockType;
   linkPopoverTarget?: string;
+  canUploadImage?: boolean;
 
   onBold: () => void;
   onItalic: () => void;
@@ -30,6 +31,7 @@ type ToolbarProps = {
   onRedo: () => void;
   onFormatChange: (format: BlockType) => void;
   onLink: () => void;
+  onImageUpload?: () => void;
 };
 
 type ToolbarButtonProps = {
@@ -105,6 +107,7 @@ export const Toolbar = ({
   isLinkActive,
   selectedFormat,
   linkPopoverTarget,
+  canUploadImage = false,
   onBulletList,
   onOrderedList,
   onBold,
@@ -113,6 +116,7 @@ export const Toolbar = ({
   onRedo,
   onFormatChange,
   onLink,
+  onImageUpload,
 }: ToolbarProps) => {
   return (
     <div className={styles.toolbar} role="toolbar" aria-label="Rich text formatting">
@@ -148,6 +152,12 @@ export const Toolbar = ({
         popoverTarget={linkPopoverTarget}
         onClick={onLink}
       />
+      {canUploadImage && (
+        <>
+          <div className={styles.divider} aria-hidden />
+          <ToolbarButton label="Upload image" icon="image" disabled={disabled} onClick={onImageUpload || (() => {})} />
+        </>
+      )}
       <div className={styles.divider} aria-hidden />
       <FormatSelect disabled={disabled} selectedFormat={selectedFormat} onFormatChange={onFormatChange} />
       <div className={styles.undoRedoGroup}>
