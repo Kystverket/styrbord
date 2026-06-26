@@ -27,6 +27,8 @@ jobs:
       - name: Bygge base pakke
         run: |
           npm run build --workspace base
+      - name: Eksportere statisk data
+        run: node --experimental-strip-types ./base/scripts/export-ship-types-json.mjs
       - name: Bygge Storybooks
         run: |
           npm run storybook:build
