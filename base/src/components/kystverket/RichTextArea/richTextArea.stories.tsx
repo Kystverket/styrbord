@@ -172,12 +172,7 @@ Bilde av Atlas
               setMarkdownOutput(nextMarkdown);
               args.onChange(nextMarkdown);
             }}
-          >
-            <Box horizontal>
-              <Chip.Removable>@Admin Etternavn</Chip.Removable>
-              <Chip.Removable>@Saksbehandler Etternavn</Chip.Removable>
-            </Box>
-          </RichTextArea>
+          />
           {markdownOutput && (
             <div style={{ marginTop: '12px' }}>
               <p style={{ marginBottom: '0.25rem', fontWeight: 'bold', fontSize: '0.875rem' }}>

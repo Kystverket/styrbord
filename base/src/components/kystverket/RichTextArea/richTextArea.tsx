@@ -361,7 +361,7 @@ const RichTextAreaContainer = ({
             onRemove={handleLinkRemove}
             onClose={closeLinkEditor}
           />
-          {Boolean(children) && <div>{children}</div>}
+          {!!children && <div>{children}</div>}
         </div>
 
         {displayedError && <ValidationMessage className={classes.error}>{displayedError}</ValidationMessage>}

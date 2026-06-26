@@ -152,11 +152,8 @@ export const Toolbar = ({
         popoverTarget={linkPopoverTarget}
         onClick={onLink}
       />
-      {canUploadImage && (
-        <>
-          <div className={styles.divider} aria-hidden />
-          <ToolbarButton label="Upload image" icon="image" disabled={disabled} onClick={onImageUpload || (() => {})} />
-        </>
+      {canUploadImage && Boolean(onImageUpload) && (
+        <ToolbarButton label="Upload image" icon="image" disabled={disabled} onClick={onImageUpload || (() => {})} />
       )}
       <div className={styles.divider} aria-hidden />
       <FormatSelect disabled={disabled} selectedFormat={selectedFormat} onFormatChange={onFormatChange} />
