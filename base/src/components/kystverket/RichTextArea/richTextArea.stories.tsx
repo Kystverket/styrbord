@@ -37,7 +37,7 @@ const defaultArgs: RichTextAreaProps = {
   placeholder: 'Skriv her...',
   label: 'Rikt tekstfelt',
   description: 'Dette er et tekstfelt som støtter rik tekstformatering.',
-  // optional: 'Valgfritt',
+  optional: 'Valgfritt',
 };
 
 const deriveFileInfosFromStorageIds = async (): Promise<ExtraFileInfo[]> => {
@@ -153,58 +153,54 @@ Bilde av Atlas
     },
   },
   render: (args) => {
-    const WithImageRefStory = () => {
-      const [value, setValue] = useState(args.value ?? '');
-      const [markdownOutput, setMarkdownOutput] = useState('');
+    const [value, setValue] = useState(args.value ?? ''); //NOSONAR storybook renders this as normal react
+    const [markdownOutput, setMarkdownOutput] = useState(''); //NOSONAR storybook renders this as normal react
 
-      return (
-        <FileUploaderContext.Provider
-          value={{
-            uploadFile,
-            deleteFile,
-          }}
-        >
-          <FileRetrieverContext.Provider value={{ deriveFileInfosFromStorageIds }}>
-            <RichTextArea
-              {...args}
-              value={value}
-              onChange={(nextMarkdown) => {
-                setValue(nextMarkdown);
-                setMarkdownOutput(nextMarkdown);
-                args.onChange(nextMarkdown);
-              }}
-            >
-              <Box horizontal>
-                <Chip.Removable>@Admin Etternavn</Chip.Removable>
-                <Chip.Removable>@Saksbehandler Etternavn</Chip.Removable>
-              </Box>
-            </RichTextArea>
-            {markdownOutput && (
-              <div style={{ marginTop: '12px' }}>
-                <p style={{ marginBottom: '0.25rem', fontWeight: 'bold', fontSize: '0.875rem' }}>
-                  Markdown sendt til onChange:
-                </p>
-                <pre
-                  style={{
-                    background: '#f4f4f4',
-                    border: '1px solid #ddd',
-                    borderRadius: '4px',
-                    padding: '0.75rem',
-                    fontSize: '0.8rem',
-                    whiteSpace: 'pre-wrap',
-                    wordBreak: 'break-all',
-                  }}
-                >
-                  {markdownOutput}
-                </pre>
-              </div>
-            )}
-          </FileRetrieverContext.Provider>
-        </FileUploaderContext.Provider>
-      );
-    };
-
-    return <WithImageRefStory />;
+    return (
+      <FileUploaderContext.Provider
+        value={{
+          uploadFile,
+          deleteFile,
+        }}
+      >
+        <FileRetrieverContext.Provider value={{ deriveFileInfosFromStorageIds }}>
+          <RichTextArea
+            {...args}
+            value={value}
+            onChange={(nextMarkdown) => {
+              setValue(nextMarkdown);
+              setMarkdownOutput(nextMarkdown);
+              args.onChange(nextMarkdown);
+            }}
+          >
+            <Box horizontal>
+              <Chip.Removable>@Admin Etternavn</Chip.Removable>
+              <Chip.Removable>@Saksbehandler Etternavn</Chip.Removable>
+            </Box>
+          </RichTextArea>
+          {markdownOutput && (
+            <div style={{ marginTop: '12px' }}>
+              <p style={{ marginBottom: '0.25rem', fontWeight: 'bold', fontSize: '0.875rem' }}>
+                Markdown sendt til onChange:
+              </p>
+              <pre
+                style={{
+                  background: '#f4f4f4',
+                  border: '1px solid #ddd',
+                  borderRadius: '4px',
+                  padding: '0.75rem',
+                  fontSize: '0.8rem',
+                  whiteSpace: 'pre-wrap',
+                  wordBreak: 'break-all',
+                }}
+              >
+                {markdownOutput}
+              </pre>
+            </div>
+          )}
+        </FileRetrieverContext.Provider>
+      </FileUploaderContext.Provider>
+    );
   },
 };
 
@@ -234,109 +230,105 @@ export const WithBottomToolbar: Story = {
     },
   },
   render: (args) => {
-    const WithBottomToolbarStory = () => {
-      const [value, setValue] = useState(args.value ?? '');
-      const [markdownOutput, setMarkdownOutput] = useState('');
-      const [isMarkedAsConclusion, setIsMarkedAsConclusion] = useState(false);
+    const [value, setValue] = useState(args.value ?? ''); //NOSONAR storybook renders this as normal react
+    const [markdownOutput, setMarkdownOutput] = useState(''); //NOSONAR storybook renders this as normal react
+    const [isMarkedAsConclusion, setIsMarkedAsConclusion] = useState(false); //NOSONAR storybook renders this as normal react
 
-      return (
-        <FileUploaderContext.Provider
-          value={{
-            uploadFile,
-            deleteFile,
-          }}
-        >
-          <FileRetrieverContext.Provider value={{ deriveFileInfosFromStorageIds }}>
-            <RichTextArea
-              {...args}
-              value={value}
-              onChange={(nextMarkdown) => {
-                setValue(nextMarkdown);
-                setMarkdownOutput(nextMarkdown);
-                args.onChange(nextMarkdown);
-              }}
-            >
-              <Box gap={12} px={8}>
-                <Box horizontal px={4} gap={8}>
-                  <Chip.Removable>@Admin Etternavn</Chip.Removable>
-                  <Chip.Removable>@Saksbehandler Etternavn</Chip.Removable>
+    return (
+      <FileUploaderContext.Provider
+        value={{
+          uploadFile,
+          deleteFile,
+        }}
+      >
+        <FileRetrieverContext.Provider value={{ deriveFileInfosFromStorageIds }}>
+          <RichTextArea
+            {...args}
+            value={value}
+            onChange={(nextMarkdown) => {
+              setValue(nextMarkdown);
+              setMarkdownOutput(nextMarkdown);
+              args.onChange(nextMarkdown);
+            }}
+          >
+            <Box gap={12} px={8}>
+              <Box horizontal px={4} gap={8}>
+                <Chip.Removable>@Admin Etternavn</Chip.Removable>
+                <Chip.Removable>@Saksbehandler Etternavn</Chip.Removable>
+              </Box>
+
+              <Box align="center" justify="between" pb={12} horizontal>
+                <Box horizontal>
+                  <Box horizontal gap={4} pr={4}>
+                    <Button title="Add tag" variant="ghost" size="sm" color="neutral" icon popoverTarget="addTag">
+                      <Icon material="alternate_email" />
+                    </Button>
+                    <Dropdown id="addTag" popover="manual">
+                      Example
+                    </Dropdown>
+                  </Box>
+                  <div
+                    style={{
+                      width: '1px',
+                      backgroundColor: 'var(--ds-color-neutral-surface-hover)',
+                      marginBlock: '6px',
+                    }}
+                  />
+                  <Box horizontal align="center" pl={12}>
+                    <Chip.Checkbox
+                      checked={isMarkedAsConclusion}
+                      onChange={() => setIsMarkedAsConclusion(!isMarkedAsConclusion)}
+                    >
+                      Marker som konklusjon
+                    </Chip.Checkbox>
+                  </Box>
                 </Box>
-
-                <Box align="center" justify="between" pb={12} horizontal>
-                  <Box horizontal>
-                    <Box horizontal gap={4} pr={4}>
-                      <Button title="Add tag" variant="ghost" size="sm" color="neutral" icon popoverTarget="addTag">
-                        <Icon material="alternate_email" />
-                      </Button>
-                      <Dropdown id="addTag" popover="manual">
-                        Example
-                      </Dropdown>
-                    </Box>
-                    <div
-                      style={{
-                        width: '1px',
-                        backgroundColor: 'var(--ds-color-neutral-surface-hover)',
-                        marginBlock: '6px',
-                      }}
-                    />
-                    <Box horizontal align="center" pl={12}>
-                      <Chip.Checkbox
-                        checked={isMarkedAsConclusion}
-                        onChange={() => setIsMarkedAsConclusion(!isMarkedAsConclusion)}
-                      >
-                        Marker som konklusjon
-                      </Chip.Checkbox>
-                    </Box>
-                  </Box>
-                  <Box horizontal gap={16}>
-                    <Button
-                      size="sm"
-                      color="neutral"
-                      variant="ghost"
-                      onClick={() => {
-                        alert('Avbryt');
-                      }}
-                    >
-                      Avbryt
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="filled"
-                      onClick={() => {
-                        alert('Lagre');
-                      }}
-                    >
-                      Lagre
-                    </Button>
-                  </Box>
+                <Box horizontal gap={16}>
+                  <Button
+                    size="sm"
+                    color="neutral"
+                    variant="ghost"
+                    onClick={() => {
+                      alert('Avbryt');
+                    }}
+                  >
+                    Avbryt
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="filled"
+                    onClick={() => {
+                      alert('Lagre');
+                    }}
+                  >
+                    Lagre
+                  </Button>
                 </Box>
               </Box>
-            </RichTextArea>
-            {markdownOutput && (
-              <div style={{ marginTop: '12px' }}>
-                <p style={{ marginBottom: '0.25rem', fontWeight: 'bold', fontSize: '0.875rem' }}>
-                  Markdown sendt til onChange:
-                </p>
-                <pre
-                  style={{
-                    background: '#f4f4f4',
-                    border: '1px solid #ddd',
-                    borderRadius: '4px',
-                    padding: '0.75rem',
-                    fontSize: '0.8rem',
-                    whiteSpace: 'pre-wrap',
-                    wordBreak: 'break-all',
-                  }}
-                >
-                  {markdownOutput}
-                </pre>
-              </div>
-            )}
-          </FileRetrieverContext.Provider>
-        </FileUploaderContext.Provider>
-      );
-    };
-
-    return <WithBottomToolbarStory />;
+            </Box>
+          </RichTextArea>
+          {markdownOutput && (
+            <div style={{ marginTop: '12px' }}>
+              <p style={{ marginBottom: '0.25rem', fontWeight: 'bold', fontSize: '0.875rem' }}>
+                Markdown sendt til onChange:
+              </p>
+              <pre
+                style={{
+                  background: '#f4f4f4',
+                  border: '1px solid #ddd',
+                  borderRadius: '4px',
+                  padding: '0.75rem',
+                  fontSize: '0.8rem',
+                  whiteSpace: 'pre-wrap',
+                  wordBreak: 'break-all',
+                }}
+              >
+                {markdownOutput}
+              </pre>
+            </div>
+          )}
+        </FileRetrieverContext.Provider>
+      </FileUploaderContext.Provider>
+    );
   },
 };
