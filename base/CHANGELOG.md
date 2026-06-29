@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.12.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.11.0...styrbord-v1.12.0) (2026-06-29)
+
+
+### Features
+
+* definer opp bottomToolbar, og ny story ([#234](https://github.com/Kystverket/styrbord/issues/234)) ([4221e4f](https://github.com/Kystverket/styrbord/commit/4221e4f1dde9f660ba3710538c965d78fc15c7a8))
+
+
+### Bug Fixes
+
+* **base:** Legg til subtle farge til Chip ([#243](https://github.com/Kystverket/styrbord/issues/243)) ([cb8ee97](https://github.com/Kystverket/styrbord/commit/cb8ee975d609ed50e9d94a2f8d8095bb3fde4f44))
+
 ## [1.11.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.10.0...styrbord-v1.11.0) (2026-06-26)
 
 
