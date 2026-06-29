@@ -13,7 +13,7 @@ export type RichTextAreaProps = {
   required?: boolean | string;
   error?: string;
   /** Used for the bottomToolbar */
-  children?: ReactNode;
+  bottomToolbar?: ReactNode;
   /** Optional upload handler that returns a display src and optional stable image ref. */
   onImageUpload?: OnImageUploadFn;
   /** Optional remove handler for deleting persisted images by stable ref. */

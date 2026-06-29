@@ -68,7 +68,7 @@ const RichTextAreaContainer = ({
   disabled = false,
   label,
   description,
-  children,
+  bottomToolbar,
   optional = false,
   required = false,
   error: externalError,
@@ -361,7 +361,7 @@ const RichTextAreaContainer = ({
             onRemove={handleLinkRemove}
             onClose={closeLinkEditor}
           />
-          {!!children && <div>{children}</div>}
+          {!!bottomToolbar && <div>{bottomToolbar}</div>}
         </div>
 
         {displayedError && <ValidationMessage className={classes.error}>{displayedError}</ValidationMessage>}
