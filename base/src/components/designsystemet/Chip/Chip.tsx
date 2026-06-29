@@ -19,15 +19,13 @@ export const ChipButton: FC<ChipButtonProps & { ref?: React.Ref<HTMLButtonElemen
   );
 };
 
-export const ChipRemovable: FC<ChipRemovableProps & { ref?: React.Ref<HTMLButtonElement>; subtle?: boolean }> = ({
+export const ChipRemovable: FC<ChipRemovableProps & { ref?: React.Ref<HTMLButtonElement> }> = ({
   children,
-  subtle,
-  className,
   ref,
   ...rest
 }) => {
   return (
-    <DSChip.Removable className={[subtle && 'subtle', className].filter(Boolean).join(' ')} ref={ref} {...rest}>
+    <DSChip.Removable ref={ref} {...rest}>
       <span>{children}</span>
     </DSChip.Removable>
   );

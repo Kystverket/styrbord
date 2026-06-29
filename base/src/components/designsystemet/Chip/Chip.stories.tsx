@@ -14,7 +14,7 @@ type ChipStoryArgs = {
 
 type ChipColor = NonNullable<ChipButtonProps['data-color']>;
 
-const chipColors: ChipColor[] = ['primary', 'neutral', 'primary/subtle', 'neutral/subtle'];
+const chipColors: ChipColor[] = ['none', 'primary', 'neutral', 'primary/subtle', 'neutral/subtle'];
 const sizes = ['sm', 'md', 'lg'] as const;
 
 const defaultVariantArgs: ChipStoryArgs = {
@@ -48,13 +48,11 @@ const renderChip = (
   size?: 'sm' | 'md' | 'lg',
   color?: ChipColor,
   disabled?: boolean,
-  ...rest: undefined[]
 ) => {
   switch (variant) {
     case 'Radio': {
       return (
         <Chip.Radio
-          {...rest}
           data-size={size}
           data-color={color}
           disabled={disabled}
@@ -69,7 +67,6 @@ const renderChip = (
     case 'Checkbox': {
       return (
         <Chip.Checkbox
-          {...rest}
           data-size={size}
           data-color={color}
           disabled={disabled}
@@ -83,14 +80,14 @@ const renderChip = (
     }
     case 'Removable': {
       return (
-        <Chip.Removable {...rest} data-size={size} data-color={color} disabled={disabled} aria-label={`Slett ${label}`}>
+        <Chip.Removable data-size={size} data-color={color} disabled={disabled} aria-label={`Slett ${label}`}>
           {label}
         </Chip.Removable>
       );
     }
     case 'Button': {
       return (
-        <Chip.Button {...rest} data-size={size} data-color={color} disabled={disabled}>
+        <Chip.Button data-size={size} data-color={color} disabled={disabled}>
           {label}
         </Chip.Button>
       );
