@@ -1,0 +1,20 @@
+.ds-chip[data-color='primary/subtle'] {
+  background-color: var(--ds-color-primary-surface-tinted);
+  color: var(--ds-color-primary-text-default);
+  &:hover {
+    background-color: var(--ds-color-primary-surface-hover);
+  }
+  &:active {
+    background-color: var(--ds-color-primary-surface-active);
+  }
+}
+.ds-chip[data-color='neutral/subtle'] {
+  background-color: var(--ds-color-neutral-surface-tinted);
+  color: var(--ds-color-neutral-text-default);
+  &:hover {
+    background-color: var(--ds-color-neutral-surface-hover);
+  }
+  &:active {
+    background-color: var(--ds-color-neutral-surface-active);
+  }
+}

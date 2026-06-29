@@ -8,16 +8,20 @@ type ChipVariant = (typeof chipVariants)[number];
 type ChipStoryArgs = {
   variant: ChipVariant;
   label: string;
+  color: ChipColor;
+  disabled: boolean;
 };
 
 type ChipColor = NonNullable<ChipButtonProps['data-color']>;
 
-const chipColors: ChipColor[] = ['none', 'neutral'];
+const chipColors: ChipColor[] = ['primary', 'neutral', 'primary/subtle', 'neutral/subtle'];
 const sizes = ['sm', 'md', 'lg'] as const;
 
 const defaultVariantArgs: ChipStoryArgs = {
   variant: 'Radio',
   label: 'Nynorsk',
+  color: 'none',
+  disabled: false,
 };
 
 const variantArgTypes = {
@@ -28,13 +32,36 @@ const variantArgTypes = {
   label: {
     control: { type: 'text' as const },
   },
+  color: {
+    control: { type: 'select' as const },
+    description: 'Subtle is mainly used for Removable variant',
+    options: chipColors,
+  },
+  disabled: {
+    control: { type: 'boolean' as const },
+  },
 };
 
-const renderChip = (variant: ChipVariant, label: string, size?: 'sm' | 'md' | 'lg', color?: ChipColor) => {
+const renderChip = (
+  variant: ChipVariant,
+  label: string,
+  size?: 'sm' | 'md' | 'lg',
+  color?: ChipColor,
+  disabled?: boolean,
+  ...rest: undefined[]
+) => {
   switch (variant) {
     case 'Radio': {
       return (
-        <Chip.Radio data-size={size} data-color={color} name="preview-radio" value={size ?? 'preview'} defaultChecked>
+        <Chip.Radio
+          {...rest}
+          data-size={size}
+          data-color={color}
+          disabled={disabled}
+          name="preview-radio"
+          value={size ?? 'preview'}
+          defaultChecked
+        >
           {label}
         </Chip.Radio>
       );
@@ -42,8 +69,10 @@ const renderChip = (variant: ChipVariant, label: string, size?: 'sm' | 'md' | 'l
     case 'Checkbox': {
       return (
         <Chip.Checkbox
+          {...rest}
           data-size={size}
           data-color={color}
+          disabled={disabled}
           name="preview-checkbox"
           value={size ?? 'preview'}
           defaultChecked
@@ -54,14 +83,14 @@ const renderChip = (variant: ChipVariant, label: string, size?: 'sm' | 'md' | 'l
     }
     case 'Removable': {
       return (
-        <Chip.Removable data-size={size} data-color={color} aria-label={`Slett ${label}`}>
+        <Chip.Removable {...rest} data-size={size} data-color={color} disabled={disabled} aria-label={`Slett ${label}`}>
           {label}
         </Chip.Removable>
       );
     }
     case 'Button': {
       return (
-        <Chip.Button data-size={size} data-color={color}>
+        <Chip.Button {...rest} data-size={size} data-color={color} disabled={disabled}>
           {label}
         </Chip.Button>
       );
@@ -88,7 +117,7 @@ export default meta;
 type Story = StoryObj<ChipStoryArgs>;
 
 export const Preview: Story = {
-  render: ({ variant, label }) => renderChip(variant, label),
+  render: ({ variant, label, color, disabled }) => renderChip(variant, label, 'md', color, disabled),
   args: defaultVariantArgs,
   argTypes: variantArgTypes,
 };
@@ -97,10 +126,12 @@ export const Preview: Story = {
  * Go into the story itself to have an option to switch between variants
  */
 export const Sizes: Story = {
-  render: ({ variant, label }) => (
+  render: ({ variant, label, disabled }) => (
     <Box gap={8}>
       {sizes.map((size) => {
-        return <span key={size}>{renderChip(variant, `${label} ${size.toUpperCase()}`, size)}</span>;
+        return (
+          <span key={size}>{renderChip(variant, `${label} ${size.toUpperCase()}`, size, undefined, disabled)}</span>
+        );
       })}
     </Box>
   ),
@@ -109,10 +140,10 @@ export const Sizes: Story = {
 };
 
 export const Colors: Story = {
-  render: ({ variant, label }) => (
+  render: ({ variant, label, disabled }) => (
     <Box gap={8}>
       {chipColors.map((color) => {
-        return <span key={color}>{renderChip(variant, `${label} ${color}`, 'md', color)}</span>;
+        return <span key={color}>{renderChip(variant, `${label} ${color}`, 'md', color, disabled)}</span>;
       })}
     </Box>
   ),
