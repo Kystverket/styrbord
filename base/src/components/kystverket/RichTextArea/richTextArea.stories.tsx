@@ -146,8 +146,8 @@ export const WithBottomToolbar: Story = {
         bottomToolbar={
           <Box gap={12} px={8}>
             <Box horizontal px={4} gap={8}>
-              <Chip.Removable>@Admin Etternavn</Chip.Removable>
-              <Chip.Removable>@Saksbehandler Etternavn</Chip.Removable>
+              <Chip.Removable data-color="primary/subtle">@Admin Etternavn</Chip.Removable>
+              <Chip.Removable data-color="primary/subtle">@Saksbehandler Etternavn</Chip.Removable>
             </Box>
 
             <Box align="center" justify="between" pb={12} horizontal>
@@ -169,6 +169,7 @@ export const WithBottomToolbar: Story = {
                 />
                 <Box horizontal align="center" pl={12}>
                   <Chip.Checkbox
+                    data-color="neutral"
                     checked={isMarkedAsConclusion}
                     onChange={() => setIsMarkedAsConclusion(!isMarkedAsConclusion)}
                   >
