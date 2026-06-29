@@ -1,4 +1,5 @@
 import type { CmdKey } from '@milkdown/core';
+import type { ReactNode } from 'react';
 
 export type RichTextAreaProps = {
   value: string | null | undefined;
@@ -11,6 +12,8 @@ export type RichTextAreaProps = {
   optional?: boolean | string;
   required?: boolean | string;
   error?: string;
+  /** Used for the bottomToolbar */
+  bottomToolbar?: ReactNode;
   /** Optional upload handler that returns a display src and optional stable image ref. */
   onImageUpload?: OnImageUploadFn;
   /** Optional remove handler for deleting persisted images by stable ref. */

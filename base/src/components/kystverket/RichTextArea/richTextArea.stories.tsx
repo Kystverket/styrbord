@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
@@ -9,6 +9,7 @@ import { ExtraFileInfo, UploadFileResult } from '../FileUploader/FileUploader.ty
 import { FileUploaderContext } from '../FileUploader/FileUploader.context';
 import { FileRetrieverContext } from '../FileUploader/FileRetriever.context';
 import { v4 as uuidv4 } from 'uuid';
+import { Box, Button, Chip, Dropdown, Icon } from '~/main';
 
 const meta = {
   title: 'Form/RichTextArea/RichTextArea',
@@ -27,21 +28,6 @@ const meta = {
 export default meta;
 
 type Story = StoryObj<typeof meta>;
-
-const fileToDataUrl = (file: File) =>
-  new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (typeof reader.result === 'string') {
-        resolve(reader.result);
-        return;
-      }
-
-      reject(new Error('Could not read image file'));
-    };
-    reader.onerror = () => reject(reader.error ?? new Error('Could not read image file'));
-    reader.readAsDataURL(file);
-  });
 
 const defaultArgs: RichTextAreaProps = {
   value: '',
@@ -123,6 +109,103 @@ export const WithError: Story = {
   render: renderInteractive,
 };
 
+export const WithBottomToolbar: Story = {
+  parameters: {
+    docs: {
+      source: {
+        // Prevent Storybook from pretty-printing runtime-heavy render output for this interactive story.
+        type: 'code',
+      },
+    },
+  },
+  args: {
+    ...defaultArgs,
+    label: 'Rikt tekstfelt med bottomToolbar',
+    description: 'Et eksempel på hvordan bottomToolbar kan brukes i richTextArea',
+  },
+  render: (args) => {
+    const [value, setValue] = useState(args.value ?? ''); // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
+    const [isMarkedAsConclusion, setIsMarkedAsConclusion] = useState(false); // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
+    const objectUrlsRef = useRef<Set<string>>(new Set()); // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
+
+    useEffect(() => {
+      return () => {
+        // Cleanup: revoke all object URLs on unmount
+        objectUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+      };
+    }, []);
+
+    return (
+      <RichTextArea
+        {...args}
+        value={value}
+        onChange={(nextMarkdown) => {
+          setValue(nextMarkdown);
+          args.onChange(nextMarkdown);
+        }}
+        bottomToolbar={
+          <Box gap={12} px={8}>
+            <Box horizontal px={4} gap={8}>
+              <Chip.Removable data-color="primary/subtle">@Admin Etternavn</Chip.Removable>
+              <Chip.Removable data-color="primary/subtle">@Saksbehandler Etternavn</Chip.Removable>
+            </Box>
+
+            <Box align="center" justify="between" pb={12} horizontal>
+              <Box horizontal>
+                <Box horizontal gap={4} pr={4}>
+                  <Button title="Add tag" variant="ghost" size="sm" color="neutral" icon popoverTarget="addTag">
+                    <Icon material="alternate_email" />
+                  </Button>
+                  <Dropdown id="addTag" popover="manual">
+                    Example
+                  </Dropdown>
+                </Box>
+                <div
+                  style={{
+                    width: '1px',
+                    backgroundColor: 'var(--ds-color-neutral-surface-hover)',
+                    marginBlock: '6px',
+                  }}
+                />
+                <Box horizontal align="center" pl={12}>
+                  <Chip.Checkbox
+                    data-color="neutral"
+                    checked={isMarkedAsConclusion}
+                    onChange={() => setIsMarkedAsConclusion(!isMarkedAsConclusion)}
+                  >
+                    Marker som konklusjon
+                  </Chip.Checkbox>
+                </Box>
+              </Box>
+              <Box horizontal gap={16}>
+                <Button
+                  size="sm"
+                  color="neutral"
+                  variant="ghost"
+                  onClick={() => {
+                    alert('Avbryt');
+                  }}
+                >
+                  Avbryt
+                </Button>
+                <Button
+                  size="sm"
+                  variant="filled"
+                  onClick={() => {
+                    alert('Lagre');
+                  }}
+                >
+                  Lagre
+                </Button>
+              </Box>
+            </Box>
+          </Box>
+        }
+      />
+    );
+  },
+};
+
 /**
  * Demonstrates stable image references in markdown.
  *
@@ -137,6 +220,14 @@ export const WithError: Story = {
  * and a `MarkdownToReact` resolver can map that ref to a displayable URL.
  */
 export const WithImageRef: Story = {
+  parameters: {
+    docs: {
+      source: {
+        // Prevent Storybook from pretty-printing runtime-heavy render output for this interactive story.
+        type: 'code',
+      },
+    },
+  },
   args: {
     ...defaultArgs,
 
@@ -146,7 +237,7 @@ Bilde av Atlas
     label: 'Rikt tekstfelt med bildereferanse',
     description: 'Last opp et bilde — markdownutdata vil inneholde en stabil referanse til bildet.',
     onImageUpload: async (file) => {
-      const src = await fileToDataUrl(file);
+      const src = URL.createObjectURL(file);
       // Simulate a stable blob reference that would be generated server-side
       const ref = `image://${crypto.randomUUID()}`;
       return { src, ref, alt: file.name };
@@ -158,6 +249,22 @@ Bilde av Atlas
   render: (args) => {
     const [value, setValue] = useState(args.value ?? ''); // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
     const [markdownOutput, setMarkdownOutput] = useState(''); // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
+    const objectUrlsRef = useRef<Set<string>>(new Set()); // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
+
+    useEffect(() => {
+      // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
+      return () => {
+        // Cleanup: revoke all object URLs on unmount
+        objectUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+      };
+    }, []);
+
+    const handleImageUpload = async (file: File) => {
+      const src = URL.createObjectURL(file);
+      objectUrlsRef.current.add(src);
+      const ref = `image://${crypto.randomUUID()}`;
+      return { src, ref, alt: file.name };
+    };
 
     return (
       <FileUploaderContext.Provider
@@ -169,6 +276,7 @@ Bilde av Atlas
         <FileRetrieverContext.Provider value={{ deriveFileInfosFromStorageIds }}>
           <RichTextArea
             {...args}
+            onImageUpload={handleImageUpload}
             value={value}
             onChange={(nextMarkdown) => {
               setValue(nextMarkdown);

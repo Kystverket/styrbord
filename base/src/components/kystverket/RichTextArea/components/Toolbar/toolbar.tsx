@@ -19,9 +19,10 @@ type ToolbarProps = {
   isBulletListActive: boolean;
   isOrderedListActive: boolean;
   isLinkActive: boolean;
-  canUploadImage?: boolean;
   selectedFormat: BlockType;
   linkPopoverTarget?: string;
+  canUploadImage?: boolean;
+
   onBold: () => void;
   onItalic: () => void;
   onBulletList: () => void;
@@ -104,9 +105,9 @@ export const Toolbar = ({
   isBulletListActive,
   isOrderedListActive,
   isLinkActive,
-  canUploadImage = false,
   selectedFormat,
   linkPopoverTarget,
+  canUploadImage = false,
   onBulletList,
   onOrderedList,
   onBold,
@@ -151,9 +152,9 @@ export const Toolbar = ({
         popoverTarget={linkPopoverTarget}
         onClick={onLink}
       />
-      {canUploadImage && onImageUpload ? (
-        <ToolbarButton label="Image" icon="image" disabled={disabled} onClick={onImageUpload} />
-      ) : null}
+      {canUploadImage && Boolean(onImageUpload) && (
+        <ToolbarButton label="Upload image" icon="image" disabled={disabled} onClick={onImageUpload || (() => {})} />
+      )}
       <div className={styles.divider} aria-hidden />
       <FormatSelect disabled={disabled} selectedFormat={selectedFormat} onFormatChange={onFormatChange} />
       <div className={styles.undoRedoGroup}>

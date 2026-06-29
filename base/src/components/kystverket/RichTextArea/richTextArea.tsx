@@ -68,6 +68,7 @@ const RichTextAreaContainer = ({
   disabled = false,
   label,
   description,
+  bottomToolbar,
   optional = false,
   required = false,
   error: externalError,
@@ -312,8 +313,8 @@ const RichTextAreaContainer = ({
             onUndo={() => runCommand(undoCommand)}
             onRedo={() => runCommand(redoCommand)}
             onLink={openLinkEditor}
-            onImageUpload={imagePicker.openImageFilePicker}
             linkPopoverTarget={linkEditorAnchorId}
+            onImageUpload={() => imagePicker.openImageFilePicker()}
             onBulletList={() =>
               toggleList({
                 isTargetListActive: toolbarState.isBulletListActive,
@@ -360,7 +361,9 @@ const RichTextAreaContainer = ({
             onRemove={handleLinkRemove}
             onClose={closeLinkEditor}
           />
+          {!!bottomToolbar && <div>{bottomToolbar}</div>}
         </div>
+
         {displayedError && <ValidationMessage className={classes.error}>{displayedError}</ValidationMessage>}
       </div>
     </Fieldset>
