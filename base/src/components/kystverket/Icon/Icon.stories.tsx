@@ -3,6 +3,7 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import Icon from '~/components/kystverket/Icon/icon';
 import { IconId, iconIdList } from './icon.types';
 import { Body } from '~/main';
+import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
 
 const meta = {
   title: 'Helpers/Icon',
@@ -21,19 +22,24 @@ const iconDescriptions: Partial<Record<IconId, string>> = {
 };
 
 const sizes = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const;
+const colors = [...styrbordSemanticColors, ...styrbordPaletteColors];
 
 export const IconShowcase: StoryFn = () => {
   return (
     <table>
-      {iconIdList.map((iconId) => (
+      {iconIdList.map((iconId, index) => (
         <tr key={iconId}>
-          <td style={{ padding: '0.5rem' }}>
+          <td style={{ padding: '1rem' }}>
             <Icon material={iconId} />
           </td>
           <td style={{ padding: '0.5rem' }}>
             <Body strong>{iconId}</Body>
             <Body size="sm">{iconDescriptions[iconId]}</Body>
           </td>
+          <td style={{ padding: '0rem' }}>
+            <Icon material={iconId} background={colors[index % colors.length]} title={colors[index % colors.length]} />
+          </td>
+          <td style={{ padding: '0.5rem' }}>{colors[index % colors.length]}</td>
         </tr>
       ))}
     </table>
@@ -47,6 +53,9 @@ export const IconSizing: StoryFn = () => {
         <tr key={size}>
           <td style={{ padding: '0.5rem', textAlign: 'center' }}>
             <Icon size={size} material="anchor" />
+          </td>
+          <td style={{ padding: '0.5rem', textAlign: 'center' }}>
+            <Icon size={size} material="anchor" background="lyng" />
           </td>
           <td style={{ padding: '0.5rem' }}>
             size="{size}" {size === 'md' ? '(default)' : ''}

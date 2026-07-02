@@ -177,8 +177,7 @@
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    padding-inline: var(--ds-size-7);
-    padding-block: var(--ds-size-7);
+    padding: var(--side-sheet-padding, var(--ds-size-7));
     scrollbar-gutter: stable;
   }
 

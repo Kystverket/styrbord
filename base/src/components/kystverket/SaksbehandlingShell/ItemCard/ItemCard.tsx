@@ -1,15 +1,9 @@
-import { ClickableCard } from '~/main';
-import type { IconId } from '~/main';
-import type { SaksbehandlingItemType } from '../SaksbehandlingShell.types';
+import { Heading } from '@digdir/designsystemet-react';
+import Box from '../../Box/box';
+import Icon from '../../Icon/icon';
 import type { ItemCardProps } from './ItemCard.types';
-
-const ITEM_TYPE_ICON: Record<SaksbehandlingItemType, IconId> = {
-  IncomingLetter: 'inbox',
-  OutboundLetter: 'send',
-  Discussion: 'chat',
-  Checklist: 'format_list_bulleted',
-  Note: 'text_snippet',
-};
+import { Body } from '~/main';
+import classes from './ItemCard.module.css';
 
 export function ItemCard({ item, selected = false, onClick }: ItemCardProps) {
   const formattedDate = item.dateCreated.toLocaleDateString('nb-NO', {
@@ -17,19 +11,17 @@ export function ItemCard({ item, selected = false, onClick }: ItemCardProps) {
     month: '2-digit',
     year: 'numeric',
   });
-  const description = item.description ? `${item.description} · ${formattedDate}` : formattedDate;
 
   return (
-    <ClickableCard
-      heading={item.title}
-      description={description}
-      icon={item.icon ?? ITEM_TYPE_ICON[item.type]}
-      color={selected ? 'main' : 'neutral'}
-      variant={selected ? 'tinted' : 'default'}
-      headingSize="xs"
-      chevron={false}
-      onClick={onClick}
-      aria-label={item.title}
-    />
+    <button onClick={onClick} className={[classes.item, selected ? classes.selected : ''].join(' ')}>
+      <Box horizontal align="start" gap={12}>
+        <Icon material={item.icon} background={item.iconColor ?? 'lyng'} />
+        <Box align="start">
+          <Heading data-size="xs">{item.title}</Heading>
+          <Body data-size="sm">{item.description}</Body>
+          {formattedDate && <span>{formattedDate}</span>}
+        </Box>
+      </Box>
+    </button>
   );
 }

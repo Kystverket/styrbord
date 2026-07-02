@@ -1,3 +1,4 @@
+import { StyrbordPaletteColor, StyrbordSemanticColor } from '@kystverket/styrbord-tokens/colors';
 import classes from './icon.module.css';
 import { IconId } from './icon.types';
 
@@ -16,22 +17,25 @@ const iconSizes: Record<IconSize, string> = {
 
 export interface MaterialIconProps {
   material: IconId;
-  filled?: boolean;
   className?: string;
   size?: IconSize;
   title?: string;
+  background?: StyrbordPaletteColor | StyrbordSemanticColor;
 }
 
-const Icon = ({ material, filled = false, className = '', size = 'md', title }: MaterialIconProps) => {
+const Icon = ({ material, className = '', size = 'md', title, background }: MaterialIconProps) => {
   const classNames = [classes.icon, className, 'material-symbols-outlined'];
   const style: Record<string, string> = {};
 
-  if (filled) {
-    classNames.push(classes.filled);
-  }
-
   style['fontSize'] = `var(--icon-size, ${iconSizes[size]})`;
   style['height'] = `var(--icon-size, ${iconSizes[size]})`;
+  if (background) {
+    style['padding'] = '0.5rem';
+    style['border-radius'] = '4px';
+    style['color'] = `var(--icon-color, var(--ds-color-${background}-text-default))`;
+    style['background-color'] = `var(--icon-color, var(--ds-color-${background}-surface-tinted))`;
+    delete style['height'];
+  }
 
   return (
     <span title={title} aria-hidden style={style} className={classNames.join(' ')}>

@@ -3,8 +3,4 @@
     user-select: none;
     font-weight: var(--ds-font-weight-regular);
   }
-
-  .filled {
-    font-variation-settings: 'FILL' 1;
-  }
 }

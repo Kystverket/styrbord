@@ -4,7 +4,10 @@ import { ItemList } from './ItemList/ItemList';
 import classes from './SaksbehandlingShell.module.css';
 import type { SaksbehandlingShellProps } from './SaksbehandlingShell.types';
 
-const ITEM_LIST_WIDTH_STYLE = { '--side-sheet-width': '300px' } as CSSProperties;
+const ITEM_LIST_WIDTH_STYLE = {
+  '--side-sheet-width': '400px',
+  '--side-sheet-padding': '20px 0px 30px 00px',
+} as CSSProperties;
 
 export function SaksbehandlingShell({
   caseTitle,
@@ -20,7 +23,7 @@ export function SaksbehandlingShell({
   defaultComparisonOpen = false,
   children,
   className = '',
-}: SaksbehandlingShellProps) {
+}: Readonly<SaksbehandlingShellProps>) {
   const [isItemListOpen, setIsItemListOpen] = useState(defaultItemListOpen);
   const [isComparisonOpen, setIsComparisonOpen] = useState(defaultComparisonOpen);
   const [isItemListPinned, setIsItemListPinned] = useState(false);

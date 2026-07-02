@@ -1,0 +1,17 @@
+@layer styrbord-modules {
+  .item {
+    text-align: start;
+    padding: var(--ds-size-2) var(--ds-size-2);
+    margin: var(--ds-size-1) var(--ds-size-2);
+    border-radius: var(--ds-border-radius-lg);
+    border: 1px solid transparent;
+    transition: all 0.1s ease-in-out;
+  }
+  .selected {
+    border: 1px solid var(--ds-color-neutral-border-default);
+    background: var(--ds-color-neutral-surface-tinted);
+  }
+  .item:hover {
+    border: 1px solid var(--ds-color-neutral-border-default);
+  }
+}
