@@ -1,6 +1,61 @@
 @layer styrbord-modules {
-  .icon {
+  .container {
     user-select: none;
     font-weight: var(--ds-font-weight-regular);
+    position: relative;
+  }
+  .size-2xs {
+    --icon-size: 0.875rem;
+    --icon-font-size: 0.875rem;
+  }
+  .size-xs {
+    --icon-size: 1rem;
+    --icon-font-size: 1rem;
+  }
+  .size-sm {
+    --icon-size: 1.125rem;
+    --icon-font-size: 1.125rem;
+  }
+  .size-md {
+    --icon-size: 1.3125rem;
+    --icon-font-size: 1.3125rem;
+  }
+  .size-lg {
+    --icon-size: 1.5rem;
+    --icon-font-size: 1.5rem;
+  }
+  .size-xl {
+    --icon-size: 2rem;
+    --icon-font-size: 2rem;
+  }
+  .size-2xl {
+    --icon-size: 3rem;
+    --icon-font-size: 3rem;
+  }
+  .size-3xl {
+    --icon-size: 4rem;
+    --icon-font-size: 4rem;
+    --indicator-font-size: 2.2rem;
+  }
+  .hasBackground .icon {
+    --icon-size: calc(var(--icon-font-size) * 1.5);
+    padding: calc(var(--icon-font-size) * 0.25);
+    border-radius: var(--ds-border-radius-lg);
+  }
+  .icon {
+    font-size: var(--icon-font-size) !important;
+    height: var(--icon-size) !important;
+    width: var(--icon-size) !important;
+  }
+  .indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 999px;
+    font-size: calc(var(--icon-font-size) * 0.5) !important;
+    padding: calc(var(--icon-font-size) * 0.05) !important;
+  }
+  .noBackground .indicator {
+    background: var(--ds-color-primary-surface-default);
   }
 }

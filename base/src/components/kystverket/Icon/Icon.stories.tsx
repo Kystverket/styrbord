@@ -2,8 +2,9 @@ import type { Meta, StoryFn } from '@storybook/react-vite';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import Icon from '~/components/kystverket/Icon/icon';
 import { IconId, iconIdList } from './icon.types';
-import { Body } from '~/main';
+import { Body, Box } from '~/main';
 import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
+import { Fragment } from 'react';
 
 const meta = {
   title: 'Helpers/Icon',
@@ -21,7 +22,7 @@ const iconDescriptions: Partial<Record<IconId, string>> = {
   content_copy: 'Kopierer eller dupliserer',
 };
 
-const sizes = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const;
+const sizes = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl'] as const;
 const colors = [...styrbordSemanticColors, ...styrbordPaletteColors];
 
 export const IconShowcase: StoryFn = () => {
@@ -63,5 +64,28 @@ export const IconSizing: StoryFn = () => {
         </tr>
       ))}
     </table>
+  );
+};
+
+export const IconIndicator: StoryFn = () => {
+  return (
+    <Box gap={16}>
+      {sizes.map((size) => (
+        <Fragment key={size}>
+          <Box horizontal gap={16} align="center" p={8}>
+            <Icon size={size} material="description" />
+            <Icon size={size} material="description" indicator="arrow_back" />
+            <Icon size={size} material="description" background="lyng" />
+            <Icon size={size} material="description" indicator="arrow_forward" background="lyng" />
+          </Box>
+          <Box horizontal gap={16} align="center" p={8}>
+            <Icon size={size} material="mail" />
+            <Icon size={size} material="mail" indicator="check" />
+            <Icon size={size} material="mail" background="lyng" />
+            <Icon size={size} material="mail" indicator="check" background="lyng" />
+          </Box>
+        </Fragment>
+      ))}
+    </Box>
   );
 };
