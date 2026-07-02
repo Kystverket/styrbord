@@ -7,7 +7,7 @@ export interface SaksbehandlingItem {
   id: string;
   title: string;
   description?: string;
-  dateCreated: Date;
+  children?: ReactNode;
   icon: MaterialIconProps['material'];
   iconColor?: MaterialIconProps['background'];
 }

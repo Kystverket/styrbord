@@ -26,8 +26,8 @@ export function SaksbehandlingShell({
 }: Readonly<SaksbehandlingShellProps>) {
   const [isItemListOpen, setIsItemListOpen] = useState(defaultItemListOpen);
   const [isComparisonOpen, setIsComparisonOpen] = useState(defaultComparisonOpen);
-  const [isItemListPinned, setIsItemListPinned] = useState(false);
-  const [isComparisonPinned, setIsComparisonPinned] = useState(false);
+  const [isItemListPinned, setIsItemListPinned] = useState(defaultItemListOpen);
+  const [isComparisonPinned, setIsComparisonPinned] = useState(defaultComparisonOpen);
 
   const toggleItemList = () => {
     setIsItemListOpen((open) => !open);
@@ -84,6 +84,7 @@ export function SaksbehandlingShell({
               <Icon material={isItemListPinned ? 'keep_off' : 'keep'} size="sm" />
             </IconButton>
           )}
+          {itemActions && <div className={classes.divider} aria-hidden />}
           <Box horizontal align="center" gap={8}>
             {caseActions}
           </Box>

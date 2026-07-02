@@ -2,7 +2,7 @@ import { Box } from '~/main';
 import { ItemCard } from '../ItemCard/ItemCard';
 import type { ItemListProps } from './ItemList.types';
 
-export function ItemList({ items, selectedItemId, onSelectItemId }: ItemListProps) {
+export function ItemList({ items, selectedItemId, onSelectItemId }: Readonly<ItemListProps>) {
   return (
     <Box gap={4}>
       {items.map((item) => (
