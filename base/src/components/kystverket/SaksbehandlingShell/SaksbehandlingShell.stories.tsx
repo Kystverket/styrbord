@@ -17,12 +17,12 @@ const meta = {
 
 export default meta;
 
-const typeToIcon: Record<string, Pick<SaksbehandlingItem, 'icon' | 'iconColor'>> = {
-  inbound: { icon: 'inbox', iconColor: 'fyr' },
-  outbound: { icon: 'send', iconColor: 'hav' },
+const typeToIcon: Record<string, Pick<SaksbehandlingItem, 'icon' | 'iconColor' | 'iconIndicator'>> = {
+  inbound: { icon: 'mail', iconIndicator: 'arrow_forward', iconColor: 'sol' },
+  outbound: { icon: 'mail', iconIndicator: 'arrow_back', iconColor: 'hav' },
   discussion: { icon: 'chat', iconColor: 'skog' },
   note: { icon: 'format_list_bulleted', iconColor: 'lyng' },
-  task: { icon: 'text_snippet', iconColor: 'stein' },
+  task: { icon: 'text_snippet', iconColor: 'fyr' },
 };
 
 const ITEMS: SaksbehandlingItem[] = [

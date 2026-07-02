@@ -9,7 +9,7 @@ export function ItemCard({ item, selected = false, onClick }: Readonly<ItemCardP
   return (
     <button onClick={onClick} className={[classes.item, selected ? classes.selected : ''].join(' ')}>
       <Box horizontal align="start" gap={12}>
-        <Icon material={item.icon} background={item.iconColor ?? 'lyng'} />
+        <Icon material={item.icon} indicator={item.iconIndicator} background={item.iconColor ?? 'lyng'} />
         <Box align="start">
           <Heading data-size="xs">{item.title}</Heading>
           <Body data-size="sm">{item.description}</Body>

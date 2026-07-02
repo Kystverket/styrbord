@@ -71,20 +71,21 @@ export const IconIndicator: StoryFn = () => {
   return (
     <Box gap={16}>
       {sizes.map((size) => (
-        <Fragment key={size}>
-          <Box horizontal gap={16} align="center" p={8}>
-            <Icon size={size} material="description" />
-            <Icon size={size} material="description" indicator="arrow_back" />
-            <Icon size={size} material="description" background="lyng" />
-            <Icon size={size} material="description" indicator="arrow_forward" background="lyng" />
-          </Box>
-          <Box horizontal gap={16} align="center" p={8}>
-            <Icon size={size} material="mail" />
-            <Icon size={size} material="mail" indicator="check" />
-            <Icon size={size} material="mail" background="lyng" />
-            <Icon size={size} material="mail" indicator="check" background="lyng" />
-          </Box>
-        </Fragment>
+        <>
+          {(['description', 'mail'] as IconId[]).map((iconId) => (
+            <Fragment key={size + iconId}>
+              <Box horizontal gap={16} align="center" p={8}>
+                <Icon size={size} material={iconId} background="hav" />
+                {(['arrow_back', 'arrow_forward', 'mail', 'person', 'add', 'delete'] as IconId[]).map((indicatorId) => (
+                  <>
+                    <Icon size={size} material={iconId} indicator={indicatorId} />
+                    <Icon size={size} material={iconId} indicator={indicatorId} background="lyng" />
+                  </>
+                ))}
+              </Box>
+            </Fragment>
+          ))}
+        </>
       ))}
     </Box>
   );

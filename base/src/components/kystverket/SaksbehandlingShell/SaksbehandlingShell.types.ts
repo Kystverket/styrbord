@@ -9,6 +9,7 @@ export interface SaksbehandlingItem {
   description?: string;
   children?: ReactNode;
   icon: MaterialIconProps['material'];
+  iconIndicator?: MaterialIconProps['indicator'];
   iconColor?: MaterialIconProps['background'];
 }
 
