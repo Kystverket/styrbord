@@ -1,0 +1,33 @@
+@layer styrbord-modules {
+  .shell {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .heading {
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--ds-color-neutral-surface-tinted);
+  }
+
+  .toolbar {
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--ds-color-neutral-surface-tinted);
+  }
+
+  .divider {
+    width: 1px;
+    height: var(--ds-size-6);
+    background: var(--ds-color-neutral-border-subtle);
+  }
+
+  .main {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    overflow-y: auto;
+    padding: var(--ds-size-6);
+    scrollbar-gutter: stable;
+  }
+}

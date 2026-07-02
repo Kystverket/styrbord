@@ -129,6 +129,13 @@ export type {
   ClickableCardVariant,
 } from './components/kystverket/ClickableCard/ClickableCard.types';
 
+export { SaksbehandlingShell } from './components/kystverket/SaksbehandlingShell/SaksbehandlingShell';
+export type {
+  SaksbehandlingShellProps,
+  SaksbehandlingItem,
+  SaksbehandlingItemType,
+} from './components/kystverket/SaksbehandlingShell/SaksbehandlingShell.types';
+
 //^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\
 //  Komponenter fra Designsystemet
 //^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\

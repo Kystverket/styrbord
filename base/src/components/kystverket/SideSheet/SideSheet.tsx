@@ -186,70 +186,73 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
         aria-label={typeof title === 'string' ? title : undefined}
         aria-hidden={!open}
       >
-        <header className={classes.header}>
-          <div className={classes.headerRow}>
-            {showBackButton && (
-              <Tooltip content={t('sideSheet.back')} placement="bottom">
-                <Button
-                  variant="ghost"
-                  color="neutral"
-                  size="sm"
-                  icon
-                  onClick={onBack}
-                  aria-label={t('sideSheet.back')}
-                >
-                  <Icon material="arrow_back" size="md" />
-                </Button>
-              </Tooltip>
-            )}
+        {title || showBackButton ? (
+          <header className={classes.header}>
+            <div className={classes.headerRow}>
+              {showBackButton && (
+                <Tooltip content={t('sideSheet.back')} placement="bottom">
+                  <Button
+                    variant="ghost"
+                    color="neutral"
+                    size="sm"
+                    icon
+                    onClick={onBack}
+                    aria-label={t('sideSheet.back')}
+                  >
+                    <Icon material="arrow_back" size="md" />
+                  </Button>
+                </Tooltip>
+              )}
 
-            {title !== undefined && (
-              <div className={classes.headerTitle}>
-                <Heading data-size={headingSize} style={{ margin: 0 }}>
-                  {title}
-                </Heading>
+              {title !== undefined && (
+                <div className={classes.headerTitle}>
+                  <Heading data-size={headingSize} style={{ margin: 0 }}>
+                    {title}
+                  </Heading>
+                </div>
+              )}
+
+              <div className={classes.headerActions}>
+                {headerAction}
+
+                {pinnable && (
+                  <Tooltip content={isPinned ? t('sideSheet.unpin') : t('sideSheet.pin')} placement="bottom">
+                    <Button
+                      variant="ghost"
+                      color="neutral"
+                      size="sm"
+                      icon
+                      onClick={handlePinToggle}
+                      aria-label={isPinned ? t('sideSheet.unpin') : t('sideSheet.pin')}
+                      aria-pressed={isPinned}
+                    >
+                      <Icon material={getPinIcon()} size="md" />
+                    </Button>
+                  </Tooltip>
+                )}
+
+                {showCloseButton && (
+                  <Tooltip content={t('sideSheet.close')} placement="bottom">
+                    <Button
+                      variant="ghost"
+                      color="neutral"
+                      size="sm"
+                      icon
+                      onClick={onClose}
+                      aria-label={t('sideSheet.close')}
+                    >
+                      <Icon material="close" size="md" />
+                    </Button>
+                  </Tooltip>
+                )}
               </div>
-            )}
-
-            <div className={classes.headerActions}>
-              {headerAction}
-
-              {pinnable && (
-                <Tooltip content={isPinned ? t('sideSheet.unpin') : t('sideSheet.pin')} placement="bottom">
-                  <Button
-                    variant="ghost"
-                    color="neutral"
-                    size="sm"
-                    icon
-                    onClick={handlePinToggle}
-                    aria-label={isPinned ? t('sideSheet.unpin') : t('sideSheet.pin')}
-                    aria-pressed={isPinned}
-                  >
-                    <Icon material={getPinIcon()} size="md" />
-                  </Button>
-                </Tooltip>
-              )}
-
-              {showCloseButton && (
-                <Tooltip content={t('sideSheet.close')} placement="bottom">
-                  <Button
-                    variant="ghost"
-                    color="neutral"
-                    size="sm"
-                    icon
-                    onClick={onClose}
-                    aria-label={t('sideSheet.close')}
-                  >
-                    <Icon material="close" size="md" />
-                  </Button>
-                </Tooltip>
-              )}
             </div>
-          </div>
 
-          {headerDivider && <hr className={classes.headerDivider} />}
-        </header>
-
+            {headerDivider && <hr className={classes.headerDivider} />}
+          </header>
+        ) : (
+          <></>
+        )}
         <div className={classes.body}>{children}</div>
 
         <SideSheetButtonsBlock footerDivider={footerDivider} />
