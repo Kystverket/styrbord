@@ -130,7 +130,7 @@ export function HeaderMobile({ logoutHandler, loginHandler, profile, slots, link
                 {loginHandler && !profile && (
                   <Button
                     onClick={(e) => {
-                      e?.preventDefault();
+                      e.preventDefault();
                       loginHandler?.();
                       closeMenu();
                     }}
