@@ -7,7 +7,7 @@ import classes from './ItemCard.module.css';
 
 export function ItemCard({ item, selected = false, onClick }: Readonly<ItemCardProps>) {
   return (
-    <button onClick={onClick} className={[classes.item, selected ? classes.selected : ''].join(' ')}>
+    <button type="button" onClick={onClick} className={[classes.item, selected ? classes.selected : ''].join(' ')}>
       <Box horizontal align="start" gap={12}>
         <Icon material={item.icon} indicator={item.iconIndicator} background={item.iconColor ?? 'lyng'} />
         <Box align="start">
