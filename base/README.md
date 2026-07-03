@@ -45,7 +45,7 @@ import { STYRBORD_TRANSLATIONS_NAMESPACE, StyrbordTranslations } from '@kystverk
 
 function App() {
   return (
-    <SprakProvider locale="nb-NO" defaultNamespace={STYRBORD_TRANSLATIONS_NAMESPACE}>
+    <SprakProvider locale="nb-NO">
       <StyrbordTranslations>{/* resten av applikasjonen */}</StyrbordTranslations>
     </SprakProvider>
   );
