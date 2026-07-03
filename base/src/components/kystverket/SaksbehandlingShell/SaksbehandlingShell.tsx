@@ -3,6 +3,7 @@ import { Box, Icon, IconButton, SideSheet } from '~/main';
 import { ItemList } from './ItemList/ItemList';
 import classes from './SaksbehandlingShell.module.css';
 import type { SaksbehandlingShellProps } from './SaksbehandlingShell.types';
+import { useTranslation } from '~/translations';
 
 const ITEM_LIST_WIDTH_STYLE = {
   '--side-sheet-width': '400px',
@@ -22,6 +23,8 @@ export function SaksbehandlingShell({
   children,
   className = '',
 }: Readonly<SaksbehandlingShellProps>) {
+  const { scopedT } = useTranslation();
+  const t = scopedT('saksbehandlingShell');
   const [isItemListOpen, setIsItemListOpen] = useState(defaultItemListOpen);
   const [isComparisonOpen, setIsComparisonOpen] = useState(defaultComparisonOpen);
   const [isItemListPinned, setIsItemListPinned] = useState(defaultItemListOpen);
@@ -54,9 +57,10 @@ export function SaksbehandlingShell({
             color="neutral"
             size="sm"
             onClick={toggleItemList}
-            aria-label={isItemListOpen ? 'Skjul elementliste' : 'Vis elementliste'}
+            className={isItemListOpen ? classes.shellPanelButtonOpen : classes.shellPanelButtonClosed}
+            aria-label={isItemListOpen ? t('hideItemList') : t('showItemList')}
           >
-            <Icon material={isItemListOpen ? 'left_panel_close' : 'view_list'} size="sm" />
+            <Icon material="left_panel_close" size="sm" />
           </IconButton>
           {!isItemListPinned && isItemListOpen && (
             <IconButton
@@ -64,7 +68,7 @@ export function SaksbehandlingShell({
               color="neutral"
               size="sm"
               onClick={() => setIsItemListPinned((pinned) => !pinned)}
-              aria-label={isItemListPinned ? 'Løsne sidepanel' : 'Fest sidepanel'}
+              aria-label={isItemListPinned ? t('unpinSidePanel') : t('pinSidePanel')}
             >
               <Icon material={isItemListPinned ? 'keep_off' : 'keep'} size="sm" />
             </IconButton>
@@ -83,7 +87,7 @@ export function SaksbehandlingShell({
                   color="neutral"
                   size="sm"
                   onClick={() => setIsComparisonPinned((pinned) => !pinned)}
-                  aria-label={isComparisonPinned ? 'Løsne sidepanel' : 'Fest sidepanel'}
+                  aria-label={isComparisonPinned ? t('unpinSidePanel') : t('pinSidePanel')}
                 >
                   <Icon material={isComparisonPinned ? 'keep_off' : 'keep'} size="sm" />
                 </IconButton>
@@ -93,9 +97,10 @@ export function SaksbehandlingShell({
                 color="neutral"
                 size="sm"
                 onClick={toggleComparison}
-                aria-label={isComparisonOpen ? 'Skjul sammenligning' : 'Vis sammenligning'}
+                className={isComparisonOpen ? classes.shellPanelButtonOpen : classes.shellPanelButtonClosed}
+                aria-label={isComparisonOpen ? t('hideComparison') : t('showComparison')}
               >
-                <Icon material={isComparisonOpen ? 'right_panel_close' : 'code_blocks'} size="sm" />
+                <Icon material={'right_panel_close'} size="sm" />
               </IconButton>
             </>
           )}

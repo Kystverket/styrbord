@@ -1,17 +1,19 @@
 @layer styrbord-modules {
   .item {
     text-align: start;
-    padding: var(--ds-size-2) var(--ds-size-2);
-    margin: var(--ds-size-1) var(--ds-size-2);
+    padding: 8px;
+    margin: 4px 8px;
     border-radius: var(--ds-border-radius-lg);
     border: 1px solid transparent;
     transition: all 0.1s ease-in-out;
   }
   .selected {
-    border: 1px solid var(--ds-color-neutral-border-default);
-    background: var(--ds-color-neutral-background-tinted);
+    border: 1px solid var(--item-card-border-color, var(--ds-color-neutral-border-default));
+    background: var(--item-card-bg-color, var(--ds-color-neutral-background-tinted));
+    padding: 12px;
+    margin: 0px 4px;
   }
   .item:hover {
-    border: 1px solid var(--ds-color-neutral-border-default);
+    border: 1px solid var(--item-card-border-color, var(--ds-color-neutral-border-default));
   }
 }
