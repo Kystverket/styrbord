@@ -41,6 +41,7 @@ export default defineConfig({
         'react',
         'react-dom',
         '@digdir/designsystemet-react',
+        '@kystverket/styrbord-tokens',
         '@kystverket/sprak-react',
         'react-markdown',
         'react-datepicker',

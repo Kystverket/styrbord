@@ -1,0 +1,46 @@
+@layer styrbord-modules {
+  .shell {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .heading {
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--ds-color-neutral-surface-tinted);
+  }
+
+  .toolbar {
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--ds-color-neutral-surface-tinted);
+  }
+
+  .divider {
+    width: 1px;
+    height: var(--ds-size-6);
+    background: var(--ds-color-neutral-border-subtle);
+  }
+
+  .main {
+    min-height: 100%;
+  }
+
+  .mainContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    height: 100%;
+  }
+
+  .itemActions {
+    flex-shrink: 0;
+    padding: var(--ds-size-3);
+    border-bottom: 1px solid var(--ds-color-neutral-surface-tinted);
+    position: sticky;
+    top: 0px;
+    background: var(--ds-color-neutral-surface);
+    z-index: 1;
+  }
+}
