@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.2](https://github.com/Kystverket/styrbord/compare/styrbord-v1.13.1...styrbord-v1.13.2) (2026-07-03)
+
+
+### Bug Fixes
+
+* enhance SaksbehandlingShell with improved styling and internationalization support ([#253](https://github.com/Kystverket/styrbord/issues/253)) ([a38d2f6](https://github.com/Kystverket/styrbord/commit/a38d2f68a07d897808618d6abbd9faf7192fb05f))
+
 ## [1.13.1](https://github.com/Kystverket/styrbord/compare/styrbord-v1.13.0...styrbord-v1.13.1) (2026-07-03)
 
 
