@@ -15,6 +15,9 @@
   .size-33 {
     --side-sheet-width: 33%;
   }
+  .size-40 {
+    --side-sheet-width: 40%;
+  }
   .size-50 {
     --side-sheet-width: 50%;
   }
@@ -177,8 +180,7 @@
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    padding-inline: var(--ds-size-7);
-    padding-block: var(--ds-size-7);
+    padding: var(--side-sheet-padding, var(--ds-size-7));
     scrollbar-gutter: stable;
   }
 

@@ -1,6 +1,6 @@
 import { CSSProperties, ReactNode } from 'react';
 
-export type SideSheetSize = 'sm' | 'md' | 'lg' | '33%' | '50%' | '66%';
+export type SideSheetSize = 'sm' | 'md' | 'lg' | '33%' | '40%' | '50%' | '66%';
 
 export type SideSheetPlacement = 'left' | 'right';
 
