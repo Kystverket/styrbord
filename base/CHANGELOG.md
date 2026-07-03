@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.0.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.12.0...styrbord-v2.0.0) (2026-07-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* Byttet fra button asChild i header mobile til ren button. Endret header link til å kun tillate en child. ([#249](https://github.com/Kystverket/styrbord/issues/249))
+
+### Features
+
+* New app shell for Saksbehandling and new icon capabilities ([#247](https://github.com/Kystverket/styrbord/issues/247)) ([b38fb13](https://github.com/Kystverket/styrbord/commit/b38fb13f2fa1058c3103ac6f86c088f836b17e64))
+
+
+### Bug Fixes
+
+* Byttet fra button asChild i header mobile til ren button. Endret header link til å kun tillate en child. ([#249](https://github.com/Kystverket/styrbord/issues/249)) ([61117b3](https://github.com/Kystverket/styrbord/commit/61117b3ab7d5bfb39ad78030d3e845907b3acf6d))
+
 ## [1.12.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.11.0...styrbord-v1.12.0) (2026-06-29)
 
 
