@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.1](https://github.com/Kystverket/styrbord/compare/styrbord-v1.13.0...styrbord-v1.13.1) (2026-07-03)
+
+
+### Bug Fixes
+
+* **base:** Fixed version after accidentally releasing as 2.0.0. Updated docs with changelog page. ([eea13c1](https://github.com/Kystverket/styrbord/commit/eea13c1df53523c49564f0e44ebc13040c96ab8d))
+
 ## [1.13.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.12.0...styrbord-v1.13.0) (2026-07-03)
 
 ### ⚠ BREAKING CHANGES
