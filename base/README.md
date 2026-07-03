@@ -43,9 +43,13 @@ Applikasjoner som bruker Styrbord må wrappe alt med både `<SprakProvider>` (fo
 import { SprakProvider } from '@kystverket/sprak-react';
 import { STYRBORD_TRANSLATIONS_NAMESPACE, StyrbordTranslations } from '@kystverket/styrbord';
 
-<SprakProvider locale="nb-NO" defaultNamespace={STYRBORD_TRANSLATIONS_NAMESPACE}>
-  <StyrbordTranslations>{/* resten av applikasjonen */}</StyrbordTranslations>
-</SprakProvider>;
+function App() {
+  return (
+    <SprakProvider locale="nb-NO" defaultNamespace={STYRBORD_TRANSLATIONS_NAMESPACE}>
+      <StyrbordTranslations>{/* resten av applikasjonen */}</StyrbordTranslations>
+    </SprakProvider>
+  );
+}
 ```
 
 ## Design Tokens
