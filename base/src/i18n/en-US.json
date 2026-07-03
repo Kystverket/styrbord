@@ -58,6 +58,14 @@
   },
   "loading": "Loading",
   "organisasjonsnummer": "Organization number",
+  "saksbehandlingShell": {
+    "hideComparison": "Hide comparison",
+    "hideItemList": "Hide item list",
+    "pinSidePanel": "Pin side panel",
+    "showComparison": "Show comparison",
+    "showItemList": "Show item list",
+    "unpinSidePanel": "Unpin side panel"
+  },
   "sentralbord": "Switchboard",
   "sideSheet": {
     "back": "Go back",

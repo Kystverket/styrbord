@@ -43,4 +43,13 @@
     background: var(--ds-color-neutral-surface);
     z-index: 1;
   }
+
+  .shellPanelButtonOpen,
+  .shellPanelButtonClosed {
+    transition: all 150ms ease-in-out;
+  }
+
+  .shellPanelButtonClosed {
+    transform: scaleX(-1);
+  }
 }

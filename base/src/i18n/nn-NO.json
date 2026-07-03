@@ -58,6 +58,14 @@
   },
   "loading": "Lastar",
   "organisasjonsnummer": "Organisasjonsnummer",
+  "saksbehandlingShell": {
+    "hideComparison": "Skjul samanlikning",
+    "hideItemList": "Skjul elementlista",
+    "pinSidePanel": "Fest sidepanelet",
+    "showComparison": "Vis samanlikning",
+    "showItemList": "Vis elementlista",
+    "unpinSidePanel": "Løysne sidepanel"
+  },
   "sentralbord": "Sentralbord",
   "sideSheet": {
     "back": "Gå tilbake",
