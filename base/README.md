@@ -35,6 +35,23 @@ Importering av enkeltkomponenter.
 import { Heading, Ingress, Tabs } from '@kystverket/styrbord';
 ```
 
+### Språk og oversettelser
+
+Applikasjoner som bruker Styrbord må wrappe alt med både `<SprakProvider>` (for å velge språk) og `<StyrbordTranslations>` (for å hente oversettelsene til Styrbord). Uten dette vil komponenter som for eksempel Footer vise nøkkelstrenger i stedet for oversatt tekst.
+
+```tsx
+import { SprakProvider } from '@kystverket/sprak-react';
+import { STYRBORD_TRANSLATIONS_NAMESPACE, StyrbordTranslations } from '@kystverket/styrbord';
+
+function App() {
+  return (
+    <SprakProvider locale="nb-NO">
+      <StyrbordTranslations>{/* resten av applikasjonen */}</StyrbordTranslations>
+    </SprakProvider>
+  );
+}
+```
+
 ## Design Tokens
 
 Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.com/Kystverket/styrbord-tokens).
