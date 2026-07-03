@@ -8,12 +8,14 @@ export type HeaderLinkComponentProps = {
   onClick?: (e?: React.UIEvent | undefined) => void;
 };
 
+export type HeaderLinkComponent = (props: HeaderLinkComponentProps) => React.ReactElement;
+
 export interface HeaderContextProps {
-  LinkComponent: React.FC<HeaderLinkComponentProps>;
+  LinkComponent: HeaderLinkComponent;
 }
 
 export const HeaderContext = createContext<HeaderContextProps>({
-  LinkComponent: Link,
+  LinkComponent: Link as HeaderLinkComponent,
 });
 
 export interface ApplicationHeaderContextProps {
