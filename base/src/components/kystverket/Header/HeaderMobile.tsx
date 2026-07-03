@@ -116,33 +116,27 @@ export function HeaderMobile({ logoutHandler, loginHandler, profile, slots, link
                   <MainLinkItem key={index} {...link} onClick={closeMenu} />
                 ))}
                 {logoutHandler && profile && (
-                  <Button asChild>
-                    <a
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        logoutHandler?.();
-                        closeMenu();
-                      }}
-                    >
-                      <Icon material="logout" />
-                      {t('header.logout')}
-                    </a>
+                  <Button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      logoutHandler?.();
+                      closeMenu();
+                    }}
+                  >
+                    <Icon material="logout" />
+                    {t('header.logout')}
                   </Button>
                 )}
                 {loginHandler && !profile && (
-                  <Button asChild>
-                    <a
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        loginHandler?.();
-                        closeMenu();
-                      }}
-                    >
-                      <Icon material="login" />
-                      {t('header.login')}
-                    </a>
+                  <Button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      loginHandler?.();
+                      closeMenu();
+                    }}
+                  >
+                    <Icon material="login" />
+                    {t('header.login')}
                   </Button>
                 )}
               </Box>
