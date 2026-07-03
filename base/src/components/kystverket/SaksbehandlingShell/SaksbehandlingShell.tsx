@@ -1,0 +1,141 @@
+import { useState, type CSSProperties } from 'react';
+import { Box, Icon, IconButton, SideSheet } from '~/main';
+import { ItemList } from './ItemList/ItemList';
+import classes from './SaksbehandlingShell.module.css';
+import type { SaksbehandlingShellProps } from './SaksbehandlingShell.types';
+
+const ITEM_LIST_WIDTH_STYLE = {
+  '--side-sheet-width': '400px',
+  '--side-sheet-padding': 'var(--ds-size-3) 0px 30px 0px',
+} as CSSProperties;
+
+export function SaksbehandlingShell({
+  headerContent,
+  caseActions,
+  itemActions,
+  items,
+  selectedItemId,
+  onSelectItemId,
+  comparisonContent,
+  defaultItemListOpen = true,
+  defaultComparisonOpen = false,
+  children,
+  className = '',
+}: Readonly<SaksbehandlingShellProps>) {
+  const [isItemListOpen, setIsItemListOpen] = useState(defaultItemListOpen);
+  const [isComparisonOpen, setIsComparisonOpen] = useState(defaultComparisonOpen);
+  const [isItemListPinned, setIsItemListPinned] = useState(defaultItemListOpen);
+  const [isComparisonPinned, setIsComparisonPinned] = useState(defaultComparisonOpen);
+
+  const toggleItemList = () => {
+    setIsItemListOpen((open) => !open);
+    if (isItemListOpen) {
+      setIsItemListPinned(false);
+    }
+  };
+
+  const toggleComparison = () => {
+    setIsComparisonOpen((open) => !open);
+    if (isComparisonOpen) {
+      setIsComparisonPinned(false);
+    }
+  };
+
+  return (
+    <div className={`${classes.shell} ${className}`}>
+      <Box horizontal align="center" justify="between" gap={8} px={16} py={12} className={classes.heading}>
+        {headerContent}
+      </Box>
+
+      <Box horizontal align="center" justify="between" gap={8} px={16} py={8} className={classes.toolbar}>
+        <Box horizontal align="center" gap={8}>
+          <IconButton
+            variant="ghost"
+            color="neutral"
+            size="sm"
+            onClick={toggleItemList}
+            aria-label={isItemListOpen ? 'Skjul elementliste' : 'Vis elementliste'}
+          >
+            <Icon material={isItemListOpen ? 'left_panel_close' : 'view_list'} size="sm" />
+          </IconButton>
+          {!isItemListPinned && isItemListOpen && (
+            <IconButton
+              variant="ghost"
+              color="neutral"
+              size="sm"
+              onClick={() => setIsItemListPinned((pinned) => !pinned)}
+              aria-label={isItemListPinned ? 'Løsne sidepanel' : 'Fest sidepanel'}
+            >
+              <Icon material={isItemListPinned ? 'keep_off' : 'keep'} size="sm" />
+            </IconButton>
+          )}
+          {caseActions && <div className={classes.divider} aria-hidden />}
+          <Box horizontal align="center" gap={8}>
+            {caseActions}
+          </Box>
+        </Box>
+        <Box horizontal align="center" gap={8}>
+          {comparisonContent && (
+            <>
+              {!isComparisonPinned && isComparisonOpen && (
+                <IconButton
+                  variant="ghost"
+                  color="neutral"
+                  size="sm"
+                  onClick={() => setIsComparisonPinned((pinned) => !pinned)}
+                  aria-label={isComparisonPinned ? 'Løsne sidepanel' : 'Fest sidepanel'}
+                >
+                  <Icon material={isComparisonPinned ? 'keep_off' : 'keep'} size="sm" />
+                </IconButton>
+              )}
+              <IconButton
+                variant="ghost"
+                color="neutral"
+                size="sm"
+                onClick={toggleComparison}
+                aria-label={isComparisonOpen ? 'Skjul sammenligning' : 'Vis sammenligning'}
+              >
+                <Icon material={isComparisonOpen ? 'right_panel_close' : 'code_blocks'} size="sm" />
+              </IconButton>
+            </>
+          )}
+        </Box>
+      </Box>
+
+      <SideSheet.Layout>
+        <SideSheet
+          open={isItemListOpen}
+          onClose={() => setIsItemListOpen(false)}
+          pinned={isItemListPinned}
+          onPinnedChange={setIsItemListPinned}
+          placement="left"
+          showCloseButton={false}
+          style={ITEM_LIST_WIDTH_STYLE}
+        >
+          <ItemList items={items} selectedItemId={selectedItemId} onSelectItemId={onSelectItemId} />
+        </SideSheet>
+
+        <div className={classes.mainContainer}>
+          <Box horizontal align="center" gap={8} className={classes.itemActions}>
+            {itemActions}
+          </Box>
+          <div className={classes.main}>{children}</div>
+        </div>
+
+        {comparisonContent && (
+          <SideSheet
+            open={isComparisonOpen}
+            onClose={() => setIsComparisonOpen(false)}
+            pinned={isComparisonPinned}
+            onPinnedChange={setIsComparisonPinned}
+            placement="right"
+            size={isItemListPinned ? '40%' : '50%'}
+            showCloseButton={false}
+          >
+            {comparisonContent}
+          </SideSheet>
+        )}
+      </SideSheet.Layout>
+    </div>
+  );
+}

@@ -2,7 +2,9 @@ import type { Meta, StoryFn } from '@storybook/react-vite';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import Icon from '~/components/kystverket/Icon/icon';
 import { IconId, iconIdList } from './icon.types';
-import { Body } from '~/main';
+import { Body, Box } from '~/main';
+import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
+import { Fragment } from 'react';
 
 const meta = {
   title: 'Helpers/Icon',
@@ -20,20 +22,25 @@ const iconDescriptions: Partial<Record<IconId, string>> = {
   content_copy: 'Kopierer eller dupliserer',
 };
 
-const sizes = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const;
+const sizes = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl'] as const;
+const colors = [...styrbordSemanticColors, ...styrbordPaletteColors];
 
 export const IconShowcase: StoryFn = () => {
   return (
     <table>
-      {iconIdList.map((iconId) => (
+      {iconIdList.map((iconId, index) => (
         <tr key={iconId}>
-          <td style={{ padding: '0.5rem' }}>
+          <td style={{ padding: '1rem' }}>
             <Icon material={iconId} />
           </td>
           <td style={{ padding: '0.5rem' }}>
             <Body strong>{iconId}</Body>
             <Body size="sm">{iconDescriptions[iconId]}</Body>
           </td>
+          <td style={{ padding: '0rem' }}>
+            <Icon material={iconId} background={colors[index % colors.length]} title={colors[index % colors.length]} />
+          </td>
+          <td style={{ padding: '0.5rem' }}>{colors[index % colors.length]}</td>
         </tr>
       ))}
     </table>
@@ -48,11 +55,38 @@ export const IconSizing: StoryFn = () => {
           <td style={{ padding: '0.5rem', textAlign: 'center' }}>
             <Icon size={size} material="anchor" />
           </td>
+          <td style={{ padding: '0.5rem', textAlign: 'center' }}>
+            <Icon size={size} material="anchor" background="lyng" />
+          </td>
           <td style={{ padding: '0.5rem' }}>
             size="{size}" {size === 'md' ? '(default)' : ''}
           </td>
         </tr>
       ))}
     </table>
+  );
+};
+
+export const IconIndicator: StoryFn = () => {
+  return (
+    <Box gap={16}>
+      {sizes.map((size) => (
+        <Fragment key={size}>
+          {(['description', 'mail'] as IconId[]).map((iconId) => (
+            <Fragment key={size + iconId}>
+              <Box horizontal gap={16} align="center" p={8}>
+                <Icon size={size} material={iconId} background="hav" />
+                {(['arrow_back', 'arrow_forward', 'mail', 'person', 'add', 'delete'] as IconId[]).map((indicatorId) => (
+                  <Fragment key={size + iconId + indicatorId}>
+                    <Icon size={size} material={iconId} indicator={indicatorId} />
+                    <Icon size={size} material={iconId} indicator={indicatorId} background="lyng" />
+                  </Fragment>
+                ))}
+              </Box>
+            </Fragment>
+          ))}
+        </Fragment>
+      ))}
+    </Box>
   );
 };
