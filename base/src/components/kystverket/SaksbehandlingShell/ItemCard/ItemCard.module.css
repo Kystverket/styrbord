@@ -9,7 +9,7 @@
   }
   .selected {
     border: 1px solid var(--ds-color-neutral-border-default);
-    background: var(--ds-color-neutral-surface-tinted);
+    background: var(--ds-color-neutral-background-tinted);
   }
   .item:hover {
     border: 1px solid var(--ds-color-neutral-border-default);

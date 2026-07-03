@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react-vite';
 import { useState } from 'react';
-import { Body, Button, Heading, Paragraph, Tag } from '~/main';
+import { Body, Box, Button, Heading, Icon, Paragraph, Tag } from '~/main';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { SaksbehandlingShell } from './SaksbehandlingShell';
 import type { SaksbehandlingItem } from './SaksbehandlingShell.types';
@@ -119,12 +119,21 @@ export const Default: StoryFn<typeof SaksbehandlingShell> = () => {
   return (
     <div style={{ height: '100vh' }}>
       <SaksbehandlingShell
-        caseTitle="Sak 2026-0142 — Søknad om utslippstillatelse"
-        caseLocation="Sandnessjøen havn"
-        caseStatus={
-          <Tag data-color="success" data-size="sm">
-            Under behandling
-          </Tag>
+        headerContent={
+          <Box horizontal align="center" gap={8} justify="between" width="full">
+            <Heading level={1} data-size="sm" style={{ margin: 0 }}>
+              Sak 2026-0142 — Søknad om utslippstillatelse
+            </Heading>
+            <Box horizontal align="center" gap={4}>
+              <Icon material="pin_drop" size="sm" />
+              <Body size="sm" inline>
+                Sandnessjøen havn
+              </Body>
+            </Box>
+            <Tag data-color="success" data-size="sm">
+              Under behandling
+            </Tag>
+          </Box>
         }
         caseActions={<Button size="sm">Avslutt sak</Button>}
         itemActions={selectedItem && <Button size="sm">Svar</Button>}

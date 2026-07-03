@@ -14,12 +14,8 @@ export interface SaksbehandlingItem {
 }
 
 export interface SaksbehandlingShellProps {
-  /** Case title, shown in the heading row. */
-  caseTitle: string;
-  /** Case location, shown next to the title in the heading row. */
-  caseLocation?: string;
-  /** Case status, shown on the right of the heading row. Typically a `Tag`. */
-  caseStatus?: ReactNode;
+  /** Content for the header row. */
+  headerContent: ReactNode;
   /** Actions related to the case as a whole, shown on the left of the toolbar. */
   caseActions?: ReactNode;
   /** Actions related to the currently selected item, shown on the right of the toolbar. */

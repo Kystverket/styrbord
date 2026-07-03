@@ -1,18 +1,16 @@
 import { useState, type CSSProperties } from 'react';
-import { Box, Heading, Icon, IconButton, SideSheet, Body } from '~/main';
+import { Box, Icon, IconButton, SideSheet } from '~/main';
 import { ItemList } from './ItemList/ItemList';
 import classes from './SaksbehandlingShell.module.css';
 import type { SaksbehandlingShellProps } from './SaksbehandlingShell.types';
 
 const ITEM_LIST_WIDTH_STYLE = {
   '--side-sheet-width': '400px',
-  '--side-sheet-padding': '20px 0px 30px 00px',
+  '--side-sheet-padding': 'var(--ds-size-3) 0px 30px 0px',
 } as CSSProperties;
 
 export function SaksbehandlingShell({
-  caseTitle,
-  caseLocation,
-  caseStatus,
+  headerContent,
   caseActions,
   itemActions,
   items,
@@ -46,20 +44,7 @@ export function SaksbehandlingShell({
   return (
     <div className={`${classes.shell} ${className}`}>
       <Box horizontal align="center" justify="between" gap={8} px={16} py={12} className={classes.heading}>
-        <Box horizontal align="center" gap={8}>
-          <Heading level={1} data-size="sm" style={{ margin: 0 }}>
-            {caseTitle}
-          </Heading>
-          {caseLocation && (
-            <Box horizontal align="center" gap={4}>
-              <Icon material="pin_drop" size="sm" />
-              <Body size="sm" inline>
-                {caseLocation}
-              </Body>
-            </Box>
-          )}
-        </Box>
-        {caseStatus}
+        {headerContent}
       </Box>
 
       <Box horizontal align="center" justify="between" gap={8} px={16} py={8} className={classes.toolbar}>
@@ -84,13 +69,9 @@ export function SaksbehandlingShell({
               <Icon material={isItemListPinned ? 'keep_off' : 'keep'} size="sm" />
             </IconButton>
           )}
-          {itemActions && <div className={classes.divider} aria-hidden />}
+          {caseActions && <div className={classes.divider} aria-hidden />}
           <Box horizontal align="center" gap={8}>
             {caseActions}
-          </Box>
-          {itemActions && <div className={classes.divider} aria-hidden />}
-          <Box horizontal align="center" gap={8}>
-            {itemActions}
           </Box>
         </Box>
         <Box horizontal align="center" gap={8}>
@@ -134,7 +115,12 @@ export function SaksbehandlingShell({
           <ItemList items={items} selectedItemId={selectedItemId} onSelectItemId={onSelectItemId} />
         </SideSheet>
 
-        <div className={classes.main}>{children}</div>
+        <div className={classes.mainContainer}>
+          <Box horizontal align="center" gap={8} className={classes.itemActions}>
+            {itemActions}
+          </Box>
+          <div className={classes.main}>{children}</div>
+        </div>
 
         {comparisonContent && (
           <SideSheet
@@ -143,7 +129,7 @@ export function SaksbehandlingShell({
             pinned={isComparisonPinned}
             onPinnedChange={setIsComparisonPinned}
             placement="right"
-            size="50%"
+            size={isItemListPinned ? '40%' : '50%'}
             showCloseButton={false}
           >
             {comparisonContent}

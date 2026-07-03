@@ -15,6 +15,7 @@ const fixedSizeClass: Record<string, string> = {
   md: classes['size-md'],
   lg: classes['size-lg'],
   '33%': classes['size-33'],
+  '40%': classes['size-40'],
   '50%': classes['size-50'],
   '66%': classes['size-66'],
 };
