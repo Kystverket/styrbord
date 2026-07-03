@@ -1,4 +1,4 @@
-import { StyrbordPaletteColor, StyrbordSemanticColor } from '@kystverket/styrbord-tokens/colors';
+import type { StyrbordPaletteColor, StyrbordSemanticColor } from '@kystverket/styrbord-tokens/colors';
 import classes from './icon.module.css';
 import { IconId } from './icon.types';
 
@@ -16,7 +16,6 @@ export interface MaterialIconProps {
 const Icon = ({ material, indicator, className = '', size = 'md', title, background }: MaterialIconProps) => {
   const classNames = [
     classes.container,
-    indicator ? classes.hasIndicator : classes.noIndicator,
     background ? classes.hasBackground : classes.noBackground,
     classes[`size-${size}`],
     className,

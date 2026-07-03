@@ -12,7 +12,7 @@ export function ItemCard({ item, selected = false, onClick }: Readonly<ItemCardP
         <Icon material={item.icon} indicator={item.iconIndicator} background={item.iconColor ?? 'lyng'} />
         <Box align="start">
           <Heading data-size="xs">{item.title}</Heading>
-          <Body data-size="sm">{item.description}</Body>
+          <Body size="sm">{item.description}</Body>
           {item.children}
         </Box>
       </Box>
