@@ -133,7 +133,6 @@ export { SaksbehandlingShell } from './components/kystverket/SaksbehandlingShell
 export type {
   SaksbehandlingShellProps,
   SaksbehandlingItem,
-  SaksbehandlingItemType,
 } from './components/kystverket/SaksbehandlingShell/SaksbehandlingShell.types';
 
 //^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\

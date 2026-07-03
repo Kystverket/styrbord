@@ -1,7 +1,5 @@
 import type { ReactNode } from 'react';
-import { MaterialIconProps } from '../Icon/icon';
-
-export type SaksbehandlingItemType = 'IncomingLetter' | 'OutboundLetter' | 'Discussion' | 'Checklist' | 'Note';
+import type { MaterialIconProps } from '../Icon/icon';
 
 export interface SaksbehandlingItem {
   id: string;
