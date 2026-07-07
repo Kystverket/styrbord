@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.3](https://github.com/Kystverket/styrbord/compare/styrbord-v1.13.2...styrbord-v1.13.3) (2026-07-07)
+
+
+### Bug Fixes
+
+* **stepper:** remove unnecessary line-height and letter-spacing from icon styles ([#255](https://github.com/Kystverket/styrbord/issues/255)) ([70a924c](https://github.com/Kystverket/styrbord/commit/70a924cf1a4582cd145a406c9f28bf4526a8861b))
+
 ## [1.13.2](https://github.com/Kystverket/styrbord/compare/styrbord-v1.13.1...styrbord-v1.13.2) (2026-07-03)
 
 
