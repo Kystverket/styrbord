@@ -55,8 +55,6 @@
   .step .icon > * {
     font-weight: var(--ds-font-weight-medium);
     font-size: var(--ds-body-sm-font-size);
-    line-height: var(--ds-body-sm-line-height);
-    letter-spacing: var(--ds-body-sm-letter-spacing);
   }
   .step.has-style-subtle .icon {
     border: var(--ds-border-width-default) solid var(--ds-color-surface-tinted);
