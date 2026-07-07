@@ -1,3 +1,0 @@
-import{j as t}from"./iframe-CNsr8JSB.js";import{u as r,M as s,a}from"./blocks-CcFzafrJ.js";import{C as m}from"./CHANGELOG-CbkK9dvU.js";import"./preload-helper-Dp1pzeXC.js";import"./index-DnwcfGL1.js";import"./index-P-1q4Xwk.js";function o(n){const e={p:"p",...r(),...n.components};return t.jsxs(t.Fragment,{children:[t.jsx(s,{title:"Changelog"}),`
-`,t.jsxs(e.p,{children:["Følgende tekst hentes fra ",t.jsx("a",{href:"https://github.com/Kystverket/styrbord/blob/main/base/CHANGELOG.md",children:"CHANGELOG.md"}),"."]}),`
-`,t.jsx(a,{children:m})]})}function x(n={}){const{wrapper:e}={...r(),...n.components};return e?t.jsx(e,{...n,children:t.jsx(o,{...n})}):o(n)}export{x as default};
