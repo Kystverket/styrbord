@@ -11,6 +11,7 @@ export interface SlotDialogProps {
   open?: boolean;
   onClose?: () => void;
   ref?: React.Ref<HTMLDialogElement>;
+  className?: string;
 
   /**Should be enabled with long content */
   longContent?: boolean;
@@ -29,6 +30,7 @@ function SlotDialogRoot({
   children,
   longContent,
   size,
+  className = '',
 }: Readonly<SlotDialogProps>) {
   const DialogBlockClasses = `${classes.dialogBlockBase} ${longContent ? classes.longContent : ''}`;
 
@@ -39,7 +41,7 @@ function SlotDialogRoot({
         onClose={onClose}
         ref={ref}
         size={size}
-        className={classes.slotDialogOverrides}
+        className={`${classes.slotDialogOverrides} ${className}`}
         closedby="any"
       >
         <Box gap={4} className={`${classes.headerBlock} ${DialogBlockClasses}`}>
