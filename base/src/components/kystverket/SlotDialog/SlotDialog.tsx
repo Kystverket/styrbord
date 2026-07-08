@@ -1,4 +1,4 @@
-import { ReactNode, useContext } from 'react';
+import { CSSProperties, ReactNode, useContext } from 'react';
 import { Box, Dialog, Heading, Paragraph, type DialogSize } from '~/main';
 import classes from './SlotDialog.module.css';
 import { SlotDialogButtons } from '~/components/kystverket/SlotDialog/Buttons/SlotDialogButtons';
@@ -12,6 +12,7 @@ export interface SlotDialogProps {
   onClose?: () => void;
   ref?: React.Ref<HTMLDialogElement>;
   className?: string;
+  style?: CSSProperties;
 
   /**Should be enabled with long content */
   longContent?: boolean;
@@ -30,6 +31,7 @@ function SlotDialogRoot({
   children,
   longContent,
   size,
+  style,
   className = '',
 }: Readonly<SlotDialogProps>) {
   const DialogBlockClasses = `${classes.dialogBlockBase} ${longContent ? classes.longContent : ''}`;
@@ -41,6 +43,7 @@ function SlotDialogRoot({
         onClose={onClose}
         ref={ref}
         size={size}
+        style={style}
         className={`${classes.slotDialogOverrides} ${className}`}
         closedby="any"
       >
