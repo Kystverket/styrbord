@@ -70,7 +70,11 @@ jobs:
           name: dist-${{ inputs.workspace }}
           path: ${{ inputs.workspace }}/dist
       - run: rm -f .npmrc
-      - run: npm install -g npm@latest
+      # Pin npm: npm@12.0.0 (current `latest`) ships without its bundled
+      # `sigstore` module, breaking OIDC provenance publish. 11.18.0 is the
+      # latest 11.x, supports OIDC trusted publishing (>= 11.5.1), and predates
+      # the bug. See https://github.com/npm/cli/issues/9722
+      - run: npm install -g npm@11.18.0
       - name: Clear auth token for OIDC
         run: echo "NODE_AUTH_TOKEN=" >> $GITHUB_ENV
       - run: npm publish -w ${{ inputs.workspace }} --access public
