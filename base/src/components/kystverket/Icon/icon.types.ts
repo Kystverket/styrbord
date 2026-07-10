@@ -154,6 +154,7 @@ export const iconIdList = [
   'severe_cold',
   'sort',
   'source_environment',
+  'splitscreen_landscape',
   'stacked_email',
   'stylus',
   'sync',
