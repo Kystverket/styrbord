@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.14.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.13.3...styrbord-v1.14.0) (2026-07-10)
+
+
+### Features
+
+* add new icons to iconIdList for enhanced UI options ([#258](https://github.com/Kystverket/styrbord/issues/258)) ([0f07dac](https://github.com/Kystverket/styrbord/commit/0f07dac2e4b79b5cae967e5cd40eb72ed1305d44))
+
+
+### Bug Fixes
+
+* **base:** Add ClassName and Style prop to SlotDialog ([#257](https://github.com/Kystverket/styrbord/issues/257)) ([5baa1d1](https://github.com/Kystverket/styrbord/commit/5baa1d140e2059196511946f99d7f244c2aa6df4))
+
 ## [1.13.3](https://github.com/Kystverket/styrbord/compare/styrbord-v1.13.2...styrbord-v1.13.3) (2026-07-07)
 
 
