@@ -1,9 +1,4 @@
 @layer styrbord-modules {
-  .container {
-    user-select: none;
-    font-weight: var(--ds-font-weight-regular);
-    position: relative;
-  }
   .size-2xs {
     --icon-size: 0.875rem;
     --icon-font-size: 0.875rem;
@@ -37,10 +32,23 @@
     --icon-font-size: 4rem;
     --indicator-font-size: 2.2rem;
   }
+  .container.noBackground {
+    --icon-container-size: var(--icon-size);
+  }
+  .container.hasBackground {
+    --icon-container-size: calc(var(--icon-size) * 1.5);
+  }
   .hasBackground .icon {
     --icon-size: calc(var(--icon-font-size) * 1.5);
     padding: calc(var(--icon-font-size) * 0.25);
     border-radius: var(--ds-border-radius-lg);
+  }
+  .container {
+    user-select: none;
+    font-weight: var(--ds-font-weight-regular);
+    position: relative;
+    height: var(--icon-container-size) !important;
+    width: var(--icon-container-size) !important;
   }
   .icon {
     font-size: var(--icon-font-size) !important;
