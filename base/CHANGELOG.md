@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.2](https://github.com/Kystverket/styrbord/compare/styrbord-v1.14.1...styrbord-v1.14.2) (2026-07-10)
+
+
+### Bug Fixes
+
+* pin npm version to 11.18.0 for OIDC provenance support and update iconIdList with new icons ([fc23c1f](https://github.com/Kystverket/styrbord/commit/fc23c1f6fb00bb82dd74e79eed7ac5bb593cd196))
+
 ## [1.14.1](https://github.com/Kystverket/styrbord/compare/styrbord-v1.14.0...styrbord-v1.14.1) (2026-07-10)
 
 
