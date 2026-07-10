@@ -1,0 +1,76 @@
+name: Publish package
+
+on:
+  workflow_call:
+    inputs:
+      workspace:
+        description: Workspace to build and publish (base or kart)
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+      - run: npm ci
+      - run: npm run build
+      - name: Upload built package
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ inputs.workspace }}
+          path: ${{ inputs.workspace }}/dist
+          retention-days: 1
+
+  publish-github-packages:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@kystverket'
+      - run: npm ci --ignore-scripts
+      - name: Download built package
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-${{ inputs.workspace }}
+          path: ${{ inputs.workspace }}/dist
+      - run: npm publish -w ${{ inputs.workspace }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-npmjs:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@kystverket'
+      - run: npm ci --ignore-scripts
+      - name: Download built package
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-${{ inputs.workspace }}
+          path: ${{ inputs.workspace }}/dist
+      - run: rm -f .npmrc
+      - run: npm install -g npm@latest
+      - name: Clear auth token for OIDC
+        run: echo "NODE_AUTH_TOKEN=" >> $GITHUB_ENV
+      - run: npm publish -w ${{ inputs.workspace }} --access public
