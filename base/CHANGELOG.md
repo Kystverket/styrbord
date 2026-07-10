@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.1](https://github.com/Kystverket/styrbord/compare/styrbord-v1.14.0...styrbord-v1.14.1) (2026-07-10)
+
+
+### Bug Fixes
+
+* add icon to force new release ([5d70d6c](https://github.com/Kystverket/styrbord/commit/5d70d6c2b25c84ce97b3d369b3bf4fb91ae842be))
+
 ## [1.14.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.13.3...styrbord-v1.14.0) (2026-07-10)
 
 
