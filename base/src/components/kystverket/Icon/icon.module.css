@@ -44,24 +44,25 @@
     border-radius: var(--ds-border-radius-lg);
   }
   .container {
-    user-select: none;
-    font-weight: var(--ds-font-weight-regular);
+    display: flex; /* To avoid "descender space" below icon */
     position: relative;
-    height: var(--icon-container-size) !important;
     width: var(--icon-container-size) !important;
+    height: var(--icon-container-size) !important;
+    font-weight: var(--ds-font-weight-regular);
+    user-select: none;
   }
   .icon {
-    font-size: var(--icon-font-size) !important;
-    height: var(--icon-size) !important;
     width: var(--icon-size) !important;
+    height: var(--icon-size) !important;
+    font-size: var(--icon-font-size) !important;
   }
   .indicator {
     position: absolute;
     top: 50%;
     left: 50%;
+    padding: calc(var(--icon-font-size) * 0.05) !important;
     border-radius: 999px;
     font-size: calc(var(--icon-font-size) * 0.5) !important;
-    padding: calc(var(--icon-font-size) * 0.05) !important;
   }
   .noBackground .indicator {
     background: var(--ds-color-primary-surface-default);
