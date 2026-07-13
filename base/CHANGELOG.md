@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.3](https://github.com/Kystverket/styrbord/compare/styrbord-v1.14.2...styrbord-v1.14.3) (2026-07-13)
+
+
+### Bug Fixes
+
+* update badge background color to use new color variable ([64a8667](https://github.com/Kystverket/styrbord/commit/64a8667cd932e5364d7f8bbb88528d6086ddf8a0))
+
 ## [1.14.2](https://github.com/Kystverket/styrbord/compare/styrbord-v1.14.1...styrbord-v1.14.2) (2026-07-10)
 
 
