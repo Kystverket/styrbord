@@ -1,0 +1,4 @@
+.ds-field[data-variant='outline']:has(input[type='radio']) {
+  --dsc-field-border-color: var(--ds-color-neutral-border-subtle);
+  --dsc-field-border-color--checked: var(--ds-color-border-default);
+}
