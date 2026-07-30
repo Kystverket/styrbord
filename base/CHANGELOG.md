@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.4](https://github.com/Kystverket/styrbord/compare/styrbord-v1.14.3...styrbord-v1.14.4) (2026-07-30)
+
+
+### Bug Fixes
+
+* **base:** Override border-color for radio and checkbox outline ([#264](https://github.com/Kystverket/styrbord/issues/264)) ([e7981f7](https://github.com/Kystverket/styrbord/commit/e7981f72a8a2211a1c8ccfc67ec775096a661913))
+
 ## [1.14.3](https://github.com/Kystverket/styrbord/compare/styrbord-v1.14.2...styrbord-v1.14.3) (2026-07-13)
 
 
