@@ -23,8 +23,12 @@ jobs:
     outputs:
       base_release_created: ${{ steps.release.outputs.base--release_created }}
       base_version: ${{ steps.release.outputs.base--version }}
+      base_body: ${{ steps.release.outputs.base--body }}
+      base_html_url: ${{ steps.release.outputs.base--html_url }}
       kart_release_created: ${{ steps.release.outputs.kart--release_created }}
       kart_version: ${{ steps.release.outputs.kart--version }}
+      kart_body: ${{ steps.release.outputs.kart--body }}
+      kart_html_url: ${{ steps.release.outputs.kart--html_url }}
     steps:
       - uses: googleapis/release-please-action@v4
         id: release
@@ -100,19 +104,35 @@ jobs:
         env:
           BASE_RELEASED: ${{ needs.release-please.outputs.base_release_created }}
           BASE_VERSION: ${{ needs.release-please.outputs.base_version }}
+          BASE_BODY: ${{ needs.release-please.outputs.base_body }}
+          BASE_URL: ${{ needs.release-please.outputs.base_html_url }}
           KART_RELEASED: ${{ needs.release-please.outputs.kart_release_created }}
           KART_VERSION: ${{ needs.release-please.outputs.kart_version }}
+          KART_BODY: ${{ needs.release-please.outputs.kart_body }}
+          KART_URL: ${{ needs.release-please.outputs.kart_html_url }}
         run: |
-          TEXT="🚢 New Styrbord release published to npm:"
+          BLOCKS='[{"type":"section","text":{"type":"mrkdwn","text":"🚢 *New Styrbord release published to npm*"}}]'
           if [ "$BASE_RELEASED" = "true" ]; then
-            TEXT="${TEXT}
-          • \`@kystverket/styrbord\` v${BASE_VERSION}"
+            BLOCKS=$(echo "$BLOCKS" | jq \
+              --arg pkg "@kystverket/styrbord v${BASE_VERSION}" \
+              --arg body "$BASE_BODY" \
+              --arg url "$BASE_URL" \
+              '. + [
+                {"type":"divider"},
+                {"type":"section","text":{"type":"mrkdwn","text":"*<\($url)|\($pkg)>*\n\($body)"},"accessory":{"type":"button","text":{"type":"plain_text","text":"View release"},"url":"\($url)"}}
+              ]')
           fi
           if [ "$KART_RELEASED" = "true" ]; then
-            TEXT="${TEXT}
-          • \`@kystverket/styrbord-kart\` v${KART_VERSION}"
+            BLOCKS=$(echo "$BLOCKS" | jq \
+              --arg pkg "@kystverket/styrbord-kart v${KART_VERSION}" \
+              --arg body "$KART_BODY" \
+              --arg url "$KART_URL" \
+              '. + [
+                {"type":"divider"},
+                {"type":"section","text":{"type":"mrkdwn","text":"*<\($url)|\($pkg)>*\n\($body)"},"accessory":{"type":"button","text":{"type":"plain_text","text":"View release"},"url":"\($url)"}}
+              ]')
           fi
-          jq -n --arg text "$TEXT" '{"text": $text}' > /tmp/slack-payload.json
+          jq -n --argjson blocks "$BLOCKS" '{"blocks": $blocks}' > /tmp/slack-payload.json
       - name: Send Slack notification
         uses: slackapi/slack-github-action@v2
         with:
