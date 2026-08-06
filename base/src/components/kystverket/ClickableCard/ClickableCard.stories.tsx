@@ -9,7 +9,7 @@ const meta = {
   title: 'Components/ClickableCard',
   component: ClickableCard,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs'],
+  tags: ['autodocs', 'kyv'],
   argTypes: {
     variant: {
       options: ['default', 'tinted'] satisfies ClickableCardVariant[],
