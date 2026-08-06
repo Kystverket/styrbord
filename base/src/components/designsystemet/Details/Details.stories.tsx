@@ -12,8 +12,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
-          '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/accordion/overview)',
+        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/details/overview)',
       },
     },
   },
