@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.14.5](https://github.com/Kystverket/styrbord/compare/styrbord-v1.14.4...styrbord-v1.14.5) (2026-08-06)
+
+
+### Bug Fixes
+
+* **base:** add 'kyv' tag to ClickableCard stories ([#272](https://github.com/Kystverket/styrbord/issues/272)) ([321ad06](https://github.com/Kystverket/styrbord/commit/321ad066ea5d30c6c800ab7654430e52529aa10a))
+* **base:** correct Details documentation link (accordion → details) ([#271](https://github.com/Kystverket/styrbord/issues/271)) ([3f7fcd7](https://github.com/Kystverket/styrbord/commit/3f7fcd7f8858d5a4f4402b725d7df513c0a08fd9))
+* update deps ([#274](https://github.com/Kystverket/styrbord/issues/274)) ([01e3546](https://github.com/Kystverket/styrbord/commit/01e35463c5c31efd4ad9a7ba80f16394c8bb8efa))
+
 ## [1.14.4](https://github.com/Kystverket/styrbord/compare/styrbord-v1.14.3...styrbord-v1.14.4) (2026-07-30)
 
 
