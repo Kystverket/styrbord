@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.14.5...styrbord-v1.15.0) (2026-08-10)
+
+
+### Features
+
+* **base:** mulighet til å velge posisjon på ikonindikatorer ([#275](https://github.com/Kystverket/styrbord/issues/275)) ([002a054](https://github.com/Kystverket/styrbord/commit/002a054dc18f968584d8a8e9069c53f80de3d064))
+
 ## [1.14.5](https://github.com/Kystverket/styrbord/compare/styrbord-v1.14.4...styrbord-v1.14.5) (2026-08-06)
 
 
