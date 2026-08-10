@@ -72,18 +72,29 @@ export const IconIndicator: StoryFn = () => {
     <Box gap={16}>
       {sizes.map((size) => (
         <Fragment key={size}>
-          {(['description', 'mail'] as IconId[]).map((iconId) => (
-            <Fragment key={size + iconId}>
-              <Box horizontal gap={16} align="center" p={8}>
-                <Icon size={size} material={iconId} background="hav" />
-                {(['arrow_back', 'arrow_forward', 'mail', 'person', 'add', 'delete'] as IconId[]).map((indicatorId) => (
-                  <Fragment key={size + iconId + indicatorId}>
-                    <Icon size={size} material={iconId} indicator={indicatorId} />
-                    <Icon size={size} material={iconId} indicator={indicatorId} background="lyng" />
-                  </Fragment>
-                ))}
-              </Box>
-            </Fragment>
+          {(['description', 'mail', 'water'] as IconId[]).map((iconId) => (
+            <Box gap={4} p={4} key={size + iconId}>
+              {(['bottom-right', 'bottom-left', 'top-right', 'top-left'] as const).map((indicatorPosition) => (
+                <Fragment key={size + iconId + indicatorPosition}>
+                  <Box horizontal gap={16} align="center" p={8}>
+                    <Icon size={size} material={iconId} background="hav" />
+                    {(['arrow_back', 'arrow_forward', 'mail', 'person', 'add', 'delete'] as IconId[]).map(
+                      (indicatorId) => (
+                        <Fragment key={size + iconId + indicatorId}>
+                          <Icon
+                            size={size}
+                            material={iconId}
+                            indicator={indicatorId}
+                            indicatorPosition={indicatorPosition}
+                            background="lyng"
+                          />
+                        </Fragment>
+                      ),
+                    )}
+                  </Box>
+                </Fragment>
+              ))}
+            </Box>
           ))}
         </Fragment>
       ))}

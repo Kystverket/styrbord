@@ -7,13 +7,22 @@ type IconSize = '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
 export interface MaterialIconProps {
   material: IconId;
   indicator?: IconId;
+  indicatorPosition?: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left';
   className?: string;
   size?: IconSize;
   title?: string;
   background?: StyrbordPaletteColor | StyrbordSemanticColor;
 }
 
-const Icon = ({ material, indicator, className = '', size = 'md', title, background }: MaterialIconProps) => {
+const Icon = ({
+  material,
+  indicator,
+  indicatorPosition = 'bottom-right',
+  className = '',
+  size = 'md',
+  title,
+  background,
+}: MaterialIconProps) => {
   const classNames = [
     classes.container,
     background ? classes.hasBackground : classes.noBackground,
@@ -35,7 +44,12 @@ const Icon = ({ material, indicator, className = '', size = 'md', title, backgro
         {material}
       </span>
       {indicator && (
-        <span title={title} aria-hidden style={style} className={indicatorClassNames.join(' ')}>
+        <span
+          title={title}
+          aria-hidden
+          style={style}
+          className={[...indicatorClassNames, classes[`indicator-${indicatorPosition ?? 'bottom-right'}`]].join(' ')}
+        >
           {indicator}
         </span>
       )}
