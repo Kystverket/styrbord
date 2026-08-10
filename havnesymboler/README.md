@@ -14,11 +14,11 @@ npm install @kystverket/styrbord-havnesymboler
 
 ### Importer en konkret fil
 
-Bruk direkte filimport når du kjenner filnavnet og vil la bundleren håndtere asset-urlen:
+Bruk direkte filimport når du kjenner filnavnet og vil la bundleren håndtere asset-urlen. Filene ligger gruppert per symboltype, og hver mappe inneholder både `.svg`- og `.png`-varianter:
 
 ```ts
-import symbolSvg from '@kystverket/styrbord-havnesymboler/svg/<symbolnavn>.svg';
-import symbolPng from '@kystverket/styrbord-havnesymboler/png/<symbolnavn>.png';
+import fenderSvg from '@kystverket/styrbord-havnesymboler/assets/fender/blaa---punkt.svg';
+import fenderPng from '@kystverket/styrbord-havnesymboler/assets/fender/blaa---punkt.png';
 ```
 
 Dette fungerer godt i for eksempel Vite, webpack og Next.js:
@@ -27,8 +27,8 @@ Dette fungerer godt i for eksempel Vite, webpack og Next.js:
 export function Example() {
   return (
     <>
-      <img src={symbolSvg} alt="Havnesymbol" />
-      <img src={symbolPng} alt="Havnesymbol" />
+      <img src={fenderSvg} alt="Fender, blå, punktfeste" />
+      <img src={fenderPng} alt="Fender, blå, punktfeste" />
     </>
   );
 }
@@ -45,13 +45,18 @@ import {
   pngIllustrations,
   svgIllustrations,
 } from '@kystverket/styrbord-havnesymboler';
+
+const fenderSvgUrl = svgIllustrations['fender/blaa---punkt'];
+const fenderPng150Url = pngIllustrations['fender/blaa---punkt_150'];
+
+const avfallspunktSvgUrl = getIllustrationAssetPath('svg', 'avfallspunkt/blaa');
 ```
 
 - `svgIllustrations` og `pngIllustrations` er oppslagstabeller fra symbolnavn til asset-url
-- `assetManifest` inneholder alle symboler gruppert per format
+- `assetManifest` inneholder alle symboler gruppert per format, f.eks. `assetManifest.svg` og `assetManifest.png`
 - `getIllustrationAssetPath(format, navn)` returnerer asset-url eller `null`
 
-Navnene i manifestet er relative filbaner uten endelse. Hvis pakken senere får undermapper, vil nøklene bruke `/` som skilletegn.
+Navnene i manifestet er relative filbaner uten filendelse, gruppert per symboltype med `/` som skilletegn, for eksempel `fender/blaa---punkt` og `avfallspunkt/blaa`. PNG-varianter i redusert størrelse har suffikset `_150`, f.eks. `fender/blaa---punkt_150`.
 
 ### Importer råmanifest som JSON
 
@@ -63,14 +68,30 @@ import svgManifest from '@kystverket/styrbord-havnesymboler/svg-manifest.json';
 import pngManifest from '@kystverket/styrbord-havnesymboler/png-manifest.json';
 ```
 
+Et enkelt element i `svgManifest` ser slik ut:
+
+```json
+{
+  "name": "fender/blaa---punkt",
+  "format": "svg",
+  "path": "./assets/fender/blaa---punkt.svg"
+}
+```
+
 ## Innhold og struktur
 
-Under bygg kopieres filer fra:
+Kildefilene ligger under `src/`, gruppert i én mappe per symboltype (`avfallspunkt`, `beredskapspunkt`, `drivstofftilkobling`, `fender`, `fortoeyningsinnretning`, `havnesensor`, `ikke-i-bruk`, `kran`, `stroemtilkobling`, `toalett`, `vanntilkobling`). Hver mappe inneholder både `.svg`- og `.png`-filer for symbolene i den kategorien, for eksempel:
 
-- `src/svg/**/*`
-- `src/png/**/*`
+```text
+src/
+  fender/
+    blaa---punkt.svg
+    blaa---punkt.png
+    blaa---punkt_150.png
+    ...
+```
 
-til tilsvarende struktur under `dist/`.
+Under bygg kopieres hele `src/**/*` uendret til `dist/assets/**/*`.
 
 I tillegg genereres:
 
@@ -82,10 +103,10 @@ I tillegg genereres:
 
 ## Vedlikehold
 
-Legg kildefilene i `src/svg` og `src/png`, og kjør deretter:
+Legg kildefiler i riktig kategorimappe under `src/` (opprett en ny mappe for en ny symboltype ved behov), og kjør deretter:
 
 ```bash
 npm run build --workspace havnesymboler
 ```
 
-Bygget kopierer filene til `dist/` og oppdaterer manifestene automatisk.
+Bygget kopierer filene til `dist/assets/` og oppdaterer manifestene automatisk.

@@ -5,13 +5,12 @@ import { fileURLToPath } from 'node:url';
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const srcDir = path.join(rootDir, 'src');
 const distDir = path.join(rootDir, 'dist');
-const formats = ['svg', 'png'];
 
 const toPosix = (value) => value.split(path.sep).join('/');
 
-async function listAssetFiles(directory, extension, prefix = '') {
+async function listAssetFilesByFormat(directory, prefix = '') {
   const entries = await readdir(directory, { withFileTypes: true });
-  const files = [];
+  const filesByFormat = { svg: [], png: [] };
 
   for (const entry of entries.sort((left, right) => left.name.localeCompare(right.name, 'nb'))) {
     if (entry.name.startsWith('.')) {
@@ -22,31 +21,35 @@ async function listAssetFiles(directory, extension, prefix = '') {
     const absolutePath = path.join(directory, entry.name);
 
     if (entry.isDirectory()) {
-      files.push(...(await listAssetFiles(absolutePath, extension, relativePath)));
+      const nested = await listAssetFilesByFormat(absolutePath, relativePath);
+      filesByFormat.svg.push(...nested.svg);
+      filesByFormat.png.push(...nested.png);
       continue;
     }
 
-    if (path.extname(entry.name).toLowerCase() === `.${extension}`) {
-      files.push(relativePath);
+    const extension = path.extname(entry.name).toLowerCase();
+
+    if (extension === '.svg' || extension === '.png') {
+      filesByFormat[extension.slice(1)].push(relativePath);
     }
   }
 
-  return files;
+  return filesByFormat;
 }
 
 function createIllustrationName(relativePath) {
   return toPosix(relativePath).replace(/\.[^.]+$/u, '');
 }
 
-function createAssetPath(format, relativePath) {
-  return `./${format}/${toPosix(relativePath)}`;
+function createAssetPath(relativePath) {
+  return `./assets/${toPosix(relativePath)}`;
 }
 
 function createAssetEntries(format, files) {
   return files.map((relativePath) => ({
     name: createIllustrationName(relativePath),
     format,
-    path: createAssetPath(format, relativePath),
+    path: createAssetPath(relativePath),
   }));
 }
 
@@ -63,31 +66,16 @@ function createReadonlyArraySource(variableName, values) {
   return `const ${variableName} = Object.freeze(${JSON.stringify(values, null, 2)});`;
 }
 
-async function copyAssets(format, files) {
-  for (const relativePath of files) {
-    const sourcePath = path.join(srcDir, format, relativePath);
-    const targetPath = path.join(distDir, format, relativePath);
-
-    await mkdir(path.dirname(targetPath), { recursive: true });
-    await cp(sourcePath, targetPath);
-  }
-}
-
 await rm(distDir, { recursive: true, force: true });
 await mkdir(distDir, { recursive: true });
 
-const assetFilesByFormat = Object.fromEntries(
-  await Promise.all(
-    formats.map(async (format) => {
-      const formatSourceDir = path.join(srcDir, format);
-      const files = await listAssetFiles(formatSourceDir, format);
+const assetFilesByFormat = await listAssetFilesByFormat(srcDir);
+const assetsDistDir = path.join(distDir, 'assets');
 
-      await copyAssets(format, files);
-
-      return [format, files];
-    }),
-  ),
-);
+await cp(srcDir, assetsDistDir, {
+  recursive: true,
+  filter: (source) => !path.basename(source).startsWith('.'),
+});
 
 const svgEntries = createAssetEntries('svg', assetFilesByFormat.svg);
 const pngEntries = createAssetEntries('png', assetFilesByFormat.png);
