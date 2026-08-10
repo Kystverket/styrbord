@@ -29,6 +29,10 @@ jobs:
       kart_version: ${{ steps.release.outputs.kart--version }}
       kart_body: ${{ steps.release.outputs.kart--body }}
       kart_html_url: ${{ steps.release.outputs.kart--html_url }}
+      havnesymboler_release_created: ${{ steps.release.outputs.havnesymboler--release_created }}
+      havnesymboler_version: ${{ steps.release.outputs.havnesymboler--version }}
+      havnesymboler_body: ${{ steps.release.outputs.havnesymboler--body }}
+      havnesymboler_html_url: ${{ steps.release.outputs.havnesymboler--html_url }}
     steps:
       - uses: googleapis/release-please-action@v4
         id: release
@@ -59,6 +63,17 @@ jobs:
       packages: write
       id-token: write
 
+  publish-havnesymboler:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.havnesymboler_release_created == 'true' }}
+    uses: ./.github/workflows/publish-package.yml
+    with:
+      workspace: havnesymboler
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
   deploy-storybook:
     needs: release-please
     if: ${{ needs.release-please.outputs.base_release_created == 'true' || needs.release-please.outputs.kart_release_created == 'true' }}
@@ -72,7 +87,7 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
-          node-version: '24.x'
+          node-version: "24.x"
       - name: Installere dependencies
         run: |
           npm ci --ignore-scripts
@@ -92,12 +107,17 @@ jobs:
           folder: ./github-pages-root
 
   notify-slack:
-    needs: [release-please, publish-base, publish-kart]
+    needs: [release-please, publish-base, publish-kart, publish-havnesymboler]
     if: |
       always() &&
-      (needs.release-please.outputs.base_release_created == 'true' || needs.release-please.outputs.kart_release_created == 'true') &&
+      (
+        needs.release-please.outputs.base_release_created == 'true' ||
+        needs.release-please.outputs.kart_release_created == 'true' ||
+        needs.release-please.outputs.havnesymboler_release_created == 'true'
+      ) &&
       (needs.publish-base.result == 'success' || needs.publish-base.result == 'skipped') &&
-      (needs.publish-kart.result == 'success' || needs.publish-kart.result == 'skipped')
+      (needs.publish-kart.result == 'success' || needs.publish-kart.result == 'skipped') &&
+      (needs.publish-havnesymboler.result == 'success' || needs.publish-havnesymboler.result == 'skipped')
     runs-on: ubuntu-latest
     steps:
       - name: Build Slack payload
@@ -110,6 +130,10 @@ jobs:
           KART_VERSION: ${{ needs.release-please.outputs.kart_version }}
           KART_BODY: ${{ needs.release-please.outputs.kart_body }}
           KART_URL: ${{ needs.release-please.outputs.kart_html_url }}
+          HAVNESYMBOLER_RELEASED: ${{ needs.release-please.outputs.havnesymboler_release_created }}
+          HAVNESYMBOLER_VERSION: ${{ needs.release-please.outputs.havnesymboler_version }}
+          HAVNESYMBOLER_BODY: ${{ needs.release-please.outputs.havnesymboler_body }}
+          HAVNESYMBOLER_URL: ${{ needs.release-please.outputs.havnesymboler_html_url }}
         run: |
           BLOCKS='[{"type":"section","text":{"type":"mrkdwn","text":"🚢 *New Styrbord release published to npm*"}}]'
           if [ "$BASE_RELEASED" = "true" ]; then
@@ -127,6 +151,16 @@ jobs:
               --arg pkg "@kystverket/styrbord-kart v${KART_VERSION}" \
               --arg body "$KART_BODY" \
               --arg url "$KART_URL" \
+              '. + [
+                {"type":"divider"},
+                {"type":"section","text":{"type":"mrkdwn","text":"*<\($url)|\($pkg)>*\n\($body)"},"accessory":{"type":"button","text":{"type":"plain_text","text":"View release"},"url":"\($url)"}}
+              ]')
+          fi
+          if [ "$HAVNESYMBOLER_RELEASED" = "true" ]; then
+            BLOCKS=$(echo "$BLOCKS" | jq \
+              --arg pkg "@kystverket/styrbord-havnesymboler v${HAVNESYMBOLER_VERSION}" \
+              --arg body "$HAVNESYMBOLER_BODY" \
+              --arg url "$HAVNESYMBOLER_URL" \
               '. + [
                 {"type":"divider"},
                 {"type":"section","text":{"type":"mrkdwn","text":"*<\($url)|\($pkg)>*\n\($body)"},"accessory":{"type":"button","text":{"type":"plain_text","text":"View release"},"url":"\($url)"}}

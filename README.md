@@ -3,10 +3,11 @@
 Styrbord er et monorepository med komponentbiblioteker for Kystverkets interne og eksterne applikasjoner.
 Det inneholder to npm-pakker:
 
-| Pakke | Versjon | Beskrivelse |
-|---|---|---|
-| [`@kystverket/styrbord`](./base) | [![npm](https://img.shields.io/npm/v/@kystverket/styrbord)](https://www.npmjs.com/package/@kystverket/styrbord) | React-komponentbibliotek med Kystverkets profil |
-| [`@kystverket/styrbord-kart`](./kart) | [![npm](https://img.shields.io/npm/v/@kystverket/styrbord-kart)](https://www.npmjs.com/package/@kystverket/styrbord-kart) | Kart- og GeoJSON-komponenter bygget på MapLibre GL |
+| Pakke                                                   | Versjon                                                                                                                                     | Beskrivelse                                        |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| [`@kystverket/styrbord`](./base)                        | [![npm](https://img.shields.io/npm/v/@kystverket/styrbord)](https://www.npmjs.com/package/@kystverket/styrbord)                             | React-komponentbibliotek med Kystverkets profil    |
+| [`@kystverket/styrbord-kart`](./kart)                   | [![npm](https://img.shields.io/npm/v/@kystverket/styrbord-kart)](https://www.npmjs.com/package/@kystverket/styrbord-kart)                   | Kart- og GeoJSON-komponenter bygget på MapLibre GL |
+| [`@kystverket/styrbord-havnesymboler`](./havnesymboler) | [![npm](https://img.shields.io/npm/v/@kystverket/styrbord-havnesymboler)](https://www.npmjs.com/package/@kystverket/styrbord-havnesymboler) | SVG- og PNG-illustrasjoner for havnesymboler       |
 
 ## Dokumentasjon
 
@@ -29,6 +30,12 @@ Biblioteket er et tillegg til `@kystverket/styrbord` og bygger på [MapLibre GL]
 
 Se [kart/README.md](./kart/README.md) for installasjonsveiledning og brukseksempler.
 
+### `@kystverket/styrbord-havnesymboler`
+
+Inneholder SVG- og PNG-illustrasjoner som kan importeres direkte i applikasjoner, eller slås opp via et manifest eksportert fra pakken.
+
+Se [havnesymboler/README.md](./havnesymboler/README.md) for installasjonsveiledning og brukseksempler.
+
 ## Kom i gang
 
 ### Installasjon
@@ -39,6 +46,9 @@ npm install @kystverket/styrbord
 
 # Komponentbiblioteket med kart
 npm install @kystverket/styrbord @kystverket/styrbord-kart
+
+# Illustrasjonspakken for havnesymboler
+npm install @kystverket/styrbord-havnesymboler
 ```
 
 ### Grunnleggende oppsett
@@ -46,16 +56,16 @@ npm install @kystverket/styrbord @kystverket/styrbord-kart
 Importer CSS globalt én gang:
 
 ```js
-import '@kystverket/styrbord/style.css';
+import "@kystverket/styrbord/style.css";
 // For kart:
-import '@kystverket/styrbord-kart/style.css';
+import "@kystverket/styrbord-kart/style.css";
 ```
 
 Wrap applikasjonen med `SprakProvider` og `StyrbordTranslations` for korrekt språkstøtte:
 
 ```tsx
-import { SprakProvider } from '@kystverket/sprak-react';
-import { StyrbordTranslations } from '@kystverket/styrbord';
+import { SprakProvider } from "@kystverket/sprak-react";
+import { StyrbordTranslations } from "@kystverket/styrbord";
 
 function App() {
   return (
@@ -71,8 +81,8 @@ function App() {
 Importer komponenter etter behov:
 
 ```tsx
-import { Button, Heading, Tabs } from '@kystverket/styrbord';
-import { GeoJsonViewer, CoordinateField } from '@kystverket/styrbord-kart';
+import { Button, Heading, Tabs } from "@kystverket/styrbord";
+import { GeoJsonViewer, CoordinateField } from "@kystverket/styrbord-kart";
 ```
 
 ## Utvikling
@@ -101,7 +111,7 @@ npm run pretty:fix
 
 ## Commit-konvensjoner
 
-Prosjektet bruker [conventional commits](https://www.conventionalcommits.org/). Scope er påkrevd og må være `base` eller `kart`.
+Prosjektet bruker [conventional commits](https://www.conventionalcommits.org/). Scope er påkrevd og må være `base`, `kart` eller `havnesymboler`.
 
 ```text
 feat(base): legg til ny komponent
