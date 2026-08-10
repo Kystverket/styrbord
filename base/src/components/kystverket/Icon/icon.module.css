@@ -63,6 +63,7 @@
     padding: calc(var(--icon-font-size) * 0.05) !important;
     border-radius: 999px;
     font-size: calc(var(--icon-font-size) * 0.5) !important;
+    /* Gjøre indikatorer omtrentlig like fete som ikonet */
     font-weight: 700 !important;
   }
   .noBackground .indicator {
@@ -71,19 +72,13 @@
   .indicator-bottom-left {
     top: 50%;
     left: 10%;
-    bottom: auto;
-    right: auto;
   }
   .indicator-top-left {
     top: 10%;
     left: 5%;
-    bottom: auto;
-    right: auto;
   }
   .indicator-top-right {
     top: 10%;
     left: 50%;
-    bottom: auto;
-    right: auto;
   }
 }
