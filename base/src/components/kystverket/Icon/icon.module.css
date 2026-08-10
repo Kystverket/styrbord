@@ -63,8 +63,22 @@
     padding: calc(var(--icon-font-size) * 0.05) !important;
     border-radius: 999px;
     font-size: calc(var(--icon-font-size) * 0.5) !important;
+    /* Gjøre indikatorer omtrentlig like fete som ikonet */
+    font-weight: 700 !important;
   }
   .noBackground .indicator {
     background: var(--ds-color-primary-surface-default);
+  }
+  .indicator-bottom-left {
+    top: 50%;
+    left: 10%;
+  }
+  .indicator-top-left {
+    top: 10%;
+    left: 5%;
+  }
+  .indicator-top-right {
+    top: 10%;
+    left: 50%;
   }
 }
