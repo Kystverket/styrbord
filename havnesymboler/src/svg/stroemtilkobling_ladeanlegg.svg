@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="100"
+   height="100"
+   version="1.1"
+   viewBox="-1.15 -1.02 26.458334 26.458333"
+   id="svg857"
+   sodipodi:docname="Stromtilkobling_ladeanlegg.svg"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)">
+  <metadata
+     id="metadata863">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs861" />
+  <sodipodi:namedview
+     inkscape:document-rotation="0"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="3200"
+     inkscape:window-height="1721"
+     id="namedview859"
+     showgrid="false"
+     inkscape:zoom="7.1745283"
+     inkscape:cx="58.5"
+     inkscape:cy="97.451677"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg857"
+     units="px" />
+  <path
+     style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 9.9771992,4.53625 h 6.8203698 l -3.762963,6.114744 h 4.468519 c 0,0 -7.195901,12.492339 -7.055556,12.22949 0.140349,-0.262847 0.470371,-8.701752 0.470371,-8.701752 H 6.9197917 Z"
+     id="path893"
+     sodipodi:nodetypes="ccccsccc" />
+  <rect
+     style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
+     id="rect897"
+     width="18.520834"
+     height="1.3229166"
+     x="2.8187501"
+     y="1.6258333" />
+  <rect
+     y="24.115416"
+     x="2.8187501"
+     height="1.3229166"
+     width="18.520834"
+     id="rect897-9"
+     style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none" />
+  <rect
+     style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none"
+     id="rect914"
+     width="1.3229166"
+     height="21.166666"
+     x="2.8187501"
+     y="2.94875" />
+  <rect
+     y="2.94875"
+     x="20.016666"
+     height="21.166666"
+     width="1.3229166"
+     id="rect914-8"
+     style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none" />
+  <rect
+     y="-1.02"
+     x="8.1104164"
+     height="2.6458333"
+     width="7.9375"
+     id="rect897-0"
+     style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none" />
+</svg>
