@@ -1,0 +1,49 @@
+@layer styrbord-modules {
+  .wrapper {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    gap: 0;
+    border-radius: 4px;
+  }
+
+  .input {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  /* Browser's own calendar indicator is hidden in favour of the button next to it */
+  .input::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+  .input::-webkit-inner-spin-button {
+    display: none;
+  }
+
+  .pickerButton {
+    flex-shrink: 0;
+  }
+
+  /* Focusing the input rings the whole group instead of just the input;
+     focusing the button keeps the button's own ring (selector doesn't match) */
+  .wrapper:has(.input:focus-visible) {
+    box-shadow: var(--_ds--focus, var(--dsc-focus-boxShadow));
+    outline: var(--_ds--focus, var(--dsc-focus-outline));
+    outline-offset: var(--_ds--focus, var(--ds-border-width-focus));
+  }
+  /* .wrapper:has(.input:focus-visible) .input {
+    box-shadow: none !important;
+    outline: none !important;
+  } */
+
+  /* Same for hover: whole group gets the grey outline instead of just the input */
+  .wrapper:has(.input:hover) {
+    outline-color: var(--dsc-input-outline-color--hover);
+    outline-width: var(--dsc-input-outline-width--hover);
+    outline-style: var(--dsc-input-outline-style--hover);
+    border-bottom: 12px solid red;
+  }
+  /* .wrapper:has(.input:hover) .input {
+    outline: none !important;
+  } */
+}
