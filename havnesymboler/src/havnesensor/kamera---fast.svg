@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="Havnesensor_kamera_fast.svg"
+   id="svg857"
+   viewBox="-1.15 -1.02 26.458334 52.916666"
+   version="1.1"
+   height="200"
+   width="100">
+  <metadata
+     id="metadata863">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs861" />
+  <sodipodi:namedview
+     units="px"
+     inkscape:current-layer="svg857"
+     inkscape:window-maximized="1"
+     inkscape:window-y="-9"
+     inkscape:window-x="-9"
+     inkscape:cy="53.958405"
+     inkscape:cx="67.825752"
+     inkscape:zoom="10.469813"
+     showgrid="false"
+     id="namedview859"
+     inkscape:window-height="1721"
+     inkscape:window-width="3200"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     inkscape:document-rotation="0" />
+  <path
+     d="m 8.1104167,25.438334 c 0,-2.191889 1.7767526,-3.968751 3.9687493,-3.968751 2.191997,0 3.96875,1.776841 3.96875,3.968751 0,2.192108 -1.776753,3.968749 -3.96875,3.968749 -2.1919967,0 -3.9687493,-1.776841 -3.9687493,-3.968749 z"
+     style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.5965;stroke-miterlimit:4;stroke-dasharray:none"
+     id="path10" />
+  <path
+     id="path10-1"
+     style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.06434;stroke-miterlimit:3.864;stroke-dasharray:none"
+     d="m 9.4333333,25.438334 c 0,-1.461259 1.1845007,-2.645834 2.6458327,-2.645834 1.461331,0 2.645833,1.184561 2.645833,2.645834 0,1.461405 -1.184502,2.645833 -2.645833,2.645833 -1.461332,0 -2.6458327,-1.184561 -2.6458327,-2.645833 z" />
+  <rect
+     style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.91835;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="rect1464-9"
+     width="11.90625"
+     height="9.260417"
+     x="5.4645834"
+     y="8.2404165" />
+  <path
+     sodipodi:nodetypes="ccccc"
+     id="path3785"
+     d="m 17.370833,11.327222 3.96875,-3.0868053 v 9.2604163 l -3.96875,-3.086805 z"
+     style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.285453px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+  <rect
+     style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.687863;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="rect1464-2"
+     width="1.3229167"
+     height="4.6302085"
+     x="11.417708"
+     y="17.500834" />
+</svg>

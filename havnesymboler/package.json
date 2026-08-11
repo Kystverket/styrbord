@@ -1,0 +1,36 @@
+{
+  "name": "@kystverket/styrbord-havnesymboler",
+  "version": "0.0.0",
+  "description": "SVG- og PNG-illustrasjoner for havnesymboler",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kystverket/styrbord.git"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./manifest.json": "./dist/manifest.json",
+    "./svg-manifest.json": "./dist/svg-manifest.json",
+    "./png-manifest.json": "./dist/png-manifest.json",
+    "./assets/*": "./dist/assets/*",
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "build": "node ./scripts/build.mjs",
+    "test": "echo \"Warning: no test specified\" && exit 0",
+    "pretty:check": "npx prettier . --check",
+    "pretty:fix": "npx prettier . --write",
+    "lint:check": "npx eslint . --ignore-pattern dist",
+    "lint:fix": "npx eslint . --fix --ignore-pattern dist"
+  },
+  "author": "",
+  "license": "ISC"
+}

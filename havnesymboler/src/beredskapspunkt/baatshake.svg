@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="100"
+   height="100"
+   version="1.1"
+   viewBox="-1.15 -1.02 26.458334 26.458333"
+   id="svg857"
+   sodipodi:docname="Beredskapspunkt_baatshake.svg"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)">
+  <metadata
+     id="metadata863">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs861" />
+  <sodipodi:namedview
+     inkscape:document-rotation="0"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="3200"
+     inkscape:window-height="1721"
+     id="namedview859"
+     showgrid="false"
+     inkscape:zoom="7.1745283"
+     inkscape:cx="58.5"
+     inkscape:cy="64"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg857"
+     units="px" />
+  <path
+     style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     d="M 8.5489531,9.7852981 C 12.848763,6.8075611 18.013487,1.4588205 19.206739,2.5940588 20.214165,3.6885126 14.66087,8.8127041 11.314813,12.624916 Z"
+     id="path1036"
+     sodipodi:nodetypes="cccc" />
+  <path
+     style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     d="m 14.633847,8.568319 c 4.091548,0.3084081 4.720175,4.040337 3.859269,7.001378 -0.299576,1.030375 -0.808807,2.110413 -1.499067,1.849378 -0.787775,-0.623079 0.07978,-1.172782 0.02989,-2.393781 -0.08189,-2.004364 -1.905473,-5.2233756 -5.709126,-2.400378 z"
+     id="path1038"
+     sodipodi:nodetypes="cscscc" />
+  <path
+     sodipodi:nodetypes="ccccc"
+     id="path833"
+     d="M 8.5489528,9.785298 11.314813,12.624916 -1.15,23.983125 v -5.310193 z"
+     style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+</svg>

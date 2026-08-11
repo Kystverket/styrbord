@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="Beredskapspunkt_redningsboye.svg"
+   id="svg857"
+   viewBox="-1.15 -1.02 26.458334 26.458333"
+   version="1.1"
+   height="100"
+   width="100">
+  <metadata
+     id="metadata863">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs861" />
+  <sodipodi:namedview
+     units="px"
+     inkscape:current-layer="svg857"
+     inkscape:window-maximized="1"
+     inkscape:window-y="-9"
+     inkscape:window-x="-9"
+     inkscape:cy="64"
+     inkscape:cx="58.5"
+     inkscape:zoom="7.1745283"
+     showgrid="false"
+     id="namedview859"
+     inkscape:window-height="1721"
+     inkscape:window-width="3200"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     inkscape:document-rotation="0" />
+  <ellipse
+     ry="10.318758"
+     rx="10.318756"
+     style="fill:none;fill-opacity:1;stroke:#ff0202;stroke-width:1.58748;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="path871-4"
+     cx="12.079163"
+     cy="12.209165" />
+  <circle
+     r="7.8619123"
+     cy="12.209167"
+     cx="12.079167"
+     id="path871-4-5"
+     style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:3.96875002;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  <path
+     sodipodi:nodetypes="ccccccccc"
+     id="path947"
+     d="m 12.079167,17.113961 4.011369,-0.893426 3.132382,3.132381 -2.82606,2.436991 -4.317691,1.002592 -4.0206589,-0.962016 -3.1230914,-2.477567 2.994958,-2.994957 z"
+     style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+  <path
+     style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     d="M 12.079167,6.6036891 16.375471,7.9128622 19.222916,5.0654163 16.731803,2.9344769 12.079167,1.6258333 8.0217503,2.6451576 4.9354167,5.0654163 7.8851468,8.015147 Z"
+     id="path947-1"
+     sodipodi:nodetypes="ccccccccc" />
+  <ellipse
+     ry="5.2916846"
+     rx="5.2916822"
+     cy="12.209185"
+     cx="12.079183"
+     id="path871-4-2"
+     style="fill:none;fill-opacity:1;stroke:#fe0000;stroke-width:1.5875;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+</svg>

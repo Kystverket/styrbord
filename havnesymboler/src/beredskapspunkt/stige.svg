@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="100"
+   height="100"
+   version="1.1"
+   viewBox="-1.15 -1.02 26.458334 26.458333"
+   id="svg857"
+   sodipodi:docname="Beredskapspunkt_stige.svg"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)">
+  <metadata
+     id="metadata863">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs861" />
+  <sodipodi:namedview
+     inkscape:document-rotation="0"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="3200"
+     inkscape:window-height="1721"
+     id="namedview859"
+     showgrid="false"
+     inkscape:zoom="7.1745283"
+     inkscape:cx="58.5"
+     inkscape:cy="64"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg857"
+     units="px" />
+  <path
+     style="fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:2.64583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 5.4645833,22.7925 V 1.6258333"
+     id="path964"
+     sodipodi:nodetypes="cc" />
+  <path
+     sodipodi:nodetypes="cc"
+     id="path964-0"
+     d="M 18.69375,22.792501 V 1.6258333"
+     style="fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:2.64583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  <path
+     sodipodi:nodetypes="cc"
+     id="path964-1"
+     d="M 4.6708334,12.209165 H 19.4875"
+     style="fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:2.43716;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     inkscape:transform-center-x="4.6724623"
+     inkscape:transform-center-y="-3.7246933" />
+  <path
+     inkscape:transform-center-y="-3.7246933"
+     inkscape:transform-center-x="4.6724623"
+     style="fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:2.43716;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 4.6708334,4.8008317 H 19.4875"
+     id="path964-1-6"
+     sodipodi:nodetypes="cc" />
+  <path
+     sodipodi:nodetypes="cc"
+     id="path964-1-6-0"
+     d="M 4.6708334,19.617498 H 19.4875"
+     style="fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:2.43716;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     inkscape:transform-center-x="4.6724623"
+     inkscape:transform-center-y="-3.7246933" />
+</svg>

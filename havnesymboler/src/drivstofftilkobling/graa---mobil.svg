@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="100"
+   height="200"
+   version="1.1"
+   viewBox="-1.15 -1.02 26.458334 52.916666"
+   id="svg857"
+   sodipodi:docname="Drivstofftilkobling_graa_mobil.svg"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)">
+  <metadata
+     id="metadata863">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs861" />
+  <sodipodi:namedview
+     inkscape:document-rotation="0"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="3200"
+     inkscape:window-height="1721"
+     id="namedview859"
+     showgrid="false"
+     inkscape:zoom="10.146315"
+     inkscape:cx="58.5"
+     inkscape:cy="66.353808"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg857"
+     units="px" />
+  <rect
+     y="7.8435416"
+     x="6.1260419"
+     height="17.594791"
+     width="11.90625"
+     id="rect897-9"
+     style="fill:#636363;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none" />
+  <path
+     style="fill:none;stroke:#636363;stroke-width:1.32292;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 17.731205,12.267196 h 0.73436 c 0.84353,-0.03603 1.51767,0.179647 1.468717,1.469771 v 5.879081 c 0.03068,2.988439 4.131165,2.901 3.8191,0 L 22.13736,9.6201319 C 21.698691,7.0606105 18.975164,5.2158077 17.280837,4.3284652"
+     id="path5043"
+     sodipodi:nodetypes="ccccccc" />
+  <path
+     style="fill:none;stroke:#636363;stroke-width:2.64583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 7.4489584,7.8435417 V 1.6258333 C 7.3869012,0.76006275 7.5561337,0.29807337 8.7718751,0.30291667 h 6.6145829 c 0.897755,-0.0386918 1.350479,0.16328002 1.322917,1.32291663 v 6.2177084"
+     id="path5041"
+     sodipodi:nodetypes="cccccc" />
+  <path
+     id="path10-4"
+     style="fill:#636363;fill-opacity:1;stroke:none;stroke-width:1.06434;stroke-miterlimit:4;stroke-dasharray:none"
+     d="m 3.4802084,30.068543 c 0,-1.461259 1.1845019,-2.645834 2.6458326,-2.645834 1.4613319,0 2.6458339,1.184561 2.6458339,2.645834 0,1.461405 -1.184502,2.645833 -2.6458339,2.645833 -1.4613307,0 -2.6458326,-1.184561 -2.6458326,-2.645833 z" />
+  <path
+     d="m 15.386458,30.068542 c 0,-1.461258 1.184501,-2.645833 2.645833,-2.645833 1.461331,0 2.645834,1.184561 2.645834,2.645833 0,1.461406 -1.184503,2.645834 -2.645834,2.645834 -1.461332,0 -2.645833,-1.184562 -2.645833,-2.645834 z"
+     style="fill:#636363;fill-opacity:1;stroke:none;stroke-width:1.06434;stroke-miterlimit:3.864;stroke-dasharray:none"
+     id="path10-1-1" />
+</svg>

@@ -8,6 +8,10 @@
     "kart": {
       "release-type": "node",
       "package-name": "@kystverket/styrbord-kart"
+    },
+    "havnesymboler": {
+      "release-type": "node",
+      "package-name": "@kystverket/styrbord-havnesymboler"
     }
   }
 }
