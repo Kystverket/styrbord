@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.1](https://github.com/Kystverket/styrbord/compare/styrbord-v1.15.0...styrbord-v1.15.1) (2026-08-11)
+
+
+### Bug Fixes
+
+* **base:** Fikse litt styling på saksbehandlingshell ([#278](https://github.com/Kystverket/styrbord/issues/278)) ([4d576f0](https://github.com/Kystverket/styrbord/commit/4d576f0907c57d759c49cf207d35c82be707adb6))
+
 ## [1.15.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.14.5...styrbord-v1.15.0) (2026-08-10)
 
 
