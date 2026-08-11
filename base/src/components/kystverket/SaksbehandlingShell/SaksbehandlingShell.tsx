@@ -1,4 +1,4 @@
-import { useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { Box, Icon, IconButton, SideSheet } from '~/main';
 import { ItemList } from './ItemList/ItemList';
 import classes from './SaksbehandlingShell.module.css';
@@ -43,6 +43,16 @@ export function SaksbehandlingShell({
       setIsComparisonPinned(false);
     }
   };
+
+  const mainRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (mainRef.current) {
+        mainRef.current.scrollTo(0, 0);
+      }
+      window.scrollTo(0, 0);
+    }
+  }, [selectedItemId]);
 
   return (
     <div className={`${classes.shell} ${className}`}>
@@ -108,23 +118,29 @@ export function SaksbehandlingShell({
       </Box>
 
       <SideSheet.Layout>
-        <SideSheet
-          open={isItemListOpen}
-          onClose={() => setIsItemListOpen(false)}
-          pinned={isItemListPinned}
-          onPinnedChange={setIsItemListPinned}
-          placement="left"
-          showCloseButton={false}
-          style={ITEM_LIST_WIDTH_STYLE}
-        >
-          <ItemList items={items} selectedItemId={selectedItemId} onSelectItemId={onSelectItemId} />
-        </SideSheet>
+        {items !== undefined && (
+          <SideSheet
+            open={isItemListOpen}
+            onClose={() => setIsItemListOpen(false)}
+            pinned={isItemListPinned}
+            onPinnedChange={setIsItemListPinned}
+            placement="left"
+            showCloseButton={false}
+            style={ITEM_LIST_WIDTH_STYLE}
+          >
+            <ItemList items={items} selectedItemId={selectedItemId} onSelectItemId={onSelectItemId} />
+          </SideSheet>
+        )}
 
         <div className={classes.mainContainer}>
-          <Box horizontal align="center" gap={8} className={classes.itemActions}>
-            {itemActions}
-          </Box>
-          <div className={classes.main}>{children}</div>
+          {itemActions && (
+            <Box horizontal align="center" gap={8} className={classes.itemActions}>
+              {itemActions}
+            </Box>
+          )}
+          <div className={classes.main} ref={mainRef}>
+            {children}
+          </div>
         </div>
 
         {comparisonContent && (
