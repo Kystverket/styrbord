@@ -18,7 +18,7 @@ export interface SaksbehandlingShellProps {
   caseActions?: ReactNode;
   /** Actions related to the currently selected item, shown on the right of the toolbar. */
   itemActions?: ReactNode;
-  items: SaksbehandlingItem[];
+  items?: SaksbehandlingItem[];
   selectedItemId?: string;
   onSelectItemId: (id: string) => void;
   /** Optional comparison section content. When omitted, the comparison panel and its toggle are not rendered. */
