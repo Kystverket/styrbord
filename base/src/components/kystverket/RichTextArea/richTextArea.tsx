@@ -71,6 +71,7 @@ const RichTextAreaContainer = ({
   bottomToolbar,
   optional = false,
   required = false,
+  showToolbar,
   error: externalError,
 }: RichTextAreaProps) => {
   // Owned here so useEditor config can close over them before useRichTextImageUpload is called.
@@ -322,6 +323,7 @@ const RichTextAreaContainer = ({
                 wrapCommand: wrapInBulletListCommand,
               })
             }
+            showToolbar={showToolbar}
             onOrderedList={() =>
               toggleList({
                 isTargetListActive: toolbarState.isOrderedListActive,

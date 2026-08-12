@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { Button, IconButton, Icon } from '~/main';
 import type { IconId } from '~/main';
 import styles from './toolbar.module.css';
@@ -22,6 +23,7 @@ type ToolbarProps = {
   selectedFormat: BlockType;
   linkPopoverTarget?: string;
   canUploadImage?: boolean;
+  showToolbar?: boolean;
 
   onBold: () => void;
   onItalic: () => void;
@@ -68,7 +70,7 @@ type FormatSelectProps = {
 };
 
 const FormatSelect = ({ disabled, selectedFormat, onFormatChange }: FormatSelectProps) => (
-  <div className={styles.formatField}>
+  <div className={`${styles.formatField} ${styles.formatSelectWrapper}`}>
     <Button
       aria-hidden
       tabIndex={-1}
@@ -87,16 +89,53 @@ const FormatSelect = ({ disabled, selectedFormat, onFormatChange }: FormatSelect
       aria-label="Heading levels"
       value={selectedFormat}
       onChange={(e) => {
-        const v = e.target.value;
-        if (BLOCK_TYPES.includes(v as BlockType)) onFormatChange(v as BlockType);
+        onFormatChange(e.target.value as BlockType);
       }}
     >
-      <option value="paragraph">Paragraph</option>
-      <option value="h1">Heading 1</option>
-      <option value="h2">Heading 2</option>
+      {BLOCK_TYPES.map((type) => (
+        <option key={type} value={type}>
+          {FORMAT_LABELS[type]}
+        </option>
+      ))}
     </select>
   </div>
 );
+
+type FormatSelectButtonProps = {
+  disabled?: boolean;
+  selectedFormat: BlockType;
+  onFormatChange: (format: BlockType) => void;
+};
+
+const FormatSelectButton = ({ disabled, selectedFormat, onFormatChange }: FormatSelectButtonProps) => {
+  const selectRef = useRef<HTMLSelectElement>(null);
+
+  return (
+    <div className={`${styles.hiddenSelectField} ${styles.formatSelectButton}`}>
+      <ToolbarButton
+        label="Text size"
+        icon="format_size"
+        disabled={disabled}
+        onClick={() => selectRef.current?.showPicker()}
+      />
+      <select
+        ref={selectRef}
+        className={styles.hiddenSelect}
+        disabled={disabled}
+        aria-label="Text size"
+        value={selectedFormat}
+        onChange={(e) => {
+          onFormatChange(e.target.value as BlockType);
+        }}
+      >
+        <option value="paragraph">Paragraph</option>
+        <option value="h1">Heading 1</option>
+        <option value="h2">Heading 2</option>
+        <option value="h3">Heading 3</option>
+      </select>
+    </div>
+  );
+};
 
 export const Toolbar = ({
   disabled = false,
@@ -117,7 +156,10 @@ export const Toolbar = ({
   onFormatChange,
   onLink,
   onImageUpload,
+  showToolbar = true,
 }: ToolbarProps) => {
+  if (!showToolbar) return;
+
   return (
     <div className={styles.toolbar} role="toolbar" aria-label="Rich text formatting">
       <ToolbarButton label="Bold" icon="format_bold" active={isBoldActive} disabled={disabled} onClick={onBold} />
@@ -128,6 +170,7 @@ export const Toolbar = ({
         disabled={disabled}
         onClick={onItalic}
       />
+      <FormatSelectButton disabled={disabled} selectedFormat={selectedFormat} onFormatChange={onFormatChange} />
       <div className={styles.divider} aria-hidden />
       <ToolbarButton
         label="Bullet List"

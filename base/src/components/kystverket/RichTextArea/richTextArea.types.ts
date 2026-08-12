@@ -15,6 +15,7 @@ export type RichTextAreaProps = {
   /** Used for the bottomToolbar */
   bottomToolbar?: ReactNode;
   /** Optional upload handler that returns a display src and optional stable image ref. */
+  showToolbar?: boolean;
   onImageUpload?: OnImageUploadFn;
   /** Optional remove handler for deleting persisted images by stable ref. */
   onImageRemove?: (ref: string) => Promise<void>;
