@@ -37,10 +37,18 @@
 /* Basestil for Milkdown/ProseMirror-innhold */
 .editor :global(.milkdown),
 .editor :global(.ProseMirror) {
-  min-height: calc(10rem - 1.25rem);
+  min-height: 4lh;
   outline: none;
   font: inherit;
   color: inherit;
+
+  .rowsSm & {
+    min-height: 2lh;
+  }
+
+  .rowsLg & {
+    min-height: 6lh;
+  }
 }
 
 .editor :global(.ProseMirror p) {

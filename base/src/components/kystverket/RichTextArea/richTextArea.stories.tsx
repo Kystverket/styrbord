@@ -32,6 +32,7 @@ type Story = StoryObj<typeof meta>;
 const defaultArgs: RichTextAreaProps = {
   value: '',
   onChange: () => {},
+  rows: 'md',
   label: 'Rikt tekstfelt',
   description: 'Dette er et tekstfelt som støtter rik tekstformatering.',
   optional: 'Valgfritt',

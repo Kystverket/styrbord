@@ -6,6 +6,8 @@ export type RichTextAreaProps = {
   onChange: (markdown: string) => void;
   placeholder?: string;
   disabled?: boolean;
+  /** Editor height in lines. Defaults to a medium height. */
+  rows?: 'sm' | 'md' | 'lg';
   className?: string;
   label?: string;
   description?: string | React.ReactNode;

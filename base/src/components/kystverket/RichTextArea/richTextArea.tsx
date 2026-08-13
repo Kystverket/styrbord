@@ -72,6 +72,7 @@ const RichTextAreaContainer = ({
   optional = false,
   required = false,
   showToolbar,
+  rows,
   error: externalError,
 }: RichTextAreaProps) => {
   // Owned here so useEditor config can close over them before useRichTextImageUpload is called.
@@ -296,6 +297,8 @@ const RichTextAreaContainer = ({
             classes.editorWrapper,
             displayedError && classes.editorWrapperError,
             disabled && classes.editorWrapperDisabled,
+            rows === 'sm' && classes.rowsSm,
+            rows === 'lg' && classes.rowsLg,
           ]
             .filter(Boolean)
             .join(' ')}
