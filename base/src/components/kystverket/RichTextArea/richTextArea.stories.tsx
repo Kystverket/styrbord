@@ -32,6 +32,7 @@ type Story = StoryObj<typeof meta>;
 const defaultArgs: RichTextAreaProps = {
   value: '',
   onChange: () => {},
+  rows: 'md',
   label: 'Rikt tekstfelt',
   description: 'Dette er et tekstfelt som støtter rik tekstformatering.',
   optional: 'Valgfritt',
@@ -127,6 +128,7 @@ export const WithBottomToolbar: Story = {
     const [value, setValue] = useState(args.value ?? ''); // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
     const [isMarkedAsConclusion, setIsMarkedAsConclusion] = useState(false); // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
     const objectUrlsRef = useRef<Set<string>>(new Set()); // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
+    const [isToolbarShown, setIsToolbarShown] = useState<boolean>(true); // NOSONAR - Storybook render fungerer som en React-komponent, hooks er gyldige her
 
     useEffect(() => {
       return () => {
@@ -137,6 +139,7 @@ export const WithBottomToolbar: Story = {
 
     return (
       <RichTextArea
+        showToolbar={isToolbarShown}
         {...args}
         value={value}
         onChange={(nextMarkdown) => {
@@ -153,6 +156,16 @@ export const WithBottomToolbar: Story = {
             <Box align="center" justify="between" pb={12} horizontal>
               <Box horizontal>
                 <Box horizontal gap={4} pr={4}>
+                  <Button
+                    onClick={() => setIsToolbarShown((prev) => !prev)}
+                    variant="ghost"
+                    title="Toggle toolbar"
+                    size="sm"
+                    color="neutral"
+                    icon
+                  >
+                    <Icon material="match_case" size="lg" />
+                  </Button>
                   <Button title="Add tag" variant="ghost" size="sm" color="neutral" icon popoverTarget="addTag">
                     <Icon material="alternate_email" />
                   </Button>

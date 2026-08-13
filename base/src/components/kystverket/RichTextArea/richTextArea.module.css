@@ -4,6 +4,8 @@
   border: 1px solid var(--ds-color-neutral-border-default);
   border-radius: var(--ds-border-radius-md);
   overflow: hidden;
+  container-type: inline-size;
+  container-name: Wrapper;
 }
 
 .editorWrapperError {
@@ -35,10 +37,18 @@
 /* Basestil for Milkdown/ProseMirror-innhold */
 .editor :global(.milkdown),
 .editor :global(.ProseMirror) {
-  min-height: calc(10rem - 1.25rem);
+  min-height: 4lh;
   outline: none;
   font: inherit;
   color: inherit;
+
+  .rowsSm & {
+    min-height: 2lh;
+  }
+
+  .rowsLg & {
+    min-height: 6lh;
+  }
 }
 
 .editor :global(.ProseMirror p) {
