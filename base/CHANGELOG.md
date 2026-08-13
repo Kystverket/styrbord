@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.2](https://github.com/Kystverket/styrbord/compare/styrbord-v1.15.1...styrbord-v1.15.2) (2026-08-13)
+
+
+### Bug Fixes
+
+* **base:** RichTextArea improvements ([#280](https://github.com/Kystverket/styrbord/issues/280)) ([478e168](https://github.com/Kystverket/styrbord/commit/478e1685e5debf504575a4ffbb7d107a0f1a528b))
+
 ## [1.15.1](https://github.com/Kystverket/styrbord/compare/styrbord-v1.15.0...styrbord-v1.15.1) (2026-08-11)
 
 
