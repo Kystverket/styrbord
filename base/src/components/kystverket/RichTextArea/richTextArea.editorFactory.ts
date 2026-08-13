@@ -1,8 +1,9 @@
-import { Editor, defaultValueCtx, editorViewOptionsCtx, rootCtx } from '@milkdown/core';
+import { Editor, defaultValueCtx, editorViewOptionsCtx, prosePluginsCtx, rootCtx } from '@milkdown/core';
 import { imageInlineComponent, inlineImageConfig } from '@milkdown/components/image-inline';
 import type { InlineImageConfig } from '@milkdown/components/image-inline';
 import { history } from '@milkdown/plugin-history';
 import { listener, listenerCtx } from '@milkdown/plugin-listener';
+import { Plugin } from '@milkdown/prose/state';
 import type { Ctx } from '@milkdown/ctx';
 
 import {
@@ -23,6 +24,8 @@ type CreateRichTextAreaEditorParams = {
   updateInlineImageConfig: (config: InlineImageConfig) => InlineImageConfig;
   updateToolbarState: (ctx: Ctx) => void;
   onMarkdownUpdated: (ctx: Ctx, markdown: string) => void;
+  /** Fires synchronously on every doc-changing transaction, unlike onMarkdownUpdated which is debounced by @milkdown/plugin-listener. */
+  onEmptyChange: (isEmpty: boolean) => void;
 };
 
 export const createRichTextAreaEditor = ({
@@ -34,6 +37,7 @@ export const createRichTextAreaEditor = ({
   updateInlineImageConfig,
   updateToolbarState,
   onMarkdownUpdated,
+  onEmptyChange,
 }: CreateRichTextAreaEditorParams) => {
   return Editor.make()
     .config((ctx) => {
@@ -57,6 +61,17 @@ export const createRichTextAreaEditor = ({
       ctx.get(listenerCtx).selectionUpdated((listenerContext) => {
         updateToolbarState(listenerContext);
       });
+      ctx.update(prosePluginsCtx, (plugins) =>
+        plugins.concat(
+          new Plugin({
+            view: () => ({
+              update: (view) => {
+                onEmptyChange(view.state.doc.textContent.length === 0);
+              },
+            }),
+          }),
+        ),
+      );
     })
     .use(richTextCommonmarkPlugins)
     .use(imageInlineComponent)

@@ -97,6 +97,7 @@ const RichTextAreaContainer = ({
 
   const normalizedValue = normalizeMarkdownBreakTags(value ?? '');
   const [editorMarkdown, setEditorMarkdown] = useState(normalizedValue);
+  const [isEditorEmpty, setIsEditorEmpty] = useState(!normalizedValue);
   const latestOnChangeRef = useRef(onChange);
   const latestOnUploadRef = useRef(onImageUpload);
   const latestOnRemoveRef = useRef(onImageRemove);
@@ -197,6 +198,7 @@ const RichTextAreaContainer = ({
           latestOnChangeRef.current(transformedMarkdown);
           updateToolbarState(ctx);
         },
+        onEmptyChange: setIsEditorEmpty,
       }),
     [disabled],
   );
@@ -280,7 +282,7 @@ const RichTextAreaContainer = ({
     });
   }, [get]);
 
-  const showPlaceholder = !normalizedValue && Boolean(placeholder);
+  const showPlaceholder = isEditorEmpty && Boolean(placeholder);
 
   return (
     <Fieldset>
