@@ -67,7 +67,8 @@ export const createRichTextAreaEditor = ({
             view: () => ({
               update: (view) => {
                 const { doc } = view.state;
-                const isEmpty = doc.childCount === 1 && doc.firstChild!.isTextblock && doc.firstChild!.content.size === 0;
+                const isEmpty =
+                  doc.childCount === 1 && doc.firstChild!.isTextblock && doc.firstChild!.content.size === 0;
                 onEmptyChange(isEmpty);
               },
             }),
