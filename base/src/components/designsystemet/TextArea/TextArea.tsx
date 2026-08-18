@@ -56,7 +56,9 @@ export const TextArea = ({
         aria-invalid={Boolean(error) || undefined}
         {...props}
       />
-      {maxLength && <Body>{t('charactersRemaining').replace('{count}', String(maxLength - (value ?? '').length))}</Body>}
+      {maxLength && (
+        <Body>{t('charactersRemaining').replace('{count}', String(maxLength - (value ?? '').length))}</Body>
+      )}
       {typeof error === 'string' && <ValidationMessage>{error}</ValidationMessage>}
     </Box>
   );
