@@ -1,5 +1,6 @@
-import { Textfield as DsTextField } from '@digdir/designsystemet-react';
-import { LabelContent } from '~/main';
+import { Textfield as DsTextField, ValidationMessage } from '@digdir/designsystemet-react';
+import { Body, Box, LabelContent } from '~/main';
+import { useTranslation } from '~/translations';
 import { InputSize, inputSizeClass } from '~/utils/input/input';
 import classes from './TextArea.module.scss';
 
@@ -33,19 +34,32 @@ export const TextArea = ({
   optional,
   onChange,
   value,
+  maxLength,
   minHeight = 'md',
+  error,
   ...props
 }: TextAreaProps) => {
+  const { scopedT } = useTranslation();
+  const t = scopedT('textArea');
+
   return (
-    <DsTextField
-      className={`${classes.textArea} ${classes[minHeight]} ${className} ${inputSizeClass(size)}`}
-      label={<LabelContent text={label} required={required} optional={optional} />}
-      value={value ?? ''}
-      onChange={(event) => {
-        onChange?.(event.target.value);
-      }}
-      multiline
-      {...props}
-    />
+    <Box gap={8}>
+      <DsTextField
+        className={`${classes.textArea} ${classes[minHeight]} ${className} ${inputSizeClass(size)}`}
+        label={<LabelContent text={label} required={required} optional={optional} />}
+        value={value ?? ''}
+        onChange={(event) => {
+          onChange?.(event.target.value);
+        }}
+        maxLength={maxLength}
+        multiline
+        aria-invalid={Boolean(error) || undefined}
+        {...props}
+      />
+      {maxLength && (
+        <Body>{t('charactersRemaining').replace('{count}', String(maxLength - (value ?? '').length))}</Body>
+      )}
+      {typeof error === 'string' && <ValidationMessage>{error}</ValidationMessage>}
+    </Box>
   );
 };
