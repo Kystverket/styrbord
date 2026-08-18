@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.3](https://github.com/Kystverket/styrbord/compare/styrbord-v1.15.2...styrbord-v1.15.3) (2026-08-18)
+
+
+### Bug Fixes
+
+* **base:** Add counter for maxLength on TextArea ([#282](https://github.com/Kystverket/styrbord/issues/282)) ([b39172b](https://github.com/Kystverket/styrbord/commit/b39172b56d67e18f32e92ed7c5bd829565eefde9))
+
 ## [1.15.2](https://github.com/Kystverket/styrbord/compare/styrbord-v1.15.1...styrbord-v1.15.2) (2026-08-13)
 
 
