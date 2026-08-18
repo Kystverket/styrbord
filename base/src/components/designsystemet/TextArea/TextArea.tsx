@@ -1,5 +1,6 @@
 import { Textfield as DsTextField, ValidationMessage } from '@digdir/designsystemet-react';
 import { Body, Box, LabelContent } from '~/main';
+import { useTranslation } from '~/translations';
 import { InputSize, inputSizeClass } from '~/utils/input/input';
 import classes from './TextArea.module.scss';
 
@@ -38,6 +39,9 @@ export const TextArea = ({
   error,
   ...props
 }: TextAreaProps) => {
+  const { scopedT } = useTranslation();
+  const t = scopedT('textArea');
+
   return (
     <Box gap={8}>
       <DsTextField
@@ -52,7 +56,7 @@ export const TextArea = ({
         aria-invalid={Boolean(error) || undefined}
         {...props}
       />
-      {maxLength && <Body>Du har {maxLength - (value ?? '').length} tegn igjen.</Body>}
+      {maxLength && <Body>{t('charactersRemaining').replace('{count}', String(maxLength - (value ?? '').length))}</Body>}
       {typeof error === 'string' && <ValidationMessage>{error}</ValidationMessage>}
     </Box>
   );
