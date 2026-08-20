@@ -10,7 +10,7 @@ export function useSideSheetLayoutContext() {
 }
 
 /**
- * Required wrapper when using `pinnable` or `mode="push"`.
+ * Required wrapper when using `pinnable` or `defaultPinned`.
  *
  * Renders as a flex container so that a pinned SideSheet takes a fixed width
  * and the remaining content fills the rest of the row.
@@ -22,7 +22,7 @@ export function useSideSheetLayoutContext() {
  * </SideSheet.Layout>
  * ```
  */
-export function SideSheetLayout({ children, className = '', style }: SideSheetLayoutProps) {
+export function SideSheetLayout({ children, className = '', style }: Readonly<SideSheetLayoutProps>) {
   return (
     <SideSheetLayoutContext.Provider value={true}>
       <div className={`${classes.layout} ${className}`} style={style}>

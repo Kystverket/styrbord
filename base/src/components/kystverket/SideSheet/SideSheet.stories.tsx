@@ -1,24 +1,44 @@
 import type { Meta, StoryFn } from '@storybook/react-vite';
 import { useState } from 'react';
+import { SideSheetButtons } from '~/components/kystverket/SideSheet/Buttons/SideSheetButtons';
 import { Button, Icon, Paragraph, SideSheet, Tabs, Tooltip } from '~/main';
 
 export default {
   title: 'Components/SideSheet',
   component: SideSheet,
+
   tags: ['autodocs', 'beta'],
   parameters: {
     layout: 'fullscreen',
     docs: {
       source: { type: 'code' },
+      description: {
+        component: `NB: Anbefales å åpne stories direkte, da det kan bli scroll issues ellers
+
+### Context under panseret
+
+SideSheet består av to uavhengige context-systemer - ingen av dem krever at du bruker context direkte, begge virker bare ut fra hvor du plasserer komponenten i treet:
+
+- **\`<SideSheet.Layout>\`** pakker inn hovedinnholdet på siden *og* \`<SideSheet>\` som flex-søsken (se \`PageContent\` under). Kun nødvendig ved \`pinnable\` eller \`defaultPinned\` - det er det som lar det pinnede panelet dytte hovedinnholdet til side via native \`position: sticky\` + \`flex-shrink: 0\`. Rene overlay-paneler (uten pinning) trenger den ikke. Glemmer du den, varsler en console-warning.
+- **\`<SideSheet.Buttons>\`** kan rendres hvor som helst inni en \`<SideSheet>\`s \`children\` - f.eks. betinget per "side" (se *Tilbakeknapp*-storyen). Innholdet havner alltid i panelets faste footer, uansett hvor i JSX-en det er deklarert, så footer-knapper kan ligge rett ved innholdet de virker på.`,
+      },
     },
   },
+  decorators: [
+    (Story) => (
+      <div style={{ height: '150vh' }}>
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof SideSheet>;
 
 function PageContent({ onOpen }: Readonly<{ onOpen: () => void }>) {
   return (
     <div style={{ padding: '2rem', flex: 1, minWidth: 0 }}>
       <Paragraph style={{ marginBottom: '1rem' }}>
-        This is the main page content. When the SideSheet is pinned it repositions itself to sit beside it.
+        This is the main page content. When the SideSheet is pinned it repositions itself to sit beside it. This text is
+        just extra long to test the wrapping when the element is overlayed or not
       </Paragraph>
       <Button onClick={onOpen}>Open SideSheet</Button>
     </div>
@@ -29,7 +49,7 @@ export const Default: StoryFn<typeof SideSheet> = (args) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <SideSheet.Layout style={{ minHeight: '400px' }}>
+    <SideSheet.Layout style={{ height: '100%' }}>
       <PageContent onOpen={() => setOpen(true)} />
       <SideSheet {...args} open={open} onClose={() => setOpen(false)} title="Heading">
         <Paragraph>Side sheet content goes here.</Paragraph>
@@ -43,7 +63,7 @@ export const OpenInNewWindow: StoryFn<typeof SideSheet> = (args) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <SideSheet.Layout style={{ minHeight: '400px' }}>
+    <SideSheet.Layout style={{ height: '100%' }}>
       <PageContent onOpen={() => setOpen(true)} />
       <SideSheet
         {...args}
@@ -77,7 +97,7 @@ export const WithBackButton: StoryFn<typeof SideSheet> = (args) => {
   const [page, setPage] = useState<'page1' | 'page2'>('page1');
 
   return (
-    <SideSheet.Layout style={{ minHeight: '400px' }}>
+    <SideSheet.Layout style={{ height: '100%' }}>
       <PageContent
         onOpen={() => {
           setPage('page1');
@@ -89,7 +109,6 @@ export const WithBackButton: StoryFn<typeof SideSheet> = (args) => {
         open={open}
         onClose={() => setOpen(false)}
         title={page === 'page2' ? 'Heading to Page 2' : 'Heading'}
-        headingSize="sm"
         showBackButton={page === 'page2'}
         onBack={() => setPage('page1')}
       >
@@ -120,7 +139,7 @@ export const WithActionsScrollbarDividers: StoryFn<typeof SideSheet> = (args) =>
   const [open, setOpen] = useState(false);
 
   return (
-    <SideSheet.Layout style={{ minHeight: '400px' }}>
+    <SideSheet.Layout style={{ height: '100%' }}>
       <PageContent onOpen={() => setOpen(true)} />
       <SideSheet {...args} open={open} onClose={() => setOpen(false)} title="Heading">
         {Array.from({ length: 20 }, (_, i) => (
@@ -144,7 +163,7 @@ export const Pinnable: StoryFn<typeof SideSheet> = (args) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <SideSheet.Layout style={{ height: '100vh' }}>
+    <SideSheet.Layout style={{ height: '100%' }}>
       <PageContent onOpen={() => setOpen(true)} />
       <SideSheet {...args} open={open} onClose={() => setOpen(false)} title="Heading" pinnable defaultPinned={false}>
         {Array.from({ length: 20 }, (_, i) => (
@@ -170,7 +189,7 @@ export const LeftPlacement: StoryFn<typeof SideSheet> = (args) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <SideSheet.Layout style={{ minHeight: '400px' }}>
+    <SideSheet.Layout style={{ height: '100%' }}>
       <SideSheet
         {...args}
         open={open}
@@ -199,7 +218,7 @@ LeftPlacement.storyName = 'Venstre plassering';
 export const SmallSize: StoryFn<typeof SideSheet> = (args) => {
   const [open, setOpen] = useState(false);
   return (
-    <SideSheet.Layout style={{ minHeight: '400px' }}>
+    <SideSheet.Layout style={{ height: '100%' }}>
       <PageContent onOpen={() => setOpen(true)} />
       <SideSheet {...args} open={open} onClose={() => setOpen(false)} title="sm (400px)" size="sm">
         <Paragraph>Small side sheet.</Paragraph>
@@ -212,7 +231,7 @@ SmallSize.storyName = 'Størrelse: sm';
 export const LargeSize: StoryFn<typeof SideSheet> = (args) => {
   const [open, setOpen] = useState(false);
   return (
-    <SideSheet.Layout style={{ minHeight: '400px' }}>
+    <SideSheet.Layout style={{ height: '100%' }}>
       <PageContent onOpen={() => setOpen(true)} />
       <SideSheet {...args} open={open} onClose={() => setOpen(false)} title="lg (800px)" size="lg">
         <Paragraph>Large side sheet.</Paragraph>
@@ -225,7 +244,7 @@ LargeSize.storyName = 'Størrelse: lg';
 export const HalfWidth: StoryFn<typeof SideSheet> = (args) => {
   const [open, setOpen] = useState(false);
   return (
-    <SideSheet.Layout style={{ minHeight: '400px' }}>
+    <SideSheet.Layout style={{ height: '100%' }}>
       <PageContent onOpen={() => setOpen(true)} />
       <SideSheet {...args} open={open} onClose={() => setOpen(false)} title="50% width" size="50%">
         <Paragraph>Half-width side sheet.</Paragraph>
@@ -240,7 +259,7 @@ export const PinnedWithContent: StoryFn<typeof SideSheet> = (args) => {
   const [pinned, setPinned] = useState(true);
 
   return (
-    <SideSheet.Layout style={{ height: '100vh' }}>
+    <SideSheet.Layout style={{ height: '100%' }}>
       <PageContent onOpen={() => setOpen(true)} />
       <SideSheet
         {...args}
@@ -276,7 +295,7 @@ PinnedWithContent.storyName = 'Pinned';
 export const NoBackdrop: StoryFn<typeof SideSheet> = (args) => {
   const [open, setOpen] = useState(false);
   return (
-    <SideSheet.Layout style={{ minHeight: '400px' }}>
+    <SideSheet.Layout style={{ height: '100%' }}>
       <PageContent onOpen={() => setOpen(true)} />
       <SideSheet {...args} open={open} onClose={() => setOpen(false)} title="Ingen bakgrunn" backdrop={false}>
         <Paragraph>Overlay without backdrop dimming.</Paragraph>
@@ -293,7 +312,7 @@ export const TwoSheets: StoryFn<typeof SideSheet> = () => {
   const [rightPinned, setRightPinned] = useState(true);
 
   return (
-    <SideSheet.Layout style={{ height: '80vh' }}>
+    <SideSheet.Layout style={{ height: '100%' }}>
       {/* Venstre side */}
       <SideSheet
         open={leftOpen}
@@ -353,7 +372,7 @@ export const WithTabs: StoryFn<typeof SideSheet> = (args) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <SideSheet.Layout style={{ minHeight: '400px' }}>
+    <SideSheet.Layout style={{ height: '100%' }}>
       <PageContent onOpen={() => setOpen(true)} />
       <SideSheet {...args} open={open} onClose={() => setOpen(false)} title="Heading" headerDivider={false}>
         <div style={{ marginTop: 'calc(-1 * var(--ds-size-7))' }}>
@@ -393,3 +412,56 @@ export const WithTabs: StoryFn<typeof SideSheet> = (args) => {
   );
 };
 WithTabs.storyName = 'Med Tabs';
+
+const TOPBAR_HEIGHT = 64;
+const FOOTER_HEIGHT = 56;
+
+export const WithTopbarAndFooter: StoryFn<typeof SideSheet> = (args) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    // Plain position: sticky (see SideSheet.module.css) confined to SideSheet.Layout's own box
+    // (Layout doesn't clip overflow, so native sticky containment works) - no offset props,
+    // no measurement JS. The panel sticks while scrolling through Layout, and releases before
+    // reaching the footer since that's outside Layout's box.
+    <>
+      <header
+        style={{
+          height: TOPBAR_HEIGHT,
+          display: 'flex',
+          alignItems: 'center',
+          padding: '0 1rem',
+          background: 'var(--ds-color-accent-base-default, #1e3a5f)',
+          color: '#fff',
+        }}
+      >
+        Topbar (normal i dokumentet, {TOPBAR_HEIGHT}px)
+      </header>
+
+      <SideSheet.Layout style={{ height: '100%' }}>
+        <PageContent onOpen={() => setOpen(true)} />
+        <SideSheet pinnable {...args} open={open} onClose={() => setOpen(false)} title="Heading">
+          {Array.from({ length: 100 }, (_, i) => (
+            <Paragraph key={i}>Content row {i + 1} - scroll for å se dem alle.</Paragraph>
+          ))}
+          <SideSheetButtons>
+            <Button>Click me!</Button>
+          </SideSheetButtons>
+        </SideSheet>
+      </SideSheet.Layout>
+
+      <footer
+        style={{
+          height: FOOTER_HEIGHT,
+          display: 'flex',
+          alignItems: 'center',
+          padding: '0 1rem',
+          background: 'var(--ds-color-neutral-surface-hover, #eee)',
+        }}
+      >
+        Footer (normal i dokumentet, {FOOTER_HEIGHT}px)
+      </footer>
+    </>
+  );
+};
+WithTopbarAndFooter.storyName = 'Med topbar og footer (sticky)';
