@@ -10,8 +10,6 @@ export type SideSheetPlacement = 'left' | 'right';
  */
 export type SideSheetMode = 'overlay' | 'push';
 
-export type SideSheetHeadingSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-
 export interface SideSheetProps {
   open?: boolean;
   onClose?: () => void;
@@ -19,6 +17,7 @@ export interface SideSheetProps {
   size?: SideSheetSize;
   /**
    * overlay: sheet floats over content (default).
+   * BEWARE: On phone it automatically defaults back to overlay mode.
    * push: sheet starts pinned/expanded, reflowing content inside `<SideSheet.Layout>`.
    */
   mode?: SideSheetMode;
@@ -49,11 +48,11 @@ export interface SideSheetProps {
    */
   backdrop?: boolean;
 
-  /** Sheet heading text. */
+  /**
+   * Sheet heading. pass a string, or your own `<Heading>` (e.g.
+   * `<Heading data-size="xs">Title</Heading>`) to control its size and level.
+   */
   title?: ReactNode;
-
-  /** Font size of the heading. Default: `'xs'`. */
-  headingSize?: SideSheetHeadingSize;
 
   /** Show the close (×) button. Default: `true`. */
   showCloseButton?: boolean;

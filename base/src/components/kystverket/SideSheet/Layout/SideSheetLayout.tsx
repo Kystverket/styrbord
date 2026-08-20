@@ -22,7 +22,7 @@ export function useSideSheetLayoutContext() {
  * </SideSheet.Layout>
  * ```
  */
-export function SideSheetLayout({ children, className = '', style }: SideSheetLayoutProps) {
+export function SideSheetLayout({ children, className = '', style }: Readonly<SideSheetLayoutProps>) {
   return (
     <SideSheetLayoutContext.Provider value={true}>
       <div className={`${classes.layout} ${className}`} style={style}>
