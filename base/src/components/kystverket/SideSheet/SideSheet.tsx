@@ -2,6 +2,7 @@ import { forwardRef, useCallback, useContext, useEffect, useId, useRef, useState
 import { Box, Button, Heading, PHONE_SIZE_BREAKPOINT, Tooltip, useMediaQuery } from '~/main';
 import { useTranslation } from '~/translations';
 import Icon from '~/components/kystverket/Icon/icon';
+import { useBodyScrollLock } from '~/hooks/useBodyScrollLock';
 import { SideSheetButtonsContext, SideSheetButtonsProvider } from './Buttons/ButtonsContext';
 import { SideSheetButtons } from './Buttons/SideSheetButtons';
 import { SideSheetLayout, useSideSheetLayoutContext } from './Layout/SideSheetLayout';
@@ -25,28 +26,6 @@ function getSizeClass(size: SideSheetSize): string {
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
-
-// Module-level counter so multiple modal SideSheets (or other modals sharing this convention)
-// can be open at once without one closing early stealing the page's scroll back too soon.
-let scrollLockCount = 0;
-let previousBodyOverflow = '';
-
-function useBodyScrollLock(locked: boolean) {
-  useEffect(() => {
-    if (!locked) return;
-
-    if (scrollLockCount === 0) {
-      previousBodyOverflow = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-    }
-    scrollLockCount++;
-
-    return () => {
-      scrollLockCount--;
-      if (scrollLockCount === 0) document.body.style.overflow = previousBodyOverflow;
-    };
-  }, [locked]);
-}
 
 function SideSheetButtonsBlock({ footerDivider }: Readonly<{ footerDivider: boolean }>) {
   const { buttons } = useContext(SideSheetButtonsContext);
@@ -106,14 +85,18 @@ function useDynamicEdgeClamp(elRef: React.RefObject<HTMLElement | null>, enabled
     schedule();
     window.addEventListener('scroll', schedule, true);
     window.addEventListener('resize', schedule);
-    const resizeObserver = new ResizeObserver(schedule);
-    resizeObserver.observe(container);
+
+    // ResizeObserver also catches container resizes not tied to a window resize/scroll (e.g. a
+    // sibling collapsing). Not universally available - the scroll/resize listeners above already
+    // cover the common cases, so just skip it rather than throwing where it's missing.
+    const resizeObserver = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(schedule) : undefined;
+    resizeObserver?.observe(container);
 
     return () => {
       if (frame) cancelAnimationFrame(frame);
       window.removeEventListener('scroll', schedule, true);
       window.removeEventListener('resize', schedule);
-      resizeObserver.disconnect();
+      resizeObserver?.disconnect();
     };
   }, [elRef, enabled]);
 
@@ -144,10 +127,9 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
     onClose,
     placement = 'right',
     size = 'md',
-    mode = 'overlay',
     pinnable = false,
     pinned: pinnedProp,
-    defaultPinned,
+    defaultPinned = false,
     onPinnedChange,
     backdrop = true,
     title,
@@ -167,9 +149,7 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
   const titleId = useId();
   const inLayout = useSideSheetLayoutContext();
   const isControlled = pinnedProp !== undefined;
-  const [pinnedState, setPinnedState] = useState<boolean>(
-    defaultPinned === undefined ? mode === 'push' : defaultPinned,
-  );
+  const [pinnedState, setPinnedState] = useState<boolean>(defaultPinned);
   const isPhone = useMediaQuery(`(width < ${PHONE_SIZE_BREAKPOINT})`);
   const isPinned = (isControlled ? pinnedProp : pinnedState) && !isPhone;
 
@@ -181,13 +161,13 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
 
   // Warn when push/pin is used without a layout wrapper
   useEffect(() => {
-    if ((pinnable || mode === 'push') && !inLayout) {
+    if ((pinnable || defaultPinned) && !inLayout) {
       console.warn(
-        '<SideSheet> with pinnable or mode="push" should be rendered inside <SideSheet.Layout> ' +
+        '<SideSheet> with pinnable or defaultPinned should be rendered inside <SideSheet.Layout> ' +
           'so it can reflow sibling content when pinned.',
       );
     }
-  }, [inLayout, mode, pinnable]);
+  }, [inLayout, defaultPinned, pinnable]);
 
   // Focus management
   const sheetRef = useRef<HTMLElement>(null);

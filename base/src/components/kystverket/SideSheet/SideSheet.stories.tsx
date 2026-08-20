@@ -19,7 +19,7 @@ export default {
 
 SideSheet består av to uavhengige context-systemer - ingen av dem krever at du bruker context direkte, begge virker bare ut fra hvor du plasserer komponenten i treet:
 
-- **\`<SideSheet.Layout>\`** pakker inn hovedinnholdet på siden *og* \`<SideSheet>\` som flex-søsken (se \`PageContent\` under). Kun nødvendig ved \`pinnable\` eller \`mode="push"\` - det er det som lar det pinnede panelet dytte hovedinnholdet til side via native \`position: sticky\` + \`flex-shrink: 0\`. Rene overlay-paneler (uten pinning) trenger den ikke. Glemmer du den ved \`pinnable\`/\`push\`, varsler en console-warning.
+- **\`<SideSheet.Layout>\`** pakker inn hovedinnholdet på siden *og* \`<SideSheet>\` som flex-søsken (se \`PageContent\` under). Kun nødvendig ved \`pinnable\` eller \`defaultPinned\` - det er det som lar det pinnede panelet dytte hovedinnholdet til side via native \`position: sticky\` + \`flex-shrink: 0\`. Rene overlay-paneler (uten pinning) trenger den ikke. Glemmer du den, varsler en console-warning.
 - **\`<SideSheet.Buttons>\`** kan rendres hvor som helst inni en \`<SideSheet>\`s \`children\` - f.eks. betinget per "side" (se *Tilbakeknapp*-storyen). Innholdet havner alltid i panelets faste footer, uansett hvor i JSX-en det er deklarert, så footer-knapper kan ligge rett ved innholdet de virker på.`,
       },
     },
@@ -27,7 +27,6 @@ SideSheet består av to uavhengige context-systemer - ingen av dem krever at du 
   decorators: [
     (Story) => (
       <div style={{ height: '150vh' }}>
-        {/* <a href="#">Open self</a> */}
         <Story />
       </div>
     ),

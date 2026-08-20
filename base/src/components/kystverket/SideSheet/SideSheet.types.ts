@@ -4,23 +4,11 @@ export type SideSheetSize = 'sm' | 'md' | 'lg' | '33%' | '40%' | '50%' | '66%';
 
 export type SideSheetPlacement = 'left' | 'right';
 
-/**
- * - `overlay`: sheet slides over content (default). Can be pinned by the user via `pinnable`.
- * - `push`: sheet starts pinned and reflowing content inside `<SideSheet.Layout>`.
- */
-export type SideSheetMode = 'overlay' | 'push';
-
 export interface SideSheetProps {
   open?: boolean;
   onClose?: () => void;
   placement?: SideSheetPlacement;
   size?: SideSheetSize;
-  /**
-   * overlay: sheet floats over content (default).
-   * BEWARE: On phone it automatically defaults back to overlay mode.
-   * push: sheet starts pinned/expanded, reflowing content inside `<SideSheet.Layout>`.
-   */
-  mode?: SideSheetMode;
   /**
    * Show a pin button in the header that lets the user toggle overlay/push.
    * Default: `false`.
@@ -37,8 +25,9 @@ export interface SideSheetProps {
   onPinnedChange?: (pinned: boolean) => void;
 
   /**
-   * Default pinned state for uncontrolled usage. Defaults to `true` when `mode='push'`,
-   * `false` otherwise.
+   * Default pinned state for uncontrolled usage. `true` starts the sheet pinned/expanded,
+   * reflowing content inside `<SideSheet.Layout>` (push mode). Default: `false` (overlay).
+   * BEWARE: On phone it always starts unpinned regardless of this.
    */
   defaultPinned?: boolean;
 

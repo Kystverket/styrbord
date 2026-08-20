@@ -193,7 +193,6 @@ export { SideSheet, type SideSheetProps } from './components/kystverket/SideShee
 export type {
   SideSheetSize,
   SideSheetPlacement,
-  SideSheetMode,
   SideSheetLayoutProps,
 } from './components/kystverket/SideSheet/SideSheet.types';
 

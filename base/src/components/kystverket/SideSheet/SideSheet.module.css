@@ -1,6 +1,7 @@
 @layer styrbord-modules {
-  .sideSheet:focus {
-    outline: none;
+  .sideSheet:focus-visible {
+    outline: 3px solid var(--ds-color-focus-outer);
+    outline-offset: 2px;
   }
 
   .size-sm {

@@ -2,8 +2,7 @@
   .layout {
     display: flex;
     flex-direction: row;
-    position: sticky;
-    top: 0;
+    position: relative;
     min-height: 0;
     flex: 1;
   }
