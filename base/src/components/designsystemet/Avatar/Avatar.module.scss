@@ -5,7 +5,8 @@
   overflow: hidden;
 }
 
-.wrapperCircle {
+.wrapperCircle,
+.wrapperCircle .checkOverlay {
   border-radius: 50%;
 }
 
@@ -15,7 +16,7 @@
 
 .checkOverlay {
   position: absolute;
-  inset: 0;
+  inset: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,7 +32,7 @@
     display: block;
     width: 45%;
     height: 45%;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -41,11 +42,11 @@
 }
 
 .checked .checkOverlay {
-  background-color: rgba(0, 0, 0, 0.45);
+  background-color: rgba(255, 255, 255, 0.9);
   opacity: 1;
 
   &::after {
-    transform: scale(1);
+    transform: scale(1.5);
   }
 }
 
