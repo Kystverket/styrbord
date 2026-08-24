@@ -22,6 +22,10 @@ export type AvatarProps = MergeRight<
      * Tooltip text to display on hover.
      */
     tooltip?: string;
+    /**
+     * When true, overlays a checkmark on the avatar with a subtle dimming effect.
+     */
+    checked?: boolean;
   }
 >;
 
@@ -31,6 +35,7 @@ export const Avatar: FC<AvatarProps> = ({
   border: borderStyle,
   className,
   tooltip,
+  checked,
   ...rest
 }) => {
   const classList = [className];
@@ -49,8 +54,21 @@ export const Avatar: FC<AvatarProps> = ({
     classList.push(classes[`border-${borderStyle}`]);
   }
 
+  const wrapperClass = [
+    classes.wrapper,
+    rest.variant === 'square' ? classes.wrapperSquare : classes.wrapperCircle,
+    checked ? classes.checked : undefined,
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   const props = { 'data-size': size, className: classList.join(' '), ...rest } as DsAvatarProps;
-  const avatar = <DsAvatar {...props} />;
+  const avatar = (
+    <span className={wrapperClass}>
+      <DsAvatar {...props} />
+      <span className={classes.checkOverlay} aria-hidden="true" />
+    </span>
+  );
 
   if (tooltip) {
     return <Tooltip content={tooltip}>{avatar}</Tooltip>;

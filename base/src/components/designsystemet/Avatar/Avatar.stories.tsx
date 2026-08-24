@@ -45,7 +45,7 @@ Preview.args = {
 export const NoName: Story = () => <Avatar aria-label="Ola" />;
 
 export const Sizes: Story = () => (
-  <Box gap={16}>
+  <Box gap={16} align="start">
     <Avatar data-size="3xs" aria-label="xxxs" initials="3x" />
     <Avatar data-size="3xs" aria-label="xxxs" />
     <Avatar data-size="2xs" aria-label="extra extra small" initials="2x" />
@@ -193,6 +193,31 @@ export const WithTooltip: Story = () => (
     <Avatar aria-label="Kari Nordmann" tooltip="Kari Nordmann" data-color="success">
       KN
     </Avatar>
+  </>
+);
+
+export const Checked: Story = () => (
+  <>
+    <Avatar aria-label="Ola Nordmann" checked>
+      ON
+    </Avatar>
+    <Avatar aria-label="Ola Nordmann" variant="square" checked>
+      ON
+    </Avatar>
+    <Avatar data-size="xs" aria-label="Ola Nordmann" checked>
+      ON
+    </Avatar>
+    <Avatar aria-label="Ola Nordmann" data-color="success" checked />
+    <Avatar aria-label="Ola Nordmann" checked>
+      <img src={cat1} alt="" />
+    </Avatar>
+    <Avatar
+      checked
+      data-color="danger"
+      data-color-variant="surface-tinted"
+      border="double"
+      aria-label="double border"
+    />
   </>
 );
 
