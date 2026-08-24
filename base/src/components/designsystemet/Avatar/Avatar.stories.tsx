@@ -196,6 +196,21 @@ export const WithTooltip: Story = () => (
   </>
 );
 
+export const Checked: Story = () => (
+  <>
+    <Avatar aria-label="Ola Nordmann" checked>
+      ON
+    </Avatar>
+    <Avatar aria-label="Ola Nordmann" variant="square" checked>
+      ON
+    </Avatar>
+    <Avatar aria-label="Ola Nordmann" data-color="success" checked />
+    <Avatar aria-label="Ola Nordmann" checked>
+      <img src={cat1} alt="" />
+    </Avatar>
+  </>
+);
+
 export const AsLink: Story = () => (
   <a href="#">
     <Avatar aria-label="Ola Nordmann" />

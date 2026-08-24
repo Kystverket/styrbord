@@ -1,3 +1,54 @@
+// Checked overlay
+.wrapper {
+  position: relative;
+  display: inline-flex;
+  overflow: hidden;
+}
+
+.wrapperCircle {
+  border-radius: 50%;
+}
+
+.wrapperSquare {
+  border-radius: var(--ds-border-radius-lg);
+}
+
+.checkOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    background-color 0.2s ease;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 45%;
+    height: 45%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    transform: scale(0.6);
+    transition: transform 0.2s ease;
+  }
+}
+
+.checked .checkOverlay {
+  background-color: rgba(0, 0, 0, 0.45);
+  opacity: 1;
+
+  &::after {
+    transform: scale(1);
+  }
+}
+
 // Sizes
 .size2xs {
   height: 28px;
