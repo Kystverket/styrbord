@@ -6,7 +6,7 @@ interface IdContextType {
 
 const IdContext = createContext<IdContextType>({ path: [] });
 
-export function IdProvider({ id, children }: { id: string; children: React.ReactNode }) {
+export function IdProvider({ id, children }: Readonly<{ id: string; children: React.ReactNode }>) {
   const parent = useContext(IdContext);
 
   const value = useMemo(

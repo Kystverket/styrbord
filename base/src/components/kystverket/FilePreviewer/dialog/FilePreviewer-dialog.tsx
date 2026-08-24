@@ -4,6 +4,7 @@ import { Body, Box, Button, ButtonProps, Icon } from '~/main';
 import { FileInfo, defaultButtonsByType } from '../FilePreviewer.types';
 import { FileRenderer } from '../renderer/FileRenderer';
 import { useHorizontalDragScroll } from '~/hooks/useHorizontalDragScroll';
+import { useBodyScrollLock } from '~/hooks/useBodyScrollLock';
 import { handleDownload } from '../FilePreviewer-handleFileDownload';
 import { convertBytesToReadable } from '~/utils/convertBytesToReadable';
 import { openFileInNewTab } from '../FilePreviewer-openInNew';
@@ -31,6 +32,7 @@ export const FilePreviewerDialog = ({ animation = 'slide', onClose, files, start
   const selectedFileIndexRef = useRef(selectedFileIndex);
   const previewButtonRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const { scrollRef, hasMovedRef, handlers: dragScrollHandlers } = useHorizontalDragScroll();
+  useBodyScrollLock(true);
 
   const buttonConfig = getButtonConfig(selectedFile);
 
