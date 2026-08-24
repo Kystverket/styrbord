@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.16.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.15.3...styrbord-v1.16.0) (2026-08-24)
+
+
+### Features
+
+* **base:** add checked state to Avatar ([#286](https://github.com/Kystverket/styrbord/issues/286)) ([2963381](https://github.com/Kystverket/styrbord/commit/2963381d71bfa4fb784a0d66dd25ef22b2588f27))
+* **base:** Gjøre SideSheet mer responsive, legge inn utils i main ([#284](https://github.com/Kystverket/styrbord/issues/284)) ([57ea7e8](https://github.com/Kystverket/styrbord/commit/57ea7e887fadfdae5ccfcbe9e1fc0666d7937cd8))
+
 ## [1.15.3](https://github.com/Kystverket/styrbord/compare/styrbord-v1.15.2...styrbord-v1.15.3) (2026-08-18)
 
 
