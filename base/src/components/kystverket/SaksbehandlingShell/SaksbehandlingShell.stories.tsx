@@ -126,7 +126,7 @@ export const Default: StoryFn<typeof SaksbehandlingShell> = () => {
             </Heading>
             <Box horizontal align="center" gap={4}>
               <Icon material="pin_drop" size="sm" />
-              <Text size="sm">Sandnessjøen havn</Text>
+              <Text data-size="sm">Sandnessjøen havn</Text>
             </Box>
             <Tag data-color="success" data-size="sm">
               Under behandling

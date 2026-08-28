@@ -182,7 +182,7 @@ export type { LinkProps } from './components/designsystemet/Link/Link';
 export { default as Paragraph } from './components/designsystemet/Paragraph/Paragraph';
 export type { ParagraphProps } from './components/designsystemet/Paragraph/Paragraph';
 
-export { default as Text } from './components/designsystemet/Text/Text';
+export { Text } from './components/designsystemet/Text/Text';
 export type { TextProps, TextColor } from './components/designsystemet/Text/Text';
 
 export { default as Table } from './components/designsystemet/Table/Table';

@@ -1,15 +1,24 @@
 import type { Meta, StoryFn, StoryObj } from '@storybook/react-vite';
 import Box from '../../kystverket/Box/box';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
-import { Paragraph, Text, TextProps } from '~/main';
+import { Heading, Paragraph, Text, TextProps } from '~/main';
+
+import { textAlignValues, textColorValues, textTransformValues, textWrapValues } from './Text';
 
 const meta = {
   title: 'Typography/Text',
+  parameters: {
+    docs: {
+      description: {
+        component: 'Denne komponenten tillater for ekstra styling på tekst. Den legger inn et span element',
+      },
+    },
+  },
   component: Text,
   decorators: [StyrbordDecorator],
   tags: ['autodocs'],
   argTypes: {
-    size: {
+    'data-size': {
       control: 'select',
       options: ['xs', 'sm', 'md', 'lg', 'xl'],
     },
@@ -17,16 +26,24 @@ const meta = {
       control: 'select',
       options: [undefined, 'regular', 'medium', 'semibold'],
     },
-    color: {
+    ['data-color']: {
       control: 'select',
-      options: [undefined, 'accent', 'brand1', 'brand2', 'neutral', 'success', 'warning', 'danger', 'info'],
+      options: [undefined, ...textColorValues],
     },
     'data-color-subtle': {
       control: 'boolean',
     },
     textWrap: {
       control: 'select',
-      options: [undefined, 'wrap', 'balance', 'pretty', 'nowrap'],
+      options: [undefined, ...textWrapValues],
+    },
+    textTransform: {
+      control: 'select',
+      options: [undefined, ...textTransformValues],
+    },
+    textAlign: {
+      control: 'select',
+      options: [undefined, ...textAlignValues],
     },
   },
 } satisfies Meta<typeof Text>;
@@ -38,17 +55,17 @@ type Story = StoryObj<typeof meta>;
 export const Preview: Story = {
   args: {
     children: 'Sandnessjøen havn',
-    size: 'md',
+    'data-size': 'md',
   },
 };
 
-const sizes: NonNullable<TextProps['size']>[] = ['xs', 'sm', 'md', 'lg', 'xl'];
+const sizes: NonNullable<TextProps['data-size']>[] = ['xs', 'sm', 'md', 'lg', 'xl'];
 
 export const Sizes: StoryFn<typeof Text> = ({ children, ...rest }) => {
   return (
     <Box gap={8}>
       {sizes.map((size) => (
-        <Text key={size} size={size} {...rest}>
+        <Text key={size} data-size={size} {...rest}>
           {children ?? `Text ${size}`}
         </Text>
       ))}
@@ -75,30 +92,19 @@ export const Weights: StoryFn<typeof Text> = ({ children, ...rest }) => {
 };
 
 Weights.args = {
-  size: 'md',
+  'data-size': 'md',
   children: undefined,
 };
-
-const colors: NonNullable<TextProps['color']>[] = [
-  'accent',
-  'brand1',
-  'brand2',
-  'neutral',
-  'success',
-  'warning',
-  'danger',
-  'info',
-];
 
 export const Colors: StoryFn<typeof Text> = ({ ...rest }) => {
   return (
     <Box gap={16}>
-      {colors.map((color) => (
+      {textColorValues.map((color) => (
         <Box key={color} gap={4}>
-          <Text color={color} {...rest}>
+          <Text fontWeight="semibold" data-color={color} {...rest}>
             {color}
           </Text>
-          <Text color={color} data-color-subtle {...rest}>
+          <Text fontWeight="semibold" data-color={color} data-color-subtle {...rest}>
             {color} subtle
           </Text>
         </Box>
@@ -108,17 +114,15 @@ export const Colors: StoryFn<typeof Text> = ({ ...rest }) => {
 };
 
 Colors.args = {
-  size: 'md',
+  'data-size': 'md',
 };
-
-const textWraps: NonNullable<TextProps['textWrap']>[] = ['wrap', 'balance', 'pretty', 'nowrap'];
 
 export const TextWrap: StoryFn<typeof Text> = ({ children, ...rest }) => {
   return (
     <Box gap={16}>
-      {textWraps.map((textWrap) => (
+      {textWrapValues.map((textWrap) => (
         <Box key={textWrap} width="form" gap={4}>
-          <Text size="sm" fontWeight="medium">
+          <Text data-size="sm" fontWeight="medium">
             {textWrap}
           </Text>
           <Text textWrap={textWrap} {...rest}>
@@ -132,7 +136,47 @@ export const TextWrap: StoryFn<typeof Text> = ({ children, ...rest }) => {
 };
 
 TextWrap.args = {
-  size: 'md',
+  'data-size': 'md',
+  children: undefined,
+};
+
+export const TextTransform: StoryFn<typeof Text> = ({ children, ...rest }) => {
+  return (
+    <Box gap={8}>
+      {textTransformValues.map((textTransform) => (
+        <Text key={textTransform} textTransform={textTransform} {...rest}>
+          {children ?? 'Sandnessjøen havn'}
+        </Text>
+      ))}
+    </Box>
+  );
+};
+
+TextTransform.args = {
+  'data-size': 'md',
+  children: undefined,
+};
+
+export const TextAlign: StoryFn<typeof Text> = ({ children, ...rest }) => {
+  return (
+    <Box gap={16}>
+      {textAlignValues.map((textAlign) => (
+        <Box key={textAlign} width="form" gap={4}>
+          <Text data-size="sm" fontWeight="medium">
+            {textAlign}
+          </Text>
+          <Text textAlign={textAlign} style={{ display: 'block' }} {...rest}>
+            {children ??
+              'Denne teksten brytes over flere linjer for å vise hvordan text-align påvirker justering av tekst.'}
+          </Text>
+        </Box>
+      ))}
+    </Box>
+  );
+};
+
+TextAlign.args = {
+  'data-size': 'md',
   children: undefined,
 };
 
@@ -140,19 +184,15 @@ export const Examples: StoryFn<typeof Text> = () => {
   return (
     <Box gap={24}>
       <Box width="form" gap={8}>
-        <Text size="xl" fontWeight="semibold">
-          Sak 2026-0142 — Søknad om utslippstillatelse
-        </Text>
+        <Heading>
+          <Text data-color="primary">Sak 2026-0142 — Søknad om utslippstillatelse</Text>
+        </Heading>
         <Paragraph size="md">
-          Saken gjelder <Text fontWeight="semibold">utslippstillatelse</Text> for Sandnessjøen havn. Status er{' '}
-          <Text color="warning" fontWeight="medium">
-            under behandling
+          <Text data-color="neutral" fontWeight="medium">
+            Saken gjelder utslippstillatelse for Sandnessjøen havn. Status er under behandling,
+            <br />
+            og saksbehandler har markert fristen som forsinket.
           </Text>
-          , og saksbehandler har markert fristen som{' '}
-          <Text fontWeight="semibold" color="danger">
-            forsinket
-          </Text>
-          .
         </Paragraph>
       </Box>
     </Box>

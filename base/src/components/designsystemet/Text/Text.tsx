@@ -1,49 +1,53 @@
-import { Paragraph as DsParagraph } from '@digdir/designsystemet-react';
+import { Paragraph } from '../Paragraph/Paragraph';
 import { HTMLAttributes } from 'react';
 import { ParagraphProps } from '../Paragraph/Paragraph';
 import paragraphClasses from '../Paragraph/Paragraph.module.css';
 import classes from './Text.module.css';
 
-export type TextColor = 'accent' | 'brand1' | 'brand2' | 'neutral' | 'success' | 'warning' | 'danger' | 'info';
+export const textColorValues = ['primary', 'neutral', 'success', 'warning', 'danger', 'info'] as const;
+export type TextColor = (typeof textColorValues)[number];
 
-export type TextProps = Pick<ParagraphProps, 'size' | 'strong' | 'fontWeight' | 'data-color-subtle'> &
+export const textWrapValues = ['wrap', 'balance', 'pretty', 'nowrap'] as const;
+export const textTransformValues = ['none', 'capitalize', 'uppercase', 'lowercase'] as const;
+export const textAlignValues = ['left', 'center', 'right', 'justify'] as const;
+
+export type TextProps = Pick<ParagraphProps, 'strong' | 'fontWeight' | 'data-color-subtle' | 'data-size' | 'size'> &
   Omit<HTMLAttributes<HTMLSpanElement>, 'color'> & {
-    color?: TextColor;
-    textWrap?: 'wrap' | 'balance' | 'pretty' | 'nowrap';
+    ['data-color']?: TextColor;
+    textWrap?: (typeof textWrapValues)[number];
+    textTransform?: (typeof textTransformValues)[number];
+    textAlign?: (typeof textAlignValues)[number];
   };
 
 export const Text = ({
-  size,
-  strong = false,
   fontWeight,
   'data-color-subtle': colorSubtle = false,
-  color,
+  ['data-color']: color,
   textWrap,
-  className = '',
+  textTransform,
+  textAlign,
+  className,
   style,
   children,
   ...props
 }: TextProps) => {
-  const resolvedFontWeight = fontWeight ?? (strong ? 'medium' : undefined);
   const classNames = [
     className,
-    resolvedFontWeight ? paragraphClasses[`weight-${resolvedFontWeight}`] : '',
+    fontWeight ? paragraphClasses[`weight-${fontWeight}`] : '',
     color ? classes[`color-${color}`] : '',
   ].join(' ');
-  const mergedStyle = textWrap ? { textWrap, ...style } : style;
+  const mergedStyle =
+    textWrap || textTransform || textAlign || style ? { textWrap, textTransform, textAlign, ...style } : undefined;
 
   return (
-    <DsParagraph
+    <Paragraph
       asChild
-      data-size={size}
       data-color-subtle={colorSubtle ? true : undefined}
       className={classNames}
       style={mergedStyle}
       {...props}
     >
       <span>{children}</span>
-    </DsParagraph>
+    </Paragraph>
   );
 };
-
-export default Text;

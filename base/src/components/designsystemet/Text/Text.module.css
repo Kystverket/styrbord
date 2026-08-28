@@ -1,4 +1,12 @@
 @layer styrbord-modules {
+  .color-primary {
+    color: var(--ds-color-primary-text-default);
+  }
+
+  .color-primary[data-color-subtle] {
+    color: var(--ds-color-primary-text-subtle);
+  }
+
   .color-accent {
     color: var(--ds-color-accent-text-default);
   }
