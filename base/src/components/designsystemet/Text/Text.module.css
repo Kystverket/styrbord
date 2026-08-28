@@ -7,30 +7,6 @@
     color: var(--ds-color-primary-text-subtle);
   }
 
-  .color-accent {
-    color: var(--ds-color-accent-text-default);
-  }
-
-  .color-accent[data-color-subtle] {
-    color: var(--ds-color-accent-text-subtle);
-  }
-
-  .color-brand1 {
-    color: var(--ds-color-brand1-text-default);
-  }
-
-  .color-brand1[data-color-subtle] {
-    color: var(--ds-color-brand1-text-subtle);
-  }
-
-  .color-brand2 {
-    color: var(--ds-color-brand2-text-default);
-  }
-
-  .color-brand2[data-color-subtle] {
-    color: var(--ds-color-brand2-text-subtle);
-  }
-
   .color-neutral {
     color: var(--ds-color-neutral-text-default);
   }

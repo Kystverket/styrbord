@@ -11,7 +11,7 @@ export const textWrapValues = ['wrap', 'balance', 'pretty', 'nowrap'] as const;
 export const textTransformValues = ['none', 'capitalize', 'uppercase', 'lowercase'] as const;
 export const textAlignValues = ['left', 'center', 'right', 'justify'] as const;
 
-export type TextProps = Pick<ParagraphProps, 'strong' | 'fontWeight' | 'data-color-subtle' | 'data-size' | 'size'> &
+export type TextProps = Pick<ParagraphProps, 'fontWeight' | 'data-color-subtle' | 'data-size' | 'size'> &
   Omit<HTMLAttributes<HTMLSpanElement>, 'color'> & {
     ['data-color']?: TextColor;
     textWrap?: (typeof textWrapValues)[number];
