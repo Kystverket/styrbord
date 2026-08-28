@@ -23,6 +23,7 @@ export type LabelTypographyProps = TypographyProps & {
   inline?: boolean;
 };
 
+/** @deprecated Replaced by Paragraph, and extended props in Text component*/
 export const Body = Paragraph;
 
 export const Accent = ({ strong, size = 'md', className, children }: AccentTypographyProps) => {
