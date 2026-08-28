@@ -21,29 +21,36 @@ const meta = {
     'data-size': {
       control: 'select',
       options: ['xs', 'sm', 'md', 'lg', 'xl'],
+      table: { defaultValue: { summary: 'arver størrelse fra omgivelsene' } },
     },
     fontWeight: {
       control: 'select',
       options: [undefined, 'regular', 'medium', 'semibold'],
+      table: { defaultValue: { summary: 'regular' } },
     },
     ['data-color']: {
       control: 'select',
       options: [undefined, ...textColorValues],
+      table: { defaultValue: { summary: 'ingen (arver farge)' } },
     },
     'data-color-subtle': {
       control: 'boolean',
+      table: { defaultValue: { summary: 'false' } },
     },
     textWrap: {
       control: 'select',
       options: [undefined, ...textWrapValues],
+      table: { defaultValue: { summary: 'wrap' } },
     },
     textTransform: {
       control: 'select',
       options: [undefined, ...textTransformValues],
+      table: { defaultValue: { summary: 'none' } },
     },
     textAlign: {
       control: 'select',
       options: [undefined, ...textAlignValues],
+      table: { defaultValue: { summary: 'left' } },
     },
   },
 } satisfies Meta<typeof Text>;
