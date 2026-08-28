@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react-vite';
 import { useState } from 'react';
-import { Body, Box, Button, Heading, Icon, Paragraph, Tag } from '~/main';
+import { Body, Box, Button, Heading, Icon, Paragraph, Tag, Text } from '~/main';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { SaksbehandlingShell } from './SaksbehandlingShell';
 import type { SaksbehandlingItem } from './SaksbehandlingShell.types';
@@ -126,9 +126,7 @@ export const Default: StoryFn<typeof SaksbehandlingShell> = () => {
             </Heading>
             <Box horizontal align="center" gap={4}>
               <Icon material="pin_drop" size="sm" />
-              <Body size="sm" inline>
-                Sandnessjøen havn
-              </Body>
+              <Text size="sm">Sandnessjøen havn</Text>
             </Box>
             <Tag data-color="success" data-size="sm">
               Under behandling

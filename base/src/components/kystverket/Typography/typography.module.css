@@ -106,6 +106,26 @@
     font-weight: var(--ds-font-weight-medium);
   }
 
+  .label-xl-semibold {
+    composes: label-xl;
+    font-weight: var(--ds-font-weight-semibold);
+  }
+
+  .label-lg-semibold {
+    composes: label-lg;
+    font-weight: var(--ds-font-weight-semibold);
+  }
+
+  .label-md-semibold {
+    composes: label-md;
+    font-weight: var(--ds-font-weight-semibold);
+  }
+
+  .label-sm-semibold {
+    composes: label-sm;
+    font-weight: var(--ds-font-weight-semibold);
+  }
+
   .accent {
     color: var(--ds-color-neutral-text-subtle);
     text-transform: uppercase;

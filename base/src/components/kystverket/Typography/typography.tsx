@@ -1,17 +1,14 @@
 import { ReactNode } from 'react';
-import { buildTypographyClasses } from './typography.util';
+import { buildTypographyClasses, TypographyFontWeight } from './typography.util';
 import style from './typography.module.css';
+import { Paragraph, ParagraphProps } from '~/components/designsystemet/Paragraph/Paragraph';
 
 export interface TypographyProps {
   className?: string;
   children?: ReactNode | undefined;
 }
 
-export type BodyTypographyProps = TypographyProps & {
-  size?: 'sm' | 'md' | 'lg' | 'xl';
-  strong?: boolean;
-  inline?: boolean;
-};
+export type BodyTypographyProps = ParagraphProps;
 
 export type AccentTypographyProps = TypographyProps & {
   size?: 'sm' | 'md';
@@ -20,24 +17,13 @@ export type AccentTypographyProps = TypographyProps & {
 
 export type LabelTypographyProps = TypographyProps & {
   size?: 'sm' | 'md' | 'lg' | 'xl';
+  /** @deprecated Use `fontWeight="medium"` instead. */
   strong?: boolean;
+  fontWeight?: TypographyFontWeight;
   inline?: boolean;
 };
 
-export const Body = ({ inline, strong, size, className, children }: BodyTypographyProps) => {
-  const classes = buildTypographyClasses({
-    type: 'body',
-    size,
-    strong,
-    inline,
-    className,
-  });
-
-  if (inline) {
-    return <span className={`${classes}`}>{children}</span>;
-  }
-  return <p className={classes}>{children}</p>;
-};
+export const Body = Paragraph;
 
 export const Accent = ({ strong, size = 'md', className, children }: AccentTypographyProps) => {
   const classes = buildTypographyClasses({
@@ -50,11 +36,12 @@ export const Accent = ({ strong, size = 'md', className, children }: AccentTypog
   return <span className={classes}>{children}</span>;
 };
 
-const Label = ({ strong, size, className, children, inline = false }: LabelTypographyProps) => {
+const Label = ({ strong, fontWeight, size, className, children, inline = false }: LabelTypographyProps) => {
   let classes = buildTypographyClasses({
     type: 'label',
     size,
     strong,
+    fontWeight,
     className,
   });
 

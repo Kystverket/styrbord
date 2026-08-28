@@ -179,6 +179,12 @@ export type { TagProps } from './components/designsystemet/Tag/Tag';
 export { Link } from './components/designsystemet/Link/Link';
 export type { LinkProps } from './components/designsystemet/Link/Link';
 
+export { default as Paragraph } from './components/designsystemet/Paragraph/Paragraph';
+export type { ParagraphProps } from './components/designsystemet/Paragraph/Paragraph';
+
+export { default as Text } from './components/designsystemet/Text/Text';
+export type { TextProps, TextColor } from './components/designsystemet/Text/Text';
+
 export { default as Table } from './components/designsystemet/Table/Table';
 
 export { Avatar } from './components/designsystemet/Avatar/Avatar';
@@ -316,8 +322,6 @@ export type {
   PaginationProps,
 } from '@digdir/designsystemet-react';
 export { Pagination, PaginationButton, PaginationItem, PaginationList } from '@digdir/designsystemet-react';
-export type { ParagraphProps } from '@digdir/designsystemet-react';
-export { Paragraph } from '@digdir/designsystemet-react';
 export type { PopoverProps, PopoverTriggerContextProps, PopoverTriggerProps } from '@digdir/designsystemet-react';
 export { Popover, PopoverTrigger, PopoverTriggerContext } from '@digdir/designsystemet-react';
 export type { RadioProps } from '@digdir/designsystemet-react';

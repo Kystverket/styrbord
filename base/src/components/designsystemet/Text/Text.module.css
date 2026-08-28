@@ -1,0 +1,65 @@
+@layer styrbord-modules {
+  .color-accent {
+    color: var(--ds-color-accent-text-default);
+  }
+
+  .color-accent[data-color-subtle] {
+    color: var(--ds-color-accent-text-subtle);
+  }
+
+  .color-brand1 {
+    color: var(--ds-color-brand1-text-default);
+  }
+
+  .color-brand1[data-color-subtle] {
+    color: var(--ds-color-brand1-text-subtle);
+  }
+
+  .color-brand2 {
+    color: var(--ds-color-brand2-text-default);
+  }
+
+  .color-brand2[data-color-subtle] {
+    color: var(--ds-color-brand2-text-subtle);
+  }
+
+  .color-neutral {
+    color: var(--ds-color-neutral-text-default);
+  }
+
+  .color-neutral[data-color-subtle] {
+    color: var(--ds-color-neutral-text-subtle);
+  }
+
+  .color-success {
+    color: var(--ds-color-success-text-default);
+  }
+
+  .color-success[data-color-subtle] {
+    color: var(--ds-color-success-text-subtle);
+  }
+
+  .color-warning {
+    color: var(--ds-color-warning-text-default);
+  }
+
+  .color-warning[data-color-subtle] {
+    color: var(--ds-color-warning-text-subtle);
+  }
+
+  .color-danger {
+    color: var(--ds-color-danger-text-default);
+  }
+
+  .color-danger[data-color-subtle] {
+    color: var(--ds-color-danger-text-subtle);
+  }
+
+  .color-info {
+    color: var(--ds-color-info-text-default);
+  }
+
+  .color-info[data-color-subtle] {
+    color: var(--ds-color-info-text-subtle);
+  }
+}
