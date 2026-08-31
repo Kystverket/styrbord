@@ -1,0 +1,114 @@
+@layer styrbord-modules {
+  .wrapper {
+    display: flex;
+    align-items: stretch;
+    border-radius: 4px;
+  }
+
+  .input {
+    flex: 1 1 auto;
+    min-width: 0;
+    border-radius: 4px;
+    &:disabled,
+    &:read-only {
+      --dsc-input-padding: var(--spacing-4) var(--spacing-16);
+    }
+  }
+
+  .pickerButton {
+    display: none;
+    flex-shrink: 0;
+  }
+
+  /* Firefox can't hide its own icon, so skip the button there entirely */
+  @supports selector(::-webkit-calendar-picker-indicator) {
+    .input::-webkit-calendar-picker-indicator {
+      display: none;
+    }
+
+    .input {
+      --dsc-input-padding: var(--spacing-4) var(--spacing-16);
+      border-right: none;
+      border-radius: 4px 0 0 4px;
+    }
+
+    .pickerButton {
+      display: flex;
+      border-left: none;
+      border-radius: 0 4px 4px 0;
+    }
+  }
+  .input::-webkit-inner-spin-button {
+    display: none;
+  }
+
+  /* Focusing the input rings the whole group, not just the input.
+     Disabled inputs can't match :focus-visible/:hover/:open in any browser,
+     so only [readonly] needs excluding below, never :disabled. */
+  .wrapper:has(.input:focus-visible):not(:has(.input[readonly])) {
+    outline: var(--_ds--focus, var(--dsc-focus-outline));
+    outline-offset: var(--_ds--focus, var(--ds-border-width-focus));
+    box-shadow: var(--_ds--focus, var(--dsc-focus-boxShadow));
+  }
+  .wrapper:has(.input:focus-visible) .input {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Same for hover, skipped while focused/open. --dsc-input-outline-*--hover
+     won't work here (scoped to .ds-input, doesn't inherit up to wrapper) */
+  .wrapper:has(.input:hover):not(:has(.input:focus-visible, .input:open, .input[readonly])) {
+    outline-color: var(--ds-color-neutral-border-default);
+    outline-style: solid;
+    outline-width: var(--ds-border-width-default);
+  }
+  .wrapper:has(.input:hover) .input {
+    outline: none !important;
+  }
+
+  /* Button gets its own ring while its native popup is open, not the group's.
+     readonly inputs can never actually open the popup (blocked in the click
+     handler) so excluded here too, or the button would falsely look "about
+     to open". :focus-visible fallback for browsers without :open support. */
+  .wrapper:has(.input:open:not([readonly])) .pickerButton {
+    /* button sits behind the input otherwise, breaking clicks */
+    z-index: 1;
+    outline: var(--_ds--focus, var(--dsc-focus-outline));
+    outline-offset: var(--_ds--focus, var(--ds-border-width-focus));
+    box-shadow: var(--_ds--focus, var(--dsc-focus-boxShadow));
+  }
+
+  /* :open isn't supported everywhere yet: https://caniuse.com/wf-open-pseudo */
+  @supports not selector(:open) {
+    .wrapper:has(.input:focus-visible:not([readonly])) .pickerButton {
+      outline: var(--_ds--focus, var(--dsc-focus-outline));
+      outline-offset: var(--_ds--focus, var(--ds-border-width-focus));
+      box-shadow: var(--_ds--focus, var(--dsc-focus-boxShadow));
+    }
+  }
+
+  /* readOnly leaves the button enabled (so it isn't dimmed like disabled),
+     so it stays a normal hoverable/pressable button unless pinned down.
+     Raw tokens, not --dsc-input-*--readonly — those are scoped to .ds-input,
+     don't inherit to this sibling button/input. */
+  .input[readonly] {
+    color: var(--ds-color-neutral-text-subtle) !important;
+  }
+  .wrapper:has(.input[readonly]) {
+    opacity: 1;
+  }
+  .wrapper:has(.input[readonly]) .pickerButton,
+  .wrapper:has(.input[readonly]) .pickerButton:hover,
+  .wrapper:has(.input[readonly]) .pickerButton:active {
+    border: 1px solid var(--ds-color-neutral-border-subtle) !important;
+    background-color: var(--ds-color-neutral-surface-tinted) !important;
+    color: var(--ds-color-neutral-text-subtle) !important;
+    cursor: revert;
+  }
+
+  /* A real :disabled button can't reach :hover/:active in any browser, but
+     pin its background anyway in case of forced devtools states */
+  .pickerButton:disabled {
+    background-color: var(--dsc-button-background) !important;
+  }
+}

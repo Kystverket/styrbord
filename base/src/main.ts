@@ -97,11 +97,14 @@ export type { HeaderProps } from './components/kystverket/Header/Header';
 export { HeaderContext, ApplicationHeaderContext } from './components/kystverket/Header/headerContext';
 export type { HeaderContextProps, ApplicationHeaderContextProps } from './components/kystverket/Header/headerContext';
 
-export { Datepicker, type DatepickerProps } from './components/kystverket/Datepicker/Datepicker';
+export { Datepicker, type DatepickerProps } from './components/kystverket/PickerInput/Datepicker/Datepicker';
 
-export { DateTimePicker, type DateTimePickerProps } from './components/kystverket/DateTimePicker/DateTimePicker';
+export {
+  DateTimePicker,
+  type DateTimePickerProps,
+} from './components/kystverket/PickerInput/DateTimePicker/DateTimePicker';
 
-export { TimePicker, type TimePickerProps } from './components/kystverket/TimePicker/TimePicker';
+export { TimePicker, type TimePickerProps } from './components/kystverket/PickerInput/TimePicker/TimePicker';
 
 export {
   FileUploader,

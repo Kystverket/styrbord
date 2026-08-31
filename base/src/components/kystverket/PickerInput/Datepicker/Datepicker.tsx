@@ -2,7 +2,7 @@ import { Field, Input, Label, ValidationMessage } from '@digdir/designsystemet-r
 import { Icon, IconButton, InputSize, LabelContent } from '~/main';
 import { inputSizeClass } from '~/utils/input/input';
 import { useRef } from 'react';
-import styles from '../shared/PickerInput.module.css';
+import styles from '../PickerInput.module.css';
 
 export interface DatepickerProps {
   className?: string;
@@ -73,6 +73,8 @@ export const Datepicker = ({
           color="neutral"
           type="button"
           disabled={props.disabled}
+          tabIndex={props.readOnly ? -1 : 0}
+          aria-hidden={props.readOnly}
           aria-label="Åpne datovelger"
           onClick={() => {
             if (props.readOnly) return;

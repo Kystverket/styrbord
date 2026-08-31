@@ -2,34 +2,37 @@ import { Field, Input, Label, ValidationMessage } from '@digdir/designsystemet-r
 import { Icon, IconButton, InputSize, LabelContent } from '~/main';
 import { inputSizeClass } from '~/utils/input/input';
 import { useRef } from 'react';
-import styles from '../shared/PickerInput.module.css';
+import styles from '../PickerInput.module.css';
 
-export interface TimePickerProps {
+export interface DateTimePickerProps {
   className?: string;
-  loading?: boolean;
-  size?: InputSize;
-  optional?: boolean | string;
-  required?: boolean | string;
+  optional?: boolean | string | undefined;
+  required?: boolean | string | undefined;
   label: string;
   description?: string;
   error?: string;
+  loading?: boolean;
   onBlur?: () => void;
   value: Date | undefined;
   onChange?: (date: Date | undefined) => void;
-  minTime?: Date;
-  maxTime?: Date;
+  minDate?: Date;
+  maxDate?: Date;
+  size?: InputSize;
   disabled?: boolean;
   readOnly?: boolean;
 }
 
-const toTimeString = (date: Date | undefined): string => {
+const toDateTimeString = (date: Date | undefined): string => {
   if (!date) return '';
+  const y = date.getFullYear().toString().padStart(4, '0');
+  const mo = (date.getMonth() + 1).toString().padStart(2, '0');
+  const d = date.getDate().toString().padStart(2, '0');
   const h = date.getHours().toString().padStart(2, '0');
   const mi = date.getMinutes().toString().padStart(2, '0');
-  return `${h}:${mi}`;
+  return `${y}-${mo}-${d}T${h}:${mi}`;
 };
 
-export const TimePicker = ({
+export const DateTimePicker = ({
   size = 'full',
   className,
   label,
@@ -38,10 +41,10 @@ export const TimePicker = ({
   optional,
   onChange,
   value,
-  minTime,
-  maxTime,
+  minDate,
+  maxDate,
   ...props
-}: TimePickerProps) => {
+}: DateTimePickerProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
@@ -54,23 +57,16 @@ export const TimePicker = ({
         <Input
           ref={inputRef}
           className={styles.input}
-          type="time"
-          value={toTimeString(value)}
-          min={toTimeString(minTime)}
-          max={toTimeString(maxTime)}
+          type="datetime-local"
+          value={toDateTimeString(value)}
+          min={toDateTimeString(minDate)}
+          max={toDateTimeString(maxDate)}
           disabled={props.disabled}
           readOnly={props.readOnly}
           onBlur={props.onBlur}
           onChange={(e) => {
             const val = e.target.value;
-            if (!val) {
-              onChange?.(undefined);
-              return;
-            }
-            const [hours, minutes] = val.split(':').map(Number);
-            const next = new Date(value ?? new Date());
-            next.setHours(hours, minutes, 0, 0);
-            onChange?.(next);
+            onChange?.(val ? new Date(val) : undefined);
           }}
         />
         <IconButton
@@ -79,13 +75,15 @@ export const TimePicker = ({
           color="neutral"
           type="button"
           disabled={props.disabled}
-          aria-label="Åpne klokkeslettvelger"
+          tabIndex={props.readOnly ? -1 : 0}
+          aria-hidden={props.readOnly}
+          aria-label="Åpne dato- og klokkeslettvelger"
           onClick={() => {
             if (props.readOnly) return;
             inputRef.current?.showPicker?.();
           }}
         >
-          <Icon material="schedule" />
+          <Icon material="calendar_month" />
         </IconButton>
       </div>
       {props.error && <ValidationMessage>{props.error}</ValidationMessage>}
