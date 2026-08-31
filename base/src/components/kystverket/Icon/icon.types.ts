@@ -89,6 +89,7 @@ export const iconIdList = [
   'format_italic',
   'format_list_bulleted',
   'format_list_numbered',
+  'format_size',
   'forum',
   'forward_to_inbox',
   'forward',

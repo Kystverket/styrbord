@@ -71,6 +71,8 @@ const RichTextAreaContainer = ({
   bottomToolbar,
   optional = false,
   required = false,
+  showToolbar,
+  rows,
   error: externalError,
 }: RichTextAreaProps) => {
   // Owned here so useEditor config can close over them before useRichTextImageUpload is called.
@@ -95,6 +97,7 @@ const RichTextAreaContainer = ({
 
   const normalizedValue = normalizeMarkdownBreakTags(value ?? '');
   const [editorMarkdown, setEditorMarkdown] = useState(normalizedValue);
+  const [isEditorEmpty, setIsEditorEmpty] = useState(!normalizedValue);
   const latestOnChangeRef = useRef(onChange);
   const latestOnUploadRef = useRef(onImageUpload);
   const latestOnRemoveRef = useRef(onImageRemove);
@@ -195,6 +198,7 @@ const RichTextAreaContainer = ({
           latestOnChangeRef.current(transformedMarkdown);
           updateToolbarState(ctx);
         },
+        onEmptyChange: setIsEditorEmpty,
       }),
     [disabled],
   );
@@ -278,7 +282,7 @@ const RichTextAreaContainer = ({
     });
   }, [get]);
 
-  const showPlaceholder = !normalizedValue && Boolean(placeholder);
+  const showPlaceholder = isEditorEmpty && Boolean(placeholder);
 
   return (
     <Fieldset>
@@ -295,6 +299,8 @@ const RichTextAreaContainer = ({
             classes.editorWrapper,
             displayedError && classes.editorWrapperError,
             disabled && classes.editorWrapperDisabled,
+            rows === 'sm' && classes.rowsSm,
+            rows === 'lg' && classes.rowsLg,
           ]
             .filter(Boolean)
             .join(' ')}
@@ -322,6 +328,7 @@ const RichTextAreaContainer = ({
                 wrapCommand: wrapInBulletListCommand,
               })
             }
+            showToolbar={showToolbar}
             onOrderedList={() =>
               toggleList({
                 isTargetListActive: toolbarState.isOrderedListActive,

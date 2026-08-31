@@ -1,5 +1,34 @@
 # Changelog
 
+## [1.16.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.15.3...styrbord-v1.16.0) (2026-08-24)
+
+
+### Features
+
+* **base:** add checked state to Avatar ([#286](https://github.com/Kystverket/styrbord/issues/286)) ([2963381](https://github.com/Kystverket/styrbord/commit/2963381d71bfa4fb784a0d66dd25ef22b2588f27))
+* **base:** Gjøre SideSheet mer responsive, legge inn utils i main ([#284](https://github.com/Kystverket/styrbord/issues/284)) ([57ea7e8](https://github.com/Kystverket/styrbord/commit/57ea7e887fadfdae5ccfcbe9e1fc0666d7937cd8))
+
+## [1.15.3](https://github.com/Kystverket/styrbord/compare/styrbord-v1.15.2...styrbord-v1.15.3) (2026-08-18)
+
+
+### Bug Fixes
+
+* **base:** Add counter for maxLength on TextArea ([#282](https://github.com/Kystverket/styrbord/issues/282)) ([b39172b](https://github.com/Kystverket/styrbord/commit/b39172b56d67e18f32e92ed7c5bd829565eefde9))
+
+## [1.15.2](https://github.com/Kystverket/styrbord/compare/styrbord-v1.15.1...styrbord-v1.15.2) (2026-08-13)
+
+
+### Bug Fixes
+
+* **base:** RichTextArea improvements ([#280](https://github.com/Kystverket/styrbord/issues/280)) ([478e168](https://github.com/Kystverket/styrbord/commit/478e1685e5debf504575a4ffbb7d107a0f1a528b))
+
+## [1.15.1](https://github.com/Kystverket/styrbord/compare/styrbord-v1.15.0...styrbord-v1.15.1) (2026-08-11)
+
+
+### Bug Fixes
+
+* **base:** Fikse litt styling på saksbehandlingshell ([#278](https://github.com/Kystverket/styrbord/issues/278)) ([4d576f0](https://github.com/Kystverket/styrbord/commit/4d576f0907c57d759c49cf207d35c82be707adb6))
+
 ## [1.15.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.14.5...styrbord-v1.15.0) (2026-08-10)
 
 

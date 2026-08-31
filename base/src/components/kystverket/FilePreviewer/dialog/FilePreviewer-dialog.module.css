@@ -101,11 +101,14 @@
   margin: 10px 0;
   overflow: hidden;
   outline-offset: 3px;
+
   border-radius: var(--ds-border-radius-default);
 
   background-color: var(--ds-color-neutral-surface-active);
+
   & span {
     color: var(--ds-color-neutral-text-subtle);
+    margin: auto;
   }
 }
 

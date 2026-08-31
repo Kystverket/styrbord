@@ -7,6 +7,9 @@
   border: 0;
   border-bottom: 1px solid var(--ds-color-neutral-surface-hover);
 }
+.formatSelectButton {
+  display: none;
+}
 
 .divider {
   width: 1px;
@@ -61,4 +64,22 @@
 
 .formatField:not(:has(.formatSelect:disabled)):active .formatButton {
   background: var(--ds-color-neutral-surface-active);
+}
+
+.hiddenSelect {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@container Wrapper (width < 600px) {
+  .formatSelectWrapper {
+    display: none;
+  }
+  .formatSelectButton {
+    display: revert;
+  }
 }

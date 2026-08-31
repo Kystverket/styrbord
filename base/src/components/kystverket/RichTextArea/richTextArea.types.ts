@@ -6,6 +6,8 @@ export type RichTextAreaProps = {
   onChange: (markdown: string) => void;
   placeholder?: string;
   disabled?: boolean;
+  /** Editor height in lines. Defaults to a medium height. */
+  rows?: 'sm' | 'md' | 'lg';
   className?: string;
   label?: string;
   description?: string | React.ReactNode;
@@ -15,6 +17,7 @@ export type RichTextAreaProps = {
   /** Used for the bottomToolbar */
   bottomToolbar?: ReactNode;
   /** Optional upload handler that returns a display src and optional stable image ref. */
+  showToolbar?: boolean;
   onImageUpload?: OnImageUploadFn;
   /** Optional remove handler for deleting persisted images by stable ref. */
   onImageRemove?: (ref: string) => Promise<void>;

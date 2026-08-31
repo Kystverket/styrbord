@@ -11,6 +11,14 @@ export { AIS_SHIP_TYPES, getShipTypeByAisCode, getShipTypeById } from './data/ai
 export type { AisShipType, AisShipTypeEntry, AisShipTypeId, AisCode } from './data/ais/shipTypes';
 
 //^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\
+//  Utilities
+//^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\
+
+export { useMediaQuery, TABLET_SIZE_BREAKPOINT, PHONE_SIZE_BREAKPOINT } from './utils/useMediaQuery';
+export { convertBytesToReadable } from './utils/convertBytesToReadable';
+export { IdProvider, useIdProvider } from './utils/idContext';
+
+//^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\
 //  Komponenter som er på vei ut
 //^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\_/^\
 
@@ -184,16 +192,12 @@ export type { AvatarProps } from './components/designsystemet/Avatar/Avatar';
 export { AvatarStack } from './components/designsystemet/AvatarStack/AvatarStack';
 export type { AvatarStackProps } from './components/designsystemet/AvatarStack/AvatarStack';
 
-export { IdProvider, useIdProvider } from './utils/idContext';
-
 export { SlotDialog, type SlotDialogProps } from './components/kystverket/SlotDialog/SlotDialog';
 
 export { SideSheet, type SideSheetProps } from './components/kystverket/SideSheet/SideSheet';
 export type {
   SideSheetSize,
   SideSheetPlacement,
-  SideSheetMode,
-  SideSheetHeadingSize,
   SideSheetLayoutProps,
 } from './components/kystverket/SideSheet/SideSheet.types';
 
@@ -226,7 +230,6 @@ export {
   useCheckboxGroup,
   useDebounceCallback,
   useIsomorphicLayoutEffect,
-  useMediaQuery,
   usePagination,
   useRadioGroup,
   useSynchronizedAnimation,

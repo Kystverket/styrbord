@@ -1,8 +1,8 @@
-import { forwardRef, useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { Heading } from '@digdir/designsystemet-react';
-import { Box, Button, Tooltip } from '~/main';
+import { forwardRef, useCallback, useContext, useEffect, useId, useRef, useState } from 'react';
+import { Box, Button, Heading, PHONE_SIZE_BREAKPOINT, Tooltip, useMediaQuery } from '~/main';
 import { useTranslation } from '~/translations';
 import Icon from '~/components/kystverket/Icon/icon';
+import { useBodyScrollLock } from '~/hooks/useBodyScrollLock';
 import { SideSheetButtonsContext, SideSheetButtonsProvider } from './Buttons/ButtonsContext';
 import { SideSheetButtons } from './Buttons/SideSheetButtons';
 import { SideSheetLayout, useSideSheetLayoutContext } from './Layout/SideSheetLayout';
@@ -42,18 +42,80 @@ function SideSheetButtonsBlock({ footerDivider }: Readonly<{ footerDivider: bool
   );
 }
 
+interface EdgeClamp {
+  top: number;
+  height: number;
+}
+
+/**
+ * Pinned/push mode only: caps the sheet's height to however much of its containing element
+ * (typically `SideSheet.Layout`) is *actually* visible in the viewport right now - measured via
+ * the container's own `getBoundingClientRect()`, not a manually declared pixel offset. Full
+ * height whenever the container fills the viewport; shrinks automatically as the container's
+ * own top/bottom move on screen (e.g. scrolled near the top or bottom of a taller page).
+ *
+ * Position itself is untouched - native `position: sticky` (from SideSheet.module.css) already
+ * keeps it correctly confined to the container; this only fixes the height, since sticky never
+ * resizes an element on its own, only repositions it.
+ */
+function useDynamicEdgeClamp(elRef: React.RefObject<HTMLElement | null>, enabled: boolean) {
+  const [clamp, setClamp] = useState<EdgeClamp | null>(null);
+
+  useEffect(() => {
+    if (!enabled) {
+      setClamp(null);
+      return;
+    }
+    const container = elRef.current?.parentElement;
+    if (!container) return;
+
+    let frame = 0;
+    function measure() {
+      frame = 0;
+      const rect = container!.getBoundingClientRect();
+      const top = Math.max(rect.top, 0);
+      const bottom = Math.min(rect.bottom, window.innerHeight);
+      setClamp({ top, height: Math.max(bottom - top, 0) });
+    }
+    function schedule() {
+      if (frame) return;
+      frame = requestAnimationFrame(measure);
+    }
+
+    schedule();
+    window.addEventListener('scroll', schedule, true);
+    window.addEventListener('resize', schedule);
+
+    // ResizeObserver also catches container resizes not tied to a window resize/scroll (e.g. a
+    // sibling collapsing). Not universally available - the scroll/resize listeners above already
+    // cover the common cases, so just skip it rather than throwing where it's missing.
+    const resizeObserver = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(schedule) : undefined;
+    resizeObserver?.observe(container);
+
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', schedule, true);
+      window.removeEventListener('resize', schedule);
+      resizeObserver?.disconnect();
+    };
+  }, [elRef, enabled]);
+
+  return clamp;
+}
+
 function trapFocus(sheetEl: HTMLElement, event: KeyboardEvent) {
   if (event.key !== 'Tab') return;
   const focusable = Array.from(sheetEl.querySelectorAll<HTMLElement>(FOCUSABLE));
   if (!focusable.length) return;
   const first = focusable[0];
   const last = focusable[focusable.length - 1];
+  const active = document.activeElement;
   if (event.shiftKey) {
-    if (document.activeElement === first) {
+    if (active === first || active === sheetEl) {
       event.preventDefault();
       last.focus();
     }
-  } else if (document.activeElement === last) {
+  } else if (active === last || active === sheetEl) {
     event.preventDefault();
     first.focus();
   }
@@ -65,14 +127,12 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
     onClose,
     placement = 'right',
     size = 'md',
-    mode = 'overlay',
     pinnable = false,
     pinned: pinnedProp,
-    defaultPinned,
+    defaultPinned = false,
     onPinnedChange,
     backdrop = true,
     title,
-    headingSize = 'xs',
     showCloseButton = true,
     showBackButton = false,
     onBack,
@@ -86,13 +146,12 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
   ref,
 ) {
   const { t } = useTranslation();
+  const titleId = useId();
   const inLayout = useSideSheetLayoutContext();
-
   const isControlled = pinnedProp !== undefined;
-  const [pinnedState, setPinnedState] = useState<boolean>(
-    defaultPinned === undefined ? mode === 'push' : defaultPinned,
-  );
-  const isPinned = isControlled ? pinnedProp : pinnedState;
+  const [pinnedState, setPinnedState] = useState<boolean>(defaultPinned);
+  const isPhone = useMediaQuery(`(width < ${PHONE_SIZE_BREAKPOINT})`);
+  const isPinned = (isControlled ? pinnedProp : pinnedState) && !isPhone;
 
   function handlePinToggle() {
     const next = !isPinned;
@@ -102,13 +161,13 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
 
   // Warn when push/pin is used without a layout wrapper
   useEffect(() => {
-    if ((pinnable || mode === 'push') && !inLayout) {
+    if ((pinnable || defaultPinned) && !inLayout) {
       console.warn(
-        '<SideSheet> with pinnable or mode="push" should be rendered inside <SideSheet.Layout> ' +
+        '<SideSheet> with pinnable or defaultPinned should be rendered inside <SideSheet.Layout> ' +
           'so it can reflow sibling content when pinned.',
       );
     }
-  }, [inLayout, mode, pinnable]);
+  }, [inLayout, defaultPinned, pinnable]);
 
   // Focus management
   const sheetRef = useRef<HTMLElement>(null);
@@ -117,22 +176,26 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
     if (typeof ref === 'function') ref(el);
     else if (ref) (ref as React.MutableRefObject<HTMLElement | null>).current = el;
   };
+
+  const edgeClamp = useDynamicEdgeClamp(sheetRef, isPinned);
+
   const previousFocusRef = useRef<Element | null>(null);
 
   const isModal = open && !isPinned && backdrop;
+  useBodyScrollLock(isModal);
 
   useEffect(() => {
     if (open) {
       previousFocusRef.current = document.activeElement;
-      requestAnimationFrame(() => {
-        if (!sheetRef.current) return;
-        const first = sheetRef.current.querySelector<HTMLElement>(FOCUSABLE);
-        first?.focus();
-      });
+      if (isModal) {
+        requestAnimationFrame(() => {
+          sheetRef.current?.focus();
+        });
+      }
     } else if (previousFocusRef.current instanceof HTMLElement) {
       previousFocusRef.current.focus();
     }
-  }, [open]);
+  }, [open, isModal]);
 
   useEffect(() => {
     if (!isModal || !sheetRef.current) return;
@@ -164,6 +227,12 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
     .filter(Boolean)
     .join(' ');
 
+  // Pinned/push mode: keep native position: sticky (unaffected, still confined to Layout on its
+  // own), just cap maxHeight to however much of Layout is currently visible in the viewport.
+  // Overlay (unpinned) mode: always 100% of the viewport (plain CSS on .overlay) - opening it
+  // locks page scroll (useBodyScrollLock), so there's no scroll position to react to anyway.
+  const sheetStyle = edgeClamp ? { ...style, maxHeight: edgeClamp.height } : style;
+
   function getPinIcon() {
     return isPinned ? 'keep_off' : 'keep';
   }
@@ -181,13 +250,15 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
       <aside
         ref={combinedRef}
         className={sheetClasses}
-        style={style}
+        style={sheetStyle}
         role="dialog"
         aria-modal={isModal}
+        tabIndex={-1}
         aria-label={typeof title === 'string' ? title : undefined}
+        aria-labelledby={title && typeof title !== 'string' ? titleId : undefined}
         aria-hidden={!open}
       >
-        {title || showBackButton ? (
+        {(title || showBackButton) && (
           <header className={classes.header}>
             <div className={classes.headerRow}>
               {showBackButton && (
@@ -206,17 +277,15 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
               )}
 
               {title !== undefined && (
-                <div className={classes.headerTitle}>
-                  <Heading data-size={headingSize} style={{ margin: 0 }}>
-                    {title}
-                  </Heading>
+                <div id={titleId} className={classes.headerTitle}>
+                  {typeof title === 'string' ? <Heading data-size="sm">{title}</Heading> : title}
                 </div>
               )}
 
               <div className={classes.headerActions}>
                 {headerAction}
 
-                {pinnable && (
+                {pinnable && !isPhone && (
                   <Tooltip content={isPinned ? t('sideSheet.unpin') : t('sideSheet.pin')} placement="bottom">
                     <Button
                       variant="ghost"
@@ -251,8 +320,6 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
 
             {headerDivider && <hr className={classes.headerDivider} />}
           </header>
-        ) : (
-          <></>
         )}
         <div className={classes.body}>{children}</div>
 
