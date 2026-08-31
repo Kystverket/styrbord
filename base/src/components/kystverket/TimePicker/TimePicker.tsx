@@ -4,7 +4,7 @@ import { inputSizeClass } from '~/utils/input/input';
 import { useRef } from 'react';
 import styles from '../shared/PickerInput.module.css';
 
-export interface DatepickerProps {
+export interface TimePickerProps {
   className?: string;
   loading?: boolean;
   size?: InputSize;
@@ -16,21 +16,20 @@ export interface DatepickerProps {
   onBlur?: () => void;
   value: Date | undefined;
   onChange?: (date: Date | undefined) => void;
-  minDate?: Date;
-  maxDate?: Date;
+  minTime?: Date;
+  maxTime?: Date;
   disabled?: boolean;
   readOnly?: boolean;
 }
 
-const toDateString = (date: Date | undefined): string => {
+const toTimeString = (date: Date | undefined): string => {
   if (!date) return '';
-  const y = date.getFullYear().toString().padStart(4, '0');
-  const m = (date.getMonth() + 1).toString().padStart(2, '0');
-  const d = date.getDate().toString().padStart(2, '0');
-  return `${y}-${m}-${d}`;
+  const h = date.getHours().toString().padStart(2, '0');
+  const mi = date.getMinutes().toString().padStart(2, '0');
+  return `${h}:${mi}`;
 };
 
-export const Datepicker = ({
+export const TimePicker = ({
   size = 'full',
   className,
   label,
@@ -39,10 +38,10 @@ export const Datepicker = ({
   optional,
   onChange,
   value,
-  minDate,
-  maxDate,
+  minTime,
+  maxTime,
   ...props
-}: DatepickerProps) => {
+}: TimePickerProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
@@ -55,16 +54,23 @@ export const Datepicker = ({
         <Input
           ref={inputRef}
           className={styles.input}
-          type="date"
-          value={toDateString(value)}
-          min={toDateString(minDate)}
-          max={toDateString(maxDate)}
+          type="time"
+          value={toTimeString(value)}
+          min={toTimeString(minTime)}
+          max={toTimeString(maxTime)}
           disabled={props.disabled}
           readOnly={props.readOnly}
           onBlur={props.onBlur}
           onChange={(e) => {
             const val = e.target.value;
-            onChange?.(val ? new Date(val + 'T00:00:00') : undefined);
+            if (!val) {
+              onChange?.(undefined);
+              return;
+            }
+            const [hours, minutes] = val.split(':').map(Number);
+            const next = new Date(value ?? new Date());
+            next.setHours(hours, minutes, 0, 0);
+            onChange?.(next);
           }}
         />
         <IconButton
@@ -73,13 +79,13 @@ export const Datepicker = ({
           color="neutral"
           type="button"
           disabled={props.disabled}
-          aria-label="Åpne datovelger"
+          aria-label="Åpne klokkeslettvelger"
           onClick={() => {
             if (props.readOnly) return;
             inputRef.current?.showPicker?.();
           }}
         >
-          <Icon material="calendar_month" />
+          <Icon material="schedule" />
         </IconButton>
       </div>
       {props.error && <ValidationMessage>{props.error}</ValidationMessage>}

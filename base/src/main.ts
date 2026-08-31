@@ -101,6 +101,8 @@ export { Datepicker, type DatepickerProps } from './components/kystverket/Datepi
 
 export { DateTimePicker, type DateTimePickerProps } from './components/kystverket/DateTimePicker/DateTimePicker';
 
+export { TimePicker, type TimePickerProps } from './components/kystverket/TimePicker/TimePicker';
+
 export {
   FileUploader,
   type FileUploaderProps,

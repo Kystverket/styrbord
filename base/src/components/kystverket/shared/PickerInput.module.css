@@ -1,0 +1,85 @@
+@layer styrbord-modules {
+  .wrapper {
+    display: flex;
+    align-items: stretch;
+    border-radius: 4px;
+  }
+
+  .input {
+    flex: 1 1 auto;
+    min-width: 0;
+    border-radius: 4px;
+    &:disabled,
+    &:read-only {
+      --dsc-input-padding: var(--spacing-4) var(--spacing-16);
+    }
+  }
+
+  .pickerButton {
+    display: none;
+    flex-shrink: 0;
+  }
+
+  /* Firefox can't hide its own icon, so skip the button there entirely */
+  @supports selector(::-webkit-calendar-picker-indicator) {
+    .input::-webkit-calendar-picker-indicator {
+      display: none;
+    }
+
+    .input {
+      --dsc-input-padding: var(--spacing-4) var(--spacing-16);
+      border-radius: 4px 0 0 4px;
+      border-right: none;
+    }
+
+    .pickerButton {
+      display: flex;
+      border-radius: 0 4px 4px 0;
+      border-left: none;
+    }
+  }
+  .input::-webkit-inner-spin-button {
+    display: none;
+  }
+
+  /* Focusing the input rings the whole group, not just the input */
+  .wrapper:has(.input:focus-visible) {
+    box-shadow: var(--_ds--focus, var(--dsc-focus-boxShadow));
+    outline: var(--_ds--focus, var(--dsc-focus-outline));
+    outline-offset: var(--_ds--focus, var(--ds-border-width-focus));
+  }
+  .wrapper:has(.input:focus-visible) .input {
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
+  /* Same for hover, skipped while focused/open. --dsc-input-outline-*--hover
+     won't work here (scoped to .ds-input, doesn't inherit up to wrapper) */
+  .wrapper:has(.input:hover):not(:has(.input:focus-visible, .input:open)) {
+    outline-color: var(--ds-color-neutral-border-default);
+    outline-width: var(--ds-border-width-default);
+    outline-style: solid;
+  }
+  .wrapper:has(.input:hover) .input {
+    outline: none !important;
+  }
+
+  /* Button gets its own ring while its native popup is open, not the group's.
+     :focus-visible fallback for browsers without :open support yet. */
+  .wrapper:has(.input:open) .pickerButton {
+    box-shadow: var(--_ds--focus, var(--dsc-focus-boxShadow));
+    outline: var(--_ds--focus, var(--dsc-focus-outline));
+    outline-offset: var(--_ds--focus, var(--ds-border-width-focus));
+    /* button sits behind the input otherwise, breaking clicks */
+    z-index: 1;
+  }
+
+  /* :open isn't supported everywhere yet: https://caniuse.com/wf-open-pseudo */
+  @supports not selector(:open) {
+    .wrapper:has(.input:focus-visible) .pickerButton {
+      box-shadow: var(--_ds--focus, var(--dsc-focus-boxShadow));
+      outline: var(--_ds--focus, var(--dsc-focus-outline));
+      outline-offset: var(--_ds--focus, var(--ds-border-width-focus));
+    }
+  }
+}

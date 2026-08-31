@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Datepicker, DatepickerProps } from './Datepicker';
+import { TimePicker, TimePickerProps } from './TimePicker';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { useState } from 'react';
 
-const Wrapper = (props: DatepickerProps) => {
+const Wrapper = (props: TimePickerProps) => {
   const [value, setValue] = useState<Date | undefined>(props.value);
 
   const onChange = (v: Date | undefined) => {
@@ -11,11 +11,11 @@ const Wrapper = (props: DatepickerProps) => {
     props.onChange?.(v);
   };
 
-  return <Datepicker {...props} value={value} onChange={onChange} />;
+  return <TimePicker {...props} value={value} onChange={onChange} />;
 };
 
 const meta = {
-  title: 'Form/Datepicker',
+  title: 'Form/TimePicker',
   component: Wrapper,
   decorators: [StyrbordDecorator, (Story) => <Story />],
   tags: ['autodocs', 'kyv'],
@@ -26,9 +26,10 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const defaultProps: DatepickerProps = {
-  label: 'Datepicker',
+const defaultProps: TimePickerProps = {
+  label: 'TimePicker',
   description: 'Description',
+  size: 'fit',
   value: undefined,
   onChange: (date) => console.log('onChange ', date),
 };
@@ -55,34 +56,6 @@ export const Required: Story = {
 
 export const WithError: Story = {
   args: { ...defaultProps, value: new Date(), error: 'Error message' },
-};
-
-export const WithMinDate: Story = {
-  args: {
-    ...defaultProps,
-    label: 'Dato fra i dag',
-    description: 'Kun framtidige datoer kan velges',
-    minDate: new Date(),
-  },
-};
-
-export const WithMaxDate: Story = {
-  args: {
-    ...defaultProps,
-    label: 'Dato til i dag',
-    description: 'Kun tidligere og dagens dato kan velges',
-    maxDate: new Date(),
-  },
-};
-
-export const WithMinAndMaxDate: Story = {
-  args: {
-    ...defaultProps,
-    label: 'Velg dato innen 2 uker',
-    description: 'Du kan velge dato fra i dag og inntil 2 uker frem i tid',
-    minDate: new Date(),
-    maxDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 2 weeks from today
-  },
 };
 
 export const Disabled: Story = {

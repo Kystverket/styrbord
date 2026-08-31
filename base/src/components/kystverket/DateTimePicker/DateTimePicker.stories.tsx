@@ -90,3 +90,18 @@ export const WithMinAndMaxDate: Story = {
 export const Disabled: Story = {
   args: { ...defaultProps, value: new Date(), disabled: true },
 };
+
+export const ReadOnly: Story = {
+  args: { ...defaultProps, value: new Date(), readOnly: true },
+};
+
+export const States: Story = {
+  args: defaultProps,
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <Wrapper {...defaultProps} label="Default" value={new Date()} />
+      <Wrapper {...defaultProps} label="Disabled" value={new Date()} disabled />
+      <Wrapper {...defaultProps} label="Read only" value={new Date()} readOnly />
+    </div>
+  ),
+};
