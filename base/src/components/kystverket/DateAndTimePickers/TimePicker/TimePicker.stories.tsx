@@ -2,6 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { TimePicker, TimePickerProps } from './TimePicker';
 import StyrbordDecorator from '../../../../../storybook/styrbordDecorator';
 import { useState } from 'react';
+import { InputSize } from '~/utils/input/input';
+
+const sizes: InputSize[] = ['2xs', 'xs', 'sm', 'md', 'lg', 'fit', 'full'];
 
 const Wrapper = (props: TimePickerProps) => {
   const [value, setValue] = useState<Date | undefined>(props.value);
@@ -19,7 +22,12 @@ const meta = {
   component: Wrapper,
   decorators: [StyrbordDecorator, (Story) => <Story />],
   tags: ['autodocs', 'kyv'],
-  argTypes: {},
+  argTypes: {
+    size: {
+      control: 'select',
+      options: sizes,
+    },
+  },
 } satisfies Meta<typeof Wrapper>;
 
 export default meta;
@@ -29,8 +37,8 @@ type Story = StoryObj<typeof meta>;
 const defaultProps: TimePickerProps = {
   label: 'TimePicker',
   description: 'Description',
-  size: 'fit',
   value: undefined,
+  size: 'full',
   onChange: (date) => console.log('onChange ', date),
 };
 

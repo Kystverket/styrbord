@@ -2,6 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { DateTimePicker, DateTimePickerProps } from './DateTimePicker';
 import StyrbordDecorator from '../../../../../storybook/styrbordDecorator';
 import { useState } from 'react';
+import { InputSize } from '~/utils/input/input';
+
+const sizes: InputSize[] = ['2xs', 'xs', 'sm', 'md', 'lg', 'fit', 'full'];
 
 const Wrapper = (props: DateTimePickerProps) => {
   const [value, setValue] = useState<Date | undefined>(props.value);
@@ -19,7 +22,12 @@ const meta = {
   component: Wrapper,
   decorators: [StyrbordDecorator, (Story) => <Story />],
   tags: ['autodocs', 'kyv'],
-  argTypes: {},
+  argTypes: {
+    size: {
+      control: 'select',
+      options: sizes,
+    },
+  },
 } satisfies Meta<typeof Wrapper>;
 
 export default meta;
@@ -30,6 +38,7 @@ const defaultProps: DateTimePickerProps = {
   label: 'DateTimePicker',
   description: 'Description',
   value: undefined,
+  size: 'full',
   onChange: (date) => console.log('onChange ', date),
 };
 
