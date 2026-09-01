@@ -6,9 +6,9 @@ export type AllSizes = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 
 export type TypographyColor = 'accent' | 'neutral';
 
-export type TypographyFontWeight = 'regular' | 'medium' | 'semibold';
+export type TypographyWeight = 'regular' | 'medium' | 'semibold';
 
-const fontWeightSuffix: Record<TypographyFontWeight, string> = {
+const weightSuffix: Record<TypographyWeight, string> = {
   regular: '',
   medium: '-strong',
   semibold: '-semibold',
@@ -17,9 +17,9 @@ const fontWeightSuffix: Record<TypographyFontWeight, string> = {
 type BuildTypographyProps = {
   type: TypographyPrefix;
   size?: AllSizes;
-  /** @deprecated Use `fontWeight="medium"` instead. */
+  /** @deprecated Use `weight="medium"` instead. */
   strong?: boolean;
-  fontWeight?: TypographyFontWeight;
+  weight?: TypographyWeight;
   inline?: boolean;
   color?: TypographyColor;
   margin?: boolean;
@@ -30,14 +30,14 @@ export const buildTypographyClasses = ({
   type,
   size = 'md',
   strong = false,
-  fontWeight,
+  weight,
   inline = false,
   className,
 }: BuildTypographyProps): string => {
-  const resolvedWeight = fontWeight ?? (strong ? 'medium' : undefined);
+  const resolvedWeight = weight ?? (strong ? 'medium' : undefined);
   return [
     typography[type],
-    typography[`${type}-${size}${resolvedWeight ? fontWeightSuffix[resolvedWeight] : ''}`],
+    typography[`${type}-${size}${resolvedWeight ? weightSuffix[resolvedWeight] : ''}`],
     inline ? typography.inline : '',
     className ?? '',
   ].join(' ');

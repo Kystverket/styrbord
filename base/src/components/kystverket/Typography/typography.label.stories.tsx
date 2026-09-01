@@ -23,28 +23,28 @@ const defaultProps: BoxProps = {
         tekst. Den får font-weight: 400 i Figma men det korrekte skal være 500. Gyldige font-vekter for kystinn er 300,
         500 og 700
       </Body>
-      <Typography.Label size="xl" fontWeight="semibold">
+      <Typography.Label size="xl" weight="semibold">
         Label XL Semibold
       </Typography.Label>
-      <Typography.Label size="lg" fontWeight="semibold">
+      <Typography.Label size="lg" weight="semibold">
         Label Large Semibold
       </Typography.Label>
-      <Typography.Label size="md" fontWeight="semibold">
+      <Typography.Label size="md" weight="semibold">
         Label Medium Semibold
       </Typography.Label>
-      <Typography.Label size="sm" fontWeight="semibold">
+      <Typography.Label size="sm" weight="semibold">
         Label Small Semibold
       </Typography.Label>
-      <Typography.Label size="xl" fontWeight="medium">
+      <Typography.Label size="xl" weight="medium">
         Label XL Medium
       </Typography.Label>
-      <Typography.Label size="lg" fontWeight="medium">
+      <Typography.Label size="lg" weight="medium">
         Label Large Medium
       </Typography.Label>
-      <Typography.Label size="md" fontWeight="medium">
+      <Typography.Label size="md" weight="medium">
         Label Medium Medium
       </Typography.Label>
-      <Typography.Label size="sm" fontWeight="medium">
+      <Typography.Label size="sm" weight="medium">
         Label Small Medium
       </Typography.Label>
       <Typography.Label size="xl">Label XL Large</Typography.Label>

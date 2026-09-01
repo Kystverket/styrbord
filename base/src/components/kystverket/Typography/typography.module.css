@@ -156,4 +156,14 @@
     composes: accent-sm;
     font-weight: var(--ds-font-weight-medium);
   }
+
+  .accent-md-semibold {
+    composes: accent-md;
+    font-weight: var(--ds-font-weight-semibold);
+  }
+
+  .accent-sm-semibold {
+    composes: accent-sm;
+    font-weight: var(--ds-font-weight-semibold);
+  }
 }

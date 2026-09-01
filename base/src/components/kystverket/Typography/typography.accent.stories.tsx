@@ -25,11 +25,17 @@ const defaultProps: BoxProps = {
       </Body>
       <Accent size="md">Accent Medium</Accent>
       <Accent size="sm">Accent Small</Accent>
-      <Accent size="md" strong>
-        Accent Medium strong
+      <Accent size="md" weight="medium">
+        Accent Medium Medium
       </Accent>
-      <Accent size="sm" strong>
-        Accent Small strong
+      <Accent size="sm" weight="medium">
+        Accent Small Medium
+      </Accent>
+      <Accent size="md" weight="semibold">
+        Accent Medium Semibold
+      </Accent>
+      <Accent size="sm" weight="semibold">
+        Accent Small Semibold
       </Accent>
     </Box>
   ),
