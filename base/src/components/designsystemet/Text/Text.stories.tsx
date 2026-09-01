@@ -3,7 +3,7 @@ import Box from '../../kystverket/Box/box';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Heading, Paragraph, Text, TextProps } from '~/main';
 
-import { textAlignValues, textColorValues, textTransformValues, textWrapValues } from './Text';
+import { colorValues, textAlignValues, textTransformValues, textWrapValues } from './Text';
 
 const meta = {
   title: 'Typography/Text',
@@ -23,31 +23,31 @@ const meta = {
       options: ['xs', 'sm', 'md', 'lg', 'xl'],
       table: { defaultValue: { summary: 'arver størrelse fra omgivelsene' } },
     },
-    fontWeight: {
+    weight: {
       control: 'select',
       options: [undefined, 'regular', 'medium', 'semibold'],
       table: { defaultValue: { summary: 'regular' } },
     },
     ['data-color']: {
       control: 'select',
-      options: [undefined, ...textColorValues],
+      options: [undefined, ...colorValues],
       table: { defaultValue: { summary: 'ingen (arver farge)' } },
     },
     'data-color-subtle': {
       control: 'boolean',
       table: { defaultValue: { summary: 'false' } },
     },
-    textWrap: {
+    wrap: {
       control: 'select',
       options: [undefined, ...textWrapValues],
       table: { defaultValue: { summary: 'wrap' } },
     },
-    textTransform: {
+    transform: {
       control: 'select',
       options: [undefined, ...textTransformValues],
       table: { defaultValue: { summary: 'none' } },
     },
-    textAlign: {
+    align: {
       control: 'select',
       options: [undefined, ...textAlignValues],
       table: { defaultValue: { summary: 'left' } },
@@ -84,13 +84,13 @@ Sizes.args = {
   children: undefined,
 };
 
-const weights: NonNullable<TextProps['fontWeight']>[] = ['regular', 'medium', 'semibold'];
+const weights: NonNullable<TextProps['weight']>[] = ['regular', 'medium', 'semibold'];
 
 export const Weights: StoryFn<typeof Text> = ({ children, ...rest }) => {
   return (
     <Box gap={8}>
       {weights.map((fontWeight) => (
-        <Text key={fontWeight} fontWeight={fontWeight} {...rest}>
+        <Text key={fontWeight} weight={fontWeight} {...rest}>
           {children ?? `Text ${fontWeight}`}
         </Text>
       ))}
@@ -106,12 +106,12 @@ Weights.args = {
 export const Colors: StoryFn<typeof Text> = ({ ...rest }) => {
   return (
     <Box gap={16}>
-      {textColorValues.map((color) => (
+      {colorValues.map((color) => (
         <Box key={color} gap={4}>
-          <Text fontWeight="semibold" data-color={color} {...rest}>
+          <Text weight="semibold" data-color={color} {...rest}>
             {color}
           </Text>
-          <Text fontWeight="semibold" data-color={color} data-color-subtle {...rest}>
+          <Text weight="semibold" data-color={color} data-color-subtle {...rest}>
             {color} subtle
           </Text>
         </Box>
@@ -129,10 +129,10 @@ export const TextWrap: StoryFn<typeof Text> = ({ children, ...rest }) => {
     <Box gap={16}>
       {textWrapValues.map((textWrap) => (
         <Box key={textWrap} width="form" gap={4}>
-          <Text data-size="sm" fontWeight="medium">
+          <Text data-size="sm" weight="medium">
             {textWrap}
           </Text>
-          <Text textWrap={textWrap} {...rest}>
+          <Text wrap={textWrap} {...rest}>
             {children ??
               'Denne teksten brytes over flere linjer for å vise hvordan text-wrap påvirker linjeskift og lesbarhet.'}
           </Text>
@@ -151,7 +151,7 @@ export const TextTransform: StoryFn<typeof Text> = ({ children, ...rest }) => {
   return (
     <Box gap={8}>
       {textTransformValues.map((textTransform) => (
-        <Text key={textTransform} textTransform={textTransform} {...rest}>
+        <Text key={textTransform} transform={textTransform} {...rest}>
           {children ?? 'Sandnessjøen havn'}
         </Text>
       ))}
@@ -169,10 +169,10 @@ export const TextAlign: StoryFn<typeof Text> = ({ children, ...rest }) => {
     <Box gap={16}>
       {textAlignValues.map((textAlign) => (
         <Box key={textAlign} width="form" gap={4}>
-          <Text data-size="sm" fontWeight="medium">
+          <Text data-size="sm" weight="medium">
             {textAlign}
           </Text>
-          <Text textAlign={textAlign} style={{ display: 'block' }} {...rest}>
+          <Text align={textAlign} style={{ display: 'block' }} {...rest}>
             {children ??
               'Denne teksten brytes over flere linjer for å vise hvordan text-align påvirker justering av tekst.'}
           </Text>
@@ -195,7 +195,7 @@ export const Examples: StoryFn<typeof Text> = () => {
           <Text data-color="primary">Sak 2026-0142 — Søknad om utslippstillatelse</Text>
         </Heading>
         <Paragraph size="md">
-          <Text data-color="neutral" fontWeight="medium">
+          <Text data-color="neutral" weight="medium">
             Saken gjelder utslippstillatelse for Sandnessjøen havn. Status er under behandling,
             <br />
             og saksbehandler har markert fristen som forsinket.

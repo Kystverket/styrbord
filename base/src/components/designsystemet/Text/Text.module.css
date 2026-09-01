@@ -1,49 +1,5 @@
 @layer styrbord-modules {
-  .color-primary {
-    color: var(--ds-color-primary-text-default);
-  }
-
-  .color-primary[data-color-subtle] {
-    color: var(--ds-color-primary-text-subtle);
-  }
-
-  .color-neutral {
-    color: var(--ds-color-neutral-text-default);
-  }
-
-  .color-neutral[data-color-subtle] {
-    color: var(--ds-color-neutral-text-subtle);
-  }
-
-  .color-success {
-    color: var(--ds-color-success-text-default);
-  }
-
-  .color-success[data-color-subtle] {
-    color: var(--ds-color-success-text-subtle);
-  }
-
-  .color-warning {
-    color: var(--ds-color-warning-text-default);
-  }
-
-  .color-warning[data-color-subtle] {
-    color: var(--ds-color-warning-text-subtle);
-  }
-
-  .color-danger {
-    color: var(--ds-color-danger-text-default);
-  }
-
-  .color-danger[data-color-subtle] {
-    color: var(--ds-color-danger-text-subtle);
-  }
-
-  .color-info {
-    color: var(--ds-color-info-text-default);
-  }
-
-  .color-info[data-color-subtle] {
-    color: var(--ds-color-info-text-subtle);
+  .color {
+    color: var(--sb-text-color);
   }
 }

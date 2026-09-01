@@ -13,7 +13,7 @@ const meta = {
       control: 'select',
       options: ['xs', 'sm', 'md', 'lg', 'xl'],
     },
-    fontWeight: {
+    weight: {
       control: 'select',
       options: [undefined, 'regular', 'medium', 'semibold'],
     },
@@ -51,30 +51,30 @@ const defaultProps: BoxProps = {
         <Paragraph data-size="xs">Paragraph XSmall</Paragraph>
       </Box>
       <Box gap={16}>
-        <Paragraph size="xl" fontWeight="semibold">
+        <Paragraph size="xl" weight="semibold">
           Paragraph Semibold XLarge
         </Paragraph>
-        <Paragraph size="lg" fontWeight="semibold">
+        <Paragraph size="lg" weight="semibold">
           Paragraph Semibold Large
         </Paragraph>
-        <Paragraph size="md" fontWeight="semibold">
+        <Paragraph size="md" weight="semibold">
           Paragraph Semibold Medium
         </Paragraph>
-        <Paragraph size="sm" fontWeight="semibold">
+        <Paragraph size="sm" weight="semibold">
           Paragraph Semibold Small
         </Paragraph>
       </Box>
       <Box gap={16}>
-        <Paragraph size="xl" fontWeight="medium">
+        <Paragraph size="xl" weight="medium">
           Paragraph Medium XLarge
         </Paragraph>
-        <Paragraph size="lg" fontWeight="medium">
+        <Paragraph size="lg" weight="medium">
           Paragraph Medium Large
         </Paragraph>
-        <Paragraph size="md" fontWeight="medium">
+        <Paragraph size="md" weight="medium">
           Paragraph Medium Medium
         </Paragraph>
-        <Paragraph size="sm" fontWeight="medium">
+        <Paragraph size="sm" weight="medium">
           Paragraph Medium Small
         </Paragraph>
       </Box>

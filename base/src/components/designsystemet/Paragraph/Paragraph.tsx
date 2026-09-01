@@ -5,20 +5,20 @@ export type ParagraphProps = DsParagraphProps & {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   /** @deprecated Use `fontWeight="medium"` instead. */
   strong?: boolean;
-  fontWeight?: 'regular' | 'medium' | 'semibold';
+  weight?: 'regular' | 'medium' | 'semibold';
   'data-color-subtle'?: boolean;
 };
 
 export const Paragraph = ({
   size,
   strong = false,
-  fontWeight,
+  weight,
   'data-color-subtle': colorSubtle = false,
   className = '',
   children,
   ...props
 }: ParagraphProps) => {
-  const resolvedFontWeight = fontWeight ?? (strong ? 'medium' : undefined);
+  const resolvedFontWeight = weight ?? (strong ? 'medium' : undefined);
   const classNames = [className, resolvedFontWeight ? classes[`weight-${resolvedFontWeight}`] : ''].join(' ');
 
   return (
