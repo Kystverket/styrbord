@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.17.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.16.0...styrbord-v1.17.0) (2026-09-01)
+
+
+### Features
+
+* **base:** Legg til ny Text komponent, deprecate Body ([#287](https://github.com/Kystverket/styrbord/issues/287)) ([80d84d9](https://github.com/Kystverket/styrbord/commit/80d84d9fae7ffce894a5a40776230da9476f781a))
+* **base:** Legg til TimePicker komponent & Legg til bedre usability for alle "pickers" på nettlesere som støtter dette ([#288](https://github.com/Kystverket/styrbord/issues/288)) ([5bb0740](https://github.com/Kystverket/styrbord/commit/5bb07407434322b77547540dda3dc58af27550f1))
+
 ## [1.16.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.15.3...styrbord-v1.16.0) (2026-08-24)
 
 
