@@ -45,7 +45,7 @@ export const TimePicker = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <Field className={`${className} ${inputSizeClass(size)}`}>
+    <Field className={[className, inputSizeClass(size)].filter(Boolean).join(' ')}>
       <Label style={{ display: 'block', width: 'fit-content' }}>
         <LabelContent text={label} required={required} optional={optional} loading={loading} />
       </Label>
