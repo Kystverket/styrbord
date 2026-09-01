@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from "react";
-import maplibregl from "maplibre-gl";
+import * as maplibregl from "maplibre-gl";
 import type { CoordinateDirectionValue } from "~/components/CoordinateDirectionField/CoordinateDirectionField.types";
 import { clampDirection } from "~/utility/coordinate";
 import {
