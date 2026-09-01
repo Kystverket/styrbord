@@ -183,7 +183,7 @@ export { default as Paragraph } from './components/designsystemet/Paragraph/Para
 export type { ParagraphProps } from './components/designsystemet/Paragraph/Paragraph';
 
 export { Text } from './components/designsystemet/Text/Text';
-export type { TextProps, TextColor } from './components/designsystemet/Text/Text';
+export type { TextProps } from './components/designsystemet/Text/Text';
 
 export { default as Table } from './components/designsystemet/Table/Table';
 
