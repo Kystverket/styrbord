@@ -4,7 +4,7 @@ import paragraphClasses from '../Paragraph/Paragraph.module.css';
 import classes from './Text.module.css';
 import { styrbordSemanticColors, styrbordPaletteColors } from '@kystverket/styrbord-tokens/colors';
 
-export const colorValues = [...styrbordSemanticColors, ...styrbordPaletteColors];
+export const colorValues = [...styrbordSemanticColors, ...styrbordPaletteColors] as const;
 export const textWrapValues = ['wrap', 'balance', 'pretty', 'nowrap'] as const;
 export const textTransformValues = ['none', 'capitalize', 'uppercase', 'lowercase'] as const;
 export const textAlignValues = ['left', 'center', 'right', 'justify'] as const;
