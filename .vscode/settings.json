@@ -31,8 +31,7 @@
     "statusBarItem.remoteForeground": "#e7e7e7",
     "titleBar.activeBackground": "#5d2549",
     "titleBar.activeForeground": "#e7e7e7",
-    "titleBar.inactiveBackground": "#5d254999",
-    "titleBar.inactiveForeground": "#e7e7e799"
+    "titleBar.inactiveBackground": "#5d254999"
   },
   "peacock.remoteColor": "#5d2549",
   "i18n-ally.keystyle": "nested"

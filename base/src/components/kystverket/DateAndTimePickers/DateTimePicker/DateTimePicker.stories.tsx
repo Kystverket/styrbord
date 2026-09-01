@@ -1,9 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Datepicker, DatepickerProps } from './Datepicker';
-import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
+import { DateTimePicker, DateTimePickerProps } from './DateTimePicker';
+import StyrbordDecorator from '../../../../../storybook/styrbordDecorator';
 import { useState } from 'react';
+import { InputSize } from '~/utils/input/input';
 
-const Wrapper = (props: DatepickerProps) => {
+const sizes: InputSize[] = ['2xs', 'xs', 'sm', 'md', 'lg', 'fit', 'full'];
+
+const Wrapper = (props: DateTimePickerProps) => {
   const [value, setValue] = useState<Date | undefined>(props.value);
 
   const onChange = (v: Date | undefined) => {
@@ -11,25 +14,31 @@ const Wrapper = (props: DatepickerProps) => {
     props.onChange?.(v);
   };
 
-  return <Datepicker {...props} value={value} onChange={onChange} />;
+  return <DateTimePicker {...props} value={value} onChange={onChange} />;
 };
 
 const meta = {
-  title: 'Form/Datepicker',
+  title: 'Form/DateTimePicker',
   component: Wrapper,
   decorators: [StyrbordDecorator, (Story) => <Story />],
   tags: ['autodocs', 'kyv'],
-  argTypes: {},
+  argTypes: {
+    size: {
+      control: 'select',
+      options: sizes,
+    },
+  },
 } satisfies Meta<typeof Wrapper>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const defaultProps: DatepickerProps = {
-  label: 'Datepicker',
+const defaultProps: DateTimePickerProps = {
+  label: 'DateTimePicker',
   description: 'Description',
   value: undefined,
+  size: 'full',
   onChange: (date) => console.log('onChange ', date),
 };
 
@@ -37,12 +46,6 @@ export const Default: Story = {
   args: defaultProps,
 };
 
-export const WithoutDescription: Story = {
-  args: { ...defaultProps, description: '' },
-};
-export const WithValue: Story = {
-  args: { ...defaultProps, value: new Date() },
-};
 export const Optional: Story = {
   args: { ...defaultProps, value: new Date(), optional: true },
 };
@@ -51,6 +54,14 @@ export const OptionalText: Story = {
 };
 export const Required: Story = {
   args: { ...defaultProps, value: new Date(), required: true },
+};
+
+export const WithoutDescription: Story = {
+  args: { ...defaultProps, description: '' },
+};
+
+export const WithValue: Story = {
+  args: { ...defaultProps, value: new Date() },
 };
 
 export const WithError: Story = {
@@ -87,4 +98,8 @@ export const WithMinAndMaxDate: Story = {
 
 export const Disabled: Story = {
   args: { ...defaultProps, value: new Date(), disabled: true },
+};
+
+export const ReadOnly: Story = {
+  args: { ...defaultProps, value: new Date(), readOnly: true },
 };

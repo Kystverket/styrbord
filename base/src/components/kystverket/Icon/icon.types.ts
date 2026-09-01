@@ -160,6 +160,7 @@ export const iconIdList = [
   'right_panel_open',
   'sailing',
   'save',
+  'schedule',
   'send_and_archive',
   'send',
   'settings_input_antenna',
