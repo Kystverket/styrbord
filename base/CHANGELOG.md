@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.17.1](https://github.com/Kystverket/styrbord/compare/styrbord-v1.17.0...styrbord-v1.17.1) (2026-09-01)
+
+
+### Bug Fixes
+
+* **base:** Eksportere MaterialIconProps ([80a58fa](https://github.com/Kystverket/styrbord/commit/80a58fa33428463de62d8d227e414eef18d94059))
+
 ## [1.17.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.16.0...styrbord-v1.17.0) (2026-09-01)
 
 
