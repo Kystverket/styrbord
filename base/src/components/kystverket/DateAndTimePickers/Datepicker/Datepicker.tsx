@@ -1,13 +1,15 @@
 import { Field, Input, Label, ValidationMessage } from '@digdir/designsystemet-react';
-import { InputSize, LabelContent } from '~/main';
+import { Icon, IconButton, InputSize, LabelContent } from '~/main';
 import { inputSizeClass } from '~/utils/input/input';
+import { useRef } from 'react';
+import styles from '../PickerInput.module.css';
 
 export interface DatepickerProps {
   className?: string;
   loading?: boolean;
   size?: InputSize;
-  optional?: boolean | string | undefined;
-  required?: boolean | string | undefined;
+  optional?: boolean | string;
+  required?: boolean | string;
   label: string;
   description?: string;
   error?: string;
@@ -17,6 +19,7 @@ export interface DatepickerProps {
   minDate?: Date;
   maxDate?: Date;
   disabled?: boolean;
+  readOnly?: boolean;
 }
 
 const toDateString = (date: Date | undefined): string => {
@@ -40,24 +43,47 @@ export const Datepicker = ({
   maxDate,
   ...props
 }: DatepickerProps) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   return (
     <Field className={`${className} ${inputSizeClass(size)}`}>
       <Label style={{ display: 'block', width: 'fit-content' }}>
         <LabelContent text={label} required={required} optional={optional} loading={loading} />
       </Label>
       {props.description && <Field.Description>{props.description}</Field.Description>}
-      <Input
-        type="date"
-        value={toDateString(value)}
-        min={toDateString(minDate)}
-        max={toDateString(maxDate)}
-        disabled={props.disabled}
-        onBlur={props.onBlur}
-        onChange={(e) => {
-          const val = e.target.value;
-          onChange?.(val ? new Date(val + 'T00:00:00') : undefined);
-        }}
-      />
+      <div className={styles.wrapper}>
+        <Input
+          ref={inputRef}
+          className={styles.input}
+          type="date"
+          value={toDateString(value)}
+          min={toDateString(minDate)}
+          max={toDateString(maxDate)}
+          disabled={props.disabled}
+          readOnly={props.readOnly}
+          onBlur={props.onBlur}
+          onChange={(e) => {
+            const val = e.target.value;
+            onChange?.(val ? new Date(val + 'T00:00:00') : undefined);
+          }}
+        />
+        <IconButton
+          className={styles.pickerButton}
+          variant="outline"
+          color="neutral"
+          type="button"
+          disabled={props.disabled}
+          tabIndex={props.readOnly ? -1 : 0}
+          aria-hidden={props.readOnly}
+          aria-label="Åpne datovelger"
+          onClick={() => {
+            if (props.readOnly) return;
+            inputRef.current?.showPicker?.();
+          }}
+        >
+          <Icon material="calendar_month" />
+        </IconButton>
+      </div>
       {props.error && <ValidationMessage>{props.error}</ValidationMessage>}
     </Field>
   );

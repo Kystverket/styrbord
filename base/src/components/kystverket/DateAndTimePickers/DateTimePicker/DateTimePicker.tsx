@@ -1,6 +1,8 @@
 import { Field, Input, Label, ValidationMessage } from '@digdir/designsystemet-react';
-import { LabelContent } from '~/main';
-import { InputSize, inputSizeClass } from '~/utils/input/input';
+import { Icon, IconButton, InputSize, LabelContent } from '~/main';
+import { inputSizeClass } from '~/utils/input/input';
+import { useRef } from 'react';
+import styles from '../PickerInput.module.css';
 
 export interface DateTimePickerProps {
   className?: string;
@@ -17,6 +19,7 @@ export interface DateTimePickerProps {
   maxDate?: Date;
   size?: InputSize;
   disabled?: boolean;
+  readOnly?: boolean;
 }
 
 const toDateTimeString = (date: Date | undefined): string => {
@@ -42,24 +45,47 @@ export const DateTimePicker = ({
   maxDate,
   ...props
 }: DateTimePickerProps) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   return (
     <Field className={`${className} ${inputSizeClass(size)}`}>
       <Label style={{ display: 'block', width: 'fit-content' }}>
         <LabelContent text={label} required={required} optional={optional} loading={loading} />
       </Label>
       {props.description && <Field.Description>{props.description}</Field.Description>}
-      <Input
-        type="datetime-local"
-        value={toDateTimeString(value)}
-        min={toDateTimeString(minDate)}
-        max={toDateTimeString(maxDate)}
-        disabled={props.disabled}
-        onBlur={props.onBlur}
-        onChange={(e) => {
-          const val = e.target.value;
-          onChange?.(val ? new Date(val) : undefined);
-        }}
-      />
+      <div className={styles.wrapper}>
+        <Input
+          ref={inputRef}
+          className={styles.input}
+          type="datetime-local"
+          value={toDateTimeString(value)}
+          min={toDateTimeString(minDate)}
+          max={toDateTimeString(maxDate)}
+          disabled={props.disabled}
+          readOnly={props.readOnly}
+          onBlur={props.onBlur}
+          onChange={(e) => {
+            const val = e.target.value;
+            onChange?.(val ? new Date(val) : undefined);
+          }}
+        />
+        <IconButton
+          className={styles.pickerButton}
+          variant="outline"
+          color="neutral"
+          type="button"
+          disabled={props.disabled}
+          tabIndex={props.readOnly ? -1 : 0}
+          aria-hidden={props.readOnly}
+          aria-label="Åpne dato- og klokkeslettvelger"
+          onClick={() => {
+            if (props.readOnly) return;
+            inputRef.current?.showPicker?.();
+          }}
+        >
+          <Icon material="calendar_month" />
+        </IconButton>
+      </div>
       {props.error && <ValidationMessage>{props.error}</ValidationMessage>}
     </Field>
   );
