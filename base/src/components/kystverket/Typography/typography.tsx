@@ -1,60 +1,51 @@
 import { ReactNode } from 'react';
-import { buildTypographyClasses } from './typography.util';
+import { buildTypographyClasses, TypographyWeight } from './typography.util';
 import style from './typography.module.css';
+import { Paragraph, ParagraphProps } from '~/components/designsystemet/Paragraph/Paragraph';
 
 export interface TypographyProps {
   className?: string;
   children?: ReactNode | undefined;
 }
 
-export type BodyTypographyProps = TypographyProps & {
-  size?: 'sm' | 'md' | 'lg' | 'xl';
-  strong?: boolean;
-  inline?: boolean;
-};
+export type BodyTypographyProps = ParagraphProps;
 
 export type AccentTypographyProps = TypographyProps & {
   size?: 'sm' | 'md';
+  /** @deprecated Use `weight="medium"` instead. */
   strong?: boolean;
+  weight?: TypographyWeight;
 };
 
 export type LabelTypographyProps = TypographyProps & {
   size?: 'sm' | 'md' | 'lg' | 'xl';
+  /** @deprecated Use `weight="medium"` instead. */
   strong?: boolean;
+  weight?: TypographyWeight;
   inline?: boolean;
 };
 
-export const Body = ({ inline, strong, size, className, children }: BodyTypographyProps) => {
-  const classes = buildTypographyClasses({
-    type: 'body',
-    size,
-    strong,
-    inline,
-    className,
-  });
+/** @deprecated Replaced by Paragraph, and extended props in Text component*/
+export const Body = Paragraph;
 
-  if (inline) {
-    return <span className={`${classes}`}>{children}</span>;
-  }
-  return <p className={classes}>{children}</p>;
-};
-
-export const Accent = ({ strong, size = 'md', className, children }: AccentTypographyProps) => {
+export const Accent = ({ strong, weight, size = 'md', className, children }: AccentTypographyProps) => {
   const classes = buildTypographyClasses({
     type: 'accent',
     size,
     strong,
+    weight,
     className,
   });
 
   return <span className={classes}>{children}</span>;
 };
 
-const Label = ({ strong, size, className, children, inline = false }: LabelTypographyProps) => {
+const Label = ({ strong, weight, size, className, children, inline = false }: LabelTypographyProps) => {
   let classes = buildTypographyClasses({
     type: 'label',
     size,
     strong,
+    weight,
     className,
   });
 

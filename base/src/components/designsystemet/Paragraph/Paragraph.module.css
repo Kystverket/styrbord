@@ -1,0 +1,17 @@
+@layer styrbord-modules {
+  .weight-regular {
+    font-weight: var(--ds-font-weight-regular);
+  }
+
+  .weight-medium {
+    font-weight: var(--ds-font-weight-medium);
+  }
+
+  .weight-semibold {
+    font-weight: var(--ds-font-weight-semibold);
+  }
+
+  :global(:where(.ds-paragraph))[data-color-subtle] {
+    color: var(--ds-color-neutral-text-subtle);
+  }
+}

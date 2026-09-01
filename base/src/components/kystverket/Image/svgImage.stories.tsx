@@ -141,7 +141,7 @@ export const Showcase: StoryFn = () => {
       {images.map(([elementName, Element]) => (
         <tr key={elementName}>
           <td style={{ padding: '0.5rem' }}>
-            <Body strong>&lt;{elementName} /&gt;</Body>
+            <Body weight="medium">&lt;{elementName} /&gt;</Body>
           </td>
           {variants.map((variant) => (
             <td style={{ padding: '0.5rem' }}>{<Element data-color={variant} />}</td>

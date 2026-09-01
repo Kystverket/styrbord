@@ -1,0 +1,5 @@
+@layer styrbord-modules {
+  .color {
+    color: var(--sb-text-color);
+  }
+}
