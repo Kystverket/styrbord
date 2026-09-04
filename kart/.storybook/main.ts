@@ -31,6 +31,15 @@ const config: StorybookConfig = {
   viteFinal: async (viteFinalConfig) => {
     viteFinalConfig.optimizeDeps = {
       ...viteFinalConfig.optimizeDeps,
+      // maplibre-gl v6 locates its worker chunk at runtime via
+      // `new URL("./maplibre-gl-worker.mjs", import.meta.url)`. Vite's dep
+      // optimizer only pre-bundles the main entry, so that URL points into
+      // the deps directory at a file that was never emitted. Serving
+      // maplibre-gl straight from node_modules keeps the worker next to it.
+      exclude: [
+        ...(viteFinalConfig.optimizeDeps?.exclude ?? []),
+        "maplibre-gl",
+      ],
       esbuildOptions: {
         ...viteFinalConfig.optimizeDeps?.esbuildOptions,
         target: "es2022",

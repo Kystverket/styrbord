@@ -7,7 +7,7 @@ import type {
   Geometry,
   GeoJsonProperties,
 } from "geojson";
-import type maplibregl from "maplibre-gl";
+import type * as maplibregl from "maplibre-gl";
 
 import mapStyles from "~/components/shared/MapPicker.module.css";
 import editorStyles from "./GeoJsonEditor.module.css";
@@ -691,11 +691,11 @@ export function GeoJsonEditor({
     };
 
     map.on("mousemove", handleMouseMove);
-    map.on("mouseleave", handleMouseLeave);
+    map.on("mouseout", handleMouseLeave);
 
     return () => {
       map.off("mousemove", handleMouseMove);
-      map.off("mouseleave", handleMouseLeave);
+      map.off("mouseout", handleMouseLeave);
       map.getCanvas().style.cursor = "";
     };
   }, [mapRef, mapReady, disabled, hoverable]);

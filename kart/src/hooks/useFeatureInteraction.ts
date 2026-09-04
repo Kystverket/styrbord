@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import type { Feature, GeoJsonProperties, Geometry } from "geojson";
-import type maplibregl from "maplibre-gl";
+import type * as maplibregl from "maplibre-gl";
 
 /**
  * A GeoJSON feature with an optional numeric ID for MapLibre compatibility.
@@ -234,12 +234,12 @@ export function useFeatureInteraction({
 
     // Register event handlers
     map.on("mousemove", handleMouseMove);
-    map.on("mouseleave", handleMouseLeave);
+    map.on("mouseout", handleMouseLeave);
     map.on("click", handleClick);
 
     return () => {
       map.off("mousemove", handleMouseMove);
-      map.off("mouseleave", handleMouseLeave);
+      map.off("mouseout", handleMouseLeave);
       map.off("click", handleClick);
       map.getCanvas().style.cursor = "";
     };
