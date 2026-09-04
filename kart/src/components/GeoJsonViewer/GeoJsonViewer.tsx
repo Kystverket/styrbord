@@ -22,8 +22,11 @@ import { useWmsFeatureInfo } from "~/hooks/useWmsFeatureInfo";
 import type { Coordinate } from "~/utility/types";
 import {
   DEFAULT_STYLE,
+  DEFAULT_POINTER_POINT_HIT_RADIUS,
+  DEFAULT_TOUCH_POINT_HIT_RADIUS,
   FILL_LAYER,
   LINE_LAYER,
+  POINT_HIT_LAYER,
   POINT_LAYER,
   POINT_STROKE_LAYER,
   SOURCE_ID,
@@ -76,11 +79,23 @@ export function GeoJsonViewer({
   onCoordinateClick,
   showCenterAction,
   getLabel = DEFAULT_GET_LABEL,
+  pointHitRadius,
 }: GeoJsonViewerProps) {
   const layerStyle: Required<GeoJsonStyle> = {
     ...DEFAULT_STYLE,
     ...styleProp,
   };
+
+  // Default hit-area radius is bigger on touch devices so points stay easy to tap
+  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
+  useEffect(() => {
+    setIsCoarsePointer(window.matchMedia("(pointer: coarse)").matches);
+  }, []);
+  const effectivePointHitRadius =
+    pointHitRadius ??
+    (isCoarsePointer
+      ? DEFAULT_TOUCH_POINT_HIT_RADIUS
+      : DEFAULT_POINTER_POINT_HIT_RADIUS);
 
   // Strip foreign members and normalise to FeatureCollection
   const fc = useMemo(() => toFeatureCollection(data), [data]);
@@ -263,6 +278,21 @@ export function GeoJsonViewer({
           });
         }
 
+        // Invisible, larger circle used only for hover/click hit-testing —
+        // keeps the visible point small while the tap target stays big.
+        if (!map.getLayer(POINT_HIT_LAYER)) {
+          map.addLayer({
+            id: POINT_HIT_LAYER,
+            type: "circle",
+            source: SOURCE_ID,
+            layout: { visibility: "visible" },
+            paint: {
+              "circle-radius": effectivePointHitRadius,
+              "circle-opacity": 0,
+            },
+          });
+        }
+
         // Add highlight layers for hover and selection effects
         addHighlightLayers(map, layerStyle);
 
@@ -306,6 +336,21 @@ export function GeoJsonViewer({
       removeLayers(map);
     };
   }, [fc, mapVersion]);
+
+  // Keep the invisible hit-area radius in sync if it changes after the
+  // point-hit layer was first created (e.g. `isCoarsePointer` resolving
+  // after mount).
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !layersReady) return;
+    if (map.getLayer(POINT_HIT_LAYER)) {
+      map.setPaintProperty(
+        POINT_HIT_LAYER,
+        "circle-radius",
+        effectivePointHitRadius,
+      );
+    }
+  }, [effectivePointHitRadius, layersReady, mapRef]);
 
   // ----- Feature labels -----
   // Renders a symbol layer with labels computed via getLabel().
