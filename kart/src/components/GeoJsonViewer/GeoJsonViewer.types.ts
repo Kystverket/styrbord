@@ -90,6 +90,16 @@ export interface GeoJsonViewerProps extends MapBaseProps {
   fitBoundsPadding?: number;
   /** Styling overrides for the rendered GeoJSON layers. */
   geoJsonStyle?: GeoJsonStyle;
+  /**
+   * Radius (in pixels) of the invisible hit area used for hovering/clicking
+   * point features — independent of `geoJsonStyle.pointRadius`, which only
+   * controls the visible dot size. Lets points stay visually small while
+   * remaining easy to tap on mobile.
+   *
+   * Defaults to `22` on touch (coarse pointer) devices and `14` on mouse
+   * (fine pointer) devices.
+   */
+  pointHitRadius?: number;
   /** Additional CSS class applied to the root element. */
   className?: string;
   /** Whether to show the layer toggle control on the map. Defaults to `false`. */
