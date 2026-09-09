@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.18.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.17.1...styrbord-v1.18.0) (2026-09-09)
+
+
+### Features
+
+* mulig å skru av border og radius på alert ([#293](https://github.com/Kystverket/styrbord/issues/293)) ([88e5d4b](https://github.com/Kystverket/styrbord/commit/88e5d4b7787857310faa0661330c68dc13d0ce1b))
+
 ## [1.17.1](https://github.com/Kystverket/styrbord/compare/styrbord-v1.17.0...styrbord-v1.17.1) (2026-09-01)
 
 
