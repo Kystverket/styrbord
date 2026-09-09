@@ -12,7 +12,7 @@ type FileUploadActionsProps = {
   allowedFileTypes: string[];
 } & Pick<
   FileUploaderProps,
-  'variant' | 'existingFilesProvider' | 'withCaptureButton' | 'multiple' | 'hideDefaultUpload'
+  'variant' | 'existingFilesProvider' | 'withCaptureButton' | 'multiple' | 'hideDefaultUploadButton'
 >;
 
 export function FileUploadActions({
@@ -25,15 +25,15 @@ export function FileUploadActions({
   allowedFileTypes,
   withCaptureButton,
   multiple,
-  hideDefaultUpload,
+  hideDefaultUploadButton,
   t,
 }: FileUploadActionsProps) {
   const [isDropzoneActive, setIsDropzoneActive] = useState(false);
   const [canUseCamera, setCanUseCamera] = useState(false);
 
-  if (process.env.NODE_ENV !== 'production' && hideDefaultUpload && !withCaptureButton && !existingFilesProvider) {
+  if (process.env.NODE_ENV !== 'production' && hideDefaultUploadButton && !withCaptureButton && !existingFilesProvider) {
     console.warn(
-      'FileUploader: hideDefaultUpload is set but neither withCaptureButton nor existingFilesProvider is enabled — no upload action will be rendered.',
+      'FileUploader: hideDefaultUploadButton is set but neither withCaptureButton nor existingFilesProvider is enabled — no upload action will be rendered.',
     );
   }
 
@@ -85,7 +85,7 @@ export function FileUploadActions({
         onChange={onChangeFileUpload}
       />
       <Box gap={4} mt={8}>
-        {!hideDefaultUpload && variant === 'dropzone' && (
+        {!hideDefaultUploadButton && variant === 'dropzone' && (
           <div
             role="button"
             aria-label={t('dropzoneText')}
@@ -115,7 +115,7 @@ export function FileUploadActions({
           </div>
         )}
         <Box gap={8} className={classes.buttonRow} horizontal wrap>
-          {!hideDefaultUpload && variant === 'buttons' && (
+          {!hideDefaultUploadButton && variant === 'buttons' && (
             <Button
               className={`${classes.uploadButton}`}
               variant="outline"
