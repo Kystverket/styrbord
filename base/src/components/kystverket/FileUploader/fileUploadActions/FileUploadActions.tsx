@@ -31,12 +31,7 @@ export function FileUploadActions({
   const [isDropzoneActive, setIsDropzoneActive] = useState(false);
   const [canUseCamera, setCanUseCamera] = useState(false);
 
-  if (
-    process.env.NODE_ENV !== 'production' &&
-    hideDefaultUpload &&
-    !withCaptureButton &&
-    !existingFilesProvider
-  ) {
+  if (process.env.NODE_ENV !== 'production' && hideDefaultUpload && !withCaptureButton && !existingFilesProvider) {
     console.warn(
       'FileUploader: hideDefaultUpload is set but neither withCaptureButton nor existingFilesProvider is enabled — no upload action will be rendered.',
     );
