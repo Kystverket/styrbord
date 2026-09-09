@@ -1,36 +1,55 @@
-import classes from './alert.module.css';
-import React from 'react';
-import Icon from '../Icon/icon';
-import { Box, Heading } from '~/main';
-import { Alert as DsAlert, AlertProps as DsAlertProps } from '@digdir/designsystemet-react';
-import { smaller } from '../../../utils/sizing';
+import classes from "./alert.module.css";
+import React from "react";
+import Icon from "../Icon/icon";
+import { Box, Heading } from "~/main";
+import {
+  Alert as DsAlert,
+  AlertProps as DsAlertProps,
+} from "@digdir/designsystemet-react";
+import { smaller } from "../../../utils/sizing";
 
 export type AlertProps = DsAlertProps & {
-  level?: 'info' | 'success' | 'warning' | 'error';
+  level?: "info" | "success" | "warning" | "error";
   title?: string;
   text?: string;
   children?: React.ReactNode;
-  width?: 'content' | 'md' | 'full';
-  'data-size'?: 'sm' | 'md' | 'lg';
+  width?: "content" | "md" | "full";
+  "data-size"?: "sm" | "md" | "lg";
   className?: string;
-  role?: 'status';
+  role?: "status";
   onDismiss?: () => void;
+  bordered?: boolean;
+  rounded?: boolean;
 };
 
 const Alert = ({
   level,
   title = undefined,
-  'data-size': dataSize = 'md',
+  "data-size": dataSize = "md",
   text,
-  width = 'content',
-  className = '',
+  width = "content",
+  className = "",
+  bordered = true,
+  rounded = true,
   ...props
 }: AlertProps) => {
-  const dataColor = props['data-color'] ?? (level === 'error' ? 'danger' : level) ?? 'info';
-  const classNames = [classes.alert, className, classes['width-' + width]];
+  const dataColor =
+    props["data-color"] ?? (level === "error" ? "danger" : level) ?? "info";
+  const classNames = [classes.alert, className, classes["width-" + width]];
+
+  if (bordered) {
+    classNames.push(classes.bordered);
+  }
+  if (rounded) {
+    classNames.push(classes.rounded);
+  }
 
   return (
-    <DsAlert className={classNames.join(' ')} style={props.style} data-color={dataColor}>
+    <DsAlert
+      className={classNames.join(" ")}
+      style={props.style}
+      data-color={dataColor}
+    >
       <Box horizontal justify="between" align="start" gap={8}>
         <Box horizontal align="start" gap={8}>
           <Box gap={4}>
