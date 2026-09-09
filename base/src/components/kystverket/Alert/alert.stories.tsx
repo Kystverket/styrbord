@@ -72,3 +72,15 @@ export const WithErrorDismiss: Story = {
     onDismiss: () => {},
   },
 };
+
+export const WithoutBorderAndRoundedCorners: Story = {
+  args: {
+    ...defaultProps,
+    title: '',
+    text: 'Feil under opplasting',
+    level: 'error',
+    bordered: false,
+    rounded: false,
+    onDismiss: () => {},
+  },
+};

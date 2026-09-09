@@ -15,6 +15,8 @@ export type AlertProps = DsAlertProps & {
   className?: string;
   role?: 'status';
   onDismiss?: () => void;
+  bordered?: boolean;
+  rounded?: boolean;
 };
 
 const Alert = ({
@@ -24,10 +26,19 @@ const Alert = ({
   text,
   width = 'content',
   className = '',
+  bordered = true,
+  rounded = true,
   ...props
 }: AlertProps) => {
   const dataColor = props['data-color'] ?? (level === 'error' ? 'danger' : level) ?? 'info';
   const classNames = [classes.alert, className, classes['width-' + width]];
+
+  if (bordered) {
+    classNames.push(classes.bordered);
+  }
+  if (rounded) {
+    classNames.push(classes.rounded);
+  }
 
   return (
     <DsAlert className={classNames.join(' ')} style={props.style} data-color={dataColor}>
