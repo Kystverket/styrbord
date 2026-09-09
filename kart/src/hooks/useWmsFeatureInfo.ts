@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import type maplibregl from "maplibre-gl";
+import type * as maplibregl from "maplibre-gl";
 import type { Coordinate } from "~/utility/types";
 import { WmsCatalogLayersContext } from "~/utility/wmsCatalogLayersContext";
 import { fetchFeatureInfo } from "~/utility/wmsGetFeatureInfo";

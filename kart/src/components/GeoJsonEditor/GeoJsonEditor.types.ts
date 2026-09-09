@@ -5,7 +5,7 @@ import type {
   Geometry,
 } from "geojson";
 import type { ReactNode } from "react";
-import type maplibregl from "maplibre-gl";
+import type * as maplibregl from "maplibre-gl";
 
 import type { ImportErrorReason } from "./GeoJsonEditorToolbar";
 
