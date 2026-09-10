@@ -98,11 +98,7 @@ export function FileUploadActions({
         )}
         <Box gap={8} className={classes.buttonRow} horizontal wrap>
           {showDefaultUploadButton && (
-            <Button
-              className={classes.uploadButton}
-              variant="outline"
-              onClick={() => fileInputRef.current?.click()}
-            >
+            <Button className={classes.uploadButton} variant="outline" onClick={() => fileInputRef.current?.click()}>
               <Icon material="upload" />
               {t('buttonLabel')}
             </Button>
