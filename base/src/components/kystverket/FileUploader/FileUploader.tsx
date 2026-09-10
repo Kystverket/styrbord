@@ -61,13 +61,13 @@ export interface FileUploaderProps {
    */
   withCaptureButton?: boolean;
   existingFilesProvider?: () => Promise<ExistingFilesProviderItem[]>;
-  variant?: 'dropzone' | 'buttons';
 
   /**
-   * Hides the default upload button/dropzone, leaving only the capture button
-   * and/or existing files button (whichever are enabled).
+   * 'capture' shows only the "Open camera" button, hiding the default upload button.
+   * On devices that ignore the camera capture attribute (typically desktop) it falls
+   * back to rendering the default upload button.
    */
-  hideDefaultUploadButton?: boolean;
+  variant?: 'dropzone' | 'buttons' | 'capture';
 
   /**
    * Enables file preview using the FilePreviewer component.
@@ -94,7 +94,6 @@ export const FileUploader = ({
   existingFilesProvider,
   variant = 'buttons',
   allowFilePreview,
-  hideDefaultUploadButton,
 }: FileUploaderProps) => {
   const { scopedT } = useTranslation();
   const t = scopedT('fileUploader');
@@ -210,7 +209,6 @@ export const FileUploader = ({
             t={t}
             existingFilesProvider={existingFilesProvider}
             variant={variant}
-            hideDefaultUploadButton={hideDefaultUploadButton}
           />
         )}
         {showMaxReachedWarning && (

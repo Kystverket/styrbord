@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ExistingFilesDialogHandle } from '../existingFilesDialog/ExistingFilesDialog';
-import { Box, FileUploaderProps, Icon, Button, Paragraph } from '~/main';
+import { Box, FileUploaderProps, Icon, Button, Paragraph, useMediaQuery } from '~/main';
 import classes from './FileUploadActions.module.css';
 
 type FileUploadActionsProps = {
@@ -10,10 +10,7 @@ type FileUploadActionsProps = {
   t: (key: string) => string;
   onUploadFile: (uploadedFiles: File[]) => void;
   allowedFileTypes: string[];
-} & Pick<
-  FileUploaderProps,
-  'variant' | 'existingFilesProvider' | 'withCaptureButton' | 'multiple' | 'hideDefaultUploadButton'
->;
+} & Pick<FileUploaderProps, 'variant' | 'existingFilesProvider' | 'withCaptureButton' | 'multiple'>;
 
 export function FileUploadActions({
   variant,
@@ -25,37 +22,17 @@ export function FileUploadActions({
   allowedFileTypes,
   withCaptureButton,
   multiple,
-  hideDefaultUploadButton,
   t,
 }: FileUploadActionsProps) {
   const [isDropzoneActive, setIsDropzoneActive] = useState(false);
-  const [canUseCamera, setCanUseCamera] = useState(false);
 
-  if (
-    process.env.NODE_ENV !== 'production' &&
-    hideDefaultUploadButton &&
-    !withCaptureButton &&
-    !existingFilesProvider
-  ) {
-    console.warn(
-      'FileUploader: hideDefaultUploadButton is set but neither withCaptureButton nor existingFilesProvider is enabled — no upload action will be rendered.',
-    );
-  }
+  // Desktop browsers ignore the capture attribute, so the camera button would just
+  // reopen the regular file picker there.
+  const canUseCamera = useMediaQuery('(pointer: coarse)');
 
-  useEffect(() => {
-    if (typeof document === 'undefined') return;
-
-    const hasGetUserMedia = !!navigator.mediaDevices?.getUserMedia;
-    const input = document.createElement('input');
-    const hasCaptureAttr = 'capture' in input;
-
-    const isTouchLike =
-      window.matchMedia('(pointer: coarse)').matches ||
-      navigator.maxTouchPoints > 0 ||
-      /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-    setCanUseCamera((hasGetUserMedia || hasCaptureAttr) && isTouchLike);
-  }, []);
+  const showCaptureButton = canUseCamera && (withCaptureButton || variant === 'capture');
+  const showDefaultUploadButton = variant === 'buttons' || (variant === 'capture' && !canUseCamera);
+  const stretchButtons = !showDefaultUploadButton;
 
   const onChangeFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
@@ -90,7 +67,7 @@ export function FileUploadActions({
         onChange={onChangeFileUpload}
       />
       <Box gap={4} mt={8}>
-        {!hideDefaultUploadButton && variant === 'dropzone' && (
+        {variant === 'dropzone' && (
           <div
             role="button"
             aria-label={t('dropzoneText')}
@@ -120,9 +97,9 @@ export function FileUploadActions({
           </div>
         )}
         <Box gap={8} className={classes.buttonRow} horizontal wrap>
-          {!hideDefaultUploadButton && variant === 'buttons' && (
+          {showDefaultUploadButton && (
             <Button
-              className={`${classes.uploadButton}`}
+              className={classes.uploadButton}
               variant="outline"
               onClick={() => fileInputRef.current?.click()}
             >
@@ -130,10 +107,10 @@ export function FileUploadActions({
               {t('buttonLabel')}
             </Button>
           )}
-          {canUseCamera && withCaptureButton && (
+          {showCaptureButton && (
             <Button
               variant="outline"
-              className={`${classes.uploadButton} ${variant !== 'buttons' && classes.stretch}`}
+              className={`${classes.uploadButton} ${stretchButtons ? classes.stretch : ''}`}
               onClick={() => fileCameraInputRef.current?.click()}
             >
               <Icon material="photo_camera" />
@@ -143,7 +120,7 @@ export function FileUploadActions({
           {existingFilesProvider && (
             <Button
               variant="outline"
-              className={`${classes.uploadButton} ${variant !== 'buttons' && classes.stretch}`}
+              className={`${classes.uploadButton} ${stretchButtons ? classes.stretch : ''}`}
               onClick={() => dialogRef.current?.showModal()}
             >
               <Icon material="folder_open" />
