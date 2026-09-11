@@ -2,6 +2,9 @@ import { Dropdown, Button, Icon } from '~/main';
 import type { Meta, StoryFn } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
 import { useState } from 'react';
+import { styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
+
+const colorVariants = [...styrbordSemanticColors] as const;
 
 export default {
   title: 'Components/Dropdown',
@@ -28,6 +31,12 @@ export default {
       description: {
         component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/select/overview)',
       },
+    },
+  },
+  argTypes: {
+    'data-color': {
+      control: 'select',
+      options: [...colorVariants],
     },
   },
   play: async (ctx) => {
@@ -120,6 +129,42 @@ export const Controlled: StoryFn<typeof Dropdown> = () => {
       </Dropdown>
     </Dropdown.TriggerContext>
   );
+};
+
+export const Colors: StoryFn<typeof Dropdown> = () => {
+  return (
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 15rem)',
+        gap: '1rem 2rem',
+        // Room below each trigger for the open dropdown, which is positioned absolutely
+        gridAutoRows: '13rem',
+      }}
+    >
+      {colorVariants.map((color) => (
+        <Dropdown.TriggerContext key={color}>
+          <Dropdown.Trigger data-color={color}>{color}</Dropdown.Trigger>
+          <Dropdown data-color={color} placement="bottom-start" open>
+            <Dropdown.List>
+              <Dropdown.Item>
+                <Dropdown.Button>Val 1</Dropdown.Button>
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <Dropdown.Button>Val 2</Dropdown.Button>
+              </Dropdown.Item>
+            </Dropdown.List>
+          </Dropdown>
+        </Dropdown.TriggerContext>
+      ))}
+    </div>
+  );
+};
+
+// All dropdowns are already open via the `open` prop, so skip the shared play function
+Colors.play = async (ctx) => {
+  const dropdowns = ctx.canvasElement.querySelectorAll('[popover]');
+  await expect(dropdowns).toHaveLength(colorVariants.length);
 };
 
 export const WithoutTrigger: StoryFn<typeof Dropdown> = () => {
