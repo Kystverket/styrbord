@@ -156,3 +156,4 @@ Run `npm run pretty:fix` (or `npm run pretty:fix --workspace base`) and `npm run
 - **Match existing conventions, even when you disagree.** Conformance beats taste inside this codebase. If a convention looks actively harmful, say so; don't fork it silently.
 - **Surface conflicting patterns, don't blend them.** Where two patterns contradict (see file naming and story placement above), follow the newer one and flag the older for cleanup. Never average the two into a third variant.
 - **Fail loud.** If part of a task was skipped, blocked or unverified, say which part. Don't report a change as done when only some of it landed.
+- **Prop naming.** Match existing prop conventions instead of inventing new ones — color picks use `data-color`, style variants (e.g. `subtle`, `tinted`) use `data-color-variant`. Keep prop names short: drop redundant prefixes (`weight` not `fontWeight` on `Text` — `font` adds nothing).
