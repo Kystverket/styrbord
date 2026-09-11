@@ -152,7 +152,7 @@ Run `npm run pretty:fix` (or `npm run pretty:fix --workspace base`) and `npm run
 
 ## Working rules
 
-- **Surgical changes.** Touch only what the task requires. Don't reformat, rename, or "improve" adjacent code — this is a published library, and every diff line is a diff line someone reviews against a release.
+- **Surgical changes.** Touch only what the task requires. Don't reformat, rename, or "improve" adjacent code — this is a published library, and every diff line is a diff line someone reviews against a release. If a change waterfalls into a dependent component (e.g. migrating `data-color-subtle` to `data-color-variant` on `Paragraph` also requires updating `Text`, which consumes it), flag that and fix it too — don't leave the dependent component half-migrated.
 - **Match existing conventions, even when you disagree.** Conformance beats taste inside this codebase. If a convention looks actively harmful, say so; don't fork it silently.
 - **Surface conflicting patterns, don't blend them.** Where two patterns contradict (see file naming and story placement above), follow the newer one and flag the older for cleanup. Never average the two into a third variant.
 - **Fail loud.** If part of a task was skipped, blocked or unverified, say which part. Don't report a change as done when only some of it landed.
