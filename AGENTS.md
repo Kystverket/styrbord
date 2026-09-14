@@ -1,6 +1,6 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to any AI agent when working with code in this repository.
 
 ## Overview
 
@@ -61,6 +61,8 @@ There are no meaningful tests in either workspace (`test` scripts are no-ops).
 
 **Path aliases**: `~` → `src/`, `@assets` → `assets/`
 
+**Color tokens**: import color names and types from `@kystverket/styrbord-tokens/colors` — `styrbordSemanticColors`, `styrbordPaletteColors`, `colors` (resolved hex), and the matching `StyrbordSemanticColor` / `StyrbordPaletteColor` types. Never hand-write a color union. See `Text.tsx`, `icon.tsx`, `Dropdown.stories.tsx`.
+
 ### `kart` — Map Components
 
 **Components** (`kart/src/components/`):
@@ -97,8 +99,11 @@ Use `createSimpleLayer()` from `layers.helpers.ts` to create `LayerDefinition` o
 ### Component/file conventions
 
 - Each component lives in its own directory: `ComponentName/ComponentName.tsx`, `ComponentName.types.ts`, optional `.module.css`.
-- Storybook stories are co-located: `ComponentName/ComponentName.stories.tsx`.
-- Storybook configuration and static pages in `storybook/` (not `src/`).
+- **Naming**: directories and files are PascalCase (`Box/Box.tsx`). Some older components use lowercase filenames (`Box/box.tsx`) — that is legacy. All new files are PascalCase; do not add lowercase ones, and do not rename existing ones as drive-by cleanup.
+- **Where stories go** — depends on whether Styrbord wraps the component:
+  - Styrbord has a wrapper component in `src/` → story is co-located: `ComponentName/ComponentName.stories.tsx`. This is the common case (~65 stories).
+  - Styrbord only re-exports the Designsystemet component (no `.tsx` in `src/`, at most a `.override.scss`) → story lives in `base/storybook/stories/designsystemet/ComponentName/` (~20 stories).
+- Storybook configuration, static pages and the decorator live in `storybook/` (not `src/`).
 - Shared CSS for map pickers: `components/shared/MapPicker.module.css`.
 
 ### Build output
@@ -140,3 +145,15 @@ Configuration is in `release-please-config.json`. When commits land on `main`, r
 **Do not manually bump versions in `package.json`** — release-please owns that. Do not edit `.release-please-manifest.json` by hand either.
 
 On release, each package is published to both **GitHub Packages** (`npm.pkg.github.com`) and **npmjs.org** (via tokenless OIDC). Only the package that has a new release is published — the other is left untouched.
+
+## Before committing
+
+Run `npm run pretty:fix` (or `npm run pretty:fix --workspace base`) and `npm run lint:check` before every commit. Prettier failures are caught by CI, not by the build, so unformatted code lands and then needs a follow-up commit — there are several standalone `prettier fix` commits in the history for exactly this reason.
+
+## Working rules
+
+- **Surgical changes.** Touch only what the task requires. Don't reformat, rename, or "improve" adjacent code — this is a published library, and every diff line is a diff line someone reviews against a release. If a change waterfalls into a dependent component (e.g. migrating `data-color-subtle` to `data-color-variant` on `Paragraph` also requires updating `Text`, which consumes it), flag that and fix it too — don't leave the dependent component half-migrated.
+- **Match existing conventions, even when you disagree.** Conformance beats taste inside this codebase. If a convention looks actively harmful, say so; don't fork it silently.
+- **Surface conflicting patterns, don't blend them.** Where two patterns contradict (see file naming and story placement above), follow the newer one and flag the older for cleanup. Never average the two into a third variant.
+- **Fail loud.** If part of a task was skipped, blocked or unverified, say which part. Don't report a change as done when only some of it landed.
+- **Prop naming.** Match existing prop conventions instead of inventing new ones — color picks use `data-color`, style variants (e.g. `subtle`, `tinted`) use `data-color-variant`. Keep prop names short: drop redundant prefixes (`weight` not `fontWeight` on `Text` — `font` adds nothing).
