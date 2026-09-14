@@ -215,6 +215,15 @@ export const WithCaptureButton: Story = {
   },
 };
 
+export const CaptureOnly: Story = {
+  args: {
+    ...defaultProps,
+    description: 'Viser kun kamera-knappen. På desktop faller den tilbake til vanlig opplastingsknapp',
+    variant: 'capture',
+    files: [],
+  },
+};
+
 export const WithExistingFiles: Story = {
   args: {
     ...defaultProps,
