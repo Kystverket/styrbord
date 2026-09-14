@@ -22,12 +22,20 @@ export const FILL_LAYER = "geojson-fill";
 export const LINE_LAYER = "geojson-line";
 export const POINT_STROKE_LAYER = "geojson-point-stroke";
 export const POINT_LAYER = "geojson-point";
+
+export const POINT_HIT_LAYER = "geojson-point-hit";
 export const ALL_LAYERS = [
+  POINT_HIT_LAYER,
   POINT_LAYER,
   POINT_STROKE_LAYER,
   LINE_LAYER,
   FILL_LAYER,
 ];
+
+/** Default touch-friendly hit radius (px) used when `pointHitRadius` is not set, on coarse (touch) pointers. */
+export const DEFAULT_TOUCH_POINT_HIT_RADIUS = 22;
+/** Default hit radius (px) used when `pointHitRadius` is not set, on fine (mouse) pointers. */
+export const DEFAULT_POINTER_POINT_HIT_RADIUS = 14;
 
 // Hover highlight layers
 export const HOVER_FILL_LAYER = "geojson-hover-fill";
@@ -48,8 +56,10 @@ export const HIGHLIGHT_LAYERS = [
   SELECTED_POINT_LAYER,
 ];
 
-// All interactive layers (for querying features)
-export const INTERACTIVE_LAYERS = [FILL_LAYER, LINE_LAYER, POINT_LAYER];
+// All interactive layers (for querying features).
+// Points use the invisible, larger POINT_HIT_LAYER rather than the visible
+// POINT_LAYER so the tap/click target can be bigger than the rendered dot.
+export const INTERACTIVE_LAYERS = [FILL_LAYER, LINE_LAYER, POINT_HIT_LAYER];
 
 // Label layer
 export const LABEL_LAYER = "geojson-label";
