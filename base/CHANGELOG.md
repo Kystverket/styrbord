@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.19.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.18.0...styrbord-v1.19.0) (2026-09-14)
+
+
+### Features
+
+* **base:** add capture variant to FileUploader ([#295](https://github.com/Kystverket/styrbord/issues/295)) ([2e74697](https://github.com/Kystverket/styrbord/commit/2e746975b0b5c260d2eb745a5b63faa95c6e3f0c))
+
 ## [1.18.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.17.1...styrbord-v1.18.0) (2026-09-09)
 
 
