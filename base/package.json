@@ -37,11 +37,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@digdir/designsystemet-css": "~1.15.0",
+    "@digdir/designsystemet-css": "~1.21.1",
     "@material-symbols/font-400": "^0.45.9"
   },
   "peerDependencies": {
-    "@digdir/designsystemet-react": "~1.15.0",
+    "@digdir/designsystemet-react": "~1.21.1",
     "@kystverket/sprak-react": "^0.0.14",
     "@milkdown/components": "^7.19.0",
     "@milkdown/core": "^7.19.0",
