@@ -1,4 +1,4 @@
-import { Accent, Body, Box, Heading } from '~/main';
+import { Accent, Box, Heading, Paragraph } from '~/main';
 import { ContentRowProps, HeadingRowProps, SummaryRowProps, TitleRowProps, ValueRowProps } from './summary.types';
 import classes from './summary.module.css';
 
@@ -24,16 +24,16 @@ const SummaryTitle = ({ title }: TitleRowProps) => {
 const SummaryValue = ({ label, value, error = undefined }: ValueRowProps) => {
   return (
     <>
-      <Body className={classes.valueLabel} strong size="sm">
+      <Paragraph className={classes.valueLabel} data-font-weight="medium" data-size="sm">
         {label}
-      </Body>
-      <Body className={classes.valueText} size="sm">
+      </Paragraph>
+      <Paragraph className={classes.valueText} data-size="sm">
         {value}
-      </Body>
+      </Paragraph>
       {error && (
-        <Body className={classes.valueError} size="sm">
+        <Paragraph className={classes.valueError} data-size="sm">
           {error}
-        </Body>
+        </Paragraph>
       )}
     </>
   );
@@ -42,14 +42,14 @@ const SummaryValue = ({ label, value, error = undefined }: ValueRowProps) => {
 const SummaryContent = ({ label, content, error = undefined }: ContentRowProps) => {
   return (
     <>
-      <Body className={classes.contentLabel} strong size="sm">
+      <Paragraph className={classes.contentLabel} data-font-weight="medium" data-size="sm">
         {label}
-      </Body>
+      </Paragraph>
       <div className={classes.contentArea}>{content}</div>
       {error && (
-        <Body className={classes.contentError} size="sm">
+        <Paragraph className={classes.contentError} data-size="sm">
           {error}
-        </Body>
+        </Paragraph>
       )}
     </>
   );

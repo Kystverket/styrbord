@@ -4,7 +4,6 @@ import { IconId } from '~/components/kystverket/Icon/icon.types';
 import { CSSProperties } from 'react';
 
 export type TagProps = DsTagProps & {
-  bordered?: boolean;
   radius?: 'sm' | 'md' | 'lg' | 'full';
   icon?: IconId;
   'data-color-transparent'?: boolean;

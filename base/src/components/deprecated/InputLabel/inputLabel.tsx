@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import style from './inputLabel.module.css';
-import { Body, Box, Label, Spinner, Tag } from '~/main';
+import { Paragraph, Box, Label, Spinner, Tag } from '~/main';
 
 export interface InputLabelProps {
   optional?: boolean | string | undefined;
@@ -51,7 +51,7 @@ const InputLabel = ({
               {optional && <Tag className={style.spacing}>{optionalText ?? 'Valgfritt'}</Tag>}
             </Label>
           </Box>
-          {subText && <Body size="sm">{subText}</Body>}
+          {subText && <Paragraph data-size="sm">{subText}</Paragraph>}
         </Box>
         {children && <div>{children}</div>}
       </Box>

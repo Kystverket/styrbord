@@ -77,7 +77,7 @@ export * from './components/kystverket/Image/svgImage';
 
 export { default as Skillingsbuoye } from './components/kystverket/Skillingsbuoye/skillingsbuoye';
 
-export { Body, Accent, Typography } from './components/kystverket/Typography/typography';
+export { Accent, Typography } from './components/kystverket/Typography/typography';
 export type {
   TypographyProps,
   BodyTypographyProps,
