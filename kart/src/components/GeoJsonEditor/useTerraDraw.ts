@@ -20,6 +20,14 @@ import { TerraDrawMapLibreGLAdapter } from "terra-draw-maplibre-gl-adapter";
 
 import type { DrawMode } from "./GeoJsonEditor.types";
 import { toFeatureCollection } from "../GeoJsonViewer/GeoJsonViewer.utils";
+import {
+  DRAW_COLOR,
+  DRAW_CONTRAST_COLOR,
+  DRAW_FILL_OPACITY,
+  DRAW_MIDPOINT_COLOR,
+  DRAW_SELECTED_OUTLINE_COLOR,
+  DRAW_SELECTION_POINT_COLOR,
+} from "~/utility/mapColors";
 
 /** Drawing modes that terra-draw handles natively. */
 type TerraDrawableMode = Exclude<DrawMode, "directional-point">;
@@ -173,27 +181,27 @@ export function useTerraDraw({
           case "point":
             return new TerraDrawPointMode({
               styles: {
-                pointColor: "#ff451f",
+                pointColor: DRAW_COLOR,
                 pointWidth: 6,
-                pointOutlineColor: "#ffffff",
+                pointOutlineColor: DRAW_CONTRAST_COLOR,
                 pointOutlineWidth: 3,
               },
             });
           case "linestring":
             return new TerraDrawLineStringMode({
               styles: {
-                lineStringColor: "#ff451f",
+                lineStringColor: DRAW_COLOR,
                 lineStringWidth: 4,
-                closingPointColor: "#ff451f",
-                closingPointOutlineColor: "#ffffff",
+                closingPointColor: DRAW_COLOR,
+                closingPointOutlineColor: DRAW_CONTRAST_COLOR,
                 closingPointOutlineWidth: 2,
                 closingPointWidth: 5,
-                snappingPointColor: "#ff451f",
-                snappingPointOutlineColor: "#ffffff",
+                snappingPointColor: DRAW_COLOR,
+                snappingPointOutlineColor: DRAW_CONTRAST_COLOR,
                 snappingPointOutlineWidth: 2,
                 snappingPointWidth: 5,
-                coordinatePointColor: "#ff451f",
-                coordinatePointOutlineColor: "#ffffff",
+                coordinatePointColor: DRAW_COLOR,
+                coordinatePointOutlineColor: DRAW_CONTRAST_COLOR,
                 coordinatePointOutlineWidth: 2,
                 coordinatePointWidth: 5,
               },
@@ -201,24 +209,24 @@ export function useTerraDraw({
           case "polygon":
             return new TerraDrawPolygonMode({
               styles: {
-                fillColor: "#ff451f",
-                fillOpacity: 0.2,
-                outlineColor: "#ff451f",
+                fillColor: DRAW_COLOR,
+                fillOpacity: DRAW_FILL_OPACITY,
+                outlineColor: DRAW_COLOR,
                 outlineWidth: 4,
-                closingPointColor: "#ff451f",
-                closingPointOutlineColor: "#ffffff",
+                closingPointColor: DRAW_COLOR,
+                closingPointOutlineColor: DRAW_CONTRAST_COLOR,
                 closingPointOutlineWidth: 2,
                 closingPointWidth: 5,
-                snappingPointColor: "#ff451f",
-                snappingPointOutlineColor: "#ffffff",
+                snappingPointColor: DRAW_COLOR,
+                snappingPointOutlineColor: DRAW_CONTRAST_COLOR,
                 snappingPointOutlineWidth: 2,
                 snappingPointWidth: 5,
-                editedPointColor: "#ff451f",
-                editedPointOutlineColor: "#ffffff",
+                editedPointColor: DRAW_COLOR,
+                editedPointOutlineColor: DRAW_CONTRAST_COLOR,
                 editedPointOutlineWidth: 2,
                 editedPointWidth: 5,
-                coordinatePointColor: "#ff451f",
-                coordinatePointOutlineColor: "#ffffff",
+                coordinatePointColor: DRAW_COLOR,
+                coordinatePointOutlineColor: DRAW_CONTRAST_COLOR,
                 coordinatePointOutlineWidth: 2,
                 coordinatePointWidth: 5,
               },
@@ -230,21 +238,21 @@ export function useTerraDraw({
         drawModes.push(
           new TerraDrawSelectMode({
             styles: {
-              selectedPointColor: "#ff451f",
+              selectedPointColor: DRAW_COLOR,
               selectedPointWidth: 6,
-              selectedPointOutlineColor: "#ff0000",
+              selectedPointOutlineColor: DRAW_SELECTED_OUTLINE_COLOR,
               selectedPointOutlineWidth: 3,
-              selectedLineStringColor: "#ff451f",
+              selectedLineStringColor: DRAW_COLOR,
               selectedLineStringWidth: 4,
-              selectedPolygonColor: "#ff451f",
-              selectedPolygonFillOpacity: 0.2,
-              selectedPolygonOutlineColor: "#ff451f",
+              selectedPolygonColor: DRAW_COLOR,
+              selectedPolygonFillOpacity: DRAW_FILL_OPACITY,
+              selectedPolygonOutlineColor: DRAW_COLOR,
               selectedPolygonOutlineWidth: 4,
-              selectionPointColor: "#df3c1b",
-              selectionPointOutlineColor: "#ff0000",
+              selectionPointColor: DRAW_SELECTION_POINT_COLOR,
+              selectionPointOutlineColor: DRAW_SELECTED_OUTLINE_COLOR,
               selectionPointOutlineWidth: 2,
-              midPointColor: "#ff7559",
-              midPointOutlineColor: "#ffffff",
+              midPointColor: DRAW_MIDPOINT_COLOR,
+              midPointOutlineColor: DRAW_CONTRAST_COLOR,
               midPointOutlineWidth: 2,
             },
             flags: {
@@ -279,15 +287,15 @@ export function useTerraDraw({
         new TerraDrawRenderMode({
           modeName: "static",
           styles: {
-            pointColor: "#ff451f",
+            pointColor: DRAW_COLOR,
             pointWidth: 6,
-            pointOutlineColor: "#ffffff",
+            pointOutlineColor: DRAW_CONTRAST_COLOR,
             pointOutlineWidth: 3,
-            lineStringColor: "#ff451f",
+            lineStringColor: DRAW_COLOR,
             lineStringWidth: 4,
-            polygonFillColor: "#ff451f",
-            polygonFillOpacity: 0.2,
-            polygonOutlineColor: "#ff451f",
+            polygonFillColor: DRAW_COLOR,
+            polygonFillOpacity: DRAW_FILL_OPACITY,
+            polygonOutlineColor: DRAW_COLOR,
             polygonOutlineWidth: 4,
           },
         }),

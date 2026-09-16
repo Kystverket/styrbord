@@ -20,6 +20,7 @@ import {
 } from "~/hooks/useFeatureInteraction";
 import { useWmsFeatureInfo } from "~/hooks/useWmsFeatureInfo";
 import type { Coordinate } from "~/utility/types";
+import { LABEL_HALO_COLOR, LABEL_TEXT_COLOR } from "~/utility/mapColors";
 import {
   DEFAULT_STYLE,
   FILL_LAYER,
@@ -338,8 +339,8 @@ export function GeoJsonViewer({
             "text-optional": false,
           },
           paint: {
-            "text-color": "#1a1a1a",
-            "text-halo-color": "#ffffff",
+            "text-color": LABEL_TEXT_COLOR,
+            "text-halo-color": LABEL_HALO_COLOR,
             "text-halo-width": 2,
           },
         });

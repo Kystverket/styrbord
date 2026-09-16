@@ -5,6 +5,13 @@
  * the `useDirectionalPoints` hook (GeoJsonEditor directional-point mode).
  */
 
+import {
+  COMPASS_BORDER_COLOR,
+  COMPASS_FACE_COLOR,
+  COMPASS_MUTED_COLOR,
+  COMPASS_NEEDLE_COLOR,
+} from "~/utility/mapColors";
+
 // ---------------------------------------------------------------------------
 // SVG assets
 // ---------------------------------------------------------------------------
@@ -12,12 +19,12 @@
 /** SVG data URL for the rotation drag handle — a circular grab indicator with arrows. */
 export const ROTATION_HANDLE_SVG = (() => {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="11" fill="white" stroke="#000667" stroke-width="1.5" opacity="0.9"/>
-    <path d="M12 4l-2.5 3h5L12 4z" fill="#000667"/>
-    <path d="M12 20l2.5-3h-5L12 20z" fill="#000667"/>
-    <path d="M4 12l3 2.5v-5L4 12z" fill="#000667"/>
-    <path d="M20 12l-3-2.5v5L20 12z" fill="#000667"/>
-    <circle cx="12" cy="12" r="2" fill="#000667"/>
+    <circle cx="12" cy="12" r="11" fill="${COMPASS_FACE_COLOR}" stroke="${COMPASS_BORDER_COLOR}" stroke-width="1.5" opacity="0.9"/>
+    <path d="M12 4l-2.5 3h5L12 4z" fill="${COMPASS_BORDER_COLOR}"/>
+    <path d="M12 20l2.5-3h-5L12 20z" fill="${COMPASS_BORDER_COLOR}"/>
+    <path d="M4 12l3 2.5v-5L4 12z" fill="${COMPASS_BORDER_COLOR}"/>
+    <path d="M20 12l-3-2.5v5L20 12z" fill="${COMPASS_BORDER_COLOR}"/>
+    <circle cx="12" cy="12" r="2" fill="${COMPASS_BORDER_COLOR}"/>
   </svg>`;
   return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
 })();
@@ -27,14 +34,13 @@ export const ROTATION_HANDLE_SVG = (() => {
  * The primary (north) half points up in the given color, the opposite (south) half in grey.
  */
 export function createArrowSvg(
-  color = "#df3c1b",
-  borderColor = "#000667",
+  color = COMPASS_NEEDLE_COLOR,
+  borderColor = COMPASS_BORDER_COLOR,
 ): string {
-  const grey = "#b0b0b0";
   return `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
-    <circle cx="20" cy="20" r="18" fill="white" stroke="${borderColor}" stroke-width="2"/>
+    <circle cx="20" cy="20" r="18" fill="${COMPASS_FACE_COLOR}" stroke="${borderColor}" stroke-width="2"/>
     <polygon points="20,4 25,19 20,17 15,19" fill="${color}"/>
-    <polygon points="20,36 15,21 20,23 25,21" fill="${grey}"/>
+    <polygon points="20,36 15,21 20,23 25,21" fill="${COMPASS_MUTED_COLOR}"/>
     <circle cx="20" cy="20" r="2.5" fill="${color}"/>
   </svg>`;
 }

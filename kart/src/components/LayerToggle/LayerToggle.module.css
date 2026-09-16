@@ -16,19 +16,19 @@
   gap: 6px;
   padding: 6px 10px;
   border: none;
-  border-radius: var(--ds-border-radius-md, 6px);
-  background: var(--ds-color-neutral-background-default, #fff);
+  border-radius: var(--ds-border-radius-md);
+  background: var(--ds-color-neutral-background-default);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   font-size: 0.8125rem;
   font-weight: 500;
-  color: var(--ds-color-neutral-text-default, #1e2b3c);
+  color: var(--ds-color-neutral-text-default);
   line-height: 1;
   user-select: none;
 }
 
 .toggleButton:hover {
-  background: var(--ds-color-neutral-surface-hover, #f3f4f5);
+  background: var(--ds-color-neutral-surface-hover);
 }
 
 .toggleButtonIcon {
@@ -39,9 +39,9 @@
 
 .panel {
   margin-top: 4px;
-  background: var(--ds-color-neutral-background-default, #fff);
+  background: var(--ds-color-neutral-background-default);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
-  border-radius: var(--ds-border-radius-md, 6px);
+  border-radius: var(--ds-border-radius-md);
   padding: 8px 0;
   min-width: 200px;
   max-height: 320px;
@@ -50,29 +50,29 @@
 
 .filterWrapper {
   padding: 6px 8px;
-  border-bottom: 1px solid var(--ds-color-neutral-border-subtle, #e0e0e0);
+  border-bottom: 1px solid var(--ds-color-neutral-border-subtle);
 }
 
 .filterInput {
   width: 100%;
   box-sizing: border-box;
   padding: 5px 8px;
-  border: 1px solid var(--ds-color-neutral-border-default, #c9c9c9);
-  border-radius: var(--ds-border-radius-sm, 4px);
+  border: 1px solid var(--ds-color-neutral-border-default);
+  border-radius: var(--ds-border-radius-sm);
   font-size: 0.8125rem;
   font-family: inherit;
-  color: var(--ds-color-neutral-text-default, #1e2b3c);
-  background: var(--ds-color-neutral-background-default, #fff);
+  color: var(--ds-color-neutral-text-default);
+  background: var(--ds-color-neutral-background-default);
   outline: none;
 }
 
 .filterInput:focus {
-  border-color: var(--ds-color-accent-base-default, #0062ba);
-  box-shadow: 0 0 0 1px var(--ds-color-accent-base-default, #0062ba);
+  border-color: var(--ds-color-accent-base-default);
+  box-shadow: 0 0 0 1px var(--ds-color-accent-base-default);
 }
 
 .filterInput::placeholder {
-  color: var(--ds-color-neutral-text-subtle, #5a5a5a);
+  color: var(--ds-color-neutral-text-subtle);
 }
 
 .categoryHeading {
@@ -87,13 +87,13 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--ds-color-neutral-text-subtle, #5a5a5a);
+  color: var(--ds-color-neutral-text-subtle);
   user-select: none;
   cursor: pointer;
 }
 
 .categoryHeading:hover {
-  color: var(--ds-color-neutral-text-default, #1e2b3c);
+  color: var(--ds-color-neutral-text-default);
 }
 
 .chevron {
@@ -109,18 +109,18 @@
   padding: 5px 12px;
   cursor: pointer;
   font-size: 0.8125rem;
-  color: var(--ds-color-neutral-text-default, #1e2b3c);
+  color: var(--ds-color-neutral-text-default);
   user-select: none;
 }
 
 .layerItem:hover {
-  background: var(--ds-color-neutral-surface-hover, #f3f4f5);
+  background: var(--ds-color-neutral-surface-hover);
 }
 
 .checkbox {
   width: 16px;
   height: 16px;
-  accent-color: var(--ds-color-accent-base-default, #0062ba);
+  accent-color: var(--ds-color-accent-base-default);
   cursor: pointer;
   margin: 0;
 }
@@ -128,7 +128,7 @@
 .radio {
   width: 16px;
   height: 16px;
-  accent-color: var(--ds-color-accent-base-default, #0062ba);
+  accent-color: var(--ds-color-accent-base-default);
   cursor: pointer;
   margin: 0;
 }
@@ -136,6 +136,6 @@
 .emptyMessage {
   padding: 12px;
   font-size: 0.8125rem;
-  color: var(--ds-color-neutral-text-subtle, #5a5a5a);
+  color: var(--ds-color-neutral-text-subtle);
   text-align: center;
 }

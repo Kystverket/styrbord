@@ -94,6 +94,10 @@ Four React contexts control which map layers are loaded by `useMaplibreMap`:
 
 Use `createSimpleLayer()` from `layers.helpers.ts` to create `LayerDefinition` objects from simple GeoJSON, WMS, or vector-tile configs.
 
+**Map colors** (`kart/src/utility/mapColors.ts`): every color painted onto a map lives here. MapLibre paint properties and terra-draw styles take color strings, not CSS variables, so these cannot use the `--ds-color-*` cascade — instead they are resolved from `@kystverket/styrbord-tokens/colors` (light scheme; map tiles are light regardless of the page's color scheme). Never write a hex literal into a layer definition, a terra-draw style or a marker SVG; add a named constant to `mapColors.ts` instead. Colors with no matching token sit in the file's clearly marked off-palette section.
+
+kart's **CSS** uses bare `var(--ds-color-*)` with no hex fallback. `@kystverket/styrbord` always loads the token CSS, so a fallback is dead code that hides a wrong token name. Don't reintroduce them; `npm run tokens:check` catches bad names.
+
 **Path alias**: `~` → `src/`
 
 ### Component/file conventions
