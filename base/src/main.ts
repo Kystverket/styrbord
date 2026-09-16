@@ -185,12 +185,6 @@ export type { TagProps } from './components/designsystemet/Tag/Tag';
 export { Link } from './components/designsystemet/Link/Link';
 export type { LinkProps } from './components/designsystemet/Link/Link';
 
-export { default as Paragraph } from './components/designsystemet/Paragraph/Paragraph';
-export type { ParagraphProps } from './components/designsystemet/Paragraph/Paragraph';
-
-export { Text } from './components/designsystemet/Text/Text';
-export type { TextProps } from './components/designsystemet/Text/Text';
-
 export { default as Table } from './components/designsystemet/Table/Table';
 
 export { Avatar } from './components/designsystemet/Avatar/Avatar';
@@ -318,6 +312,8 @@ export type { HeadingProps } from '@digdir/designsystemet-react';
 export { Heading } from '@digdir/designsystemet-react';
 export type { InputProps } from '@digdir/designsystemet-react';
 export { Input } from '@digdir/designsystemet-react';
+export type { ParagraphProps } from '@digdir/designsystemet-react';
+export { Paragraph } from '@digdir/designsystemet-react';
 export type { LabelProps } from '@digdir/designsystemet-react';
 export { Label } from '@digdir/designsystemet-react';
 export type { ListItemProps, ListOrderedProps, ListUnorderedProps } from '@digdir/designsystemet-react';

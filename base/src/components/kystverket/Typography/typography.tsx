@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { buildTypographyClasses, TypographyWeight } from './typography.util';
 import style from './typography.module.css';
-import { Paragraph, ParagraphProps } from '~/components/designsystemet/Paragraph/Paragraph';
+import { Paragraph, ParagraphProps } from '~/main';
 
 export interface TypographyProps {
   className?: string;
