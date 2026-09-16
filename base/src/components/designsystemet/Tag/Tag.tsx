@@ -1,38 +1,35 @@
 import { Tag as DsTag, TagProps as DsTagProps } from '@digdir/designsystemet-react';
-import classes from './Tag.module.css';
 import Icon from '~/components/kystverket/Icon/icon';
 import { IconId } from '~/components/kystverket/Icon/icon.types';
+import { CSSProperties } from 'react';
 
 export type TagProps = DsTagProps & {
   bordered?: boolean;
-  rounded?: boolean;
+  radius?: 'sm' | 'md' | 'lg' | 'full';
   icon?: IconId;
-  plainBackground?: boolean;
+  'data-color-transparent'?: boolean;
 };
 
-const Tag = ({
-  bordered = false,
-  rounded = false,
-  plainBackground = false,
-  icon,
-  children,
-  className = '',
-  ...props
-}: TagProps) => {
+const Tag = ({ radius = 'md', icon, children, className = '', ...props }: TagProps) => {
   const classNames = [className];
-  if (bordered || plainBackground) {
-    classNames.push(classes.bordered);
+  const styles: CSSProperties = {};
+
+  if (radius) {
+    styles.borderRadius = `var(--ds-border-radius-${radius})`;
   }
-  if (rounded) {
-    classNames.push(classes.rounded);
+
+  if (props['data-color-transparent']) {
+    styles.backgroundColor = 'transparent';
   }
-  if (plainBackground) {
-    classNames.push(classes.plainBackground);
-  }
+
   return (
-    <DsTag className={classNames.join(' ')} {...props}>
-      {icon && <Icon material={icon} size="xs" />}
-      <span className={classes.tagText}>{children}</span>
+    <DsTag className={classNames.join(' ')} style={styles} {...props}>
+      {icon && (
+        <span aria-hidden style={{ marginInlineEnd: 'var(--ds-size-1)' }}>
+          <Icon material={icon} size="2xs" />
+        </span>
+      )}
+      <span>{children}</span>
     </DsTag>
   );
 };
