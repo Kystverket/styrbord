@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.20.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.19.0...styrbord-v1.20.0) (2026-09-16)
+
+
+### Features
+
+* Oppdatere designsystemet til 1.21.1 ([#298](https://github.com/Kystverket/styrbord/issues/298)) ([7dcf72f](https://github.com/Kystverket/styrbord/commit/7dcf72f6e02df396d447074dad334643daf3ecd7))
+
+
+### Bug Fixes
+
+* **base:** correct invalid design token references and hardcoded colors ([#300](https://github.com/Kystverket/styrbord/issues/300)) ([2105027](https://github.com/Kystverket/styrbord/commit/2105027da3c0adb88f4d1fa4945bf18964b08989))
+
 ## [1.19.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.18.0...styrbord-v1.19.0) (2026-09-14)
 
 
