@@ -70,6 +70,24 @@ Styrbord Kart har følgende peer dependencies som må være tilgjengelige i appl
 - `terra-draw-maplibre-gl-adapter`
 - `geojson`
 
+### maplibre-gl v6 og Vite
+
+maplibre-gl v6 finner worker-filen sin i runtime med
+`new URL("./maplibre-gl-worker.mjs", import.meta.url)`. Vite sin
+dependency-optimizer forhåndsbygger kun hovedmodulen, slik at den URL-en
+peker på en fil som aldri ble lagt i `deps`-katalogen -- kartet feiler med
+`The file does not exist at .../deps/maplibre-gl-worker.mjs`. Løsningen er å
+la Vite servere maplibre-gl rett fra `node_modules`:
+
+```js
+// vite.config.ts
+export default defineConfig({
+  optimizeDeps: {
+    exclude: ["maplibre-gl"],
+  },
+});
+```
+
 ## Endringslogg
 
 ### 2026-03-06 -- v0.0.5

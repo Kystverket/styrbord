@@ -54,7 +54,7 @@
     "@storybook/addon-links": "^10.2.13",
     "@storybook/addon-onboarding": "^10.2.13",
     "@storybook/react-vite": "^10.2.13",
-    "maplibre-gl": "^5.0.0",
+    "maplibre-gl": "^6.6.0",
     "storybook-addon-tag-badges": "^3.0.6"
   }
 }

@@ -31,11 +31,11 @@ const Icon = ({
   ];
   const iconClassNames = [classes.icon, 'material-symbols-outlined'];
   const indicatorClassNames = [classes.indicator, 'material-symbols-outlined'];
-  const style: Record<string, string> = {};
+  const style: React.CSSProperties = {};
 
   if (background) {
     style['color'] = `var(--icon-color, var(--ds-color-${background}-text-default))`;
-    style['background-color'] = `var(--icon-color, var(--ds-color-${background}-surface-tinted))`;
+    style['backgroundColor'] = `var(--icon-background-color, var(--ds-color-${background}-surface-tinted))`;
   }
 
   return (

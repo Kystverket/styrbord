@@ -30,7 +30,7 @@
 }
 
 .editorContainerDisabled {
-  background: var(--ds-color-neutral-background-subtle);
+  background: var(--ds-color-neutral-background-tinted);
   opacity: 0.8;
 }
 

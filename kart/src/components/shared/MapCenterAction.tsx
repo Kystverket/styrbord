@@ -1,5 +1,5 @@
 import { useEffect, useState, type RefObject } from "react";
-import type maplibregl from "maplibre-gl";
+import type * as maplibregl from "maplibre-gl";
 import styles from "./MapCenterAction.module.css";
 import { useTranslation } from "~/translations";
 

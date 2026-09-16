@@ -40,7 +40,7 @@
     /* Wins over max-height/JS-computed maxHeight when they conflict (CSS rule, not something
        that needs coordinating with useDynamicEdgeClamp) - stops it shrinking past a usable size. */
     min-height: 300px;
-    background: var(--ds-color-neutral-background-default, #fff);
+    background: var(--ds-color-neutral-background-default);
 
     &.placement-left {
       left: 0;

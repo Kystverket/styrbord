@@ -1,6 +1,6 @@
 @layer styrbord-modules {
   .container {
-    --kyv-spinner-color: var(--ds-color-accent-base-default, #005b99);
+    --kyv-spinner-color: var(--ds-color-accent-base-default);
     display: inline-flex;
     flex-direction: column;
     align-items: center;
