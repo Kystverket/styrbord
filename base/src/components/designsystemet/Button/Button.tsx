@@ -15,6 +15,26 @@ function wrapTextNodes(children: ReactNode, className: string): ReactNode {
 }
 
 export type ButtonProps = {
+  /**
+   * Visual style of the button.
+   *
+   * Styrbord deliberately and permanently names these differently from Designsystemet. The
+   * upstream names (`primary`/`secondary`/`tertiary`) read as emphasis levels and collide with
+   * `data-color="primary"`, which is a colour family — two unrelated things spelled the same way.
+   * Styrbord names the shape instead, which also leaves room for `subtle` and `dashed`, neither of
+   * which Designsystemet has.
+   *
+   * | Styrbord    | Designsystemet         |
+   * | ----------- | ---------------------- |
+   * | `filled`    | `primary`              |
+   * | `outline`   | `secondary`            |
+   * | `ghost`     | `tertiary`             |
+   * | `subtle`    | `primary` + extra CSS  |
+   * | `dashed`    | `secondary` + extra CSS|
+   *
+   * Consequence of the divergence: the upstream `variant` prop is not forwarded, so Designsystemet
+   * examples need translating through the table above. Use this list, not theirs.
+   */
   variant?: 'filled' | 'subtle' | 'outline' | 'ghost' | 'dashed';
   color?: 'primary' | 'neutral' | 'danger';
   size?: 'sm' | 'md' | 'lg';
