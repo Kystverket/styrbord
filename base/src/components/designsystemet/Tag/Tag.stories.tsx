@@ -1,6 +1,6 @@
-import { Tag, TagProps } from '~/main';
+import { Box, Tag, TagProps } from '~/main';
 import type { Meta, StoryFn, StoryObj } from '@storybook/react-vite';
-
+import { styrbordSemanticColors, styrbordPaletteColors } from '@kystverket/styrbord-tokens/colors';
 type Story = StoryObj<typeof Tag>;
 
 export default {
@@ -17,7 +17,7 @@ export default {
   },
 } satisfies Meta;
 
-const colorVariants = ['accent', 'extra1', 'neutral', 'success', 'warning', 'danger', 'info'];
+const colorVariants = [...styrbordSemanticColors, ...styrbordPaletteColors];
 
 export const Preview: Story = {
   args: {
@@ -28,13 +28,18 @@ export const Preview: Story = {
 const sizes: TagProps['data-size'][] = ['sm', 'md', 'lg'];
 export const Sizes: StoryFn<typeof Tag> = ({ ...rest }) => {
   return (
-    <>
+    <Box horizontal wrap gap={8}>
       {sizes.map((size) => (
-        <Tag key={size} data-size={size} {...rest}>
-          {size}
-        </Tag>
+        <>
+          <Tag key={size} data-size={size} {...rest}>
+            {size}
+          </Tag>
+          <Tag key={size} icon="anchor" data-size={size} {...rest}>
+            {size}
+          </Tag>
+        </>
       ))}
-    </>
+    </Box>
   );
 };
 
@@ -48,13 +53,13 @@ Sizes.parameters = {
 
 export const Colors: StoryFn<typeof Tag> = ({ ...rest }) => {
   return (
-    <>
+    <Box horizontal wrap gap={8}>
       {colorVariants.map((color) => (
         <Tag key={color} data-color={color as TagProps['data-color']} {...rest}>
           {color}
         </Tag>
       ))}
-    </>
+    </Box>
   );
 };
 
@@ -71,13 +76,13 @@ Colors.parameters = {
 
 export const Borders: StoryFn<typeof Tag> = ({ ...rest }) => {
   return (
-    <>
+    <Box horizontal wrap gap={8}>
       {colorVariants.map((color) => (
-        <Tag key={color} bordered data-color={color as TagProps['data-color']} {...rest}>
+        <Tag key={color} variant="outline" data-color={color as TagProps['data-color']} {...rest}>
           {color}
         </Tag>
       ))}
-    </>
+    </Box>
   );
 };
 
@@ -96,7 +101,7 @@ export const Rounded: StoryFn<typeof Tag> = ({ ...rest }) => {
   return (
     <>
       {colorVariants.map((color) => (
-        <Tag key={color} rounded data-color={color as TagProps['data-color']} {...rest}>
+        <Tag key={color} radius="full" data-color={color as TagProps['data-color']} {...rest}>
           {color}
         </Tag>
       ))}
@@ -108,7 +113,7 @@ export const RoundedWithSizes: StoryFn<typeof Tag> = ({ ...rest }) => {
   return (
     <>
       {sizes.map((size) => (
-        <Tag key={size} rounded data-size={size} {...rest}>
+        <Tag key={size} radius="full" data-size={size} {...rest}>
           {size}
         </Tag>
       ))}
@@ -120,7 +125,7 @@ export const RoundedWithBorders: StoryFn<typeof Tag> = ({ ...rest }) => {
   return (
     <>
       {colorVariants.map((color) => (
-        <Tag key={color} rounded bordered data-color={color as TagProps['data-color']} {...rest}>
+        <Tag key={color} radius="full" bordered data-color={color as TagProps['data-color']} {...rest}>
           {color}
         </Tag>
       ))}
@@ -138,7 +143,7 @@ export const WithIcon: Story = {
 export const PlainBackground: Story = {
   args: {
     children: 'Status',
-    plainBackground: true,
+    'data-color-transparent': true,
   },
 };
 
@@ -146,9 +151,9 @@ export const PlainBackgroundRoundedWithIcon: Story = {
   args: {
     children: 'Status',
     icon: 'check_circle',
-    plainBackground: true,
-    rounded: true,
+    radius: 'full',
     'data-color': 'accent',
+    'data-color-transparent': true,
   },
 };
 
@@ -176,7 +181,7 @@ export const RoundedWithIconColors: StoryFn<typeof Tag> = ({ ...rest }) => {
   return (
     <>
       {colorVariants.map((color) => (
-        <Tag key={color} rounded icon="info" bordered data-color={color as TagProps['data-color']} {...rest}>
+        <Tag key={color} radius="full" icon="info" bordered data-color={color as TagProps['data-color']} {...rest}>
           {color}
         </Tag>
       ))}
@@ -196,7 +201,15 @@ export const RoundedWithIconPlainColors: StoryFn<typeof Tag> = ({ ...rest }) => 
   return (
     <>
       {colorVariants.map((color) => (
-        <Tag key={color} rounded icon="info" plainBackground data-color={color as TagProps['data-color']} {...rest}>
+        <Tag
+          key={color}
+          radius="full"
+          icon="info"
+          variant="outline"
+          data-color={color as TagProps['data-color']}
+          data-color-transparent
+          {...rest}
+        >
           {color}
         </Tag>
       ))}

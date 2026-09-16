@@ -57,7 +57,7 @@ import {
   ImageUtbedringIFarvannetFarget,
   ImageUtbedringIFarvannet,
 } from './svgImage';
-import { Body } from '~/main';
+import { Paragraph } from '~/main';
 
 const meta = {
   title: 'Helpers/Images and Illustrations',
@@ -141,7 +141,7 @@ export const Showcase: StoryFn = () => {
       {images.map(([elementName, Element]) => (
         <tr key={elementName}>
           <td style={{ padding: '0.5rem' }}>
-            <Body weight="medium">&lt;{elementName} /&gt;</Body>
+            <Paragraph data-font-weight="medium">&lt;{elementName} /&gt;</Paragraph>
           </td>
           {variants.map((variant) => (
             <td style={{ padding: '0.5rem' }}>{<Element data-color={variant} />}</td>

@@ -1,6 +1,7 @@
 import { Button as DsButton, ButtonProps as DsButtonProps, Tooltip } from '@digdir/designsystemet-react';
 import classes from './Button.module.scss';
 import { Children, FC, Fragment, isValidElement, ReactNode } from 'react';
+import { StyrbordPaletteColor, StyrbordSemanticColor } from '@kystverket/styrbord-tokens/colors';
 
 function wrapTextNodes(children: ReactNode, className: string): ReactNode {
   return Children.map(children, (child) => {
@@ -36,7 +37,7 @@ export type ButtonProps = {
    * examples need translating through the table above. Use this list, not theirs.
    */
   variant?: 'filled' | 'subtle' | 'outline' | 'ghost' | 'dashed';
-  color?: 'primary' | 'neutral' | 'danger';
+  color?: StyrbordSemanticColor | StyrbordPaletteColor;
   size?: 'sm' | 'md' | 'lg';
   disabled?: boolean;
   text?: string;
