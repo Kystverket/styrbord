@@ -41,7 +41,7 @@
     border-bottom: 1px solid var(--ds-color-neutral-surface-tinted);
     position: sticky;
     top: 0px;
-    background: var(--ds-color-neutral-surface);
+    background: var(--ds-color-neutral-surface-default);
     z-index: 1;
   }
 

@@ -42,7 +42,7 @@
 }
 
 .checked .checkOverlay {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: color-mix(in srgb, var(--ds-color-neutral-surface-default) 90%, transparent);
   opacity: 1;
 
   &::after {

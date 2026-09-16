@@ -4,8 +4,6 @@ export type TypographyPrefix = 'body' | 'accent' | 'label';
 
 export type AllSizes = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 
-export type TypographyColor = 'accent' | 'neutral';
-
 export type TypographyWeight = 'regular' | 'medium' | 'semibold';
 
 const weightSuffix: Record<TypographyWeight, string> = {
@@ -21,8 +19,6 @@ type BuildTypographyProps = {
   strong?: boolean;
   weight?: TypographyWeight;
   inline?: boolean;
-  color?: TypographyColor;
-  margin?: boolean;
   className?: string;
 };
 

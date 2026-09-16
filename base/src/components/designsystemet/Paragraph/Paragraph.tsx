@@ -3,7 +3,7 @@ import classes from './Paragraph.module.css';
 
 export type ParagraphProps = DsParagraphProps & {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  /** @deprecated Use `fontWeight="medium"` instead. */
+  /** @deprecated Use `weight="medium"` instead. */
   strong?: boolean;
   weight?: 'regular' | 'medium' | 'semibold';
   'data-color-subtle'?: boolean;

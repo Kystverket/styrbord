@@ -40,8 +40,8 @@
     height: fit-content;
     min-height: 72px;
     border-bottom: 1px solid var(--ds-color-neutral-surface-tinted);
-    border-bottom-right-radius: var(--ds-border-radius-small);
-    border-bottom-left-radius: var(--ds-border-radius-small);
+    border-bottom-right-radius: var(--ds-border-radius-sm);
+    border-bottom-left-radius: var(--ds-border-radius-sm);
     background-color: var(--ds-color-neutral-background-default);
   }
   .mainLinkButton {
