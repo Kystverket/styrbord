@@ -41,4 +41,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npm run lint:check -w base
       - run: npm run pretty:check -w base
+      - run: npm run tokens:check
       - run: npm run build -w base
