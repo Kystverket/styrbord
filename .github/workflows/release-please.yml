@@ -100,7 +100,11 @@ jobs:
       (needs.publish-kart.result == 'success' || needs.publish-kart.result == 'skipped')
     runs-on: ubuntu-latest
     steps:
-      - name: Build Slack payload
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
+      - name: Bygge Slack-payload
         env:
           BASE_RELEASED: ${{ needs.release-please.outputs.base_release_created }}
           BASE_VERSION: ${{ needs.release-please.outputs.base_version }}
@@ -110,32 +114,10 @@ jobs:
           KART_VERSION: ${{ needs.release-please.outputs.kart_version }}
           KART_BODY: ${{ needs.release-please.outputs.kart_body }}
           KART_URL: ${{ needs.release-please.outputs.kart_html_url }}
-        run: |
-          BLOCKS='[{"type":"section","text":{"type":"mrkdwn","text":"🚢 *New Styrbord release published to npm*"}}]'
-          if [ "$BASE_RELEASED" = "true" ]; then
-            BLOCKS=$(echo "$BLOCKS" | jq \
-              --arg pkg "@kystverket/styrbord v${BASE_VERSION}" \
-              --arg body "$BASE_BODY" \
-              --arg url "$BASE_URL" \
-              '. + [
-                {"type":"divider"},
-                {"type":"section","text":{"type":"mrkdwn","text":"*<\($url)|\($pkg)>*\n\($body)"},"accessory":{"type":"button","text":{"type":"plain_text","text":"View release"},"url":"\($url)"}}
-              ]')
-          fi
-          if [ "$KART_RELEASED" = "true" ]; then
-            BLOCKS=$(echo "$BLOCKS" | jq \
-              --arg pkg "@kystverket/styrbord-kart v${KART_VERSION}" \
-              --arg body "$KART_BODY" \
-              --arg url "$KART_URL" \
-              '. + [
-                {"type":"divider"},
-                {"type":"section","text":{"type":"mrkdwn","text":"*<\($url)|\($pkg)>*\n\($body)"},"accessory":{"type":"button","text":{"type":"plain_text","text":"View release"},"url":"\($url)"}}
-              ]')
-          fi
-          jq -n --argjson blocks "$BLOCKS" '{"blocks": $blocks}' > /tmp/slack-payload.json
-      - name: Send Slack notification
+        run: node .github/scripts/release-notes-to-slack.mjs "$RUNNER_TEMP/slack-payload.json"
+      - name: Sende Slack-varsel
         uses: slackapi/slack-github-action@v2
         with:
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
           webhook-type: incoming-webhook
-          payload-file-path: /tmp/slack-payload.json
+          payload-file-path: ${{ runner.temp }}/slack-payload.json
