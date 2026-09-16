@@ -46,8 +46,8 @@
 
   /* main + default */
   .card[data-color='primary'][data-variant='default'] {
-    --_bg: #fff;
-    --_bg-hover: #f5fcff;
+    --_bg: var(--ds-color-primary-surface-default);
+    --_bg-hover: var(--ds-color-primary-background-tinted);
   }
 
   /* main + tinted */
@@ -93,7 +93,7 @@
   .description {
     margin: 0;
     color: inherit;
-    font-size: var(--ds-font-size-sm);
+    font-size: var(--ds-font-size-2);
     line-height: var(--ds-line-height-md);
   }
 

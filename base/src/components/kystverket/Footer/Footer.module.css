@@ -110,7 +110,7 @@
   }
 
   select:hover {
-    border-color: var(--ds-color-primary-border-hover);
+    border-color: var(--ds-color-primary-base-contrast-default);
   }
 
   .selectOption {
