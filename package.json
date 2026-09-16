@@ -14,7 +14,8 @@
     "pretty:check": "npm run pretty:check --workspaces --if-present",
     "pretty:fix": "npm run pretty:fix --workspaces --if-present",
     "lint:check": "npm run lint:check --workspaces --if-present",
-    "lint:fix": "npm run lint:fix --workspaces --if-present"
+    "lint:fix": "npm run lint:fix --workspaces --if-present",
+    "tokens:check": "node scripts/check-design-tokens.mjs"
   },
   "version": "",
   "devDependencies": {
