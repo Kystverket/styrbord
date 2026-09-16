@@ -71,6 +71,10 @@ export const Danger: Story = {
   args: { ...defaultProps, variant: 'filled', color: 'danger' },
 };
 
+export const DangerDashed: Story = {
+  args: { ...defaultProps, variant: 'dashed', color: 'danger' },
+};
+
 export const LinkTo: Story = {
   args: { ...defaultProps, variant: 'subtle', href: 'https://www.kystverket.no', text: 'Kystverket' },
 };
