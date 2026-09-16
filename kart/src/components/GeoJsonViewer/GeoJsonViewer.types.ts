@@ -54,17 +54,17 @@ export interface FeatureStyleProperties {
  * on their `properties` object.
  */
 export interface GeoJsonStyle {
-  /** Fill color for polygons. Defaults to `"rgba(0, 6, 103, 0.2)"`. */
+  /** Fill color for polygons. Defaults to the `primary` base color at 20% opacity. */
   fillColor?: string;
-  /** Outline color for polygons and line color for LineStrings. Defaults to `"#000667"`. */
+  /** Outline color for polygons and line color for LineStrings. Defaults to the `primary` base color. */
   lineColor?: string;
   /** Line width in pixels. Defaults to `2`. */
   lineWidth?: number;
   /** Point circle radius in pixels. Defaults to `6`. */
   pointRadius?: number;
-  /** Point circle color. Defaults to `"#df3c1b"`. */
+  /** Point circle color. Defaults to the `accent` border color. */
   pointColor?: string;
-  /** Point circle stroke color. Defaults to `"#000667"`. */
+  /** Point circle stroke color. Defaults to the `primary` base color. */
   pointStrokeColor?: string;
   /** Point circle stroke width in pixels. Defaults to `2`. */
   pointStrokeWidth?: number;

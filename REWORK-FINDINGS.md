@@ -9,12 +9,12 @@ Scope: 18 wrapper components in [base/src/components/designsystemet/](base/src/c
 plus the kart package. Everything below was verified against the source in this repo and the installed
 Designsystemet 1.21.1 / `@kystverket/styrbord-tokens` 1.0.0 packages.
 
-> **Status:** step 1 of the sequencing below (the non-breaking fixes) has been applied — see
+> **Status:** steps 1 and 6 of the sequencing below have been applied — see
 > [What has been fixed](#what-has-been-fixed) for exactly what changed and where the implementation
 > deviated from the original proposal. Step 5 was a decision, not a code change: **the `Button`
-> variant renaming stays, permanently** — see [Decisions](#decisions). Steps 2, 3, 4 and 6 are still
-> open. Sections 1.6, 1.7 and the relevant parts of 1.5 and 2.7 describe the state *before* those
-> fixes and are kept as the record of what was wrong.
+> variant renaming stays, permanently** — see [Decisions](#decisions). Steps 2, 3 and 4 are still
+> open. Sections 1.6, 1.7, 1.8 and the relevant parts of 1.5 and 2.7 describe the state *before*
+> those fixes and are kept as the record of what was wrong.
 
 ---
 
@@ -349,9 +349,8 @@ Make `Text` set the attribute rather than an inline custom property.
 **5. Decide on `Button`** — **Decided: keep the renaming, permanently.** See
 [Decisions](#decisions). No code change; the divergence is now documented in three places.
 
-**6. kart color extraction** — non-breaking.
-Centralise map colors into one module sourced from `@kystverket/styrbord-tokens/colors`; deduplicate
-`SELECTED_COLOR`; drop the hex fallbacks in kart CSS once step 1 has made the token names correct.
+**6. kart color extraction** — non-breaking. **Done — see
+[What has been fixed](#what-has-been-fixed).**
 
 Steps 3 and 4 are both breaking. Since release-please versions `base` and `kart` independently and a
 `feat!` / `BREAKING CHANGE:` footer triggers a major bump, they are best landed as one coordinated
@@ -398,11 +397,13 @@ separate issue and still open — it is part of step 2/3.
 
 ## What has been fixed
 
-Step 1 landed. No public prop was added, removed or renamed, so this is `fix:` territory rather than
+### Step 1 — non-breaking fixes
+
+No public prop was added, removed or renamed, so this is `fix:` territory rather than
 a major bump. Several of these *do* change rendering — that is the point: the declarations they
 replace were invalid and being dropped silently by the browser.
 
-### Dead token references — all 17 sites corrected
+#### Dead token references — all 17 sites corrected
 
 | Was | Now | Where |
 |---|---|---|
@@ -420,7 +421,7 @@ did nothing at all (`lg`/`xl` worked, because only those two used correct names)
 corners. The `Stepper` step label and the `Summary` edit button previously inherited their color and
 now take the intended one.
 
-### Hardcoded hex replaced
+#### Hardcoded hex replaced
 
 - `ClickableCard`, `primary` + `default` — the only one of the four colour/variant blocks not using
   tokens. Now `--ds-color-primary-surface-default` / `--ds-color-primary-background-tinted`. The
@@ -435,7 +436,7 @@ now take the intended one.
   CSS from `main.ts`, so the fallbacks could never apply; the `KyvSpinner` one claimed `#005b99` for
   `--ds-color-accent-base-default`, which is actually `#FF451F`.
 
-### Two deviations from the plan as written
+#### Two deviations from the plan as written
 
 **`Paragraph`'s subtle rule was not simply swapped to `--ds-color-text-subtle`.** That variable is
 defined on `:root` as **primary**, not neutral, so the swap this document originally proposed would
@@ -462,7 +463,7 @@ stack, VS Code's background colour), and `FileRenderer` is rendered both inside 
 same component light in one place and dark in the other. Treated as a scrim-style exception.
 Reclassify it if the team disagrees.
 
-### Other
+#### Other
 
 - `Icon` — the background now reads `--icon-background-color` instead of sharing `--icon-color` with
   the foreground. No behaviour change today (neither variable is set anywhere); it removes the trap.
@@ -475,13 +476,70 @@ Reclassify it if the team disagrees.
   (`var(--ds-color-${family}-text-default)`) are skipped as unresolvable. Currently: 490 tokens
   defined, zero bad references.
 
-Not done, deliberately: the ~45 hex fallbacks in kart's CSS (`var(--ds-color-…, #c9c9c9)`). They are
-all dead as long as the consumer loads `@kystverket/styrbord/dist/style.css`, and nearly all carry
-Designsystemet's default blue rather than Kystverket's palette — but removing them is step 6, and
-kart's CSS files use the fallback form consistently. Flagged, not touched.
+Not done at the time, deliberately: the hex fallbacks in kart's CSS (`var(--ds-color-…, #c9c9c9)`).
+Removing them was step 6, and they are gone now — see below.
 
-`npm run lint:check`, `npm run pretty:check -w base`, `npm run tokens:check` and `npm run build` all
-pass.
+### Step 6 — kart colour extraction
+
+Non-breaking in the API sense: no export was added, removed or renamed in `main.ts`, and every
+documented default keeps its current value bar one (see *Visible changes* below). `fix(kart):`.
+
+**New module: [`kart/src/utility/mapColors.ts`](kart/src/utility/mapColors.ts).** Every colour kart
+paints onto a map now lives there, grouped by what it is for — drawing, viewing, labels, compass
+markers — with an explicitly marked off-palette section at the bottom. Map colours can't ride the
+`--ds-color-*` cascade (MapLibre paint properties and terra-draw styles take colour strings, not CSS
+variables), so the brand ones are read from `@kystverket/styrbord-tokens/colors`, light scheme. Map
+tiles are light whatever colour scheme surrounds them, so the geometry drawn on top follows the
+tiles, not the page.
+
+Ten hand-copied brand colours now resolve from tokens, and all of them resolve to exactly the value
+they replaced:
+
+| Was | Now |
+|---|---|
+| `#ff451f` (22 sites) | `accent.baseDefault` → `DRAW_COLOR` |
+| `#000667` (16) | `primary.baseDefault` → `VIEW_LINE_COLOR`, `COMPASS_BORDER_COLOR` |
+| `#ffffff` / `white` (15) | `neutral.backgroundDefault` → `DRAW_CONTRAST_COLOR`, `LABEL_HALO_COLOR`, `COMPASS_FACE_COLOR` |
+| `#df3c1b` (8) | `accent.borderDefault` → `VIEW_POINT_COLOR`, `DRAW_SELECTION_POINT_COLOR`, `COMPASS_NEEDLE_COLOR` |
+| `#ff7559` | `accent.baseHover` → `DRAW_MIDPOINT_COLOR` |
+| `rgba(0, 6, 103, 0.2)` | `withAlpha(primary.baseDefault, 0.2)` → `VIEW_FILL_COLOR` |
+
+**`SELECTED_COLOR` deduplicated.** The `#0062ba` that was written out in both
+`GeoJsonViewer.utils.ts` and `useDirectionalPoints.ts` is now one constant, and the two `rgba()`
+strings derived from it (`HOVER_COLOR` at 0.4, `SELECTED_GLOW_COLOR` at 0.5, plus the `box-shadow`
+in `useDirectionalPoints`) are computed from it via `withAlpha` rather than hand-written. Change the
+blue in one place and all four follow.
+
+**All 48 hex fallbacks removed from kart's CSS** (`var(--ds-color-neutral-background-default, #fff)`
+→ `var(--ds-color-neutral-background-default)`), across `GeoJsonEditor`, `GeoJsonViewerHoverPopup`,
+`LayerToggle`, `MapCenterAction` and `MapPicker`. They were dead — `@kystverket/styrbord` always
+loads the token CSS — and they were actively harmful, because a fallback hides a wrong token name
+instead of letting it break visibly. `npm run tokens:check` already guarantees the names are valid.
+
+**Visible change, one:** map feature labels drew in `#1a1a1a` and now draw in
+`neutral.textDefault` = `#2a2b35`. Both are near-black; nothing else moved.
+
+**No new runtime dependency.** kart's vite config lists `@kystverket/styrbord-tokens` as external,
+but that exact-string match doesn't cover the `/colors` subpath, so rollup inlines the resolved hex
+values into `dist/style.js` at build time. Verified: the built bundle contains no import of the
+tokens package.
+
+#### Left alone, deliberately
+
+- **The easter-egg triangles** in [useMaplibreMap.ts](kart/src/hooks/useMaplibreMap.ts#L470) —
+  `#8B4513`/`#5C2D0A` and `#E8466A`/`#A1203E`. 1.8 lists them as off-palette, which they are, but
+  they are decorations with specific intended colours, not theme colours, and pulling them into a
+  "map colours" module would misrepresent what they are. Same treatment as `FileRenderer` in step 1.
+- **The off-palette selection blue `#0062ba`.** Centralised and documented, but not retargeted.
+  The nearest token is `info.baseDefault` (`#0a71c0`); switching would visibly change every hover
+  and selection highlight, which is a design decision, not a refactor. Likewise `#ff0000`
+  (terra-draw selected-vertex outline), `#b0b0b0` (muted compass half) and `#088` (vector-tile
+  fallback).
+- **Story files.** The `#f5f5f5` container backgrounds and the illustrative per-feature colours in
+  `GeoJsonViewer.stories.tsx` are demo fixtures, not library output.
+
+`npm run lint:check`, `npm run pretty:check`, `npm run tokens:check` and `npm run build` all pass
+(both workspaces).
 
 ---
 
