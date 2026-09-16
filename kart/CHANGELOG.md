@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.2](https://github.com/Kystverket/styrbord/compare/styrbord-kart-v0.1.1...styrbord-kart-v0.1.2) (2026-09-16)
+
+
+### Bug Fixes
+
+* **kart:** correct invalid neutral background token reference ([#301](https://github.com/Kystverket/styrbord/issues/301)) ([d3e72f3](https://github.com/Kystverket/styrbord/commit/d3e72f32c3cd126875d7ad09d57ccbc59b2e4357))
+* **kart:** support maplibre-gl v6 ([#291](https://github.com/Kystverket/styrbord/issues/291)) ([bf8f33f](https://github.com/Kystverket/styrbord/commit/bf8f33fb424db7f8e6814d80fc625b7b4d07282a))
+
 ## [0.1.1](https://github.com/Kystverket/styrbord/compare/styrbord-kart-v0.1.0...styrbord-kart-v0.1.1) (2026-08-06)
 
 
