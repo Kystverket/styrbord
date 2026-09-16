@@ -29,7 +29,7 @@
     flex-direction: row;
     align-items: center;
     gap: 0.5rem;
-    color: var(--ds-color-grey-70);
+    color: var(--ds-color-neutral-text-subtle);
     flex: 0 0 auto;
     padding: 0.1rem 0.5rem;
   }

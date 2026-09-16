@@ -7,14 +7,14 @@
 }
 
 .input {
-  font-size: var(--ds-font-size-sm, 0.875rem);
+  font-size: var(--ds-font-size-2);
   padding-top: var(--ds-size-1);
   padding-bottom: var(--ds-size-1);
 }
 
 .hint {
   margin: 0;
-  font-size: var(--ds-font-size-sm, 0.875rem);
+  font-size: var(--ds-font-size-2);
   color: var(--ds-color-neutral-text-subtle);
 }
 
@@ -47,5 +47,5 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--ds-color-warning-text);
+  color: var(--ds-color-warning-text-default);
 }

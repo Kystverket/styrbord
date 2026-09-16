@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import maplibregl from "maplibre-gl";
+import * as maplibregl from "maplibre-gl";
 import type { Coordinate } from "~/utility/types";
 import {
   clampLatitude,
