@@ -7,6 +7,7 @@ import type {
 import {
   VECTOR_TILE_DEFAULT_COLOR,
   VIEW_FILL_COLOR,
+  VIEW_FILL_OPACITY,
   VIEW_LINE_COLOR,
   VIEW_POINT_COLOR,
   VIEW_POINT_STROKE_COLOR,
@@ -82,7 +83,7 @@ export function createSimpleLayer(
             source: sourceId,
             paint: {
               "fill-color": opts.fillColor ?? VIEW_FILL_COLOR,
-              "fill-opacity": 0.5,
+              "fill-opacity": opts.fillOpacity ?? VIEW_FILL_OPACITY,
             },
             filter: ["==", "$type", "Polygon"],
           } as LayerSpecification,

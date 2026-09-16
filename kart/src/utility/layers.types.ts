@@ -78,8 +78,10 @@ export interface SimpleLayerOptions {
 export interface SimpleGeoJsonLayerOptions extends SimpleLayerOptions {
   type: "geojson";
   data: Feature | FeatureCollection | string;
-  /** Fill color. Defaults to semi-transparent blue. */
+  /** Fill color. Defaults to the `primary` base color. */
   fillColor?: string;
+  /** Fill opacity. Defaults to `0.2`. */
+  fillOpacity?: number;
   /** Line/stroke color. Defaults to dark blue. */
   lineColor?: string;
   /** Point circle color. Defaults to red. */

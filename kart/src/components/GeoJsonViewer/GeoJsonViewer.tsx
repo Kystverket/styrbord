@@ -210,7 +210,10 @@ export function GeoJsonViewer({
             layout: { visibility: "visible" },
             paint: {
               "fill-color": featureExpr("fillColor", layerStyle.fillColor),
-              "fill-opacity": featureExpr("fillOpacity", 1),
+              "fill-opacity": featureExpr(
+                "fillOpacity",
+                layerStyle.fillOpacity,
+              ),
             },
           });
         }

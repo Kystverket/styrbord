@@ -73,8 +73,10 @@ export const DRAW_MIDPOINT_COLOR = hex(token.accent.baseHover);
 
 /** Outline colour for polygons and the line colour for LineStrings. */
 export const VIEW_LINE_COLOR = hex(token.primary.baseDefault);
-/** Polygon fill — the line colour at {@link DRAW_FILL_OPACITY}. */
-export const VIEW_FILL_COLOR = withAlpha(VIEW_LINE_COLOR, DRAW_FILL_OPACITY);
+/** Polygon fill colour before opacity is applied. */
+export const VIEW_FILL_COLOR = VIEW_LINE_COLOR;
+/** Default polygon fill opacity for read-only geometry. */
+export const VIEW_FILL_OPACITY = DRAW_FILL_OPACITY;
 /** Point circle colour. */
 export const VIEW_POINT_COLOR = hex(token.accent.borderDefault);
 /** Point circle stroke, matching the line colour. */

@@ -54,8 +54,10 @@ export interface FeatureStyleProperties {
  * on their `properties` object.
  */
 export interface GeoJsonStyle {
-  /** Fill color for polygons. Defaults to the `primary` base color at 20% opacity. */
+  /** Fill color for polygons. Defaults to the `primary` base color. */
   fillColor?: string;
+  /** Fill opacity for polygons. Defaults to `0.2`. */
+  fillOpacity?: number;
   /** Outline color for polygons and line color for LineStrings. Defaults to the `primary` base color. */
   lineColor?: string;
   /** Line width in pixels. Defaults to `2`. */
