@@ -211,14 +211,6 @@ export type {
 export { Suggestion } from './components/designsystemet/Suggestion/Suggestion';
 export type { SuggestionProps } from './components/designsystemet/Suggestion/Suggestion';
 
-export type {
-  ChipButtonProps,
-  ChipCheckboxProps,
-  ChipRadioProps,
-  ChipRemovableProps,
-} from './components/designsystemet/Chip';
-export { Chip, ChipButton, ChipCheckbox, ChipRadio, ChipRemovable } from './components/designsystemet/Chip';
-
 //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 //
 // RE-EKSPORT AV DESIGNSYSTEMET
@@ -263,6 +255,15 @@ export type { ComboboxEmptyProps, ComboboxOptionProps, ComboboxProps } from '@di
 export { Combobox, ComboboxEmpty, ComboboxOption } from '@digdir/designsystemet-react';
 export type { CardBlockProps, CardProps } from '@digdir/designsystemet-react';
 export { Card, CardBlock } from '@digdir/designsystemet-react';
+
+export type {
+  ChipButtonProps,
+  ChipCheckboxProps,
+  ChipRadioProps,
+  ChipRemovableProps,
+} from '@digdir/designsystemet-react';
+export { ChipCheckbox, ChipRadio, ChipRemovable, Chip, ChipButton } from '@digdir/designsystemet-react';
+
 export type { CheckboxProps } from '@digdir/designsystemet-react';
 export { Checkbox } from '@digdir/designsystemet-react';
 export type { DetailsContentProps, DetailsProps, DetailsSummaryProps } from '@digdir/designsystemet-react';
