@@ -160,4 +160,12 @@ Run `npm run pretty:fix` (or `npm run pretty:fix --workspace base`) and `npm run
 - **Match existing conventions, even when you disagree.** Conformance beats taste inside this codebase. If a convention looks actively harmful, say so; don't fork it silently.
 - **Surface conflicting patterns, don't blend them.** Where two patterns contradict (see file naming and story placement above), follow the newer one and flag the older for cleanup. Never average the two into a third variant.
 - **Fail loud.** If part of a task was skipped, blocked or unverified, say which part. Don't report a change as done when only some of it landed.
+- **`Button.variant` diverges from Designsystemet — permanently.** Styrbord uses
+  `filled | outline | ghost | subtle | dashed`; Designsystemet uses `primary | secondary | tertiary`.
+  This is a settled decision, not drift: upstream's names read as emphasis levels and collide with
+  `data-color="primary"`, which is a colour family, and Styrbord's list has room for `subtle` and
+  `dashed`, which upstream lacks. Do not "align" it, and do not forward the upstream `variant`
+  through the wrapper. The mapping table lives in the `ButtonProps.variant` JSDoc and in the
+  Storybook docs page; keep all three in sync. Note this is about `variant` only — `color` being
+  capped at `primary | neutral | danger` is a separate, still-open issue.
 - **Prop naming.** Match existing prop conventions instead of inventing new ones — color picks use `data-color`, style variants (e.g. `subtle`, `tinted`) use `data-color-variant`. Keep prop names short: drop redundant prefixes (`weight` not `fontWeight` on `Text` — `font` adds nothing).

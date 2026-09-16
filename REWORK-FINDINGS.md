@@ -9,10 +9,12 @@ Scope: 18 wrapper components in [base/src/components/designsystemet/](base/src/c
 plus the kart package. Everything below was verified against the source in this repo and the installed
 Designsystemet 1.21.1 / `@kystverket/styrbord-tokens` 1.0.0 packages.
 
-> **Status:** steps 1 and 6 have been applied — see [What has been fixed](#what-has-been-fixed) for
-> exactly what changed and where the implementation deviated from the original proposal. Steps 2–5
-> are still open. Sections 1.6, 1.7, 1.8 and the relevant parts of 1.5 and 2.7 describe the state
-> *before* those fixes and are kept as the record of what was wrong.
+> **Status:** steps 1 and 6 of the sequencing below have been applied — see
+> [What has been fixed](#what-has-been-fixed) for exactly what changed and where the implementation
+> deviated from the original proposal. Step 5 was a decision, not a code change: **the `Button`
+> variant renaming stays, permanently** — see [Decisions](#decisions). Steps 2, 3 and 4 are still
+> open. Sections 1.6, 1.7, 1.8 and the relevant parts of 1.5 and 2.7 describe the state *before*
+> those fixes and are kept as the record of what was wrong.
 
 ---
 
@@ -344,17 +346,52 @@ Make `Text` set the attribute rather than an inline custom property.
 `size` → `data-size`; the input `size` prop → `width`; stacked booleans → `variant`;
 `StepItem.style` → `StepItem.variant`.
 
-**5. Decide on `Button`** — breaking if changed.
-Either adopt Designsystemet's `primary | secondary | tertiary` and keep `subtle`/`dashed` as
-additions, or keep the renaming and document it as a deliberate, permanent divergence. Do not leave
-it undecided.
+**5. Decide on `Button`** — **Decided: keep the renaming, permanently.** See
+[Decisions](#decisions). No code change; the divergence is now documented in three places.
 
 **6. kart color extraction** — non-breaking. **Done — see
 [What has been fixed](#what-has-been-fixed).**
 
-Steps 3–5 are all breaking. Since release-please versions `base` and `kart` independently and a
+Steps 3 and 4 are both breaking. Since release-please versions `base` and `kart` independently and a
 `feat!` / `BREAKING CHANGE:` footer triggers a major bump, they are best landed as one coordinated
 2.0 for `base` with a codemod or migration table, rather than as a sequence of majors.
+
+---
+
+## Decisions
+
+### `Button.variant` keeps Styrbord's names — permanently (step 5, section 2.2)
+
+`filled | outline | ghost | subtle | dashed` stays. Designsystemet's
+`primary | secondary | tertiary` is **not** adopted, now or later.
+
+Why:
+
+- Upstream's names read as emphasis levels, and `primary` collides head-on with
+  `data-color="primary"`, which is a colour *family*. One word, two unrelated axes, on the same
+  component. Styrbord's names describe the shape, which is what the prop actually controls.
+- Styrbord has two variants Designsystemet does not (`subtle`, `dashed`). Adopting upstream's three
+  names would leave those two as odd ones out in a list that otherwise mirrors upstream — worse than
+  a list that is consistently Styrbord's own.
+- The migration cost is real and the benefit is documentation convenience, which a mapping table
+  buys more cheaply.
+
+Accepted cost: Designsystemet's examples and docs need translating through the mapping table, and
+the wrapper keeps `Omit<DsButtonProps, 'variant' | …>`, so there is no escape hatch to the upstream
+value. That is the trade, taken with eyes open.
+
+The mapping table now lives in three places, which must stay in sync:
+
+- `ButtonProps.variant` JSDoc in [Button.tsx](base/src/components/designsystemet/Button/Button.tsx) —
+  what an IDE and Storybook's autodocs show.
+- The component description in
+  [Button.stories.tsx](base/src/components/designsystemet/Button/Button.stories.tsx) — the
+  Storybook docs page, in Norwegian like the rest of the consumer-facing docs.
+- The working rules in [AGENTS.md](AGENTS.md) — so a future agent doesn't "helpfully" align it.
+
+**Scope note:** this decision is about `variant` only. `color` being capped at
+`primary | neutral | danger` when the CSS would support all 20 families (2.2, second half) is a
+separate issue and still open — it is part of step 2/3.
 
 ---
 
@@ -508,13 +545,12 @@ tokens package.
 
 ## Open questions for the team
 
-1. **Button variants** — adopt Designsystemet's names, or formalise the divergence? (2.2)
-2. **Palette colors in components** — should `data-color="lyng"` work on `Button`, `Tag`, `Box`, or
+1. **Palette colors in components** — should `data-color="lyng"` work on `Button`, `Tag`, `Box`, or
    are the 10 palette colors intended for illustration and data visualisation only? This decides how
    wide the unions get.
-3. **Dark mode** — is it a supported target or an accident of the token layer? The answer changes how
+2. **Dark mode** — is it a supported target or an accident of the token layer? The answer changes how
    much of 1.7 matters.
-4. **Input `size`** — is anyone depending on the pixel widths (`2xs`=75px etc.), or can the inputs move
+3. **Input `size`** — is anyone depending on the pixel widths (`2xs`=75px etc.), or can the inputs move
    to `width` + `data-size` cleanly?
-5. **Deprecation window** — does Styrbord keep old props working alongside new ones for a release, or
+4. **Deprecation window** — does Styrbord keep old props working alongside new ones for a release, or
    is a clean 2.0 with a migration guide acceptable? Consumer count decides this.

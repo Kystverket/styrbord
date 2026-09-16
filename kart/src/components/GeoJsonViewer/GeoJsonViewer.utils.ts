@@ -7,6 +7,7 @@ import {
   SELECTED_COLOR,
   SELECTED_GLOW_COLOR,
   VIEW_FILL_COLOR,
+  VIEW_FILL_OPACITY,
   VIEW_LINE_COLOR,
   VIEW_POINT_COLOR,
   VIEW_POINT_STROKE_COLOR,
@@ -18,6 +19,7 @@ import {
 
 export const DEFAULT_STYLE: Required<GeoJsonStyle> = {
   fillColor: VIEW_FILL_COLOR,
+  fillOpacity: VIEW_FILL_OPACITY,
   lineColor: VIEW_LINE_COLOR,
   lineWidth: 2,
   pointRadius: 6,
