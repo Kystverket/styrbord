@@ -136,6 +136,13 @@ Things that are easy to get wrong here, all of them learned the hard way:
 - **Cookie metadata is hand-maintained** in `utility/services.ts`. Adding a vendor means adding its cookies
   there, or the dialog silently under-reports. An empty `cookies: []` renders "sets no cookies"; omitting
   the field renders nothing — keep that distinction.
+- **A service can only sit in one category the dialog can show.** c15t accepts composite
+  conditions (`{ and: ['measurement', 'experience'] }`), but `getSelectableCategories` and the
+  dialog's per-category listing both drop non-string categories, so such a service renders
+  nowhere and the user never sees it. `postHogService` is the worked example: it is gated on
+  `measurement` and turns session replay on and off at runtime from the `experience` consent via
+  c15t's `onLoad`/`onConsentChange`. Heatmaps cannot be toggled that way — they are an init
+  option, so they only take effect on the next page load.
 - **Categories are c15t's fixed vocabulary** (`necessary | functionality | experience | measurement |
   marketing`) and cannot be extended. Labels are ours, so this is invisible to users.
 

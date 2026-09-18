@@ -87,6 +87,25 @@ Plausible lastes uten samtykke (`alwaysLoad`), fordi det verken setter informasj
 eller lagrer noe som kan knyttes til enheten. `plausibleService({ domain, requireConsent: true })`
 legger det bak statistikk-kategorien i stedet.
 
+PostHog ligger bak statistikk, fordi det alltid teller sidevisninger og klikk:
+
+```tsx
+postHogService({
+  apiKey: 'phc_...',
+  sessionReplay: true, // sesjonsopptak og varmekart
+  capturePageview: false, // appen teller sidevisninger selv ved ruteendring
+});
+```
+
+Med `sessionReplay` gjør PostHog i tillegg det samme som Hotjar, og det hører hjemme under
+brukeropplevelse. Siden en tjeneste bare kan stå i én kategori i dialogen, løses det i kjøretid:
+skriptet starter med opptak avslått og slår det på når brukeren gir brukeropplevelse — også uten
+at siden lastes på nytt. Varmekart settes ved oppstart og er først med ved neste sidelast.
+
+API-nøkkelen er offentlig og hører hjemme i klientkoden, men send den likevel inn som en prop
+framfor å lese den i biblioteket — se avsnittet om `cookieDomain` over. CSP må åpne for både
+`eu.i.posthog.com` og `eu-assets.i.posthog.com`.
+
 ### Kategorier
 
 Kategoriene er c15t sitt faste vokabular: `necessary`, `functionality`, `experience`,
