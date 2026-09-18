@@ -11,7 +11,8 @@
     },
     "consent": {
       "release-type": "node",
-      "package-name": "@kystverket/styrbord-consent"
+      "package-name": "@kystverket/styrbord-consent",
+      "bump-minor-pre-major": true
     }
   }
 }
