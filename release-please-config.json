@@ -8,6 +8,10 @@
     "kart": {
       "release-type": "node",
       "package-name": "@kystverket/styrbord-kart"
+    },
+    "cookie-banner": {
+      "release-type": "node",
+      "package-name": "@kystverket/styrbord-cookie-banner"
     }
   }
 }

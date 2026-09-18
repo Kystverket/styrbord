@@ -1,0 +1,41 @@
+{
+  "name": "@kystverket/styrbord-cookie-banner",
+  "version": "0.0.0",
+  "description": "Cookie-banner for Kystverkets applikasjoner",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kystverket/styrbord.git"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/src/main.d.ts",
+      "style": "./dist/style.css",
+      "import": "./dist/style.js"
+    },
+    "./*.css": {
+      "import": "./dist/*.css",
+      "require": "./dist/*.css"
+    }
+  },
+  "main": "./dist/style.js",
+  "typings": "./dist/src/main.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "build": "tsc && vite build",
+    "test": "echo \"Warning: no test specified\" && exit 0",
+    "pretty:check": "npx prettier . --check",
+    "pretty:fix": "npx prettier . --write",
+    "lint:check": "npx eslint .",
+    "lint:fix": "npx eslint --fix ."
+  },
+  "author": "",
+  "license": "ISC",
+  "peerDependencies": {
+    "@kystverket/styrbord": ">=1.20.0",
+    "react": ">=19.0.0",
+    "react-dom": ">=19.0.0"
+  }
+}

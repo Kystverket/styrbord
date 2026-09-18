@@ -2,7 +2,8 @@
   "name": "styrbord-root",
   "workspaces": [
     "base",
-    "kart"
+    "kart",
+    "cookie-banner"
   ],
   "scripts": {
     "build": "npm run build --workspaces --if-present",

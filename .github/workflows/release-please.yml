@@ -29,6 +29,10 @@ jobs:
       kart_version: ${{ steps.release.outputs.kart--version }}
       kart_body: ${{ steps.release.outputs.kart--body }}
       kart_html_url: ${{ steps.release.outputs.kart--html_url }}
+      cookie_banner_release_created: ${{ steps.release.outputs['cookie-banner--release_created'] }}
+      cookie_banner_version: ${{ steps.release.outputs['cookie-banner--version'] }}
+      cookie_banner_body: ${{ steps.release.outputs['cookie-banner--body'] }}
+      cookie_banner_html_url: ${{ steps.release.outputs['cookie-banner--html_url'] }}
     steps:
       - uses: googleapis/release-please-action@v4
         id: release
@@ -54,6 +58,17 @@ jobs:
     uses: ./.github/workflows/publish-package.yml
     with:
       workspace: kart
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+  publish-cookie-banner:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.cookie_banner_release_created == 'true' }}
+    uses: ./.github/workflows/publish-package.yml
+    with:
+      workspace: cookie-banner
     permissions:
       contents: read
       packages: write
@@ -92,12 +107,15 @@ jobs:
           folder: ./github-pages-root
 
   notify-slack:
-    needs: [release-please, publish-base, publish-kart]
+    needs: [release-please, publish-base, publish-kart, publish-cookie-banner]
     if: |
       always() &&
-      (needs.release-please.outputs.base_release_created == 'true' || needs.release-please.outputs.kart_release_created == 'true') &&
+      (needs.release-please.outputs.base_release_created == 'true' ||
+        needs.release-please.outputs.kart_release_created == 'true' ||
+        needs.release-please.outputs.cookie_banner_release_created == 'true') &&
       (needs.publish-base.result == 'success' || needs.publish-base.result == 'skipped') &&
-      (needs.publish-kart.result == 'success' || needs.publish-kart.result == 'skipped')
+      (needs.publish-kart.result == 'success' || needs.publish-kart.result == 'skipped') &&
+      (needs.publish-cookie-banner.result == 'success' || needs.publish-cookie-banner.result == 'skipped')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -114,6 +132,10 @@ jobs:
           KART_VERSION: ${{ needs.release-please.outputs.kart_version }}
           KART_BODY: ${{ needs.release-please.outputs.kart_body }}
           KART_URL: ${{ needs.release-please.outputs.kart_html_url }}
+          COOKIE_BANNER_RELEASED: ${{ needs.release-please.outputs.cookie_banner_release_created }}
+          COOKIE_BANNER_VERSION: ${{ needs.release-please.outputs.cookie_banner_version }}
+          COOKIE_BANNER_BODY: ${{ needs.release-please.outputs.cookie_banner_body }}
+          COOKIE_BANNER_URL: ${{ needs.release-please.outputs.cookie_banner_html_url }}
         run: node .github/scripts/release-notes-to-slack.mjs "$RUNNER_TEMP/slack-payload.json"
       - name: Sende Slack-varsel
         uses: slackapi/slack-github-action@v2

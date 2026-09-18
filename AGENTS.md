@@ -4,12 +4,13 @@ This file provides guidance to any AI agent when working with code in this repos
 
 ## Overview
 
-Styrbord is a monorepo containing two npm workspace packages:
+Styrbord is a monorepo containing three npm workspace packages:
 
 - **`base`** (`@kystverket/styrbord`) — React component library wrapping [@digdir/designsystemet-react](https://storybook.designsystemet.no/) with Kystverket branding. Also re-exports all Designsystemet components explicitly.
 - **`kart`** (`@kystverket/styrbord-kart`) — Map and GeoJSON component library built on MapLibre GL and terra-draw. Depends on `@kystverket/styrbord`.
+- **`cookie-banner`** (`@kystverket/styrbord-cookie-banner`) — Cookie banner. Scaffolded but empty: build, lint and publishing are wired up, no components yet. Has no Storybook.
 
-Both are library packages (not apps): they build to `dist/` and export from `src/main.ts`.
+All are library packages (not apps): they build to `dist/` and export from `src/main.ts`.
 
 ## Commands
 
@@ -34,6 +35,7 @@ npm run pretty:fix        # auto-fix formatting
 # Build only one workspace
 npm run build --workspace base
 npm run build --workspace kart
+npm run build --workspace cookie-banner
 ```
 
 From within a workspace directory (e.g. `cd kart`):
@@ -122,7 +124,7 @@ This project uses **conventional commits**. Every commit message must follow the
 <type>(<scope>): <description>
 ```
 
-**Scope is required** and must be either `base` or `kart`. This is enforced on PR titles by `amannn/action-semantic-pull-request` in `.github/workflows/lint.yml`.
+**Scope is required** and must be `base`, `kart` or `cookie-banner` (`ci` for workflow-only changes). This is enforced on PR titles by `amannn/action-semantic-pull-request` in `.github/workflows/lint.yml`.
 
 Examples:
 
@@ -139,16 +141,17 @@ A `feat` commit triggers a minor version bump; `fix` triggers a patch bump; a br
 
 ## Versioning and releases
 
-Releases are managed by **release-please** via `.github/workflows/release-please.yml`. The two packages are versioned independently:
+Releases are managed by **release-please** via `.github/workflows/release-please.yml`. The packages are versioned independently:
 
 - `@kystverket/styrbord` (path: `base`) — current version tracked in `.release-please-manifest.json`
 - `@kystverket/styrbord-kart` (path: `kart`) — current version tracked in `.release-please-manifest.json`
+- `@kystverket/styrbord-cookie-banner` (path: `cookie-banner`) — current version tracked in `.release-please-manifest.json`
 
 Configuration is in `release-please-config.json`. When commits land on `main`, release-please opens or updates a release PR per package. Merging that PR tags the release and triggers the publish workflow.
 
 **Do not manually bump versions in `package.json`** — release-please owns that. Do not edit `.release-please-manifest.json` by hand either.
 
-On release, each package is published to both **GitHub Packages** (`npm.pkg.github.com`) and **npmjs.org** (via tokenless OIDC). Only the package that has a new release is published — the other is left untouched.
+On release, each package is published to both **GitHub Packages** (`npm.pkg.github.com`) and **npmjs.org** (via tokenless OIDC). Only the packages that have a new release are published — the others are left untouched.
 
 ## Before committing
 

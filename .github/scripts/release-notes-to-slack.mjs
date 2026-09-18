@@ -80,6 +80,13 @@ const releases = [
     body: process.env.KART_BODY,
     url: process.env.KART_URL,
   },
+  {
+    released: process.env.COOKIE_BANNER_RELEASED === 'true',
+    name: '@kystverket/styrbord-cookie-banner',
+    version: process.env.COOKIE_BANNER_VERSION,
+    body: process.env.COOKIE_BANNER_BODY,
+    url: process.env.COOKIE_BANNER_URL,
+  },
 ].filter((release) => release.released);
 
 const blocks = [
