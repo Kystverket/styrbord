@@ -9,9 +9,9 @@
       "release-type": "node",
       "package-name": "@kystverket/styrbord-kart"
     },
-    "cookie-banner": {
+    "consent": {
       "release-type": "node",
-      "package-name": "@kystverket/styrbord-cookie-banner"
+      "package-name": "@kystverket/styrbord-consent"
     }
   }
 }

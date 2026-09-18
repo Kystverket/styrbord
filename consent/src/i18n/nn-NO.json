@@ -1,0 +1,57 @@
+{
+  "banner": {
+    "heading": "Informasjonskapslar",
+    "body": "Vi brukar informasjonskapslar for å forstå korleis tenesta blir brukt, slik at vi kan gjere henne betre. Du vel sjølv kva du samtykkjer til.",
+    "acceptAll": "Godta alle",
+    "rejectAll": "Berre nødvendige",
+    "managePreferences": "Vel sjølv"
+  },
+  "dialog": {
+    "heading": "Innstillingar for informasjonskapslar",
+    "body": "Nødvendige informasjonskapslar er alltid på, fordi tenesta ikkje fungerer utan dei. Dei andre vel du sjølv.",
+    "savePreferences": "Lagre val",
+    "acceptAll": "Godta alle",
+    "rejectAll": "Berre nødvendige",
+    "close": "Lukk",
+    "servicesLabel": "Tenester",
+    "showCookies": "Vis informasjonskapslar",
+    "noCookies": "Set ingen informasjonskapslar",
+    "alwaysOnHeading": "Alltid på",
+    "alwaysOnBody": "Desse lagrar ingenting på eininga di og kan ikkje brukast til å kjenne deg att. Dei krev difor ikkje samtykke, og er alltid på.",
+    "cookieName": "Namn",
+    "cookieProvider": "Levert av",
+    "cookieDuration": "Varigheit"
+  },
+  "durations": {
+    "session": "Til du lukkar nettlesaren",
+    "day": "{{count}} dag",
+    "days": "{{count}} dagar",
+    "month": "{{count}} månad",
+    "months": "{{count}} månader",
+    "year": "{{count}} år",
+    "years": "{{count}} år"
+  },
+  "categories": {
+    "necessary": {
+      "title": "Nødvendige",
+      "description": "Krevst for at tenesta skal fungere, mellom anna for innlogging og tryggleik. Desse kan ikkje slåast av."
+    },
+    "functionality": {
+      "title": "Funksjonalitet",
+      "description": "Hugsar vala dine, som språk og andre innstillingar."
+    },
+    "measurement": {
+      "title": "Statistikk",
+      "description": "Lèt oss telje besøk og sjå kva sider som blir brukte, slik at vi kan prioritere rett."
+    },
+    "experience": {
+      "title": "Brukaroppleving",
+      "description": "Lèt oss sjå korleis sidene faktisk blir brukte, gjennom anonymiserte opptak og varmekart, slik at vi kan rette opp det som er vanskeleg."
+    },
+    "marketing": {
+      "title": "Marknadsføring",
+      "description": "Blir brukt til å tilpasse annonsar. Kystverket brukar ikkje dette i dag."
+    }
+  },
+  "manageLink": "Administrer informasjonskapslar"
+}

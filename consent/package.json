@@ -1,7 +1,7 @@
 {
-  "name": "@kystverket/styrbord-cookie-banner",
+  "name": "@kystverket/styrbord-consent",
   "version": "0.0.0",
-  "description": "Cookie-banner for Kystverkets applikasjoner",
+  "description": "Samtykke-komponenter for Kystverkets applikasjoner",
   "type": "module",
   "repository": {
     "type": "git",
@@ -37,5 +37,8 @@
     "@kystverket/styrbord": ">=1.20.0",
     "react": ">=19.0.0",
     "react-dom": ">=19.0.0"
+  },
+  "dependencies": {
+    "c15t": "^2.2.1"
   }
 }

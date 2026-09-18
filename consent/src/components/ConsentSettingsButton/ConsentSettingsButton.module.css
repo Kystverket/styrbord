@@ -1,0 +1,15 @@
+@layer styrbord-consent {
+  .button {
+    position: fixed;
+    right: calc(var(--ds-size-4) + env(safe-area-inset-right, 0px));
+    bottom: calc(var(--ds-size-4) + env(safe-area-inset-bottom, 0px));
+    z-index: 999;
+    /* 44px er anbefalt minste treffflate for berøring (WCAG 2.5.5). Standardstørrelsen på
+       IconButton lander på 42, som er i minste laget for en knapp som står alene i et hjørne. */
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: var(--ds-border-radius-full);
+    background: var(--ds-color-neutral-background-default);
+    box-shadow: var(--ds-shadow-md);
+  }
+}

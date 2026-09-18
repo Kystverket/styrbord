@@ -31,6 +31,7 @@ export default defineConfig({
       external: [
         'react',
         'react-dom',
+        'c15t',
         '@digdir/designsystemet-react',
         '@kystverket/sprak-react',
         '@kystverket/styrbord',
@@ -42,6 +43,8 @@ export default defineConfig({
         globals: {
           react: 'React',
           '@digdir/designsystemet-react': '@digdir/designsystemet-react',
+          '@kystverket/styrbord': 'Styrbord',
+          c15t: 'c15t',
         },
       },
       plugins: [

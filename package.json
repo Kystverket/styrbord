@@ -3,7 +3,7 @@
   "workspaces": [
     "base",
     "kart",
-    "cookie-banner"
+    "consent"
   ],
   "scripts": {
     "build": "npm run build --workspaces --if-present",

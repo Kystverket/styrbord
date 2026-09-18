@@ -8,7 +8,7 @@ Styrbord is a monorepo containing three npm workspace packages:
 
 - **`base`** (`@kystverket/styrbord`) — React component library wrapping [@digdir/designsystemet-react](https://storybook.designsystemet.no/) with Kystverket branding. Also re-exports all Designsystemet components explicitly.
 - **`kart`** (`@kystverket/styrbord-kart`) — Map and GeoJSON component library built on MapLibre GL and terra-draw. Depends on `@kystverket/styrbord`.
-- **`cookie-banner`** (`@kystverket/styrbord-cookie-banner`) — Cookie banner. Scaffolded but empty: build, lint and publishing are wired up, no components yet. Has no Storybook.
+- **`consent`** (`@kystverket/styrbord-consent`) — Cookie-consent banner, preferences dialog and the consent store behind them, built on [c15t](https://c15t.com) in offline mode. Depends on `@kystverket/styrbord`. Has no Storybook.
 
 All are library packages (not apps): they build to `dist/` and export from `src/main.ts`.
 
@@ -35,7 +35,7 @@ npm run pretty:fix        # auto-fix formatting
 # Build only one workspace
 npm run build --workspace base
 npm run build --workspace kart
-npm run build --workspace cookie-banner
+npm run build --workspace consent
 ```
 
 From within a workspace directory (e.g. `cd kart`):
@@ -64,6 +64,39 @@ There are no meaningful tests in either workspace (`test` scripts are no-ops).
 **Path aliases**: `~` → `src/`, `@assets` → `assets/`
 
 **Color tokens**: import color names and types from `@kystverket/styrbord-tokens/colors` — `styrbordSemanticColors`, `styrbordPaletteColors`, `colors` (resolved hex), and the matching `StyrbordSemanticColor` / `StyrbordPaletteColor` types. Never hand-write a color union. See `Text.tsx`, `icon.tsx`, `Dropdown.stories.tsx`.
+
+### `consent` — Cookie Consent
+
+**Components** (`consent/src/components/`):
+
+- `ConsentProvider` — Creates the consent store and provides it. Everything else must live inside it.
+- `CookieConsent` — Banner, preferences dialog and settings button in one. What apps normally mount.
+- `ConsentBanner` / `ConsentPreferencesDialog` / `ConsentSettingsButton` — The individual surfaces, exported
+  for apps that want to place them themselves.
+- `ManageConsentLink` — Text-link alternative to the floating settings button.
+
+**State** lives in `utility/consentStore.ts` (c15t, offline mode) and is read through `hooks/useConsent.ts`.
+Translations for nb-NO, nn-NO and en-US ship with the package in `src/i18n/`.
+
+Things that are easy to get wrong here, all of them learned the hard way:
+
+- **Config comes in as props — never read env inside the package.** Next.js and Vite inline env vars at
+  build time, so a value read inside the library would be frozen to whatever the build machine had.
+- **c15t's `setScripts` appends, it does not replace** (`[...state.scripts, ...scripts]`) despite the name.
+  Services are registered once via `createConsentManagerStore`'s `scripts` option. Calling `setScripts`
+  as well registers everything twice — visible as a duplicate-React-key warning and double script loads.
+- **The consent surfaces wait for `mounted`.** Consent lives in a client-read cookie, so the server cannot
+  know whether to show the banner. `useSyncExternalStore`'s `getServerSnapshot` is also used during
+  hydration, so returning live client state there throws the whole React tree away with a hydration
+  mismatch. `useStoreValue` caches its server snapshot for the same reason.
+- **Use `storageConfig.defaultDomain`, not c15t's `crossSubdomain: true`.** The latter derives the domain
+  from the last two labels of the hostname, which is right in production but too broad when test
+  environments are nested deeper (`app.test.example.cloud` → `.example.cloud`).
+- **Cookie metadata is hand-maintained** in `utility/services.ts`. Adding a vendor means adding its cookies
+  there, or the dialog silently under-reports. An empty `cookies: []` renders "sets no cookies"; omitting
+  the field renders nothing — keep that distinction.
+- **Categories are c15t's fixed vocabulary** (`necessary | functionality | experience | measurement |
+  marketing`) and cannot be extended. Labels are ours, so this is invisible to users.
 
 ### `kart` — Map Components
 
@@ -124,7 +157,7 @@ This project uses **conventional commits**. Every commit message must follow the
 <type>(<scope>): <description>
 ```
 
-**Scope is required** and must be `base`, `kart` or `cookie-banner` (`ci` for workflow-only changes). This is enforced on PR titles by `amannn/action-semantic-pull-request` in `.github/workflows/lint.yml`.
+**Scope is required** and must be `base`, `kart` or `consent` (`ci` for workflow-only changes). This is enforced on PR titles by `amannn/action-semantic-pull-request` in `.github/workflows/lint.yml`.
 
 Examples:
 
@@ -145,7 +178,7 @@ Releases are managed by **release-please** via `.github/workflows/release-please
 
 - `@kystverket/styrbord` (path: `base`) — current version tracked in `.release-please-manifest.json`
 - `@kystverket/styrbord-kart` (path: `kart`) — current version tracked in `.release-please-manifest.json`
-- `@kystverket/styrbord-cookie-banner` (path: `cookie-banner`) — current version tracked in `.release-please-manifest.json`
+- `@kystverket/styrbord-consent` (path: `consent`) — current version tracked in `.release-please-manifest.json`
 
 Configuration is in `release-please-config.json`. When commits land on `main`, release-please opens or updates a release PR per package. Merging that PR tags the release and triggers the publish workflow.
 

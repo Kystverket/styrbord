@@ -1,3 +1,0 @@
-/* Cascade layer for cookie-banner styles. Declared up front so component
-   stylesheets can register in a fixed order as they are added. */
-@layer styrbord-cookie-banner;

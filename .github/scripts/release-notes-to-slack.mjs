@@ -81,11 +81,11 @@ const releases = [
     url: process.env.KART_URL,
   },
   {
-    released: process.env.COOKIE_BANNER_RELEASED === 'true',
-    name: '@kystverket/styrbord-cookie-banner',
-    version: process.env.COOKIE_BANNER_VERSION,
-    body: process.env.COOKIE_BANNER_BODY,
-    url: process.env.COOKIE_BANNER_URL,
+    released: process.env.CONSENT_RELEASED === 'true',
+    name: '@kystverket/styrbord-consent',
+    version: process.env.CONSENT_VERSION,
+    body: process.env.CONSENT_BODY,
+    url: process.env.CONSENT_URL,
   },
 ].filter((release) => release.released);
 
