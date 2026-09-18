@@ -76,7 +76,7 @@ jobs:
 
   deploy-storybook:
     needs: release-please
-    if: ${{ needs.release-please.outputs.base_release_created == 'true' || needs.release-please.outputs.kart_release_created == 'true' }}
+    if: ${{ needs.release-please.outputs.base_release_created == 'true' || needs.release-please.outputs.kart_release_created == 'true' || needs.release-please.outputs.consent_release_created == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       packages: read
@@ -101,6 +101,7 @@ jobs:
           npm run storybook:build
           cp -r ./base/storybook-static ./github-pages-root/base
           cp -r ./kart/storybook-static ./github-pages-root/kart
+          cp -r ./consent/storybook-static ./github-pages-root/consent
       - name: Laste opp til GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
