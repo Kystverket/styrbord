@@ -1,0 +1,6 @@
+.canvas {
+  min-height: 100vh;
+  background: var(--ds-color-neutral-background-default);
+  color: var(--ds-color-neutral-text-default);
+  font-family: var(--ds-font-family), system-ui, sans-serif;
+}

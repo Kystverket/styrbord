@@ -1,0 +1,29 @@
+/* Demosiden historiene vises på. Ikke en del av pakken — den skal bare se ut som en side, slik
+   at banneret og innstillingsknappen har noe å ligge over. */
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-size-4);
+  padding: var(--ds-size-6);
+  /* Plass til banneret, som ligger fast mot bunnen av vinduet. */
+  padding-bottom: 18rem;
+  max-width: 48rem;
+  font-size: var(--ds-body-md-font-size);
+  line-height: var(--ds-body-md-line-height);
+}
+
+.page p {
+  margin: 0;
+}
+
+.heading {
+  margin: 0;
+  font-size: var(--ds-heading-md-font-size);
+  font-weight: var(--ds-heading-md-font-weight);
+  line-height: var(--ds-heading-md-line-height);
+}
+
+.status {
+  color: var(--ds-color-neutral-text-subtle);
+  font-size: var(--ds-body-sm-font-size);
+}

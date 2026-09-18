@@ -4,7 +4,7 @@ on:
   workflow_call:
     inputs:
       workspace:
-        description: Workspace to build and publish (base or kart)
+        description: Workspace to build and publish (base, kart or consent)
         required: true
         type: string
 
