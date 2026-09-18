@@ -28,22 +28,14 @@ export default defineConfig({
       name: 'Styrbord',
     },
     rollupOptions: {
-      external: [
-        'react',
-        'react-dom',
-        'c15t',
-        '@digdir/designsystemet-react',
-        '@kystverket/sprak-react',
-        '@kystverket/styrbord',
-        '@kystverket/styrbord-tokens',
-      ],
+      // Designtokenene står bevisst ikke her: de kommer inn som en CSS-import og skal bakes
+      // inn i `dist/style.css`, slik at applikasjonen ikke trenger å laste noe i tillegg.
+      external: ['react', 'react-dom', 'react/jsx-runtime', 'c15t'],
       output: {
         // Provide global variables to use in the UMD build
         // for externalized deps
         globals: {
           react: 'React',
-          '@digdir/designsystemet-react': '@digdir/designsystemet-react',
-          '@kystverket/styrbord': 'Styrbord',
           c15t: 'c15t',
         },
       },

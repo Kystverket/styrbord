@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Box, Heading, Paragraph } from '@kystverket/styrbord';
 import {
   ConsentDemo,
   languageArgTypes,
@@ -8,6 +7,7 @@ import {
   type ConsentStoryArgs,
 } from '../../../storybook/ConsentDemo';
 import { CookieConsent, ManageConsentLink } from './CookieConsent';
+import styles from './CookieConsent.stories.module.css';
 
 const meta: Meta<ConsentStoryArgs> = {
   title: 'Samtykke/CookieConsent',
@@ -59,14 +59,12 @@ export const UtenSporingstjenester: Story = {
 export const MedTekstlenke: Story = {
   render: ({ language }) => (
     <ConsentDemo language={language} start="answered">
-      <Box gap={8} p={24}>
-        <Heading level={2} data-size="xs">
-          Informasjonskapsler
-        </Heading>
-        <Paragraph>
+      <section className={styles.prose}>
+        <h2>Informasjonskapsler</h2>
+        <p>
           Du kan når som helst <ManageConsentLink /> og endre hva vi får lov til å måle.
-        </Paragraph>
-      </Box>
+        </p>
+      </section>
       <CookieConsent />
     </ConsentDemo>
   ),

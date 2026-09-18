@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { deleteConsentFromStorage } from 'c15t';
-import { Box, Button, Heading, Paragraph } from '@kystverket/styrbord';
+import { Button } from '~/components/shared/Button/Button';
 import {
   ConsentProvider,
   consentCookieService,
@@ -12,6 +12,7 @@ import {
   type ConsentLanguage,
   type ConsentService,
 } from '~/main';
+import styles from './ConsentDemo.module.css';
 
 /**
  * Egen nøkkel for Storybook, slik at demoen aldri rører samtykket til en applikasjon som
@@ -76,10 +77,10 @@ function ConsentStatus() {
     .map(([category]) => category);
 
   return (
-    <Paragraph data-size="sm">
+    <p className={styles.status}>
       Aktiv flate: <code>{activeUI}</code>. Samtykket til:{' '}
       <code>{granted.length > 0 ? granted.join(', ') : 'ingen'}</code>.
-    </Paragraph>
+    </p>
   );
 }
 
@@ -128,21 +129,19 @@ export function ConsentDemo({
 
   return (
     <ConsentProvider key={generation} language={language} storageKey={STORY_STORAGE_KEY} services={services}>
-      <Box gap={16} p={24} pb={128}>
-        <Heading level={1} data-size="md">
-          Demoside
-        </Heading>
-        <Paragraph>
+      <div className={styles.page} data-color="neutral">
+        <h1 className={styles.heading}>Demoside</h1>
+        <p>
           Innholdet her er bare en flate for samtykkeflatene å legge seg over. Banneret ligger nederst, og
           innstillingsknappen dukker opp i hjørnet når banneret er besvart.
-        </Paragraph>
+        </p>
         <ConsentStatus />
         <div>
           <Button variant="outline" onClick={reset}>
             Nullstill samtykke
           </Button>
         </div>
-      </Box>
+      </div>
 
       <ApplyStart start={start} />
       {children}

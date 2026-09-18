@@ -2,9 +2,9 @@ import type { Preview } from '@storybook/react-vite';
 import { themes } from 'storybook/theming';
 import StyrbordDecorator from '../storybook/styrbordDecorator';
 
-// Stilene fra basispakken lastes fra det bygde pakken, slik en applikasjon ville gjort det.
-// Samtykkepakkens egen CSS kommer inn via `~/main`, som historiene importerer fra.
-import '@kystverket/styrbord/style.css';
+// Den eneste stilimporten, akkurat som i en applikasjon: designtokenene følger med denne fila.
+// At Storybook klarer seg med den er samtidig beviset på at pakken står på egne bein.
+import '../src/css/index.css';
 
 export const globalTypes = {
   colorScheme: {

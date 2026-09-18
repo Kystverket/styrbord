@@ -1,11 +1,14 @@
 'use client';
 
-import { Box, Button, CompactDetails, Heading, Paragraph, SlotDialog, Switch, Table } from '@kystverket/styrbord';
+import { useEffect, useRef, type MouseEvent, type ReactElement } from 'react';
 import type { ConsentCategory, ConsentService } from '../../utility/consent.types';
 import { useConsentStore } from '../../utility/consentContext';
 import { getSelectableCategories } from '../../utility/consentStore';
+import { useRegisterConsentDialog } from '../../utility/dialogRegistry';
 import { formatCookieDuration, type ConsentTranslations } from '../../utility/translations';
 import { useStoreValue } from '../../hooks/useStoreValue';
+import { Button } from '../shared/Button/Button';
+import { Switch } from '../shared/Switch/Switch';
 import styles from './ConsentPreferencesDialog.module.css';
 
 /**
@@ -30,32 +33,33 @@ function CookieDetails({
   );
 
   if (rows.length === 0) {
-    return <Paragraph data-size="xs">{translations.dialog.noCookies}</Paragraph>;
+    return <p className={styles.fineprint}>{translations.dialog.noCookies}</p>;
   }
 
   return (
-    <CompactDetails label={translations.dialog.showCookies}>
-      <Table width="full" data-size="sm">
-        <Table.Head>
-          <Table.Row>
-            <Table.HeaderCell>{translations.dialog.cookieName}</Table.HeaderCell>
-            <Table.HeaderCell>{translations.dialog.cookieProvider}</Table.HeaderCell>
-            <Table.HeaderCell>{translations.dialog.cookieDuration}</Table.HeaderCell>
-          </Table.Row>
-        </Table.Head>
-        <Table.Body>
+    <details className={styles.details}>
+      <summary className={styles.summary}>{translations.dialog.showCookies}</summary>
+      <table className={styles.table}>
+        <thead>
+          <tr>
+            <th scope="col">{translations.dialog.cookieName}</th>
+            <th scope="col">{translations.dialog.cookieProvider}</th>
+            <th scope="col">{translations.dialog.cookieDuration}</th>
+          </tr>
+        </thead>
+        <tbody>
           {rows.map((row) => (
-            <Table.Row key={`${row.provider}-${row.name}`}>
-              <Table.Cell>
+            <tr key={`${row.provider}-${row.name}`}>
+              <td>
                 <code>{row.name}</code>
-              </Table.Cell>
-              <Table.Cell>{row.provider}</Table.Cell>
-              <Table.Cell>{formatCookieDuration(row.duration, translations)}</Table.Cell>
-            </Table.Row>
+              </td>
+              <td>{row.provider}</td>
+              <td>{formatCookieDuration(row.duration, translations)}</td>
+            </tr>
           ))}
-        </Table.Body>
-      </Table>
-    </CompactDetails>
+        </tbody>
+      </table>
+    </details>
   );
 }
 
@@ -69,9 +73,9 @@ function ServiceNames({
   }
 
   return (
-    <Paragraph data-size="xs">
+    <p className={styles.fineprint}>
       {translations.dialog.servicesLabel}: {services.map((service) => service.displayName ?? service.id).join(', ')}
-    </Paragraph>
+    </p>
   );
 }
 
@@ -82,16 +86,43 @@ function ServiceNames({
  * styrer noe. Tjenester som går uten samtykke får sin egen «alltid på»-seksjon, slik at de er
  * synlige selv om de ikke kan slås av; ellers ville en kapselfri tjeneste som Plausible vært
  * usynlig for brukeren.
+ *
+ * Bygget på `<dialog>` direkte. `showModal()` gir fokusfelle, Escape og backdrop gratis, som er
+ * hele grunnen til at vi ikke trenger et dialogbibliotek for å klare oss uten Styrbord.
  */
-export function ConsentPreferencesDialog() {
+export function ConsentPreferencesDialog(): ReactElement | null {
   const { store, translations, mounted } = useConsentStore();
 
   const activeUI = useStoreValue(store, (state) => state.activeUI);
   const selectedConsents = useStoreValue(store, (state) => state.selectedConsents);
   const scripts = useStoreValue(store, (state) => state.scripts) as ConsentService[];
 
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const open = activeUI === 'dialog';
+
+  // Melder fra om at dialogen finnes, slik at banneret og innstillingsknappen kan advare
+  // dersom de står der uten den.
+  useRegisterConsentDialog();
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) {
+      return;
+    }
+
+    if (open && !dialog.open) {
+      dialog.showModal();
+    } else if (!open && dialog.open) {
+      dialog.close();
+    }
+  }, [open]);
+
   const categories = getSelectableCategories(scripts);
-  const { setConsent, saveConsents, setActiveUI } = store.getState();
+  // `setSelectedConsent`, ikke `setConsent`: sistnevnte kaller `saveConsents('custom')` selv, så
+  // dialogen ville lagret og lukket seg ved første klikk på en bryter — og siden den bygger det
+  // nye settet fra `consents` framfor `selectedConsents`, ville den samtidig forkastet de andre
+  // bryterne brukeren hadde flyttet. Her skal ingenting lagres før «Lagre valg».
+  const { setSelectedConsent, saveConsents, setActiveUI } = store.getState();
 
   if (!mounted) {
     return null;
@@ -102,32 +133,51 @@ export function ConsentPreferencesDialog() {
   const servicesInCategory = (category: ConsentCategory) =>
     scripts.filter((script) => !script.alwaysLoad && script.category === category);
 
+  // Klikk på selve dialogen treffer bare backdropen — innholdet ligger i et element under.
+  const closeOnBackdrop = (event: MouseEvent<HTMLDialogElement>) => {
+    if (event.target === dialogRef.current) {
+      setActiveUI('none');
+    }
+  };
+
   return (
-    <SlotDialog
-      title={translations.dialog.heading}
-      open={activeUI === 'dialog'}
+    <dialog
+      ref={dialogRef}
+      className={styles.dialog}
+      data-color="primary"
+      aria-labelledby="styrbord-consent-dialog-heading"
       onClose={() => setActiveUI('none')}
-      size="md"
-      longContent
+      onClick={closeOnBackdrop}
     >
-      <Box gap={24}>
-        <Paragraph data-size="sm">{translations.dialog.body}</Paragraph>
+      <div className={styles.content}>
+        <div className={styles.header}>
+          <h2 id="styrbord-consent-dialog-heading" className={styles.heading}>
+            {translations.dialog.heading}
+          </h2>
+          <button
+            type="button"
+            className={styles.close}
+            aria-label={translations.dialog.close}
+            onClick={() => setActiveUI('none')}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden focusable="false">
+              <path d="m6 6 12 12M18 6 6 18" strokeLinecap="round" />
+            </svg>
+          </button>
+        </div>
+        <p className={styles.body}>{translations.dialog.body}</p>
 
         <div className={styles.categories}>
           <section className={styles.category}>
-            <Heading level={3} data-size="2xs">
-              {translations.categories.necessary.title}
-            </Heading>
-            <Paragraph data-size="sm">{translations.categories.necessary.description}</Paragraph>
+            <h3 className={styles.categoryHeading}>{translations.categories.necessary.title}</h3>
+            <p className={styles.body}>{translations.categories.necessary.description}</p>
             <CookieDetails services={necessaryServices} translations={translations} />
           </section>
 
           {alwaysOnServices.length > 0 && (
             <section className={styles.category}>
-              <Heading level={3} data-size="2xs">
-                {translations.dialog.alwaysOnHeading}
-              </Heading>
-              <Paragraph data-size="sm">{translations.dialog.alwaysOnBody}</Paragraph>
+              <h3 className={styles.categoryHeading}>{translations.dialog.alwaysOnHeading}</h3>
+              <p className={styles.body}>{translations.dialog.alwaysOnBody}</p>
               <ServiceNames services={alwaysOnServices} translations={translations} />
               <CookieDetails services={alwaysOnServices} translations={translations} />
             </section>
@@ -141,7 +191,7 @@ export function ConsentPreferencesDialog() {
                   label={translations.categories[category].title}
                   description={translations.categories[category].description}
                   checked={selectedConsents[category] === true}
-                  onChange={(event) => setConsent(category, event.target.checked)}
+                  onChange={(event) => setSelectedConsent(category, event.target.checked)}
                 />
                 <div className={styles.services}>
                   <ServiceNames services={services} translations={translations} />
@@ -151,9 +201,9 @@ export function ConsentPreferencesDialog() {
             );
           })}
         </div>
-      </Box>
+      </div>
 
-      <SlotDialog.Buttons>
+      <div className={styles.buttons}>
         <Button variant="filled" onClick={() => saveConsents('custom')}>
           {translations.dialog.savePreferences}
         </Button>
@@ -163,7 +213,7 @@ export function ConsentPreferencesDialog() {
         <Button variant="ghost" onClick={() => saveConsents('necessary')}>
           {translations.dialog.rejectAll}
         </Button>
-      </SlotDialog.Buttons>
-    </SlotDialog>
+      </div>
+    </dialog>
   );
 }

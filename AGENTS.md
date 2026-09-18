@@ -8,7 +8,7 @@ Styrbord is a monorepo containing three npm workspace packages:
 
 - **`base`** (`@kystverket/styrbord`) — React component library wrapping [@digdir/designsystemet-react](https://storybook.designsystemet.no/) with Kystverket branding. Also re-exports all Designsystemet components explicitly.
 - **`kart`** (`@kystverket/styrbord-kart`) — Map and GeoJSON component library built on MapLibre GL and terra-draw. Depends on `@kystverket/styrbord`.
-- **`consent`** (`@kystverket/styrbord-consent`) — Cookie-consent banner, preferences dialog and the consent store behind them, built on [c15t](https://c15t.com) in offline mode. Depends on `@kystverket/styrbord`.
+- **`consent`** (`@kystverket/styrbord-consent`) — Cookie-consent banner, preferences dialog and the consent store behind them, built on [c15t](https://c15t.com) in offline mode. Deliberately standalone: it does **not** depend on `@kystverket/styrbord`, only on `@kystverket/styrbord-tokens`, and supports React 18.2+.
 
 All are library packages (not apps): they build to `dist/` and export from `src/main.ts`.
 
@@ -81,10 +81,40 @@ There are no meaningful tests in either workspace (`test` scripts are no-ops).
 **State** lives in `utility/consentStore.ts` (c15t, offline mode) and is read through `hooks/useConsent.ts`.
 Translations for nb-NO, nn-NO and en-US ship with the package in `src/i18n/`.
 
-**Storybook** runs on port 6007 and deploys to `/consent` alongside base and kart. Two things it
+**No Styrbord dependency — on purpose.** Some applications cannot take on the whole design system,
+and a consent banner is exactly the thing they still need. So consent depends only on
+`@kystverket/styrbord-tokens`, and the handful of controls it needs live in
+`components/shared/` (`Button`, `Switch`); the dialog is a native `<dialog>` with `showModal()`,
+the settings icon is an inline SVG, and `ManageConsentLink` is a `<button>` styled as a link.
+Do not reach for `@kystverket/styrbord` here, and do not add a component to `shared/` that the
+consent surfaces don't actually use — it is not a second design system.
+
+Consequences worth knowing:
+
+- **Every colour, space and font size comes from a `--ds-*` token**, and `npm run tokens:check`
+  validates `consent/src` against the tokens package *alone* — a token that only exists in
+  `@digdir/designsystemet-css` would be undefined for a consumer of this package.
+- **The surfaces set their own `data-color`** (`primary` on banner and dialog, `neutral` on the
+  settings button), because `--ds-color-base-*` has no value without a `[data-color]` ancestor and
+  a standalone package cannot assume the app provides one. `shared/Button` relies on this.
+- **The token CSS is bundled into `dist/style.css`** via an `@import` in `src/css/index.css`, so
+  `import '@kystverket/styrbord-consent/style.css'` is the whole setup. In a Styrbord app that
+  means the tokens load twice — same values, so it costs bytes, not correctness.
+- **`ConsentPreferencesDialog` must be mounted wherever `ConsentBanner` or
+  `ConsentSettingsButton` is.** Both hide themselves when they set `activeUI` to `dialog`, so
+  without the dialog the surface vanishes with nothing to replace it and the user can neither
+  give nor withdraw consent. `utility/dialogRegistry.ts` counts mounted dialogs and warns on the
+  console when a visible surface has none — the check is deferred one tick because sibling
+  effects run in order and the dialog registers after the banner above it.
+- **React 18.2 is supported**, so no React 19-only APIs. Exported components carry an explicit
+  `ReactElement` return type: an inferred return type emits `React.JSX.Element`, which does not
+  exist in `@types/react` 18.2 and breaks consumers on that version.
+
+**Storybook** runs on port 6007 and deploys to `/consent` alongside base and kart. Three things it
 does differently from the other workspaces: it has no `SprakProvider` (the texts follow the
-library, not the app's i18n setup), and the stories run against *inert* copies of the real
-services — `storybook/ConsentDemo.tsx` strips `src`/`textContent` and sets `callbackOnly`, so a
+library, not the app's i18n setup), it imports no Styrbord components or CSS at all — which is what
+keeps the deployed Storybook honest about the package standing alone — and the stories run against
+*inert* copies of the real services — `storybook/ConsentDemo.tsx` strips `src`/`textContent` and sets `callbackOnly`, so a
 published demo never actually loads Hotjar or PostHog when you press "Godta alle". The same file
 owns the reset button; without it a story could only be played once per browser, since the answer
 is persisted in a cookie.

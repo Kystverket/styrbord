@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactElement } from 'react';
 import { ConsentContext, type ConsentContextValue } from '../../utility/consentContext';
 import { createConsentStore, hasGatedServices, type ConsentStore } from '../../utility/consentStore';
+import { ConsentDialogRegistryProvider, useConsentDialogRegistry } from '../../utility/dialogRegistry';
 import { getConsentTranslations, type ConsentTranslations } from '../../utility/translations';
 import type { ConsentProviderProps } from './ConsentProvider.types';
 
@@ -31,7 +32,7 @@ export function ConsentProvider({
   language,
   translations: translationOverrides,
   ...config
-}: Readonly<ConsentProviderProps>) {
+}: Readonly<ConsentProviderProps>): ReactElement {
   // Lageret skal opprettes én gang. Et ref framfor useState gjør det tydelig at dette ikke er
   // tilstand React skal følge med på — endringer leses via useSyncExternalStore.
   const storeRef = useRef<ConsentStore | null>(null);
@@ -51,6 +52,8 @@ export function ConsentProvider({
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
+  const dialogRegistry = useConsentDialogRegistry();
+
   const value = useMemo<ConsentContextValue>(
     () => ({
       store,
@@ -63,5 +66,9 @@ export function ConsentProvider({
     [store, language, translationOverrides, serviceIds, mounted],
   );
 
-  return <ConsentContext.Provider value={value}>{children}</ConsentContext.Provider>;
+  return (
+    <ConsentContext.Provider value={value}>
+      <ConsentDialogRegistryProvider value={dialogRegistry}>{children}</ConsentDialogRegistryProvider>
+    </ConsentContext.Provider>
+  );
 }

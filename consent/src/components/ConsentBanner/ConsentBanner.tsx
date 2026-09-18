@@ -1,8 +1,10 @@
 'use client';
 
-import { Box, Button, Heading, Paragraph } from '@kystverket/styrbord';
+import type { ReactElement } from 'react';
 import { useConsentStore } from '../../utility/consentContext';
+import { useMissingConsentDialogWarning } from '../../utility/dialogRegistry';
 import { useStoreValue } from '../../hooks/useStoreValue';
+import { Button } from '../shared/Button/Button';
 import styles from './ConsentBanner.module.css';
 
 /**
@@ -13,25 +15,28 @@ import styles from './ConsentBanner.module.css';
  * GDPR. De tre valgene er likestilte — «Kun nødvendige» skal være like lett å treffe som
  * «Godta alle».
  */
-export function ConsentBanner() {
+export function ConsentBanner(): ReactElement | null {
   const { store, translations, showsBanner, mounted } = useConsentStore();
   const activeUI = useStoreValue(store, (state) => state.activeUI);
 
-  if (!mounted || !showsBanner || activeUI !== 'banner') {
+  const visible = mounted && showsBanner && activeUI === 'banner';
+  useMissingConsentDialogWarning('ConsentBanner', visible);
+
+  if (!visible) {
     return null;
   }
 
   const { saveConsents, setActiveUI } = store.getState();
 
   return (
-    <section className={styles.banner} aria-labelledby="styrbord-consent-banner-heading">
+    <section className={styles.banner} data-color="primary" aria-labelledby="styrbord-consent-banner-heading">
       <div className={styles.inner}>
-        <Box gap={8}>
-          <Heading id="styrbord-consent-banner-heading" level={2} data-size="xs">
+        <div className={styles.text}>
+          <h2 id="styrbord-consent-banner-heading" className={styles.heading}>
             {translations.banner.heading}
-          </Heading>
-          <Paragraph data-size="sm">{translations.banner.body}</Paragraph>
-        </Box>
+          </h2>
+          <p className={styles.body}>{translations.banner.body}</p>
+        </div>
 
         <div className={styles.actions}>
           <Button variant="filled" onClick={() => saveConsents('all')}>

@@ -1,8 +1,12 @@
 # Styrbord Consent
 
 Samtykke for informasjonskapsler (cookie-banner, innstillingsdialog og tilhørende logikk) for
-Kystverkets interne og eksterne applikasjoner. Biblioteket er et tillegg til Styrbord og bygger
-på `@kystverket/styrbord`.
+Kystverkets interne og eksterne applikasjoner.
+
+Pakken står på egne bein: den bruker ikke `@kystverket/styrbord`, bare designtokenene, slik at
+også applikasjoner som ikke kan ta inn hele designsystemet får et samtykkebanner som ser ut som
+resten av Kystverket. Kontrollene den trenger — knapp, bryter, dialog — ligger i pakken og er
+bygget på de samme tokenene.
 
 Bygger på [c15t](https://c15t.com) i offline-modus: ingen backend, ingen nettverkskall, alt
 lagres i nettleseren.
@@ -16,15 +20,23 @@ lagres i nettleseren.
 
 ## Bruk
 
-Det holder å importere CSS globalt en gang.
+Importer CSS globalt én gang. Designtokenene følger med i denne fila, så det er den eneste
+importen som trengs — også i en applikasjon som ikke bruker Styrbord ellers.
 
 ```js
-import '@kystverket/styrbord/style.css';
 import '@kystverket/styrbord-consent/style.css';
 ```
 
+> Bruker applikasjonen allerede `@kystverket/styrbord`, laster den tokenene to ganger. Verdiene
+> er de samme, så det koster noen kilobyte og ingenting annet.
+
 Legg `ConsentProvider` rundt applikasjonen og `CookieConsent` inni. Sistnevnte gir banner,
 innstillingsdialog og den flytende knappen som åpner innstillingene igjen.
+
+> Plasserer du flatene hver for seg i stedet, må `ConsentPreferencesDialog` alltid være med.
+> Både banneret og innstillingsknappen skjuler seg selv når de åpner innstillingene, så uten
+> dialogen forsvinner flaten uten at noe kommer i stedet. Pakken advarer i konsollet om den
+> oppdager det.
 
 ```tsx
 import { ConsentProvider, CookieConsent, hotjarService, plausibleService } from '@kystverket/styrbord-consent';
@@ -93,12 +105,22 @@ Bokmål, nynorsk og engelsk følger med. Overstyr enkelttekster med `translation
 Tekstene ligger i biblioteket framfor i applikasjonens i18n-oppsett, slik at komponentene
 fungerer uavhengig av om appen bruker i18next, `@kystverket/sprak-react` eller ingenting.
 
+### Utseende
+
+Alt av farger, avstander, typografi og skygger leses fra `@kystverket/styrbord-tokens`. Flatene
+setter selv `data-color` på rotelementet sitt, slik at de ser like ut uansett hva applikasjonen
+rundt gjør.
+
+Skriften er `--ds-font-family` (Museo Sans) med en systemfont som reserve. Laster applikasjonen
+webfonten, brukes den; ellers faller teksten pent tilbake.
+
+Mørk modus følger `data-color-scheme` på et element lenger opp, på samme måte som i Styrbord.
+
 ## Avhengigheter
 
 Følgende peer dependencies må være tilgjengelige i applikasjonen:
 
-- `@kystverket/styrbord`
-- `react`
-- `react-dom`
+- `react` (18.2 eller nyere)
+- `react-dom` (18.2 eller nyere)
 
-`c15t` følger med som vanlig avhengighet.
+`c15t` og `@kystverket/styrbord-tokens` følger med som vanlige avhengigheter.
