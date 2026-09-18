@@ -8,7 +8,7 @@ Styrbord is a monorepo containing three npm workspace packages:
 
 - **`base`** (`@kystverket/styrbord`) — React component library wrapping [@digdir/designsystemet-react](https://storybook.designsystemet.no/) with Kystverket branding. Also re-exports all Designsystemet components explicitly.
 - **`kart`** (`@kystverket/styrbord-kart`) — Map and GeoJSON component library built on MapLibre GL and terra-draw. Depends on `@kystverket/styrbord`.
-- **`consent`** (`@kystverket/styrbord-consent`) — Cookie-consent banner, preferences dialog and the consent store behind them, built on [c15t](https://c15t.com) in offline mode. Depends on `@kystverket/styrbord`. Has no Storybook.
+- **`consent`** (`@kystverket/styrbord-consent`) — Cookie-consent banner, preferences dialog and the consent store behind them, built on [c15t](https://c15t.com) in offline mode. Depends on `@kystverket/styrbord`.
 
 All are library packages (not apps): they build to `dist/` and export from `src/main.ts`.
 
@@ -25,6 +25,9 @@ npm run dev
 
 # Storybook (base, port 6006)
 npm run storybook:base
+
+# Storybook (consent, port 6007)
+npm run storybook --workspace consent
 
 # Lint and format
 npm run lint:check        # check all workspaces
@@ -77,6 +80,14 @@ There are no meaningful tests in either workspace (`test` scripts are no-ops).
 
 **State** lives in `utility/consentStore.ts` (c15t, offline mode) and is read through `hooks/useConsent.ts`.
 Translations for nb-NO, nn-NO and en-US ship with the package in `src/i18n/`.
+
+**Storybook** runs on port 6007 and deploys to `/consent` alongside base and kart. Two things it
+does differently from the other workspaces: it has no `SprakProvider` (the texts follow the
+library, not the app's i18n setup), and the stories run against *inert* copies of the real
+services — `storybook/ConsentDemo.tsx` strips `src`/`textContent` and sets `callbackOnly`, so a
+published demo never actually loads Hotjar or PostHog when you press "Godta alle". The same file
+owns the reset button; without it a story could only be played once per browser, since the answer
+is persisted in a cookie.
 
 Things that are easy to get wrong here, all of them learned the hard way:
 
