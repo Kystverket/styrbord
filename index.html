@@ -1,10 +1,48 @@
 <!doctype html>
-<html lang="en">
+<html lang="nb" data-color-scheme="light" data-color="primary">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Styrbord - Select Package</title>
+    <title>Styrbord – velg pakke</title>
+
+    <!--
+      kystverket.css og fonts/ kopieres inn i github-pages-root av
+      deploy-jobben, slik at denne siden bruker de samme designtokenene og
+      den samme skriften som Storybookene den lenker til. Åpner du fila
+      lokalt uten de to katalogene, vises den ustilt.
+    -->
+    <link rel="stylesheet" href="kystverket.css" />
     <style>
+      @font-face {
+        font-family: "Museo sans";
+        src:
+          url("fonts/museo-sans-300.woff2") format("woff2"),
+          url("fonts/museo-sans-300.woff") format("woff");
+        font-display: swap;
+        font-style: normal;
+        font-weight: 300;
+      }
+
+      @font-face {
+        font-family: "Museo sans";
+        src:
+          url("fonts/museo-sans-500.woff2") format("woff2"),
+          url("fonts/museo-sans-500.woff") format("woff");
+        font-display: swap;
+        font-style: normal;
+        font-weight: 500;
+      }
+
+      @font-face {
+        font-family: "Museo sans";
+        src:
+          url("fonts/museo-sans-700.woff2") format("woff2"),
+          url("fonts/museo-sans-700.woff") format("woff");
+        font-display: swap;
+        font-style: normal;
+        font-weight: 700;
+      }
+
       * {
         margin: 0;
         padding: 0;
@@ -12,135 +50,159 @@
       }
 
       body {
-        font-family:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
-          Cantarell, sans-serif;
-        background: #f9f6f3;
+        font-family: var(--ds-font-family);
+        font-size: var(--ds-font-size-4);
+        font-weight: var(--ds-font-weight-regular);
+        line-height: var(--ds-line-height-md);
+        color: var(--ds-color-neutral-text-default);
+        background: var(--ds-color-background-default);
+        -webkit-font-smoothing: antialiased;
         min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 20px;
+        padding: var(--ds-size-6);
       }
 
       .container {
-        max-width: 900px;
+        max-width: 60rem;
         width: 100%;
       }
 
-      h1 {
-        color: #000667;
+      .masthead {
         text-align: center;
-        font-size: 3rem;
-        margin-bottom: 1rem;
+        margin-bottom: var(--ds-size-12);
+      }
+
+      .logo {
+        height: var(--ds-size-10);
+        width: auto;
+        margin-bottom: var(--ds-size-6);
+      }
+
+      h1 {
+        color: var(--ds-color-text-default);
+        font-size: var(--ds-font-size-9);
+        font-weight: var(--ds-font-weight-semibold);
+        line-height: var(--ds-line-height-sm);
+        margin-bottom: var(--ds-size-2);
       }
 
       .subtitle {
-        color: #666;
-        text-align: center;
-        font-size: 1.2rem;
-        margin-bottom: 3rem;
+        color: var(--ds-color-neutral-text-subtle);
+        font-size: var(--ds-font-size-5);
       }
 
       .options {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-      }
-
-      .option-shell {
-        display: block;
-        padding-top: 8px;
+        grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+        gap: var(--ds-size-4);
       }
 
       .option-card {
-        background: white;
-        border-radius: 12px;
-        padding: 2rem;
-        text-align: center;
-        transition:
-          transform 0.3s ease,
-          box-shadow 0.3s ease;
+        background: var(--ds-color-surface-default);
+        border: 1px solid var(--ds-color-border-subtle);
+        border-radius: var(--ds-border-radius-md);
+        padding: var(--ds-size-6);
         text-decoration: none;
         color: inherit;
-        display: block;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: var(--ds-size-3);
+        transition:
+          background 0.1s ease-in-out,
+          border-color 0.1s ease-in-out;
       }
 
-      .option-shell:hover .option-card,
-      .option-shell:focus-within .option-card {
-        transform: translateY(-8px);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+      .option-card:hover {
+        background: var(--ds-color-surface-hover);
+        border-color: var(--ds-color-border-default);
+      }
+
+      .option-card:active {
+        background: var(--ds-color-surface-active);
+      }
+
+      .option-card:focus-visible {
+        outline: 3px solid var(--ds-color-base-default);
+        outline-offset: 2px;
       }
 
       .option-icon {
-        width: 80px;
-        height: 80px;
-        background: #e6f9ff;
-        border-radius: 50%;
+        width: var(--ds-size-12);
+        height: var(--ds-size-12);
+        background: var(--ds-color-background-tinted);
+        border-radius: var(--ds-border-radius-md);
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 0 auto 1.5rem;
-        font-size: 2rem;
-        color: white;
+        font-size: var(--ds-font-size-7);
       }
 
       .option-title {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: #000667;
-        margin-bottom: 0.5rem;
+        font-size: var(--ds-font-size-5);
+        font-weight: var(--ds-font-weight-medium);
+        line-height: var(--ds-line-height-sm);
+        color: var(--ds-color-text-default);
+      }
+
+      .option-card:hover .option-title {
+        text-decoration: underline;
       }
 
       .option-description {
-        color: #666;
-        line-height: 1.6;
+        color: var(--ds-color-neutral-text-subtle);
+        font-size: var(--ds-font-size-3);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .option-card {
+          transition: none;
+        }
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <h1>Styrbord</h1>
-      <p class="subtitle">Velg din pakke</p>
+      <div class="masthead">
+        <img
+          class="logo"
+          src="https://www.kystverket.no/UI/Icons/logo.svg"
+          alt="Kystverket"
+        />
+        <h1>Styrbord</h1>
+        <p class="subtitle">Velg din pakke</p>
+      </div>
 
       <div class="options">
-        <div class="option-shell">
-          <a href="base" class="option-card">
-            <div class="option-icon">📦</div>
-            <h2 class="option-title">@kystverket/styrbord</h2>
-            <p class="option-description">
-              Kjernepakke med essensielle komponenter
-            </p>
-          </a>
-        </div>
+        <a href="base" class="option-card">
+          <span class="option-icon" aria-hidden="true">📦</span>
+          <h2 class="option-title">@kystverket/styrbord</h2>
+          <p class="option-description">
+            Kjernepakke med essensielle komponenter
+          </p>
+        </a>
 
-        <div class="option-shell">
-          <a href="kart" class="option-card">
-            <div class="option-icon">🗺️</div>
-            <h2 class="option-title">@kystverket/styrbord-kart</h2>
-            <p class="option-description">Kartkomponenter og verktøy</p>
-          </a>
-        </div>
+        <a href="kart" class="option-card">
+          <span class="option-icon" aria-hidden="true">🗺️</span>
+          <h2 class="option-title">@kystverket/styrbord-kart</h2>
+          <p class="option-description">Kartkomponenter og verktøy</p>
+        </a>
 
-        <div class="option-shell">
-          <a href="consent" class="option-card">
-            <div class="option-icon">🍪</div>
-            <h2 class="option-title">@kystverket/styrbord-consent</h2>
-            <p class="option-description">Samtykke for informasjonskapsler</p>
-          </a>
-        </div>
+        <a href="consent" class="option-card">
+          <span class="option-icon" aria-hidden="true">🍪</span>
+          <h2 class="option-title">@kystverket/styrbord-consent</h2>
+          <p class="option-description">Samtykke for informasjonskapsler</p>
+        </a>
 
-        <div class="option-shell">
-          <a
-            href="https://kystverket.github.io/styrbord-tokens"
-            class="option-card"
-          >
-            <div class="option-icon">🎨</div>
-            <h2 class="option-title">@kystverket/styrbord-tokens</h2>
-            <p class="option-description">Designtokens og temaer</p>
-          </a>
-        </div>
+        <a
+          href="https://kystverket.github.io/styrbord-tokens"
+          class="option-card"
+        >
+          <span class="option-icon" aria-hidden="true">🎨</span>
+          <h2 class="option-title">@kystverket/styrbord-tokens</h2>
+          <p class="option-description">Designtokens og temaer</p>
+        </a>
       </div>
     </div>
   </body>
