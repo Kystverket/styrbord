@@ -17,7 +17,7 @@ export type AvatarProps = MergeRight<
   (AriaLabel | AriaHidden) & {
     'data-size'?: '2xs' | '3xs' | DsAvatarProps['data-size'];
     'data-color-variant'?: 'base' | 'surface-tinted';
-    border?: 'solid' | 'dashed' | 'dotted' | 'double' | 'none';
+    'border-style'?: 'solid' | 'dashed' | 'dotted' | 'double' | 'none';
     /**
      * Tooltip text to display on hover.
      */
@@ -32,7 +32,7 @@ export type AvatarProps = MergeRight<
 export const Avatar: FC<AvatarProps> = ({
   'data-size': size = 'md',
   'data-color-variant': colorVariant = 'base',
-  border: borderStyle,
+  'border-style': borderStyle,
   className,
   tooltip,
   checked,

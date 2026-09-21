@@ -68,23 +68,38 @@ export const ColorVariants: Story = () => (
 export const BorderVariants: Story = () => (
   <Box gap={16}>
     <Box horizontal align="center" gap={8}>
-      <Avatar data-color="neutral" data-color-variant="surface-tinted" border="solid" aria-label="solid border" />
+      <Avatar data-color="neutral" data-color-variant="surface-tinted" border-style="solid" aria-label="solid border" />
       solid
     </Box>
     <Box horizontal align="center" gap={8}>
-      <Avatar data-color="neutral" data-color-variant="surface-tinted" border="dashed" aria-label="dashed border" />
+      <Avatar
+        data-color="neutral"
+        data-color-variant="surface-tinted"
+        border-style="dashed"
+        aria-label="dashed border"
+      />
       dashed
     </Box>
     <Box horizontal align="center" gap={8}>
-      <Avatar data-color="neutral" data-color-variant="surface-tinted" border="dotted" aria-label="dotted border" />
+      <Avatar
+        data-color="neutral"
+        data-color-variant="surface-tinted"
+        border-style="dotted"
+        aria-label="dotted border"
+      />
       dotted
     </Box>
     <Box horizontal align="center" gap={8}>
-      <Avatar data-color="neutral" data-color-variant="surface-tinted" border="double" aria-label="double border" />
+      <Avatar
+        data-color="neutral"
+        data-color-variant="surface-tinted"
+        border-style="double"
+        aria-label="double border"
+      />
       double
     </Box>
     <Box horizontal align="center" gap={8}>
-      <Avatar data-color="neutral" data-color-variant="surface-tinted" border="none" aria-label="no border" />
+      <Avatar data-color="neutral" data-color-variant="surface-tinted" border-style="none" aria-label="no border" />
       none
     </Box>
   </Box>
@@ -94,7 +109,7 @@ export const CombinedVariants: Story = () => (
   <Box gap={16}>
     <Box horizontal align="center" gap={8}>
       <Avatar
-        border="dashed"
+        border-style="dashed"
         data-color="muted"
         data-color-variant="surface-tinted"
         aria-label="muted surface-tinted dashed"
@@ -105,13 +120,13 @@ export const CombinedVariants: Story = () => (
       <Avatar
         data-color="success"
         data-color-variant="surface-tinted"
-        border="solid"
+        border-style="solid"
         aria-label="success surface-tinted solid"
       />
       success + surface-tinted + solid
     </Box>
     <Box horizontal align="center" gap={8}>
-      <Avatar data-color="warning" data-color-variant="base" border="dotted" aria-label="warning base dotted" />
+      <Avatar data-color="warning" data-color-variant="base" border-style="dotted" aria-label="warning base dotted" />
       warning + base + dotted
     </Box>
   </Box>
@@ -206,7 +221,7 @@ export const Checked: Story = () => (
       checked
       data-color="danger"
       data-color-variant="surface-tinted"
-      border="double"
+      border-style="double"
       aria-label="double border"
     />
   </>
