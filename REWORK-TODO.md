@@ -19,55 +19,55 @@ conversion for that file.
 
 ### Tag — [Tag.module.css](base/src/components/designsystemet/Tag/Tag.module.css), [Tag.tsx](base/src/components/designsystemet/Tag/Tag.tsx)
 
-- [ ] Seven `[data-color='…']` rules set a single border colour. One
+- [x] Seven `[data-color='…']` rules set a single border colour. One
       `--tag-border-color: var(--ds-color-border-subtle)` covers all 20 families (§1.2)
-- [ ] 9 family-hardcoded tokens (§1.2)
-- [ ] `bordered` / `rounded` / `plainBackground` — three booleans, eight combinations, only a few
+- [x] 9 family-hardcoded tokens (§1.2)
+- [x] `bordered` / `rounded` / `plainBackground` — three booleans, eight combinations, only a few
       handled; `plainBackground` silently implies `bordered`. Collapse to one `variant` (§2.5)
-- [ ] `bordered` duplicates Designsystemet 1.21's own `variant?: 'default' | 'outline'`, and the two
+- [x] `bordered` duplicates Designsystemet 1.21's own `variant?: 'default' | 'outline'`, and the two
       can be set contradictorily (§2.4)
 
 ### Chip — [Chip.colors.override.scss](base/src/components/designsystemet/Chip/Chip.colors.override.scss)
 
-- [ ] Delete the `[data-color='primary/subtle']` and `[data-color='neutral/subtle']` rules. The
+- [x] Delete the `[data-color='primary/subtle']` and `[data-color='neutral/subtle']` rules. The
       slash syntax does not exist in Designsystemet and breaks every other `--ds-color-*` in the
       subtree (§1.4)
-- [ ] Update the three call sites: [Chip.stories.tsx:17](base/src/components/designsystemet/Chip/Chip.stories.tsx#L17)
+- [x] Update the three call sites: [Chip.stories.tsx:17](base/src/components/designsystemet/Chip/Chip.stories.tsx#L17)
       and [richTextArea.stories.tsx:152-153](base/src/components/kystverket/RichTextArea/richTextArea.stories.tsx#L152-L153)
-- [ ] 8 family-hardcoded tokens (§1.2)
+- [x] 8 family-hardcoded tokens (§1.2)
 
 ### Text — [Text.tsx](base/src/components/designsystemet/Text/Text.tsx), [Text.module.css](base/src/components/designsystemet/Text/Text.module.css)
 
-- [ ] Set the `data-color` attribute instead of computing `var(--ds-color-${color}-text-${variant})`
+- [x] Set the `data-color` attribute instead of computing `var(--ds-color-${color}-text-${variant})`
       into an inline `--sb-text-color`. Today only the `text-default` and `text-subtle` slots are
       reachable and the colour does not cascade to descendants (§1.5)
-- [ ] Specificity tie: `.color` here and `:where(.ds-paragraph)[data-color-subtle]` in Paragraph both
+- [x] Specificity tie: `.color` here and `:where(.ds-paragraph)[data-color-subtle]` in Paragraph both
       weigh (0,1,0) in the same `styrbord-modules` layer — the winner depends on bundle order.
       Design it away rather than relying on it (§1.5)
-- [ ] `data-color-subtle` → `data-color-variant` (§1.5)
-- [ ] Once `data-color` is a real attribute, the `Omit<HTMLAttributes<HTMLSpanElement>, 'color'>`
+- [x] `data-color-subtle` → `data-color-variant` (§1.5)
+- [x] Once `data-color` is a real attribute, the `Omit<HTMLAttributes<HTMLSpanElement>, 'color'>`
       should be removable (§2.6)
 
 ### Paragraph — [Paragraph.tsx](base/src/components/designsystemet/Paragraph/Paragraph.tsx), [Paragraph.module.css](base/src/components/designsystemet/Paragraph/Paragraph.module.css)
 
-- [ ] `data-color-subtle` → `data-color-variant`. Step 1 fixed only the family bug on the element
+- [x] `data-color-subtle` → `data-color-variant`. Step 1 fixed only the family bug on the element
       itself; the rule still does not follow an _ancestor's_ `data-color` (§1.5)
 
 ### Button — [Button.tsx](base/src/components/designsystemet/Button/Button.tsx), [Button.module.scss](base/src/components/designsystemet/Button/Button.module.scss)
 
-- [ ] `color` is capped at `primary | neutral | danger` out of 20 families, for no reason visible in
+- [x] `color` is capped at `primary | neutral | danger` out of 20 families, for no reason visible in
       the CSS — the SCSS is already written with family-less variables (§2.2, second half)
 - `variant` is settled. Do not align it with upstream; see _Decisions_ in the findings.
 
 ### Avatar — [Avatar.module.scss](base/src/components/designsystemet/Avatar/Avatar.module.scss), [Avatar.tsx](base/src/components/designsystemet/Avatar/Avatar.tsx)
 
-- [ ] 30 family-hardcoded tokens — the worst file in `designsystemet/` (§1.2)
-- [ ] `border: 'solid' | 'dashed' | 'dotted' | 'double' | 'none'` is a border _style_, while Box's
+- [x] 30 family-hardcoded tokens — the worst file in `designsystemet/` (§1.2)
+- [x] `border: 'solid' | 'dashed' | 'dotted' | 'double' | 'none'` is a border _style_, while Box's
       `border` is a _width_ and four other components use booleans (§2.4)
 
 ### Dialog — [Dialog.tsx](base/src/components/designsystemet/Dialog/Dialog.tsx)
 
-- [ ] `size` is a rem `max-width` (`sm`=25rem, `md`=40rem, `lg`=50rem) written to
+- [x] `size` is a rem `max-width` (`sm`=25rem, `md`=40rem, `lg`=50rem) written to
       `--dsc-dialog-max-width`, not a `data-size` (§2.3)
 
 ### Details, Dropdown
@@ -123,8 +123,8 @@ conversion for that file.
 
 ### Typography — [typography.tsx](base/src/components/kystverket/Typography/typography.tsx), [typography.util.ts](base/src/components/kystverket/Typography/typography.util.ts)
 
-- [ ] The `@deprecated` hints still say `Use \`fontWeight="medium"\``; the prop is `weight`. Step 1
-    fixed this in `Paragraph` only (§2.7)
+- [ ] The `@deprecated` hints still say `Use \`fontWeight="medium"\``; the prop is`weight`. Step 1
+    fixed this in`Paragraph` only (§2.7)
 - [ ] `size` is a plain prop (§2.1)
 
 ### PageHeading — [PageHeading.tsx](base/src/components/kystverket/PageHeading/PageHeading.tsx)
