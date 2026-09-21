@@ -15,6 +15,8 @@ export interface MapBaseProps {
    * - `undefined` — auto-detect (visible on touch devices)
    */
   showCenterAction?: boolean;
+  /** Whether to show the zoom controls. Defaults to `true`. */
+  showZoomControls?: boolean;
 }
 
 /**

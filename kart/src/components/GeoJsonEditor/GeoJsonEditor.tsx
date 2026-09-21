@@ -80,12 +80,14 @@ export function GeoJsonEditor({
   onCoordinateClick,
   onImportError,
   showCenterAction,
+  showZoomControls,
   singleFeature = false,
   getLabel = DEFAULT_GET_LABEL,
 }: GeoJsonEditorProps) {
   const { mapContainerRef, mapRef, mapReady, mapVersion } = useMaplibreMap({
     disabled,
     height,
+    showZoomControls,
   });
 
   // ----- Coordinate click → WMS feature info -----
