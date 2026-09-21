@@ -2,20 +2,20 @@
   .banner {
     position: fixed;
     inset-inline: 0;
-    bottom: 0;
+    bottom: calc(var(--ds-size-14) + env(safe-area-inset-bottom, 0px));
     z-index: 1000;
-    padding: var(--ds-size-4);
+    padding: var(--ds-size-14) var(--ds-size-7);
     background: var(--ds-color-neutral-background-default);
     color: var(--ds-color-neutral-text-default);
     border-top: 1px solid var(--ds-color-neutral-border-subtle);
     box-shadow: var(--ds-shadow-lg);
-    padding-bottom: calc(var(--ds-size-4) + env(safe-area-inset-bottom, 0px));
+    padding-bottom: var(--ds-size-14);
   }
 
   .inner {
     display: flex;
     flex-direction: column;
-    gap: var(--ds-size-4);
+    gap: var(--ds-size-7);
     max-width: 68rem;
     margin-inline: auto;
   }
