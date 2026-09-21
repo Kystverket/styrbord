@@ -1,5 +1,5 @@
 import { Textfield as DsTextField, ValidationMessage } from '@digdir/designsystemet-react';
-import { Body, Box, LabelContent } from '~/main';
+import { Box, LabelContent } from '~/main';
 import { useTranslation } from '~/translations';
 import { InputSize, inputSizeClass } from '~/utils/input/input';
 import classes from './TextArea.module.scss';
@@ -57,7 +57,7 @@ export const TextArea = ({
         {...props}
       />
       {maxLength && (
-        <Body>{t('charactersRemaining').replace('{count}', String(maxLength - (value ?? '').length))}</Body>
+        <span>{t('charactersRemaining').replace('{count}', String(maxLength - (value ?? '').length))}</span>
       )}
       {typeof error === 'string' && <ValidationMessage>{error}</ValidationMessage>}
     </Box>

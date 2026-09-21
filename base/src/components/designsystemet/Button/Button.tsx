@@ -44,11 +44,12 @@ export type ButtonProps = {
   href?: string;
   target?: string;
   tooltip?: string;
-} & Omit<DsButtonProps, 'variant' | 'data-color' | 'data-size' | 'disabled'>;
+} & Omit<DsButtonProps, 'variant' | 'data-size' | 'disabled'>;
 
 export const Button: FC<ButtonProps> = ({
   variant = 'outline',
   color = undefined,
+  'data-color': dataColor = undefined,
   size = 'md',
   text = undefined,
   href = undefined,
@@ -81,7 +82,7 @@ export const Button: FC<ButtonProps> = ({
       break;
   }
 
-  propsToOverride['data-color'] = color;
+  propsToOverride['data-color'] = color ?? dataColor;
   propsToOverride['data-size'] = size;
 
   if (href) {

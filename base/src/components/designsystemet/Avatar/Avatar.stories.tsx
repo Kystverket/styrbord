@@ -1,6 +1,7 @@
 import type { Meta, StoryFn } from '@storybook/react-vite';
 import { Avatar, AvatarProps, Badge, Box, Dropdown, Icon } from '~/main';
 import cat1 from '@assets/img/cats/Cat 3.jpg';
+import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
 type Story = StoryFn<typeof Avatar>;
 
 const meta: Meta<typeof Avatar> = {
@@ -19,17 +20,7 @@ const meta: Meta<typeof Avatar> = {
   },
 };
 
-const colors: AvatarProps['data-color'][] = [
-  'primary',
-  'neutral',
-  'muted',
-  'success',
-  'danger',
-  'warning',
-  'accent',
-  'extra1',
-  'extra2',
-];
+const colors: AvatarProps['data-color'][] = [...styrbordSemanticColors, ...styrbordPaletteColors];
 const colorVariants: AvatarProps['data-color-variant'][] = ['base', 'surface-tinted'];
 
 export default meta;
