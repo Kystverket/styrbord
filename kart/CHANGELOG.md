@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/Kystverket/styrbord/compare/styrbord-kart-v0.1.2...styrbord-kart-v0.1.3) (2026-09-18)
+
+
+### Bug Fixes
+
+* **kart:** source map colours from design tokens ([#304](https://github.com/Kystverket/styrbord/issues/304)) ([0f6277b](https://github.com/Kystverket/styrbord/commit/0f6277bc52b3a5b088edcdf08cb1b628c3b1dbf1))
+
 ## [0.1.2](https://github.com/Kystverket/styrbord/compare/styrbord-kart-v0.1.1...styrbord-kart-v0.1.2) (2026-09-16)
 
 

@@ -16,6 +16,7 @@ jobs:
             ci
             base
             kart
+            consent
   check-i18n:
     name: Check i18n
     runs-on: ubuntu-latest
@@ -43,3 +44,6 @@ jobs:
       - run: npm run pretty:check -w base
       - run: npm run tokens:check
       - run: npm run build -w base
+      - run: npm run lint:check -w consent
+      - run: npm run pretty:check -w consent
+      - run: npm run build -w consent
