@@ -72,7 +72,7 @@ conversion for that file.
 
 ### Details, Dropdown
 
-- [ ] [Details.override.scss](base/src/components/designsystemet/Details/Details.override.scss) — 8
+- [x] [Details.override.scss](base/src/components/designsystemet/Details/Details.override.scss) — 8
       family-hardcoded tokens (§1.2)
 - [ ] [Dropdown.override.scss](base/src/components/designsystemet/Dropdown/Dropdown.override.scss) — 5 (§1.2)
 
