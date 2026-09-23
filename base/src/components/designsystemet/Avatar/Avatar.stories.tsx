@@ -21,7 +21,7 @@ const meta: Meta<typeof Avatar> = {
 };
 
 const colors: AvatarProps['data-color'][] = [...styrbordSemanticColors, ...styrbordPaletteColors];
-const colorVariants: AvatarProps['data-color-variant'][] = ['base', 'surface-tinted'];
+const colorVariants: string[] = ['base', 'tinted'];
 
 export default meta;
 
@@ -68,38 +68,23 @@ export const ColorVariants: Story = () => (
 export const BorderVariants: Story = () => (
   <Box gap={16}>
     <Box horizontal align="center" gap={8}>
-      <Avatar data-color="neutral" data-color-variant="surface-tinted" border-style="solid" aria-label="solid border" />
+      <Avatar data-color="neutral" data-color-variant="tinted" border-style="solid" aria-label="solid border" />
       solid
     </Box>
     <Box horizontal align="center" gap={8}>
-      <Avatar
-        data-color="neutral"
-        data-color-variant="surface-tinted"
-        border-style="dashed"
-        aria-label="dashed border"
-      />
+      <Avatar data-color="neutral" data-color-variant="tinted" border-style="dashed" aria-label="dashed border" />
       dashed
     </Box>
     <Box horizontal align="center" gap={8}>
-      <Avatar
-        data-color="neutral"
-        data-color-variant="surface-tinted"
-        border-style="dotted"
-        aria-label="dotted border"
-      />
+      <Avatar data-color="neutral" data-color-variant="tinted" border-style="dotted" aria-label="dotted border" />
       dotted
     </Box>
     <Box horizontal align="center" gap={8}>
-      <Avatar
-        data-color="neutral"
-        data-color-variant="surface-tinted"
-        border-style="double"
-        aria-label="double border"
-      />
+      <Avatar data-color="neutral" data-color-variant="tinted" border-style="double" aria-label="double border" />
       double
     </Box>
     <Box horizontal align="center" gap={8}>
-      <Avatar data-color="neutral" data-color-variant="surface-tinted" border-style="none" aria-label="no border" />
+      <Avatar data-color="neutral" data-color-variant="tinted" border-style="none" aria-label="no border" />
       none
     </Box>
   </Box>
@@ -108,22 +93,12 @@ export const BorderVariants: Story = () => (
 export const CombinedVariants: Story = () => (
   <Box gap={16}>
     <Box horizontal align="center" gap={8}>
-      <Avatar
-        border-style="dashed"
-        data-color="muted"
-        data-color-variant="surface-tinted"
-        aria-label="muted surface-tinted dashed"
-      />
-      muted + surface-tinted + dashed
+      <Avatar border-style="dashed" data-color="muted" data-color-variant="tinted" aria-label="muted tinted dashed" />
+      muted + tinted + dashed
     </Box>
     <Box horizontal align="center" gap={8}>
-      <Avatar
-        data-color="success"
-        data-color-variant="surface-tinted"
-        border-style="solid"
-        aria-label="success surface-tinted solid"
-      />
-      success + surface-tinted + solid
+      <Avatar data-color="success" data-color-variant="tinted" border-style="solid" aria-label="success tinted solid" />
+      success + tinted + solid
     </Box>
     <Box horizontal align="center" gap={8}>
       <Avatar data-color="warning" data-color-variant="base" border-style="dotted" aria-label="warning base dotted" />
@@ -134,12 +109,12 @@ export const CombinedVariants: Story = () => (
 
 export const ShapeVariants: Story = () => (
   <>
-    <Avatar variant="circle" aria-label="variant circle" />
-    <Avatar variant="square" aria-label="variant square" />
-    <Avatar variant="circle" aria-label="Ola Nordman">
+    <Avatar data-variant="circle" aria-label="variant circle" />
+    <Avatar data-variant="square" aria-label="variant square" />
+    <Avatar data-variant="circle" aria-label="Ola Nordman">
       ON
     </Avatar>
-    <Avatar variant="square" aria-label="Ola Nordman">
+    <Avatar data-variant="square" aria-label="Ola Nordman">
       ON
     </Avatar>
   </>
@@ -207,7 +182,7 @@ export const Checked: Story = () => (
     <Avatar aria-label="Ola Nordmann" checked>
       ON
     </Avatar>
-    <Avatar aria-label="Ola Nordmann" variant="square" checked>
+    <Avatar aria-label="Ola Nordmann" data-variant="square" checked>
       ON
     </Avatar>
     <Avatar data-size="xs" aria-label="Ola Nordmann" checked>
@@ -217,13 +192,7 @@ export const Checked: Story = () => (
     <Avatar aria-label="Ola Nordmann" checked>
       <img src={cat1} alt="" />
     </Avatar>
-    <Avatar
-      checked
-      data-color="danger"
-      data-color-variant="surface-tinted"
-      border-style="double"
-      aria-label="double border"
-    />
+    <Avatar checked data-color="danger" data-color-variant="tinted" border-style="double" aria-label="double border" />
   </>
 );
 

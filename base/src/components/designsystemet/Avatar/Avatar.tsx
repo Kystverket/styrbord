@@ -16,7 +16,6 @@ export type AvatarProps = MergeRight<
   DsAvatarProps,
   (AriaLabel | AriaHidden) & {
     'data-size'?: '2xs' | '3xs' | DsAvatarProps['data-size'];
-    'data-color-variant'?: 'base' | 'surface-tinted';
     'border-style'?: 'solid' | 'dashed' | 'dotted' | 'double' | 'none';
     /**
      * Tooltip text to display on hover.
@@ -31,7 +30,6 @@ export type AvatarProps = MergeRight<
 
 export const Avatar: FC<AvatarProps> = ({
   'data-size': size = 'md',
-  'data-color-variant': colorVariant = 'base',
   'border-style': borderStyle,
   className,
   tooltip,
@@ -46,27 +44,21 @@ export const Avatar: FC<AvatarProps> = ({
     classList.push(classes['size3xs']);
   }
 
-  if (colorVariant === 'surface-tinted') {
-    classList.push(classes.surfaceTinted);
-  }
-
   if (borderStyle) {
-    classList.push(classes[`border-${borderStyle}`]);
+    classList.push(classes[`has-border`], classes[`border-${borderStyle}`]);
   }
 
-  const wrapperClass = [
-    classes.wrapper,
-    rest.variant === 'square' ? classes.wrapperSquare : classes.wrapperCircle,
-    checked ? classes.checked : undefined,
-  ]
-    .filter(Boolean)
-    .join(' ');
+  const wrapperClass = [classes.wrapper, checked ? classes.checked : undefined].filter(Boolean).join(' ');
 
   const props = { 'data-size': size, className: classList.join(' '), ...rest } as DsAvatarProps;
   const avatar = (
     <span className={wrapperClass}>
       <DsAvatar {...props} />
-      <span className={classes.checkOverlay} aria-hidden="true" />
+      <span
+        className={classes.checkOverlay}
+        data-variant={(rest as unknown as { 'data-variant'?: string })['data-variant']}
+        aria-hidden="true"
+      />
     </span>
   );
 

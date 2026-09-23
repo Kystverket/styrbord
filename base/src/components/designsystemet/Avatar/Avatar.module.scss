@@ -5,15 +5,6 @@
   overflow: hidden;
 }
 
-.wrapperCircle,
-.wrapperCircle .checkOverlay {
-  border-radius: 50%;
-}
-
-.wrapperSquare {
-  border-radius: var(--ds-border-radius-lg);
-}
-
 .checkOverlay {
   position: absolute;
   inset: 2px;
@@ -26,6 +17,14 @@
   transition:
     opacity 0.2s ease,
     background-color 0.2s ease;
+
+  &:not([data-variant='square']) {
+    border-radius: 50%;
+  }
+
+  &[data-variant='square'] {
+    border-radius: var(--ds-border-radius-sm);
+  }
 
   &::after {
     content: '';
@@ -65,20 +64,9 @@
   line-height: 8px;
 }
 
-.surfaceTinted {
-  --border-color: var(--ds-color-border-default);
-  background-color: var(--ds-color-surface-tinted);
-  color: var(--ds-color-text-default);
+.has-border {
+  border-color: var(--ds-color-border-default);
   border-width: 1px;
-  border-style: solid;
-  border-color: transparent;
-}
-
-.border-solid,
-.border-dashed,
-.border-dotted,
-.border-double {
-  border-color: var(--border-color);
 }
 
 .border-solid {
@@ -92,4 +80,5 @@
 }
 .border-double {
   border-style: double;
+  border-width: 4px;
 }
