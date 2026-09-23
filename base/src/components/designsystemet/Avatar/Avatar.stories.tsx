@@ -196,7 +196,9 @@ export const Checked: Story = () => (
   </>
 );
 
-const boringVariants: AvatarBoringVariant[] = [
+const boringVariants: (true | 'solid' | AvatarBoringVariant)[] = [
+  true,
+  'solid',
   'marble',
   'beam',
   'pixel',
@@ -210,40 +212,46 @@ const boringNames = ['Ola Nordmann', 'Kari Nordmann', 'Per Hansen', 'Anne Olsen'
 
 export const Boring: Story = () => (
   <Box gap={16}>
+    <Box horizontal align="center" gap={8}>
+      {boringNames.map((name) => (
+        <Avatar key={name} auto aria-label={name} tooltip={name} />
+      ))}
+      <Avatar auto aria-label="" tooltip="Unknown" />
+    </Box>
     {boringVariants.map((variant) => (
-      <Box key={variant} horizontal align="center" gap={8}>
+      <Box key={String(variant)} horizontal align="center" gap={8}>
         {boringNames.map((name) => (
-          <Avatar key={name} boring={variant} aria-label={name} tooltip={name} />
+          <Avatar key={name} auto={variant} aria-label={name} tooltip={name} />
         ))}
         {variant}
       </Box>
     ))}
     <Box horizontal align="center" gap={8}>
-      <Avatar boring="marble" aria-label="Ola Nordmann" data-size="3xs" />
-      <Avatar boring="marble" aria-label="Ola Nordmann" data-size="xs" />
-      <Avatar boring="marble" aria-label="Ola Nordmann" data-size="lg" />
-      <Avatar boring="marble" aria-label="Ola Nordmann" data-variant="square" />
-      <Avatar boring="marble" aria-label="Ola Nordmann" checked />
-      <Avatar boring="marble" aria-label="Ola Nordmann" border-style="solid" />
+      <Avatar auto="marble" aria-label="Ola Nordmann" data-size="3xs" />
+      <Avatar auto="marble" aria-label="Ola Nordmann" data-size="xs" />
+      <Avatar auto="marble" aria-label="Ola Nordmann" data-size="lg" />
+      <Avatar auto="marble" aria-label="Ola Nordmann" data-variant="square" />
+      <Avatar auto="marble" aria-label="Ola Nordmann" checked />
+      <Avatar auto="marble" aria-label="Ola Nordmann" border-style="solid" />
       sizes, square, checked, border
     </Box>
     <Box horizontal align="center" gap={8}>
-      <Avatar boring="marble" aria-label="Ola Nordmann" data-size="3xs">
+      <Avatar auto="marble" aria-label="Ola Nordmann" data-size="3xs">
         3S
       </Avatar>
-      <Avatar boring="marble" aria-label="Ola Nordmann" data-size="xs">
+      <Avatar auto="marble" aria-label="Ola Nordmann" data-size="xs">
         XS
       </Avatar>
-      <Avatar boring="marble" aria-label="Kari Nordmann" data-size="lg">
+      <Avatar auto="marble" aria-label="Kari Nordmann" data-size="lg">
         LG
       </Avatar>
-      <Avatar boring="marble" aria-label="Ola Nordmann" data-variant="square">
+      <Avatar auto="marble" aria-label="Ola Nordmann" data-variant="square">
         SQ
       </Avatar>
-      <Avatar boring="marble" aria-label="Ola Nordmann" checked>
+      <Avatar auto="marble" aria-label="Ola Nordmann" checked>
         CH
       </Avatar>
-      <Avatar boring="marble" aria-label="Ola Nordmann" border-style="solid">
+      <Avatar auto="marble" aria-label="Ola Nordmann" border-style="solid">
         BS
       </Avatar>
       sizes, square, checked, border

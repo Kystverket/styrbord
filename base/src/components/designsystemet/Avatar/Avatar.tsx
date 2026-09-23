@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { Avatar as DsAvatar, AvatarProps as DsAvatarProps, MergeRight, Tooltip } from '@digdir/designsystemet-react';
 import BoringAvatar from 'boring-avatars';
 import classes from './Avatar.module.scss';
+import { autoSolidStyles, borderStyleClasses, boringColors, sizeClasses, determineAutoMode } from './Avatar.helpers';
 
 export type AvatarBoringVariant =
   | 'marble'
@@ -12,19 +13,6 @@ export type AvatarBoringVariant =
   | 'bauhaus'
   | 'geometric'
   | 'abstract';
-
-/**
- * Kystverket's avatar palette. boring-avatars needs hex strings (some variants compute
- * contrast from them), and `base` has no runtime dependency on `@kystverket/styrbord-tokens`,
- * so the values are copied here. Keep them in sync with the named tokens.
- */
-const boringColors = [
-  '#001955', // dyphav base-default
-  '#0596CB', // hav base-default
-  '#A9E5FB', // himmel base-default
-  '#F7EFE5', // sand base-default
-  '#3BA460', // skog base-default
-];
 
 type AriaLabel = {
   /**
@@ -53,7 +41,7 @@ export type AvatarProps = MergeRight<
      * Renders a generated [boring avatar](https://boringavatars.com) in Kystverket's colors,
      * seeded from `aria-label`. Ignored when `children` is set.
      */
-    boring?: AvatarBoringVariant;
+    auto?: true | 'solid' | AvatarBoringVariant;
   }
 >;
 
@@ -63,50 +51,50 @@ export const Avatar: FC<AvatarProps> = ({
   className,
   tooltip,
   checked,
-  boring,
+  auto,
   children,
   ...rest
 }) => {
-  const classList = [className];
+  const classList = [className, sizeClasses(size), borderStyleClasses(borderStyle)];
 
-  if (size === '2xs') {
-    classList.push(classes['size2xs']);
-  } else if (size === '3xs') {
-    classList.push(classes['size3xs']);
-  }
+  const autoMode = determineAutoMode(auto, rest['aria-label']);
+  const isBoring = autoMode !== 'solid';
 
-  if (borderStyle) {
-    classList.push(classes[`has-border`], classes[`border-${borderStyle}`]);
-  }
-
-  if (boring) {
+  if (isBoring) {
     classList.push(classes.boring);
   }
 
   const wrapperClass = [classes.wrapper, checked ? classes.checked : undefined].filter(Boolean).join(' ');
+  const wrapperStyles: Record<string, string> = autoMode === 'solid' ? autoSolidStyles(rest['aria-label']) : {};
 
   const props = { 'data-size': size, className: classList.join(' '), ...rest } as DsAvatarProps;
   let content = null;
 
-  const boringAvatar = boring ? (
-    <BoringAvatar variant={boring} name={rest['aria-label'] ?? ''} colors={boringColors} size="100%" square />
+  const boringAvatar = isBoring ? (
+    <BoringAvatar
+      variant={autoMode ?? 'marble'}
+      name={rest['aria-label'] ?? ''}
+      colors={boringColors}
+      size="100%"
+      square
+    />
   ) : null;
 
-  if (boring && children) {
+  if (isBoring && children) {
     content = (
       <>
         <div className={classes.boringChildren}>{children}</div>
         {boringAvatar}
       </>
     );
-  } else if (boring && !children) {
+  } else if (isBoring && !children) {
     content = boringAvatar;
   } else {
     content = children;
   }
 
   const avatar = (
-    <span className={wrapperClass}>
+    <span className={wrapperClass} style={wrapperStyles}>
       <DsAvatar {...props}>{content}</DsAvatar>
       <span
         className={classes.checkOverlay}
