@@ -3,6 +3,7 @@ import { Avatar as DsAvatar, AvatarProps as DsAvatarProps, MergeRight, Tooltip }
 import BoringAvatar from 'boring-avatars';
 import classes from './Avatar.module.scss';
 import { autoSolidStyles, borderStyleClasses, boringColors, sizeClasses, determineAutoMode } from './Avatar.helpers';
+import { DataColor, DataColorVariant } from '~/main';
 
 export type AvatarBoringVariant =
   | 'marble'
@@ -27,6 +28,8 @@ type AriaHidden = Partial<AriaLabel> & {
 export type AvatarProps = MergeRight<
   DsAvatarProps,
   (AriaLabel | AriaHidden) & {
+    'data-color'?: DataColor;
+    'data-color-variant'?: DataColorVariant;
     'data-size'?: '2xs' | '3xs' | DsAvatarProps['data-size'];
     'border-style'?: 'solid' | 'dashed' | 'dotted' | 'double' | 'none';
     /**

@@ -1,5 +1,9 @@
+import { StyrbordPaletteColor, StyrbordSemanticColor } from '@kystverket/styrbord-tokens/colors';
 import './css/index.scss';
 import '@material-symbols/font-400/outlined.css';
+
+export type DataColor = StyrbordSemanticColor | StyrbordPaletteColor;
+export type DataColorVariant = 'base' | 'tinted';
 
 export type { SupportedLanguage, ScreenSize } from './utils/types';
 

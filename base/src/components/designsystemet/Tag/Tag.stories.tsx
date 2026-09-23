@@ -125,7 +125,7 @@ export const RoundedWithBorders: StoryFn<typeof Tag> = ({ ...rest }) => {
   return (
     <>
       {colorVariants.map((color) => (
-        <Tag key={color} radius="full" bordered data-color={color as TagProps['data-color']} {...rest}>
+        <Tag key={color} radius="full" variant="outline" data-color={color as TagProps['data-color']} {...rest}>
           {color}
         </Tag>
       ))}
@@ -181,7 +181,14 @@ export const RoundedWithIconColors: StoryFn<typeof Tag> = ({ ...rest }) => {
   return (
     <>
       {colorVariants.map((color) => (
-        <Tag key={color} radius="full" icon="info" bordered data-color={color as TagProps['data-color']} {...rest}>
+        <Tag
+          key={color}
+          radius="full"
+          icon="info"
+          variant="outline"
+          data-color={color as TagProps['data-color']}
+          {...rest}
+        >
           {color}
         </Tag>
       ))}

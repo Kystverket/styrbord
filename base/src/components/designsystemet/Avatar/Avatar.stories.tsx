@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/react-vite';
-import { Avatar, AvatarBoringVariant, AvatarProps, Badge, Box, Dropdown, Icon } from '~/main';
+import { Avatar, AvatarBoringVariant, AvatarProps, Badge, Box, Dropdown, Icon, DataColorVariant } from '~/main';
 import cat1 from '@assets/img/cats/Cat 3.jpg';
 import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
 type Story = StoryFn<typeof Avatar>;
@@ -21,7 +21,7 @@ const meta: Meta<typeof Avatar> = {
 };
 
 const colors: AvatarProps['data-color'][] = [...styrbordSemanticColors, ...styrbordPaletteColors];
-const colorVariants: string[] = ['base', 'tinted'];
+const colorVariants: DataColorVariant[] = ['base', 'tinted'];
 
 export default meta;
 
@@ -33,7 +33,7 @@ Preview.args = {
   children: '',
 };
 
-export const NoName: Story = () => <Avatar aria-label="Ola" />;
+export const NoName: Story = () => <Avatar aria-label="Ola Test" />;
 
 export const Sizes: Story = () => (
   <Box gap={16} align="start">
@@ -93,7 +93,7 @@ export const BorderVariants: Story = () => (
 export const CombinedVariants: Story = () => (
   <Box gap={16}>
     <Box horizontal align="center" gap={8}>
-      <Avatar border-style="dashed" data-color="muted" data-color-variant="tinted" aria-label="muted tinted dashed" />
+      <Avatar border-style="dashed" data-color="primary" data-color-variant="tinted" aria-label="muted tinted dashed" />
       muted + tinted + dashed
     </Box>
     <Box horizontal align="center" gap={8}>

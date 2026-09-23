@@ -42,7 +42,7 @@ function SlotDialogRoot({
         open={open}
         onClose={onClose}
         ref={ref}
-        size={size}
+        max-width={size}
         style={style}
         className={`${classes.slotDialogOverrides} ${className}`}
         closedby="any"
