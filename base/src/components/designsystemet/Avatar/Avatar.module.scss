@@ -49,6 +49,24 @@
   }
 }
 
+// Boring avatar: the SVG fills the avatar, so drop the icon padding
+.boring:global(.ds-avatar) {
+  padding: 0;
+}
+.boringChildren {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  color: white; /* Internal text color */
+  text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000; /* Creates a 1px border by casting shadows in 4 diagonals */
+}
 // Sizes
 .size2xs {
   height: 28px;

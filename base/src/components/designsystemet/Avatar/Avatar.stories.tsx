@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/react-vite';
-import { Avatar, AvatarProps, Badge, Box, Dropdown, Icon } from '~/main';
+import { Avatar, AvatarBoringVariant, AvatarProps, Badge, Box, Dropdown, Icon } from '~/main';
 import cat1 from '@assets/img/cats/Cat 3.jpg';
 import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
 type Story = StoryFn<typeof Avatar>;
@@ -194,6 +194,61 @@ export const Checked: Story = () => (
     </Avatar>
     <Avatar checked data-color="danger" data-color-variant="tinted" border-style="double" aria-label="double border" />
   </>
+);
+
+const boringVariants: AvatarBoringVariant[] = [
+  'marble',
+  'beam',
+  'pixel',
+  'sunset',
+  'ring',
+  'bauhaus',
+  'geometric',
+  'abstract',
+];
+const boringNames = ['Ola Nordmann', 'Kari Nordmann', 'Per Hansen', 'Anne Olsen', 'Lars Berg'];
+
+export const Boring: Story = () => (
+  <Box gap={16}>
+    {boringVariants.map((variant) => (
+      <Box key={variant} horizontal align="center" gap={8}>
+        {boringNames.map((name) => (
+          <Avatar key={name} boring={variant} aria-label={name} tooltip={name} />
+        ))}
+        {variant}
+      </Box>
+    ))}
+    <Box horizontal align="center" gap={8}>
+      <Avatar boring="marble" aria-label="Ola Nordmann" data-size="3xs" />
+      <Avatar boring="marble" aria-label="Ola Nordmann" data-size="xs" />
+      <Avatar boring="marble" aria-label="Ola Nordmann" data-size="lg" />
+      <Avatar boring="marble" aria-label="Ola Nordmann" data-variant="square" />
+      <Avatar boring="marble" aria-label="Ola Nordmann" checked />
+      <Avatar boring="marble" aria-label="Ola Nordmann" border-style="solid" />
+      sizes, square, checked, border
+    </Box>
+    <Box horizontal align="center" gap={8}>
+      <Avatar boring="marble" aria-label="Ola Nordmann" data-size="3xs">
+        3S
+      </Avatar>
+      <Avatar boring="marble" aria-label="Ola Nordmann" data-size="xs">
+        XS
+      </Avatar>
+      <Avatar boring="marble" aria-label="Kari Nordmann" data-size="lg">
+        LG
+      </Avatar>
+      <Avatar boring="marble" aria-label="Ola Nordmann" data-variant="square">
+        SQ
+      </Avatar>
+      <Avatar boring="marble" aria-label="Ola Nordmann" checked>
+        CH
+      </Avatar>
+      <Avatar boring="marble" aria-label="Ola Nordmann" border-style="solid">
+        BS
+      </Avatar>
+      sizes, square, checked, border
+    </Box>
+  </Box>
 );
 
 export const AsLink: Story = () => (
