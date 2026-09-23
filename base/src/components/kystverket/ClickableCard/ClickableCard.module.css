@@ -13,6 +13,9 @@
     background-color: transparent;
     font-family: inherit;
     font-size: inherit;
+    --_border-color: var(--ds-color-border-subtle);
+    color: var(--ds-color-text-default);
+    --_icon-color: var(--ds-color-border-strong);
   }
 
   .card:focus-visible {
@@ -20,48 +23,17 @@
     outline-offset: var(--ds-size-1);
   }
 
-  .card[data-color='neutral'] {
-    --_border-color: var(--ds-color-neutral-border-subtle);
-    --_icon-color: var(--ds-color-neutral-border-strong);
-    color: var(--ds-color-neutral-text-default);
-  }
-
-  .card[data-color='primary'] {
-    --_border-color: var(--ds-color-primary-border-subtle);
-    --_icon-color: var(--ds-color-primary-border-default);
-    color: var(--ds-color-primary-text-default);
-  }
-
-  /* neutral + default */
-  .card[data-color='neutral'][data-variant='default'] {
-    --_bg: var(--ds-color-neutral-surface-default);
-    --_bg-hover: var(--ds-color-neutral-background-tinted);
-  }
-
   /* neutral + tinted */
-  .card[data-color='neutral'][data-variant='tinted'] {
-    --_bg: var(--ds-color-neutral-background-tinted);
-    --_bg-hover: var(--ds-color-neutral-surface-tinted);
-  }
-
-  /* main + default */
-  .card[data-color='primary'][data-variant='default'] {
-    --_bg: var(--ds-color-primary-surface-default);
-    --_bg-hover: var(--ds-color-primary-background-tinted);
-  }
-
-  /* main + tinted */
-  .card[data-color='primary'][data-variant='tinted'] {
-    --_bg: var(--ds-color-primary-background-tinted);
-    --_bg-hover: var(--ds-color-primary-surface-tinted);
-  }
-
-  .card {
-    background-color: var(--_bg);
+  .card[data-color-variant='tinted'] {
+    background-color: var(--ds-color-background-tinted);
   }
 
   .card:hover {
-    background-color: var(--_bg-hover);
+    background-color: var(--ds-color-background-tinted);
+  }
+
+  .card[data-color-variant='tinted']:hover {
+    background-color: var(--ds-color-surface-tinted);
   }
 
   .bordered {

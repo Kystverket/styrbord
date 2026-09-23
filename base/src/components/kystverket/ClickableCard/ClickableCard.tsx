@@ -7,19 +7,19 @@ const ClickableCard = (props: ClickableCardProps) => {
     heading,
     description,
     children,
-    variant = 'default',
-    color = 'neutral',
+    'data-color-variant': variant = 'default',
+    'data-color': dataColor = 'neutral',
     headingLevel = 2,
     headingSize = 'sm',
     icon,
     chevron = true,
-    showBorder = true,
+    'border-style': borderStyle = 'solid',
     className = '',
     'aria-label': ariaLabel,
   } = props;
-  const dataColor = color === 'main' ? 'primary' : 'neutral';
-
-  const cardClasses = [classes.card, showBorder ? classes.bordered : '', className].filter(Boolean).join(' ');
+  const cardClasses = [classes.card, borderStyle === 'solid' ? classes.bordered : '', className]
+    .filter(Boolean)
+    .join(' ');
 
   const inner = (
     <>
@@ -44,7 +44,7 @@ const ClickableCard = (props: ClickableCardProps) => {
         rel={effectiveRel}
         className={cardClasses}
         data-color={dataColor}
-        data-variant={variant}
+        data-color-variant={variant}
         aria-label={ariaLabel}
         onClick={props.onClick}
       >
@@ -58,7 +58,7 @@ const ClickableCard = (props: ClickableCardProps) => {
       type="button"
       className={cardClasses}
       data-color={dataColor}
-      data-variant={variant}
+      data-color-variant={variant}
       aria-label={ariaLabel}
       onClick={props.onClick}
     >

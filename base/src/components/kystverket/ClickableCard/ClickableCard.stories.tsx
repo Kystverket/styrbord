@@ -1,9 +1,8 @@
 import type { Meta, StoryFn, StoryObj } from '@storybook/react-vite';
 
-import { Box, Paragraph } from '~/main';
+import { Box, DataColor, DataColorVariant, Paragraph } from '~/main';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import ClickableCard from './ClickableCard';
-import type { ClickableCardColor, ClickableCardVariant } from './ClickableCard.types';
 
 const meta = {
   title: 'Components/ClickableCard',
@@ -11,12 +10,12 @@ const meta = {
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],
   argTypes: {
-    variant: {
-      options: ['default', 'tinted'] satisfies ClickableCardVariant[],
+    'data-color-variant': {
+      options: ['base', 'tinted'] satisfies DataColorVariant[],
       control: { type: 'radio' },
     },
-    color: {
-      options: ['neutral', 'main'] satisfies ClickableCardColor[],
+    'data-color': {
+      options: ['neutral', 'primary', 'lyng', 'fyr', 'gress'] satisfies DataColor[],
       control: { type: 'radio' },
     },
     headingLevel: {
@@ -43,19 +42,21 @@ export const Default: Story = {
     description: 'Lorem ipsum dolor mit amet.',
     icon: 'anchor',
     chevron: true,
-    showBorder: true,
-    variant: 'default',
-    color: 'neutral',
+    'border-style': 'solid',
+    'data-color-variant': 'base',
+    'data-color': 'neutral',
     onClick: () => alert('Clicked!'),
   },
 };
 
 export const ColorVariants: StoryFn = () => {
-  const combos: { label: string; color: ClickableCardColor; variant: ClickableCardVariant }[] = [
-    { label: 'Neutral, default', color: 'neutral', variant: 'default' },
-    { label: 'Main, default', color: 'main', variant: 'default' },
+  const combos: { label: string; color: DataColor; variant: DataColorVariant }[] = [
+    { label: 'Neutral, default', color: 'neutral', variant: 'base' },
+    { label: 'Main, default', color: 'primary', variant: 'base' },
     { label: 'Neutral, tinted', color: 'neutral', variant: 'tinted' },
-    { label: 'Main, tinted', color: 'main', variant: 'tinted' },
+    { label: 'Main, tinted', color: 'primary', variant: 'tinted' },
+    { label: 'Lyng, tinted', color: 'lyng', variant: 'tinted' },
+    { label: 'Gress, tinted', color: 'gress', variant: 'tinted' },
   ];
 
   return (
@@ -67,9 +68,9 @@ export const ColorVariants: StoryFn = () => {
           description="Most provide as with carried business are much better more the perfected designer. Writing slightly explain desk unable at supposedly about this."
           icon="anchor"
           chevron
-          showBorder
-          color={c.color}
-          variant={c.variant}
+          border-style="solid"
+          data-color={c.color}
+          data-color-variant={c.variant}
         />
       ))}
     </div>
@@ -86,32 +87,32 @@ export const Eksempel: StoryFn = () => {
           icon="picture_as_pdf"
           chevron
           headingSize="xs"
-          variant="default"
-          color="neutral"
+          data-color-variant="base"
+          data-color="neutral"
         />
         <ClickableCard
           heading="Forespørsel om nautisk vurdering"
           icon="picture_as_pdf"
           chevron
           headingSize="xs"
-          variant="tinted"
-          color="neutral"
+          data-color-variant="tinted"
+          data-color="neutral"
         />
         <ClickableCard
           heading="Forespørsel om nautisk vurdering"
           icon="picture_as_pdf"
           chevron
           headingSize="xs"
-          variant="default"
-          color="main"
+          data-color-variant="base"
+          data-color="primary"
         />
         <ClickableCard
           heading="Forespørsel om nautisk vurdering"
           icon="picture_as_pdf"
           chevron
           headingSize="xs"
-          variant="tinted"
-          color="main"
+          data-color-variant="tinted"
+          data-color="primary"
         />
       </Box>
 
@@ -123,9 +124,9 @@ export const Eksempel: StoryFn = () => {
             description="Most provide as with carried business are much better more the perfected designer. Writing slightly explain desk unable at supposedly about this."
             icon="anchor"
             chevron
-            showBorder
-            variant="default"
-            color="neutral"
+            border-style="solid"
+            data-color-variant="base"
+            data-color="neutral"
           >
             <Box gap={4} p={4}>
               <Paragraph data-size="xs">SLOT</Paragraph>
@@ -145,9 +146,9 @@ export const AsLink: Story = {
     description: 'Åpner lenken i ny fane.',
     icon: 'anchor',
     chevron: true,
-    showBorder: true,
-    variant: 'tinted',
-    color: 'main',
+    'border-style': 'solid',
+    'data-color-variant': 'tinted',
+    'data-color': 'primary',
     href: 'https://designsystemet.no',
     target: '_blank',
     rel: 'noopener noreferrer',

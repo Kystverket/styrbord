@@ -1,20 +1,19 @@
+import { DataColor, DataColorVariant } from '~/main';
 import type { IconId } from '../Icon/icon.types';
 
-export type ClickableCardColor = 'neutral' | 'main';
-export type ClickableCardVariant = 'default' | 'tinted';
 export type ClickableCardHeadingSize = '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
 type ClickableCardBaseProps = {
   heading: string;
   description?: string;
   children?: React.ReactNode;
-  variant?: ClickableCardVariant;
-  color?: ClickableCardColor;
+  'data-color-variant'?: DataColorVariant;
+  'data-color'?: DataColor;
   headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
   headingSize?: ClickableCardHeadingSize;
   icon?: IconId;
   chevron?: boolean;
-  showBorder?: boolean;
+  'border-style'?: 'solid';
   className?: string;
   'aria-label'?: string;
 };

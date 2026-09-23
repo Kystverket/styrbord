@@ -74,46 +74,36 @@ conversion for that file.
 
 - [x] [Details.override.scss](base/src/components/designsystemet/Details/Details.override.scss) — 8
       family-hardcoded tokens (§1.2)
-- [ ] [Dropdown.override.scss](base/src/components/designsystemet/Dropdown/Dropdown.override.scss) — 5 (§1.2)
+- [x] [Dropdown.override.scss](base/src/components/designsystemet/Dropdown/Dropdown.override.scss) — 5 (§1.2)
 
 ---
 
 ## base — `kystverket/`
 
-### Box — [box.types.ts](base/src/components/kystverket/Box/box.types.ts), [box.tsx](base/src/components/kystverket/Box/box.tsx), [box.colors.module.css](base/src/components/kystverket/Box/box.colors.module.css)
-
-- [ ] **78 family-hardcoded tokens** — the single largest conversion site in the repo (§1.2)
-- [ ] `color="family/variant"` slash syntax, split and turned into a class name. Same invention as
-      Chip's, in a different place; neither agrees with the other (§1.4)
-- [ ] Retire `navy` and `white` — neither is a token colour (§1.3)
-- [ ] `color` sets `background`, `color` _and_ `--border-color`; it is named after one of the three (§2.6)
-- [ ] `border: 'sm' | 'md' | 'lg'` is a border _width_ (§2.4)
-- [ ] `font.size` is a plain prop, not `data-size` (§2.1)
-
 ### ClickableCard — [ClickableCard.types.ts](base/src/components/kystverket/ClickableCard/ClickableCard.types.ts), [ClickableCard.module.css](base/src/components/kystverket/ClickableCard/ClickableCard.module.css)
 
-- [ ] `color: 'neutral' | 'main'` — `main` is remapped to `primary` and is not a token name (§1.3)
-- [ ] 16 family-hardcoded tokens (§1.2)
-- [ ] `showBorder` boolean — third spelling of the same concept (§2.4)
+- [x] `color: 'neutral' | 'main'` — `main` is remapped to `primary` and is not a token name (§1.3)
+- [x] 16 family-hardcoded tokens (§1.2)
+- [x] `showBorder` boolean — third spelling of the same concept (§2.4)
 
 ### Stepper — [stepper.tsx](base/src/components/kystverket/Stepper/stepper.tsx), [stepper.module.css](base/src/components/kystverket/Stepper/stepper.module.css)
 
-- [ ] Per-step `data-color` ships both `danger` and `error` as separate values (§1.3)
-- [ ] `StepItem.style: 'auto' | 'filled' | 'subtle' | 'outline'` shadows the CSS `style` prop. This
+- [x] Per-step `data-color` ships both `danger` and `error` as separate values (§1.3)
+- [x] `StepItem.style: 'auto' | 'filled' | 'subtle' | 'outline'` shadows the CSS `style` prop. This
       is `variant` (§2.6)
-- [ ] 4 family-hardcoded tokens (§1.2)
+- [x] 4 family-hardcoded tokens (§1.2)
 
 ### Alert — [alert.tsx](base/src/components/kystverket/Alert/alert.tsx)
 
-- [ ] `level` (`info | success | warning | error`) and `data-color` both feed the same attribute,
+- [x] `level` (`info | success | warning | error`) and `data-color` both feed the same attribute,
       `data-color` wins, `error` is silently remapped to `danger`. Designsystemet's Alert is
       `data-color`-only (§2.7)
-- [ ] `bordered` (defaults `true`) and `rounded` booleans → one `variant` (§2.5)
+- [x] `bordered` (defaults `true`) and `rounded` booleans → one `variant` (§2.5)
 
 ### Icon — [icon.tsx](base/src/components/kystverket/Icon/icon.tsx)
 
-- [ ] `background` sets both background _and_ foreground; it is named after one of the two (§2.6)
-- [ ] `size` is a plain prop, not `data-size` (§2.1)
+- [!] `background` sets both background _and_ foreground; it is named after one of the two (§2.6)
+- [!] `size` is a plain prop, not `data-size` (§2.1)
 
 ### SvgImage — [svgImage.tsx](base/src/components/kystverket/Image/svgImage.tsx), [svgImage.module.css](base/src/components/kystverket/Image/svgImage.module.css)
 
@@ -136,6 +126,16 @@ conversion for that file.
 - [ ] 5 family-hardcoded tokens (§1.2)
 - [ ] `size` is a plain prop (§2.1)
 - The `rgba(0,0,0,…)` scrim stays — a backdrop is a backdrop in both schemes (§1.7)
+
+### Box — [box.types.ts](base/src/components/kystverket/Box/box.types.ts), [box.tsx](base/src/components/kystverket/Box/box.tsx), [box.colors.module.css](base/src/components/kystverket/Box/box.colors.module.css)
+
+- [ ] **78 family-hardcoded tokens** — the single largest conversion site in the repo (§1.2)
+- [ ] `color="family/variant"` slash syntax, split and turned into a class name. Same invention as
+      Chip's, in a different place; neither agrees with the other (§1.4)
+- [ ] Retire `navy` and `white` — neither is a token colour (§1.3)
+- [ ] `color` sets `background`, `color` _and_ `--border-color`; it is named after one of the three (§2.6)
+- [ ] `border: 'sm' | 'md' | 'lg'` is a border _width_ (§2.4)
+- [ ] `font.size` is a plain prop, not `data-size` (§2.1)
 
 ### Cascade conversion only (§1.2)
 
