@@ -11,7 +11,6 @@ import {
   ImageBwBoelgevarsel,
   ImageBwNais,
   ImageBwOhoi,
-  svgImageColors,
   ImageDatakatalog,
   ImageFyr,
   ImageDigitaleFyrbesoek,
@@ -58,6 +57,7 @@ import {
   ImageUtbedringIFarvannet,
 } from './svgImage';
 import { Paragraph } from '~/main';
+import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
 
 const meta = {
   title: 'Helpers/Images and Illustrations',
@@ -125,7 +125,7 @@ const images: [string, React.FC<SvgImageProps>][] = [
   ['ImageUtbedringIFarvannetFarget', ImageUtbedringIFarvannetFarget],
 ];
 
-const variants = [...svgImageColors] as const;
+const variants = [...styrbordSemanticColors, ...styrbordPaletteColors] as const;
 
 export const Showcase: StoryFn = () => {
   return (
