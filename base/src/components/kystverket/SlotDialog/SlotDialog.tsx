@@ -16,7 +16,7 @@ export interface SlotDialogProps {
 
   /**Should be enabled with long content */
   longContent?: boolean;
-  size?: DialogSize;
+  'max-width'?: DialogSize;
   title: string;
   subtitle?: string;
   children: ReactNode;
@@ -30,7 +30,7 @@ function SlotDialogRoot({
   ref,
   children,
   longContent,
-  size,
+  'max-width': maxWidth,
   style,
   className = '',
 }: Readonly<SlotDialogProps>) {
@@ -42,7 +42,7 @@ function SlotDialogRoot({
         open={open}
         onClose={onClose}
         ref={ref}
-        max-width={size}
+        max-width={maxWidth}
         style={style}
         className={`${classes.slotDialogOverrides} ${className}`}
         closedby="any"

@@ -84,7 +84,6 @@ export { default as Skillingsbuoye } from './components/kystverket/Skillingsbuoy
 export { Accent, Typography } from './components/kystverket/Typography/typography';
 export type {
   TypographyProps,
-  BodyTypographyProps,
   AccentTypographyProps,
   LabelTypographyProps,
 } from './components/kystverket/Typography/typography';
@@ -141,11 +140,7 @@ export { default as CompactDetails } from './components/kystverket/CompactDetail
 export type { CompactDetailsProps } from './components/kystverket/CompactDetails/CompactDetails.types';
 
 export { default as ClickableCard } from './components/kystverket/ClickableCard/ClickableCard';
-export type {
-  ClickableCardProps,
-  ClickableCardColor,
-  ClickableCardVariant,
-} from './components/kystverket/ClickableCard/ClickableCard.types';
+export type { ClickableCardProps } from './components/kystverket/ClickableCard/ClickableCard.types';
 
 export { SaksbehandlingShell } from './components/kystverket/SaksbehandlingShell/SaksbehandlingShell';
 export type {

@@ -1,14 +1,11 @@
 import { ReactNode } from 'react';
 import { buildTypographyClasses, TypographyWeight } from './typography.util';
 import style from './typography.module.css';
-import { ParagraphProps } from '~/main';
 
 export interface TypographyProps {
   className?: string;
   children?: ReactNode | undefined;
 }
-
-export type BodyTypographyProps = ParagraphProps;
 
 export type AccentTypographyProps = TypographyProps & {
   size?: 'sm' | 'md';

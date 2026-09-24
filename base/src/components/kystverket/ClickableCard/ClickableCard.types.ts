@@ -13,7 +13,7 @@ type ClickableCardBaseProps = {
   headingSize?: ClickableCardHeadingSize;
   icon?: IconId;
   chevron?: boolean;
-  'border-style'?: 'solid';
+  'border-style'?: 'none' | 'solid';
   className?: string;
   'aria-label'?: string;
 };
