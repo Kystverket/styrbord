@@ -101,6 +101,21 @@ export const Disabled: Story = {
   },
   render: renderInteractive,
 };
+
+export const WithCodeFormatting: Story = {
+  args: {
+    ...defaultArgs,
+    label: 'Rikt tekstfelt med kode',
+    description: 'Viser at editoren kan laste markdown med inline-kode og kodeblokker.',
+    value: `Inline-kode: \`const answer = 42;\`
+
+\`\`\`ts
+const greet = (name: string) => \`Hei, \${name}\`;
+\`\`\``,
+  },
+  render: renderInteractive,
+};
+
 export const WithError: Story = {
   args: {
     ...defaultArgs,
