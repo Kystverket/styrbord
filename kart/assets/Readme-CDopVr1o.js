@@ -1,4 +1,4 @@
-import{j as e}from"./jsx-runtime-D_zvdyIk.js";import{u as o,a as i,b as s}from"./blocks-CEBc7hZk.js";import"./preload-helper-Dp1pzeXC.js";import"./iframe-DdR7LuWm.js";import"./index-CGbibCST.js";import"./index-D3IZn0Nz.js";const a=`# Styrbord Kart
+import{j as e}from"./jsx-runtime-D_zvdyIk.js";import{u as o,a as i,b as s}from"./blocks-CyWnDIf7.js";import"./preload-helper-Dp1pzeXC.js";import"./iframe-ZzHvW-RP.js";import"./index-CRCYpcbM.js";import"./index-CXY2nAPh.js";const a=`# Styrbord Kart
 
 Styrbord Kart er et kart- og GeoJSON-komponentbibliotek for Kystverkets interne og eksterne
 applikasjoner. Biblioteket er et tillegg til Styrbord, med fokus på visualisering, redigering og
@@ -87,12 +87,6 @@ export default defineConfig({
   },
 });
 \`\`\`
-
-## Endringslogg
-
-### 2026-03-06 -- v0.0.5
-
-- README omskrevet for \`@kystverket/styrbord-kart\` med kartspesifikk dokumentasjon.
 `;function t(n){const r={p:"p",...o(),...n.components};return e.jsxs(e.Fragment,{children:[e.jsx(i,{title:"Readme"}),`
 `,e.jsxs(r.p,{children:["Følgende tekst hentes fra README.md i ",e.jsx("a",{href:"https://github.com/Kystverket/styrbord",children:"rotmappen til prosjektet"}),"."]}),`
 `,e.jsx(s,{children:a})]})}function f(n={}){const{wrapper:r}={...o(),...n.components};return r?e.jsx(r,{...n,children:e.jsx(t,{...n})}):t(n)}export{f as default};
