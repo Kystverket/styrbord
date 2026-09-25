@@ -1,6 +1,6 @@
 {
   "name": "@kystverket/styrbord-consent",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Samtykke-komponenter for Kystverkets applikasjoner",
   "type": "module",
   "repository": {

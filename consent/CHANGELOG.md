@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/Kystverket/styrbord/compare/styrbord-consent-v1.0.1...styrbord-consent-v2.0.0) (2026-09-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* **consent:** style.css no longer includes the Designsystemet theme. Styrbord apps: nothing to do. Apps without Styrbord: also import '@kystverket/styrbord-consent/theme.css'.
+
+### Features
+
+* **consent:** move design tokens out of style.css into opt-in theme.css ([#315](https://github.com/Kystverket/styrbord/issues/315)) ([89c8d60](https://github.com/Kystverket/styrbord/commit/89c8d60530ea9b1897a57b1b427e478bd6f87536))
+
 ## [1.0.1](https://github.com/Kystverket/styrbord/compare/styrbord-consent-v1.0.0...styrbord-consent-v1.0.1) (2026-09-23)
 
 
