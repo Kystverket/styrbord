@@ -92,14 +92,19 @@ consent surfaces don't actually use — it is not a second design system.
 Consequences worth knowing:
 
 - **Every colour, space and font size comes from a `--ds-*` token**, and `npm run tokens:check`
-  validates `consent/src` against the tokens package *alone* — a token that only exists in
+  validates `consent/src` against the tokens package _alone_ — a token that only exists in
   `@digdir/designsystemet-css` would be undefined for a consumer of this package.
 - **The surfaces set their own `data-color`** (`primary` on banner and dialog, `neutral` on the
   settings button), because `--ds-color-base-*` has no value without a `[data-color]` ancestor and
   a standalone package cannot assume the app provides one. `shared/Button` relies on this.
-- **The token CSS is bundled into `dist/style.css`** via an `@import` in `src/css/index.css`, so
-  `import '@kystverket/styrbord-consent/style.css'` is the whole setup. In a Styrbord app that
-  means the tokens load twice — same values, so it costs bytes, not correctness.
+- **`dist/style.css` is component styles only; the theme is the opt-in `dist/theme.css`.** The
+  theme targets `:root` and `[data-size]`, so bundling it into `style.css` made a cookie banner
+  override the host app's theme (and whichever `styrbord-tokens` version loaded last won).
+  `src/css/theme.css` imports the tokens `layer(dsno)` — the same layer path Styrbord uses — so
+  an app that loads both gets one merged theme rather than two competing ones. The `themeCss`
+  plugin in `vite.config.mts` builds `theme.css` and fails the build if `style.css` ever
+  contains `:root` or a `ds` layer again. Standalone apps import `theme.css` + `style.css`;
+  Styrbord apps import `style.css` only.
 - **`ConsentPreferencesDialog` must be mounted wherever `ConsentBanner` or
   `ConsentSettingsButton` is.** Both hide themselves when they set `activeUI` to `dialog`, so
   without the dialog the surface vanishes with nothing to replace it and the user can neither
@@ -112,9 +117,9 @@ Consequences worth knowing:
 
 **Storybook** runs on port 6007 and deploys to `/consent` alongside base and kart. Three things it
 does differently from the other workspaces: it has no `SprakProvider` (the texts follow the
-library, not the app's i18n setup), it imports no Styrbord components or CSS at all — which is what
+library, not the app's i18n setup), it imports no Styrbord components or CSS at all — only `theme.css` + `index.css`, as a standalone app would — which is what
 keeps the deployed Storybook honest about the package standing alone — and the stories run against
-*inert* copies of the real services — `storybook/ConsentDemo.tsx` strips `src`/`textContent` and sets `callbackOnly`, so a
+_inert_ copies of the real services — `storybook/ConsentDemo.tsx` strips `src`/`textContent` and sets `callbackOnly`, so a
 published demo never actually loads Hotjar or PostHog when you press "Godta alle". The same file
 owns the reset button; without it a story could only be played once per browser, since the answer
 is persisted in a cookie.
@@ -144,7 +149,7 @@ Things that are easy to get wrong here, all of them learned the hard way:
   c15t's `onLoad`/`onConsentChange`. Heatmaps cannot be toggled that way — they are an init
   option, so they only take effect on the next page load.
 - **Categories are c15t's fixed vocabulary** (`necessary | functionality | experience | measurement |
-  marketing`) and cannot be extended. Labels are ours, so this is invisible to users.
+marketing`) and cannot be extended. Labels are ours, so this is invisible to users.
 
 ### `kart` — Map Components
 
