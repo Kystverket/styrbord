@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/Kystverket/styrbord/compare/styrbord-consent-v1.0.0...styrbord-consent-v1.0.1) (2026-09-23)
+
+
+### Bug Fixes
+
+* **consent:** adjust padding and positioning in ConsentBanner styles ([8cff45e](https://github.com/Kystverket/styrbord/commit/8cff45e16ee8efd0833c6dd1532325137d87ae79))
+
 ## 1.0.0 (2026-09-18)
 
 
