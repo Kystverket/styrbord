@@ -51,7 +51,7 @@ export interface HeaderProps {
 type HeaderProfile = {
   name: string;
   department?: string;
-  avatarStyle?: Pick<AvatarProps, 'data-color' | 'data-color-variant' | 'border'>;
+  avatarStyle?: Pick<AvatarProps, 'data-color' | 'data-color-variant' | 'border-style'>;
 };
 
 export const nameToInitials = (name?: string): string => {

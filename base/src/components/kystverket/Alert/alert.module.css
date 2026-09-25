@@ -16,16 +16,11 @@
   }
   .alert {
     --dsc-alert-border-width: 0;
-    --dsc-alert-border-radius: 0;
   }
 
   .bordered {
     --dsc-alert-border-width: var(--ds-border-width-default);
     --dsc-alert-border-color: var(--ds-color-border-subtle);
-  }
-
-  .rounded {
-    --dsc-alert-border-radius: var(--ds-border-radius-lg);
   }
 
   .alert[data-color],

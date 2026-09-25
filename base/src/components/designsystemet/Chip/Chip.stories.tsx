@@ -1,5 +1,6 @@
 import { Box, Chip, ChipButtonProps } from '~/main';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
 
 const chipVariants = ['Radio', 'Checkbox', 'Removable', 'Button'] as const;
 
@@ -14,7 +15,7 @@ type ChipStoryArgs = {
 
 type ChipColor = NonNullable<ChipButtonProps['data-color']>;
 
-const chipColors: ChipColor[] = ['none', 'primary', 'neutral', 'primary/subtle', 'neutral/subtle'];
+const chipColors: ChipColor[] = [...styrbordSemanticColors, ...styrbordPaletteColors];
 const sizes = ['sm', 'md', 'lg'] as const;
 
 const defaultVariantArgs: ChipStoryArgs = {

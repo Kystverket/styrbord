@@ -1,14 +1,11 @@
 import { ReactNode } from 'react';
 import { buildTypographyClasses, TypographyWeight } from './typography.util';
 import style from './typography.module.css';
-import { Paragraph, ParagraphProps } from '~/components/designsystemet/Paragraph/Paragraph';
 
 export interface TypographyProps {
   className?: string;
   children?: ReactNode | undefined;
 }
-
-export type BodyTypographyProps = ParagraphProps;
 
 export type AccentTypographyProps = TypographyProps & {
   size?: 'sm' | 'md';
@@ -24,9 +21,6 @@ export type LabelTypographyProps = TypographyProps & {
   weight?: TypographyWeight;
   inline?: boolean;
 };
-
-/** @deprecated Replaced by Paragraph, and extended props in Text component*/
-export const Body = Paragraph;
 
 export const Accent = ({ strong, weight, size = 'md', className, children }: AccentTypographyProps) => {
   const classes = buildTypographyClasses({
@@ -57,7 +51,6 @@ const Label = ({ strong, weight, size, className, children, inline = false }: La
 };
 
 export const Typography = {
-  Body,
   Accent,
   Label,
 };

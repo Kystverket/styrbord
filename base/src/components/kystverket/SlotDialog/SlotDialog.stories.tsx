@@ -195,7 +195,7 @@ export const Sizes: StoryFn<typeof SlotDialog> = () => {
       {(['sm', 'md', 'lg'] as DialogSize[]).map((size) => (
         <SlotDialog
           key={size}
-          size={size}
+          max-width={size}
           open={openSize === size}
           onClose={() => setOpenSize(null)}
           title={`Dialog — ${size}`}

@@ -72,7 +72,7 @@
 .dashed {
   border-style: dashed;
   background: transparent;
-  color: var(--ds-color-text-default);
+  color: var(--ds-color-text-subtle);
 
   &:hover {
     border-style: dashed;
@@ -82,9 +82,4 @@
   &:active {
     background-color: var(--ds-color-surface-hover);
   }
-}
-
-/* ---------- collection overrides ---------- */
-:is(.dashed, .subtle, .ghost, .outline)[data-color='danger'] {
-  color: var(--ds-color-danger-text-subtle);
 }

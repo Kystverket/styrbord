@@ -53,21 +53,19 @@ import UtfordringIFarvannet from './svg/utfordring_farvannet.svg?react';
 import UtfordringIFarvannetFarget from './svg/utfordring_farvannet_farget.svg?react';
 import UtbedringIFarvannet from './svg/utbedring_i_farvannet.svg?react';
 import UtbedringIFarvannetFarget from './svg/utbedring_i_farvannet_farget.svg?react';
-
-export const svgImageColors = ['primary', 'info', 'accent', 'sand', 'neutral', 'white'] as const;
-export type SvgImageColor = (typeof svgImageColors)[number];
+import { DataColor } from '~/main';
 
 export type SvgImageSize = number;
 
 export type SvgImageProps = {
-  'data-color'?: SvgImageColor;
+  'data-color'?: DataColor;
   size?: SvgImageSize;
   className?: string;
 };
 
 type BaseSvgImageProps = {
   name?: string;
-  'data-color'?: SvgImageColor;
+  'data-color'?: DataColor;
   size?: SvgImageSize;
   className?: string;
 };
@@ -77,11 +75,11 @@ const getImageProps = ({
   'data-color': dataColor = 'primary',
   className,
   size,
-}: BaseSvgImageProps): { style: React.CSSProperties; className: string } => {
-  const classNames = [classes.svg, name ? classes[name] : '', classes[dataColor], className || ''];
+}: BaseSvgImageProps): { style: React.CSSProperties; 'data-color': DataColor; className: string } => {
+  const classNames = [classes.svg, name ? classes[name] : '', className || ''];
   const style = { '--kyv-svg-size': `calc(var(--ds-size-unit) * ${size ?? 18})` } as React.CSSProperties;
 
-  return { style: style, className: classNames.join(' ') };
+  return { style: style, 'data-color': dataColor, className: classNames.join(' ') };
 };
 
 export const ImageHais = (props: SvgImageProps) => {

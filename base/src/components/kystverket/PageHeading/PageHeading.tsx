@@ -10,7 +10,7 @@ export interface PageHeadingProps {
   aboveSection?: ReactNode;
   rightSection?: ReactNode;
   children?: ReactNode;
-  border?: boolean;
+  underline?: boolean;
   px?: Spacing;
   contentWidth?: 'container' | 'full' | 'form' | 'fit';
 }
@@ -20,13 +20,13 @@ export function PageHeading({
   aboveSection = undefined,
   rightSection = undefined,
   heading = undefined,
-  border = true,
+  underline = true,
   headingSize = 'xl',
   contentWidth = 'container',
   px = 16,
-}: PageHeadingProps) {
+}: Readonly<PageHeadingProps>) {
   return (
-    <div className={[classes.pageHeading, border ? classes.hasBorder : undefined].join(' ')}>
+    <div className={[classes.pageHeading, underline ? classes.hasBorder : undefined].join(' ')}>
       <Box gap={24} width={contentWidth} px={px}>
         <Box>{aboveSection}</Box>
         <Box horizontal justify="between">

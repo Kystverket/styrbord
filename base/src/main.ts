@@ -1,5 +1,9 @@
+import { StyrbordPaletteColor, StyrbordSemanticColor } from '@kystverket/styrbord-tokens/colors';
 import './css/index.scss';
 import '@material-symbols/font-400/outlined.css';
+
+export type DataColor = StyrbordSemanticColor | StyrbordPaletteColor;
+export type DataColorVariant = 'base' | 'tinted';
 
 export type { SupportedLanguage, ScreenSize } from './utils/types';
 
@@ -77,10 +81,9 @@ export * from './components/kystverket/Image/svgImage';
 
 export { default as Skillingsbuoye } from './components/kystverket/Skillingsbuoye/skillingsbuoye';
 
-export { Body, Accent, Typography } from './components/kystverket/Typography/typography';
+export { Accent, Typography } from './components/kystverket/Typography/typography';
 export type {
   TypographyProps,
-  BodyTypographyProps,
   AccentTypographyProps,
   LabelTypographyProps,
 } from './components/kystverket/Typography/typography';
@@ -137,11 +140,7 @@ export { default as CompactDetails } from './components/kystverket/CompactDetail
 export type { CompactDetailsProps } from './components/kystverket/CompactDetails/CompactDetails.types';
 
 export { default as ClickableCard } from './components/kystverket/ClickableCard/ClickableCard';
-export type {
-  ClickableCardProps,
-  ClickableCardColor,
-  ClickableCardVariant,
-} from './components/kystverket/ClickableCard/ClickableCard.types';
+export type { ClickableCardProps } from './components/kystverket/ClickableCard/ClickableCard.types';
 
 export { SaksbehandlingShell } from './components/kystverket/SaksbehandlingShell/SaksbehandlingShell';
 export type {
@@ -185,16 +184,10 @@ export type { TagProps } from './components/designsystemet/Tag/Tag';
 export { Link } from './components/designsystemet/Link/Link';
 export type { LinkProps } from './components/designsystemet/Link/Link';
 
-export { default as Paragraph } from './components/designsystemet/Paragraph/Paragraph';
-export type { ParagraphProps } from './components/designsystemet/Paragraph/Paragraph';
-
-export { Text } from './components/designsystemet/Text/Text';
-export type { TextProps } from './components/designsystemet/Text/Text';
-
 export { default as Table } from './components/designsystemet/Table/Table';
 
 export { Avatar } from './components/designsystemet/Avatar/Avatar';
-export type { AvatarProps } from './components/designsystemet/Avatar/Avatar';
+export type { AvatarProps, AvatarBoringVariant } from './components/designsystemet/Avatar/Avatar';
 
 export { AvatarStack } from './components/designsystemet/AvatarStack/AvatarStack';
 export type { AvatarStackProps } from './components/designsystemet/AvatarStack/AvatarStack';
@@ -210,14 +203,6 @@ export type {
 
 export { Suggestion } from './components/designsystemet/Suggestion/Suggestion';
 export type { SuggestionProps } from './components/designsystemet/Suggestion/Suggestion';
-
-export type {
-  ChipButtonProps,
-  ChipCheckboxProps,
-  ChipRadioProps,
-  ChipRemovableProps,
-} from './components/designsystemet/Chip';
-export { Chip, ChipButton, ChipCheckbox, ChipRadio, ChipRemovable } from './components/designsystemet/Chip';
 
 //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 //
@@ -263,6 +248,15 @@ export type { ComboboxEmptyProps, ComboboxOptionProps, ComboboxProps } from '@di
 export { Combobox, ComboboxEmpty, ComboboxOption } from '@digdir/designsystemet-react';
 export type { CardBlockProps, CardProps } from '@digdir/designsystemet-react';
 export { Card, CardBlock } from '@digdir/designsystemet-react';
+
+export type {
+  ChipButtonProps,
+  ChipCheckboxProps,
+  ChipRadioProps,
+  ChipRemovableProps,
+} from '@digdir/designsystemet-react';
+export { ChipCheckbox, ChipRadio, ChipRemovable, Chip, ChipButton } from '@digdir/designsystemet-react';
+
 export type { CheckboxProps } from '@digdir/designsystemet-react';
 export { Checkbox } from '@digdir/designsystemet-react';
 export type { DetailsContentProps, DetailsProps, DetailsSummaryProps } from '@digdir/designsystemet-react';
@@ -317,6 +311,8 @@ export type { HeadingProps } from '@digdir/designsystemet-react';
 export { Heading } from '@digdir/designsystemet-react';
 export type { InputProps } from '@digdir/designsystemet-react';
 export { Input } from '@digdir/designsystemet-react';
+export type { ParagraphProps } from '@digdir/designsystemet-react';
+export { Paragraph } from '@digdir/designsystemet-react';
 export type { LabelProps } from '@digdir/designsystemet-react';
 export { Label } from '@digdir/designsystemet-react';
 export type { ListItemProps, ListOrderedProps, ListUnorderedProps } from '@digdir/designsystemet-react';

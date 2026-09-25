@@ -38,6 +38,7 @@
   "license": "ISC",
   "dependencies": {
     "@digdir/designsystemet-css": "~1.21.1",
+    "@kystverket/styrbord-tokens": "^1.1.0",
     "@material-symbols/font-400": "^0.45.9"
   },
   "peerDependencies": {
@@ -51,6 +52,7 @@
     "@milkdown/prose": "^7.19.0",
     "@milkdown/react": "^7.19.0",
     "@milkdown/utils": "^7.19.0",
+    "boring-avatars": "^2.0.4",
     "exifr": "^7.1.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

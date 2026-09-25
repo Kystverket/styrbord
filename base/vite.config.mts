@@ -47,6 +47,7 @@ export default defineConfig({
         'react-datepicker',
         'date-fns',
         'exifr',
+        'boring-avatars',
         'uuid',
         /^@milkdown\//,
         new RegExp('.*storybook.*'),

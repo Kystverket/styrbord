@@ -146,7 +146,7 @@ export const Colors: StoryFn<typeof Dropdown> = () => {
         <Dropdown.TriggerContext key={color}>
           <Dropdown.Trigger data-color={color}>{color}</Dropdown.Trigger>
           <Dropdown data-color={color} placement="bottom-start" open>
-            <Dropdown.List>
+            <Dropdown.List data-color="neutral">
               <Dropdown.Item>
                 <Dropdown.Button>Val 1</Dropdown.Button>
               </Dropdown.Item>

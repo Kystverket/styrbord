@@ -1,7 +1,7 @@
 import type { Meta, StoryFn, StoryObj } from '@storybook/react-vite';
 
 import React from 'react';
-import { Link, Body, Box, Icon } from '~/main';
+import { Link, Box, Icon } from '~/main';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
@@ -83,9 +83,9 @@ export const WithIconAndNoUnderline: Story = {
 
 export const InText: StoryFn<typeof Link> = () => (
   <>
-    <Body>
+    <span>
       Vi bruker komponenter fra <Link href={designsystemetLink}>et fantastisk designsystem</Link>.
-    </Body>
+    </span>
     <Box gap={16}>
       <Link href="mailto:designsystem@digdir.no">
         <Icon material="person" aria-hidden />
@@ -96,9 +96,9 @@ export const InText: StoryFn<typeof Link> = () => (
 );
 
 export const LongLink: StoryFn<typeof Link> = () => (
-  <Body>
+  <span>
     <Link href={designsystemetLink}>Dette er en lenke som brekker over flere linjer</Link>
-  </Body>
+  </span>
 );
 
 LongLink.decorators = [
@@ -110,21 +110,17 @@ LongLink.decorators = [
 ];
 
 export const Neutral: StoryFn<typeof Link> = () => (
-  <>
-    <Body>
-      <Link data-color="neutral" href={designsystemetLink}>
-        Neutral
-      </Link>
-    </Body>
-  </>
+  <span>
+    <Link data-color="neutral" href={designsystemetLink}>
+      Neutral
+    </Link>
+  </span>
 );
 
 export const Accent: StoryFn<typeof Link> = () => (
-  <>
-    <Body>
-      <Link data-color="accent" href={designsystemetLink}>
-        Accent
-      </Link>
-    </Body>
-  </>
+  <span>
+    <Link data-color="accent" href={designsystemetLink}>
+      Accent
+    </Link>
+  </span>
 );

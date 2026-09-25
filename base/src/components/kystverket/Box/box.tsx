@@ -68,12 +68,14 @@ function growShrinkToCssValue(value?: boolean | number): string {
   return value === true ? '1' : !value ? '0' : value.toString();
 }
 
+/** @deprecated `Box` will be removed in a future major version. */
 export type BoxProps = (VerticalBoxProps | HorizontalBoxProps) &
   SpacingProps &
   BorderRadiusProps &
   BorderWidthProps &
   BoxStyleProps;
 
+/** @deprecated `Box` will be removed in a future major version. */
 const Box = ({
   className = '',
   radius = undefined,

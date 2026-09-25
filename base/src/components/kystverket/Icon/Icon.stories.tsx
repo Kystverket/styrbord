@@ -2,7 +2,7 @@ import type { Meta, StoryFn } from '@storybook/react-vite';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import Icon from '~/components/kystverket/Icon/icon';
 import { IconId, iconIdList } from './icon.types';
-import { Body, Box } from '~/main';
+import { Paragraph, Box } from '~/main';
 import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
 import { Fragment } from 'react';
 
@@ -34,8 +34,8 @@ export const IconShowcase: StoryFn = () => {
             <Icon material={iconId} />
           </td>
           <td style={{ padding: '0.5rem' }}>
-            <Body weight="medium">{iconId}</Body>
-            <Body size="sm">{iconDescriptions[iconId]}</Body>
+            <Paragraph data-font-weight="medium">{iconId}</Paragraph>
+            <Paragraph data-size="sm">{iconDescriptions[iconId]}</Paragraph>
           </td>
           <td style={{ padding: '0rem' }}>
             <Icon material={iconId} background={colors[index % colors.length]} title={colors[index % colors.length]} />

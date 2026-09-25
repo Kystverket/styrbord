@@ -15,7 +15,6 @@
     gap: 0.25rem;
     overflow-x: auto;
     flex-wrap: wrap;
-
     flex-direction: column;
     justify-content: start;
     align-items: start;
@@ -29,7 +28,7 @@
     flex-direction: row;
     align-items: center;
     gap: 0.5rem;
-    color: var(--ds-color-neutral-text-subtle);
+    color: var(--ds-color-text-subtle);
     flex: 0 0 auto;
     padding: 0.1rem 0.5rem;
   }
@@ -56,12 +55,12 @@
     font-weight: var(--ds-font-weight-medium);
     font-size: var(--ds-body-sm-font-size);
   }
-  .step.has-style-subtle .icon {
+  .step.has-variant-subtle .icon {
     border: var(--ds-border-width-default) solid var(--ds-color-surface-tinted);
     background-color: var(--ds-color-surface-tinted);
     color: var(--ds-color-text-default);
   }
-  .step.has-style-outline .icon {
+  .step.has-variant-outline .icon {
     border: var(--ds-border-width-default) solid var(--ds-color-border-default);
     background-color: transparent;
     color: var(--ds-color-text-default);
@@ -72,7 +71,7 @@
     height: 15px;
     flex: 0 0 15px;
     margin-left: 1.5rem;
-    background-color: var(--ds-color-primary-border-default);
+    background-color: var(--ds-color-border-default);
   }
   .step-container.orientation-vertical.item-orientation-vertical .divider {
     margin-left: 0;
@@ -83,7 +82,7 @@
     font-size: var(--ds-body-md-font-size);
     line-height: var(--ds-body-md-line-height);
     letter-spacing: var(--ds-body-md-letter-spacing);
-    color: var(--ds-color-neutral-text-subtle);
+    color: var(--ds-color-text-subtle);
   }
   .step.item-orientation-vertical .label {
     min-width: min-content;
@@ -92,7 +91,7 @@
   }
   .step.clickable .label,
   .step.is-current .label {
-    color: var(--ds-color-primary-text-default);
+    color: var(--ds-color-text-default);
   }
   .step.clickable {
     cursor: pointer;

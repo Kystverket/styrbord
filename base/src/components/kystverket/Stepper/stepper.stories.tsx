@@ -157,7 +157,7 @@ export const Colors: Story = {
     steps: steps.map((step, index) => ({
       ...step,
       onClick: () => {},
-      style: 'filled',
+      variant: 'filled',
       'data-color': colors[index % colors.length],
     })),
   },
