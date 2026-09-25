@@ -87,9 +87,3 @@ export default defineConfig({
   },
 });
 ```
-
-## Endringslogg
-
-### 2026-03-06 -- v0.0.5
-
-- README omskrevet for `@kystverket/styrbord-kart` med kartspesifikk dokumentasjon.
