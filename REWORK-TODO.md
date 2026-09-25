@@ -107,19 +107,19 @@ conversion for that file.
 
 ### SvgImage — [svgImage.tsx](base/src/components/kystverket/Image/svgImage.tsx), [svgImage.module.css](base/src/components/kystverket/Image/svgImage.module.css)
 
-- [ ] `data-color` accepts only 6 values, one of which (`white`) is not a token colour (§1.3)
-- [ ] 14 family-hardcoded tokens (§1.2)
-- [ ] `size` is a plain prop (§2.1)
+- [x] `data-color` accepts only 6 values, one of which (`white`) is not a token colour (§1.3)
+- [x] 14 family-hardcoded tokens (§1.2)
+- [x] `size` is a plain prop (§2.1)
 
 ### Typography — [typography.tsx](base/src/components/kystverket/Typography/typography.tsx), [typography.util.ts](base/src/components/kystverket/Typography/typography.util.ts)
 
-- [ ] The `@deprecated` hints still say `Use \`fontWeight="medium"\``; the prop is`weight`. Step 1
+- [x] The `@deprecated` hints still say `Use \`fontWeight="medium"\``; the prop is`weight`. Step 1
     fixed this in`Paragraph` only (§2.7)
 - [ ] `size` is a plain prop (§2.1)
 
 ### PageHeading — [PageHeading.tsx](base/src/components/kystverket/PageHeading/PageHeading.tsx)
 
-- [ ] `border: boolean` — fourth spelling of the border concept (§2.4)
+- [x] `border: boolean` — fourth spelling of the border concept (§2.4)
 
 ### SideSheet — [SideSheet.module.css](base/src/components/kystverket/SideSheet/SideSheet.module.css)
 
