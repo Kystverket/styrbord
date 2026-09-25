@@ -7,7 +7,7 @@ import type {
   Geometry,
   GeoJsonProperties,
 } from "geojson";
-import type maplibregl from "maplibre-gl";
+import type * as maplibregl from "maplibre-gl";
 
 import mapStyles from "~/components/shared/MapPicker.module.css";
 import editorStyles from "./GeoJsonEditor.module.css";
@@ -16,6 +16,13 @@ import { useWmsFeatureInfo } from "~/hooks/useWmsFeatureInfo";
 import { computeBounds } from "~/utility/geojson";
 import type { Coordinate } from "~/utility/types";
 import { toFeatureCollection } from "../GeoJsonViewer/GeoJsonViewer.utils";
+import {
+  DRAW_COLOR,
+  DRAW_CONTRAST_COLOR,
+  DRAW_FILL_OPACITY,
+  LABEL_HALO_COLOR,
+  LABEL_TEXT_COLOR,
+} from "~/utility/mapColors";
 import type { DrawMode, GeoJsonEditorProps } from "./GeoJsonEditor.types";
 import { useTerraDraw } from "./useTerraDraw";
 import { useDirectionalPoints } from "./useDirectionalPoints";
@@ -73,12 +80,14 @@ export function GeoJsonEditor({
   onCoordinateClick,
   onImportError,
   showCenterAction,
+  showZoomControls,
   singleFeature = false,
   getLabel = DEFAULT_GET_LABEL,
 }: GeoJsonEditorProps) {
   const { mapContainerRef, mapRef, mapReady, mapVersion } = useMaplibreMap({
     disabled,
     height,
+    showZoomControls,
   });
 
   // ----- Coordinate click → WMS feature info -----
@@ -487,28 +496,28 @@ export function GeoJsonEditor({
         type: "fill",
         source: SOURCE,
         filter: ["==", "$type", "Polygon"],
-        paint: { "fill-color": "#ff451f", "fill-opacity": 0.2 },
+        paint: { "fill-color": DRAW_COLOR, "fill-opacity": DRAW_FILL_OPACITY },
       });
       map.addLayer({
         id: LINE,
         type: "line",
         source: SOURCE,
         filter: ["in", "$type", "LineString", "Polygon"],
-        paint: { "line-color": "#ff451f", "line-width": 4 },
+        paint: { "line-color": DRAW_COLOR, "line-width": 4 },
       });
       map.addLayer({
         id: POINT_STROKE,
         type: "circle",
         source: SOURCE,
         filter: ["==", "$type", "Point"],
-        paint: { "circle-radius": 9, "circle-color": "#ffffff" },
+        paint: { "circle-radius": 9, "circle-color": DRAW_CONTRAST_COLOR },
       });
       map.addLayer({
         id: POINT,
         type: "circle",
         source: SOURCE,
         filter: ["==", "$type", "Point"],
-        paint: { "circle-radius": 6, "circle-color": "#ff451f" },
+        paint: { "circle-radius": 6, "circle-color": DRAW_COLOR },
       });
     };
 
@@ -591,8 +600,8 @@ export function GeoJsonEditor({
             "text-optional": false,
           },
           paint: {
-            "text-color": "#1a1a1a",
-            "text-halo-color": "#ffffff",
+            "text-color": LABEL_TEXT_COLOR,
+            "text-halo-color": LABEL_HALO_COLOR,
             "text-halo-width": 2,
           },
         });
@@ -691,11 +700,11 @@ export function GeoJsonEditor({
     };
 
     map.on("mousemove", handleMouseMove);
-    map.on("mouseleave", handleMouseLeave);
+    map.on("mouseout", handleMouseLeave);
 
     return () => {
       map.off("mousemove", handleMouseMove);
-      map.off("mouseleave", handleMouseLeave);
+      map.off("mouseout", handleMouseLeave);
       map.getCanvas().style.cursor = "";
     };
   }, [mapRef, mapReady, disabled, hoverable]);

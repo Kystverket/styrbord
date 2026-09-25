@@ -8,6 +8,11 @@
     "kart": {
       "release-type": "node",
       "package-name": "@kystverket/styrbord-kart"
+    },
+    "consent": {
+      "release-type": "node",
+      "package-name": "@kystverket/styrbord-consent",
+      "bump-minor-pre-major": true
     }
   }
 }

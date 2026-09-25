@@ -4,6 +4,14 @@ import type {
   LayerFilterConfig,
   CreateSimpleLayerOptions,
 } from "~/utility/layers.types";
+import {
+  VECTOR_TILE_DEFAULT_COLOR,
+  VIEW_FILL_COLOR,
+  VIEW_FILL_OPACITY,
+  VIEW_LINE_COLOR,
+  VIEW_POINT_COLOR,
+  VIEW_POINT_STROKE_COLOR,
+} from "~/utility/mapColors";
 
 // ---------------------------------------------------------------------------
 // Include / exclude filter utilities
@@ -74,8 +82,8 @@ export function createSimpleLayer(
             type: "fill",
             source: sourceId,
             paint: {
-              "fill-color": opts.fillColor ?? "rgba(0, 6, 103, 0.2)",
-              "fill-opacity": 0.5,
+              "fill-color": opts.fillColor ?? VIEW_FILL_COLOR,
+              "fill-opacity": opts.fillOpacity ?? VIEW_FILL_OPACITY,
             },
             filter: ["==", "$type", "Polygon"],
           } as LayerSpecification,
@@ -84,7 +92,7 @@ export function createSimpleLayer(
             type: "line",
             source: sourceId,
             paint: {
-              "line-color": opts.lineColor ?? "#000667",
+              "line-color": opts.lineColor ?? VIEW_LINE_COLOR,
               "line-width": 2,
             },
             filter: ["==", "$type", "LineString"],
@@ -94,9 +102,9 @@ export function createSimpleLayer(
             type: "circle",
             source: sourceId,
             paint: {
-              "circle-color": opts.pointColor ?? "#df3c1b",
+              "circle-color": opts.pointColor ?? VIEW_POINT_COLOR,
               "circle-radius": 5,
-              "circle-stroke-color": "#000667",
+              "circle-stroke-color": VIEW_POINT_STROKE_COLOR,
               "circle-stroke-width": 1,
             },
             filter: ["==", "$type", "Point"],
@@ -136,15 +144,17 @@ export function createSimpleLayer(
       };
 
       if (renderAs === "fill") {
-        layerSpec.paint = { "fill-color": opts.color ?? "#088" };
+        layerSpec.paint = {
+          "fill-color": opts.color ?? VECTOR_TILE_DEFAULT_COLOR,
+        };
       } else if (renderAs === "line") {
         layerSpec.paint = {
-          "line-color": opts.color ?? "#088",
+          "line-color": opts.color ?? VECTOR_TILE_DEFAULT_COLOR,
           "line-width": 2,
         };
       } else {
         layerSpec.paint = {
-          "circle-color": opts.color ?? "#088",
+          "circle-color": opts.color ?? VECTOR_TILE_DEFAULT_COLOR,
           "circle-radius": 5,
         };
       }

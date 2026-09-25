@@ -1,0 +1,18 @@
+/* Brødtekst rundt `ManageConsentLink`, så lenka kan sees i sammenhengen den er laget for. */
+.prose {
+  padding: var(--ds-size-6);
+  max-width: 48rem;
+  font-size: var(--ds-body-md-font-size);
+  line-height: var(--ds-body-md-line-height);
+}
+
+.prose h2 {
+  margin: 0 0 var(--ds-size-2);
+  font-size: var(--ds-heading-xs-font-size);
+  font-weight: var(--ds-heading-xs-font-weight);
+  line-height: var(--ds-heading-xs-line-height);
+}
+
+.prose p {
+  margin: 0;
+}

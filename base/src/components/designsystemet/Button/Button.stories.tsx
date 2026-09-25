@@ -12,7 +12,24 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/button/overview)',
+        component: [
+          '[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/button/overview)',
+          '',
+          '**Merk:** `variant` har med vilje andre navn enn i Designsystemet, og dette er en varig forskjell.',
+          'Designsystemets `primary`/`secondary`/`tertiary` leses som nivåer og kolliderer med',
+          '`data-color="primary"`, som er en fargefamilie. Styrbord navngir formen i stedet, og får',
+          'samtidig plass til `subtle` og `dashed`, som Designsystemet ikke har.',
+          '',
+          '| Styrbord | Designsystemet |',
+          '| --- | --- |',
+          '| `filled` | `primary` |',
+          '| `outline` | `secondary` |',
+          '| `ghost` | `tertiary` |',
+          '| `subtle` | `primary` + ekstra CSS |',
+          '| `dashed` | `secondary` + ekstra CSS |',
+          '',
+          'Eksempler fra Designsystemet må oversettes gjennom tabellen over.',
+        ].join('\n'),
       },
     },
   },

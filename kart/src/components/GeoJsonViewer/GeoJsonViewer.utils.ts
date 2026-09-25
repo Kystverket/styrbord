@@ -1,19 +1,30 @@
 import type { FeatureCollection } from "geojson";
-import type maplibregl from "maplibre-gl";
+import type * as maplibregl from "maplibre-gl";
 
 import type { GeoJsonStyle, GeoJsonViewerProps } from "./GeoJsonViewer.types";
+import {
+  HOVER_COLOR,
+  SELECTED_COLOR,
+  SELECTED_GLOW_COLOR,
+  VIEW_FILL_COLOR,
+  VIEW_FILL_OPACITY,
+  VIEW_LINE_COLOR,
+  VIEW_POINT_COLOR,
+  VIEW_POINT_STROKE_COLOR,
+} from "~/utility/mapColors";
 
 // ---------------------------------------------------------------------------
 // Defaults & Constants
 // ---------------------------------------------------------------------------
 
 export const DEFAULT_STYLE: Required<GeoJsonStyle> = {
-  fillColor: "rgba(0, 6, 103, 0.2)",
-  lineColor: "#000667",
+  fillColor: VIEW_FILL_COLOR,
+  fillOpacity: VIEW_FILL_OPACITY,
+  lineColor: VIEW_LINE_COLOR,
   lineWidth: 2,
   pointRadius: 6,
-  pointColor: "#df3c1b",
-  pointStrokeColor: "#000667",
+  pointColor: VIEW_POINT_COLOR,
+  pointStrokeColor: VIEW_POINT_STROKE_COLOR,
   pointStrokeWidth: 2,
 };
 
@@ -64,10 +75,8 @@ export const INTERACTIVE_LAYERS = [FILL_LAYER, LINE_LAYER, POINT_HIT_LAYER];
 // Label layer
 export const LABEL_LAYER = "geojson-label";
 
-// Highlight colors
-export const HOVER_COLOR = "rgba(0, 98, 186, 0.4)";
-export const SELECTED_COLOR = "#0062ba";
-export const SELECTED_GLOW_COLOR = "rgba(0, 98, 186, 0.5)";
+// Highlight colors — defined in ~/utility/mapColors
+export { HOVER_COLOR, SELECTED_COLOR, SELECTED_GLOW_COLOR };
 
 // ---------------------------------------------------------------------------
 // Data-driven styling helpers

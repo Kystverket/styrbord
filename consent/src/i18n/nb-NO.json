@@ -1,0 +1,57 @@
+{
+  "banner": {
+    "heading": "Informasjonskapsler",
+    "body": "Vi bruker informasjonskapsler for å forstå hvordan tjenesten brukes, slik at vi kan gjøre den bedre. Du velger selv hva du samtykker til.",
+    "acceptAll": "Godta alle",
+    "rejectAll": "Kun nødvendige",
+    "managePreferences": "Velg selv"
+  },
+  "dialog": {
+    "heading": "Innstillinger for informasjonskapsler",
+    "body": "Nødvendige informasjonskapsler er alltid på, fordi tjenesten ikke fungerer uten dem. De øvrige velger du selv.",
+    "savePreferences": "Lagre valg",
+    "acceptAll": "Godta alle",
+    "rejectAll": "Kun nødvendige",
+    "close": "Lukk",
+    "servicesLabel": "Tjenester",
+    "showCookies": "Vis informasjonskapsler",
+    "noCookies": "Setter ingen informasjonskapsler",
+    "alwaysOnHeading": "Alltid på",
+    "alwaysOnBody": "Disse lagrer ingenting på enheten din og kan ikke brukes til å kjenne deg igjen. De krever derfor ikke samtykke, og er alltid på.",
+    "cookieName": "Navn",
+    "cookieProvider": "Levert av",
+    "cookieDuration": "Varighet"
+  },
+  "durations": {
+    "session": "Til du lukker nettleseren",
+    "day": "{{count}} dag",
+    "days": "{{count}} dager",
+    "month": "{{count}} måned",
+    "months": "{{count}} måneder",
+    "year": "{{count}} år",
+    "years": "{{count}} år"
+  },
+  "categories": {
+    "necessary": {
+      "title": "Nødvendige",
+      "description": "Kreves for at tjenesten skal fungere, blant annet for innlogging og sikkerhet. Disse kan ikke slås av."
+    },
+    "functionality": {
+      "title": "Funksjonalitet",
+      "description": "Husker valgene dine, som språk og andre innstillinger."
+    },
+    "measurement": {
+      "title": "Statistikk",
+      "description": "Lar oss telle besøk og se hvilke sider som brukes, slik at vi kan prioritere riktig."
+    },
+    "experience": {
+      "title": "Brukeropplevelse",
+      "description": "Lar oss se hvordan sidene faktisk brukes, gjennom anonymiserte opptak og varmekart, slik at vi kan rette opp det som er vanskelig."
+    },
+    "marketing": {
+      "title": "Markedsføring",
+      "description": "Brukes til å tilpasse annonser. Kystverket bruker ikke dette i dag."
+    }
+  },
+  "manageLink": "Administrer informasjonskapsler"
+}

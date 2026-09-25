@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { MutableRefObject } from "react";
 import type { Map as MaplibreMap } from "maplibre-gl";
-import maplibregl from "maplibre-gl";
+import * as maplibregl from "maplibre-gl";
 import type { Feature, Point } from "geojson";
 
 import { clampDirection } from "~/utility/coordinate";
@@ -10,6 +10,7 @@ import {
   createCompassMarkerElement,
   positionHandle,
 } from "~/utility/compassMarker";
+import { SELECTED_COLOR, SELECTED_GLOW_COLOR } from "~/utility/mapColors";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -64,13 +65,13 @@ export interface UseDirectionalPointsResult {
 // Selection styling
 // ---------------------------------------------------------------------------
 
-const SELECTED_SHADOW = "0 0 0 3px rgba(0, 98, 186, 0.5)";
+const SELECTED_SHADOW = `0 0 0 3px ${SELECTED_GLOW_COLOR}`;
 const DEFAULT_SHADOW = "none";
 
 function setSelectedStyle(container: HTMLDivElement, selected: boolean) {
   const compass = container.querySelector("div") as HTMLElement | null;
   if (!compass) return;
-  compass.style.outline = selected ? "2px solid #0062ba" : "none";
+  compass.style.outline = selected ? `2px solid ${SELECTED_COLOR}` : "none";
   compass.style.outlineOffset = selected ? "2px" : "";
   compass.style.borderRadius = selected ? "50%" : "";
   compass.style.boxShadow = selected ? SELECTED_SHADOW : DEFAULT_SHADOW;

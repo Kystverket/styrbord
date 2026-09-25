@@ -130,15 +130,15 @@
   }
 
   .border-radius-none {
-    border-radius: var(--ds-border-radius-none);
+    border-radius: 0;
   }
 
   .border-radius-sm {
-    border-radius: var(--ds-border-radius-small);
+    border-radius: var(--ds-border-radius-sm);
   }
 
   .border-radius-md {
-    border-radius: var(--ds-border-radius-medium);
+    border-radius: var(--ds-border-radius-md);
   }
 
   .border-radius-lg {

@@ -1,0 +1,10 @@
+/* Designtokens. Pakken er bevisst frittstående: `@kystverket/styrbord-consent/style.css` skal
+   være den eneste importen en applikasjon trenger, og da må tokenene følge med i stedet for å
+   forutsettes lastet av noe annet. Apper som også bruker @kystverket/styrbord får dermed
+   tokenene to ganger — det koster noen kilobyte, men verdiene er de samme, så resultatet blir
+   det samme uansett hvilken av dem som vinner. */
+@import '@kystverket/styrbord-tokens/kystverket.css';
+
+/* Cascade layer for consent styles. Declared up front so component
+   stylesheets can register in a fixed order as they are added. */
+@layer styrbord-consent;

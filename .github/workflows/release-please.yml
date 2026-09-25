@@ -29,6 +29,10 @@ jobs:
       kart_version: ${{ steps.release.outputs.kart--version }}
       kart_body: ${{ steps.release.outputs.kart--body }}
       kart_html_url: ${{ steps.release.outputs.kart--html_url }}
+      consent_release_created: ${{ steps.release.outputs.consent--release_created }}
+      consent_version: ${{ steps.release.outputs.consent--version }}
+      consent_body: ${{ steps.release.outputs.consent--body }}
+      consent_html_url: ${{ steps.release.outputs.consent--html_url }}
     steps:
       - uses: googleapis/release-please-action@v4
         id: release
@@ -59,9 +63,20 @@ jobs:
       packages: write
       id-token: write
 
+  publish-consent:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.consent_release_created == 'true' }}
+    uses: ./.github/workflows/publish-package.yml
+    with:
+      workspace: consent
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
   deploy-storybook:
     needs: release-please
-    if: ${{ needs.release-please.outputs.base_release_created == 'true' || needs.release-please.outputs.kart_release_created == 'true' }}
+    if: ${{ needs.release-please.outputs.base_release_created == 'true' || needs.release-please.outputs.kart_release_created == 'true' || needs.release-please.outputs.consent_release_created == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       packages: read
@@ -86,21 +101,33 @@ jobs:
           npm run storybook:build
           cp -r ./base/storybook-static ./github-pages-root/base
           cp -r ./kart/storybook-static ./github-pages-root/kart
+          cp -r ./consent/storybook-static ./github-pages-root/consent
+      - name: Kopiere designtokens og skrift til landingssiden
+        run: |
+          cp ./node_modules/@kystverket/styrbord-tokens/dist/kystverket.css ./github-pages-root/
+          cp -r ./base/assets/fonts ./github-pages-root/fonts
       - name: Laste opp til GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: ./github-pages-root
 
   notify-slack:
-    needs: [release-please, publish-base, publish-kart]
+    needs: [release-please, publish-base, publish-kart, publish-consent]
     if: |
       always() &&
-      (needs.release-please.outputs.base_release_created == 'true' || needs.release-please.outputs.kart_release_created == 'true') &&
+      (needs.release-please.outputs.base_release_created == 'true' ||
+        needs.release-please.outputs.kart_release_created == 'true' ||
+        needs.release-please.outputs.consent_release_created == 'true') &&
       (needs.publish-base.result == 'success' || needs.publish-base.result == 'skipped') &&
-      (needs.publish-kart.result == 'success' || needs.publish-kart.result == 'skipped')
+      (needs.publish-kart.result == 'success' || needs.publish-kart.result == 'skipped') &&
+      (needs.publish-consent.result == 'success' || needs.publish-consent.result == 'skipped')
     runs-on: ubuntu-latest
     steps:
-      - name: Build Slack payload
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
+      - name: Bygge Slack-payload
         env:
           BASE_RELEASED: ${{ needs.release-please.outputs.base_release_created }}
           BASE_VERSION: ${{ needs.release-please.outputs.base_version }}
@@ -110,32 +137,14 @@ jobs:
           KART_VERSION: ${{ needs.release-please.outputs.kart_version }}
           KART_BODY: ${{ needs.release-please.outputs.kart_body }}
           KART_URL: ${{ needs.release-please.outputs.kart_html_url }}
-        run: |
-          BLOCKS='[{"type":"section","text":{"type":"mrkdwn","text":"🚢 *New Styrbord release published to npm*"}}]'
-          if [ "$BASE_RELEASED" = "true" ]; then
-            BLOCKS=$(echo "$BLOCKS" | jq \
-              --arg pkg "@kystverket/styrbord v${BASE_VERSION}" \
-              --arg body "$BASE_BODY" \
-              --arg url "$BASE_URL" \
-              '. + [
-                {"type":"divider"},
-                {"type":"section","text":{"type":"mrkdwn","text":"*<\($url)|\($pkg)>*\n\($body)"},"accessory":{"type":"button","text":{"type":"plain_text","text":"View release"},"url":"\($url)"}}
-              ]')
-          fi
-          if [ "$KART_RELEASED" = "true" ]; then
-            BLOCKS=$(echo "$BLOCKS" | jq \
-              --arg pkg "@kystverket/styrbord-kart v${KART_VERSION}" \
-              --arg body "$KART_BODY" \
-              --arg url "$KART_URL" \
-              '. + [
-                {"type":"divider"},
-                {"type":"section","text":{"type":"mrkdwn","text":"*<\($url)|\($pkg)>*\n\($body)"},"accessory":{"type":"button","text":{"type":"plain_text","text":"View release"},"url":"\($url)"}}
-              ]')
-          fi
-          jq -n --argjson blocks "$BLOCKS" '{"blocks": $blocks}' > /tmp/slack-payload.json
-      - name: Send Slack notification
+          CONSENT_RELEASED: ${{ needs.release-please.outputs.consent_release_created }}
+          CONSENT_VERSION: ${{ needs.release-please.outputs.consent_version }}
+          CONSENT_BODY: ${{ needs.release-please.outputs.consent_body }}
+          CONSENT_URL: ${{ needs.release-please.outputs.consent_html_url }}
+        run: node .github/scripts/release-notes-to-slack.mjs "$RUNNER_TEMP/slack-payload.json"
+      - name: Sende Slack-varsel
         uses: slackapi/slack-github-action@v2
         with:
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
           webhook-type: incoming-webhook
-          payload-file-path: /tmp/slack-payload.json
+          payload-file-path: ${{ runner.temp }}/slack-payload.json

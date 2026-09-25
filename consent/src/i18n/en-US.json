@@ -1,0 +1,57 @@
+{
+  "banner": {
+    "heading": "Cookies",
+    "body": "We use cookies to understand how this service is used, so that we can improve it. You decide what you consent to.",
+    "acceptAll": "Accept all",
+    "rejectAll": "Necessary only",
+    "managePreferences": "Choose yourself"
+  },
+  "dialog": {
+    "heading": "Cookie settings",
+    "body": "Necessary cookies are always on, because the service does not work without them. The rest is up to you.",
+    "savePreferences": "Save choices",
+    "acceptAll": "Accept all",
+    "rejectAll": "Necessary only",
+    "close": "Close",
+    "servicesLabel": "Services",
+    "showCookies": "Show cookies",
+    "noCookies": "Sets no cookies",
+    "alwaysOnHeading": "Always on",
+    "alwaysOnBody": "These store nothing on your device and cannot be used to recognise you. They therefore do not require consent, and are always on.",
+    "cookieName": "Name",
+    "cookieProvider": "Provided by",
+    "cookieDuration": "Duration"
+  },
+  "durations": {
+    "session": "Until you close your browser",
+    "day": "{{count}} day",
+    "days": "{{count}} days",
+    "month": "{{count}} month",
+    "months": "{{count}} months",
+    "year": "{{count}} year",
+    "years": "{{count}} years"
+  },
+  "categories": {
+    "necessary": {
+      "title": "Necessary",
+      "description": "Required for the service to work, including sign-in and security. These cannot be turned off."
+    },
+    "functionality": {
+      "title": "Functionality",
+      "description": "Remembers your choices, such as language and other settings."
+    },
+    "measurement": {
+      "title": "Statistics",
+      "description": "Lets us count visits and see which pages are used, so we can prioritise correctly."
+    },
+    "experience": {
+      "title": "User experience",
+      "description": "Lets us see how the pages are actually used, through anonymised recordings and heatmaps, so we can fix what is difficult."
+    },
+    "marketing": {
+      "title": "Marketing",
+      "description": "Used to tailor advertising. Kystverket does not use this today."
+    }
+  },
+  "manageLink": "Manage cookies"
+}

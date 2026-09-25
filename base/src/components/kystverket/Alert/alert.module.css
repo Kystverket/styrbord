@@ -15,9 +15,19 @@
     cursor: pointer;
   }
   .alert {
+    --dsc-alert-border-width: 0;
+    --dsc-alert-border-radius: 0;
+  }
+
+  .bordered {
+    --dsc-alert-border-width: var(--ds-border-width-default);
     --dsc-alert-border-color: var(--ds-color-border-subtle);
+  }
+
+  .rounded {
     --dsc-alert-border-radius: var(--ds-border-radius-lg);
   }
+
   .alert[data-color],
   .alert[data-color='info'] {
     --dsc-alert-icon-url: url('data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M19.5713%203.42871C20.1236%203.42871%2020.5713%203.87643%2020.5713%204.42871V19.5713C20.5713%2020.1236%2020.1236%2020.5713%2019.5713%2020.5713H4.42871C3.87643%2020.5713%203.42871%2020.1236%203.42871%2019.5713V4.42871C3.42871%203.87643%203.87643%203.42871%204.42871%203.42871H19.5713ZM11.1426%2016.7139H12.8574V10.2861H11.1426V16.7139ZM11.1426%206.85742V8.57129H12.8574V6.85742H11.1426Z%22%20fill%3D%22currentColor%22%2F%3E%3C%2Fsvg%3E');

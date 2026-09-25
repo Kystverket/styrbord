@@ -1,0 +1,23 @@
+@layer styrbord-consent {
+  /* Arver typografien fra teksten den står i — den skal se ut som en lenke midt i en setning,
+     ikke som en knapp som har havnet der. */
+  .link {
+    display: inline;
+    padding: 0;
+    border: none;
+    background: none;
+    font: inherit;
+    color: var(--ds-color-primary-text-default);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .link:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  .link:focus-visible {
+    outline: var(--ds-border-width-focus) solid var(--ds-color-focus-outer);
+    outline-offset: 2px;
+  }
+}

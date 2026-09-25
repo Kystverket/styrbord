@@ -1,4 +1,4 @@
-import type maplibregl from "maplibre-gl";
+import type * as maplibregl from "maplibre-gl";
 import type { LayerSpecification } from "maplibre-gl";
 import type { Coordinate } from "~/utility/types";
 import type { BaseLayerDefinition } from "~/utility/layers.types";

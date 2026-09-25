@@ -1,0 +1,54 @@
+{
+  "name": "@kystverket/styrbord-consent",
+  "version": "1.0.1",
+  "description": "Samtykke-komponenter for Kystverkets applikasjoner",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kystverket/styrbord.git"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/src/main.d.ts",
+      "style": "./dist/style.css",
+      "import": "./dist/style.js"
+    },
+    "./*.css": {
+      "import": "./dist/*.css",
+      "require": "./dist/*.css"
+    }
+  },
+  "main": "./dist/style.js",
+  "typings": "./dist/src/main.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "build": "tsc && vite build",
+    "test": "echo \"Warning: no test specified\" && exit 0",
+    "storybook": "storybook dev -p 6007",
+    "storybook:build": "storybook build",
+    "pretty:check": "npx prettier . --check",
+    "pretty:fix": "npx prettier . --write",
+    "lint:check": "npx eslint .",
+    "lint:fix": "npx eslint --fix ."
+  },
+  "author": "",
+  "license": "ISC",
+  "peerDependencies": {
+    "react": ">=18.2.0",
+    "react-dom": ">=18.2.0"
+  },
+  "dependencies": {
+    "@kystverket/styrbord-tokens": "^1.1.0",
+    "c15t": "^2.2.1"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^5.0.1",
+    "@storybook/addon-docs": "^10.2.13",
+    "@storybook/addon-links": "^10.2.13",
+    "@storybook/addon-onboarding": "^10.2.13",
+    "@storybook/react-vite": "^10.2.13",
+    "storybook-addon-tag-badges": "^3.0.6"
+  }
+}

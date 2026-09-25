@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.20.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.19.0...styrbord-v1.20.0) (2026-09-16)
+
+
+### Features
+
+* Oppdatere designsystemet til 1.21.1 ([#298](https://github.com/Kystverket/styrbord/issues/298)) ([7dcf72f](https://github.com/Kystverket/styrbord/commit/7dcf72f6e02df396d447074dad334643daf3ecd7))
+
+
+### Bug Fixes
+
+* **base:** correct invalid design token references and hardcoded colors ([#300](https://github.com/Kystverket/styrbord/issues/300)) ([2105027](https://github.com/Kystverket/styrbord/commit/2105027da3c0adb88f4d1fa4945bf18964b08989))
+
+## [1.19.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.18.0...styrbord-v1.19.0) (2026-09-14)
+
+
+### Features
+
+* **base:** add capture variant to FileUploader ([#295](https://github.com/Kystverket/styrbord/issues/295)) ([2e74697](https://github.com/Kystverket/styrbord/commit/2e746975b0b5c260d2eb745a5b63faa95c6e3f0c))
+
+## [1.18.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.17.1...styrbord-v1.18.0) (2026-09-09)
+
+
+### Features
+
+* mulig å skru av border og radius på alert ([#293](https://github.com/Kystverket/styrbord/issues/293)) ([88e5d4b](https://github.com/Kystverket/styrbord/commit/88e5d4b7787857310faa0661330c68dc13d0ce1b))
+
 ## [1.17.1](https://github.com/Kystverket/styrbord/compare/styrbord-v1.17.0...styrbord-v1.17.1) (2026-09-01)
 
 

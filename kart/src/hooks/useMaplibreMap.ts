@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import maplibregl from "maplibre-gl";
+import * as maplibregl from "maplibre-gl";
 import type { Coordinate } from "~/utility/types";
 import {
   clampLatitude,
@@ -26,6 +26,8 @@ export interface UseMaplibreMapOptions {
   onMapClick?: (coord: Coordinate) => void;
   /** Height of the map container. Defaults to `"400px"`. */
   height?: string;
+  /** Whether to show the zoom controls. Defaults to `true`. */
+  showZoomControls?: boolean;
 }
 
 /**
@@ -45,6 +47,7 @@ export function useMaplibreMap({
   disabled = false,
   onMapClick,
   height,
+  showZoomControls = true,
 }: UseMaplibreMapOptions = {}) {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
@@ -146,6 +149,12 @@ export function useMaplibreMap({
       }
 
       const map = new maplibregl.Map(mapOptions);
+      if (showZoomControls) {
+        map.addControl(
+          new maplibregl.NavigationControl({ showCompass: false }),
+          "bottom-right",
+        );
+      }
 
       // Record that the initial base layer is already on the map, so the
       // base-layer sync effect won't try to re-add it.

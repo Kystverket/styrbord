@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState, useCallback, useRef } from "react";
 import type { GeoJSONSource } from "maplibre-gl";
-import type maplibregl from "maplibre-gl";
+import type * as maplibregl from "maplibre-gl";
 import type {
   Feature,
   FeatureCollection,
@@ -20,6 +20,7 @@ import {
 } from "~/hooks/useFeatureInteraction";
 import { useWmsFeatureInfo } from "~/hooks/useWmsFeatureInfo";
 import type { Coordinate } from "~/utility/types";
+import { LABEL_HALO_COLOR, LABEL_TEXT_COLOR } from "~/utility/mapColors";
 import {
   DEFAULT_STYLE,
   DEFAULT_POINTER_POINT_HIT_RADIUS,
@@ -78,6 +79,7 @@ export function GeoJsonViewer({
   hoverContent,
   onCoordinateClick,
   showCenterAction,
+  showZoomControls,
   getLabel = DEFAULT_GET_LABEL,
   pointHitRadius,
 }: GeoJsonViewerProps) {
@@ -127,6 +129,7 @@ export function GeoJsonViewer({
     disabled,
     height,
     onMapClick: onCoordinateClick ? handleMapClick : undefined,
+    showZoomControls,
   });
 
   const onCoordinateClickRef = useRef(onCoordinateClick);
@@ -224,7 +227,10 @@ export function GeoJsonViewer({
             layout: { visibility: "visible" },
             paint: {
               "fill-color": featureExpr("fillColor", layerStyle.fillColor),
-              "fill-opacity": featureExpr("fillOpacity", 1),
+              "fill-opacity": featureExpr(
+                "fillOpacity",
+                layerStyle.fillOpacity,
+              ),
             },
           });
         }
@@ -383,8 +389,8 @@ export function GeoJsonViewer({
             "text-optional": false,
           },
           paint: {
-            "text-color": "#1a1a1a",
-            "text-halo-color": "#ffffff",
+            "text-color": LABEL_TEXT_COLOR,
+            "text-halo-color": LABEL_HALO_COLOR,
             "text-halo-width": 2,
           },
         });

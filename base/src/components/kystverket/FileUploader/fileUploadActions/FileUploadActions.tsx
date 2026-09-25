@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ExistingFilesDialogHandle } from '../existingFilesDialog/ExistingFilesDialog';
-import { Box, FileUploaderProps, Icon, Button, Paragraph } from '~/main';
+import { Box, FileUploaderProps, Icon, Button, Paragraph, useMediaQuery } from '~/main';
 import classes from './FileUploadActions.module.css';
 
 type FileUploadActionsProps = {
@@ -25,22 +25,14 @@ export function FileUploadActions({
   t,
 }: FileUploadActionsProps) {
   const [isDropzoneActive, setIsDropzoneActive] = useState(false);
-  const [canUseCamera, setCanUseCamera] = useState(false);
 
-  useEffect(() => {
-    if (typeof document === 'undefined') return;
+  // Desktop browsers ignore the capture attribute, so the camera button would just
+  // reopen the regular file picker there.
+  const canUseCamera = useMediaQuery('(pointer: coarse)');
 
-    const hasGetUserMedia = !!navigator.mediaDevices?.getUserMedia;
-    const input = document.createElement('input');
-    const hasCaptureAttr = 'capture' in input;
-
-    const isTouchLike =
-      window.matchMedia('(pointer: coarse)').matches ||
-      navigator.maxTouchPoints > 0 ||
-      /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-    setCanUseCamera((hasGetUserMedia || hasCaptureAttr) && isTouchLike);
-  }, []);
+  const showCaptureButton = canUseCamera && (withCaptureButton || variant === 'capture');
+  const showDefaultUploadButton = variant === 'buttons' || (variant === 'capture' && !canUseCamera);
+  const stretchButtons = !showDefaultUploadButton;
 
   const onChangeFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
@@ -105,20 +97,16 @@ export function FileUploadActions({
           </div>
         )}
         <Box gap={8} className={classes.buttonRow} horizontal wrap>
-          {variant === 'buttons' && (
-            <Button
-              className={`${classes.uploadButton}`}
-              variant="outline"
-              onClick={() => fileInputRef.current?.click()}
-            >
+          {showDefaultUploadButton && (
+            <Button className={classes.uploadButton} variant="outline" onClick={() => fileInputRef.current?.click()}>
               <Icon material="upload" />
               {t('buttonLabel')}
             </Button>
           )}
-          {canUseCamera && withCaptureButton && (
+          {showCaptureButton && (
             <Button
               variant="outline"
-              className={`${classes.uploadButton} ${variant !== 'buttons' && classes.stretch}`}
+              className={`${classes.uploadButton} ${stretchButtons ? classes.stretch : ''}`}
               onClick={() => fileCameraInputRef.current?.click()}
             >
               <Icon material="photo_camera" />
@@ -128,7 +116,7 @@ export function FileUploadActions({
           {existingFilesProvider && (
             <Button
               variant="outline"
-              className={`${classes.uploadButton} ${variant !== 'buttons' && classes.stretch}`}
+              className={`${classes.uploadButton} ${stretchButtons ? classes.stretch : ''}`}
               onClick={() => dialogRef.current?.showModal()}
             >
               <Icon material="folder_open" />
