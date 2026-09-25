@@ -1,4 +1,4 @@
-import{j as e}from"./iframe-BoZQqqIr.js";import{u as s,a as o,b as i}from"./blocks-JuMDTQdT.js";import"./preload-helper-Dp1pzeXC.js";import"./index-D8iivn2s.js";const a=`# Styrbord Consent
+import{j as e}from"./iframe-q82g95C_.js";import{u as s,a as o,b as i}from"./blocks-BRvV52rd.js";import"./preload-helper-Dp1pzeXC.js";import"./index-DVcjPf0F.js";const a=`# Styrbord Consent
 
 Samtykke for informasjonskapsler (cookie-banner, innstillingsdialog og tilhørende logikk) for
 Kystverkets interne og eksterne applikasjoner.
@@ -20,15 +20,23 @@ lagres i nettleseren.
 
 ## Bruk
 
-Importer CSS globalt én gang. Designtokenene følger med i denne fila, så det er den eneste
-importen som trengs — også i en applikasjon som ikke bruker Styrbord ellers.
+Importer CSS globalt én gang. I en applikasjon som bruker \`@kystverket/styrbord\` er dette alt:
 
 \`\`\`js
 import '@kystverket/styrbord-consent/style.css';
 \`\`\`
 
-> Bruker applikasjonen allerede \`@kystverket/styrbord\`, laster den tokenene to ganger. Verdiene
-> er de samme, så det koster noen kilobyte og ingenting annet.
+Bruker applikasjonen ikke Styrbord, må den også laste Designsystemet-temaet, som komponentene
+henter farger, avstander og typografi fra:
+
+\`\`\`js
+import '@kystverket/styrbord-consent/theme.css';
+import '@kystverket/styrbord-consent/style.css';
+\`\`\`
+
+> Uten \`theme.css\` i en slik app blir komponentene ustilte, og ingenting feiler. Temaet ligger i
+> samme cascade layer som i Styrbord (\`dsno\`), så importeres det likevel i en Styrbord-app, slår
+> kopiene seg sammen i stedet for å overstyre hverandre.
 
 Legg \`ConsentProvider\` rundt applikasjonen og \`CookieConsent\` inni. Sistnevnte gir banner,
 innstillingsdialog og den flytende knappen som åpner innstillingene igjen.

@@ -1,4 +1,4 @@
-import{j as n}from"./iframe-BoZQqqIr.js";import{l as m,a as p,d as g,b as l,c as d}from"./ConsentDemo-DGQ9KzZt.js";import"./preload-helper-Dp1pzeXC.js";const k={title:"Samtykke/ConsentSettingsButton",component:g,tags:["autodocs","kyv"],parameters:{layout:"fullscreen"},argTypes:p,args:m},e={render:({language:i})=>n.jsxs(l,{language:i,start:"answered",children:[n.jsx(g,{}),n.jsx(d,{})]})};var r,s,t,a,o;e.parameters={...e.parameters,docs:{...(r=e.parameters)==null?void 0:r.docs,source:{originalSource:`{
+import{j as n}from"./iframe-q82g95C_.js";import{l as m,a as p,d as g,b as l,c as d}from"./ConsentDemo-1gJdFAra.js";import"./preload-helper-Dp1pzeXC.js";const k={title:"Samtykke/ConsentSettingsButton",component:g,tags:["autodocs","kyv"],parameters:{layout:"fullscreen"},argTypes:p,args:m},e={render:({language:i})=>n.jsxs(l,{language:i,start:"answered",children:[n.jsx(g,{}),n.jsx(d,{})]})};var r,s,t,a,o;e.parameters={...e.parameters,docs:{...(r=e.parameters)==null?void 0:r.docs,source:{originalSource:`{
   render: ({
     language
   }) => <ConsentDemo language={language} start="answered">

@@ -1,4 +1,4 @@
-import{j as n}from"./iframe-BoZQqqIr.js";import{l as g,a as d,C as i,b as m,c as u}from"./ConsentDemo-DGQ9KzZt.js";import"./preload-helper-Dp1pzeXC.js";const v={title:"Samtykke/ConsentBanner",component:i,tags:["autodocs","kyv"],parameters:{layout:"fullscreen"},argTypes:d,args:g},e={render:({language:l})=>n.jsxs(m,{language:l,children:[n.jsx(i,{}),n.jsx(u,{})]})};var r,s,t,a,o;e.parameters={...e.parameters,docs:{...(r=e.parameters)==null?void 0:r.docs,source:{originalSource:`{
+import{j as n}from"./iframe-q82g95C_.js";import{l as g,a as d,C as i,b as m,c as u}from"./ConsentDemo-1gJdFAra.js";import"./preload-helper-Dp1pzeXC.js";const v={title:"Samtykke/ConsentBanner",component:i,tags:["autodocs","kyv"],parameters:{layout:"fullscreen"},argTypes:d,args:g},e={render:({language:l})=>n.jsxs(m,{language:l,children:[n.jsx(i,{}),n.jsx(u,{})]})};var r,s,t,a,o;e.parameters={...e.parameters,docs:{...(r=e.parameters)==null?void 0:r.docs,source:{originalSource:`{
   render: ({
     language
   }) => <ConsentDemo language={language}>
