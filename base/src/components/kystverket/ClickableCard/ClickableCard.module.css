@@ -97,6 +97,14 @@
     line-height: var(--ds-line-height-md);
   }
 
+  .sm {
+    padding: var(--ds-size-4);
+    & .description {
+      font-size: var(--ds-body-sm-font-size);
+      line-height: var(--ds-body-sm-line-height);
+    }
+  }
+
   .slot {
     border: 2px dashed var(--ds-color-neutral-border-subtle);
     border-radius: var(--ds-border-radius-sm);

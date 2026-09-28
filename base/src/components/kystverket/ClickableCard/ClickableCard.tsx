@@ -9,8 +9,9 @@ const ClickableCard = (props: ClickableCardProps) => {
     children,
     variant = 'default',
     color = 'neutral',
+    'data-size': size = 'md',
     headingLevel = 2,
-    headingSize = 'sm',
+    headingSize = size === 'sm' ? '2xs' : 'sm',
     icon,
     chevron = true,
     showBorder = true,
@@ -19,7 +20,9 @@ const ClickableCard = (props: ClickableCardProps) => {
   } = props;
   const dataColor = color === 'main' ? 'primary' : 'neutral';
 
-  const cardClasses = [classes.card, showBorder ? classes.bordered : '', className].filter(Boolean).join(' ');
+  const cardClasses = [classes.card, classes[size], showBorder ? classes.bordered : '', className]
+    .filter(Boolean)
+    .join(' ');
 
   const inner = (
     <>

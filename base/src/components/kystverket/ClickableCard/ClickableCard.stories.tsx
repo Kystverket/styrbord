@@ -3,7 +3,7 @@ import type { Meta, StoryFn, StoryObj } from '@storybook/react-vite';
 import { Box, Paragraph } from '~/main';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import ClickableCard from './ClickableCard';
-import type { ClickableCardColor, ClickableCardVariant } from './ClickableCard.types';
+import type { ClickableCardColor, ClickableCardSize, ClickableCardVariant } from './ClickableCard.types';
 
 const meta = {
   title: 'Components/ClickableCard',
@@ -17,6 +17,10 @@ const meta = {
     },
     color: {
       options: ['neutral', 'main'] satisfies ClickableCardColor[],
+      control: { type: 'radio' },
+    },
+    'data-size': {
+      options: ['sm', 'md'] satisfies ClickableCardSize[],
       control: { type: 'radio' },
     },
     headingLevel: {
@@ -46,6 +50,7 @@ export const Default: Story = {
     showBorder: true,
     variant: 'default',
     color: 'neutral',
+    'data-size': 'md',
     onClick: () => alert('Clicked!'),
   },
 };
@@ -76,6 +81,23 @@ export const ColorVariants: StoryFn = () => {
   );
 };
 ColorVariants.storyName = 'Farge og variant';
+
+export const Sizes: StoryFn = () => (
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+    {(['md', 'sm'] satisfies ClickableCardSize[]).map((size) => (
+      <ClickableCard
+        key={size}
+        heading={`Størrelse ${size}`}
+        description="Most provide as with carried business are much better more the perfected designer."
+        icon="anchor"
+        chevron
+        showBorder
+        data-size={size}
+      />
+    ))}
+  </div>
+);
+Sizes.storyName = 'Størrelser';
 
 export const Eksempel: StoryFn = () => {
   return (
