@@ -7,10 +7,10 @@ type ClickableCardBaseProps = {
   heading: string;
   description?: string;
   children?: React.ReactNode;
+  'data-size'?: 'sm' | 'md' | 'lg';
   'data-color-variant'?: DataColorVariant;
   'data-color'?: DataColor;
   headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
-  headingSize?: ClickableCardHeadingSize;
   icon?: IconId;
   chevron?: boolean;
   'border-style'?: 'none' | 'solid';

@@ -7,10 +7,10 @@ const ClickableCard = (props: ClickableCardProps) => {
     heading,
     description,
     children,
+    'data-size': dataSize = 'md',
     'data-color-variant': variant = 'default',
     'data-color': dataColor = 'neutral',
     headingLevel = 2,
-    headingSize = 'sm',
     icon,
     chevron = true,
     'border-style': borderStyle = 'solid',
@@ -22,17 +22,23 @@ const ClickableCard = (props: ClickableCardProps) => {
     .join(' ');
 
   const inner = (
-    <>
-      <Box horizontal className={classes.header}>
-        {icon && <Icon material={icon} className={classes.iconLeft} size="md" />}
-        <Heading data-size={headingSize} level={headingLevel} className={classes.heading}>
-          {heading}
-        </Heading>
-        {chevron && <Icon material="chevron_right" className={classes.chevron} size="md" />}
+    <Box horizontal justify="between" align="center" className={classes.gap3}>
+      <Box className={classes.gap2}>
+        <Box horizontal align="center" className={classes.gap3}>
+          {icon && <Icon material={icon} className={classes.iconLeft} size="md" />}
+          <Heading data-size="sm" level={headingLevel}>
+            {heading}
+          </Heading>
+        </Box>
+        {(description || children) && (
+          <Box className={classes.gap3}>
+            {description && <p className={classes.description}>{description}</p>}
+            {children !== undefined && children !== null && <Box width="full">{children}</Box>}
+          </Box>
+        )}
       </Box>
-      {description && <p className={classes.description}>{description}</p>}
-      {children !== undefined && children !== null && <Box className={classes.slot}>{children}</Box>}
-    </>
+      {chevron && <Icon material="chevron_right" className={classes.chevron} size="md" />}
+    </Box>
   );
 
   if (typeof props.href === 'string') {
@@ -43,6 +49,7 @@ const ClickableCard = (props: ClickableCardProps) => {
         target={props.target}
         rel={effectiveRel}
         className={cardClasses}
+        data-size={dataSize}
         data-color={dataColor}
         data-color-variant={variant}
         aria-label={ariaLabel}
@@ -57,6 +64,7 @@ const ClickableCard = (props: ClickableCardProps) => {
     <button
       type="button"
       className={cardClasses}
+      data-size={dataSize}
       data-color={dataColor}
       data-color-variant={variant}
       aria-label={ariaLabel}

@@ -3,6 +3,7 @@ import type { Meta, StoryFn, StoryObj } from '@storybook/react-vite';
 import { Box, DataColor, DataColorVariant, Paragraph } from '~/main';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import ClickableCard from './ClickableCard';
+import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
 
 const meta = {
   title: 'Components/ClickableCard',
@@ -15,19 +16,19 @@ const meta = {
       control: { type: 'radio' },
     },
     'data-color': {
-      options: ['neutral', 'primary', 'lyng', 'fyr', 'gress'] satisfies DataColor[],
+      options: [...styrbordSemanticColors, ...styrbordPaletteColors] satisfies DataColor[],
       control: { type: 'radio' },
     },
     headingLevel: {
       options: [1, 2, 3, 4, 5, 6],
       control: { type: 'select' },
     },
-    headingSize: {
-      options: ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'],
-      control: { type: 'select' },
-    },
     icon: {
       control: { type: 'text' },
+    },
+    'data-size': {
+      options: ['sm', 'md', 'lg'],
+      control: { type: 'radio' },
     },
   },
 } satisfies Meta<typeof ClickableCard>;
@@ -48,6 +49,41 @@ export const Default: Story = {
     onClick: () => alert('Clicked!'),
   },
 };
+
+export const Sizes: StoryFn = () => {
+  const combos: { label: string; 'data-size': 'sm' | 'md' | 'lg' }[] = [
+    { label: 'Liten', 'data-size': 'sm' },
+    { label: 'Middels', 'data-size': 'md' },
+    { label: 'Stor', 'data-size': 'lg' },
+  ];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+      {combos.map((c) => (
+        <>
+          <ClickableCard
+            key={`first-${c['data-size']}`}
+            heading={c.label}
+            description="Most provide as with carried business are much better more the perfected designer. Writing slightly explain desk unable at supposedly about this."
+            icon="anchor"
+            chevron
+            border-style="solid"
+            data-size={c['data-size']}
+          />
+          <ClickableCard
+            key={`second-${c['data-size']}`}
+            heading={c.label}
+            icon="article"
+            chevron
+            border-style="solid"
+            data-size={c['data-size']}
+          />
+        </>
+      ))}
+    </div>
+  );
+};
+Sizes.storyName = 'Størrelser';
 
 export const ColorVariants: StoryFn = () => {
   const combos: { label: string; color: DataColor; variant: DataColorVariant }[] = [
@@ -86,7 +122,7 @@ export const Eksempel: StoryFn = () => {
           heading="Forespørsel om nautisk vurdering"
           icon="picture_as_pdf"
           chevron
-          headingSize="xs"
+          data-size="sm"
           data-color-variant="base"
           data-color="neutral"
         />
@@ -94,7 +130,6 @@ export const Eksempel: StoryFn = () => {
           heading="Forespørsel om nautisk vurdering"
           icon="picture_as_pdf"
           chevron
-          headingSize="xs"
           data-color-variant="tinted"
           data-color="neutral"
         />
@@ -102,7 +137,6 @@ export const Eksempel: StoryFn = () => {
           heading="Forespørsel om nautisk vurdering"
           icon="picture_as_pdf"
           chevron
-          headingSize="xs"
           data-color-variant="base"
           data-color="primary"
         />
@@ -110,7 +144,7 @@ export const Eksempel: StoryFn = () => {
           heading="Forespørsel om nautisk vurdering"
           icon="picture_as_pdf"
           chevron
-          headingSize="xs"
+          data-size="sm"
           data-color-variant="tinted"
           data-color="primary"
         />
