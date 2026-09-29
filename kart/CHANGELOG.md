@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/Kystverket/styrbord/compare/styrbord-kart-v0.1.3...styrbord-kart-v0.2.0) (2026-09-25)
+
+
+### Features
+
+* Add zoom controls and opt out prop ([6c73bfa](https://github.com/Kystverket/styrbord/commit/6c73bfa602b53c646dfef44ec84b3ad6a13eaeb6))
+
 ## [0.1.3](https://github.com/Kystverket/styrbord/compare/styrbord-kart-v0.1.2...styrbord-kart-v0.1.3) (2026-09-18)
 
 

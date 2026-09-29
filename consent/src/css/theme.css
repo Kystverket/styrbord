@@ -1,0 +1,6 @@
+/* Designsystemet-temaet for apper som ikke bruker @kystverket/styrbord. Blir `dist/theme.css`.
+
+   Lagt i `dsno`, samme lag som Styrbord legger tokenene i. Importerer en app både denne og
+   Styrbord, slår de to kopiene seg sammen i samme lag i stedet for at den som lastes sist
+   overstyrer den andre. */
+@import '@kystverket/styrbord-tokens/kystverket.css' layer(dsno);
