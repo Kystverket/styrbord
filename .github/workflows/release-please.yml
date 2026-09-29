@@ -2,12 +2,12 @@ name: Release Please
 
 on:
   push:
-    branches: [main]
+    branches: [main, 1.x]
 
-# Only one release-please run at a time. Never cancel an in-flight run so a
-# release PR merge / publish is always allowed to finish before the next starts.
+# Only one release-please run at a time per branch. Never cancel an in-flight run
+# so a release PR merge / publish is always allowed to finish before the next starts.
 concurrency:
-  group: release-please
+  group: release-please-${{ github.ref_name }}
   cancel-in-progress: false
 
 permissions:
@@ -40,6 +40,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
+          # main releases the current major; 1.x is the maintenance branch for 1.x fixes.
+          target-branch: ${{ github.ref_name }}
 
   publish-base:
     needs: release-please
@@ -47,6 +49,8 @@ jobs:
     uses: ./.github/workflows/publish-package.yml
     with:
       workspace: base
+      # Keep `latest` on the current major; maintenance releases go to their own tag.
+      dist-tag: ${{ github.ref_name == 'main' && 'latest' || 'v1' }}
     permissions:
       contents: read
       packages: write
@@ -58,6 +62,8 @@ jobs:
     uses: ./.github/workflows/publish-package.yml
     with:
       workspace: kart
+      # Keep `latest` on the current major; maintenance releases go to their own tag.
+      dist-tag: ${{ github.ref_name == 'main' && 'latest' || 'v1' }}
     permissions:
       contents: read
       packages: write
@@ -69,6 +75,8 @@ jobs:
     uses: ./.github/workflows/publish-package.yml
     with:
       workspace: consent
+      # Keep `latest` on the current major; maintenance releases go to their own tag.
+      dist-tag: ${{ github.ref_name == 'main' && 'latest' || 'v1' }}
     permissions:
       contents: read
       packages: write
@@ -76,7 +84,8 @@ jobs:
 
   deploy-storybook:
     needs: release-please
-    if: ${{ needs.release-please.outputs.base_release_created == 'true' || needs.release-please.outputs.kart_release_created == 'true' || needs.release-please.outputs.consent_release_created == 'true' }}
+    # Only main deploys Storybook, so a 1.x maintenance release doesn't overwrite the current docs.
+    if: ${{ github.ref_name == 'main' && (needs.release-please.outputs.base_release_created == 'true' || needs.release-please.outputs.kart_release_created == 'true' || needs.release-please.outputs.consent_release_created == 'true') }}
     runs-on: ubuntu-latest
     permissions:
       packages: read
