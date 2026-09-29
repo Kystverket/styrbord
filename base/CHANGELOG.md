@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.20.1...styrbord-v2.0.0) (2026-09-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* **base,kart:** Styrbord 2.x!
+
+### Features
+
+* **base,kart:** Styrbord 2.x! ([018f512](https://github.com/Kystverket/styrbord/commit/018f512909a9208a2726f5d74a7eae40dca85b96))
+
 ## [1.20.1](https://github.com/Kystverket/styrbord/compare/styrbord-v1.20.0...styrbord-v1.20.1) (2026-09-29)
 
 
