@@ -115,3 +115,29 @@ Versjonering og publisering håndteres automatisk av [release-please](https://gi
 De to pakkene versjoneres uavhengig av hverandre. Endre aldri versjonsnumre i `package.json` manuelt.
 
 Pakkene publiseres til [npmjs.org](https://www.npmjs.com/) og [GitHub Packages](https://github.com/orgs/Kystverket/packages) når en release-PR merges til `main`.
+
+### Hotfix på 1.x
+
+`main` er gjeldende hovedversjon. Branchen `1.x` er vedlikeholdsbranchen for 1.x-linjen, og release-please kjører på begge.
+Releaser fra `main` publiseres med dist-tag `latest`, releaser fra `1.x` med dist-tag `v1`, slik at `npm install` fortsatt gir nyeste hovedversjon.
+
+1. Lag en branch fra `1.x`, og gjør rettingen der:
+
+   ```bash
+   git fetch origin
+   git checkout -b fix/beskrivelse origin/1.x
+   ```
+
+2. Commit med vanlig conventional commit, for eksempel `fix(base): rett opp fokusmarkering i Dialog`.
+   Bruk `fix` for hotfixer: det gir en patch-versjon (1.20.1 → 1.20.2). `feat` gir en ny minor-versjon, og breaking changes hører ikke hjemme på `1.x`.
+3. Åpne PR mot `1.x` (ikke `main`), og merge den.
+4. release-please åpner en release-PR mot `1.x`. Når den merges, publiseres pakken med dist-tag `v1`.
+   Storybook deployes bare fra `main`, så dokumentasjonen på GitHub Pages viser fortsatt gjeldende hovedversjon.
+5. Gjelder feilen også gjeldende hovedversjon, cherry-picker du rettingen til en branch fra `main` og åpner en egen PR mot `main`:
+
+   ```bash
+   git checkout -b fix/beskrivelse-main origin/main
+   git cherry-pick <commit-sha>
+   ```
+
+Applikasjoner som fortsatt er på 1.x, får hotfixen med `npm install @kystverket/styrbord@v1` eller en versjonsrange som `^1.20.0`.
