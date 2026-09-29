@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Card, CardBlock, CardProps } from '@digdir/designsystemet-react';
 import CardTitle from '../CardTitle/CardTitle';
-import { Box } from '~/main';
+import { Surface } from '~/main';
 
 const meta = {
   title: 'Components/Card',
@@ -44,10 +44,10 @@ const colors: CardProps['data-color'][] = [
 const colorVariants: CardProps['variant'][] = ['default', 'tinted'];
 
 export const ColorVariants: Story['render'] = () => (
-  <Box gap={16}>
+  <Surface gap={4}>
     {colors.map((color) =>
       colorVariants.map((colorVariant) => (
-        <Box key={String(color) + String(colorVariant)} horizontal align="center" gap={8}>
+        <Surface key={String(color) + String(colorVariant)} horizontal align="center" gap={2}>
           <Card data-color={color} variant={colorVariant}>
             <CardBlock>
               <CardTitle>
@@ -60,10 +60,10 @@ export const ColorVariants: Story['render'] = () => (
               </p>
             </CardBlock>
           </Card>
-        </Box>
+        </Surface>
       )),
     )}
-  </Box>
+  </Surface>
 );
 
 export const Colors: Story = {

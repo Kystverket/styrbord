@@ -1,4 +1,4 @@
-import { Dialog, Heading, Paragraph, Button, Field, EXPERIMENTAL_Suggestion as Suggestion, Box } from '~/main';
+import { Dialog, Heading, Paragraph, Button, Field, EXPERIMENTAL_Suggestion as Suggestion, Surface } from '~/main';
 import type { Meta, StoryFn } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
 import { useRef, useState } from 'react';
@@ -309,14 +309,14 @@ export const NestedDialogs: StoryFn<typeof Dialog> = () => {
         <Paragraph style={{ marginBottom: 'var(--ds-size-4)' }}>
           This is the outer dialog. You can open another dialog from here.
         </Paragraph>
-        <Box horizontal gap={8}>
+        <Surface horizontal gap={2}>
           <Button variant="filled" onClick={() => innerDialogRef.current?.showModal()}>
             Open Inner Dialog
           </Button>
           <Button command="close" commandFor="OuterDialog">
             Close
           </Button>
-        </Box>
+        </Surface>
 
         <Dialog
           id="InnerDialog"

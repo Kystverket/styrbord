@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react-vite';
 import { useRef, useState } from 'react';
-import { Box, Button, Input, Label, Paragraph, SlotDialog, type DialogSize } from '~/main';
+import { Surface, Button, Input, Label, Paragraph, SlotDialog, type DialogSize } from '~/main';
 
 export default {
   title: 'Components/SlotDialog',
@@ -140,7 +140,7 @@ export const MultiplePages: StoryFn<typeof SlotDialog> = (args) => {
         title="Multi-page dialog"
         subtitle={`Step ${page + 1} of ${totalPages}`}
       >
-        <Box gap={16}>
+        <Surface gap={4}>
           <Paragraph>This is page {page + 1}.</Paragraph>
           <Paragraph>Use {isLastPage ? '"Submit"' : '"Next"'} to continue.</Paragraph>
           {[0, 2].includes(page) && (
@@ -155,7 +155,7 @@ export const MultiplePages: StoryFn<typeof SlotDialog> = (args) => {
               </Label>
             </>
           )}
-        </Box>
+        </Surface>
 
         <SlotDialog.Buttons>
           {!isLastPage && (
@@ -186,7 +186,7 @@ export const Sizes: StoryFn<typeof SlotDialog> = () => {
   const [openSize, setOpenSize] = useState<DialogSize | null>(null);
 
   return (
-    <Box horizontal gap={8}>
+    <Surface horizontal gap={2}>
       {(['sm', 'md', 'lg'] as DialogSize[]).map((size) => (
         <Button key={size} onClick={() => setOpenSize(size)}>
           Open {size}
@@ -195,7 +195,7 @@ export const Sizes: StoryFn<typeof SlotDialog> = () => {
       {(['sm', 'md', 'lg'] as DialogSize[]).map((size) => (
         <SlotDialog
           key={size}
-          size={size}
+          max-width={size}
           open={openSize === size}
           onClose={() => setOpenSize(null)}
           title={`Dialog — ${size}`}
@@ -214,6 +214,6 @@ export const Sizes: StoryFn<typeof SlotDialog> = () => {
           </SlotDialog.Buttons>
         </SlotDialog>
       ))}
-    </Box>
+    </Surface>
   );
 };

@@ -1,6 +1,6 @@
 import { forwardRef, useContext, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import {
-  Box,
+  Surface,
   FileInfo,
   Button,
   Checkbox,
@@ -150,18 +150,18 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
       <SlotDialog longContent title={t('existingFiles.dialogTitle')} ref={setDialogElement}>
         <>
           {loadingAllExistingFiles && (
-            <Box horizontal align="center" justify="center">
+            <Surface horizontal align="center" justify="center">
               <Spinner aria-label={t('loading')} />
-            </Box>
+            </Surface>
           )}
           {!loadingAllExistingFiles && existingFilesCollection.length === 0 && (
             <Paragraph>{t('existingFiles.noFilesAvailable')}</Paragraph>
           )}
           {!loadingAllExistingFiles && existingFilesCollection.length > 0 && (
-            <Box gap={12} my={4}>
+            <Surface gap={3} my={1}>
               {selectedFileCollection !== undefined && (
                 <>
-                  <Box gap={8} horizontal align={'center'}>
+                  <Surface gap={2} horizontal align={'center'}>
                     <Button
                       onClick={() => setSelectedFileCollection(undefined)}
                       aria-label={t('existingFiles.goBackToCollectionAriaLabel')}
@@ -174,7 +174,7 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
                     <Heading>
                       {t('existingFiles.inMenuTitle')} "{selectedFileCollection.title}"
                     </Heading>
-                  </Box>
+                  </Surface>
 
                   <Paragraph className={classes.selectFilesLabel}>{t('existingFiles.selectFilesLabel')}</Paragraph>
 
@@ -201,17 +201,17 @@ export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, Existin
                     onClick={() => setSelectedFileCollection(fileCollection)}
                   />
                 ))}
-            </Box>
+            </Surface>
           )}
           <SlotDialog.Buttons>
-            <Box horizontal gap={16}>
+            <Surface horizontal gap={4}>
               <Button variant="filled" onClick={handleConfirmExistingFiles}>
                 {t('existingFiles.dialogConfirm')}
               </Button>
               <Button variant="outline" onClick={handleCancelExistingFiles}>
                 {t('existingFiles.dialogCancel')}
               </Button>
-            </Box>
+            </Surface>
           </SlotDialog.Buttons>
         </>
       </SlotDialog>
@@ -236,13 +236,13 @@ function ExistingFilesListCard({ existingFilesProviderItem, onClick }: ExistingF
       className={classes.listCard}
       onClick={onClick}
     >
-      <Box horizontal justify="between" align="center">
-        <Box gap={4}>
+      <Surface horizontal justify="between" align="center">
+        <Surface gap={1}>
           <Heading>{existingFilesProviderItem.title}</Heading>
           <Paragraph className={classes.subtitle}>{existingFilesProviderItem.label}</Paragraph>
-        </Box>
+        </Surface>
         <Icon material="chevron_right" />
-      </Box>
+      </Surface>
     </Card>
   );
 }
@@ -290,21 +290,21 @@ function ExistingFileItem({
         }}
         onClick={(e) => e.stopPropagation()}
       />
-      <Box gap={12} horizontal>
-        <Box className={classes.filePreview}>
+      <Surface gap={3} horizontal>
+        <Surface className={classes.filePreview}>
           {extraInfo?.thumbnailUri ? (
             <img src={extraInfo.thumbnailUri} alt={file.fileName || t('unknownFilename')} />
           ) : (
             <Icon size="lg" material={getPrefixIcon(file.contentType)} />
           )}
-        </Box>
-        <Box gap={2}>
+        </Surface>
+        <Surface gap={1}>
           <Paragraph className={classes.fileName}>{file.fileName || t('unknownFilename')}</Paragraph>
           {extraInfo?.sizeInBytes && (
             <Paragraph className={classes.subtitle}>{convertBytesToReadable(extraInfo.sizeInBytes)}</Paragraph>
           )}
-        </Box>
-      </Box>
+        </Surface>
+      </Surface>
     </div>
   );
 }

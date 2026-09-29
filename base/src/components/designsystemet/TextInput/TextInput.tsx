@@ -1,7 +1,7 @@
 import { Textfield as DsTextField } from '@digdir/designsystemet-react';
 import { HTMLInputAutoCompleteAttribute } from 'react';
 import { LabelContent } from '~/main';
-import { InputSize, inputSizeClass } from '~/utils/input/input';
+import { InputSize, inputWidthClass } from '~/utils/input/input';
 
 export interface TextInputProps {
   optional?: boolean | string | undefined;
@@ -22,12 +22,12 @@ export interface TextInputProps {
   suffix?: string;
   id?: string;
   type?: 'email' | 'hidden' | 'password' | 'tel' | 'text' | 'time' | 'url';
-  size?: InputSize;
+  width?: InputSize;
   autoComplete?: HTMLInputAutoCompleteAttribute;
 }
 
 export const TextInput = ({
-  size = 'full',
+  width = 'full',
   type = 'text',
   className,
   label,
@@ -40,7 +40,7 @@ export const TextInput = ({
 }: TextInputProps) => {
   return (
     <DsTextField
-      className={`${className} ${inputSizeClass(size)}`}
+      className={`${className} ${inputWidthClass(width)}`}
       label={<LabelContent text={label} loading={loading} required={required} optional={optional} />}
       value={value ?? ''}
       onChange={(event) => {

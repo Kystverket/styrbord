@@ -1,5 +1,5 @@
 import { ExtraFileInfo, FileInfo } from '../FileUploader.types';
-import { Box, Button, Icon, Paragraph, Spinner, ValidationMessage } from '~/main';
+import { Surface, Button, Icon, Paragraph, Spinner, ValidationMessage } from '~/main';
 import classes from './FileUploaderItem.module.css';
 import { MaterialIconProps } from '~/components/kystverket/Icon/icon';
 import { convertBytesToReadable } from '~/utils/convertBytesToReadable';
@@ -21,22 +21,22 @@ export const getPrefixIcon = (contentType: FileInfo['contentType']): MaterialIco
 
 export function FileUploaderItem({ file, extraInfo, t, onDeleteFile, onPreviewFile }: FileUploaderItemProps) {
   return (
-    <Box className={classes.itemWrapper}>
-      <Box className={classes.filePreview}>
+    <Surface className={classes.itemWrapper}>
+      <Surface className={classes.filePreview}>
         {extraInfo?.thumbnailUri ? (
           <img src={extraInfo.thumbnailUri} alt={file.fileName || t('unknownFilename')} />
         ) : (
           <Icon size="lg" material={getPrefixIcon(file.contentType)} />
         )}
-      </Box>
-      <Box className={classes.fileData}>
+      </Surface>
+      <Surface className={classes.fileData}>
         <Paragraph className={classes.title}>{file.fileName}</Paragraph>
         <Paragraph className={classes.subtitle} data-size="sm">
           {file.status === 'uploading' ? t('uploading') : convertBytesToReadable(extraInfo?.sizeInBytes)}
         </Paragraph>
         {file.status === 'error' && <ValidationMessage>{file.error}</ValidationMessage>}
-      </Box>
-      <Box align="center" horizontal className={classes.buttonContainer}>
+      </Surface>
+      <Surface align="center" horizontal className={classes.buttonContainer}>
         {onPreviewFile && file.status === 'uploaded' && (
           <Button onClick={onPreviewFile} aria-label={t('previewFileAriaLabel')} icon variant="ghost" color="neutral">
             <Icon material="visibility" />
@@ -54,7 +54,7 @@ export function FileUploaderItem({ file, extraInfo, t, onDeleteFile, onPreviewFi
           </Button>
         )}
         {file.status === 'uploading' && <Spinner aria-label={t('uploading')} data-size="xs" data-color="neutral" />}
-      </Box>
-    </Box>
+      </Surface>
+    </Surface>
   );
 }

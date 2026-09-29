@@ -1,8 +1,9 @@
 import React from 'react';
 import classes from './stepper.module.css';
 import { Icon, IconId } from '~/main';
+import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
 
-export const stepItemColorOptions = ['auto', 'primary', 'accent', 'neutral', 'success', 'danger', 'error', 'info'];
+export const stepItemColorOptions = ['auto', ...styrbordSemanticColors, ...styrbordPaletteColors];
 export type StepItemColor = (typeof stepItemColorOptions)[number];
 
 export interface StepItem {
@@ -10,7 +11,7 @@ export interface StepItem {
   label: string;
   icon?: IconId | 'index' | 'auto';
   'data-color'?: StepItemColor;
-  style?: 'auto' | 'filled' | 'subtle' | 'outline';
+  variant?: 'auto' | 'filled' | 'subtle' | 'outline';
   onClick?: (item: StepItem) => void;
 }
 
@@ -37,7 +38,7 @@ const StepItem = ({
   placement,
   icon = 'auto',
   'data-color': dataColor = 'auto',
-  style = 'auto',
+  variant = 'auto',
   label,
   labels,
   onClick,
@@ -48,7 +49,7 @@ const StepItem = ({
   if (dataColor === 'auto') dataColor = autoColor;
 
   const autoStyle = placement === 'before' ? 'outline' : placement === 'current' ? 'filled' : 'outline';
-  if (style === 'auto') style = autoStyle;
+  if (variant === 'auto') variant = autoStyle;
 
   let iconContent = <span>{index}</span>;
   if (icon === 'auto') {
@@ -71,7 +72,7 @@ const StepItem = ({
     classes.step,
     classes[`item-orientation-${itemOrientation}`],
     classes[`is-${placement}`],
-    classes[`has-style-${style}`],
+    classes[`has-variant-${variant}`],
     onClick ? classes.clickable : '',
   ].join(' ');
 

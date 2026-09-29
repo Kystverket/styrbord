@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ExistingFilesDialogHandle } from '../existingFilesDialog/ExistingFilesDialog';
-import { Box, FileUploaderProps, Icon, Button, Paragraph, useMediaQuery } from '~/main';
+import { Surface, FileUploaderProps, Icon, Button, Paragraph, useMediaQuery } from '~/main';
 import classes from './FileUploadActions.module.css';
 
 type FileUploadActionsProps = {
@@ -66,7 +66,7 @@ export function FileUploadActions({
         accept={allowedFileTypes.join(',')}
         onChange={onChangeFileUpload}
       />
-      <Box gap={4} mt={8}>
+      <Surface gap={1} mt={2}>
         {variant === 'dropzone' && (
           <div
             role="button"
@@ -96,7 +96,7 @@ export function FileUploadActions({
             <Paragraph className={classes.dropzoneText}>{t('dropzoneText')}</Paragraph>
           </div>
         )}
-        <Box gap={8} className={classes.buttonRow} horizontal wrap>
+        <Surface gap={2} className={classes.buttonRow} horizontal wrap>
           {showDefaultUploadButton && (
             <Button className={classes.uploadButton} variant="outline" onClick={() => fileInputRef.current?.click()}>
               <Icon material="upload" />
@@ -123,8 +123,8 @@ export function FileUploadActions({
               {t('existingFiles.buttonOpen')}
             </Button>
           )}
-        </Box>
-      </Box>
+        </Surface>
+      </Surface>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { Box, Button, Icon, Dropdown, Avatar, Label, Divider, HeaderContext } from '~/main';
+import { Surface, Button, Icon, Dropdown, Avatar, Label, Divider, HeaderContext } from '~/main';
 import classes from './Header.module.css';
 import { useContext, useId, useRef, useState } from 'react';
 import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
@@ -41,7 +41,7 @@ export function HeaderProfile({ links, profile, logoutHandler }: HeaderProfilePr
           onClick={() => openMenu()}
           aria-label={t('header.openProfileMenu')}
         >
-          <Box horizontal gap={4} align="center">
+          <Surface horizontal gap={1} align="center">
             <Avatar
               aria-label={`${profile.name} profile picture`}
               data-size="2xs"
@@ -49,27 +49,27 @@ export function HeaderProfile({ links, profile, logoutHandler }: HeaderProfilePr
               {...(profile.avatarStyle || { 'data-color': 'success' })}
             />
             <Icon material="keyboard_arrow_down" aria-hidden />
-          </Box>
+          </Surface>
         </Button>
         <Dropdown id={id} open={isMenuOpen} data-color="neutral">
           <Dropdown.List>
             <Dropdown.Item>
-              <Box horizontal align="center" p={8} gap={12} px={12}>
+              <Surface horizontal align="center" p={2} gap={3} px={3}>
                 <Avatar
                   aria-label={`${profile.name} profile picture`}
                   data-size="2xs"
                   initials={nameToInitials(profile.name)}
                   {...(profile.avatarStyle || { 'data-color': 'success' })}
                 />
-                <Box className={classes.profileMeta}>
+                <Surface className={classes.profileMeta}>
                   <Label className={`${classes.profileDisplayName} ${classes.truncateOverflow}`}>{profile.name}</Label>
                   {profile.department && (
                     <Label data-size="sm" className={`${classes.profileDepartment} ${classes.truncateOverflow}`}>
                       {profile.department}
                     </Label>
                   )}
-                </Box>
-              </Box>
+                </Surface>
+              </Surface>
               <Divider />
             </Dropdown.Item>
             {profileLinks.map((link, index) => (

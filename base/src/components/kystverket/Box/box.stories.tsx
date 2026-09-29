@@ -5,10 +5,10 @@ import { Heading } from '~/main';
 import { boxBackgroundColors, boxBackgroundVariants } from './box.types';
 
 const meta = {
-  title: 'Helpers/Box',
+  title: 'Deprecated/Box',
   component: Box,
   decorators: [StyrbordDecorator],
-  tags: ['autodocs', 'kyv'],
+  tags: ['autodocs', 'deprecated'],
   argTypes: {},
 } satisfies Meta<typeof Box>;
 

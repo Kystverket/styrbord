@@ -1,4 +1,4 @@
-import { Box, Button, Icon, Dialog, Avatar, Label } from '~/main';
+import { Surface, Button, Icon, Dialog, Avatar, Label } from '~/main';
 import classes from './Header.module.css';
 import { useContext, useId, useRef, useState } from 'react';
 import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
@@ -59,41 +59,41 @@ export function HeaderMobile({ logoutHandler, loginHandler, profile, slots, link
           onClick={openMenu}
           aria-label={t('header.openMenu')}
         >
-          <Box horizontal gap={16} align="center">
+          <Surface horizontal gap={4} align="center">
             <Icon material="menu" aria-hidden />
-          </Box>
+          </Surface>
         </Button>
         <Dialog id={id} open={isMenuOpen} onClose={() => setIsMenuOpen(false)} placement="right">
           {profile && (
             <Dialog.Block>
-              <Box horizontal align="center" p={8} gap={12} px={12}>
+              <Surface horizontal align="center" p={2} gap={3} px={3}>
                 <Avatar
                   aria-label={`${profile.name} profile picture`}
                   data-size="2xs"
                   initials={nameToInitials(profile.name)}
                   {...(profile.avatarStyle || { 'data-color': 'success' })}
                 />
-                <Box className={classes.profileMeta}>
+                <Surface className={classes.profileMeta}>
                   <Label className={`${classes.profileDisplayName} ${classes.truncateOverflow}`}>{profile.name}</Label>
                   {profile.department && (
                     <Label data-size="sm" className={`${classes.profileDepartment} ${classes.truncateOverflow}`}>
                       {profile.department}
                     </Label>
                   )}
-                </Box>
+                </Surface>
                 {slots?.widgets}
-              </Box>
+              </Surface>
             </Dialog.Block>
           )}
           {(slots?.preLinks || slots?.postLinks || mainLinks.length > 0) && (
             <Dialog.Block>
-              <Box>
+              <Surface>
                 {slots?.preLinks}
                 {mainLinks.map((link, index) => (
                   <MainLinkItem key={index} {...link} onClick={closeMenu} />
                 ))}
                 {slots?.postLinks}
-              </Box>
+              </Surface>
             </Dialog.Block>
           )}
           {applications && applications.length > 1 && (
@@ -111,7 +111,7 @@ export function HeaderMobile({ logoutHandler, loginHandler, profile, slots, link
           )}
           {(logoutHandler || profileLinks.length > 0) && (
             <Dialog.Block>
-              <Box horizontal wrap align="center" gap={16} justify="between" width="full">
+              <Surface horizontal wrap align="center" gap={4} justify="between" width="full">
                 {profileLinks.map((link, index) => (
                   <MainLinkItem key={index} {...link} onClick={closeMenu} />
                 ))}
@@ -139,7 +139,7 @@ export function HeaderMobile({ logoutHandler, loginHandler, profile, slots, link
                     {t('header.login')}
                   </Button>
                 )}
-              </Box>
+              </Surface>
             </Dialog.Block>
           )}
         </Dialog>

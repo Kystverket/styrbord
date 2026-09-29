@@ -2,7 +2,7 @@ import type { Meta, StoryFn } from '@storybook/react-vite';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import Icon from '~/components/kystverket/Icon/icon';
 import { IconId, iconIdList } from './icon.types';
-import { Body, Box } from '~/main';
+import { Paragraph, Surface } from '~/main';
 import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
 import { Fragment } from 'react';
 
@@ -34,8 +34,8 @@ export const IconShowcase: StoryFn = () => {
             <Icon material={iconId} />
           </td>
           <td style={{ padding: '0.5rem' }}>
-            <Body weight="medium">{iconId}</Body>
-            <Body size="sm">{iconDescriptions[iconId]}</Body>
+            <Paragraph data-font-weight="medium">{iconId}</Paragraph>
+            <Paragraph data-size="sm">{iconDescriptions[iconId]}</Paragraph>
           </td>
           <td style={{ padding: '0rem' }}>
             <Icon material={iconId} background={colors[index % colors.length]} title={colors[index % colors.length]} />
@@ -69,14 +69,14 @@ export const IconSizing: StoryFn = () => {
 
 export const IconIndicator: StoryFn = () => {
   return (
-    <Box gap={16}>
+    <Surface gap={4}>
       {sizes.map((size) => (
         <Fragment key={size}>
           {(['description', 'mail', 'water'] as IconId[]).map((iconId) => (
-            <Box gap={4} p={4} key={size + iconId}>
+            <Surface gap={1} p={1} key={size + iconId}>
               {(['bottom-right', 'bottom-left', 'top-right', 'top-left'] as const).map((indicatorPosition) => (
                 <Fragment key={size + iconId + indicatorPosition}>
-                  <Box horizontal gap={16} align="center" p={8}>
+                  <Surface horizontal gap={4} align="center" p={2}>
                     <Icon size={size} material={iconId} background="hav" />
                     {(['arrow_back', 'arrow_forward', 'mail', 'person', 'add', 'delete'] as IconId[]).map(
                       (indicatorId) => (
@@ -91,13 +91,13 @@ export const IconIndicator: StoryFn = () => {
                         </Fragment>
                       ),
                     )}
-                  </Box>
+                  </Surface>
                 </Fragment>
               ))}
-            </Box>
+            </Surface>
           ))}
         </Fragment>
       ))}
-    </Box>
+    </Surface>
   );
 };

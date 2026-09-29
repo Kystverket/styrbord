@@ -1,10 +1,10 @@
-import { Box } from '~/main';
+import { Surface } from '~/main';
 import { ItemCard } from '../ItemCard/ItemCard';
 import type { ItemListProps } from './ItemList.types';
 
 export function ItemList({ items, selectedItemId, onSelectItemId }: Readonly<ItemListProps>) {
   return (
-    <Box gap={4}>
+    <Surface gap={1}>
       {items.map((item) => (
         <ItemCard
           key={item.id}
@@ -13,6 +13,6 @@ export function ItemList({ items, selectedItemId, onSelectItemId }: Readonly<Ite
           onClick={() => onSelectItemId(item.id)}
         />
       ))}
-    </Box>
+    </Surface>
   );
 }

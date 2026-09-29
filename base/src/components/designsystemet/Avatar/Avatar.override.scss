@@ -3,5 +3,11 @@
 }
 
 .ds-avatar[data-variant='square'] {
-  border-radius: var(--ds-border-radius-lg);
+  border-radius: var(--ds-border-radius-default);
+}
+
+*[data-color-variant='tinted'] .ds-avatar,
+.ds-avatar[data-color-variant='tinted'] {
+  background-color: var(--ds-color-surface-tinted);
+  color: var(--ds-color-text-default);
 }

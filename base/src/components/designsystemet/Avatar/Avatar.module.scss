@@ -5,15 +5,6 @@
   overflow: hidden;
 }
 
-.wrapperCircle,
-.wrapperCircle .checkOverlay {
-  border-radius: 50%;
-}
-
-.wrapperSquare {
-  border-radius: var(--ds-border-radius-lg);
-}
-
 .checkOverlay {
   position: absolute;
   inset: 2px;
@@ -26,6 +17,14 @@
   transition:
     opacity 0.2s ease,
     background-color 0.2s ease;
+
+  &:not([data-variant='square']) {
+    border-radius: 50%;
+  }
+
+  &[data-variant='square'] {
+    border-radius: var(--ds-border-radius-sm);
+  }
 
   &::after {
     content: '';
@@ -50,6 +49,24 @@
   }
 }
 
+// Boring avatar: the SVG fills the avatar, so drop the icon padding
+.boring:global(.ds-avatar) {
+  padding: 0;
+}
+.boringChildren {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  color: white; /* Internal text color */
+  text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000; /* Creates a 1px border by casting shadows in 4 diagonals */
+}
 // Sizes
 .size2xs {
   height: 28px;
@@ -65,90 +82,21 @@
   line-height: 8px;
 }
 
-// Colors
-[data-color='primary'].surfaceTinted {
-  --surface-bg: var(--ds-color-primary-surface-tinted);
-  --surface-text: var(--ds-color-primary-text-default);
-  --border-color: var(--ds-color-primary-border-subtle);
-  background-color: var(--surface-bg);
-  color: var(--surface-text);
-}
-[data-color='accent'].surfaceTinted {
-  --surface-bg: var(--ds-color-accent-surface-tinted);
-  --surface-text: var(--ds-color-accent-text-default);
-  --border-color: var(--ds-color-accent-border-subtle);
-  background-color: var(--surface-bg);
-  color: var(--surface-text);
-}
-[data-color='success'].surfaceTinted {
-  --surface-bg: var(--ds-color-success-surface-tinted);
-  --surface-text: var(--ds-color-success-text-default);
-  --border-color: var(--ds-color-success-border-subtle);
-  background-color: var(--surface-bg);
-  color: var(--surface-text);
-}
-[data-color='warning'].surfaceTinted {
-  --surface-bg: var(--ds-color-warning-surface-tinted);
-  --surface-text: var(--ds-color-warning-text-default);
-  --border-color: var(--ds-color-warning-border-subtle);
-  background-color: var(--surface-bg);
-  color: var(--surface-text);
-}
-[data-color='danger'].surfaceTinted {
-  --surface-bg: var(--ds-color-danger-surface-tinted);
-  --surface-text: var(--ds-color-danger-text-default);
-  --border-color: var(--ds-color-danger-border-subtle);
-  background-color: var(--surface-bg);
-  color: var(--surface-text);
-}
-[data-color='neutral'].surfaceTinted {
-  --surface-bg: var(--ds-color-neutral-surface-tinted);
-  --surface-text: var(--ds-color-neutral-text-default);
-  --border-color: var(--ds-color-neutral-border-subtle);
-  background-color: var(--surface-bg);
-  color: var(--surface-text);
-}
-[data-color='extra1'].surfaceTinted {
-  --surface-bg: var(--ds-color-extra1-surface-tinted);
-  --surface-text: var(--ds-color-extra1-text-default);
-  --border-color: var(--ds-color-extra1-border-subtle);
-  background-color: var(--surface-bg);
-  color: var(--surface-text);
-}
-[data-color='extra2'].surfaceTinted {
-  --surface-bg: var(--ds-color-extra2-surface-tinted);
-  --surface-text: var(--ds-color-extra2-text-default);
-  --border-color: var(--ds-color-extra2-border-subtle);
-  background-color: var(--surface-bg);
-  color: var(--surface-text);
-}
-[data-color='muted'].surfaceTinted {
-  --surface-bg: var(--ds-color-neutral-background-tinted);
-  --surface-text: var(--ds-color-neutral-border-strong);
-  --border-color: var(--ds-color-neutral-border-subtle);
-  background-color: var(--surface-bg);
-  color: var(--surface-text);
+.has-border {
+  border-color: var(--ds-color-border-default);
+  border-width: 1px;
 }
 
-// Muted base variant
-[data-color='muted']:not(.surfaceTinted) {
-  background-color: var(--ds-color-neutral-border-default);
-  color: var(--ds-color-neutral-background-tinted);
+.border-solid {
+  border-style: solid;
 }
-
-// Border combinations
-.surfaceTinted.border-solid {
-  border: 1px solid var(--border-color);
+.border-dashed {
+  border-style: dashed;
 }
-
-.surfaceTinted.border-dashed {
-  border: 1px dashed var(--border-color);
+.border-dotted {
+  border-style: dotted;
 }
-
-.surfaceTinted.border-dotted {
-  border: 1px dotted var(--border-color);
-}
-
-.surfaceTinted.border-double {
-  border: 3px double var(--border-color);
+.border-double {
+  border-style: double;
+  border-width: 4px;
 }

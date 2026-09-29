@@ -1,7 +1,7 @@
 import { Heading } from '@digdir/designsystemet-react';
 import classes from './CardTitle.module.scss';
 
-import { Box, Icon, IconId } from '~/main';
+import { Surface, Icon, IconId } from '~/main';
 
 export type CardTitleProps = {
   children?: React.ReactNode;
@@ -13,7 +13,7 @@ export type CardTitleProps = {
 
 const CardTitle = ({ icon, href, children, level = 2, size = 'sm' }: CardTitleProps) => {
   return (
-    <Box horizontal justify="between">
+    <Surface horizontal justify="between">
       {href ? (
         <Heading data-size={size} level={level}>
           <a className="styrbord-card-link" href={href}>
@@ -26,7 +26,7 @@ const CardTitle = ({ icon, href, children, level = 2, size = 'sm' }: CardTitlePr
         </Heading>
       )}
       {icon && <Icon material={icon} className={classes.icon} />}
-    </Box>
+    </Surface>
   );
 };
 

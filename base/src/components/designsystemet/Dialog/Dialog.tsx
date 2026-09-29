@@ -16,12 +16,15 @@ const sizeMaxWidth: Record<DialogSize, string> = {
 };
 
 export type DialogProps = DSDialogProps & {
-  size?: DialogSize;
+  'max-width'?: DialogSize;
 };
 
-const DialogRoot = forwardRef<HTMLDialogElement, DialogProps>(function Dialog({ size, style, ...props }, ref) {
+const DialogRoot = forwardRef<HTMLDialogElement, DialogProps>(function Dialog(
+  { 'max-width': maxWidth, style, ...props },
+  ref,
+) {
   const sizeStyle: CSSProperties =
-    size && size !== 'md' ? ({ '--dsc-dialog-max-width': sizeMaxWidth[size] } as CSSProperties) : {};
+    maxWidth && maxWidth !== 'md' ? ({ '--dsc-dialog-max-width': sizeMaxWidth[maxWidth] } as CSSProperties) : {};
 
   return <DSDialog ref={ref} style={{ ...sizeStyle, ...style }} {...props} />;
 });

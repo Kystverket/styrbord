@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Body, Accent } from './typography';
-import Box, { BoxProps } from '../Box/box';
+import { Paragraph, Accent } from '~/main';
+import Surface from '../Surface/Surface';
+import type { BoxProps } from '../Box/box';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
@@ -17,12 +18,12 @@ type Story = StoryObj<typeof meta>;
 
 const defaultProps: BoxProps = {
   children: (
-    <Box gap={16}>
-      <Body size="md">
+    <Surface gap={4}>
+      <Paragraph data-size="md">
         Ved endringer av typografi er det viktig å merke seg at Figma rapporterer feil font-weight for medium-bold
         tekst. Den får font-weight: 400 i Figma men det korrekte skal være 500. Gyldige font-vekter for kystinn er 300,
         500 og 700
-      </Body>
+      </Paragraph>
       <Accent size="md">Accent Medium</Accent>
       <Accent size="sm">Accent Small</Accent>
       <Accent size="md" weight="medium">
@@ -37,7 +38,7 @@ const defaultProps: BoxProps = {
       <Accent size="sm" weight="semibold">
         Accent Small Semibold
       </Accent>
-    </Box>
+    </Surface>
   ),
 };
 

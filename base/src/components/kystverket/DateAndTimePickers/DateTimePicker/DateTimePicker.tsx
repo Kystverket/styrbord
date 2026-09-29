@@ -1,6 +1,6 @@
 import { Field, Input, Label, ValidationMessage } from '@digdir/designsystemet-react';
 import { Icon, IconButton, InputSize, LabelContent } from '~/main';
-import { inputSizeClass } from '~/utils/input/input';
+import { inputWidthClass } from '~/utils/input/input';
 import { useRef } from 'react';
 import styles from '../PickerInput.module.css';
 
@@ -17,7 +17,7 @@ export interface DateTimePickerProps {
   onChange?: (date: Date | undefined) => void;
   minDate?: Date;
   maxDate?: Date;
-  size?: InputSize;
+  width?: InputSize;
   disabled?: boolean;
   readOnly?: boolean;
 }
@@ -33,7 +33,7 @@ const toDateTimeString = (date: Date | undefined): string => {
 };
 
 export const DateTimePicker = ({
-  size = 'full',
+  width = 'full',
   className,
   label,
   loading,
@@ -48,7 +48,7 @@ export const DateTimePicker = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <Field className={`${className} ${inputSizeClass(size)}`}>
+    <Field className={`${className} ${inputWidthClass(width)}`}>
       <Label style={{ display: 'block', width: 'fit-content' }}>
         <LabelContent text={label} required={required} optional={optional} loading={loading} />
       </Label>

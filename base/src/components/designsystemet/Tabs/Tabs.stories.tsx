@@ -1,4 +1,4 @@
-import { Tabs, Tooltip, Button, Icon, Box } from '~/main';
+import { Tabs, Tooltip, Button, Icon, Surface } from '~/main';
 import type { Meta, StoryFn } from '@storybook/react-vite';
 import { useState } from 'react';
 
@@ -35,7 +35,7 @@ Preview.args = {
 
 export const withButton: StoryFn<typeof Tabs> = (args) => (
   <Tabs {...args}>
-    <Box horizontal justify="between" align="center" width="full" mb={20}>
+    <Surface horizontal justify="between" align="center" width="full" mb={5}>
       <Tabs.List>
         <Tabs.Tab value="value1">Tab 1</Tabs.Tab>
         <Tabs.Tab value="value2">Tab 2</Tabs.Tab>
@@ -45,7 +45,7 @@ export const withButton: StoryFn<typeof Tabs> = (args) => (
         <Icon material="add" />
         Ny sak
       </Button>
-    </Box>
+    </Surface>
 
     <Tabs.Panel value="value1">content 1</Tabs.Panel>
     <Tabs.Panel value="value2">content 2</Tabs.Panel>
@@ -55,7 +55,7 @@ export const withButton: StoryFn<typeof Tabs> = (args) => (
 
 export const withoutUnderline: StoryFn<typeof Tabs> = (args) => (
   <Tabs {...args}>
-    <Box horizontal justify="between" align="center" width="full" mb={20}>
+    <Surface horizontal justify="between" align="center" width="full" mb={5}>
       <Tabs.List>
         <Tabs.Tab value="value1">Tab 1</Tabs.Tab>
         <Tabs.Tab value="value2">Tab 2</Tabs.Tab>
@@ -65,7 +65,7 @@ export const withoutUnderline: StoryFn<typeof Tabs> = (args) => (
         <Icon material="add" />
         Ny sak
       </Button>
-    </Box>
+    </Surface>
 
     <Tabs.Panel value="value1">content 1</Tabs.Panel>
     <Tabs.Panel value="value2">content 2</Tabs.Panel>

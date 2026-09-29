@@ -32,15 +32,15 @@ export const Default: Story = {
 };
 
 export const Warning: Story = {
-  args: { ...defaultProps, title: 'Informativ tittel', level: 'warning' },
+  args: { ...defaultProps, title: 'Informativ tittel', 'data-color': 'warning' },
 };
 
 export const Success: Story = {
-  args: { ...defaultProps, level: 'success' },
+  args: { ...defaultProps, 'data-color': 'success' },
 };
 
 export const Danger: Story = {
-  args: { ...defaultProps, level: 'error' },
+  args: { ...defaultProps, 'data-color': 'danger' },
 };
 
 export const DangerAlt: Story = {
@@ -68,7 +68,7 @@ export const WithErrorDismiss: Story = {
     ...defaultProps,
     title: '',
     text: 'Feil under opplasting',
-    level: 'error',
+    'data-color': 'danger',
     onDismiss: () => {},
   },
 };
@@ -78,9 +78,12 @@ export const WithoutBorderAndRoundedCorners: Story = {
     ...defaultProps,
     title: '',
     text: 'Feil under opplasting',
-    level: 'error',
-    bordered: false,
-    rounded: false,
+    'data-color': 'danger',
+    'border-style': 'none',
     onDismiss: () => {},
   },
+};
+
+export const Lyng: Story = {
+  args: { ...defaultProps, 'data-color': 'lyng' },
 };

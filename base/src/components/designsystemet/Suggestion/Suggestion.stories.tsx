@@ -6,7 +6,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 const DevelopmentNotice = () => (
   <Alert
     title="Under utvikling"
-    level="warning"
+    data-color="warning"
     text="Komponenten er fortsatt under utvikling og kan endre seg."
     style={{ marginBottom: 'var(--ds-size-6)' }}
   />

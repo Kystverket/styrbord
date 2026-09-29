@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Box, ValidationMessage } from '~/main';
+import { Surface, ValidationMessage } from '~/main';
 
 export interface ErrorLabelProps {
   text?: string | null;
@@ -11,10 +11,10 @@ const ErrorLabel = ({ ...props }: ErrorLabelProps) => {
   const errorText = props.text ?? props.error;
   const errorHasText = typeof errorText === 'string' && errorText.length > 0;
   return (
-    <Box gap={4}>
+    <Surface gap={1}>
       {props.children && <div>{props.children}</div>}
       {errorHasText && <ValidationMessage>{errorText}</ValidationMessage>}
-    </Box>
+    </Surface>
   );
 };
 

@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react-vite';
 import { useState } from 'react';
-import { Body, Box, Button, Heading, Icon, Paragraph, Tag, Text } from '~/main';
+import { Paragraph, Surface, Button, Heading, Icon, Tag } from '~/main';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { SaksbehandlingShell } from './SaksbehandlingShell';
 import type { SaksbehandlingItem } from './SaksbehandlingShell.types';
@@ -120,18 +120,18 @@ export const Default: StoryFn<typeof SaksbehandlingShell> = () => {
     <div style={{ height: '100vh' }}>
       <SaksbehandlingShell
         headerContent={
-          <Box horizontal align="center" gap={8} justify="between" width="full">
+          <Surface horizontal align="center" gap={2} justify="between" width="full">
             <Heading level={1} data-size="sm" style={{ margin: 0 }}>
               Sak 2026-0142 — Søknad om utslippstillatelse
             </Heading>
-            <Box horizontal align="center" gap={4}>
+            <Surface horizontal align="center" gap={1}>
               <Icon material="pin_drop" size="sm" />
-              <Text data-size="sm">Sandnessjøen havn</Text>
-            </Box>
+              <span data-size="sm">Sandnessjøen havn</span>
+            </Surface>
             <Tag data-color="success" data-size="sm">
               Under behandling
             </Tag>
-          </Box>
+          </Surface>
         }
         caseActions={<Button size="sm">Avslutt sak</Button>}
         itemActions={selectedItem && <Button size="sm">Svar</Button>}
@@ -238,8 +238,8 @@ export const Default: StoryFn<typeof SaksbehandlingShell> = () => {
             <Heading level={2} data-size="sm">
               {selectedItem.title}
             </Heading>
-            <Body>{selectedItem.description}</Body>
-            <Body>
+            <Paragraph>{selectedItem.description}</Paragraph>
+            <Paragraph>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at bibendum dui. Sed eu enim et tellus
               lacinia pretium. Proin vel velit euismod, finibus libero in, sagittis lacus. Nam euismod leo vitae magna
               egestas, sed commodo purus egestas. Aenean euismod est sed libero imperdiet porttitor. Donec molestie diam
@@ -254,8 +254,8 @@ export const Default: StoryFn<typeof SaksbehandlingShell> = () => {
               ipsum et, consectetur massa. Fusce pretium lectus sed lobortis facilisis. Vestibulum interdum nulla vitae
               ex mattis condimentum. Nulla facilisi. Suspendisse consectetur nibh vel massa mattis scelerisque. In
               lectus erat, lobortis et arcu ut, posuere vehicula tortor.
-            </Body>
-            <Body>
+            </Paragraph>
+            <Paragraph>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at bibendum dui. Sed eu enim et tellus
               lacinia pretium. Proin vel velit euismod, finibus libero in, sagittis lacus. Nam euismod leo vitae magna
               egestas, sed commodo purus egestas. Aenean euismod est sed libero imperdiet porttitor. Donec molestie diam
@@ -270,8 +270,8 @@ export const Default: StoryFn<typeof SaksbehandlingShell> = () => {
               ipsum et, consectetur massa. Fusce pretium lectus sed lobortis facilisis. Vestibulum interdum nulla vitae
               ex mattis condimentum. Nulla facilisi. Suspendisse consectetur nibh vel massa mattis scelerisque. In
               lectus erat, lobortis et arcu ut, posuere vehicula tortor.
-            </Body>
-            <Body>
+            </Paragraph>
+            <Paragraph>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at bibendum dui. Sed eu enim et tellus
               lacinia pretium. Proin vel velit euismod, finibus libero in, sagittis lacus. Nam euismod leo vitae magna
               egestas, sed commodo purus egestas. Aenean euismod est sed libero imperdiet porttitor. Donec molestie diam
@@ -286,8 +286,8 @@ export const Default: StoryFn<typeof SaksbehandlingShell> = () => {
               ipsum et, consectetur massa. Fusce pretium lectus sed lobortis facilisis. Vestibulum interdum nulla vitae
               ex mattis condimentum. Nulla facilisi. Suspendisse consectetur nibh vel massa mattis scelerisque. In
               lectus erat, lobortis et arcu ut, posuere vehicula tortor.
-            </Body>
-            <Body>
+            </Paragraph>
+            <Paragraph>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at bibendum dui. Sed eu enim et tellus
               lacinia pretium. Proin vel velit euismod, finibus libero in, sagittis lacus. Nam euismod leo vitae magna
               egestas, sed commodo purus egestas. Aenean euismod est sed libero imperdiet porttitor. Donec molestie diam
@@ -302,8 +302,8 @@ export const Default: StoryFn<typeof SaksbehandlingShell> = () => {
               ipsum et, consectetur massa. Fusce pretium lectus sed lobortis facilisis. Vestibulum interdum nulla vitae
               ex mattis condimentum. Nulla facilisi. Suspendisse consectetur nibh vel massa mattis scelerisque. In
               lectus erat, lobortis et arcu ut, posuere vehicula tortor.
-            </Body>
-            <Body>
+            </Paragraph>
+            <Paragraph>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at bibendum dui. Sed eu enim et tellus
               lacinia pretium. Proin vel velit euismod, finibus libero in, sagittis lacus. Nam euismod leo vitae magna
               egestas, sed commodo purus egestas. Aenean euismod est sed libero imperdiet porttitor. Donec molestie diam
@@ -318,8 +318,8 @@ export const Default: StoryFn<typeof SaksbehandlingShell> = () => {
               ipsum et, consectetur massa. Fusce pretium lectus sed lobortis facilisis. Vestibulum interdum nulla vitae
               ex mattis condimentum. Nulla facilisi. Suspendisse consectetur nibh vel massa mattis scelerisque. In
               lectus erat, lobortis et arcu ut, posuere vehicula tortor.
-            </Body>
-            <Body>
+            </Paragraph>
+            <Paragraph>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at bibendum dui. Sed eu enim et tellus
               lacinia pretium. Proin vel velit euismod, finibus libero in, sagittis lacus. Nam euismod leo vitae magna
               egestas, sed commodo purus egestas. Aenean euismod est sed libero imperdiet porttitor. Donec molestie diam
@@ -334,8 +334,8 @@ export const Default: StoryFn<typeof SaksbehandlingShell> = () => {
               ipsum et, consectetur massa. Fusce pretium lectus sed lobortis facilisis. Vestibulum interdum nulla vitae
               ex mattis condimentum. Nulla facilisi. Suspendisse consectetur nibh vel massa mattis scelerisque. In
               lectus erat, lobortis et arcu ut, posuere vehicula tortor.
-            </Body>
-            <Body>
+            </Paragraph>
+            <Paragraph>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at bibendum dui. Sed eu enim et tellus
               lacinia pretium. Proin vel velit euismod, finibus libero in, sagittis lacus. Nam euismod leo vitae magna
               egestas, sed commodo purus egestas. Aenean euismod est sed libero imperdiet porttitor. Donec molestie diam
@@ -350,8 +350,8 @@ export const Default: StoryFn<typeof SaksbehandlingShell> = () => {
               ipsum et, consectetur massa. Fusce pretium lectus sed lobortis facilisis. Vestibulum interdum nulla vitae
               ex mattis condimentum. Nulla facilisi. Suspendisse consectetur nibh vel massa mattis scelerisque. In
               lectus erat, lobortis et arcu ut, posuere vehicula tortor.
-            </Body>
-            <Body>
+            </Paragraph>
+            <Paragraph>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at bibendum dui. Sed eu enim et tellus
               lacinia pretium. Proin vel velit euismod, finibus libero in, sagittis lacus. Nam euismod leo vitae magna
               egestas, sed commodo purus egestas. Aenean euismod est sed libero imperdiet porttitor. Donec molestie diam
@@ -366,8 +366,8 @@ export const Default: StoryFn<typeof SaksbehandlingShell> = () => {
               ipsum et, consectetur massa. Fusce pretium lectus sed lobortis facilisis. Vestibulum interdum nulla vitae
               ex mattis condimentum. Nulla facilisi. Suspendisse consectetur nibh vel massa mattis scelerisque. In
               lectus erat, lobortis et arcu ut, posuere vehicula tortor.
-            </Body>
-            <Body>
+            </Paragraph>
+            <Paragraph>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at bibendum dui. Sed eu enim et tellus
               lacinia pretium. Proin vel velit euismod, finibus libero in, sagittis lacus. Nam euismod leo vitae magna
               egestas, sed commodo purus egestas. Aenean euismod est sed libero imperdiet porttitor. Donec molestie diam
@@ -382,7 +382,7 @@ export const Default: StoryFn<typeof SaksbehandlingShell> = () => {
               ipsum et, consectetur massa. Fusce pretium lectus sed lobortis facilisis. Vestibulum interdum nulla vitae
               ex mattis condimentum. Nulla facilisi. Suspendisse consectetur nibh vel massa mattis scelerisque. In
               lectus erat, lobortis et arcu ut, posuere vehicula tortor.
-            </Body>
+            </Paragraph>
           </>
         ) : (
           <Paragraph>Velg et element i listen til venstre.</Paragraph>

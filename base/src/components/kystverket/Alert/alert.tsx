@@ -1,12 +1,11 @@
 import classes from './alert.module.css';
 import React from 'react';
 import Icon from '../Icon/icon';
-import { Box, Heading } from '~/main';
+import { Surface, DataColor, Heading } from '~/main';
 import { Alert as DsAlert, AlertProps as DsAlertProps } from '@digdir/designsystemet-react';
 import { smaller } from '../../../utils/sizing';
 
 export type AlertProps = DsAlertProps & {
-  level?: 'info' | 'success' | 'warning' | 'error';
   title?: string;
   text?: string;
   children?: React.ReactNode;
@@ -15,36 +14,30 @@ export type AlertProps = DsAlertProps & {
   className?: string;
   role?: 'status';
   onDismiss?: () => void;
-  bordered?: boolean;
-  rounded?: boolean;
+  'border-style'?: 'none' | 'solid';
+  'data-color'?: DataColor;
 };
 
 const Alert = ({
-  level,
   title = undefined,
   'data-size': dataSize = 'md',
   text,
   width = 'content',
   className = '',
-  bordered = true,
-  rounded = true,
+  'border-style': borderStyle = 'solid',
   ...props
 }: AlertProps) => {
-  const dataColor = props['data-color'] ?? (level === 'error' ? 'danger' : level) ?? 'info';
   const classNames = [classes.alert, className, classes['width-' + width]];
 
-  if (bordered) {
+  if (borderStyle === 'solid') {
     classNames.push(classes.bordered);
-  }
-  if (rounded) {
-    classNames.push(classes.rounded);
   }
 
   return (
-    <DsAlert className={classNames.join(' ')} style={props.style} data-color={dataColor}>
-      <Box horizontal justify="between" align="start" gap={8}>
-        <Box horizontal align="start" gap={8}>
-          <Box gap={4}>
+    <DsAlert className={classNames.join(' ')} style={props.style} {...props}>
+      <Surface horizontal justify="between" align="start" gap={2}>
+        <Surface horizontal align="start" gap={2}>
+          <Surface gap={1}>
             {title && (
               <Heading data-size={smaller(smaller(dataSize))}>
                 <span role={props.role}>{title}</span>
@@ -54,14 +47,14 @@ const Alert = ({
               {text}
               {props.children}
             </div>
-          </Box>
-        </Box>
+          </Surface>
+        </Surface>
         {props.onDismiss ? (
           <button className={classes.closeButton} onClick={props.onDismiss}>
             <Icon material="close" />
           </button>
         ) : null}
-      </Box>
+      </Surface>
     </DsAlert>
   );
 };

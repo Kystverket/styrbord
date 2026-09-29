@@ -10,36 +10,13 @@
   .svg {
     width: var(--kyv-svg-size, auto);
     height: var(--kyv-svg-size, auto);
+    color: var(--ds-color-base-default);
   }
   @supports (width: round(down, 0.1em, 1px)) {
     .svg {
       width: round(down, var(--kyv-svg-size, auto), 1px);
       height: round(down, var(--kyv-svg-size, auto), 1px);
     }
-  }
-
-  .primary {
-    color: var(--ds-color-primary-border-default);
-  }
-
-  .info {
-    color: var(--ds-color-info-border-subtle);
-  }
-
-  .accent {
-    color: var(--ds-color-accent-border-default);
-  }
-
-  .sand {
-    color: var(--ds-color-primary-background-default);
-  }
-
-  .neutral {
-    color: var(--ds-color-neutral-border-default);
-  }
-
-  .white {
-    color: var(--ds-color-primary-base-contrast-default);
   }
 
   /* export const imageColors = ['primary', 'info', 'accent', 'sand', 'neutral', 'white'] as const; */

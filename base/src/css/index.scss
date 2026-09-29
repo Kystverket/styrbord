@@ -25,10 +25,8 @@
   @include meta.load-css('../components/designsystemet/Checkbox/Checkbox.override.scss');
   @include meta.load-css('../components/designsystemet/Tooltip/Tooltip.override.scss');
   @include meta.load-css('../components/designsystemet/Avatar/Avatar.override.scss');
-  @include meta.load-css('../components/designsystemet/Dropdown/Dropdown.override.scss');
   @include meta.load-css('../components/designsystemet/Popover/Popover.override.scss');
   @include meta.load-css('../components/designsystemet/Suggestion/Suggestion.override.scss');
-  @include meta.load-css('../components/designsystemet/Chip/Chip.override.scss');
   @include meta.load-css('../components/designsystemet/Radio/Radio.override.scss');
 }
 
@@ -37,4 +35,48 @@
 .ds-popover {
   max-width: 400px;
   @include meta.load-css('../components/designsystemet/Dialog/Dialog.override.scss');
+}
+
+.ds-paragraph[data-color-variant='subtle']:not([data-color]),
+p[data-color-variant='subtle']:not([data-color]),
+span[data-color-variant='subtle']:not([data-color]) {
+  color: var(--ds-color-neutral-text-subtle);
+}
+
+.ds-paragraph[data-font-weight='regular']:not([data-color]),
+p[data-font-weight='regular']:not([data-color]),
+span[data-font-weight='regular']:not([data-color]) {
+  font-weight: var(--ds-font-weight-regular);
+}
+.ds-paragraph[data-font-weight='medium']:not([data-color]),
+p[data-font-weight='medium']:not([data-color]),
+span[data-font-weight='medium']:not([data-color]) {
+  font-weight: var(--ds-font-weight-medium);
+}
+.ds-paragraph[data-font-weight='semibold']:not([data-color]),
+p[data-font-weight='semibold']:not([data-color]),
+span[data-font-weight='semibold']:not([data-color]) {
+  font-weight: var(--ds-font-weight-semibold);
+}
+
+*[data-text-case='upper'] {
+  text-transform: uppercase;
+}
+*[data-text-case='lower'] {
+  text-transform: lowercase;
+}
+*[data-text-case='capitalize'] {
+  text-transform: capitalize;
+}
+*[data-text-wrap='wrap'] {
+  text-wrap: normal;
+}
+*[data-text-wrap='nowrap'] {
+  text-wrap: nowrap;
+}
+*[data-text-wrap='pre'] {
+  text-wrap: pre;
+}
+*[data-text-wrap='pretty'] {
+  text-wrap: pretty;
 }

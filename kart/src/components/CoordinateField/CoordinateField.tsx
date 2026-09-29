@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useId, useMemo, useState } from "react";
-import { Box, NumberInput, ValidationMessage } from "@kystverket/styrbord";
+import { Surface, NumberInput, ValidationMessage } from "@kystverket/styrbord";
 import type { FeatureCollection, Point } from "geojson";
 
 import type { CoordinateFieldProps } from "./CoordinateField.types";
@@ -88,7 +88,7 @@ export function CoordinateField({
   );
 
   return (
-    <Box gap={16} className={[className].filter(Boolean).join(" ")}>
+    <Surface gap={4} className={[className].filter(Boolean).join(" ")}>
       <GeoJsonEditor
         singleFeature
         modes={["point"]}
@@ -100,7 +100,7 @@ export function CoordinateField({
       />
 
       {/* Coordinate inputs */}
-      <Box horizontal gap={16}>
+      <Surface horizontal gap={4}>
         <NumberInput
           id={`${id}-lat`}
           inputMode="decimal"
@@ -122,10 +122,10 @@ export function CoordinateField({
           onChange={(v) => setLonValue(v)}
           onBlur={() => commitLatLon(latValue, lonValue)}
         />
-      </Box>
+      </Surface>
 
       {error && <ValidationMessage>{error}</ValidationMessage>}
-    </Box>
+    </Surface>
   );
 }
 

@@ -17,9 +17,10 @@ Alle komponentene og typene i Designsystemet er tilgjengelig i Styrbord med føl
 
 ## Versjonering
 
-- Major følger major-versjon til Designsystemet.
-- Minor inkrementeres ved en eller flere knekkende endringer, eller ny versjon av Designsystemet.
-- Patch inkrementeres ved alle endringer, store eller små, som ikke knekker noe eksisterende.
+- Prosjektet følger semantisk versjonering (`major.minor.patch`).
+- Major inkrementeres ved knekkende endringer.
+- Minor inkrementeres ved ny funksjonalitet bakoverkompatibelt.
+- Patch inkrementeres ved feilrettinger og mindre forbedringer.
 
 ## Bruk
 

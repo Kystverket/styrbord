@@ -1,4 +1,4 @@
-import { Table, TableHeaderCellProps, useCheckboxGroup, Checkbox, Box } from '~/main';
+import { Table, TableHeaderCellProps, useCheckboxGroup, Checkbox, Surface } from '~/main';
 import type { Meta, StoryFn } from '@storybook/react-vite';
 import { useState } from 'react';
 import { Textfield } from '@digdir/designsystemet-react';
@@ -398,7 +398,7 @@ WithBorder.parameters = {
 export const OpaqueHeader: Story = (args) => {
   const rows = Array.from({ length: 4 }, (_, i) => i + 1);
   return (
-    <Box gap={16}>
+    <Surface gap={4}>
       <Table {...args} header="opaque">
         <Table.Head>
           <Table.Row>
@@ -447,7 +447,7 @@ export const OpaqueHeader: Story = (args) => {
           ))}
         </Table.Body>
       </Table>
-    </Box>
+    </Surface>
   );
 };
 

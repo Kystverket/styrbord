@@ -1,7 +1,7 @@
 import { Textfield as DsTextField, ValidationMessage } from '@digdir/designsystemet-react';
-import { Body, Box, LabelContent } from '~/main';
+import { Surface, LabelContent } from '~/main';
 import { useTranslation } from '~/translations';
-import { InputSize, inputSizeClass } from '~/utils/input/input';
+import { InputSize, inputWidthClass } from '~/utils/input/input';
 import classes from './TextArea.module.scss';
 
 export const Textfield = null;
@@ -22,12 +22,12 @@ export interface TextAreaProps {
   inputMode?: 'email' | 'tel' | 'search' | 'text' | 'none' | 'url' | 'numeric' | 'decimal';
   maxLength?: number;
   minHeight?: 'sm' | 'md' | 'lg';
-  size?: InputSize;
+  width?: InputSize;
   id?: string;
 }
 
 export const TextArea = ({
-  size = 'full',
+  width = 'full',
   className,
   label,
   required,
@@ -43,9 +43,9 @@ export const TextArea = ({
   const t = scopedT('textArea');
 
   return (
-    <Box gap={8}>
+    <Surface gap={2}>
       <DsTextField
-        className={`${classes.textArea} ${classes[minHeight]} ${className} ${inputSizeClass(size)}`}
+        className={`${classes.textArea} ${classes[minHeight]} ${className} ${inputWidthClass(width)}`}
         label={<LabelContent text={label} required={required} optional={optional} />}
         value={value ?? ''}
         onChange={(event) => {
@@ -57,9 +57,9 @@ export const TextArea = ({
         {...props}
       />
       {maxLength && (
-        <Body>{t('charactersRemaining').replace('{count}', String(maxLength - (value ?? '').length))}</Body>
+        <span>{t('charactersRemaining').replace('{count}', String(maxLength - (value ?? '').length))}</span>
       )}
       {typeof error === 'string' && <ValidationMessage>{error}</ValidationMessage>}
-    </Box>
+    </Surface>
   );
 };

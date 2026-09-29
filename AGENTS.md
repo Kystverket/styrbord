@@ -58,9 +58,11 @@ There are no meaningful tests in either workspace (`test` scripts are no-ops).
 
 **Component categories** (`base/src/components/`):
 
-- `kystverket/` — Kystverket-specific components (marked ⚓ in Storybook): `Alert`, `Box`, `Button`, `Datepicker`, `FileUploader`, `Footer`, `Header`, `Icon`, `Logo`, `PageHeading`, `RichTextArea`, `Stepper`, `Summary`, `Tabs`, etc.
+- `kystverket/` — Kystverket-specific components (marked ⚓ in Storybook): `Alert`, `Button`, `Datepicker`, `FileUploader`, `Footer`, `Header`, `Icon`, `Logo`, `PageHeading`, `RichTextArea`, `Stepper`, `Summary`, `Surface`, `Tabs`, etc.
 - `designsystemet/` — Extended/overridden Designsystemet components (marked 🌈+⚓): `Button`, `TextInput`, `NumberInput`, `Select`, `Tabs`, `Tag`, etc.
 - `deprecated/` — Components being phased out, exported with a `Deprecated` prefix.
+
+**Layout: use `Surface`, never `Box`.** `Surface` replaces `Box`, which is `@deprecated` and will be removed in a future major. Don't add new `Box` usages, and don't fix Box's own issues — migrate the call site instead. Box spacing is pixels, Surface spacing is a step on the `--ds-size-*` scale (divide by 4); `color="x"` becomes `data-color="x" data-color-variant="subtle"`. Migration details are in `base/v2.md`.
 
 **Internationalisation** (`base/src/i18n/`): Translation JSON files for `nb-NO`, `nn-NO`, `en-US`. Translations are loaded via `@kystverket/sprak-react` using the `useStyrbordTranslation` hook (imported from `~/translations`). Applications must wrap with both `<SprakProvider>` (for language selection) and `<StyrbordTranslations>` (for the Styrbord namespace).
 
