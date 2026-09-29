@@ -50,7 +50,8 @@ jobs:
     with:
       workspace: base
       # Keep `latest` on the current major; maintenance releases go to their own tag.
-      dist-tag: ${{ github.ref_name == 'main' && 'latest' || 'v1' }}
+      # Not `v1`: npm rejects dist-tags that parse as a semver range.
+      dist-tag: ${{ github.ref_name == 'main' && 'latest' || 'maintenance' }}
     permissions:
       contents: read
       packages: write
@@ -63,7 +64,8 @@ jobs:
     with:
       workspace: kart
       # Keep `latest` on the current major; maintenance releases go to their own tag.
-      dist-tag: ${{ github.ref_name == 'main' && 'latest' || 'v1' }}
+      # Not `v1`: npm rejects dist-tags that parse as a semver range.
+      dist-tag: ${{ github.ref_name == 'main' && 'latest' || 'maintenance' }}
     permissions:
       contents: read
       packages: write
@@ -76,7 +78,8 @@ jobs:
     with:
       workspace: consent
       # Keep `latest` on the current major; maintenance releases go to their own tag.
-      dist-tag: ${{ github.ref_name == 'main' && 'latest' || 'v1' }}
+      # Not `v1`: npm rejects dist-tags that parse as a semver range.
+      dist-tag: ${{ github.ref_name == 'main' && 'latest' || 'maintenance' }}
     permissions:
       contents: read
       packages: write
