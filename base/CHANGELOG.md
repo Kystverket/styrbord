@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.3](https://github.com/Kystverket/styrbord/compare/styrbord-v2.0.2...styrbord-v2.0.3) (2026-09-29)
+
+
+### Bug Fixes
+
+* Surface med hvit bakgrunn ([d89bc35](https://github.com/Kystverket/styrbord/commit/d89bc358dda18081001844cc354950523d44e86d))
+
 ## [2.0.2](https://github.com/Kystverket/styrbord/compare/styrbord-v2.0.1...styrbord-v2.0.2) (2026-09-29)
 
 
