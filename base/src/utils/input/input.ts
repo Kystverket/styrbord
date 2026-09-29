@@ -2,7 +2,7 @@ import styles from './input.module.css';
 
 export type InputSize = '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'fit' | 'full';
 
-export const inputSizeClass = (size: InputSize) => {
+export const inputWidthClass = (size: InputSize) => {
   switch (size) {
     case '2xs':
       return styles.sizeXxs;

@@ -23,7 +23,7 @@ const meta = {
   decorators: [StyrbordDecorator, (Story) => <Story />],
   tags: ['autodocs', 'kyv'],
   argTypes: {
-    size: {
+    width: {
       control: 'select',
       options: sizes,
     },
@@ -38,7 +38,7 @@ const defaultProps: DateTimePickerProps = {
   label: 'DateTimePicker',
   description: 'Description',
   value: undefined,
-  size: 'full',
+  width: 'full',
   onChange: (date) => console.log('onChange ', date),
 };
 

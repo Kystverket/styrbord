@@ -52,7 +52,7 @@ export const GeoJsonAnnotater = ({
               <TextInput
                 id={getId("features", index, "properties", annotation.name)}
                 value={feature.properties?.[annotation.name]}
-                size="full"
+                width="full"
                 onChange={(value) => {
                   onFeatureChange(index, annotation.name, value);
                 }}

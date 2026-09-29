@@ -157,11 +157,11 @@ conversion for that file.
 
 ### Input sizing — [utils/input/input.ts](base/src/utils/input/input.ts), TextInput, TextArea, NumberInput
 
-- [ ] `InputSize` is a pixel `max-width` (`2xs`=75px, `xs`=130px, `sm`=185px, `md`=350px,
+- [x] `InputSize` is a pixel `max-width` (`2xs`=75px, `xs`=130px, `sm`=185px, `md`=350px,
       `lg`=31.25rem, plus `fit` and `full`), so the inputs currently have **no way to express
       "small input"** — only "narrow input". Move to `width` (Designsystemet already defines
       `'full' | 'auto'` on `Select`) plus `data-size` for the control size (§2.3)
-- [ ] All three use a plain `size` prop (§2.1)
+- [x] All three use a plain `size` prop (§2.1)
 - Blocked on open question 3 below.
 
 ---

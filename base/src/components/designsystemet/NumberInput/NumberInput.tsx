@@ -1,7 +1,7 @@
 import { Textfield } from '@digdir/designsystemet-react';
 import classes from './NumberInput.module.scss';
 import { LabelContent } from '~/main';
-import { InputSize, inputSizeClass } from '~/utils/input/input';
+import { InputSize, inputWidthClass } from '~/utils/input/input';
 import { useEffect, useState } from 'react';
 
 export interface NumberInputProps {
@@ -23,12 +23,12 @@ export interface NumberInputProps {
   min?: number;
   max?: number;
   align?: 'left' | 'right';
-  size?: InputSize;
+  width?: InputSize;
   id?: string;
 }
 
 export const NumberInput = ({
-  size = 'full',
+  width = 'full',
   inputMode = 'numeric',
   className,
   align = 'left',
@@ -45,7 +45,7 @@ export const NumberInput = ({
   return (
     <Textfield
       id={props.id}
-      className={[className, inputSizeClass(size), classes['align-' + align]].join(' ')}
+      className={[className, inputWidthClass(width), classes['align-' + align]].join(' ')}
       label={<LabelContent text={props.label} required={props.required} optional={props.optional} />}
       description={props.description}
       readOnly={props.readOnly}
