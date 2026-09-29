@@ -7,6 +7,11 @@ on:
         description: Workspace to build and publish (base, kart or consent)
         required: true
         type: string
+      dist-tag:
+        description: npm dist-tag to publish under (latest for main, v1 for the 1.x maintenance branch)
+        required: false
+        type: string
+        default: latest
 
 jobs:
   build:
@@ -46,7 +51,7 @@ jobs:
         with:
           name: dist-${{ inputs.workspace }}
           path: ${{ inputs.workspace }}/dist
-      - run: npm publish -w ${{ inputs.workspace }}
+      - run: npm publish -w ${{ inputs.workspace }} --tag ${{ inputs.dist-tag }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -77,4 +82,4 @@ jobs:
       - run: npm install -g npm@11.18.0
       - name: Clear auth token for OIDC
         run: echo "NODE_AUTH_TOKEN=" >> $GITHUB_ENV
-      - run: npm publish -w ${{ inputs.workspace }} --access public
+      - run: npm publish -w ${{ inputs.workspace }} --access public --tag ${{ inputs.dist-tag }}
