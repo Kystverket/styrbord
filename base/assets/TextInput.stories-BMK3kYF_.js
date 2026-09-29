@@ -1,0 +1,43 @@
+import{k as w}from"./Dialog-ZBxDd1Uk.js";import{S as F}from"./iframe-DR0OYCpq.js";import"./tooltip-DnfQk6b_.js";import"./index-DNwtzyee.js";import"./index-CPkxmeg0.js";import"./shipTypes-hFnSBndP.js";import"./Details-gblrFMVs.js";import"./KyvDivider-D67Jstwx.js";import"./KyvSpinner-zXYCJit5.js";import"./skillingsbuoye-DjMihQYC.js";import"./Logo-BKoiHjcJ.js";import"./color-tokens-DRys5hYJ.js";import"./preload-helper-Dp1pzeXC.js";const Z={title:"Form/TextInput",component:w,decorators:[F],tags:["autodocs","ds-override"],argTypes:{},parameters:{docs:{description:{component:"[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/textfield/overview)"}}}},r={onBlur:()=>console.log("onBlur"),onChange:j=>console.log(`onChange value: ${j}`),value:"",label:"This is a label",description:"This is a description"},e={args:r},a={args:{...r,required:!0}},s={args:{...r,optional:!0}},o={args:{...r,optional:"Spesialtilpasset verdi"}},t={args:{...r,placeholder:"placeholder"}},n={args:{...r,error:"error"}},c={args:{...r,disabled:!0}},d={args:{...r,readOnly:!0}},p={args:{...r,loading:!0}};var i,l,u;e.parameters={...e.parameters,docs:{...(i=e.parameters)==null?void 0:i.docs,source:{originalSource:`{
+  args: defaultArgs
+}`,...(u=(l=e.parameters)==null?void 0:l.docs)==null?void 0:u.source}}};var m,g,f;a.parameters={...a.parameters,docs:{...(m=a.parameters)==null?void 0:m.docs,source:{originalSource:`{
+  args: {
+    ...defaultArgs,
+    required: true
+  }
+}`,...(f=(g=a.parameters)==null?void 0:g.docs)==null?void 0:f.source}}};var h,S,A;s.parameters={...s.parameters,docs:{...(h=s.parameters)==null?void 0:h.docs,source:{originalSource:`{
+  args: {
+    ...defaultArgs,
+    optional: true
+  }
+}`,...(A=(S=s.parameters)==null?void 0:S.docs)==null?void 0:A.source}}};var O,y,b;o.parameters={...o.parameters,docs:{...(O=o.parameters)==null?void 0:O.docs,source:{originalSource:`{
+  args: {
+    ...defaultArgs,
+    optional: 'Spesialtilpasset verdi'
+  }
+}`,...(b=(y=o.parameters)==null?void 0:y.docs)==null?void 0:b.source}}};var v,x,D;t.parameters={...t.parameters,docs:{...(v=t.parameters)==null?void 0:v.docs,source:{originalSource:`{
+  args: {
+    ...defaultArgs,
+    placeholder: 'placeholder'
+  }
+}`,...(D=(x=t.parameters)==null?void 0:x.docs)==null?void 0:D.source}}};var T,q,R;n.parameters={...n.parameters,docs:{...(T=n.parameters)==null?void 0:T.docs,source:{originalSource:`{
+  args: {
+    ...defaultArgs,
+    error: 'error'
+  }
+}`,...(R=(q=n.parameters)==null?void 0:q.docs)==null?void 0:R.source}}};var W,E,k;c.parameters={...c.parameters,docs:{...(W=c.parameters)==null?void 0:W.docs,source:{originalSource:`{
+  args: {
+    ...defaultArgs,
+    disabled: true
+  }
+}`,...(k=(E=c.parameters)==null?void 0:E.docs)==null?void 0:k.source}}};var B,C,I;d.parameters={...d.parameters,docs:{...(B=d.parameters)==null?void 0:B.docs,source:{originalSource:`{
+  args: {
+    ...defaultArgs,
+    readOnly: true
+  }
+}`,...(I=(C=d.parameters)==null?void 0:C.docs)==null?void 0:I.source}}};var L,P,_;p.parameters={...p.parameters,docs:{...(L=p.parameters)==null?void 0:L.docs,source:{originalSource:`{
+  args: {
+    ...defaultArgs,
+    loading: true
+  }
+}`,...(_=(P=p.parameters)==null?void 0:P.docs)==null?void 0:_.source}}};const rr=["Default","Required","Optional","OptionalText","WithPlaceholder","WithError","Disabled","ReadOnly","Loading"];export{e as Default,c as Disabled,p as Loading,s as Optional,o as OptionalText,d as ReadOnly,a as Required,n as WithError,t as WithPlaceholder,rr as __namedExportsOrder,Z as default};
