@@ -51,7 +51,7 @@ export function HeaderApps({ links, applications }: HeaderAppsProps) {
           </Surface>
         </Button>
         <Dropdown id={id} open={isMenuOpen} data-color="neutral">
-          <Dropdown.List>
+          <Dropdown.List data-color="neutral">
             {applications.map((app) => (
               <Dropdown.Item key={app.id}>
                 <Dropdown.Button asChild>

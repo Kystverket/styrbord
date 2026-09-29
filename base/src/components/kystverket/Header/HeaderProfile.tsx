@@ -52,7 +52,7 @@ export function HeaderProfile({ links, profile, logoutHandler }: HeaderProfilePr
           </Surface>
         </Button>
         <Dropdown id={id} open={isMenuOpen} data-color="neutral">
-          <Dropdown.List>
+          <Dropdown.List data-color="neutral">
             <Dropdown.Item>
               <Surface horizontal align="center" p={2} gap={3} px={3}>
                 <Avatar
