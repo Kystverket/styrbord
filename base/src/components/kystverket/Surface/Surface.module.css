@@ -1,0 +1,247 @@
+@layer styrbord-modules {
+  .surface {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Spacing and flex — each class is only added when its prop is set */
+
+  .pt {
+    padding-top: var(--surface-pt);
+  }
+  .pr {
+    padding-right: var(--surface-pr);
+  }
+  .pb {
+    padding-bottom: var(--surface-pb);
+  }
+  .pl {
+    padding-left: var(--surface-pl);
+  }
+  .mt {
+    margin-top: var(--surface-mt);
+  }
+  .mr {
+    margin-right: var(--surface-mr);
+  }
+  .mb {
+    margin-bottom: var(--surface-mb);
+  }
+  .ml {
+    margin-left: var(--surface-ml);
+  }
+  .gap {
+    gap: var(--surface-gap);
+  }
+  .grow {
+    flex-grow: var(--surface-grow);
+  }
+  .shrink {
+    flex-shrink: var(--surface-shrink);
+  }
+  .basis {
+    flex-basis: var(--surface-basis);
+  }
+  .wrap {
+    flex-wrap: wrap;
+  }
+  .nowrap {
+    flex-wrap: nowrap;
+  }
+  .wrap-reverse {
+    flex-wrap: wrap-reverse;
+  }
+
+  /* Colour — follows the `data-color` cascade, so every family works */
+
+  .surface[data-color][data-color-variant='subtle'] {
+    background: var(--ds-color-background-tinted);
+    color: var(--ds-color-text-default);
+  }
+
+  .surface[data-color][data-color-variant='tinted'] {
+    background: var(--ds-color-surface-tinted);
+    --surface-border-color: var(--ds-color-border-default);
+  }
+
+  .surface[data-color][data-color-variant='base'] {
+    background: var(--ds-color-base-default);
+    color: var(--ds-color-base-contrast-default);
+    --surface-border-color: var(--ds-color-base-default);
+  }
+
+  .border-solid,
+  .border-dashed,
+  .border-dotted {
+    border: var(--ds-border-width-default) solid var(--surface-border-color, var(--ds-color-border-subtle));
+  }
+  .border-dashed {
+    border-style: dashed;
+  }
+  .border-dotted {
+    border-style: dotted;
+  }
+  /* A double line needs at least three widths to show as two lines */
+  .border-double {
+    border: calc(var(--ds-border-width-default) * 3) double var(--surface-border-color, var(--ds-color-border-subtle));
+  }
+
+  /* Layout */
+
+  .horizontal {
+    flex-direction: row;
+  }
+
+  .align-normal {
+    align-items: normal;
+  }
+  .align-start {
+    align-items: start;
+  }
+  .align-center {
+    align-items: center;
+  }
+  .align-end {
+    align-items: end;
+  }
+  .align-stretch {
+    align-items: stretch;
+  }
+
+  .justify-start {
+    justify-content: start;
+  }
+  .justify-center {
+    justify-content: center;
+  }
+  .justify-end {
+    justify-content: end;
+  }
+  .justify-between {
+    justify-content: space-between;
+  }
+  .justify-stretch {
+    justify-content: stretch;
+  }
+
+  .radius-none {
+    border-radius: 0;
+  }
+  .radius-default {
+    border-radius: var(--ds-border-radius-default);
+  }
+  .radius-sm {
+    border-radius: var(--ds-border-radius-sm);
+  }
+  .radius-md {
+    border-radius: var(--ds-border-radius-md);
+  }
+  .radius-lg {
+    border-radius: var(--ds-border-radius-lg);
+  }
+  .radius-xl {
+    border-radius: var(--ds-border-radius-xl);
+  }
+  .radius-full {
+    border-radius: var(--ds-border-radius-full);
+  }
+
+  .width-auto {
+    width: auto;
+  }
+  .width-fit {
+    width: fit-content;
+  }
+  .width-full {
+    width: 100%;
+  }
+  .width-container {
+    width: 100%;
+    max-width: 80rem;
+  }
+  .width-form {
+    width: 100%;
+    max-width: 55.75rem;
+  }
+  .width-form-sidebar {
+    width: 100%;
+    max-width: 16.5rem;
+  }
+
+  .container-size {
+    container-type: size;
+  }
+  .container-inline-size {
+    container-type: inline-size;
+  }
+
+  /* `show` hides below the breakpoint, `hide` hides from it. Same breakpoints as Box. */
+
+  .show-screen-xxs,
+  .show-screen-xs,
+  .show-screen-sm,
+  .show-screen-md,
+  .show-screen-lg {
+    display: none;
+  }
+
+  @media screen and (min-width: 384px) {
+    .horizontal-screen-xxs {
+      flex-direction: row;
+    }
+    .show-screen-xxs {
+      display: flex;
+    }
+    .hide-screen-xxs {
+      display: none;
+    }
+  }
+
+  @media screen and (min-width: 512px) {
+    .horizontal-screen-xs {
+      flex-direction: row;
+    }
+    .show-screen-xs {
+      display: flex;
+    }
+    .hide-screen-xs {
+      display: none;
+    }
+  }
+
+  @media screen and (min-width: 640px) {
+    .horizontal-screen-sm {
+      flex-direction: row;
+    }
+    .show-screen-sm {
+      display: flex;
+    }
+    .hide-screen-sm {
+      display: none;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    .horizontal-screen-md {
+      flex-direction: row;
+    }
+    .show-screen-md {
+      display: flex;
+    }
+    .hide-screen-md {
+      display: none;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .horizontal-screen-lg {
+      flex-direction: row;
+    }
+    .show-screen-lg {
+      display: flex;
+    }
+    .hide-screen-lg {
+      display: none;
+    }
+  }
+}
