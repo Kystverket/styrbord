@@ -21,6 +21,7 @@ Alle komponentene og typene i Designsystemet er tilgjengelig i Styrbord med føl
 - Major inkrementeres ved knekkende endringer.
 - Minor inkrementeres ved ny funksjonalitet bakoverkompatibelt.
 - Patch inkrementeres ved feilrettinger og mindre forbedringer.
+- Versjon 2.0.0 finnes bare på GitHub Packages. På npmjs var versjonsnummeret allerede brukt, så første 2.x-versjon der er 2.0.1.
 
 ## Bruk
 
