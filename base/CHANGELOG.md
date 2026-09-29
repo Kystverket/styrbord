@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/Kystverket/styrbord/compare/styrbord-v2.0.1...styrbord-v2.0.2) (2026-09-29)
+
+
+### Bug Fixes
+
+* **base:** Neutral dropdown i header ([9eefd8c](https://github.com/Kystverket/styrbord/commit/9eefd8c30b8f14b0da9cc0cf2025e5bbc7ae9e2c))
+
 ## [2.0.1](https://github.com/Kystverket/styrbord/compare/styrbord-v2.0.0...styrbord-v2.0.1) (2026-09-29)
 
 
