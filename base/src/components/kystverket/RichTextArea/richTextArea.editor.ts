@@ -10,7 +10,7 @@ import type { ImageInsertHandler, UploadImageFn } from './richTextArea.types';
 
 export const normalizeMarkdownBreakTags = (value: string) => value.replaceAll(/<br\s*\/?>/gi, '\n\n');
 
-const blockedCommonmarkGroups = new Set(['CodeBlock', 'InlineCode', 'Blockquote', 'Hr', 'Html']);
+const blockedCommonmarkGroups = new Set(['Blockquote', 'Hr', 'Html']);
 export const richTextCommonmarkPlugins = commonmark.filter((plugin) => {
   const group = plugin.meta?.group ?? '';
   return !blockedCommonmarkGroups.has(group);
