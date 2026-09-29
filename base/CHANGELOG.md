@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.20.1](https://github.com/Kystverket/styrbord/compare/styrbord-v1.20.0...styrbord-v1.20.1) (2026-09-29)
+
+
+### Bug Fixes
+
+* **base:** allow rich text code markdown ([#317](https://github.com/Kystverket/styrbord/issues/317)) ([45ad100](https://github.com/Kystverket/styrbord/commit/45ad1003a33cad5c8f21db452986dc4e58d812b0))
+
 ## [1.20.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.19.0...styrbord-v1.20.0) (2026-09-16)
 
 
