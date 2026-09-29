@@ -1,5 +1,5 @@
 import { Textfield as DsTextField, ValidationMessage } from '@digdir/designsystemet-react';
-import { Box, LabelContent } from '~/main';
+import { Surface, LabelContent } from '~/main';
 import { useTranslation } from '~/translations';
 import { InputSize, inputWidthClass } from '~/utils/input/input';
 import classes from './TextArea.module.scss';
@@ -43,7 +43,7 @@ export const TextArea = ({
   const t = scopedT('textArea');
 
   return (
-    <Box gap={8}>
+    <Surface gap={2}>
       <DsTextField
         className={`${classes.textArea} ${classes[minHeight]} ${className} ${inputWidthClass(width)}`}
         label={<LabelContent text={label} required={required} optional={optional} />}
@@ -60,6 +60,6 @@ export const TextArea = ({
         <span>{t('charactersRemaining').replace('{count}', String(maxLength - (value ?? '').length))}</span>
       )}
       {typeof error === 'string' && <ValidationMessage>{error}</ValidationMessage>}
-    </Box>
+    </Surface>
   );
 };

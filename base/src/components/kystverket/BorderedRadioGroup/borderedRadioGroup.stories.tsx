@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import BorderedRadioGroup, { BorderedRadioGroupProps, RadioGroupValueType } from './borderedRadioGroup';
-import { Box } from '~/main';
+import { Surface } from '~/main';
 import { useState } from 'react';
 
 const meta = {
@@ -42,9 +42,9 @@ export const Default: Story = {
   render: (args) => {
     const [value, setValue] = useState<RadioGroupValueType | undefined>(undefined);
     return (
-      <Box width="full">
+      <Surface width="full">
         <BorderedRadioGroup {...args} value={value} onChange={(v) => setValue(v)} />
-      </Box>
+      </Surface>
     );
   },
 };
@@ -70,9 +70,9 @@ export const WithLongOptionText: Story = {
   render: (args) => {
     const [value, setValue] = useState<RadioGroupValueType | undefined>(undefined);
     return (
-      <Box width="full">
+      <Surface width="full">
         <BorderedRadioGroup {...args} value={value} onChange={(v) => setValue(v)} />
-      </Box>
+      </Surface>
     );
   },
 };
@@ -89,9 +89,9 @@ export const WithReactElementDescription: Story = {
   render: (args) => {
     const [value, setValue] = useState<RadioGroupValueType | undefined>(undefined);
     return (
-      <Box width="full">
+      <Surface width="full">
         <BorderedRadioGroup {...args} value={value} onChange={(v) => setValue(v)} />
-      </Box>
+      </Surface>
     );
   },
 };
@@ -104,9 +104,9 @@ export const WithError: Story = {
   render: (args) => {
     const [value, setValue] = useState<RadioGroupValueType | undefined>(undefined);
     return (
-      <Box width="full">
+      <Surface width="full">
         <BorderedRadioGroup {...args} value={value} onChange={(v) => setValue(v)} />
-      </Box>
+      </Surface>
     );
   },
 };
@@ -116,9 +116,9 @@ export const Optional: Story = {
   render: (args) => {
     const [value, setValue] = useState<RadioGroupValueType | undefined>(undefined);
     return (
-      <Box width="full">
+      <Surface width="full">
         <BorderedRadioGroup {...args} value={value} onChange={(v) => setValue(v)} />
-      </Box>
+      </Surface>
     );
   },
 };
@@ -128,9 +128,9 @@ export const OptionalText: Story = {
   render: (args) => {
     const [value, setValue] = useState<RadioGroupValueType | undefined>(undefined);
     return (
-      <Box width="full">
+      <Surface width="full">
         <BorderedRadioGroup {...args} value={value} onChange={(v) => setValue(v)} />
-      </Box>
+      </Surface>
     );
   },
 };
@@ -140,9 +140,9 @@ export const Required: Story = {
   render: (args) => {
     const [value, setValue] = useState<RadioGroupValueType | undefined>(undefined);
     return (
-      <Box width="full">
+      <Surface width="full">
         <BorderedRadioGroup {...args} value={value} onChange={(v) => setValue(v)} />
-      </Box>
+      </Surface>
     );
   },
 };
@@ -152,9 +152,9 @@ export const ReadOnly: Story = {
   render: (args) => {
     const [value, setValue] = useState<RadioGroupValueType | undefined>(undefined);
     return (
-      <Box width="full">
+      <Surface width="full">
         <BorderedRadioGroup {...args} value={value} onChange={(v) => setValue(v)} />
-      </Box>
+      </Surface>
     );
   },
 };
@@ -164,9 +164,9 @@ export const Disabled: Story = {
   render: (args) => {
     const [value, setValue] = useState<RadioGroupValueType | undefined>(undefined);
     return (
-      <Box width="full">
+      <Surface width="full">
         <BorderedRadioGroup {...args} value={value} onChange={(v) => setValue(v)} />
-      </Box>
+      </Surface>
     );
   },
 };

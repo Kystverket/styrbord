@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import Stepper, { StepItem, StepItemColor, StepperProps } from './stepper';
-import { Box } from '~/main';
+import { Surface } from '~/main';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
@@ -52,9 +52,9 @@ export const AutoVertical: Story = {
   args: defaultProps,
   decorators: [
     (Story) => (
-      <Box width="form-sidebar" p={16}>
+      <Surface width="form-sidebar" p={4}>
         <Story />
-      </Box>
+      </Surface>
     ),
   ],
 };
@@ -63,9 +63,9 @@ export const Vertical: Story = {
   args: { ...defaultProps, orientation: 'vertical' },
   decorators: [
     (Story) => (
-      <Box p={16}>
+      <Surface p={4}>
         <Story />
-      </Box>
+      </Surface>
     ),
   ],
 };
@@ -74,9 +74,9 @@ export const HorizontalForced: Story = {
   args: { ...defaultProps, orientation: 'horizontal', forceOrientation: true },
   decorators: [
     (Story) => (
-      <Box p={16}>
+      <Surface p={4}>
         <Story />
-      </Box>
+      </Surface>
     ),
   ],
 };
@@ -85,11 +85,11 @@ export const HorizontalForcedSmall: Story = {
   args: { ...defaultProps, orientation: 'horizontal', forceOrientation: true },
   decorators: [
     (Story) => (
-      <Box p={16}>
+      <Surface p={4}>
         <div data-size="sm">
           <Story />
         </div>
-      </Box>
+      </Surface>
     ),
   ],
 };
@@ -98,9 +98,9 @@ export const HideLabels: Story = {
   args: { ...defaultProps, labels: 'never' },
   decorators: [
     (Story) => (
-      <Box p={16}>
+      <Surface p={4}>
         <Story />
-      </Box>
+      </Surface>
     ),
   ],
 };
@@ -109,9 +109,9 @@ export const OnlyCurrentLabel: Story = {
   args: { ...defaultProps, labels: 'current' },
   decorators: [
     (Story) => (
-      <Box p={16}>
+      <Surface p={4}>
         <Story />
-      </Box>
+      </Surface>
     ),
   ],
 };
@@ -120,9 +120,9 @@ export const Clickable: Story = {
   args: { step: 5, steps: steps.map((step) => ({ ...step, onClick: () => {} })) },
   decorators: [
     (Story) => (
-      <Box p={16}>
+      <Surface p={4}>
         <Story />
-      </Box>
+      </Surface>
     ),
   ],
 };
@@ -131,9 +131,9 @@ export const Smaller: Story = {
   args: { 'data-size': 'sm', step: 5, steps: steps.map((step) => ({ ...step, onClick: () => {} })) },
   decorators: [
     (Story) => (
-      <Box p={16}>
+      <Surface p={4}>
         <Story />
-      </Box>
+      </Surface>
     ),
   ],
 };
@@ -142,9 +142,9 @@ export const Larger: Story = {
   args: { 'data-size': 'lg', step: 5, steps: steps.map((step) => ({ ...step, onClick: () => {} })) },
   decorators: [
     (Story) => (
-      <Box p={16}>
+      <Surface p={4}>
         <Story />
-      </Box>
+      </Surface>
     ),
   ],
 };
@@ -163,9 +163,9 @@ export const Colors: Story = {
   },
   decorators: [
     (Story) => (
-      <Box p={16}>
+      <Surface p={4}>
         <Story />
-      </Box>
+      </Surface>
     ),
   ],
 };
@@ -181,9 +181,9 @@ export const Icons: Story = {
   },
   decorators: [
     (Story) => (
-      <Box p={16}>
+      <Surface p={4}>
         <Story />
-      </Box>
+      </Surface>
     ),
   ],
 };

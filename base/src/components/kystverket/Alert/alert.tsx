@@ -1,7 +1,7 @@
 import classes from './alert.module.css';
 import React from 'react';
 import Icon from '../Icon/icon';
-import { Box, DataColor, Heading } from '~/main';
+import { Surface, DataColor, Heading } from '~/main';
 import { Alert as DsAlert, AlertProps as DsAlertProps } from '@digdir/designsystemet-react';
 import { smaller } from '../../../utils/sizing';
 
@@ -35,9 +35,9 @@ const Alert = ({
 
   return (
     <DsAlert className={classNames.join(' ')} style={props.style} {...props}>
-      <Box horizontal justify="between" align="start" gap={8}>
-        <Box horizontal align="start" gap={8}>
-          <Box gap={4}>
+      <Surface horizontal justify="between" align="start" gap={2}>
+        <Surface horizontal align="start" gap={2}>
+          <Surface gap={1}>
             {title && (
               <Heading data-size={smaller(smaller(dataSize))}>
                 <span role={props.role}>{title}</span>
@@ -47,14 +47,14 @@ const Alert = ({
               {text}
               {props.children}
             </div>
-          </Box>
-        </Box>
+          </Surface>
+        </Surface>
         {props.onDismiss ? (
           <button className={classes.closeButton} onClick={props.onDismiss}>
             <Icon material="close" />
           </button>
         ) : null}
-      </Box>
+      </Surface>
     </DsAlert>
   );
 };

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import CompactDetails from './CompactDetails';
-import { Box, BorderedRadioGroup, Paragraph } from '~/main';
+import { Surface, BorderedRadioGroup, Paragraph } from '~/main';
 import type { RadioGroupValueType } from '../BorderedRadioGroup/borderedRadioGroup';
 
 const meta = {
@@ -33,9 +33,9 @@ export const Default: Story = {
     children: 'The quick brown fox jumps over the lazy dog',
   },
   render: (args) => (
-    <Box width="full">
+    <Surface width="full">
       <CompactDetails {...args} />
-    </Box>
+    </Surface>
   ),
 };
 
@@ -46,9 +46,9 @@ export const Open: Story = {
     children: 'The quick brown fox jumps over the lazy dog',
   },
   render: (args) => (
-    <Box width="full">
+    <Surface width="full">
       <CompactDetails {...args} />
-    </Box>
+    </Surface>
   ),
 };
 
@@ -60,9 +60,9 @@ export const Controlled: Story = {
   render: (args) => {
     const [open, setOpen] = useState(false);
     return (
-      <Box width="full">
+      <Surface width="full">
         <CompactDetails {...args} open={open} onOpenChange={setOpen} />
-      </Box>
+      </Surface>
     );
   },
 };
@@ -81,7 +81,7 @@ export const PlacementInRadioGroup: Story = {
     const [value, setValue] = useState<RadioGroupValueType | undefined>(undefined);
     return (
       <div style={{ maxWidth: '32rem' }}>
-        <Box gap={12}>
+        <Surface gap={3}>
           <Paragraph style={{ fontWeight: '500' }}>
             Er tiltaket i samsvar med kommuneplans arealdel eller reguleringsplan?
           </Paragraph>
@@ -101,7 +101,7 @@ export const PlacementInRadioGroup: Story = {
             value={value}
             onChange={(v) => setValue(v)}
           />
-        </Box>
+        </Surface>
       </div>
     );
   },

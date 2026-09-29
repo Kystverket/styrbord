@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/react-vite';
-import { Avatar, AvatarBoringVariant, AvatarProps, Badge, Box, Dropdown, Icon, DataColorVariant } from '~/main';
+import { Avatar, AvatarBoringVariant, AvatarProps, Badge, Surface, Dropdown, Icon, DataColorVariant } from '~/main';
 import cat1 from '@assets/img/cats/Cat 3.jpg';
 import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
 type Story = StoryFn<typeof Avatar>;
@@ -36,7 +36,7 @@ Preview.args = {
 export const NoName: Story = () => <Avatar aria-label="Ola Test" />;
 
 export const Sizes: Story = () => (
-  <Box gap={16} align="start">
+  <Surface gap={4} align="start">
     <Avatar data-size="3xs" aria-label="xxxs" initials="3x" />
     <Avatar data-size="3xs" aria-label="xxxs" />
     <Avatar data-size="2xs" aria-label="extra extra small" initials="2x" />
@@ -49,62 +49,62 @@ export const Sizes: Story = () => (
     <Avatar data-size="md" aria-label="medium" />
     <Avatar data-size="lg" aria-label="large" initials="lg" />
     <Avatar data-size="lg" aria-label="large" />
-  </Box>
+  </Surface>
 );
 
 export const ColorVariants: Story = () => (
-  <Box gap={16}>
+  <Surface gap={4}>
     {colorVariants.map((colorVariant) =>
       colors.map((color) => (
-        <Box key={String(color) + String(colorVariant)} horizontal align="center" gap={8}>
+        <Surface key={String(color) + String(colorVariant)} horizontal align="center" gap={2}>
           <Avatar data-color={color} data-color-variant={colorVariant} aria-label={`color ${color}`} />
           {color} {colorVariant}
-        </Box>
+        </Surface>
       )),
     )}
-  </Box>
+  </Surface>
 );
 
 export const BorderVariants: Story = () => (
-  <Box gap={16}>
-    <Box horizontal align="center" gap={8}>
+  <Surface gap={4}>
+    <Surface horizontal align="center" gap={2}>
       <Avatar data-color="neutral" data-color-variant="tinted" border-style="solid" aria-label="solid border" />
       solid
-    </Box>
-    <Box horizontal align="center" gap={8}>
+    </Surface>
+    <Surface horizontal align="center" gap={2}>
       <Avatar data-color="neutral" data-color-variant="tinted" border-style="dashed" aria-label="dashed border" />
       dashed
-    </Box>
-    <Box horizontal align="center" gap={8}>
+    </Surface>
+    <Surface horizontal align="center" gap={2}>
       <Avatar data-color="neutral" data-color-variant="tinted" border-style="dotted" aria-label="dotted border" />
       dotted
-    </Box>
-    <Box horizontal align="center" gap={8}>
+    </Surface>
+    <Surface horizontal align="center" gap={2}>
       <Avatar data-color="neutral" data-color-variant="tinted" border-style="double" aria-label="double border" />
       double
-    </Box>
-    <Box horizontal align="center" gap={8}>
+    </Surface>
+    <Surface horizontal align="center" gap={2}>
       <Avatar data-color="neutral" data-color-variant="tinted" border-style="none" aria-label="no border" />
       none
-    </Box>
-  </Box>
+    </Surface>
+  </Surface>
 );
 
 export const CombinedVariants: Story = () => (
-  <Box gap={16}>
-    <Box horizontal align="center" gap={8}>
+  <Surface gap={4}>
+    <Surface horizontal align="center" gap={2}>
       <Avatar border-style="dashed" data-color="primary" data-color-variant="tinted" aria-label="muted tinted dashed" />
       muted + tinted + dashed
-    </Box>
-    <Box horizontal align="center" gap={8}>
+    </Surface>
+    <Surface horizontal align="center" gap={2}>
       <Avatar data-color="success" data-color-variant="tinted" border-style="solid" aria-label="success tinted solid" />
       success + tinted + solid
-    </Box>
-    <Box horizontal align="center" gap={8}>
+    </Surface>
+    <Surface horizontal align="center" gap={2}>
       <Avatar data-color="warning" data-color-variant="base" border-style="dotted" aria-label="warning base dotted" />
       warning + base + dotted
-    </Box>
-  </Box>
+    </Surface>
+  </Surface>
 );
 
 export const ShapeVariants: Story = () => (
@@ -211,22 +211,22 @@ const boringVariants: (true | 'solid' | AvatarBoringVariant)[] = [
 const boringNames = ['Ola Nordmann', 'Kari Nordmann', 'Per Hansen', 'Anne Olsen', 'Lars Berg'];
 
 export const Boring: Story = () => (
-  <Box gap={16}>
-    <Box horizontal align="center" gap={8}>
+  <Surface gap={4}>
+    <Surface horizontal align="center" gap={2}>
       {boringNames.map((name) => (
         <Avatar key={name} auto aria-label={name} tooltip={name} />
       ))}
       <Avatar auto aria-label="" tooltip="Unknown" />
-    </Box>
+    </Surface>
     {boringVariants.map((variant) => (
-      <Box key={String(variant)} horizontal align="center" gap={8}>
+      <Surface key={String(variant)} horizontal align="center" gap={2}>
         {boringNames.map((name) => (
           <Avatar key={name} auto={variant} aria-label={name} tooltip={name} />
         ))}
         {variant}
-      </Box>
+      </Surface>
     ))}
-    <Box horizontal align="center" gap={8}>
+    <Surface horizontal align="center" gap={2}>
       <Avatar auto="marble" aria-label="Ola Nordmann" data-size="3xs" />
       <Avatar auto="marble" aria-label="Ola Nordmann" data-size="xs" />
       <Avatar auto="marble" aria-label="Ola Nordmann" data-size="lg" />
@@ -234,8 +234,8 @@ export const Boring: Story = () => (
       <Avatar auto="marble" aria-label="Ola Nordmann" checked />
       <Avatar auto="marble" aria-label="Ola Nordmann" border-style="solid" />
       sizes, square, checked, border
-    </Box>
-    <Box horizontal align="center" gap={8}>
+    </Surface>
+    <Surface horizontal align="center" gap={2}>
       <Avatar auto="marble" aria-label="Ola Nordmann" data-size="3xs">
         3S
       </Avatar>
@@ -255,8 +255,8 @@ export const Boring: Story = () => (
         BS
       </Avatar>
       sizes, square, checked, border
-    </Box>
-  </Box>
+    </Surface>
+  </Surface>
 );
 
 export const AsLink: Story = () => (

@@ -1,8 +1,7 @@
-import { Box } from '~/main';
+import { Surface, SurfaceProps } from '~/main';
 import classes from './PageHeading.module.css';
 import { ReactNode } from 'react';
 import { Heading } from '@digdir/designsystemet-react';
-import { Spacing } from '../Box/box.types';
 
 export interface PageHeadingProps {
   heading?: string;
@@ -11,8 +10,8 @@ export interface PageHeadingProps {
   rightSection?: ReactNode;
   children?: ReactNode;
   underline?: boolean;
-  px?: Spacing;
-  contentWidth?: 'container' | 'full' | 'form' | 'fit';
+  px?: SurfaceProps['px'];
+  contentWidth?: SurfaceProps['width'];
 }
 
 export function PageHeading({
@@ -23,22 +22,22 @@ export function PageHeading({
   underline = true,
   headingSize = 'xl',
   contentWidth = 'container',
-  px = 16,
+  px = 4,
 }: Readonly<PageHeadingProps>) {
   return (
     <div className={[classes.pageHeading, underline ? classes.hasBorder : undefined].join(' ')}>
-      <Box gap={24} width={contentWidth} px={px}>
-        <Box>{aboveSection}</Box>
-        <Box horizontal justify="between">
+      <Surface gap={6} width={contentWidth} px={px}>
+        <Surface>{aboveSection}</Surface>
+        <Surface horizontal justify="between">
           <Heading level={1} data-size={headingSize} style={{ color: 'var(--ds-color-primary-text-default)' }}>
             {heading}
           </Heading>
-          <Box>{rightSection}</Box>
-        </Box>
-      </Box>
-      <Box width={contentWidth} px={px}>
+          <Surface>{rightSection}</Surface>
+        </Surface>
+      </Surface>
+      <Surface width={contentWidth} px={px}>
         {children}
-      </Box>
+      </Surface>
     </div>
   );
 }

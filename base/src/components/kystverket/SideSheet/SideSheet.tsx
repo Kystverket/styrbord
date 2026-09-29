@@ -1,5 +1,5 @@
 import { forwardRef, useCallback, useContext, useEffect, useId, useRef, useState } from 'react';
-import { Box, Button, Heading, PHONE_SIZE_BREAKPOINT, Tooltip, useMediaQuery } from '~/main';
+import { Surface, Button, Heading, PHONE_SIZE_BREAKPOINT, Tooltip, useMediaQuery } from '~/main';
 import { useTranslation } from '~/translations';
 import Icon from '~/components/kystverket/Icon/icon';
 import { useBodyScrollLock } from '~/hooks/useBodyScrollLock';
@@ -33,11 +33,11 @@ function SideSheetButtonsBlock({ footerDivider }: Readonly<{ footerDivider: bool
   return (
     <footer className={classes.footer}>
       {footerDivider && <hr className={classes.footerDivider} />}
-      <Box className={classes.buttonBlock}>
-        <Box horizontal gap={12}>
+      <Surface className={classes.buttonBlock}>
+        <Surface horizontal gap={3}>
           {buttons}
-        </Box>
-      </Box>
+        </Surface>
+      </Surface>
     </footer>
   );
 }

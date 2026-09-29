@@ -1,7 +1,7 @@
 import type { Meta, StoryFn, StoryObj } from '@storybook/react-vite';
 
 import React from 'react';
-import { Link, Box, Icon } from '~/main';
+import { Link, Surface, Icon } from '~/main';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
@@ -86,12 +86,12 @@ export const InText: StoryFn<typeof Link> = () => (
     <span>
       Vi bruker komponenter fra <Link href={designsystemetLink}>et fantastisk designsystem</Link>.
     </span>
-    <Box gap={16}>
+    <Surface gap={4}>
       <Link href="mailto:designsystem@digdir.no">
         <Icon material="person" aria-hidden />
         <span>Kontakt oss</span>
       </Link>
-    </Box>
+    </Surface>
   </>
 );
 

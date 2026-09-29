@@ -1,4 +1,4 @@
-import { Box, Icon, IconId, Logo, LogoVariant, Label, Paragraph, AvatarProps } from '~/main';
+import { Surface, Icon, IconId, Logo, LogoVariant, Label, Paragraph, AvatarProps } from '~/main';
 import classes from './Header.module.css';
 import { Fragment, ReactNode, useContext } from 'react';
 import { useTranslation } from '~/translations';
@@ -100,24 +100,31 @@ export function Header({
     ) || [];
 
   return (
-    <Box horizontal justify="center" align="center" className={classes.headerContainer}>
-      <Box className={classes.headerInlinePadding} horizontal gap={12} align="center" justify="between" width={width}>
-        <Box horizontal align="center" gap={16}>
+    <Surface horizontal justify="center" align="center" className={classes.headerContainer}>
+      <Surface
+        className={classes.headerInlinePadding}
+        horizontal
+        gap={3}
+        align="center"
+        justify="between"
+        width={width}
+      >
+        <Surface horizontal align="center" gap={4}>
           <a className={classes.logoLink} href={url}>
             <Logo className={classes.logo} variant={variant} height={47} alt={title ?? t('header.alt-text')} />
             {title && <Label className={classes.titleText}>{title}</Label>}
           </a>
-        </Box>
+        </Surface>
 
-        <Box horizontal gap={12} align="center" className="">
-          <Box horizontal gap={12} align="center" className={classes.smallScreenHide}>
+        <Surface horizontal gap={3} align="center" className="">
+          <Surface horizontal gap={3} align="center" className={classes.smallScreenHide}>
             {slots?.preLinks}
             {mainLinks.map((link, index) => (
               <MainLinkItem key={index} {...link} />
             ))}
             {slots?.postLinks}
-          </Box>
-          <Box horizontal gap={0} align="center">
+          </Surface>
+          <Surface horizontal gap={0} align="center">
             <div className={classes.notSmallScreenHide + ' mobile-menu'}>
               <HeaderMobile
                 applications={applications}
@@ -128,7 +135,7 @@ export function Header({
                 slots={slots}
               />
             </div>
-            <Box horizontal gap={0} align="center" className={classes.smallScreenHide}>
+            <Surface horizontal gap={0} align="center" className={classes.smallScreenHide}>
               <HeaderApps links={links} applications={applications} />
               {slots?.widgets}
               <HeaderProfile links={links} profile={profile} logoutHandler={logoutHandler} />
@@ -143,10 +150,10 @@ export function Header({
                   <Paragraph>{t('header.login')}</Paragraph>
                 </LinkComponent>
               )}
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-    </Box>
+            </Surface>
+          </Surface>
+        </Surface>
+      </Surface>
+    </Surface>
   );
 }

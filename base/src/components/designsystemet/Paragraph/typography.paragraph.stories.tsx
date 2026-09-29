@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Box, { BoxProps } from '../../kystverket/Box/box';
+import Surface from '../../kystverket/Surface/Surface';
+import type { BoxProps } from '../../kystverket/Box/box';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Paragraph } from '~/main';
 
@@ -30,20 +31,20 @@ export const Preview: Story = {
 
 const defaultProps: BoxProps = {
   children: (
-    <Box gap={24}>
+    <Surface gap={6}>
       <Paragraph data-size="md">
         Ved endringer av typografi er det viktig å merke seg at Figma rapporterer feil font-weight for medium-bold
         tekst. Den får font-weight: 400 i Figma men det korrekte skal være 500. Gyldige font-vekter for kystinn er 300,
         500 og 700
       </Paragraph>
-      <Box gap={16}>
+      <Surface gap={4}>
         <Paragraph data-size="xl">Paragraph XLarge</Paragraph>
         <Paragraph data-size="lg">Paragraph Large</Paragraph>
         <Paragraph data-size="md">Paragraph Medium</Paragraph>
         <Paragraph data-size="sm">Paragraph Small</Paragraph>
         <Paragraph data-size="xs">Paragraph XSmall</Paragraph>
-      </Box>
-      <Box gap={16}>
+      </Surface>
+      <Surface gap={4}>
         <Paragraph data-size="xl" data-font-weight="semibold">
           Paragraph Semibold XLarge
         </Paragraph>
@@ -56,8 +57,8 @@ const defaultProps: BoxProps = {
         <Paragraph data-size="sm" data-font-weight="semibold">
           Paragraph Semibold Small
         </Paragraph>
-      </Box>
-      <Box gap={16}>
+      </Surface>
+      <Surface gap={4}>
         <Paragraph data-size="xl" data-font-weight="medium">
           Paragraph Medium XLarge
         </Paragraph>
@@ -70,8 +71,8 @@ const defaultProps: BoxProps = {
         <Paragraph data-size="sm" data-font-weight="medium">
           Paragraph Medium Small
         </Paragraph>
-      </Box>
-      <Box gap={16}>
+      </Surface>
+      <Surface gap={4}>
         <Paragraph data-size="lg" data-color-variant="subtle">
           Paragraph Large subtle
         </Paragraph>
@@ -81,8 +82,8 @@ const defaultProps: BoxProps = {
         <Paragraph data-size="sm" data-color-variant="subtle">
           Paragraph Small subtle
         </Paragraph>
-      </Box>
-    </Box>
+      </Surface>
+    </Surface>
   ),
 };
 

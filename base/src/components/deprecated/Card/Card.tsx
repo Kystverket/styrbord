@@ -1,7 +1,7 @@
 import { Card as DsCard, CardProps as DsCardProps, Heading } from '@digdir/designsystemet-react';
 import classes from './Card.module.scss';
 
-import { Box, Icon, IconId } from '~/main';
+import { Surface, Icon, IconId } from '~/main';
 
 export type CardProps = Omit<DsCardProps, 'children'> & {
   title?: string;
@@ -16,7 +16,7 @@ const Card = ({ title, icon, link, children, titleLevel = 2, ...props }: CardPro
     return (
       <DsCard {...props} title={title}>
         {title && (
-          <Box horizontal justify="between" mb={8}>
+          <Surface horizontal justify="between" mb={2}>
             {link ? (
               <Heading data-size="sm" level={titleLevel}>
                 <a className="styrbord-card-link" href={link}>
@@ -29,7 +29,7 @@ const Card = ({ title, icon, link, children, titleLevel = 2, ...props }: CardPro
               </Heading>
             )}
             {icon && <Icon material={icon} className={classes.icon} />}
-          </Box>
+          </Surface>
         )}
         {children}
       </DsCard>

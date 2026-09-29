@@ -1,4 +1,4 @@
-import { Box, Button, Icon, Dropdown, HeaderContext } from '~/main';
+import { Surface, Button, Icon, Dropdown, HeaderContext } from '~/main';
 import classes from './Header.module.css';
 import { useContext, useId, useRef, useState } from 'react';
 import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
@@ -46,9 +46,9 @@ export function HeaderApps({ links, applications }: HeaderAppsProps) {
           onClick={openMenu}
           aria-label={t('header.openApplicationsMenu')}
         >
-          <Box horizontal gap={16} align="center">
+          <Surface horizontal gap={4} align="center">
             <Icon material="apps" aria-hidden />
-          </Box>
+          </Surface>
         </Button>
         <Dropdown id={id} open={isMenuOpen} data-color="neutral">
           <Dropdown.List>

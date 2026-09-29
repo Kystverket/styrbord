@@ -9,7 +9,7 @@ import { ExtraFileInfo, UploadFileResult } from '../FileUploader/FileUploader.ty
 import { FileUploaderContext } from '../FileUploader/FileUploader.context';
 import { FileRetrieverContext } from '../FileUploader/FileRetriever.context';
 import { v4 as uuidv4 } from 'uuid';
-import { Box, Button, Chip, Dropdown, Icon } from '~/main';
+import { Surface, Button, Chip, Dropdown, Icon } from '~/main';
 
 const meta = {
   title: 'Form/RichTextArea/RichTextArea',
@@ -162,15 +162,15 @@ export const WithBottomToolbar: Story = {
           args.onChange(nextMarkdown);
         }}
         bottomToolbar={
-          <Box gap={12} px={8}>
-            <Box horizontal px={4} gap={8}>
+          <Surface gap={3} px={2}>
+            <Surface horizontal px={1} gap={2}>
               <Chip.Removable data-color="primary/subtle">@Admin Etternavn</Chip.Removable>
               <Chip.Removable data-color="primary/subtle">@Saksbehandler Etternavn</Chip.Removable>
-            </Box>
+            </Surface>
 
-            <Box align="center" justify="between" pb={12} horizontal>
-              <Box horizontal>
-                <Box horizontal gap={4} pr={4}>
+            <Surface align="center" justify="between" pb={3} horizontal>
+              <Surface horizontal>
+                <Surface horizontal gap={1} pr={1}>
                   <Button
                     onClick={() => setIsToolbarShown((prev) => !prev)}
                     variant="ghost"
@@ -187,7 +187,7 @@ export const WithBottomToolbar: Story = {
                   <Dropdown id="addTag" popover="manual">
                     Example
                   </Dropdown>
-                </Box>
+                </Surface>
                 <div
                   style={{
                     width: '1px',
@@ -195,7 +195,7 @@ export const WithBottomToolbar: Story = {
                     marginBlock: '6px',
                   }}
                 />
-                <Box horizontal align="center" pl={12}>
+                <Surface horizontal align="center" pl={3}>
                   <Chip.Checkbox
                     data-color="neutral"
                     checked={isMarkedAsConclusion}
@@ -203,9 +203,9 @@ export const WithBottomToolbar: Story = {
                   >
                     Marker som konklusjon
                   </Chip.Checkbox>
-                </Box>
-              </Box>
-              <Box horizontal gap={16}>
+                </Surface>
+              </Surface>
+              <Surface horizontal gap={4}>
                 <Button
                   size="sm"
                   color="neutral"
@@ -225,9 +225,9 @@ export const WithBottomToolbar: Story = {
                 >
                   Lagre
                 </Button>
-              </Box>
-            </Box>
-          </Box>
+              </Surface>
+            </Surface>
+          </Surface>
         }
       />
     );

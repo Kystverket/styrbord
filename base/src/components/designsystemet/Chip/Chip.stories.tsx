@@ -1,4 +1,4 @@
-import { Box, Chip, ChipButtonProps } from '~/main';
+import { Surface, Chip, ChipButtonProps } from '~/main';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
 
@@ -125,13 +125,13 @@ export const Preview: Story = {
  */
 export const Sizes: Story = {
   render: ({ variant, label, disabled }) => (
-    <Box gap={8}>
+    <Surface gap={2}>
       {sizes.map((size) => {
         return (
           <span key={size}>{renderChip(variant, `${label} ${size.toUpperCase()}`, size, undefined, disabled)}</span>
         );
       })}
-    </Box>
+    </Surface>
   ),
   args: defaultVariantArgs,
   argTypes: variantArgTypes,
@@ -139,11 +139,11 @@ export const Sizes: Story = {
 
 export const Colors: Story = {
   render: ({ variant, label, disabled }) => (
-    <Box gap={8}>
+    <Surface gap={2}>
       {chipColors.map((color) => {
         return <span key={color}>{renderChip(variant, `${label} ${color}`, 'md', color, disabled)}</span>;
       })}
-    </Box>
+    </Surface>
   ),
   args: {
     ...defaultVariantArgs,

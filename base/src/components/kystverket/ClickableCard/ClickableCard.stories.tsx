@@ -1,6 +1,6 @@
 import type { Meta, StoryFn, StoryObj } from '@storybook/react-vite';
 
-import { Box, DataColor, DataColorVariant, Paragraph } from '~/main';
+import { Surface, DataColor, DataColorVariant, Paragraph } from '~/main';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import ClickableCard from './ClickableCard';
 import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
@@ -117,7 +117,7 @@ ColorVariants.storyName = 'Farge og variant';
 export const Eksempel: StoryFn = () => {
   return (
     <div style={{ maxWidth: '500px', padding: '24px', display: 'flex', flexDirection: 'column', gap: '32px' }}>
-      <Box gap={16}>
+      <Surface gap={4}>
         <ClickableCard
           heading="Forespørsel om nautisk vurdering"
           icon="picture_as_pdf"
@@ -148,11 +148,11 @@ export const Eksempel: StoryFn = () => {
           data-color-variant="tinted"
           data-color="primary"
         />
-      </Box>
+      </Surface>
 
-      <Box gap={8}>
+      <Surface gap={2}>
         <Paragraph data-size="sm">Alle elementer skrudd på</Paragraph>
-        <Box width="fit">
+        <Surface width="fit">
           <ClickableCard
             heading="Card title"
             description="Most provide as with carried business are much better more the perfected designer. Writing slightly explain desk unable at supposedly about this."
@@ -162,13 +162,13 @@ export const Eksempel: StoryFn = () => {
             data-color-variant="base"
             data-color="neutral"
           >
-            <Box gap={4} p={4}>
+            <Surface gap={1} p={1}>
               <Paragraph data-size="xs">SLOT</Paragraph>
               <Paragraph data-size="xs">Erstatt med eget innhold</Paragraph>
-            </Box>
+            </Surface>
           </ClickableCard>
-        </Box>
-      </Box>
+        </Surface>
+      </Surface>
     </div>
   );
 };

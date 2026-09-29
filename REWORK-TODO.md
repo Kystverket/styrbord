@@ -114,7 +114,7 @@ conversion for that file.
 ### Typography — [typography.tsx](base/src/components/kystverket/Typography/typography.tsx), [typography.util.ts](base/src/components/kystverket/Typography/typography.util.ts)
 
 - [x] The `@deprecated` hints still say `Use \`fontWeight="medium"\``; the prop is`weight`. Step 1
-    fixed this in`Paragraph` only (§2.7)
+  fixed this in`Paragraph` only (§2.7)
 - [ ] `size` is a plain prop (§2.1)
 
 ### PageHeading — [PageHeading.tsx](base/src/components/kystverket/PageHeading/PageHeading.tsx)
@@ -128,6 +128,8 @@ conversion for that file.
 - The `rgba(0,0,0,…)` scrim stays — a backdrop is a backdrop in both schemes (§1.7)
 
 ### Box — [box.types.ts](base/src/components/kystverket/Box/box.types.ts), [box.tsx](base/src/components/kystverket/Box/box.tsx), [box.colors.module.css](base/src/components/kystverket/Box/box.colors.module.css)
+
+**Superseded by [Surface](base/src/components/kystverket/Surface/Surface.tsx).** Box is deprecated and will be removed, so the items below are resolved by migrating call sites to Surface, not by fixing Box. Surface already solves all of them.
 
 - [ ] **78 family-hardcoded tokens** — the single largest conversion site in the repo (§1.2)
 - [ ] `color="family/variant"` slash syntax, split and turned into a class name. Same invention as

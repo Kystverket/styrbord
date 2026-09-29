@@ -1,5 +1,5 @@
 import { CSSProperties, ReactNode, useContext } from 'react';
-import { Box, Dialog, Heading, Paragraph, type DialogSize } from '~/main';
+import { Surface, Dialog, Heading, Paragraph, type DialogSize } from '~/main';
 import classes from './SlotDialog.module.css';
 import { SlotDialogButtons } from '~/components/kystverket/SlotDialog/Buttons/SlotDialogButtons';
 import {
@@ -47,13 +47,13 @@ function SlotDialogRoot({
         className={`${classes.slotDialogOverrides} ${className}`}
         closedby="any"
       >
-        <Box gap={4} className={`${classes.headerBlock} ${DialogBlockClasses}`}>
+        <Surface gap={1} className={`${classes.headerBlock} ${DialogBlockClasses}`}>
           {!!subtitle && <Paragraph>{subtitle}</Paragraph>}
           <Heading>{title}</Heading>
-        </Box>
-        <Box className={`${classes.contentBlock} ${DialogBlockClasses}`}>
-          <Box>{children}</Box>
-        </Box>
+        </Surface>
+        <Surface className={`${classes.contentBlock} ${DialogBlockClasses}`}>
+          <Surface>{children}</Surface>
+        </Surface>
         <SlotDialogButtonsBlock className={`${classes.buttonBlock} ${DialogBlockClasses}`} />
       </Dialog>
     </SlotDialogButtonsProvider>
@@ -68,11 +68,11 @@ function SlotDialogButtonsBlock({ className }: Readonly<{ className: string }>) 
   }
 
   return (
-    <Box className={className}>
-      <Box horizontal gap={12}>
+    <Surface className={className}>
+      <Surface horizontal gap={3}>
         {buttons}
-      </Box>
-    </Box>
+      </Surface>
+    </Surface>
   );
 }
 

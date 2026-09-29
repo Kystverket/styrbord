@@ -1,4 +1,4 @@
-import { Box, Tag, TagProps } from '~/main';
+import { Surface, Tag, TagProps } from '~/main';
 import type { Meta, StoryFn, StoryObj } from '@storybook/react-vite';
 import { styrbordSemanticColors, styrbordPaletteColors } from '@kystverket/styrbord-tokens/colors';
 type Story = StoryObj<typeof Tag>;
@@ -28,7 +28,7 @@ export const Preview: Story = {
 const sizes: TagProps['data-size'][] = ['sm', 'md', 'lg'];
 export const Sizes: StoryFn<typeof Tag> = ({ ...rest }) => {
   return (
-    <Box horizontal wrap gap={8}>
+    <Surface horizontal wrap gap={2}>
       {sizes.map((size) => (
         <>
           <Tag key={size} data-size={size} {...rest}>
@@ -39,7 +39,7 @@ export const Sizes: StoryFn<typeof Tag> = ({ ...rest }) => {
           </Tag>
         </>
       ))}
-    </Box>
+    </Surface>
   );
 };
 
@@ -53,13 +53,13 @@ Sizes.parameters = {
 
 export const Colors: StoryFn<typeof Tag> = ({ ...rest }) => {
   return (
-    <Box horizontal wrap gap={8}>
+    <Surface horizontal wrap gap={2}>
       {colorVariants.map((color) => (
         <Tag key={color} data-color={color as TagProps['data-color']} {...rest}>
           {color}
         </Tag>
       ))}
-    </Box>
+    </Surface>
   );
 };
 
@@ -76,13 +76,13 @@ Colors.parameters = {
 
 export const Borders: StoryFn<typeof Tag> = ({ ...rest }) => {
   return (
-    <Box horizontal wrap gap={8}>
+    <Surface horizontal wrap gap={2}>
       {colorVariants.map((color) => (
         <Tag key={color} variant="outline" data-color={color as TagProps['data-color']} {...rest}>
           {color}
         </Tag>
       ))}
-    </Box>
+    </Surface>
   );
 };
 

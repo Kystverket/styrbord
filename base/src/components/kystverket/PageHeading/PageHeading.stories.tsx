@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { PageHeading } from './PageHeading';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
-import { Tag, Breadcrumbs, Button, Icon, Box } from '~/main';
+import { Tag, Breadcrumbs, Button, Icon, Surface } from '~/main';
 
 const meta = {
   title: 'Page/PageHeading',
@@ -24,9 +24,9 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   decorators: [
     (Story) => (
-      <Box p={16} color="danger">
+      <Surface p={4}>
         <Story />
-      </Box>
+      </Surface>
     ),
   ],
   args: {
@@ -68,9 +68,9 @@ export const Default: Story = {
 export const UtenSeksjoner: Story = {
   decorators: [
     (Story) => (
-      <Box p={16} color="danger">
+      <Surface p={4}>
         <Story />
-      </Box>
+      </Surface>
     ),
   ],
   args: {
@@ -81,9 +81,9 @@ export const UtenSeksjoner: Story = {
 export const BareRight: Story = {
   decorators: [
     (Story) => (
-      <Box p={16} color="danger">
+      <Surface p={4}>
         <Story />
-      </Box>
+      </Surface>
     ),
   ],
   args: {

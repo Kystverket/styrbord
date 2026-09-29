@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import classes from './FilePreviewer-dialog.module.css';
-import { Paragraph, Box, Button, ButtonProps, Icon } from '~/main';
+import { Paragraph, Surface, Button, ButtonProps, Icon } from '~/main';
 import { FileInfo, defaultButtonsByType } from '../FilePreviewer.types';
 import { FileRenderer } from '../renderer/FileRenderer';
 import { useHorizontalDragScroll } from '~/hooks/useHorizontalDragScroll';
@@ -96,17 +96,17 @@ export const FilePreviewerDialog = ({ animation = 'slide', onClose, files, start
   return (
     <dialog ref={dialogRef} className={classes.frame} onClose={handleClose} data-color-scheme="dark">
       {/* NAVIGATION */}
-      <Box horizontal justify="between" className={classes.nav}>
-        <Box>
+      <Surface horizontal justify="between" className={classes.nav}>
+        <Surface>
           <Paragraph>{selectedFile.fileName}</Paragraph>
           {selectedFile.fileSizeInBytes && (
             <Paragraph data-size="sm" className={classes.fileSize}>
               {selectedFile.fileSize ?? convertBytesToReadable(selectedFile.fileSizeInBytes)}
             </Paragraph>
           )}
-        </Box>
-        <Box horizontal className={classes.topRightButtonContainer}>
-          <Box horizontal>
+        </Surface>
+        <Surface horizontal className={classes.topRightButtonContainer}>
+          <Surface horizontal>
             {buttonConfig.showOpenInNew && (
               <Button title="Åpne i ny fane" onClick={handleOpenInNew} {...defaultButtonProps}>
                 <Icon material="open_in_new" size="lg" />
@@ -117,16 +117,16 @@ export const FilePreviewerDialog = ({ animation = 'slide', onClose, files, start
                 <Icon material="download" size="lg" />
               </Button>
             )}
-          </Box>
-          <Box>
+          </Surface>
+          <Surface>
             <Button title="Lukk" onClick={handleClose} {...defaultButtonProps}>
               <Icon material="close" size="lg" />
             </Button>
-          </Box>
-        </Box>
-      </Box>
+          </Surface>
+        </Surface>
+      </Surface>
       {/* END OF NAVIGATION */}
-      <Box className={classes.content}>
+      <Surface className={classes.content}>
         {selectedFileIndex > 0 && (
           <Button
             title="Forrige fil"
@@ -147,14 +147,17 @@ export const FilePreviewerDialog = ({ animation = 'slide', onClose, files, start
             <Icon material="chevron_right" size="lg"></Icon>
           </Button>
         )}
-        <Box className={classes.fileInnerContainer}>
+        <Surface className={classes.fileInnerContainer}>
           {files.map((file, idx) => (
-            <Box key={`${idx}-display`} className={`${classes.file} ${classes[animation]} ${getPositionClass(idx)}`}>
+            <Surface
+              key={`${idx}-display`}
+              className={`${classes.file} ${classes[animation]} ${getPositionClass(idx)}`}
+            >
               <FileRenderer tabIndex={idx === selectedFileIndex ? 0 : -1} mode="full" file={file} />
-            </Box>
+            </Surface>
           ))}
-        </Box>
-      </Box>
+        </Surface>
+      </Surface>
 
       <div
         onKeyDown={(e) => {

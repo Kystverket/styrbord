@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { Box, NumberInput, ValidationMessage } from "@kystverket/styrbord";
+import { Surface, NumberInput, ValidationMessage } from "@kystverket/styrbord";
 import type { FeatureCollection, Point } from "geojson";
 
 import type {
@@ -156,7 +156,7 @@ export function CoordinateDirectionField({
   );
 
   return (
-    <Box gap={16} className={[className].filter(Boolean).join(" ")}>
+    <Surface gap={4} className={[className].filter(Boolean).join(" ")}>
       <GeoJsonEditor
         singleFeature
         modes={["directional-point"]}
@@ -168,7 +168,7 @@ export function CoordinateDirectionField({
       />
 
       {/* Coordinate + direction inputs */}
-      <Box horizontal gap={16}>
+      <Surface horizontal gap={4}>
         <NumberInput
           id={`${id}-lat`}
           inputMode="decimal"
@@ -203,10 +203,10 @@ export function CoordinateDirectionField({
           onChange={(v) => setDirValue(v)}
           onBlur={() => commitDirection(dirValue)}
         />
-      </Box>
+      </Surface>
 
       {error && <ValidationMessage>{error}</ValidationMessage>}
-    </Box>
+    </Surface>
   );
 }
 

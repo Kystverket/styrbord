@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import style from './inputLabel.module.css';
-import { Paragraph, Box, Label, Spinner, Tag } from '~/main';
+import { Paragraph, Surface, Label, Spinner, Tag } from '~/main';
 
 export interface InputLabelProps {
   optional?: boolean | string | undefined;
@@ -36,9 +36,9 @@ const InputLabel = ({
 
   return (
     <label className={style.content}>
-      <Box gap={8}>
-        <Box gap={0} mb={children || embedded ? 0 : 8}>
-          <Box horizontal align="center">
+      <Surface gap={2}>
+        <Surface gap={0} mb={children || embedded ? 0 : 2}>
+          <Surface horizontal align="center">
             <Label>
               {text}
               {loading && <Spinner aria-label="spinning" data-size="xs" className={style.loading} />}
@@ -50,11 +50,11 @@ const InputLabel = ({
               {required && !requiredText && <span className={style.requiredStar}>*</span>}
               {optional && <Tag className={style.spacing}>{optionalText ?? 'Valgfritt'}</Tag>}
             </Label>
-          </Box>
+          </Surface>
           {subText && <Paragraph data-size="sm">{subText}</Paragraph>}
-        </Box>
+        </Surface>
         {children && <div>{children}</div>}
-      </Box>
+      </Surface>
     </label>
   );
 };

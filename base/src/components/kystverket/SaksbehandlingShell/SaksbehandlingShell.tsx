@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
-import { Box, Icon, IconButton, SideSheet } from '~/main';
+import { Surface, Icon, IconButton, SideSheet } from '~/main';
 import { ItemList } from './ItemList/ItemList';
 import classes from './SaksbehandlingShell.module.css';
 import type { SaksbehandlingShellProps } from './SaksbehandlingShell.types';
@@ -56,12 +56,12 @@ export function SaksbehandlingShell({
 
   return (
     <div className={`${classes.shell} ${className}`}>
-      <Box horizontal align="center" justify="between" gap={8} px={16} py={12} className={classes.heading}>
+      <Surface horizontal align="center" justify="between" gap={2} px={4} py={3} className={classes.heading}>
         {headerContent}
-      </Box>
+      </Surface>
 
-      <Box horizontal align="center" justify="between" gap={8} px={16} py={8} className={classes.toolbar}>
-        <Box horizontal align="center" gap={8}>
+      <Surface horizontal align="center" justify="between" gap={2} px={4} py={2} className={classes.toolbar}>
+        <Surface horizontal align="center" gap={2}>
           <IconButton
             variant="ghost"
             color="neutral"
@@ -84,11 +84,11 @@ export function SaksbehandlingShell({
             </IconButton>
           )}
           {caseActions && <div className={classes.divider} aria-hidden />}
-          <Box horizontal align="center" gap={8}>
+          <Surface horizontal align="center" gap={2}>
             {caseActions}
-          </Box>
-        </Box>
-        <Box horizontal align="center" gap={8}>
+          </Surface>
+        </Surface>
+        <Surface horizontal align="center" gap={2}>
           {comparisonContent && (
             <>
               {!isComparisonPinned && isComparisonOpen && (
@@ -114,8 +114,8 @@ export function SaksbehandlingShell({
               </IconButton>
             </>
           )}
-        </Box>
-      </Box>
+        </Surface>
+      </Surface>
 
       <SideSheet.Layout>
         {items !== undefined && (
@@ -134,9 +134,9 @@ export function SaksbehandlingShell({
 
         <div className={classes.mainContainer}>
           {itemActions && (
-            <Box horizontal align="center" gap={8} className={classes.itemActions}>
+            <Surface horizontal align="center" gap={2} className={classes.itemActions}>
               {itemActions}
-            </Box>
+            </Surface>
           )}
           <div className={classes.main} ref={mainRef}>
             {children}

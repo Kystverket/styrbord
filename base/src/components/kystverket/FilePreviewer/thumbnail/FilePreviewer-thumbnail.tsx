@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { FPContext } from '../FilePreviewer-context';
 import { FileInfo } from '../FilePreviewer.types';
-import { Box, Button, Icon, Paragraph, Tooltip } from '~/main';
+import { Surface, Button, Icon, Paragraph, Tooltip } from '~/main';
 import classes from './FilePreviewer-thumbnail.module.css';
 import { FileRenderer } from '../renderer/FileRenderer';
 import { convertBytesToReadable } from '~/utils/convertBytesToReadable';
@@ -61,7 +61,7 @@ export const FilePreviewerThumbnail = ({ file, index }: FilePreviewerThumbnailPr
     >
       <div className={classes.thumbnail}>
         <FileRenderer file={file} />
-        <Box className={classes.buttonGroup} horizontal>
+        <Surface className={classes.buttonGroup} horizontal>
           <Button
             variant="ghost"
             color="neutral"
@@ -88,22 +88,22 @@ export const FilePreviewerThumbnail = ({ file, index }: FilePreviewerThumbnailPr
           >
             <Icon material="download" />
           </Button>
-        </Box>
+        </Surface>
       </div>
-      <Box className={classes.fileInfoContainer}>
-        <Box horizontal>
+      <Surface className={classes.fileInfoContainer}>
+        <Surface horizontal>
           <Tooltip content={`${filename.filename}.${filename.extension}`}>
             <Paragraph className={classes.fileName}>{filename.filename}</Paragraph>
           </Tooltip>
           <Paragraph className={classes.fileExtension}>.{filename.extension}</Paragraph>
-        </Box>
+        </Surface>
 
         {file.fileSizeInBytes && (
           <Paragraph data-size="sm" className={classes.fileSize}>
             {file.fileSize ?? convertBytesToReadable(file.fileSizeInBytes)}
           </Paragraph>
         )}
-      </Box>
+      </Surface>
     </div>
   );
 };

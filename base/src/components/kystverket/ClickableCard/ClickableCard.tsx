@@ -1,4 +1,4 @@
-import { Box, Heading, Icon } from '~/main';
+import { Surface, Heading, Icon } from '~/main';
 import classes from './ClickableCard.module.css';
 import type { ClickableCardProps } from './ClickableCard.types';
 
@@ -22,23 +22,23 @@ const ClickableCard = (props: ClickableCardProps) => {
     .join(' ');
 
   const inner = (
-    <Box horizontal justify="between" align="center" className={classes.gap3}>
-      <Box className={classes.gap2}>
-        <Box horizontal align="center" className={classes.gap3}>
+    <Surface horizontal justify="between" align="center" className={classes.gap3}>
+      <Surface className={classes.gap2}>
+        <Surface horizontal align="center" className={classes.gap3}>
           {icon && <Icon material={icon} className={classes.iconLeft} size="md" />}
           <Heading data-size="sm" level={headingLevel}>
             {heading}
           </Heading>
-        </Box>
+        </Surface>
         {(description || children) && (
-          <Box className={classes.gap3}>
+          <Surface className={classes.gap3}>
             {description && <p className={classes.description}>{description}</p>}
-            {children !== undefined && children !== null && <Box width="full">{children}</Box>}
-          </Box>
+            {children !== undefined && children !== null && <Surface width="full">{children}</Surface>}
+          </Surface>
         )}
-      </Box>
+      </Surface>
       {chevron && <Icon material="chevron_right" className={classes.chevron} size="md" />}
-    </Box>
+    </Surface>
   );
 
   if (typeof props.href === 'string') {

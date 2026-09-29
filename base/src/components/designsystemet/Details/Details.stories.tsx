@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
-import { Card, Details, DetailsProps, Box } from '~/main';
+import { Card, Details, DetailsProps, Surface } from '~/main';
 
 const meta = {
   title: 'Components/Details',
@@ -65,7 +65,7 @@ export const WithColors: Story = {
   args: {},
   render: () => {
     return (
-      <Box gap={32}>
+      <Surface gap={8}>
         <Card>
           <Details data-color="neutral">
             <Details.Summary>Details header</Details.Summary>
@@ -136,7 +136,7 @@ export const WithColors: Story = {
             <Details.Content>Details content</Details.Content>
           </Details>
         </Card>
-      </Box>
+      </Surface>
     );
   },
 };

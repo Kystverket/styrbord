@@ -1,15 +1,15 @@
-import { Accent, Box, Heading, Paragraph } from '~/main';
+import { Accent, Surface, Heading, Paragraph } from '~/main';
 import { ContentRowProps, HeadingRowProps, SummaryRowProps, TitleRowProps, ValueRowProps } from './summary.types';
 import classes from './summary.module.css';
 
 const SummaryHeading = ({ title, editButton }: HeadingRowProps) => {
   return (
-    <Box className={classes.heading} horizontal justify="between" align="center">
+    <Surface className={classes.heading} horizontal justify="between" align="center">
       <Heading>{title}</Heading>
       <button className={classes.editButton} onClick={editButton.onClick} aria-label={editButton.ariaLabel}>
         {editButton.label}
       </button>
-    </Box>
+    </Surface>
   );
 };
 

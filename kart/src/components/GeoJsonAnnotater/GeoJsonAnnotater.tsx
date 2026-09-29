@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  Box,
+  Surface,
   TextInput,
   ValidationMessage,
   useIdProvider,
@@ -43,12 +43,12 @@ export const GeoJsonAnnotater = ({
     getError?.(`features[${index}].properties.${key}`);
 
   return data.features.map((feature, index) => (
-    <Box key={index}>
+    <Surface key={index}>
       {annotations.map((annotation) => (
-        <Box key={annotation.name}>
-          <Box horizontal width="full" align="center" gap={8}>
+        <Surface key={annotation.name}>
+          <Surface horizontal width="full" align="center" gap={2}>
             <span>#{feature.properties?.nummer}</span>
-            <Box grow>
+            <Surface grow>
               <TextInput
                 id={getId("features", index, "properties", annotation.name)}
                 value={feature.properties?.[annotation.name]}
@@ -57,15 +57,15 @@ export const GeoJsonAnnotater = ({
                   onFeatureChange(index, annotation.name, value);
                 }}
               />
-            </Box>
-          </Box>
+            </Surface>
+          </Surface>
           {getAnnotationError(index, annotation.name) && (
             <ValidationMessage key={annotation.name}>
               {getAnnotationError(index, annotation.name)}
             </ValidationMessage>
           )}
-        </Box>
+        </Surface>
       ))}
-    </Box>
+    </Surface>
   ));
 };

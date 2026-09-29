@@ -68,14 +68,22 @@ function growShrinkToCssValue(value?: boolean | number): string {
   return value === true ? '1' : !value ? '0' : value.toString();
 }
 
-/** @deprecated `Box` will be removed in a future major version. */
+/** @deprecated Use `SurfaceProps`. `Box` will be removed in a future major version. */
 export type BoxProps = (VerticalBoxProps | HorizontalBoxProps) &
   SpacingProps &
   BorderRadiusProps &
   BorderWidthProps &
   BoxStyleProps;
 
-/** @deprecated `Box` will be removed in a future major version. */
+/**
+ * **Replaced by `Surface`.** `Box` will be removed in a future major version — use `Surface` for all new code.
+ *
+ * Spacing on `Box` is in pixels; on `Surface` it is a step on the Designsystemet size scale, so divide by 4:
+ * `gap={16}` → `gap={4}`, `p={24}` → `p={6}`. `color="danger"` becomes
+ * `data-color="danger" data-color-variant="subtle"`.
+ *
+ * @deprecated Use `Surface`. `Box` will be removed in a future major version.
+ */
 const Box = ({
   className = '',
   radius = undefined,

@@ -2,7 +2,7 @@ import type { Meta, StoryFn } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
 import { useEffect, useState } from 'react';
 
-import { Popover, Paragraph, Button, Box, Icon } from '~/main';
+import { Popover, Paragraph, Button, Surface, Icon } from '~/main';
 
 export default {
   title: 'Components/Popover',
@@ -63,7 +63,7 @@ export const Preview: StoryFn<typeof Popover> = (args) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <Box gap={8} align="start">
+    <Surface gap={2} align="start">
       <Paragraph>
         This popover is kept open for testing purposes. Normally, it closes when clicking outside of it.
       </Paragraph>
@@ -73,7 +73,7 @@ export const Preview: StoryFn<typeof Popover> = (args) => {
           popover content
         </Popover>
       </Popover.TriggerContext>
-    </Box>
+    </Surface>
   );
 };
 
@@ -180,7 +180,7 @@ export const Variants: StoryFn<typeof Popover> = () => {
   useEffect(() => setOpen(true), []);
 
   return (
-    <Box gap={64} align="start" px={64}>
+    <Surface gap={30} align="start" px={30}>
       {Object.entries(VariantsMap).map(([key, props], index) => (
         <Popover.TriggerContext key={key}>
           <Popover.Trigger>popover</Popover.Trigger>
@@ -189,7 +189,7 @@ export const Variants: StoryFn<typeof Popover> = () => {
           </Popover>
         </Popover.TriggerContext>
       ))}
-    </Box>
+    </Surface>
   );
 };
 Variants.parameters = {
@@ -230,7 +230,7 @@ export const Sizes: StoryFn<typeof Popover> = () => {
   useEffect(() => setOpen(true), []);
 
   return (
-    <Box gap={64} align="start" px={64}>
+    <Surface gap={30} align="start" px={30}>
       {(['sm', 'md', 'lg'] as const).map((size) => (
         <Popover.TriggerContext key={size}>
           <Popover.Trigger>popover</Popover.Trigger>
@@ -239,7 +239,7 @@ export const Sizes: StoryFn<typeof Popover> = () => {
           </Popover>
         </Popover.TriggerContext>
       ))}
-    </Box>
+    </Surface>
   );
 };
 

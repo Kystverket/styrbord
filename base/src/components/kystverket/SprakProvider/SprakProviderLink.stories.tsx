@@ -8,7 +8,7 @@ import { FileInfo } from '../FileUploader/FileUploader.types';
 
 import { NamespaceProvider, SprakProvider, SprakDebug } from '@kystverket/sprak-react';
 import { STYRBORD_TRANSLATIONS_NAMESPACE } from '~/translations';
-import { Box } from '~/main';
+import { Surface } from '~/main';
 
 import linkTranslations from './linkTranslations.json';
 
@@ -24,7 +24,7 @@ const Wrapper = (props: FileUploaderProps) => {
 };
 
 const LinkTranslationsDecorator = (Story: PartialStoryFn) => (
-  <Box color="danger" p={24}>
+  <Surface data-color="danger" data-color-variant="subtle" p={6}>
     <SprakProvider locale="nb-NO" defaultNamespace={STYRBORD_TRANSLATIONS_NAMESPACE} debug>
       <NamespaceProvider
         ns={'other-namespace'}
@@ -41,7 +41,7 @@ const LinkTranslationsDecorator = (Story: PartialStoryFn) => (
         </NamespaceProvider>
       </NamespaceProvider>
     </SprakProvider>
-  </Box>
+  </Surface>
 );
 
 const meta = {

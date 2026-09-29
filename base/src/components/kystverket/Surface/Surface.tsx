@@ -25,6 +25,13 @@ const size = (value: SurfaceSize) => `var(--ds-size-${value})`;
 
 const growShrink = (value: boolean | number) => (value === true ? '1' : !value ? '0' : value.toString());
 
+/**
+ * A flex container with token-based spacing, colour, border and radius. Replaces `Box`, which is deprecated.
+ *
+ * Unlike `Box`, every property is opt-in: a bare `<Surface>` is only `display: flex; flex-direction: column`,
+ * spacing is a step on the Designsystemet size scale (`4` = `var(--ds-size-4)`), colour follows `data-color`,
+ * and all other `div` attributes and a `ref` are passed through.
+ */
 const Surface = forwardRef<HTMLDivElement, SurfaceProps>(function Surface(
   {
     horizontal,

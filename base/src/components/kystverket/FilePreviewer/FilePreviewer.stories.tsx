@@ -2,7 +2,7 @@ import type { Meta, StoryFn } from '@storybook/react-vite';
 import { FilePreviewRef, FilePreviewerDialogProps } from './dialog/FilePreviewer-dialog';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
-import { Box, Button, FilePreviewer } from '~/main';
+import { Surface, Button, FilePreviewer } from '~/main';
 import { useRef } from 'react';
 
 import atlas from '@assets/img/atlas/atlas 1.jpeg';
@@ -76,9 +76,9 @@ export const Default: StoryFn<FilePreviewerDialogProps> = (args) => {
     <>
       <FilePreviewer animation={args.animation}>
         {args.files.map((file, idx) => (
-          <Box key={idx} mt={8}>
+          <Surface key={idx} mt={2}>
             <FilePreviewer.Thumbnail file={file} index={idx} />
-          </Box>
+          </Surface>
         ))}
       </FilePreviewer>
     </>
@@ -89,11 +89,11 @@ export const withFlex: StoryFn<FilePreviewerDialogProps> = (args) => {
   return (
     <>
       <FilePreviewer animation={args.animation}>
-        <Box align="start" horizontal gap={8}>
+        <Surface align="start" horizontal gap={2}>
           {args.files.map((file, idx) => (
             <FilePreviewer.Thumbnail file={file} key={idx} index={idx} />
           ))}
-        </Box>
+        </Surface>
       </FilePreviewer>
     </>
   );
@@ -112,12 +112,12 @@ export const openWithRef: StoryFn<FilePreviewerDialogProps> = (args) => {
 
   return (
     <>
-      <Box gap={8} width="form-sidebar">
+      <Surface gap={2} width="form-sidebar">
         <p>Click the button below to open the file preview dialog.</p>
         <Button onClick={openPreview}>Open with Ref</Button>
         <Button onClick={openPreviewOnSecondItem}>Open on item with index 2</Button>
         <FilePreviewer animation={args.animation} files={args.files} ref={filePreviewRef} />
-      </Box>
+      </Surface>
     </>
   );
 };
@@ -125,15 +125,15 @@ export const openWithRef: StoryFn<FilePreviewerDialogProps> = (args) => {
 export const withNoneAnimation: StoryFn<FilePreviewerDialogProps> = (args) => {
   return (
     <>
-      <Box gap={8} width="form-sidebar">
+      <Surface gap={2} width="form-sidebar">
         <FilePreviewer animation={args.animation} files={args.files}>
-          <Box align="start" horizontal gap={8}>
+          <Surface align="start" horizontal gap={2}>
             {args.files.map((file, idx) => (
               <FilePreviewer.Thumbnail file={file} key={idx} index={idx} />
             ))}
-          </Box>
+          </Surface>
         </FilePreviewer>
-      </Box>
+      </Surface>
     </>
   );
 };
