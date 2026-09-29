@@ -8,7 +8,7 @@ on:
         required: true
         type: string
       dist-tag:
-        description: npm dist-tag to publish under (latest for main, v1 for the 1.x maintenance branch)
+        description: npm dist-tag to publish under (latest for main, maintenance for the 1.x maintenance branch)
         required: false
         type: string
         default: latest
