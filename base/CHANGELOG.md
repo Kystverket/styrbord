@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/Kystverket/styrbord/compare/styrbord-v2.0.0...styrbord-v2.0.1) (2026-09-29)
+
+
+### Bug Fixes
+
+* **base:** release 2.0.1 to npmjs ([#325](https://github.com/Kystverket/styrbord/issues/325)) ([5e1a078](https://github.com/Kystverket/styrbord/commit/5e1a0785616ba1c6f41404420fa69c25466c0f81))
+
 ## [2.0.0](https://github.com/Kystverket/styrbord/compare/styrbord-v1.20.1...styrbord-v2.0.0) (2026-09-29)
 
 
