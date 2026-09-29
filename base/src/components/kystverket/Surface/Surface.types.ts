@@ -29,7 +29,7 @@ export type SurfaceSpacingProps = {
   [K in SurfaceSpacingKey]?: SurfaceSize;
 };
 
-export const surfaceColorVariants = ['subtle', 'tinted', 'base'] as const;
+export const surfaceColorVariants = ['default', 'subtle', 'tinted', 'base'] as const;
 export type SurfaceColorVariant = (typeof surfaceColorVariants)[number];
 
 export const surfaceBorderStyles = ['none', 'solid', 'dashed', 'dotted', 'double'] as const;
@@ -55,7 +55,7 @@ export type SurfaceProps = Omit<HTMLAttributes<HTMLDivElement>, 'color'> &
     /** Gives the surface a background, text and border colour from this family. */
     'data-color'?: DataColor;
     /**
-     * `subtle` = `background-tinted`, `tinted` = `surface-tinted`, `base` = `base-default` with contrast text.
+     * `default` = `surface-default` (white in light mode), `subtle` = `background-tinted`, `tinted` = `surface-tinted`, `base` = `base-default` with contrast text.
      * Only has an effect together with `data-color`.
      */
     'data-color-variant'?: SurfaceColorVariant;

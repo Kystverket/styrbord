@@ -54,6 +54,11 @@
 
   /* Colour — follows the `data-color` cascade, so every family works */
 
+  .surface[data-color][data-color-variant='default'] {
+    background: var(--ds-color-surface-default);
+    color: var(--ds-color-text-default);
+  }
+
   .surface[data-color][data-color-variant='subtle'] {
     background: var(--ds-color-background-tinted);
     color: var(--ds-color-text-default);
