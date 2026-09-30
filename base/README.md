@@ -15,6 +15,10 @@ Alle komponentene og typene i Designsystemet er tilgjengelig i Styrbord med føl
 - Komponenter merket med 🌈 i menyen er uendret fra Designsystemet.
 - Komponenter merket med 🌈+⚓ i menyen er Designsystem-komponenter som er utvidet med Kystverkets behov. Bruk og egenskap skal i stor grad overlappe.
 
+## Migrere fra 1.x?
+
+Mat KI-agenten med [v2.md](Versjon 2 - Endringer). Den vil da klare å migrere det meste uten problemer. Testet med Claude Code med Opus 5.5.
+
 ## Versjonering
 
 - Prosjektet følger semantisk versjonering (`major.minor.patch`).
