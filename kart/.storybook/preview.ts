@@ -1,8 +1,13 @@
 import type { Preview } from "@storybook/react-vite";
+import { setWorkerUrl } from "maplibre-gl";
+import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import { themes } from "storybook/theming";
 
 import "@kystverket/styrbord/style.css";
 import "../storybook/storybook-style.scss";
+
+// maplibre-gl v6 cannot find its worker once bundled; see "maplibre-gl v6" in README.md.
+setWorkerUrl(maplibreWorkerUrl);
 
 const preview: Preview = {
   parameters: {
