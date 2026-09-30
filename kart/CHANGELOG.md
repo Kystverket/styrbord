@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/Kystverket/styrbord/compare/styrbord-kart-v1.0.0...styrbord-kart-v1.0.1) (2026-09-30)
+
+
+### Bug Fixes
+
+* **kart:** set maplibre-gl v6 worker URL in Storybook and document per-bundler setup ([#329](https://github.com/Kystverket/styrbord/issues/329)) ([8ffff0f](https://github.com/Kystverket/styrbord/commit/8ffff0f5b7929533a4d67e5790ca7529185b77ac))
+
 ## [1.0.0](https://github.com/Kystverket/styrbord/compare/styrbord-kart-v0.2.0...styrbord-kart-v1.0.0) (2026-09-29)
 
 
