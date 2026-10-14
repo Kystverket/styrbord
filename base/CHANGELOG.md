@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.4](https://github.com/Kystverket/styrbord/compare/styrbord-v2.0.3...styrbord-v2.0.4) (2026-10-14)
+
+
+### Bug Fixes
+
+* Chevron vises feil i Suggestion, og fikse Suggestion multiple ([#333](https://github.com/Kystverket/styrbord/issues/333)) ([40e1444](https://github.com/Kystverket/styrbord/commit/40e14441dafc833496d6b0d8acfeb3529ffd2558))
+
 ## [2.0.3](https://github.com/Kystverket/styrbord/compare/styrbord-v2.0.2...styrbord-v2.0.3) (2026-09-29)
 
 
