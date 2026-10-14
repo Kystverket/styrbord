@@ -20,7 +20,10 @@ function SuggestionRoot({ children, label, className, required, optional, error,
       <Label>
         <LabelContent text={label} required={required} optional={optional} />
       </Label>
-      <DsSuggestion {...props}>{children}</DsSuggestion>
+      <DsSuggestion {...props}>
+        {children}
+        <DsSuggestion.Toggle />
+      </DsSuggestion>
       {error && <ValidationMessage>{error}</ValidationMessage>}
     </Field>
   );
