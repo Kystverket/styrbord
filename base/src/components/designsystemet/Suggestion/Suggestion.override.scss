@@ -4,3 +4,9 @@
     color: var(--ds-color-neutral-text-subtle);
   }
 }
+
+// Same chevron as Select; Designsystemet's gradient chevron renders jagged. Selector mirrors theirs.
+.ds-suggestion:where(:has(u-datalist):not(:has(button[aria-expanded], button[type='reset']:not([hidden])))) > input {
+  background-image: var(--styrbord-chevron-down);
+  background-size: 1em 0.5em;
+}
