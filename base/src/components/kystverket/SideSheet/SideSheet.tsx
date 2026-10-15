@@ -6,6 +6,7 @@ import { useBodyScrollLock } from '~/hooks/useBodyScrollLock';
 import { SideSheetButtonsContext, SideSheetButtonsProvider } from './Buttons/ButtonsContext';
 import { SideSheetButtons } from './Buttons/SideSheetButtons';
 import { SideSheetLayout, useSideSheetLayoutContext } from './Layout/SideSheetLayout';
+import { ResizeHandle } from './ResizeHandle/ResizeHandle';
 import classes from './SideSheet.module.css';
 import type { SideSheetProps, SideSheetSize } from './SideSheet.types';
 export type { SideSheetProps };
@@ -127,6 +128,7 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
     onClose,
     placement = 'right',
     size = 'md',
+    allowResize = false,
     pinnable = false,
     pinned: pinnedProp,
     defaultPinned = false,
@@ -178,6 +180,13 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
   };
 
   const edgeClamp = useDynamicEdgeClamp(sheetRef, isPinned);
+
+  // Width set by dragging the resize handle; `null` means "use `size`". Starts over whenever
+  // `size` changes. Kept across close/reopen since the sheet stays mounted.
+  const [resizedWidth, setResizedWidth] = useState<number | null>(null);
+  const [resizing, setResizing] = useState(false);
+  useEffect(() => setResizedWidth(null), [size]);
+  const showResizeHandle = allowResize && open && !isPhone;
 
   const previousFocusRef = useRef<Element | null>(null);
 
@@ -231,7 +240,13 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
   // own), just cap maxHeight to however much of Layout is currently visible in the viewport.
   // Overlay (unpinned) mode: always 100% of the viewport (plain CSS on .overlay) - opening it
   // locks page scroll (useBodyScrollLock), so there's no scroll position to react to anyway.
-  const sheetStyle = edgeClamp ? { ...style, maxHeight: edgeClamp.height } : style;
+  const sheetStyle = {
+    ...style,
+    ...(edgeClamp && { maxHeight: edgeClamp.height }),
+    // Inline, so it beats the size class without touching any other CSS. `.push.closed` sets
+    // `width: 0 !important`, so this can't hold a closed sheet open.
+    ...(allowResize && resizedWidth !== null && { '--side-sheet-width': `${resizedWidth}px` }),
+  } as React.CSSProperties;
 
   function getPinIcon() {
     return isPinned ? 'keep_off' : 'keep';
@@ -257,6 +272,7 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
         aria-label={typeof title === 'string' ? title : undefined}
         aria-labelledby={title && typeof title !== 'string' ? titleId : undefined}
         aria-hidden={!open}
+        data-resizing={resizing || undefined}
       >
         {(title || showBackButton) && (
           <header className={classes.header}>
@@ -324,6 +340,17 @@ const SideSheetRoot = forwardRef<HTMLElement, SideSheetProps>(function SideSheet
         <div className={classes.body}>{children}</div>
 
         <SideSheetButtonsBlock footerDivider={footerDivider} />
+
+        {showResizeHandle && (
+          <ResizeHandle
+            sheetRef={sheetRef}
+            placement={placement}
+            pinned={isPinned}
+            onResize={setResizedWidth}
+            onResizingChange={setResizing}
+            onReset={() => setResizedWidth(null)}
+          />
+        )}
       </aside>
     </>
   );

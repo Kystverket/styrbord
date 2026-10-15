@@ -72,6 +72,7 @@
     "close": "Lukk sidepanel",
     "openInNewTab": "Åpne i ny fane",
     "pin": "Fest sidepanel",
+    "resize": "Endre bredde på sidepanel",
     "unpin": "Løsne sidepanel"
   },
   "textArea": {
