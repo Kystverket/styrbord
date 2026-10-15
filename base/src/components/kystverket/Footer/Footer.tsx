@@ -70,7 +70,7 @@ export function Footer({ additionalLogo, text = '', copyright = '', contacts, li
         <div className={classes.footerContentContainer}>
           <div className={classes.logoContainer}>
             <div className={classes.logoContainerInner}>
-              <Logo alt={t('kystverket')} variant="white-horizontal" width={220} height={55.25} />
+              <Logo alt={t('kystverket')} color="white" width={220} height={55.25} />
               {additionalLogo}
             </div>
             {!text && (
