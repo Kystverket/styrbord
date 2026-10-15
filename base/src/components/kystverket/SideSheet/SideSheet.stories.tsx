@@ -212,7 +212,7 @@ export const Resizable: StoryFn<typeof SideSheet> = (args) => {
           Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
           aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
         </Paragraph>
-        <Paragraph>
+        <Paragraph style={{ marginTop: '2rem' }}>
           Dra i kanten mot innholdet for å endre bredden, eller fokuser den med Tab og bruk piltastene (hold Shift for
           større steg). Dobbeltklikk på kanten for å gå tilbake til <code>size</code>.
         </Paragraph>
