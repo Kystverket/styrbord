@@ -1,0 +1,23 @@
+.product-logo-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.product-logo-text {
+  /* Scales with the logo: --logo-height is set inline from the rendered logo height */
+  font-size: calc(var(--logo-height) * 0.35);
+  line-height: 0;
+  margin-left: 0.75em;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.logo-color-white {
+  color: #ffffff;
+}
+.logo-color-black {
+  color: #000000;
+}
+.logo-color-blue {
+  color: #000667;
+}
