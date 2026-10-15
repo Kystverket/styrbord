@@ -22,7 +22,7 @@
       top: 0;
       bottom: 0;
       width: 2px;
-      background: transparent;
+      background: var(--ds-color-neutral-border-default);
       content: '';
       transition: background 150ms;
     }
