@@ -13,11 +13,11 @@
 }
 
 .logo-color-white {
-  color: #ffffff;
+  color: var(--ds-color-base-contrast-default);
 }
 .logo-color-black {
   color: #000000;
 }
 .logo-color-blue {
-  color: #000667;
+  color: var(--ds-color-base-default);
 }
