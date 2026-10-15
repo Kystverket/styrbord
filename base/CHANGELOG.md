@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.2.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.1.0...styrbord-v2.2.0) (2026-10-15)
+
+
+### Features
+
+* **base:** add allowResize to SideSheet ([#335](https://github.com/Kystverket/styrbord/issues/335)) ([d0ca975](https://github.com/Kystverket/styrbord/commit/d0ca975c0ed8deef5ef76046f60db2158cf5623d))
+
+## [2.1.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.0.4...styrbord-v2.1.0) (2026-10-15)
+
+
+### Features
+
+* Ny Kystverketlogo med knekkende (men enkle) endringer ([#336](https://github.com/Kystverket/styrbord/issues/336)) ([284a3e4](https://github.com/Kystverket/styrbord/commit/284a3e4b1c2afa74e024560520eba30d4154e6b2))
+
 ## [2.0.4](https://github.com/Kystverket/styrbord/compare/styrbord-v2.0.3...styrbord-v2.0.4) (2026-10-14)
 
 
