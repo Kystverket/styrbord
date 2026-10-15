@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.0.4...styrbord-v2.1.0) (2026-10-15)
+
+
+### Features
+
+* Ny Kystverketlogo med knekkende (men enkle) endringer ([#336](https://github.com/Kystverket/styrbord/issues/336)) ([284a3e4](https://github.com/Kystverket/styrbord/commit/284a3e4b1c2afa74e024560520eba30d4154e6b2))
+
 ## [2.0.4](https://github.com/Kystverket/styrbord/compare/styrbord-v2.0.3...styrbord-v2.0.4) (2026-10-14)
 
 
