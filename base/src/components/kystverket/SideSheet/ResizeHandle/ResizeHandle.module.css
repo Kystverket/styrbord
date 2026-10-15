@@ -22,7 +22,7 @@
       top: 0;
       bottom: 0;
       width: 2px;
-      background: var(--ds-color-neutral-border-default);
+      background: transparent;
       content: '';
       transition: background 150ms;
     }
@@ -37,6 +37,11 @@
     &:not([data-pinned])::after {
       top: var(--ds-border-radius-xl);
       bottom: var(--ds-border-radius-xl);
+    }
+
+    &:hover::after,
+    &:active::after {
+      background: var(--ds-color-neutral-border-default);
     }
 
     &:focus-visible {
