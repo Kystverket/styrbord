@@ -17,6 +17,7 @@ export type { ConsentContextValue } from './utility/consentContext';
 
 export {
   clearServiceCookies,
+  clearServiceStorage,
   createConsentStore,
   getSelectableCategories,
   hasGatedServices,
@@ -25,7 +26,13 @@ export {
 } from './utility/consentStore';
 export type { ConsentStore } from './utility/consentStore';
 
-export { consentCookieService, hotjarService, plausibleService, postHogService } from './utility/services';
+export {
+  consentCookieService,
+  hotjarService,
+  plausibleService,
+  postHogReplayService,
+  postHogService,
+} from './utility/services';
 export type { HotjarOptions, PlausibleOptions, PostHogOptions } from './utility/services';
 
 export {
