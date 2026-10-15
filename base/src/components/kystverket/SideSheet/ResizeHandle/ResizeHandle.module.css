@@ -1,0 +1,56 @@
+@layer styrbord-modules {
+  /* Sits inside the sheet rather than straddling its edge: .push has overflow: hidden. */
+  .resizeHandle {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: var(--ds-size-2);
+    cursor: col-resize;
+    touch-action: none;
+
+    &[data-placement='right'] {
+      left: 0;
+    }
+    &[data-placement='left'] {
+      right: 0;
+    }
+
+    /* The visible line, on the edge facing the page. */
+    &::after {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: transparent;
+      content: '';
+      transition: background 150ms;
+    }
+    &[data-placement='right']::after {
+      left: 0;
+    }
+    &[data-placement='left']::after {
+      right: 0;
+    }
+
+    /* Keep the line clear of the overlay's rounded corners. */
+    &:not([data-pinned])::after {
+      top: var(--ds-border-radius-xl);
+      bottom: var(--ds-border-radius-xl);
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+    &:focus-visible::after {
+      width: 4px;
+      background: var(--ds-color-focus-outer);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .resizeHandle::after {
+      transition: none;
+    }
+  }
+}

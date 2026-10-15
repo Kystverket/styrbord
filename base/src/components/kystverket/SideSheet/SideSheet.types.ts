@@ -10,6 +10,14 @@ export interface SideSheetProps {
   placement?: SideSheetPlacement;
   size?: SideSheetSize;
   /**
+   * Let the user change the sheet's width by dragging the edge facing the page, or with the
+   * arrow keys when the handle has focus. `size` is the starting width, and double-clicking the
+   * handle goes back to it. The width is kept while the sheet is mounted and starts over when
+   * `size` changes. Hidden on phones, where the sheet is full width.
+   * Default: `false`.
+   */
+  allowResize?: boolean;
+  /**
    * Show a pin button in the header that lets the user toggle overlay/push.
    * Default: `false`.
    */
