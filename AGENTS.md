@@ -149,7 +149,11 @@ Things that are easy to get wrong here, all of them learned the hard way:
   nowhere and the user never sees it. `postHogService` is the worked example: it is gated on
   `measurement` and turns session replay on and off at runtime from the `experience` consent via
   c15t's `onLoad`/`onConsentChange`. Heatmaps cannot be toggled that way — they are an init
-  option, so they only take effect on the next page load.
+  option, so they only take effect on the next page load. The dialog only shows categories some
+  service sits in, so `experience` must be made selectable separately: `postHogReplayService` is
+  a `callbackOnly` entry that does just that, and the provider warns when `sessionReplay` is on
+  without any `experience` service. It must not clear cookies or storage — those are shared with
+  the `measurement` entry.
 - **Categories are c15t's fixed vocabulary** (`necessary | functionality | experience | measurement |
 marketing`) and cannot be extended. Labels are ours, so this is invisible to users.
 
