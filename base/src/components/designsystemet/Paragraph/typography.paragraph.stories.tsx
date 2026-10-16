@@ -45,30 +45,30 @@ const defaultProps: BoxProps = {
         <Paragraph data-size="xs">Paragraph XSmall</Paragraph>
       </Surface>
       <Surface gap={4}>
-        <Paragraph data-size="xl" data-font-weight="semibold">
+        <Paragraph data-size="xl" data-weight="semibold">
           Paragraph Semibold XLarge
         </Paragraph>
-        <Paragraph data-size="lg" data-font-weight="semibold">
+        <Paragraph data-size="lg" data-weight="semibold">
           Paragraph Semibold Large
         </Paragraph>
-        <Paragraph data-size="md" data-font-weight="semibold">
+        <Paragraph data-size="md" data-weight="semibold">
           Paragraph Semibold Medium
         </Paragraph>
-        <Paragraph data-size="sm" data-font-weight="semibold">
+        <Paragraph data-size="sm" data-weight="semibold">
           Paragraph Semibold Small
         </Paragraph>
       </Surface>
       <Surface gap={4}>
-        <Paragraph data-size="xl" data-font-weight="medium">
+        <Paragraph data-size="xl" data-weight="medium">
           Paragraph Medium XLarge
         </Paragraph>
-        <Paragraph data-size="lg" data-font-weight="medium">
+        <Paragraph data-size="lg" data-weight="medium">
           Paragraph Medium Large
         </Paragraph>
-        <Paragraph data-size="md" data-font-weight="medium">
+        <Paragraph data-size="md" data-weight="medium">
           Paragraph Medium Medium
         </Paragraph>
-        <Paragraph data-size="sm" data-font-weight="medium">
+        <Paragraph data-size="sm" data-weight="medium">
           Paragraph Medium Small
         </Paragraph>
       </Surface>
