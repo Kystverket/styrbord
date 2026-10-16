@@ -13,6 +13,10 @@
     "longitude": "Lengdegrad",
     "longitudePlaceholder": "f.eks. 10.3951"
   },
+  "fullscreen": {
+    "enter": "Vis i fullskjerm",
+    "exit": "Avslutt fullskjerm"
+  },
   "layers": {
     "backgroundMaps": "Bakgrunnskart",
     "defaultCategory": "Lag",

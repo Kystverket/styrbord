@@ -81,6 +81,7 @@ export function GeoJsonEditor({
   onImportError,
   showCenterAction,
   showZoomControls,
+  showFullscreenControl,
   singleFeature = false,
   getLabel = DEFAULT_GET_LABEL,
 }: GeoJsonEditorProps) {
@@ -88,6 +89,7 @@ export function GeoJsonEditor({
     disabled,
     height,
     showZoomControls,
+    showFullscreenControl,
   });
 
   // ----- Coordinate click → WMS feature info -----

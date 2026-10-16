@@ -7,6 +7,12 @@
   overflow: hidden;
 }
 
+.mapContainer:fullscreen,
+.mapContainer:global(.maplibregl-pseudo-fullscreen) {
+  border: none;
+  border-radius: 0;
+}
+
 .mapContainer.disabled {
   opacity: 0.5;
   pointer-events: none;

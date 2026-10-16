@@ -13,6 +13,10 @@
     "longitude": "Longitude",
     "longitudePlaceholder": "e.g. 10.3951"
   },
+  "fullscreen": {
+    "enter": "Enter fullscreen",
+    "exit": "Exit fullscreen"
+  },
   "layers": {
     "backgroundMaps": "Background maps",
     "defaultCategory": "Layers",

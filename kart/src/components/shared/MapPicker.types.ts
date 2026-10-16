@@ -17,6 +17,8 @@ export interface MapBaseProps {
   showCenterAction?: boolean;
   /** Whether to show the zoom controls. Defaults to `true`. */
   showZoomControls?: boolean;
+  /** Whether to show a button that toggles the map in and out of fullscreen. Defaults to `true`. */
+  showFullscreenControl?: boolean;
 }
 
 /**

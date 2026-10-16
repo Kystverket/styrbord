@@ -16,6 +16,7 @@ import type {
   BaseLayerDefinition,
   LayerDefinition,
 } from "~/utility/layers.types";
+import { useTranslation } from "~/translations";
 
 export interface UseMaplibreMapOptions {
   /** Initial coordinate to center the map on. Falls back to context `defaultCenter`. */
@@ -28,6 +29,8 @@ export interface UseMaplibreMapOptions {
   height?: string;
   /** Whether to show the zoom controls. Defaults to `true`. */
   showZoomControls?: boolean;
+  /** Whether to show a button that toggles the map in and out of fullscreen. Defaults to `true`. */
+  showFullscreenControl?: boolean;
 }
 
 /**
@@ -48,7 +51,9 @@ export function useMaplibreMap({
   onMapClick,
   height,
   showZoomControls = true,
+  showFullscreenControl = true,
 }: UseMaplibreMapOptions = {}) {
+  const { t } = useTranslation();
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   // mapVersion is an incrementing counter: 0 = no map, positive = map instance N.
@@ -135,6 +140,10 @@ export function useMaplibreMap({
         container,
         style: initialStyle,
         attributionControl: {},
+        locale: {
+          "FullscreenControl.Enter": t("fullscreen.enter"),
+          "FullscreenControl.Exit": t("fullscreen.exit"),
+        },
       };
 
       if (initialCoordinate) {
@@ -154,6 +163,9 @@ export function useMaplibreMap({
           new maplibregl.NavigationControl({ showCompass: false }),
           "bottom-right",
         );
+      }
+      if (showFullscreenControl) {
+        map.addControl(new maplibregl.FullscreenControl(), "bottom-right");
       }
 
       // Record that the initial base layer is already on the map, so the

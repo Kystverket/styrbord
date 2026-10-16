@@ -77,6 +77,7 @@ export function GeoJsonViewer({
   onCoordinateClick,
   showCenterAction,
   showZoomControls,
+  showFullscreenControl,
   getLabel = DEFAULT_GET_LABEL,
 }: GeoJsonViewerProps) {
   const layerStyle: Required<GeoJsonStyle> = {
@@ -115,6 +116,7 @@ export function GeoJsonViewer({
     height,
     onMapClick: onCoordinateClick ? handleMapClick : undefined,
     showZoomControls,
+    showFullscreenControl,
   });
 
   const onCoordinateClickRef = useRef(onCoordinateClick);
