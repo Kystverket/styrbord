@@ -15,7 +15,7 @@ const meta: Meta<typeof AvatarStack> = {
     layout: 'padded',
   },
   args: {
-    size: 64,
+    size: 42,
     gap: 2,
     overlap: 16,
     radius: 32,

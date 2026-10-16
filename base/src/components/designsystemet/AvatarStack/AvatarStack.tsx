@@ -10,7 +10,7 @@ type CssLength = number | string;
 export type AvatarStackProps = Omit<DsAvatarStackProps, 'gap' | 'avatarSize' | 'overlap' | 'suffix'> & {
   /**
    * Size of the avatars.
-   * @default 64
+   * @default 42
    */
   size?: CssLength;
   /**
