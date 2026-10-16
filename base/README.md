@@ -15,6 +15,13 @@ Alle komponentene og typene i Designsystemet er tilgjengelig i Styrbord med føl
 - Komponenter merket med 🌈 i menyen er uendret fra Designsystemet.
 - Komponenter merket med 🌈+⚓ i menyen er Designsystem-komponenter som er utvidet med Kystverkets behov. Bruk og egenskap skal i stor grad overlappe.
 
+## Endringer som kan skape visuell endring
+
+### 2026-10-16
+
+Default weight på label endret til medium fra semibold.
+data-font-weight endret til data-weight for å matche designsystemet.
+
 ## Migrere fra 1.x?
 
 Mat KI-agenten med [v2.md](Versjon 2 - Endringer). Den vil da klare å migrere det meste uten problemer. Testet med Claude Code med Opus 5.5.
