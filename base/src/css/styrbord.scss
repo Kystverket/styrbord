@@ -51,6 +51,10 @@
   display: inline-block;
 }
 
+.ds-label:not([data-weight]) {
+  font-weight: var(--ds-font-weight-medium);
+}
+
 :root {
   --spacing-0: 0px;
   --spacing-2: 2px;
