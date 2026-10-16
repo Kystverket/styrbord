@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.2.0...styrbord-v2.3.0) (2026-10-16)
+
+
+### Features
+
+* Endre data-font-weight til data-weight og endre boldness på label ([#342](https://github.com/Kystverket/styrbord/issues/342)) ([4b88e06](https://github.com/Kystverket/styrbord/commit/4b88e06372843d9d44ad01cac7fd450fda31f760))
+
 ## [2.2.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.1.0...styrbord-v2.2.0) (2026-10-15)
 
 
