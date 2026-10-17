@@ -22,6 +22,7 @@ export function CoordinateField({
   className,
   height,
   showCenterAction,
+  showFullscreenControl,
 }: CoordinateFieldProps) {
   const id = useId();
   const { t } = useTranslation();
@@ -97,6 +98,7 @@ export function CoordinateField({
         disabled={disabled}
         height={height}
         showCenterAction={showCenterAction}
+        showFullscreenControl={showFullscreenControl}
       />
 
       {/* Coordinate inputs */}

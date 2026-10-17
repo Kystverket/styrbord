@@ -36,6 +36,7 @@ export function CoordinateDirectionField({
   className,
   height,
   showCenterAction,
+  showFullscreenControl,
 }: CoordinateDirectionFieldProps) {
   const id = useId();
   const { t } = useTranslation();
@@ -165,6 +166,7 @@ export function CoordinateDirectionField({
         disabled={disabled}
         height={height}
         showCenterAction={showCenterAction}
+        showFullscreenControl={showFullscreenControl}
       />
 
       {/* Coordinate + direction inputs */}
