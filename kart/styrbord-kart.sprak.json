@@ -3,6 +3,21 @@
   "mainLanguage": "nb-NO",
   "ignore": [
     {
+      "key": "featureNavigation.next",
+      "checks": ["untranslated"],
+      "languages": ["nn-NO"]
+    },
+    {
+      "key": "featureNavigation.position",
+      "checks": ["untranslated"],
+      "languages": ["nn-NO"]
+    },
+    {
+      "key": "featureNavigation.showOne",
+      "checks": ["untranslated"],
+      "languages": ["nn-NO"]
+    },
+    {
       "key": "fields.directionPlaceholder",
       "checks": ["untranslated"],
       "languages": ["en-US", "nn-NO"]
@@ -14,6 +29,16 @@
     },
     {
       "key": "fields.longitude",
+      "checks": ["untranslated"],
+      "languages": ["nn-NO"]
+    },
+    {
+      "key": "fullscreen.enter",
+      "checks": ["untranslated"],
+      "languages": ["nn-NO"]
+    },
+    {
+      "key": "fullscreen.exit",
       "checks": ["untranslated"],
       "languages": ["nn-NO"]
     },

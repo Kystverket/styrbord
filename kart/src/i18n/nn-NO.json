@@ -5,6 +5,14 @@
     "point": "Teikn punkt",
     "polygon": "Teikn polygon"
   },
+  "featureNavigation": {
+    "count": "{{total}} markeringar",
+    "next": "Neste markering",
+    "position": "{{current}} av {{total}}",
+    "previous": "Førre markering",
+    "showAll": "Vis alle markeringar",
+    "showOne": "Vis markering"
+  },
   "fields": {
     "direction": "Retning (grader)",
     "directionPlaceholder": "0–360",

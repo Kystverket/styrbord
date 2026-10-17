@@ -5,6 +5,14 @@
     "point": "Draw point",
     "polygon": "Draw polygon"
   },
+  "featureNavigation": {
+    "count": "{{total}} features",
+    "next": "Next feature",
+    "position": "{{current}} of {{total}}",
+    "previous": "Previous feature",
+    "showAll": "Show all features",
+    "showOne": "Show feature"
+  },
   "fields": {
     "direction": "Direction (degrees)",
     "directionPlaceholder": "0–360",

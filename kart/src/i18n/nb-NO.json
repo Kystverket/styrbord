@@ -5,6 +5,14 @@
     "point": "Tegn punkt",
     "polygon": "Tegn polygon"
   },
+  "featureNavigation": {
+    "count": "{{total}} markeringer",
+    "next": "Neste markering",
+    "position": "{{current}} av {{total}}",
+    "previous": "Forrige markering",
+    "showAll": "Vis alle markeringer",
+    "showOne": "Vis markering"
+  },
   "fields": {
     "direction": "Retning (grader)",
     "directionPlaceholder": "0–360",
