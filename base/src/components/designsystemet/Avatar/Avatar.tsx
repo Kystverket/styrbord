@@ -68,9 +68,16 @@ export const Avatar: FC<AvatarProps> = ({
   }
 
   const wrapperClass = [classes.wrapper, checked ? classes.checked : undefined].filter(Boolean).join(' ');
-  const wrapperStyles: Record<string, string> = autoMode === 'solid' ? autoSolidStyles(rest['aria-label']) : {};
+  // A data-color on the avatar itself sets --ds-color-base-default, so it wins over the solid colors
+  const solidStyles: Record<string, string> =
+    autoMode === 'solid' && !rest['data-color'] ? autoSolidStyles(rest['aria-label']) : {};
 
-  const props = { 'data-size': size, className: classList.join(' '), ...rest } as DsAvatarProps;
+  const props = {
+    'data-size': size,
+    className: classList.join(' '),
+    ...rest,
+    style: { ...solidStyles, ...rest.style },
+  } as DsAvatarProps;
   let content = null;
 
   const boringAvatar = isBoring ? (
@@ -96,16 +103,20 @@ export const Avatar: FC<AvatarProps> = ({
     content = children;
   }
 
-  const avatar = (
-    <span className={wrapperClass} style={wrapperStyles}>
+  // Only wrap when the check overlay is used, so .ds-avatar stays a direct child of e.g. AvatarStack's <li>
+  const avatar =
+    checked === undefined ? (
       <DsAvatar {...props}>{content}</DsAvatar>
-      <span
-        className={classes.checkOverlay}
-        data-variant={(rest as unknown as { 'data-variant'?: string })['data-variant']}
-        aria-hidden="true"
-      />
-    </span>
-  );
+    ) : (
+      <span className={wrapperClass}>
+        <DsAvatar {...props}>{content}</DsAvatar>
+        <span
+          className={classes.checkOverlay}
+          data-variant={(rest as unknown as { 'data-variant'?: string })['data-variant']}
+          aria-hidden="true"
+        />
+      </span>
+    );
 
   if (tooltip) {
     return <Tooltip content={tooltip}>{avatar}</Tooltip>;

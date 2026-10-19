@@ -48,6 +48,15 @@ export type ConsentService = Script & {
    * tredjeparten allerede har satt.
    */
   clearCookiePrefixes?: string[];
+
+  /**
+   * Nøkler i `localStorage` og `sessionStorage` tjenesten skriver, og som skal slettes når
+   * samtykket trekkes tilbake. Prefiks-match, som `clearCookiePrefixes`.
+   *
+   * Mange skript speiler kapslene sine til nettleserlagringen (PostHog med
+   * `persistence: 'localStorage+cookie'`), og da er det ikke nok å slette kapslene.
+   */
+  clearStoragePrefixes?: string[];
 };
 
 /**

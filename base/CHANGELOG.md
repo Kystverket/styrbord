@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.4.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.3.0...styrbord-v2.4.0) (2026-10-19)
+
+
+### Features
+
+* **base:** Add prop for AvatarStack customization, and fix so border (mask) on AvatarStack works ([#345](https://github.com/Kystverket/styrbord/issues/345)) ([49cb77a](https://github.com/Kystverket/styrbord/commit/49cb77ac6299ae6fff76791a5703c62077290139))
+* **base:** Legge inn  `focusgroup="toolbar"` på toolbar i RichTextArea for å forbedre accessibility ([#348](https://github.com/Kystverket/styrbord/issues/348)) ([f61771a](https://github.com/Kystverket/styrbord/commit/f61771a2617afa11c887c6fe635028c179d055bb))
+
 ## [2.3.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.2.0...styrbord-v2.3.0) (2026-10-16)
 
 

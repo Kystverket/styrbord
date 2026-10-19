@@ -11,7 +11,7 @@ import {
   createRichTextAreaEditorEditable,
   createRichTextAreaEditorPaste,
   handleRichTextAreaEditorClick,
-  handleRichTextAreaEditorKeydown,
+  createRichTextAreaEditorKeydown,
   richTextCommonmarkPlugins,
 } from './richTextArea.editor';
 
@@ -19,6 +19,10 @@ type CreateRichTextAreaEditorParams = {
   root: HTMLElement;
   disabled: boolean;
   editorMarkdown: string;
+  /** id of the element describing the editor (the Alt+F10 hint). */
+  describedBy: string;
+  /** Whether Alt+F10 has a toolbar item to go to; without one, Tab must be allowed to leave a list. */
+  canReachToolbar: () => boolean;
   canUploadImage: boolean;
   dispatchImageFromFile: (file: File) => void;
   updateInlineImageConfig: (config: InlineImageConfig) => InlineImageConfig;
@@ -32,6 +36,8 @@ export const createRichTextAreaEditor = ({
   root,
   disabled,
   editorMarkdown,
+  describedBy,
+  canReachToolbar,
   canUploadImage,
   dispatchImageFromFile,
   updateInlineImageConfig,
@@ -47,10 +53,11 @@ export const createRichTextAreaEditor = ({
       ctx.update(editorViewOptionsCtx, (prev = {}) => ({
         ...prev,
         editable: createRichTextAreaEditorEditable(disabled),
+        attributes: { 'aria-describedby': describedBy },
         handleDOMEvents: {
           ...prev.handleDOMEvents,
           click: handleRichTextAreaEditorClick,
-          keydown: handleRichTextAreaEditorKeydown,
+          keydown: createRichTextAreaEditorKeydown(canReachToolbar),
           paste: createRichTextAreaEditorPaste(canUploadImage, dispatchImageFromFile),
           drop: createRichTextAreaEditorDrop(canUploadImage, dispatchImageFromFile),
         },

@@ -1,4 +1,4 @@
-import { commandsCtx, editorViewCtx } from '@milkdown/core';
+import { commandsCtx } from '@milkdown/core';
 import type { Editor } from '@milkdown/core';
 import type { Ctx } from '@milkdown/ctx';
 import { liftListItemCommand, turnIntoTextCommand, wrapInHeadingCommand } from '@milkdown/preset-commonmark';
@@ -29,13 +29,13 @@ export const useRichTextCommands = ({
   get,
   updateToolbarState,
 }: UseRichTextCommandsParams): UseRichTextCommandsReturn => {
-  // Felles flyt for alle toolbar-kommandoer.
+  // Felles flyt for alle toolbar-kommandoer. Flytter ikke fokus til editoren – tastaturbrukere
+  // skal bli værende i toolbaren og gå ned i tekstfeltet selv.
   const executeInEditor = (fn: (ctx: Ctx) => void) => {
     if (disabled) return;
     const editor = get();
     if (!editor) return;
     editor.action((ctx) => {
-      ctx.get(editorViewCtx).focus();
       fn(ctx);
       updateToolbarState(ctx);
     });

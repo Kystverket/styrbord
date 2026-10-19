@@ -2,6 +2,13 @@ import type { ConsentCategory, ConsentService } from './consent.types';
 import { DEFAULT_EXPIRY_DAYS, DEFAULT_STORAGE_KEY } from './consentStore';
 
 /**
+ * Merker en PostHog-tjeneste satt opp med `sessionReplay`, slik at vi kan advare når opptaket
+ * ikke har noen kategori brukeren kan samtykke til. Et symbol framfor et vanlig felt, fordi det
+ * ikke er en del av `ConsentService`-kontrakten — og det overlever likevel `{ ...service }`.
+ */
+const SESSION_REPLAY = Symbol('styrbord-consent.sessionReplay');
+
+/**
  * Ferdige oppsett for de vanligste sporingstjenestene, med kategorien hver av dem hører til.
  *
  * Disse hører hjemme i biblioteket, ikke i den enkelte applikasjonen: når flere apper deler
@@ -105,7 +112,8 @@ export interface PostHogOptions {
    * Om sesjonsopptak og varmekart skal brukes.
    *
    * Dette er en annen ting å samtykke til enn statistikk, og styres derfor av kategorien
-   * `experience` — se kommentaren på funksjonen under.
+   * `experience` — se kommentaren på funksjonen under. Legg også `postHogReplayService` i
+   * tjenestelista, ellers får brukeren aldri valget, og opptaket blir aldri slått på.
    *
    * @default false
    */
@@ -135,6 +143,17 @@ export interface PostHogOptions {
    * @default '2026-05-30'
    */
   defaults?: string;
+
+  /**
+   * Flere valg til `posthog.init`, f.eks. `capture_exceptions`, `debug` eller maskering av
+   * opptak (`session_recording: { maskTextSelector: '*' }`). PostHog maskerer bare input-felt
+   * som standard, og «anonymiserte opptak» forutsetter i praksis mer enn det.
+   *
+   * Flettes inn etter standardverdiene over, men kan ikke overstyre det samtykket styrer:
+   * `disable_session_recording`, `capture_heatmaps` og `cross_subdomain_cookie` settes alltid
+   * av biblioteket.
+   */
+  initOptions?: Record<string, unknown>;
 }
 
 /** Den lille biten av PostHog-API-et vi rører. Skrevet ut her for å slippe `posthog-js` som avhengighet. */
@@ -156,7 +175,8 @@ interface PostHogGlobal {
  * (`{ and: [...] }`), men dialogen filtrerer dem bort, så PostHog ville blitt usynlig for
  * brukeren — akkurat den stille underrapporteringen kapselmetadataen er til for å unngå.
  * Opptaket styres derfor i stedet i kjøretid: skriptet starter med opptak avslått, og slår det
- * på og av etter hvert som `experience` gis og trekkes tilbake.
+ * på og av etter hvert som `experience` gis og trekkes tilbake. For at brukeren skal få det
+ * valget, må `experience` finnes i dialogen — det er det `postHogReplayService` er til for.
  *
  * Merk at varmekart ikke lar seg skru på i kjøretid slik opptak gjør — de settes når skriptet
  * initialiseres. Gir brukeren `experience` etter at siden er lastet, starter opptaket med én
@@ -172,6 +192,7 @@ export function postHogService({
   capturePageview = true,
   personProfiles = 'identified_only',
   defaults = '2026-05-30',
+  initOptions,
 }: PostHogOptions): ConsentService {
   const host = apiHost.replace(/\/$/, '');
   const assets = (assetHost ?? host.replace('.i.posthog.com', '-assets.i.posthog.com')).replace(/\/$/, '');
@@ -196,11 +217,14 @@ export function postHogService({
     }
   };
 
-  return {
+  const service: ConsentService & { [SESSION_REPLAY]?: true } = {
     id: 'posthog',
     displayName: 'PostHog',
     category: 'measurement',
     clearCookiePrefixes: ['ph_'],
+    // PostHog (`persistence: 'localStorage+cookie'`) speiler kapselen til localStorage, og
+    // holder vinduets øktdata i sessionStorage. Begge må ryddes når samtykket trekkes tilbake.
+    clearStoragePrefixes: ['ph_'],
     // Kapselen heter `ph_<nøkkel>_posthog`. Nøkkelen er kjent her, så brukeren får se det
     // faktiske navnet framfor et jokertegn. PostHog speiler den samme verdien til localStorage,
     // som dialogen foreløpig ikke har noen måte å vise.
@@ -212,6 +236,8 @@ export function postHogService({
         person_profiles: personProfiles,
         capture_pageview: capturePageview,
         defaults,
+        ...initOptions,
+        // Alt under styres av samtykket, og skal ikke kunne overstyres via `initOptions`.
         // PostHog setter denne til `true` selv, som legger kapselen på toppdomenet. Samme felle
         // som c15t sin `crossSubdomain` — se kommentaren på `ConsentConfig.cookieDomain`.
         cross_subdomain_cookie: false,
@@ -222,6 +248,66 @@ export function postHogService({
     },
     onConsentChange: ({ consents }) => applyReplayConsent(consents),
   };
+
+  if (sessionReplay) {
+    service[SESSION_REPLAY] = true;
+  }
+
+  return service;
+}
+
+/**
+ * Gjør PostHogs sesjonsopptak og varmekart til noe brukeren kan samtykke til.
+ *
+ * `postHogService` står i `measurement`, og dialogen viser bare kategorier en tjeneste faktisk
+ * står i. Uten en tjeneste i `experience` får brukeren derfor aldri spørsmålet, og opptaket
+ * slås aldri på — med mindre svaret er gitt i en annen app via den delte kapselen, altså uten
+ * at brukeren har fått valget her. Denne oppføringen laster ingenting (`callbackOnly`); den
+ * gjør bare kategorien synlig. Selve av- og påslåingen skjer i `postHogService`.
+ *
+ * Den rydder bevisst ingen kapsler: de deles med statistikkdelen, og skal stå så lenge
+ * `measurement` er gitt.
+ *
+ * ```ts
+ * const postHog = { apiKey: 'phc_...', sessionReplay: true };
+ * services: [postHogService(postHog), postHogReplayService(postHog)]
+ * ```
+ */
+export function postHogReplayService({ apiKey }: Pick<PostHogOptions, 'apiKey'>): ConsentService {
+  return {
+    id: 'posthog-replay',
+    displayName: 'PostHog (opptak og varmekart)',
+    category: 'experience',
+    callbackOnly: true,
+    // Samme kapsel som under statistikk — opptaket lagres i den samme PostHog-økten.
+    cookies: [{ name: `ph_${apiKey}_posthog`, duration: 365 }],
+  };
+}
+
+let warnedReplayUnselectable = false;
+
+/**
+ * Advarer når PostHog er satt opp med `sessionReplay`, men ingen tjeneste står i `experience`.
+ * Da vises aldri kategorien i dialogen, og opptaket kan bare slås på av et svar gitt i en
+ * annen app.
+ */
+export function warnIfReplayUnselectable(services: ConsentService[]): void {
+  if (warnedReplayUnselectable) {
+    return;
+  }
+
+  const wantsReplay = services.some((service) => (service as { [SESSION_REPLAY]?: true })[SESSION_REPLAY]);
+  const hasExperience = services.some((service) => !service.alwaysLoad && service.category === 'experience');
+  if (!wantsReplay || hasExperience) {
+    return;
+  }
+
+  warnedReplayUnselectable = true;
+  console.warn(
+    `postHogService({ sessionReplay: true }) is configured, but no service is in the ` +
+      `'experience' category, so the user is never asked and session replay never starts. ` +
+      `Add postHogReplayService({ apiKey }) to services.`,
+  );
 }
 
 /**
