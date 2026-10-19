@@ -19,6 +19,8 @@ type CreateRichTextAreaEditorParams = {
   root: HTMLElement;
   disabled: boolean;
   editorMarkdown: string;
+  /** id of the element describing the editor (the Alt+F10 hint). */
+  describedBy: string;
   canUploadImage: boolean;
   dispatchImageFromFile: (file: File) => void;
   updateInlineImageConfig: (config: InlineImageConfig) => InlineImageConfig;
@@ -32,6 +34,7 @@ export const createRichTextAreaEditor = ({
   root,
   disabled,
   editorMarkdown,
+  describedBy,
   canUploadImage,
   dispatchImageFromFile,
   updateInlineImageConfig,
@@ -47,6 +50,7 @@ export const createRichTextAreaEditor = ({
       ctx.update(editorViewOptionsCtx, (prev = {}) => ({
         ...prev,
         editable: createRichTextAreaEditorEditable(disabled),
+        attributes: { 'aria-describedby': describedBy },
         handleDOMEvents: {
           ...prev.handleDOMEvents,
           click: handleRichTextAreaEditorClick,
