@@ -14,6 +14,18 @@ const meta: Meta<typeof AvatarStack> = {
   parameters: {
     layout: 'padded',
   },
+  args: {
+    size: 42,
+    gap: 2,
+    overlap: 16,
+    radius: 32,
+  },
+  argTypes: {
+    size: { control: { type: 'range', min: 16, max: 128, step: 1 } },
+    gap: { control: { type: 'range', min: 0, max: 16, step: 1 } },
+    overlap: { control: { type: 'range', min: 0, max: 128, step: 1 } },
+    radius: { control: { type: 'range', min: 0, max: 64, step: 1 } },
+  },
 };
 
 const mixedAvatars = (
@@ -84,30 +96,34 @@ export default meta;
 
 export const Preview: Story = (args) => <AvatarStack {...args}>{textAvatars}</AvatarStack>;
 
-export const Expandable: Story = () => (
+export const Expandable: Story = (args) => (
   <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ds-size-6)' }}>
     <div>
       <p>expandable (hover or focus to expand)</p>
-      <AvatarStack expandable>{imageAvatars}</AvatarStack>
+      <AvatarStack {...args} expandable>
+        {imageAvatars}
+      </AvatarStack>
     </div>
     <div>
       <p>expandable="fixed" (width stays constant)</p>
-      <AvatarStack expandable="fixed">{imageAvatars}</AvatarStack>
+      <AvatarStack {...args} expandable="fixed">
+        {imageAvatars}
+      </AvatarStack>
     </div>
   </div>
 );
 
-export const WithSuffix: Story = () => (
-  <AvatarStack aria-label="Deltakere i møtet">
+export const WithSuffix: Story = (args) => (
+  <AvatarStack {...args} aria-label="Deltakere i møtet">
     {mixedAvatars}
     <li>+14</li>
   </AvatarStack>
 );
 
-export const ExpandableWithTooltips: Story = () => (
+export const ExpandableWithTooltips: Story = (args) => (
   <div>
     <p>expandable — tooltip on hover</p>
-    <AvatarStack expandable aria-label="Deltakere i møtet">
+    <AvatarStack {...args} expandable aria-label="Deltakere i møtet">
       <li>
         <Tooltip content="Ola Nordmann">
           <Avatar aria-label="Ola Nordmann">
