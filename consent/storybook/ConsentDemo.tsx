@@ -6,6 +6,7 @@ import {
   consentCookieService,
   hotjarService,
   plausibleService,
+  postHogReplayService,
   postHogService,
   useConsent,
   useConsentStore,
@@ -40,7 +41,8 @@ export const demoServices: ConsentService[] = [
   consentCookieService(STORY_STORAGE_KEY),
   plausibleService({ domain: 'demo.kystverket.no' }),
   hotjarService({ siteId: 1234567 }),
-  postHogService({ apiKey: 'phc_demo' }),
+  postHogService({ apiKey: 'phc_demo', sessionReplay: true }),
+  postHogReplayService({ apiKey: 'phc_demo' }),
 ].map(withoutScript);
 
 /** Bare den nødvendige kapselen: ingen tjeneste å ta stilling til, og dermed ikke noe banner. */

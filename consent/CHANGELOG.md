@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/Kystverket/styrbord/compare/styrbord-consent-v2.0.0...styrbord-consent-v2.1.0) (2026-10-19)
+
+
+### Features
+
+* **consent:** make PostHog session replay consentable, clear storage, allow init options ([#338](https://github.com/Kystverket/styrbord/issues/338)) ([844d4e2](https://github.com/Kystverket/styrbord/commit/844d4e21ec48872347adf1908504f95dedc8c468)), closes [#331](https://github.com/Kystverket/styrbord/issues/331)
+
 ## [2.0.0](https://github.com/Kystverket/styrbord/compare/styrbord-consent-v1.0.1...styrbord-consent-v2.0.0) (2026-09-25)
 
 

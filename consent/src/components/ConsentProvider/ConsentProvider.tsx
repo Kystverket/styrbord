@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState, type ReactElement } from 'react';
 import { ConsentContext, type ConsentContextValue } from '../../utility/consentContext';
 import { createConsentStore, hasGatedServices, type ConsentStore } from '../../utility/consentStore';
 import { ConsentDialogRegistryProvider, useConsentDialogRegistry } from '../../utility/dialogRegistry';
+import { warnIfReplayUnselectable } from '../../utility/services';
 import { getConsentTranslations, type ConsentTranslations } from '../../utility/translations';
 import type { ConsentProviderProps } from './ConsentProvider.types';
 
@@ -51,6 +52,9 @@ export function ConsentProvider({
 
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
+
+  // Avhenger av `serviceIds`, ikke `services` — se kommentaren over.
+  useEffect(() => warnIfReplayUnselectable(services), [serviceIds]);
 
   const dialogRegistry = useConsentDialogRegistry();
 
