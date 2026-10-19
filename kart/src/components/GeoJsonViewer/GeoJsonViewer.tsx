@@ -35,7 +35,7 @@ import {
   addHighlightLayers,
   updateHoverHighlight,
   updateSelectionHighlight,
-  featureExpr,
+  addStyledLayers,
 } from "./GeoJsonViewer.utils";
 import { LayerToggle } from "../LayerToggle/LayerToggle";
 import { GeoJsonViewerHoverPopup } from "./GeoJsonViewerHoverPopup";
@@ -201,73 +201,17 @@ export function GeoJsonViewer({
         }
 
         // Add layers (idempotent — skipped if they already exist).
-        // Paint properties use data-driven expressions so that individual
-        // features can override the global style via their `properties`
-        // (e.g. `properties.fillColor`, `properties.lineColor`).
-        if (!map.getLayer(FILL_LAYER)) {
-          map.addLayer({
-            id: FILL_LAYER,
-            type: "fill",
-            source: SOURCE_ID,
-            layout: { visibility: "visible" },
-            paint: {
-              "fill-color": featureExpr("fillColor", layerStyle.fillColor),
-              "fill-opacity": featureExpr(
-                "fillOpacity",
-                layerStyle.fillOpacity,
-              ),
-            },
-          });
-        }
-
-        if (!map.getLayer(LINE_LAYER)) {
-          map.addLayer({
-            id: LINE_LAYER,
-            type: "line",
-            source: SOURCE_ID,
-            layout: { visibility: "visible" },
-            paint: {
-              "line-color": featureExpr("lineColor", layerStyle.lineColor),
-              "line-width": featureExpr("lineWidth", layerStyle.lineWidth),
-            },
-          });
-        }
-
-        if (!map.getLayer(POINT_STROKE_LAYER)) {
-          map.addLayer({
-            id: POINT_STROKE_LAYER,
-            type: "circle",
-            source: SOURCE_ID,
-            layout: { visibility: "visible" },
-            paint: {
-              "circle-radius": [
-                "+",
-                featureExpr("pointRadius", layerStyle.pointRadius),
-                featureExpr("pointStrokeWidth", layerStyle.pointStrokeWidth),
-              ] as unknown as maplibregl.ExpressionSpecification,
-              "circle-color": featureExpr(
-                "pointStrokeColor",
-                layerStyle.pointStrokeColor,
-              ),
-            },
-          });
-        }
-
-        if (!map.getLayer(POINT_LAYER)) {
-          map.addLayer({
-            id: POINT_LAYER,
-            type: "circle",
-            source: SOURCE_ID,
-            layout: { visibility: "visible" },
-            paint: {
-              "circle-radius": featureExpr(
-                "pointRadius",
-                layerStyle.pointRadius,
-              ),
-              "circle-color": featureExpr("pointColor", layerStyle.pointColor),
-            },
-          });
-        }
+        addStyledLayers(
+          map,
+          SOURCE_ID,
+          {
+            fill: FILL_LAYER,
+            line: LINE_LAYER,
+            pointStroke: POINT_STROKE_LAYER,
+            point: POINT_LAYER,
+          },
+          layerStyle,
+        );
 
         // Add highlight layers for hover and selection effects
         addHighlightLayers(map, layerStyle);

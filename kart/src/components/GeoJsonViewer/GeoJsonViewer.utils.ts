@@ -108,6 +108,101 @@ export function toFeatureCollection(
   return { type: "FeatureCollection", features: [data] } as FeatureCollection;
 }
 
+/** Layer ids used by {@link addStyledLayers}. */
+export interface StyledLayerIds {
+  fill: string;
+  line: string;
+  pointStroke: string;
+  point: string;
+}
+
+/**
+ * Add the fill/line/point layers that render a GeoJSON source with a
+ * {@link GeoJsonStyle}. Idempotent — layers that already exist are skipped.
+ *
+ * Paint properties use data-driven expressions so that individual features
+ * can override the global style via their `properties` (e.g.
+ * `properties.fillColor`, `properties.lineColor`).
+ */
+export function addStyledLayers(
+  map: maplibregl.Map,
+  sourceId: string,
+  ids: StyledLayerIds,
+  style: Required<GeoJsonStyle>,
+  beforeId?: string,
+) {
+  if (!map.getLayer(ids.fill)) {
+    map.addLayer(
+      {
+        id: ids.fill,
+        type: "fill",
+        source: sourceId,
+        layout: { visibility: "visible" },
+        paint: {
+          "fill-color": featureExpr("fillColor", style.fillColor),
+          "fill-opacity": featureExpr("fillOpacity", style.fillOpacity),
+        },
+      },
+      beforeId,
+    );
+  }
+
+  if (!map.getLayer(ids.line)) {
+    map.addLayer(
+      {
+        id: ids.line,
+        type: "line",
+        source: sourceId,
+        layout: { visibility: "visible" },
+        paint: {
+          "line-color": featureExpr("lineColor", style.lineColor),
+          "line-width": featureExpr("lineWidth", style.lineWidth),
+        },
+      },
+      beforeId,
+    );
+  }
+
+  if (!map.getLayer(ids.pointStroke)) {
+    map.addLayer(
+      {
+        id: ids.pointStroke,
+        type: "circle",
+        source: sourceId,
+        layout: { visibility: "visible" },
+        paint: {
+          "circle-radius": [
+            "+",
+            featureExpr("pointRadius", style.pointRadius),
+            featureExpr("pointStrokeWidth", style.pointStrokeWidth),
+          ] as unknown as maplibregl.ExpressionSpecification,
+          "circle-color": featureExpr(
+            "pointStrokeColor",
+            style.pointStrokeColor,
+          ),
+        },
+      },
+      beforeId,
+    );
+  }
+
+  if (!map.getLayer(ids.point)) {
+    map.addLayer(
+      {
+        id: ids.point,
+        type: "circle",
+        source: sourceId,
+        layout: { visibility: "visible" },
+        paint: {
+          "circle-radius": featureExpr("pointRadius", style.pointRadius),
+          "circle-color": featureExpr("pointColor", style.pointColor),
+        },
+      },
+      beforeId,
+    );
+  }
+}
+
 /** Remove all GeoJSON layers and the source from the map, ignoring errors. */
 export function removeLayers(map: maplibregl.Map) {
   try {

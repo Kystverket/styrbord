@@ -15,7 +15,11 @@ import { useMaplibreMap } from "~/hooks/useMaplibreMap";
 import { useWmsFeatureInfo } from "~/hooks/useWmsFeatureInfo";
 import { computeBounds } from "~/utility/geojson";
 import type { Coordinate } from "~/utility/types";
-import { toFeatureCollection } from "../GeoJsonViewer/GeoJsonViewer.utils";
+import {
+  DEFAULT_STYLE,
+  addStyledLayers,
+  toFeatureCollection,
+} from "../GeoJsonViewer/GeoJsonViewer.utils";
 import {
   DRAW_COLOR,
   DRAW_CONTRAST_COLOR,
@@ -46,6 +50,27 @@ const DEFAULT_GET_LABEL = (feature: Feature<Geometry, GeoJsonProperties>) =>
 
 const LABEL_SOURCE = "geojson-editor-labels";
 const LABEL_LAYER = "geojson-editor-label";
+
+const REFERENCE_SOURCE = "geojson-reference";
+const REFERENCE_LAYERS = {
+  fill: "geojson-reference-fill",
+  line: "geojson-reference-line",
+  pointStroke: "geojson-reference-point-stroke",
+  point: "geojson-reference-point",
+};
+const REFERENCE_LAYER_IDS = Object.values(REFERENCE_LAYERS);
+
+/**
+ * First layer the reference layers must sit beneath: terra-draw's (`td-*`)
+ * or the editor's own (disabled-mode features, labels).
+ */
+function findEditorLayerId(map: maplibregl.Map): string | undefined {
+  return map
+    .getStyle()
+    .layers.find(
+      (l) => l.id.startsWith("td-") || l.id.startsWith("geojson-editor-"),
+    )?.id;
+}
 
 // ---------------------------------------------------------------------------
 // Component
@@ -83,6 +108,8 @@ export function GeoJsonEditor({
   showZoomControls,
   singleFeature = false,
   getLabel = DEFAULT_GET_LABEL,
+  referenceData,
+  referenceStyle,
 }: GeoJsonEditorProps) {
   const { mapContainerRef, mapRef, mapReady, mapVersion } = useMaplibreMap({
     disabled,
@@ -539,15 +566,101 @@ export function GeoJsonEditor({
     };
   }, [mapRef, mapReady, disabled, fc]);
 
-  // Fit bounds to initial data (only once — skip re-fitting after user edits)
+  // ----- Reference data (read-only, rendered beneath the editable features) -----
+  const referenceFc = useMemo(
+    () => (referenceData ? toFeatureCollection(referenceData) : undefined),
+    [referenceData],
+  );
+
+  // Serialised so an inline `referenceStyle={{ ... }}` doesn't rebuild the layers every render.
+  const referenceStyleKey = JSON.stringify(referenceStyle ?? {});
+  const hasReference = !!referenceFc;
+
+  // Layers are only rebuilt when the style changes; data goes through setData below.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapReady || !hasReference) return;
+
+    const style = { ...DEFAULT_STYLE, ...JSON.parse(referenceStyleKey) };
+
+    const addLayers = () => {
+      try {
+        if (!map.getSource(REFERENCE_SOURCE)) {
+          map.addSource(REFERENCE_SOURCE, {
+            type: "geojson",
+            data: { type: "FeatureCollection", features: [] },
+            // Stable ids for hover tracking — reference data often has none.
+            generateId: true,
+          });
+        }
+        addStyledLayers(
+          map,
+          REFERENCE_SOURCE,
+          REFERENCE_LAYERS,
+          style,
+          findEditorLayerId(map),
+        );
+      } catch {
+        // map may already be destroyed
+      }
+    };
+
+    if (map.isStyleLoaded()) {
+      addLayers();
+    } else {
+      map.once("load", addLayers);
+    }
+
+    return () => {
+      map.off("load", addLayers);
+      try {
+        for (const id of REFERENCE_LAYER_IDS) {
+          if (map.getLayer(id)) map.removeLayer(id);
+        }
+        if (map.getSource(REFERENCE_SOURCE)) map.removeSource(REFERENCE_SOURCE);
+      } catch {
+        // map may already be destroyed
+      }
+    };
+  }, [mapRef, mapReady, mapVersion, hasReference, referenceStyleKey]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapReady || !referenceFc) return;
+
+    const updateData = () => {
+      const src = map.getSource(REFERENCE_SOURCE) as
+        | maplibregl.GeoJSONSource
+        | undefined;
+      src?.setData(referenceFc);
+    };
+
+    if (map.isStyleLoaded()) {
+      updateData();
+    } else {
+      map.once("load", updateData);
+    }
+
+    return () => {
+      map.off("load", updateData);
+    };
+  }, [mapRef, mapReady, mapVersion, referenceFc, referenceStyleKey]);
+
+  // Fit bounds to initial data (only once — skip re-fitting after user edits).
+  // Reference data counts too, so the user sees the context they edit against.
   const hasFittedBoundsRef = useRef(false);
 
   useEffect(() => {
     const map = mapRef.current;
-    if (!map || !mapReady || !fc || !fitBounds || hasFittedBoundsRef.current)
-      return;
+    if (!map || !mapReady || !fitBounds || hasFittedBoundsRef.current) return;
 
-    const bounds = computeBounds(fc);
+    const features = [
+      ...(fc?.features ?? []),
+      ...(referenceFc?.features ?? []),
+    ];
+    if (features.length === 0) return;
+
+    const bounds = computeBounds({ type: "FeatureCollection", features });
     if (!bounds) return;
 
     hasFittedBoundsRef.current = true;
@@ -565,7 +678,7 @@ export function GeoJsonEditor({
     } else {
       map.once("load", fit);
     }
-  }, [fc, fitBounds, fitBoundsPadding, mapRef, mapReady]);
+  }, [fc, referenceFc, fitBounds, fitBoundsPadding, mapRef, mapReady]);
 
   // ----- Feature labels -----
   // Renders a symbol layer with labels computed via getLabel().
@@ -659,27 +772,42 @@ export function GeoJsonEditor({
       const features = map.queryRenderedFeatures(e.point);
 
       // Find terra-draw features (they have the 'mode' property set by terra-draw)
+      // Reference features are excluded — they may carry `mode` too (e.g. a
+      // previous editor's output) but are not editable.
       const terraDrawFeature = features.find(
-        (f) => f.properties?.mode && f.properties.mode !== "select",
+        (f) =>
+          f.properties?.mode &&
+          f.properties.mode !== "select" &&
+          !REFERENCE_LAYER_IDS.includes(f.layer.id),
       );
+      const referenceFeature = terraDrawFeature
+        ? undefined
+        : features.find((f) => REFERENCE_LAYER_IDS.includes(f.layer.id));
+      const hovered = terraDrawFeature ?? referenceFeature;
 
-      if (terraDrawFeature) {
-        const featureId =
-          terraDrawFeature.id ?? terraDrawFeature.properties?.id ?? null;
+      if (hovered) {
+        const featureId = terraDrawFeature
+          ? (terraDrawFeature.id ?? terraDrawFeature.properties?.id ?? null)
+          : (hovered.id ?? null);
+        // Prefixed so a reference feature never shares a key with a drawn one.
+        const hoverKey = terraDrawFeature
+          ? featureId
+          : `reference:${featureId}`;
 
-        if (featureId !== prevHoveredId) {
-          prevHoveredId = featureId;
+        if (hoverKey !== prevHoveredId) {
+          prevHoveredId = hoverKey;
           const feature: InteractiveFeature = {
             type: "Feature",
             id: featureId ?? undefined,
-            geometry: terraDrawFeature.geometry as Geometry,
-            properties: terraDrawFeature.properties as GeoJsonProperties,
+            geometry: hovered.geometry as Geometry,
+            properties: hovered.properties as GeoJsonProperties,
           };
           setHoveredFeature(feature);
           onHoverRef.current?.(feature, e);
         }
         setHoverPosition({ x: e.point.x, y: e.point.y });
-        map.getCanvas().style.cursor = "pointer";
+        // Only drawn features can be clicked; reference features just show the popup.
+        map.getCanvas().style.cursor = terraDrawFeature ? "pointer" : "";
       } else {
         if (prevHoveredId !== null) {
           prevHoveredId = null;
