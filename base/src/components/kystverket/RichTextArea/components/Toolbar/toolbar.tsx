@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import type { KeyboardEvent, Ref } from 'react';
 import { Button, IconButton, Icon } from '~/main';
 import type { IconId } from '~/main';
 import styles from './toolbar.module.css';
@@ -14,6 +15,7 @@ const FORMAT_LABELS: Record<BlockType, string> = {
 };
 
 type ToolbarProps = {
+  ref?: Ref<HTMLDivElement>;
   disabled?: boolean;
   isBoldActive: boolean;
   isItalicActive: boolean;
@@ -53,6 +55,8 @@ const ToolbarButton = ({ id, popoverTarget, label, icon, active, disabled, onCli
     color="neutral"
     size="sm"
     onClick={onClick}
+    // Mouse clicks shouldn't steal focus from the editor; keyboard activation keeps focus on the button.
+    onMouseDown={(e) => e.preventDefault()}
     disabled={disabled}
     popoverTarget={popoverTarget}
     className={styles.toolbarButton}
@@ -62,6 +66,28 @@ const ToolbarButton = ({ id, popoverTarget, label, icon, active, disabled, onCli
     <Icon material={icon} size="sm" />
   </IconButton>
 );
+
+// The toolbar items a keyboard user can land on: skips disabled ones, ones hidden at this width
+// and the aria-hidden button behind the format select.
+export const getToolbarItems = (toolbar: Element) =>
+  Array.from(toolbar.querySelectorAll<HTMLElement>('button, select')).filter(
+    (el) => el.tabIndex !== -1 && !el.matches(':disabled') && el.checkVisibility(),
+  );
+
+// focusgroup (native, and Designsystemet's polyfill) deliberately skips <select>, since it uses the
+// arrow keys itself, so left/right would change the value instead of moving focus. Take them back and
+// move along the toolbar by hand, stopping at the ends like focusgroup="toolbar"; up/down stay with the select.
+const moveFocusInToolbar = (e: KeyboardEvent<HTMLSelectElement>) => {
+  if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+  const toolbar = e.currentTarget.closest('[role="toolbar"]');
+  if (!toolbar) return;
+  e.preventDefault();
+
+  const items = getToolbarItems(toolbar);
+  const index = items.indexOf(e.currentTarget);
+  const step = e.key === 'ArrowRight' ? 1 : -1;
+  items[Math.max(0, Math.min(index + step, items.length - 1))]?.focus();
+};
 
 type FormatSelectProps = {
   disabled?: boolean;
@@ -88,6 +114,7 @@ const FormatSelect = ({ disabled, selectedFormat, onFormatChange }: FormatSelect
       disabled={disabled}
       aria-label="Heading levels"
       value={selectedFormat}
+      onKeyDown={moveFocusInToolbar}
       onChange={(e) => {
         onFormatChange(e.target.value as BlockType);
       }}
@@ -138,6 +165,7 @@ const FormatSelectButton = ({ disabled, selectedFormat, onFormatChange }: Format
 };
 
 export const Toolbar = ({
+  ref,
   disabled = false,
   isBoldActive,
   isItalicActive,
@@ -161,7 +189,7 @@ export const Toolbar = ({
   if (!showToolbar) return;
 
   return (
-    <div className={styles.toolbar} role="toolbar" aria-label="Rich text formatting">
+    <div ref={ref} focusgroup="toolbar" className={styles.toolbar} role="toolbar" aria-label="Rich text formatting">
       <ToolbarButton label="Bold" icon="format_bold" active={isBoldActive} disabled={disabled} onClick={onBold} />
       <ToolbarButton
         label="Italic"
