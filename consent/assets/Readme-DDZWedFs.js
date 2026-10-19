@@ -1,4 +1,4 @@
-import{j as e}from"./iframe-q82g95C_.js";import{u as s,a as o,b as i}from"./blocks-BRvV52rd.js";import"./preload-helper-Dp1pzeXC.js";import"./index-DVcjPf0F.js";const a=`# Styrbord Consent
+import{j as e}from"./iframe-pvbcaWMW.js";import{u as s,a as o,b as i}from"./blocks-BalCQtc5.js";import"./preload-helper-Dp1pzeXC.js";import"./index-Iv__mCmj.js";const a=`# Styrbord Consent
 
 Samtykke for informasjonskapsler (cookie-banner, innstillingsdialog og tilhørende logikk) for
 Kystverkets interne og eksterne applikasjoner.
@@ -87,7 +87,7 @@ La \`cookieDomain\` stå udefinert lokalt; da settes kapselen på gjeldende vert
 
 ### Tjenester
 
-\`plausibleService\`, \`hotjarService\`, \`postHogService\` og \`consentCookieService\` er ferdige
+\`plausibleService\`, \`hotjarService\`, \`postHogService\`, \`postHogReplayService\` og \`consentCookieService\` er ferdige
 oppsett med riktig kategori og kapselliste. Andre tjenester defineres som vanlige
 \`ConsentService\`-objekter.
 
@@ -98,17 +98,32 @@ legger det bak statistikk-kategorien i stedet.
 PostHog ligger bak statistikk, fordi det alltid teller sidevisninger og klikk:
 
 \`\`\`tsx
-postHogService({
+const postHog = {
   apiKey: 'phc_...',
   sessionReplay: true, // sesjonsopptak og varmekart
   capturePageview: false, // appen teller sidevisninger selv ved ruteendring
-});
+  initOptions: { session_recording: { maskTextSelector: '*' } },
+};
+
+services={[postHogService(postHog), postHogReplayService(postHog)]}
 \`\`\`
 
 Med \`sessionReplay\` gjør PostHog i tillegg det samme som Hotjar, og det hører hjemme under
 brukeropplevelse. Siden en tjeneste bare kan stå i én kategori i dialogen, løses det i kjøretid:
 skriptet starter med opptak avslått og slår det på når brukeren gir brukeropplevelse — også uten
 at siden lastes på nytt. Varmekart settes ved oppstart og er først med ved neste sidelast.
+
+\`postHogReplayService\` laster ingenting; den gjør bare brukeropplevelse til et valg i dialogen.
+Uten den — og uten en annen tjeneste i den kategorien, som Hotjar — får brukeren aldri spørsmålet,
+og opptaket slås aldri på. Biblioteket advarer i konsollet når det mangler.
+
+\`initOptions\` flettes inn i \`posthog.init\`, for f.eks. \`capture_exceptions\`, \`debug\` eller
+maskering. PostHog maskerer bare input-felt som standard, så bruk \`session_recording\` til å
+maskere mer når teksten lover anonymiserte opptak. Valgene samtykket styrer
+(\`disable_session_recording\`, \`capture_heatmaps\`, \`cross_subdomain_cookie\`) kan ikke overstyres.
+
+Når samtykket trekkes tilbake, slettes både \`ph_\`-kapslene og PostHogs kopi i \`localStorage\` og
+\`sessionStorage\`. Egne tjenester får det samme med \`clearStoragePrefixes\`.
 
 API-nøkkelen er offentlig og hører hjemme i klientkoden, men send den likevel inn som en prop
 framfor å lese den i biblioteket — se avsnittet om \`cookieDomain\` over. CSP må åpne for både
