@@ -38,6 +38,22 @@ export function hasGatedServices(services: ConsentService[]) {
   return getSelectableCategories(services).length > 0;
 }
 
+/** Tjenestene brukeren ikke har samtykket til, og som det derfor skal ryddes etter. */
+function servicesWithoutConsent(services: ConsentService[], consents: Partial<ConsentState>) {
+  return services.filter((service) => {
+    // Tjenester som lastes uansett samtykke skal beholde kapslene sine.
+    if (service.alwaysLoad) {
+      return false;
+    }
+    // Sammensatte kategoriuttrykk lar seg ikke slå opp direkte; da lar vi kapslene stå
+    // heller enn å slette noe brukeren faktisk har samtykket til.
+    if (typeof service.category !== 'string') {
+      return false;
+    }
+    return consents[service.category] !== true;
+  });
+}
+
 /**
  * Sletter informasjonskapsler satt av tjenester brukeren ikke har samtykket til.
  *
@@ -57,20 +73,7 @@ export function clearServiceCookies(
     return;
   }
 
-  const prefixes = services
-    .filter((service) => {
-      // Tjenester som lastes uansett samtykke skal beholde kapslene sine.
-      if (service.alwaysLoad) {
-        return false;
-      }
-      // Sammensatte kategoriuttrykk lar seg ikke slå opp direkte; da lar vi kapslene stå
-      // heller enn å slette noe brukeren faktisk har samtykket til.
-      if (typeof service.category !== 'string') {
-        return false;
-      }
-      return consents[service.category] !== true;
-    })
-    .flatMap((service) => service.clearCookiePrefixes ?? []);
+  const prefixes = servicesWithoutConsent(services, consents).flatMap((service) => service.clearCookiePrefixes ?? []);
 
   if (prefixes.length === 0) {
     return;
@@ -92,6 +95,38 @@ export function clearServiceCookies(
     deleteCookie(name, { domain: window.location.hostname });
     if (cookieDomain) {
       deleteCookie(name, { domain: cookieDomain });
+    }
+  }
+}
+
+/**
+ * Sletter `localStorage`- og `sessionStorage`-nøkler skrevet av tjenester brukeren ikke har
+ * samtykket til. Kjøres sammen med `clearServiceCookies`, også ved oppstart.
+ */
+export function clearServiceStorage(services: ConsentService[], consents: Partial<ConsentState>) {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  const prefixes = servicesWithoutConsent(services, consents).flatMap((service) => service.clearStoragePrefixes ?? []);
+
+  if (prefixes.length === 0) {
+    return;
+  }
+
+  for (const storageName of ['localStorage', 'sessionStorage'] as const) {
+    // Selve tilgangen kan kaste, f.eks. i privat modus eller med blokkert nettstedsdata.
+    try {
+      const storage = window[storageName];
+      // Samles før sletting: å fjerne nøkler mens vi går gjennom dem flytter indeksene.
+      const keys = Array.from({ length: storage.length }, (_, index) => storage.key(index)).filter(
+        (key): key is string => key !== null && prefixes.some((prefix) => key.startsWith(prefix)),
+      );
+      for (const key of keys) {
+        storage.removeItem(key);
+      }
+    } catch {
+      // Ingen lagring å rydde i.
     }
   }
 }
@@ -128,7 +163,10 @@ export function createConsentStore(config: ConsentConfig): ConsentStore {
     // Hotjar ikke lar seg stoppe når det først kjører.
     reloadOnConsentRevoked: true,
     callbacks: {
-      onConsentSet: ({ preferences }) => clearServiceCookies(config.services, preferences, config.cookieDomain),
+      onConsentSet: ({ preferences }) => {
+        clearServiceCookies(config.services, preferences, config.cookieDomain);
+        clearServiceStorage(config.services, preferences);
+      },
     },
   });
 }
