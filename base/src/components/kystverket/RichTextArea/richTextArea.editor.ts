@@ -68,7 +68,9 @@ const getListItemDepth = (view: EditorView) => {
 // Tab/Shift+Tab i en liste oppfører seg som i Word: de redigerer alltid og flytter aldri fokus ut.
 // Tab indenterer, Shift+Tab outdenterer nestede punkter, og ellers skjer ingenting – listen fjernes
 // ikke (det gjør Backspace i starten av punktet). Utenfor lister flytter Tab fokus som vanlig.
-const handleListTab = (view: EditorView, event: KeyboardEvent) => {
+// Unntak: uten en toolbar å nå med Alt+F10 (skjult eller deaktivert) slipper Tab gjennom, ellers blir
+// en editor som bare består av én liste en tastaturfelle.
+const handleListTab = (view: EditorView, event: KeyboardEvent, canReachToolbar: () => boolean) => {
   if (event.key !== 'Tab' || event.ctrlKey || event.metaKey || event.altKey) {
     return false;
   }
@@ -85,15 +87,20 @@ const handleListTab = (view: EditorView, event: KeyboardEvent) => {
     return false;
   }
 
-  event.preventDefault();
+  // true hopper over listItemKeymap (som ellers ville fjernet listen). Uten preventDefault flytter
+  // nettleseren fokus som vanlig.
+  if (canReachToolbar()) {
+    event.preventDefault();
+  }
   return true;
 };
 
-export const handleRichTextAreaEditorKeydown = (view: EditorView, event: KeyboardEvent) => {
-  if (handleListTab(view, event)) {
-    return true;
-  }
+export const createRichTextAreaEditorKeydown = (canReachToolbar: () => boolean) => {
+  return (view: EditorView, event: KeyboardEvent) =>
+    handleListTab(view, event, canReachToolbar) || handleLinkSpace(view, event);
+};
 
+const handleLinkSpace = (view: EditorView, event: KeyboardEvent) => {
   if (event.key !== ' ' || event.ctrlKey || event.metaKey || event.altKey) {
     return false;
   }

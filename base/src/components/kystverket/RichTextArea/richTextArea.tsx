@@ -165,6 +165,7 @@ const RichTextAreaContainer = ({
   const toolbarHintId = useId();
   const toolbarRef = useRef<HTMLDivElement>(null);
   const editorWrapperRef = useRef<HTMLDivElement>(null);
+  const bottomToolbarRef = useRef<HTMLDivElement>(null);
 
   const dispatchImageFromFile = (file: File) => insertImageFromFileRef.current(file);
   const updateInlineImageConfig = (config: InlineImageConfig) => inlineImageConfigUpdaterRef.current(config);
@@ -178,6 +179,7 @@ const RichTextAreaContainer = ({
         disabled,
         editorMarkdown,
         describedBy: toolbarHintId,
+        canReachToolbar: () => Boolean(toolbarRef.current && getToolbarItems(toolbarRef.current).length > 0),
         canUploadImage: Boolean(latestOnUploadRef.current),
         dispatchImageFromFile,
         updateInlineImageConfig,
@@ -259,10 +261,12 @@ const RichTextAreaContainer = ({
       return;
     }
 
-    // Ikke synk ekstern verdi mens bruker aktivt redigerer – i teksten eller i toolbaren. Toolbaren flytter
-    // ikke lenger fokus til editoren, så å bare sjekke editorens fokus lot en utdatert verdi overskrive
-    // første formatendring.
-    if (editorWrapperRef.current?.contains(document.activeElement)) {
+    // Ikke synk ekstern verdi mens bruker aktivt redigerer – i teksten, toolbaren eller lenkeeditoren.
+    // Toolbaren flytter ikke lenger fokus til editoren, så å bare sjekke editorens fokus lot en utdatert
+    // verdi overskrive første formatendring. Konsumentens bottomToolbar teller ikke: en knapp der som
+    // nullstiller verdien skal slå gjennom.
+    const { activeElement } = document;
+    if (editorWrapperRef.current?.contains(activeElement) && !bottomToolbarRef.current?.contains(activeElement)) {
       return;
     }
 
@@ -332,9 +336,11 @@ const RichTextAreaContainer = ({
           ref={editorWrapperRef}
           onKeyDown={handleEditorWrapperKeyDown}
         >
-          <span id={toolbarHintId} className="ds-sr-only">
-            Press Alt+F10 to go to the formatting toolbar, and Escape to return.
-          </span>
+          {showToolbar !== false && (
+            <span id={toolbarHintId} className="ds-sr-only">
+              Press Alt+F10 to go to the formatting toolbar, and Escape to return.
+            </span>
+          )}
           <Toolbar
             ref={toolbarRef}
             disabled={disabled || loading || imageUpload.isUploadingImage}
@@ -399,7 +405,7 @@ const RichTextAreaContainer = ({
             onRemove={handleLinkRemove}
             onClose={closeLinkEditor}
           />
-          {!!bottomToolbar && <div>{bottomToolbar}</div>}
+          {!!bottomToolbar && <div ref={bottomToolbarRef}>{bottomToolbar}</div>}
         </div>
 
         {displayedError && <ValidationMessage className={classes.error}>{displayedError}</ValidationMessage>}
