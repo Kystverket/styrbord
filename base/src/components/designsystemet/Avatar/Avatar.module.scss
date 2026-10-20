@@ -1,102 +1,108 @@
-// Checked overlay
-.wrapper {
-  position: relative;
-  display: inline-flex;
-  overflow: hidden;
-}
-
-.checkOverlay {
-  position: absolute;
-  inset: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-  opacity: 0;
-  pointer-events: none;
-  transition:
-    opacity 0.2s ease,
-    background-color 0.2s ease;
-
-  &:not([data-variant='square']) {
-    border-radius: 50%;
+@layer styrbord-modules {
+  // Checked overlay
+  .wrapper {
+    position: relative;
+    display: inline-flex;
+    overflow: hidden;
   }
 
-  &[data-variant='square'] {
-    border-radius: var(--ds-border-radius-sm);
+  .checkOverlay {
+    position: absolute;
+    inset: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      opacity 0.2s ease,
+      background-color 0.2s ease;
+
+    &:not([data-variant='square']) {
+      border-radius: 50%;
+    }
+
+    &[data-variant='square'] {
+      border-radius: var(--ds-border-radius-sm);
+    }
+
+    &::after {
+      content: '';
+      display: block;
+      width: 45%;
+      height: 45%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      transform: scale(0.6);
+      transition: transform 0.2s ease;
+    }
   }
 
-  &::after {
-    content: '';
-    display: block;
-    width: 45%;
-    height: 45%;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    transform: scale(0.6);
-    transition: transform 0.2s ease;
+  .checked .checkOverlay {
+    background-color: color-mix(in srgb, var(--ds-color-neutral-surface-default) 90%, transparent);
+    opacity: 1;
+
+    &::after {
+      transform: scale(1.5);
+    }
   }
-}
 
-.checked .checkOverlay {
-  background-color: color-mix(in srgb, var(--ds-color-neutral-surface-default) 90%, transparent);
-  opacity: 1;
-
-  &::after {
-    transform: scale(1.5);
+  // Boring avatar: the SVG fills the avatar, so drop the icon padding
+  .boring:global(.ds-avatar) {
+    padding: 0;
   }
-}
+  .boringChildren {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    color: white; /* Internal text color */
+    text-shadow:
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      1px 1px 0 #000; /* Creates a 1px border by casting shadows in 4 diagonals */
+  }
+  // Sizes — set Designsystemet's own variables, which size the avatar and its initials
 
-// Boring avatar: the SVG fills the avatar, so drop the icon padding
-.boring:global(.ds-avatar) {
-  padding: 0;
-}
-.boringChildren {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  color: white; /* Internal text color */
-  text-shadow:
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000; /* Creates a 1px border by casting shadows in 4 diagonals */
-}
-// Sizes
-.size2xs {
-  height: 28px;
-  width: 28px;
-  font-size: 10px;
-  line-height: 10px;
-}
+  .sizexs {
+    --dsc-avatar-padding: 5px;
+    --dsc-avatar-font-size: 15px;
+  }
 
-.size3xs {
-  height: 22px;
-  width: 22px;
-  font-size: 8px;
-  line-height: 8px;
-}
+  .size2xs {
+    --dsc-avatar-size: 28px;
+    --dsc-avatar-font-size: 13px;
+    --dsc-avatar-padding: 4px;
+  }
 
-.has-border {
-  border-color: var(--ds-color-border-default);
-  border-width: 1px;
-}
+  .size3xs {
+    --dsc-avatar-size: 22px;
+    --dsc-avatar-font-size: 10px;
+    --dsc-avatar-padding: 3px;
+  }
 
-.border-solid {
-  border-style: solid;
-}
-.border-dashed {
-  border-style: dashed;
-}
-.border-dotted {
-  border-style: dotted;
-}
-.border-double {
-  border-style: double;
-  border-width: 4px;
+  .has-border {
+    border-color: var(--ds-color-border-default);
+    border-width: 1px;
+  }
+
+  .border-solid {
+    border-style: solid;
+  }
+  .border-dashed {
+    border-style: dashed;
+  }
+  .border-dotted {
+    border-style: dotted;
+  }
+  .border-double {
+    border-style: double;
+    border-width: 4px;
+  }
 }

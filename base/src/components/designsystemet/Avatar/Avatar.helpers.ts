@@ -41,9 +41,7 @@ function pickByName<T>(name: string, options: readonly T[]): T {
 }
 
 export const sizeClasses = (size: string) => {
-  if (size === '2xs') return classes['size2xs'];
-  if (size === '3xs') return classes['size3xs'];
-  return '';
+  return classes['size' + size];
 };
 
 export const borderStyleClasses = (borderStyle: string | undefined) => {
