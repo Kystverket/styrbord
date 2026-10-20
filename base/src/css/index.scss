@@ -43,19 +43,19 @@ span[data-color-variant='subtle']:not([data-color]) {
   color: var(--ds-color-neutral-text-subtle);
 }
 
-.ds-paragraph[data-font-weight='regular']:not([data-color]),
-p[data-font-weight='regular']:not([data-color]),
-span[data-font-weight='regular']:not([data-color]) {
+.ds-paragraph[data-weight='regular'],
+p[data-weight='regular'],
+span[data-weight='regular'] {
   font-weight: var(--ds-font-weight-regular);
 }
-.ds-paragraph[data-font-weight='medium']:not([data-color]),
-p[data-font-weight='medium']:not([data-color]),
-span[data-font-weight='medium']:not([data-color]) {
+.ds-paragraph[data-weight='medium'],
+p[data-weight='medium'],
+span[data-weight='medium'] {
   font-weight: var(--ds-font-weight-medium);
 }
-.ds-paragraph[data-font-weight='semibold']:not([data-color]),
-p[data-font-weight='semibold']:not([data-color]),
-span[data-font-weight='semibold']:not([data-color]) {
+.ds-paragraph[data-weight='semibold'],
+p[data-weight='semibold'],
+span[data-weight='semibold'] {
   font-weight: var(--ds-font-weight-semibold);
 }
 

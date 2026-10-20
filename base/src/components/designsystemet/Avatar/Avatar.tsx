@@ -1,8 +1,9 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { Avatar as DsAvatar, AvatarProps as DsAvatarProps, MergeRight, Tooltip } from '@digdir/designsystemet-react';
 import BoringAvatar from 'boring-avatars';
 import classes from './Avatar.module.scss';
 import { autoSolidStyles, borderStyleClasses, boringColors, sizeClasses, determineAutoMode } from './Avatar.helpers';
+import { AvatarContext } from './Avatar.context';
 import { DataColor, DataColorVariant } from '~/main';
 
 export type AvatarBoringVariant =
@@ -14,6 +15,8 @@ export type AvatarBoringVariant =
   | 'bauhaus'
   | 'geometric'
   | 'abstract';
+
+export type AvatarAuto = boolean | 'solid' | AvatarBoringVariant;
 
 type AriaLabel = {
   /**
@@ -43,8 +46,11 @@ export type AvatarProps = MergeRight<
     /**
      * Renders a generated [boring avatar](https://boringavatars.com) in Kystverket's colors,
      * seeded from `aria-label`. Ignored when `children` is set.
+     *
+     * Defaults to the `auto` of the nearest `AvatarProvider`. Set to `false` to opt this avatar
+     * out of a provider's default and render it without generated colors.
      */
-    auto?: true | 'solid' | AvatarBoringVariant;
+    auto?: AvatarAuto;
   }
 >;
 
@@ -60,27 +66,29 @@ export const Avatar: FC<AvatarProps> = ({
 }) => {
   const classList = [className, sizeClasses(size), borderStyleClasses(borderStyle)];
 
-  const autoMode = determineAutoMode(auto, rest['aria-label']);
-  const isBoring = autoMode !== 'solid';
+  const context = useContext(AvatarContext);
+  const autoMode = determineAutoMode(auto ?? context.auto, rest['aria-label']);
+  const isBoring = autoMode !== undefined && autoMode !== 'solid';
 
   if (isBoring) {
     classList.push(classes.boring);
   }
 
   const wrapperClass = [classes.wrapper, checked ? classes.checked : undefined].filter(Boolean).join(' ');
-  const wrapperStyles: Record<string, string> = autoMode === 'solid' ? autoSolidStyles(rest['aria-label']) : {};
+  // A data-color on the avatar itself sets --ds-color-base-default, so it wins over the solid colors
+  const solidStyles: Record<string, string> =
+    autoMode === 'solid' && !rest['data-color'] ? autoSolidStyles(rest['aria-label']) : {};
 
-  const props = { 'data-size': size, className: classList.join(' '), ...rest } as DsAvatarProps;
+  const props = {
+    'data-size': size,
+    className: classList.join(' '),
+    ...rest,
+    style: { ...solidStyles, ...rest.style },
+  } as DsAvatarProps;
   let content = null;
 
   const boringAvatar = isBoring ? (
-    <BoringAvatar
-      variant={autoMode ?? 'marble'}
-      name={rest['aria-label'] ?? ''}
-      colors={boringColors}
-      size="100%"
-      square
-    />
+    <BoringAvatar variant={autoMode} name={rest['aria-label'] ?? ''} colors={boringColors} size="100%" square />
   ) : null;
 
   if (isBoring && children) {
@@ -96,16 +104,20 @@ export const Avatar: FC<AvatarProps> = ({
     content = children;
   }
 
-  const avatar = (
-    <span className={wrapperClass} style={wrapperStyles}>
+  // Only wrap when the check overlay is used, so .ds-avatar stays a direct child of e.g. AvatarStack's <li>
+  const avatar =
+    checked === undefined ? (
       <DsAvatar {...props}>{content}</DsAvatar>
-      <span
-        className={classes.checkOverlay}
-        data-variant={(rest as unknown as { 'data-variant'?: string })['data-variant']}
-        aria-hidden="true"
-      />
-    </span>
-  );
+    ) : (
+      <span className={wrapperClass}>
+        <DsAvatar {...props}>{content}</DsAvatar>
+        <span
+          className={classes.checkOverlay}
+          data-variant={(rest as unknown as { 'data-variant'?: string })['data-variant']}
+          aria-hidden="true"
+        />
+      </span>
+    );
 
   if (tooltip) {
     return <Tooltip content={tooltip}>{avatar}</Tooltip>;

@@ -1,4 +1,4 @@
-import { AvatarBoringVariant } from './Avatar';
+import { AvatarAuto, AvatarBoringVariant } from './Avatar';
 import classes from './Avatar.module.scss';
 import { colors } from '@kystverket/styrbord-tokens/colors';
 
@@ -41,9 +41,7 @@ function pickByName<T>(name: string, options: readonly T[]): T {
 }
 
 export const sizeClasses = (size: string) => {
-  if (size === '2xs') return classes['size2xs'];
-  if (size === '3xs') return classes['size3xs'];
-  return '';
+  return classes['size' + size];
 };
 
 export const borderStyleClasses = (borderStyle: string | undefined) => {
@@ -64,10 +62,14 @@ export const autoSolidStyles = (ariaLabel?: string) => {
   return styles;
 };
 
+/**
+ * `undefined` means auto is explicitly disabled (`auto={false}`): no generated colors at all.
+ */
 export const determineAutoMode = (
-  auto: true | undefined | 'solid' | AvatarBoringVariant,
+  auto: AvatarAuto | undefined,
   ariaLabel?: string,
-): AvatarBoringVariant | 'solid' => {
+): AvatarBoringVariant | 'solid' | undefined => {
+  if (auto === false) return undefined;
   if (!ariaLabel) return 'solid';
   if (!auto) return 'solid';
   return auto === true ? 'solid' : auto;

@@ -34,6 +34,7 @@ export interface HeaderProps {
     title?: string;
     url: string;
     variant?: LogoVariant;
+    product?: string;
   };
   applications?: HeaderApplication[];
   links?: HeaderLinkItem[];
@@ -51,6 +52,10 @@ export interface HeaderProps {
 type HeaderProfile = {
   name: string;
   department?: string;
+  /**
+   * URL of a profile picture. Falls back to initials when unset or when the image fails to load.
+   */
+  image?: string;
   avatarStyle?: Pick<AvatarProps, 'data-color' | 'data-color-variant' | 'border-style'>;
 };
 
@@ -79,7 +84,7 @@ export function MainLinkItem(props: HeaderLinkItemWithOnClick) {
 }
 
 export function Header({
-  logo: { title = undefined, variant = 'blue-horizontal', url },
+  logo: { title = undefined, variant = 'horizontal', product, url },
   links,
   slots,
   width = 'container',
@@ -87,7 +92,7 @@ export function Header({
   applications,
   loginHandler,
   logoutHandler,
-}: HeaderProps) {
+}: Readonly<HeaderProps>) {
   const { t } = useTranslation();
   const { LinkComponent } = useContext(HeaderContext);
   const { applicationId: currentApplicationId } = useContext(ApplicationHeaderContext);
@@ -111,7 +116,13 @@ export function Header({
       >
         <Surface horizontal align="center" gap={4}>
           <a className={classes.logoLink} href={url}>
-            <Logo className={classes.logo} variant={variant} height={47} alt={title ?? t('header.alt-text')} />
+            <Logo
+              className={classes.logo}
+              variant={variant}
+              product={product}
+              height={47}
+              alt={title ?? t('header.alt-text')}
+            />
             {title && <Label className={classes.titleText}>{title}</Label>}
           </a>
         </Surface>

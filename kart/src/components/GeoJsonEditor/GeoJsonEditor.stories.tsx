@@ -127,6 +127,54 @@ export const WithInitialData: Story = {
   },
 };
 
+const harbourReference: FeatureCollection = {
+  type: "FeatureCollection",
+  features: [
+    {
+      type: "Feature",
+      properties: { type: "harbor", name: "Havneområde (referanse)" },
+      geometry: {
+        type: "Polygon",
+        coordinates: [
+          [
+            [6.145, 62.4715],
+            [6.145, 62.4665],
+            [6.16, 62.4665],
+            [6.16, 62.4715],
+            [6.145, 62.4715],
+          ],
+        ],
+      },
+    },
+  ],
+};
+
+/**
+ * `referenceData` is drawn read-only beneath the editable features, styled like
+ * `GeoJsonViewer` (override with `referenceStyle`). It is never part of
+ * `onChange` and cannot be selected — hover it to see its popup. Here the
+ * reference is a harbour area and the user draws inside it.
+ */
+const ReferenceDataTemplate: StoryFn<typeof GeoJsonEditor> = () => {
+  const [data, setData] = useState<FeatureCollection>({
+    type: "FeatureCollection",
+    features: [],
+  });
+
+  return (
+    <GeoJsonEditor
+      value={data}
+      onChange={setData}
+      referenceData={harbourReference}
+      fitBounds
+    />
+  );
+};
+
+export const WithReferenceData: Story = {
+  render: ReferenceDataTemplate,
+};
+
 // ---------------------------------------------------------------------------
 // 3. Controlled – live JSON output
 // ---------------------------------------------------------------------------

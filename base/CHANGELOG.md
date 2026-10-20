@@ -1,5 +1,62 @@
 # Changelog
 
+## [2.6.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.5.0...styrbord-v2.6.0) (2026-10-20)
+
+
+### Features
+
+* **base:** add profile image to Header avatar ([#357](https://github.com/Kystverket/styrbord/issues/357)) ([05ec3cf](https://github.com/Kystverket/styrbord/commit/05ec3cf9a273cc0fabc921393591602c0eb8bf66))
+
+## [2.5.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.4.2...styrbord-v2.5.0) (2026-10-20)
+
+
+### Features
+
+* **base:** add AvatarProvider for default Avatar auto mode ([#355](https://github.com/Kystverket/styrbord/issues/355)) ([2c88085](https://github.com/Kystverket/styrbord/commit/2c8808508d60df5192d294cb3d07972e13248207))
+
+## [2.4.2](https://github.com/Kystverket/styrbord/compare/styrbord-v2.4.1...styrbord-v2.4.2) (2026-10-20)
+
+
+### Bug Fixes
+
+* **base:** size Avatar through Designsystemet 1.23 variables ([#353](https://github.com/Kystverket/styrbord/issues/353)) ([be3201a](https://github.com/Kystverket/styrbord/commit/be3201aab844a2ef44d8ba46a16e94574d729ac0))
+
+## [2.4.1](https://github.com/Kystverket/styrbord/compare/styrbord-v2.4.0...styrbord-v2.4.1) (2026-10-19)
+
+
+### Bug Fixes
+
+* **base:** Make `lg` and `md` tags be less bold ([#350](https://github.com/Kystverket/styrbord/issues/350)) ([fd6e468](https://github.com/Kystverket/styrbord/commit/fd6e46803dfc28557512b062de15aec02789985f))
+
+## [2.4.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.3.0...styrbord-v2.4.0) (2026-10-19)
+
+
+### Features
+
+* **base:** Add prop for AvatarStack customization, and fix so border (mask) on AvatarStack works ([#345](https://github.com/Kystverket/styrbord/issues/345)) ([49cb77a](https://github.com/Kystverket/styrbord/commit/49cb77ac6299ae6fff76791a5703c62077290139))
+* **base:** Legge inn  `focusgroup="toolbar"` på toolbar i RichTextArea for å forbedre accessibility ([#348](https://github.com/Kystverket/styrbord/issues/348)) ([f61771a](https://github.com/Kystverket/styrbord/commit/f61771a2617afa11c887c6fe635028c179d055bb))
+
+## [2.3.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.2.0...styrbord-v2.3.0) (2026-10-16)
+
+
+### Features
+
+* Endre data-font-weight til data-weight og endre boldness på label ([#342](https://github.com/Kystverket/styrbord/issues/342)) ([4b88e06](https://github.com/Kystverket/styrbord/commit/4b88e06372843d9d44ad01cac7fd450fda31f760))
+
+## [2.2.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.1.0...styrbord-v2.2.0) (2026-10-15)
+
+
+### Features
+
+* **base:** add allowResize to SideSheet ([#335](https://github.com/Kystverket/styrbord/issues/335)) ([d0ca975](https://github.com/Kystverket/styrbord/commit/d0ca975c0ed8deef5ef76046f60db2158cf5623d))
+
+## [2.1.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.0.4...styrbord-v2.1.0) (2026-10-15)
+
+
+### Features
+
+* Ny Kystverketlogo med knekkende (men enkle) endringer ([#336](https://github.com/Kystverket/styrbord/issues/336)) ([284a3e4](https://github.com/Kystverket/styrbord/commit/284a3e4b1c2afa74e024560520eba30d4154e6b2))
+
 ## [2.0.4](https://github.com/Kystverket/styrbord/compare/styrbord-v2.0.3...styrbord-v2.0.4) (2026-10-14)
 
 

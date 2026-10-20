@@ -7,6 +7,12 @@ export default {
   title: 'Components/Tag',
   component: Tag,
   tags: ['autodocs', 'ds'],
+  argTypes: {
+    'data-size': {
+      control: 'radio',
+      options: ['sm', 'md', 'lg'],
+    },
+  },
   parameters: {
     customStyles: { justifyContent: 'start' },
     docs: {

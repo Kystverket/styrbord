@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Header, HeaderProps } from './Header';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { ApplicationHeaderContext } from './headerContext';
+import cat from '@assets/img/cats/Cat 3.jpg';
 
 const meta = {
   title: 'Page/Header',
@@ -21,7 +22,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 const saksbehandlingMeny: HeaderProps = {
-  logo: { variant: 'saksbehandling', url: '/' },
+  logo: { product: 'Saksbehandling', url: '/' },
   applications: [
     { id: 'sak', name: 'Saksbehandling', icon: 'data_table' },
     { id: 'is', name: 'Ismelding', icon: 'severe_cold' },
@@ -111,11 +112,11 @@ export const SaksbehandlingAnnenApplikasjon: Story = {
 };
 
 const defaultProps: Story['args'] = {
-  logo: { variant: 'blue-horizontal', url: '#' },
+  logo: { url: '#' },
 };
 
 export const Kystverket: Story = {
-  args: { ...defaultProps, logo: { ...defaultProps.logo, variant: 'blue-horizontal' } },
+  args: { ...defaultProps, logo: { ...defaultProps.logo } },
 };
 
 export const MedUndertittel: Story = {
@@ -123,23 +124,23 @@ export const MedUndertittel: Story = {
 };
 
 export const Datakatalog: Story = {
-  args: { ...defaultProps, logo: { ...defaultProps.logo, variant: 'datakatalog' } },
+  args: { ...defaultProps, logo: { ...defaultProps.logo, product: 'Datakatalog' } },
 };
 
 export const Fyr: Story = {
-  args: { ...defaultProps, logo: { ...defaultProps.logo, variant: 'fyr' } },
+  args: { ...defaultProps, logo: { ...defaultProps.logo, product: 'Fyr' } },
 };
 
 export const Hais: Story = {
-  args: { ...defaultProps, logo: { ...defaultProps.logo, variant: 'hais' } },
+  args: { ...defaultProps, logo: { ...defaultProps.logo, product: 'Historisk AIS' } },
 };
 
 export const Pfsa: Story = {
-  args: { ...defaultProps, logo: { ...defaultProps.logo, variant: 'pfsa' } },
+  args: { ...defaultProps, logo: { ...defaultProps.logo, product: 'Maritim Sikring' } },
 };
 
 export const Selvbetjening: Story = {
-  args: { ...defaultProps, logo: { ...defaultProps.logo, variant: 'selvbetjening' } },
+  args: { ...defaultProps, logo: { ...defaultProps.logo, product: 'Selvbetjening' } },
 };
 
 export const medProfilOgMenyItems: Story = {
@@ -181,6 +182,24 @@ export const medProfil: Story = {
     profile: {
       name: 'Ola Nordmann',
       department: 'Hav- og kystforvaltning',
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ marginBottom: '150px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+};
+
+export const medProfilbilde: Story = {
+  args: {
+    ...defaultProps,
+    profile: {
+      name: 'Ola Nordmann',
+      department: 'Hav- og kystforvaltning',
+      image: cat,
     },
   },
   decorators: [

@@ -1,0 +1,6 @@
+@layer styrbord-modules {
+  /* md is the default size, so a tag without data-size counts as md */
+  .tag:not([data-size='sm']) {
+    font-weight: var(--ds-font-weight-regular);
+  }
+}

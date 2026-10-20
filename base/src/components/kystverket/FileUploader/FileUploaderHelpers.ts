@@ -4,6 +4,10 @@ import { v4 } from 'uuid';
 
 type FileUploaderFilters = Pick<FileUploaderProps, 'maxSizeInBytes' | 'allowedFileTypes' | 'maxFiles'>;
 
+// Browsers report an empty File.type for .geojson, since most OSes have no MIME type registered for it.
+const getContentType = (file: File): string =>
+  file.type || (file.name.toLowerCase().endsWith('.geojson') ? 'application/geo+json' : '');
+
 export const onFilesChanged = (
   files: FileAndExif[],
   state: FileInfo[],
@@ -25,7 +29,7 @@ export const onFilesChanged = (
       contextId,
       fileName: fileAndExif.file.name,
       status: 'uploading',
-      contentType: fileAndExif.file.type,
+      contentType: getContentType(fileAndExif.file),
       exif: fileAndExif.exif,
     });
 
@@ -38,7 +42,7 @@ export const onFilesChanged = (
       contextId,
       fileName: rejection.file.file.name,
       status: 'error',
-      contentType: rejection.file.file.type,
+      contentType: getContentType(rejection.file.file),
       exif: rejection.file.exif,
       error: t(`errors.${rejection.reason}`),
     });
@@ -122,7 +126,7 @@ const isAcceptedFileType = (file: File, allowedFileTypes: FileUploaderProps['all
   }
 
   const fileName = file.name.toLowerCase();
-  const fileMimeType = file.type.toLowerCase();
+  const fileMimeType = getContentType(file).toLowerCase();
 
   return normalizedAllowedTypes.some((allowedType) => {
     if (allowedType.startsWith('.')) {

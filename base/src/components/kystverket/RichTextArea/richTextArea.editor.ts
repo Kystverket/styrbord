@@ -3,6 +3,7 @@ import type { InlineImageConfig } from '@milkdown/components/image-inline';
 import { history } from '@milkdown/plugin-history';
 import { commonmark } from '@milkdown/preset-commonmark';
 import { listener } from '@milkdown/plugin-listener';
+import { sinkListItem } from '@milkdown/prose/schema-list';
 import type { EditorView } from '@milkdown/prose/view';
 
 import { normalizeHref } from './utils/linkUtils';
@@ -48,7 +49,58 @@ export const handleRichTextAreaEditorClick = (_view: EditorView, event: MouseEve
   return true;
 };
 
-export const handleRichTextAreaEditorKeydown = (view: EditorView, event: KeyboardEvent) => {
+const getListItemDepth = (view: EditorView) => {
+  const listItemType = view.state.schema.nodes.list_item;
+  if (!listItemType) {
+    return 0;
+  }
+
+  const { $from } = view.state.selection;
+  let listItemDepth = 0;
+  for (let depth = $from.depth; depth > 0; depth--) {
+    if ($from.node(depth).type === listItemType) {
+      listItemDepth++;
+    }
+  }
+  return listItemDepth;
+};
+
+// Tab/Shift+Tab i en liste oppfører seg som i Word: de redigerer alltid og flytter aldri fokus ut.
+// Tab indenterer, Shift+Tab outdenterer nestede punkter, og ellers skjer ingenting – listen fjernes
+// ikke (det gjør Backspace i starten av punktet). Utenfor lister flytter Tab fokus som vanlig.
+// Unntak: uten en toolbar å nå med Alt+F10 (skjult eller deaktivert) slipper Tab gjennom, ellers blir
+// en editor som bare består av én liste en tastaturfelle.
+const handleListTab = (view: EditorView, event: KeyboardEvent, canReachToolbar: () => boolean) => {
+  if (event.key !== 'Tab' || event.ctrlKey || event.metaKey || event.altKey) {
+    return false;
+  }
+
+  const listItemDepth = getListItemDepth(view);
+  if (listItemDepth === 0) {
+    return false;
+  }
+
+  const listItemType = view.state.schema.nodes.list_item!;
+  const canMove = event.shiftKey ? listItemDepth > 1 : sinkListItem(listItemType)(view.state);
+  if (canMove) {
+    // La listItemKeymap gjøre selve indenteringen.
+    return false;
+  }
+
+  // true hopper over listItemKeymap (som ellers ville fjernet listen). Uten preventDefault flytter
+  // nettleseren fokus som vanlig.
+  if (canReachToolbar()) {
+    event.preventDefault();
+  }
+  return true;
+};
+
+export const createRichTextAreaEditorKeydown = (canReachToolbar: () => boolean) => {
+  return (view: EditorView, event: KeyboardEvent) =>
+    handleListTab(view, event, canReachToolbar) || handleLinkSpace(view, event);
+};
+
+const handleLinkSpace = (view: EditorView, event: KeyboardEvent) => {
   if (event.key !== ' ' || event.ctrlKey || event.metaKey || event.altKey) {
     return false;
   }

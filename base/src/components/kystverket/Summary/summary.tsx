@@ -24,7 +24,7 @@ const SummaryTitle = ({ title }: TitleRowProps) => {
 const SummaryValue = ({ label, value, error = undefined }: ValueRowProps) => {
   return (
     <>
-      <Paragraph className={classes.valueLabel} data-font-weight="medium" data-size="sm">
+      <Paragraph className={classes.valueLabel} data-weight="medium" data-size="sm">
         {label}
       </Paragraph>
       <Paragraph className={classes.valueText} data-size="sm">
@@ -42,7 +42,7 @@ const SummaryValue = ({ label, value, error = undefined }: ValueRowProps) => {
 const SummaryContent = ({ label, content, error = undefined }: ContentRowProps) => {
   return (
     <>
-      <Paragraph className={classes.contentLabel} data-font-weight="medium" data-size="sm">
+      <Paragraph className={classes.contentLabel} data-weight="medium" data-size="sm">
         {label}
       </Paragraph>
       <div className={classes.contentArea}>{content}</div>

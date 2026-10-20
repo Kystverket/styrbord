@@ -34,7 +34,7 @@ export const IconShowcase: StoryFn = () => {
             <Icon material={iconId} />
           </td>
           <td style={{ padding: '0.5rem' }}>
-            <Paragraph data-font-weight="medium">{iconId}</Paragraph>
+            <Paragraph data-weight="medium">{iconId}</Paragraph>
             <Paragraph data-size="sm">{iconDescriptions[iconId]}</Paragraph>
           </td>
           <td style={{ padding: '0rem' }}>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useContext, useEffect, useId, useRef, useState } from 'react';
+import type { KeyboardEvent } from 'react';
 import { Milkdown, MilkdownProvider, useEditor } from '@milkdown/react';
 import { editorViewCtx } from '@milkdown/core';
 import type { InlineImageConfig } from '@milkdown/components/image-inline';
@@ -13,7 +14,7 @@ import classes from './richTextArea.module.css';
 import { Fieldset, LabelContent, ValidationMessage } from '~/main';
 import { FileRetrieverContext } from '../FileUploader/FileRetriever.context';
 import LinkEditor from './components/LinkEditor/linkEditor';
-import { Toolbar } from './components/Toolbar/toolbar';
+import { getToolbarItems, Toolbar } from './components/Toolbar/toolbar';
 import { useRichTextToolbarState } from './hooks/useRichTextToolbarState';
 import { useRichTextLinkEditor } from './hooks/useRichTextLinkEditor';
 import { useRichTextImageUpload } from './hooks/useRichTextImageUpload';
@@ -161,6 +162,10 @@ const RichTextAreaContainer = ({
 
   const { toolbarState, updateToolbarState } = useRichTextToolbarState();
   const linkEditorAnchorId = `rich-text-link-editor-${useId().replaceAll(':', '')}`;
+  const toolbarHintId = useId();
+  const toolbarRef = useRef<HTMLDivElement>(null);
+  const editorWrapperRef = useRef<HTMLDivElement>(null);
+  const bottomToolbarRef = useRef<HTMLDivElement>(null);
 
   const dispatchImageFromFile = (file: File) => insertImageFromFileRef.current(file);
   const updateInlineImageConfig = (config: InlineImageConfig) => inlineImageConfigUpdaterRef.current(config);
@@ -173,6 +178,8 @@ const RichTextAreaContainer = ({
         root,
         disabled,
         editorMarkdown,
+        describedBy: toolbarHintId,
+        canReachToolbar: () => Boolean(toolbarRef.current && getToolbarItems(toolbarRef.current).length > 0),
         canUploadImage: Boolean(latestOnUploadRef.current),
         dispatchImageFromFile,
         updateInlineImageConfig,
@@ -254,13 +261,12 @@ const RichTextAreaContainer = ({
       return;
     }
 
-    // Ikke synk ekstern verdi mens bruker aktivt skriver i editoren.
-    let isEditorFocused = false;
-    editor.action((ctx) => {
-      isEditorFocused = ctx.get(editorViewCtx).hasFocus();
-    });
-
-    if (isEditorFocused) {
+    // Ikke synk ekstern verdi mens bruker aktivt redigerer – i teksten, toolbaren eller lenkeeditoren.
+    // Toolbaren flytter ikke lenger fokus til editoren, så å bare sjekke editorens fokus lot en utdatert
+    // verdi overskrive første formatendring. Konsumentens bottomToolbar teller ikke: en knapp der som
+    // nullstiller verdien skal slå gjennom.
+    const { activeElement } = document;
+    if (editorWrapperRef.current?.contains(activeElement) && !bottomToolbarRef.current?.contains(activeElement)) {
       return;
     }
 
@@ -284,6 +290,29 @@ const RichTextAreaContainer = ({
 
   const showPlaceholder = isEditorEmpty && Boolean(placeholder);
 
+  // Alt+F10 fra editoren hopper til toolbaren, Esc i toolbaren hopper tilbake (som TinyMCE/CKEditor).
+  // Tab redigerer lister, så uten dette er toolbaren vanskelig å nå med tastatur.
+  const handleEditorWrapperKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    const toolbar = toolbarRef.current;
+    if (!toolbar) return;
+    const target = e.target as Node;
+
+    if (e.key === 'F10' && e.altKey && !toolbar.contains(target)) {
+      const [firstItem] = getToolbarItems(toolbar);
+      if (!firstItem) return;
+      e.preventDefault();
+      firstItem.focus();
+      return;
+    }
+
+    // Toolbaren er ett tab-stopp (arrow-tastene navigerer inni), så Tab ut av den går rett til teksten.
+    const isTabForward = e.key === 'Tab' && !e.shiftKey && !e.ctrlKey && !e.metaKey && !e.altKey;
+    if ((e.key === 'Escape' || isTabForward) && toolbar.contains(target)) {
+      e.preventDefault();
+      get()?.action((ctx) => ctx.get(editorViewCtx).focus());
+    }
+  };
+
   return (
     <Fieldset>
       {label && (
@@ -304,8 +333,16 @@ const RichTextAreaContainer = ({
           ]
             .filter(Boolean)
             .join(' ')}
+          ref={editorWrapperRef}
+          onKeyDown={handleEditorWrapperKeyDown}
         >
+          {showToolbar !== false && (
+            <span id={toolbarHintId} className="ds-sr-only">
+              Press Alt+F10 to go to the formatting toolbar, and Escape to return.
+            </span>
+          )}
           <Toolbar
+            ref={toolbarRef}
             disabled={disabled || loading || imageUpload.isUploadingImage}
             isBoldActive={toolbarState.isBoldActive}
             isItalicActive={toolbarState.isItalicActive}
@@ -368,7 +405,7 @@ const RichTextAreaContainer = ({
             onRemove={handleLinkRemove}
             onClose={closeLinkEditor}
           />
-          {!!bottomToolbar && <div>{bottomToolbar}</div>}
+          {!!bottomToolbar && <div ref={bottomToolbarRef}>{bottomToolbar}</div>}
         </div>
 
         {displayedError && <ValidationMessage className={classes.error}>{displayedError}</ValidationMessage>}

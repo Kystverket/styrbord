@@ -1,49 +1,53 @@
-import logoBlueHorizontal from './logo-b-horizontal.svg';
-import logoDatakatalogHorizontal from './Kystverket Datakatalog.svg';
-import logoFyrHorizontal from './Kystverket Fyr.svg';
-import logoHaisHorizontal from './Kystverket Historisk AIS.svg';
-import logoPfsaHorizontal from './Kystverket Maritim Sikring.svg';
-import logoSaksbehandlingHorizontal from './Kystverket Saksbehandling.svg';
-import logoSelvbetjeningHorizontal from './Kystverket Selvbetjening.svg';
-import logoWhiteVertical from './logo-w-vertical.svg';
-import logoWhiteHorizontal from './logo-w-horizontal.svg';
+import logoHorizontal from './kyv-2026-h-no.svg?react';
+import logoVertical from './kyv-2026-v-no.svg?react';
+import logoHorizontalEn from './kyv-2026-h-en.svg?react';
+import logoVerticalEn from './kyv-2026-v-en.svg?react';
+import logoSymbol from './kyv-2026-s-no.svg?react';
 
-export type LogoVariant =
-  | 'blue-horizontal'
-  | 'datakatalog'
-  | 'fyr'
-  | 'hais'
-  | 'pfsa'
-  | 'saksbehandling'
-  | 'selvbetjening'
-  | 'white-horizontal'
-  | 'white-vertical';
+import { CSSProperties, FunctionComponent, SVGProps } from 'react';
+
+import classes from './logo.module.css';
+
+export type LogoVariant = 'horizontal' | 'vertical' | 'symbol' | 'horizontal-en' | 'vertical-en';
+export type LogoColor = 'blue' | 'white' | 'black';
 
 export interface LogoProps {
   className?: string;
+  color?: LogoColor;
   variant?: LogoVariant;
+  product?: string;
   alt?: string;
   height?: number;
   width?: number;
 }
 
-const logoVariants = {
-  'blue-horizontal': { image: logoBlueHorizontal, width: 186, height: 47 },
-  datakatalog: { image: logoDatakatalogHorizontal, width: 589, height: 83 },
-  fyr: { image: logoFyrHorizontal, width: 409, height: 83 },
-  hais: { image: logoHaisHorizontal, width: 591, height: 83 },
-  pfsa: { image: logoPfsaHorizontal, width: 643, height: 83 },
-  saksbehandling: { image: logoSaksbehandlingHorizontal, width: 654, height: 83 },
-  selvbetjening: { image: logoSelvbetjeningHorizontal, width: 618, height: 83 },
-  'white-vertical': { image: logoWhiteVertical, width: 152, height: 110 },
-  'white-horizontal': { image: logoWhiteHorizontal, width: 221, height: 55.25 },
+const logoVariants: Record<
+  LogoVariant,
+  { image: FunctionComponent<SVGProps<SVGSVGElement>>; width: number; height: number }
+> = {
+  horizontal: { image: logoHorizontal, width: 183, height: 47 },
+  vertical: { image: logoVertical, width: 153, height: 110 },
+  symbol: { image: logoSymbol, width: 60, height: 100 },
+  'horizontal-en': { image: logoHorizontalEn, width: 183, height: 47 },
+  'vertical-en': { image: logoVerticalEn, width: 200, height: 110 },
 };
 
-export function Logo({ className, variant = 'blue-horizontal', alt = 'Til forsiden', height, width }: LogoProps) {
+export function Logo({
+  product,
+  className,
+  color = 'blue',
+  variant = 'horizontal',
+  alt = 'Kystverket',
+  height,
+  width,
+}: Readonly<LogoProps>) {
+  const LogoImage = logoVariants[variant].image;
   let logoHeight = logoVariants[variant].height;
   let logoWidth = logoVariants[variant].width;
 
   const logoRatio = logoWidth / logoHeight;
+  const colorClassName = classes['logo-color-' + color];
+  const variantClassName = classes['logo-variant-' + variant];
 
   if (height && width) {
     logoHeight = height;
@@ -56,7 +60,25 @@ export function Logo({ className, variant = 'blue-horizontal', alt = 'Til forsid
     logoHeight = width / logoRatio;
   }
 
-  return (
-    <img className={className} src={logoVariants[variant].image} alt={alt} height={logoHeight} width={logoWidth} />
-  );
+  if (product) {
+    return (
+      <div
+        aria-label={alt}
+        className={[className, classes['product-logo-container'], colorClassName, variantClassName].join(' ')}
+        style={{ '--logo-height': `${logoHeight}px` } as CSSProperties}
+      >
+        <LogoImage height={logoHeight} width={logoWidth} />
+        <span className={classes['product-logo-text']}>{product}</span>
+      </div>
+    );
+  } else {
+    return (
+      <LogoImage
+        className={[className, colorClassName, variantClassName].join(' ')}
+        aria-label={alt}
+        height={logoHeight}
+        width={logoWidth}
+      />
+    );
+  }
 }

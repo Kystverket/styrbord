@@ -12,6 +12,7 @@ import type { ImportErrorReason } from "./GeoJsonEditorToolbar";
 import type { MapBaseProps } from "../shared/MapPicker.types";
 import type { InteractiveFeature } from "~/hooks/useFeatureInteraction";
 import type { CoordinateClickResult } from "~/utility/wmsGetFeatureInfo";
+import type { GeoJsonStyle } from "../GeoJsonViewer/GeoJsonViewer.types";
 
 /** Drawing modes available in the editor toolbar. */
 export type DrawMode = "point" | "linestring" | "polygon" | "directional-point";
@@ -107,4 +108,19 @@ export interface GeoJsonEditorProps extends MapBaseProps {
   getLabel?: (
     feature: Feature<Geometry, GeoJsonProperties>,
   ) => string | number | null | undefined;
+
+  /**
+   * Read-only GeoJSON shown beneath the editable features, for context
+   * (e.g. existing areas the user draws relative to). It is rendered the same
+   * way as `GeoJsonViewer`'s `data` — including per-feature
+   * `FeatureStyleProperties` overrides — and is never part of `onChange`.
+   *
+   * Included in the initial `fitBounds` together with `value`.
+   */
+  referenceData?:
+    | Feature<Geometry, GeoJsonProperties>
+    | FeatureCollection<Geometry, GeoJsonProperties>;
+
+  /** Styling overrides for `referenceData`. Same shape as `GeoJsonViewer`'s `geoJsonStyle`. */
+  referenceStyle?: GeoJsonStyle;
 }

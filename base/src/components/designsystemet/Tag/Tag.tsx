@@ -2,6 +2,7 @@ import { Tag as DsTag, TagProps as DsTagProps } from '@digdir/designsystemet-rea
 import Icon from '~/components/kystverket/Icon/icon';
 import { IconId } from '~/components/kystverket/Icon/icon.types';
 import { CSSProperties } from 'react';
+import classes from './Tag.module.css';
 
 export type TagProps = DsTagProps & {
   radius?: 'sm' | 'md' | 'lg' | 'full';
@@ -10,7 +11,7 @@ export type TagProps = DsTagProps & {
 };
 
 const Tag = ({ radius = 'md', icon, children, className = '', ...props }: TagProps) => {
-  const classNames = [className];
+  const classNames = [classes.tag, className];
   const styles: CSSProperties = {};
 
   if (radius) {
