@@ -1,8 +1,9 @@
-import { Surface, Button, Icon, Dialog, Avatar, Label } from '~/main';
+import { Surface, Button, Icon, Dialog, Label } from '~/main';
 import classes from './Header.module.css';
 import { useContext, useId, useRef, useState } from 'react';
 import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
-import { HeaderProps, HeaderLinkItem, MainLinkItem, nameToInitials } from './Header';
+import { HeaderProps, HeaderLinkItem, MainLinkItem } from './Header';
+import { HeaderAvatar } from './HeaderAvatar';
 import { ApplicationHeaderContext } from './headerContext';
 import { useTranslation } from '~/translations';
 
@@ -67,12 +68,7 @@ export function HeaderMobile({ logoutHandler, loginHandler, profile, slots, link
           {profile && (
             <Dialog.Block>
               <Surface horizontal align="center" p={2} gap={3} px={3}>
-                <Avatar
-                  aria-label={`${profile.name} profile picture`}
-                  data-size="2xs"
-                  initials={nameToInitials(profile.name)}
-                  {...(profile.avatarStyle || { 'data-color': 'success' })}
-                />
+                <HeaderAvatar profile={profile} />
                 <Surface className={classes.profileMeta}>
                   <Label className={`${classes.profileDisplayName} ${classes.truncateOverflow}`}>{profile.name}</Label>
                   {profile.department && (

@@ -52,6 +52,10 @@ export interface HeaderProps {
 type HeaderProfile = {
   name: string;
   department?: string;
+  /**
+   * URL of a profile picture. Falls back to initials when unset or when the image fails to load.
+   */
+  image?: string;
   avatarStyle?: Pick<AvatarProps, 'data-color' | 'data-color-variant' | 'border-style'>;
 };
 
