@@ -1,5 +1,15 @@
 import type { Meta, StoryFn } from '@storybook/react-vite';
-import { Avatar, AvatarBoringVariant, AvatarProps, Badge, Surface, Dropdown, Icon, DataColorVariant } from '~/main';
+import {
+  Avatar,
+  AvatarBoringVariant,
+  AvatarProps,
+  AvatarProvider,
+  Badge,
+  Surface,
+  Dropdown,
+  Icon,
+  DataColorVariant,
+} from '~/main';
 import cat1 from '@assets/img/cats/Cat 3.jpg';
 import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
 type Story = StoryFn<typeof Avatar>;
@@ -257,6 +267,18 @@ export const Boring: Story = () => (
       sizes, square, checked, border
     </Surface>
   </Surface>
+);
+
+export const WithProvider: Story = () => (
+  <AvatarProvider auto="beam">
+    <Surface horizontal align="center" gap={2}>
+      {boringNames.map((name) => (
+        <Avatar key={name} aria-label={name} tooltip={name} />
+      ))}
+      <Avatar auto="solid" aria-label="Ola Nordmann" tooltip="auto=solid" />
+      <Avatar auto={false} aria-label="Ola Nordmann" tooltip="auto=false" />
+    </Surface>
+  </AvatarProvider>
 );
 
 export const AsLink: Story = () => (

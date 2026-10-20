@@ -196,7 +196,9 @@ export type { LinkProps } from './components/designsystemet/Link/Link';
 export { default as Table } from './components/designsystemet/Table/Table';
 
 export { Avatar } from './components/designsystemet/Avatar/Avatar';
-export type { AvatarProps, AvatarBoringVariant } from './components/designsystemet/Avatar/Avatar';
+export type { AvatarProps, AvatarAuto, AvatarBoringVariant } from './components/designsystemet/Avatar/Avatar';
+export { AvatarProvider } from './components/designsystemet/Avatar/Avatar.context';
+export type { AvatarProviderProps } from './components/designsystemet/Avatar/Avatar.context';
 
 export { AvatarStack } from './components/designsystemet/AvatarStack/AvatarStack';
 export type { AvatarStackProps } from './components/designsystemet/AvatarStack/AvatarStack';

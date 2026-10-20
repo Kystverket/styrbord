@@ -1,8 +1,9 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { Avatar as DsAvatar, AvatarProps as DsAvatarProps, MergeRight, Tooltip } from '@digdir/designsystemet-react';
 import BoringAvatar from 'boring-avatars';
 import classes from './Avatar.module.scss';
 import { autoSolidStyles, borderStyleClasses, boringColors, sizeClasses, determineAutoMode } from './Avatar.helpers';
+import { AvatarContext } from './Avatar.context';
 import { DataColor, DataColorVariant } from '~/main';
 
 export type AvatarBoringVariant =
@@ -14,6 +15,8 @@ export type AvatarBoringVariant =
   | 'bauhaus'
   | 'geometric'
   | 'abstract';
+
+export type AvatarAuto = boolean | 'solid' | AvatarBoringVariant;
 
 type AriaLabel = {
   /**
@@ -43,8 +46,11 @@ export type AvatarProps = MergeRight<
     /**
      * Renders a generated [boring avatar](https://boringavatars.com) in Kystverket's colors,
      * seeded from `aria-label`. Ignored when `children` is set.
+     *
+     * Defaults to the `auto` of the nearest `AvatarProvider`. Set to `false` to opt this avatar
+     * out of a provider's default and render it without generated colors.
      */
-    auto?: true | 'solid' | AvatarBoringVariant;
+    auto?: AvatarAuto;
   }
 >;
 
@@ -60,8 +66,9 @@ export const Avatar: FC<AvatarProps> = ({
 }) => {
   const classList = [className, sizeClasses(size), borderStyleClasses(borderStyle)];
 
-  const autoMode = determineAutoMode(auto, rest['aria-label']);
-  const isBoring = autoMode !== 'solid';
+  const context = useContext(AvatarContext);
+  const autoMode = determineAutoMode(auto ?? context.auto, rest['aria-label']);
+  const isBoring = autoMode !== undefined && autoMode !== 'solid';
 
   if (isBoring) {
     classList.push(classes.boring);
@@ -81,13 +88,7 @@ export const Avatar: FC<AvatarProps> = ({
   let content = null;
 
   const boringAvatar = isBoring ? (
-    <BoringAvatar
-      variant={autoMode ?? 'marble'}
-      name={rest['aria-label'] ?? ''}
-      colors={boringColors}
-      size="100%"
-      square
-    />
+    <BoringAvatar variant={autoMode} name={rest['aria-label'] ?? ''} colors={boringColors} size="100%" square />
   ) : null;
 
   if (isBoring && children) {
