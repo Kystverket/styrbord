@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.4.2...styrbord-v2.5.0) (2026-10-20)
+
+
+### Features
+
+* **base:** add AvatarProvider for default Avatar auto mode ([#355](https://github.com/Kystverket/styrbord/issues/355)) ([2c88085](https://github.com/Kystverket/styrbord/commit/2c8808508d60df5192d294cb3d07972e13248207))
+
 ## [2.4.2](https://github.com/Kystverket/styrbord/compare/styrbord-v2.4.1...styrbord-v2.4.2) (2026-10-20)
 
 
