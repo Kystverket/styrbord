@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.6.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.5.0...styrbord-v2.6.0) (2026-10-20)
+
+
+### Features
+
+* **base:** add profile image to Header avatar ([#357](https://github.com/Kystverket/styrbord/issues/357)) ([05ec3cf](https://github.com/Kystverket/styrbord/commit/05ec3cf9a273cc0fabc921393591602c0eb8bf66))
+
 ## [2.5.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.4.2...styrbord-v2.5.0) (2026-10-20)
 
 

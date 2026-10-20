@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/Kystverket/styrbord/compare/styrbord-kart-v1.0.1...styrbord-kart-v1.1.0) (2026-10-20)
+
+
+### Features
+
+* **kart:** add referenceData to GeoJsonEditor ([#351](https://github.com/Kystverket/styrbord/issues/351)) ([5b03fed](https://github.com/Kystverket/styrbord/commit/5b03feddc1b36298ed8ea2e09f1c7c94440ea215))
+
 ## [1.0.1](https://github.com/Kystverket/styrbord/compare/styrbord-kart-v1.0.0...styrbord-kart-v1.0.1) (2026-09-30)
 
 
