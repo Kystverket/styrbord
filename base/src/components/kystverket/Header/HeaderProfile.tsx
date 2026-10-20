@@ -1,8 +1,9 @@
-import { Surface, Button, Icon, Dropdown, Avatar, Label, Divider, HeaderContext } from '~/main';
+import { Surface, Button, Icon, Dropdown, Label, Divider, HeaderContext } from '~/main';
 import classes from './Header.module.css';
 import { useContext, useId, useRef, useState } from 'react';
 import { useOnClickOutsideAndEscape } from '~/hooks/useOnClickOutsideAndEscape';
-import { HeaderProps, nameToInitials } from './Header';
+import { HeaderProps } from './Header';
+import { HeaderAvatar } from './HeaderAvatar';
 import { useTranslation } from '~/translations';
 
 export type HeaderProfileProps = Pick<HeaderProps, 'links' | 'profile' | 'logoutHandler'>;
@@ -42,12 +43,7 @@ export function HeaderProfile({ links, profile, logoutHandler }: HeaderProfilePr
           aria-label={t('header.openProfileMenu')}
         >
           <Surface horizontal gap={1} align="center">
-            <Avatar
-              aria-label={`${profile.name} profile picture`}
-              data-size="2xs"
-              initials={nameToInitials(profile.name)}
-              {...(profile.avatarStyle || { 'data-color': 'success' })}
-            />
+            <HeaderAvatar profile={profile} />
             <Icon material="keyboard_arrow_down" aria-hidden />
           </Surface>
         </Button>
@@ -55,12 +51,7 @@ export function HeaderProfile({ links, profile, logoutHandler }: HeaderProfilePr
           <Dropdown.List data-color="neutral">
             <Dropdown.Item>
               <Surface horizontal align="center" p={2} gap={3} px={3}>
-                <Avatar
-                  aria-label={`${profile.name} profile picture`}
-                  data-size="2xs"
-                  initials={nameToInitials(profile.name)}
-                  {...(profile.avatarStyle || { 'data-color': 'success' })}
-                />
+                <HeaderAvatar profile={profile} />
                 <Surface className={classes.profileMeta}>
                   <Label className={`${classes.profileDisplayName} ${classes.truncateOverflow}`}>{profile.name}</Label>
                   {profile.department && (

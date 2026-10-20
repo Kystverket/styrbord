@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Header, HeaderProps } from './Header';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { ApplicationHeaderContext } from './headerContext';
+import cat from '@assets/img/cats/Cat 3.jpg';
 
 const meta = {
   title: 'Page/Header',
@@ -181,6 +182,24 @@ export const medProfil: Story = {
     profile: {
       name: 'Ola Nordmann',
       department: 'Hav- og kystforvaltning',
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ marginBottom: '150px' }}>
+        <Story />
+      </div>
+    ),
+  ],
+};
+
+export const medProfilbilde: Story = {
+  args: {
+    ...defaultProps,
+    profile: {
+      name: 'Ola Nordmann',
+      department: 'Hav- og kystforvaltning',
+      image: cat,
     },
   },
   decorators: [
