@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.2](https://github.com/Kystverket/styrbord/compare/styrbord-v2.4.1...styrbord-v2.4.2) (2026-10-20)
+
+
+### Bug Fixes
+
+* **base:** size Avatar through Designsystemet 1.23 variables ([#353](https://github.com/Kystverket/styrbord/issues/353)) ([be3201a](https://github.com/Kystverket/styrbord/commit/be3201aab844a2ef44d8ba46a16e94574d729ac0))
+
 ## [2.4.1](https://github.com/Kystverket/styrbord/compare/styrbord-v2.4.0...styrbord-v2.4.1) (2026-10-19)
 
 
