@@ -5,6 +5,14 @@
     "point": "Draw point",
     "polygon": "Draw polygon"
   },
+  "featureNavigation": {
+    "count": "{{total}} features",
+    "next": "Next feature",
+    "position": "{{current}} of {{total}}",
+    "previous": "Previous feature",
+    "showAll": "Show all features",
+    "showOne": "Show feature"
+  },
   "fields": {
     "direction": "Direction (degrees)",
     "directionPlaceholder": "0–360",
@@ -12,6 +20,10 @@
     "latitudePlaceholder": "e.g. 63.4305",
     "longitude": "Longitude",
     "longitudePlaceholder": "e.g. 10.3951"
+  },
+  "fullscreen": {
+    "enter": "Enter fullscreen",
+    "exit": "Exit fullscreen"
   },
   "layers": {
     "backgroundMaps": "Background maps",

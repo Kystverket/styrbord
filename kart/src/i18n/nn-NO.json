@@ -5,6 +5,14 @@
     "point": "Teikn punkt",
     "polygon": "Teikn polygon"
   },
+  "featureNavigation": {
+    "count": "{{total}} markeringar",
+    "next": "Neste markering",
+    "position": "{{current}} av {{total}}",
+    "previous": "Førre markering",
+    "showAll": "Vis alle markeringar",
+    "showOne": "Vis markering"
+  },
   "fields": {
     "direction": "Retning (grader)",
     "directionPlaceholder": "0–360",
@@ -12,6 +20,10 @@
     "latitudePlaceholder": "t.d. 63.4305",
     "longitude": "Lengdegrad",
     "longitudePlaceholder": "t.d. 10.3951"
+  },
+  "fullscreen": {
+    "enter": "Vis i fullskjerm",
+    "exit": "Avslutt fullskjerm"
   },
   "layers": {
     "backgroundMaps": "Bakgrunnskart",
