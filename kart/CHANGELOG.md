@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/Kystverket/styrbord/compare/styrbord-kart-v1.1.0...styrbord-kart-v1.2.0) (2026-10-21)
+
+
+### Features
+
+* Map fullscreen og bytte mellom GeoJson lagt til i kartet ([#346](https://github.com/Kystverket/styrbord/issues/346)) ([c8ca7dd](https://github.com/Kystverket/styrbord/commit/c8ca7dd8fdbaad595ecc81749f801a7aee12b04d))
+
 ## [1.1.0](https://github.com/Kystverket/styrbord/compare/styrbord-kart-v1.0.1...styrbord-kart-v1.1.0) (2026-10-20)
 
 
