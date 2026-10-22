@@ -1,4 +1,4 @@
-import{j as e}from"./jsx-runtime-D_zvdyIk.js";import{u as o,a as i,b as s}from"./blocks-ldDscH_X.js";import"./preload-helper-Dp1pzeXC.js";import"./iframe-Chfu11GR.js";import"./index-d1j_qDdu.js";import"./index-C-miGOqa.js";const l=`# Styrbord Kart
+import{j as e}from"./jsx-runtime-D_zvdyIk.js";import{u as o,a as i,b as s}from"./blocks-B2QlLXkv.js";import"./preload-helper-Dp1pzeXC.js";import"./iframe-DK80EsTv.js";import"./index-CnCT1oct.js";import"./index-DsS4Ifvm.js";const l=`# Styrbord Kart
 
 Styrbord Kart er et kart- og GeoJSON-komponentbibliotek for Kystverkets interne og eksterne
 applikasjoner. Biblioteket er et tillegg til Styrbord, med fokus på visualisering, redigering og
