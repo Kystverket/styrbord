@@ -2,15 +2,18 @@
   .with-icon {
     display: inline-flex;
     align-items: center;
-    gap: var(--spacing-2);
+    gap: var(--ds-size-1);
     text-decoration: none;
   }
   .link-icon {
     flex-shrink: 0;
     text-decoration: none;
   }
+  .link-icon-text {
+    text-decoration-thickness: var(--dsc-link-text-decoration-thickness);
+  }
   .with-underline .link-icon-text {
-    text-decoration: underline;
+    text-decoration-line: underline;
   }
 
   .without-underline {
@@ -19,21 +22,17 @@
 
   .without-underline.without-icon:hover,
   .without-underline.without-icon:focus {
-    text-decoration: underline;
+    text-decoration-line: underline;
   }
 
-  .with-underline.without-icon:hover,
-  .with-underline.without-icon:focus {
-    text-decoration: none;
+  .with-icon:hover .link-icon-text,
+  .with-icon:focus .link-icon-text {
+    text-decoration-line: underline;
   }
 
-  .without-underline.with-icon:hover .link-icon-text,
-  .without-underline.with-icon:focus .link-icon-text {
-    text-decoration: underline;
-  }
-
-  .with-underline.with-icon:hover .link-icon-text,
-  .with-underline.with-icon:focus .link-icon-text {
-    text-decoration: none;
+  @media (hover: hover) and (pointer: fine) {
+    .with-icon:hover .link-icon-text {
+      text-decoration-thickness: var(--dsc-link-text-decoration-thickness--hover);
+    }
   }
 }

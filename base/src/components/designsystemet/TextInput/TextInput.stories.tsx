@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { TextInput, TextInputProps } from './TextInput';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
+import { Surface } from '~/main';
 
 const meta = {
   title: 'Form/TextInput',
@@ -87,5 +88,27 @@ export const Loading: Story = {
   args: {
     ...defaultArgs,
     loading: true,
+  },
+};
+
+/**
+ * Optional, required and plain side by side, top-aligned, so any height difference in the label row shows.
+ *
+ * For obligatoriske felter som ønskes markert med tag, bruker man “warning”-variant.
+ */
+export const LabelSizes: Story = {
+  render: (args) => (
+    <Surface horizontal gap={4} align="start">
+      <TextInput {...args} label="Optional" optional />
+      <TextInput {...args} label="Required" required />
+      <TextInput {...args} label="Required with text" required="Påkrevd" />
+      <TextInput {...args} label="Plain" />
+      <TextInput {...args} label="Read only" readOnly />
+      <TextInput {...args} label="Disabled" disabled />
+    </Surface>
+  ),
+  args: {
+    ...defaultArgs,
+    description: undefined,
   },
 };
