@@ -1,4 +1,9 @@
 @layer styrbord-modules {
+  .dateWidth {
+    width: 10.25rem;
+    max-width: 100%;
+  }
+
   .wrapper {
     display: flex;
     align-items: stretch;
