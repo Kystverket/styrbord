@@ -89,61 +89,10 @@ export const Points: Story = {
 };
 
 // ---- Feature navigation ----
-const harbours: FeatureCollection = {
-  type: "FeatureCollection",
-  features: [
-    singlePolygon,
-    {
-      type: "Feature",
-      properties: { name: "Bergen, Vågen" },
-      geometry: {
-        type: "Polygon",
-        coordinates: [
-          [
-            [5.318, 60.399],
-            [5.318, 60.395],
-            [5.325, 60.395],
-            [5.325, 60.399],
-            [5.318, 60.399],
-          ],
-        ],
-      },
-    },
-    {
-      type: "Feature",
-      properties: { name: "Stavanger, Vågen" },
-      geometry: { type: "Point", coordinates: [5.731, 58.972] },
-    },
-    {
-      type: "Feature",
-      properties: { name: "Tromsø havn" },
-      geometry: {
-        type: "Polygon",
-        coordinates: [
-          [
-            [18.955, 69.65],
-            [18.955, 69.645],
-            [18.965, 69.645],
-            [18.965, 69.65],
-            [18.955, 69.65],
-          ],
-        ],
-      },
-    },
-  ],
-};
-
 /** One feature: pan or zoom away, then "Vis markering" brings it back into view. */
 export const FeatureNavigationSingle: Story = {
   args: {
     data: singlePolygon,
-  },
-};
-
-/** Several features: "Vis alle markeringer" fits all of them, and the arrows step through them one at a time. */
-export const FeatureNavigationMultiple: Story = {
-  args: {
-    data: harbours,
   },
 };
 
