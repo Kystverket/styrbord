@@ -1,4 +1,9 @@
 @layer styrbord-modules {
+  .dateWidth {
+    width: 10.25rem;
+    max-width: 100%;
+  }
+
   .wrapper {
     display: flex;
     align-items: stretch;
@@ -9,10 +14,6 @@
     flex: 1 1 auto;
     min-width: 0;
     border-radius: 4px;
-    &:disabled,
-    &:read-only {
-      --dsc-input-padding: var(--spacing-4) var(--spacing-16);
-    }
   }
 
   .pickerButton {
@@ -27,7 +28,6 @@
     }
 
     .input {
-      --dsc-input-padding: var(--spacing-4) var(--spacing-16);
       border-right: none;
       border-radius: 4px 0 0 4px;
     }
