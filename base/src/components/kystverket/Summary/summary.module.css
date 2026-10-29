@@ -1,101 +1,69 @@
 @layer styrbord-modules {
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    --span2: span 2;
+  .list {
+    display: flex;
+    flex-direction: column;
+    border: var(--ds-border-width-default) solid var(--ds-color-neutral-surface-hover);
+    border-radius: var(--ds-border-radius-xl);
+    overflow: hidden;
   }
 
-  .heading {
-    grid-column: var(--span2);
-    padding: 8px 0px;
-    margin-bottom: var(--spacing-12);
+  .title,
+  .valueRow,
+  .contentRow {
+    border-bottom: var(--ds-border-width-default) solid var(--ds-color-neutral-surface-hover);
   }
 
-  .valueError + .heading,
-  .valueText + .heading,
-  .contentError + .heading,
-  .contentArea + .heading {
-    margin-top: var(--spacing-24);
+  .list > :last-child {
+    border-bottom: none;
   }
 
   .title {
-    grid-column: var(--span2);
-    background-color: var(--ds-color-info-background-default);
-    border: var(--ds-border-width-default) solid var(--ds-color-neutral-surface-hover);
-    padding: 8px 12px;
-    border-radius: var(--spacing-2);
+    background-color: var(--ds-color-neutral-background-tinted);
+    padding: var(--ds-size-3) var(--ds-size-5);
   }
 
-  .valueError + .title,
-  .valueText + .title,
-  .contentError + .title,
-  .contentArea + .title {
-    border-top: none;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
+  .valueRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 
-  .title:has(+ .valueLabel) {
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-  }
-
-  *:has(+ .heading) {
-    border-bottom-left-radius: var(--spacing-2);
-    border-bottom-right-radius: var(--spacing-2);
-  }
-
-  .valueLabel {
-    border-left: 1px solid var(--ds-color-neutral-surface-hover);
-    border-bottom: 1px solid var(--ds-color-neutral-surface-hover);
-    padding: var(--spacing-8) var(--spacing-12);
-  }
+  .valueLabel,
   .valueText {
-    border-right: 1px solid var(--ds-color-neutral-surface-hover);
-    border-bottom: 1px solid var(--ds-color-neutral-surface-hover);
-    padding: var(--spacing-8) var(--spacing-12);
-  }
-  .valueError {
-    grid-column: var(--span2);
-    border-bottom: 1px solid var(--ds-color-neutral-surface-hover);
-  }
-  .valueLabel:has(+ .valueError),
-  .valueText:has(+ .valueError) {
-    border-bottom: none;
+    padding: var(--ds-size-4) var(--ds-size-5);
+    overflow-wrap: anywhere;
   }
 
   .contentLabel {
-    grid-column: var(--span2);
-    border-left: 1px solid var(--ds-color-neutral-surface-hover);
-    border-right: 1px solid var(--ds-color-neutral-surface-hover);
-    padding: var(--spacing-8) var(--spacing-12);
+    padding: var(--ds-size-4) var(--ds-size-5) 0;
   }
+
   .contentArea {
-    grid-column: var(--span2);
-    border-left: 1px solid var(--ds-color-neutral-surface-hover);
-    border-right: 1px solid var(--ds-color-neutral-surface-hover);
-    border-bottom: 1px solid var(--ds-color-neutral-surface-hover);
-    padding: var(--spacing-8) var(--spacing-12);
+    padding: var(--ds-size-1) var(--ds-size-5) var(--ds-size-4);
   }
-  .contentError {
-    grid-column: var(--span2);
-    border-bottom: 1px solid var(--ds-color-neutral-surface-hover);
-  }
-  .contentArea:has(+ .contentError) {
-    border-bottom: none;
+
+  .error {
+    grid-column: 1 / -1;
+    padding: 0 var(--ds-size-5) var(--ds-size-4);
   }
 
   .editButton {
-    font-size: var(--ds-body-sm-font-size);
-    line-height: var(--ds-body-sm-line-height);
-    letter-spacing: var(--ds-body-sm-letter-spacing);
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-size-1);
+    padding: 0;
+    font-size: var(--ds-body-md-font-size);
+    line-height: var(--ds-body-md-line-height);
+    letter-spacing: var(--ds-body-md-letter-spacing);
     font-weight: var(--ds-font-weight-regular);
     color: var(--ds-color-primary-text-default);
-    text-decoration: underline;
-    text-underline-offset: var(--spacing-6);
     background: transparent;
     border: none;
     cursor: pointer;
+  }
+
+  .editButtonText {
+    text-decoration-line: underline;
   }
 
   .editButton:hover {
@@ -103,19 +71,14 @@
   }
 
   @media screen and (max-width: 640px) {
-    .grid {
-      --span2: span 1;
+    .valueRow {
       grid-template-columns: 1fr;
     }
     .valueLabel {
-      border-left: 1px solid var(--ds-color-neutral-surface-hover);
-      border-right: 1px solid var(--ds-color-neutral-surface-hover);
-      border-bottom: none;
+      padding-bottom: 0;
     }
     .valueText {
-      border-left: 1px solid var(--ds-color-neutral-surface-hover);
-      border-right: 1px solid var(--ds-color-neutral-surface-hover);
-      border-bottom: 1px solid var(--ds-color-neutral-surface-hover);
+      padding-top: var(--ds-size-1);
     }
   }
 }
