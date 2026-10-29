@@ -19,7 +19,7 @@ const defaultProps: SummaryProps = {
   rows: [
     {
       title: 'Oppsummeringstittel',
-      editButton: { label: 'Rediger', ariaLabel: 'Rediger oppsummeringstittel', onClick: () => {} },
+      editButton: { label: 'Endre svar', ariaLabel: 'Endre svar for oppsummeringstittel', onClick: () => {} },
     },
     { title: 'Tittel' },
     { label: 'Label', value: 'Verdi' },
@@ -35,7 +35,7 @@ const defaultProps: SummaryProps = {
     { label: 'Label', content: 'Innhold' },
     {
       title: 'Oppsummeringstittel 2',
-      editButton: { label: 'Rediger', ariaLabel: 'Rediger oppsummeringstittel 2', onClick: () => {} },
+      editButton: { label: 'Endre svar', ariaLabel: 'Endre svar for oppsummeringstittel 2', onClick: () => {} },
     },
     { title: 'Tittel' },
     { label: 'Label', value: 'Verdi' },

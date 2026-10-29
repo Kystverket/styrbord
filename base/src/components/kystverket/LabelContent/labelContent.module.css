@@ -22,6 +22,7 @@
   }
 
   .tag {
+    --dsc-tag-min-height: var(--ds-size-7);
     font-weight: var(--ds-font-weight-regular) !important;
   }
 }

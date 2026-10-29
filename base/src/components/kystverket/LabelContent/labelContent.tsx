@@ -22,12 +22,16 @@ const LabelContent = ({ text, loading = false, optional = false, required = fals
       {text}
       {loading && <Spinner aria-label="spinning" data-size="xs" className={style.loading} />}
       {required && requiredText && (
-        <Tag className={`${style.spacing} ${style.tag}`} data-color="warning">
+        <Tag data-size="sm" className={`${style.spacing} ${style.tag}`} data-color="warning">
           {requiredText}
         </Tag>
       )}
       {required && !requiredText && <span className={style.requiredStar}>*</span>}
-      {optional && <Tag className={`${style.spacing} ${style.tag}`}>{optionalText ?? t('labelContent.optional')}</Tag>}
+      {optional && (
+        <Tag data-size="sm" className={`${style.spacing} ${style.tag}`}>
+          {optionalText ?? t('labelContent.optional')}
+        </Tag>
+      )}
     </span>
   );
 };

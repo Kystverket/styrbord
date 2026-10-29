@@ -18,6 +18,122 @@
   pointer-events: none;
 }
 
+/* Map controls: MapLibre's zoom and fullscreen, plus any of ours in the same stack. */
+.mapContainer :global(.maplibregl-ctrl-bottom-right .maplibregl-ctrl-group) {
+  margin: 0 10px 8px 0;
+}
+
+.mapContainer :global(.maplibregl-ctrl.maplibregl-ctrl-group) {
+  padding: 4px;
+  border-radius: var(--ds-border-radius-default);
+  background: var(--ds-color-neutral-surface-default);
+  box-shadow: var(--ds-shadow-md);
+}
+
+/* `:focus` as well, because MapLibre squares off the corners of a focused button. */
+.mapContainer :global(.maplibregl-ctrl.maplibregl-ctrl-group button),
+.mapContainer :global(.maplibregl-ctrl.maplibregl-ctrl-group button:focus) {
+  width: var(--ds-size-9);
+  height: var(--ds-size-9);
+  border-radius: var(--ds-border-radius-default);
+  color: var(--ds-color-neutral-text-default);
+}
+
+.mapContainer :global(.maplibregl-ctrl.maplibregl-ctrl-group button + button) {
+  position: relative;
+  margin-top: calc(2 * var(--ds-size-1));
+  border-top: none;
+}
+
+.mapContainer
+  :global(.maplibregl-ctrl.maplibregl-ctrl-group button + button)::before {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--ds-size-1));
+  left: 50%;
+  width: var(--ds-size-7);
+  height: 1px;
+  transform: translateX(-50%);
+  background: var(--ds-color-neutral-surface-hover);
+}
+
+@media (hover: hover) {
+  .mapContainer
+    :global(
+      .maplibregl-ctrl.maplibregl-ctrl-group button:not(:disabled):hover
+    ) {
+    background-color: var(--ds-color-neutral-surface-hover);
+  }
+}
+
+.mapContainer
+  :global(.maplibregl-ctrl.maplibregl-ctrl-group button:not(:disabled):active) {
+  background-color: var(--ds-color-neutral-surface-active);
+}
+
+/* Material Symbols, weight 300, 20 px — drawn as masks so they take the text colour. */
+.mapContainer
+  :global(
+    .maplibregl-ctrl
+      button:is(
+        .maplibregl-ctrl-zoom-in,
+        .maplibregl-ctrl-zoom-out,
+        .maplibregl-ctrl-fullscreen,
+        .maplibregl-ctrl-shrink
+      )
+      .maplibregl-ctrl-icon
+  ) {
+  background: currentColor;
+  mask-position: center;
+  mask-size: 20px;
+  mask-repeat: no-repeat;
+}
+
+.mapContainer
+  :global(
+    .maplibregl-ctrl button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon
+  ) {
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M454-454H260v-52h194v-194h52v194h194v52H506v194h-52v-194Z'/%3E%3C/svg%3E");
+}
+
+.mapContainer
+  :global(
+    .maplibregl-ctrl button.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon
+  ) {
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M252-454v-52h456v52H252Z'/%3E%3C/svg%3E");
+}
+
+.mapContainer
+  :global(
+    .maplibregl-ctrl button.maplibregl-ctrl-fullscreen .maplibregl-ctrl-icon
+  ) {
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M260-260v-220h52v168h168v52H260Zm388-220v-168H480v-52h220v220h-52Z'/%3E%3C/svg%3E");
+}
+
+.mapContainer
+  :global(
+    .maplibregl-ctrl button.maplibregl-ctrl-shrink .maplibregl-ctrl-icon
+  ) {
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M432-432v220h-52v-168H212v-52h220Zm148-316v168h168v52H528v-220h52Z'/%3E%3C/svg%3E");
+}
+
+@media (forced-colors: active) {
+  .mapContainer
+    :global(
+      .maplibregl-ctrl
+        button:is(
+          .maplibregl-ctrl-zoom-in,
+          .maplibregl-ctrl-zoom-out,
+          .maplibregl-ctrl-fullscreen,
+          .maplibregl-ctrl-shrink
+        )
+        .maplibregl-ctrl-icon
+    ) {
+    forced-color-adjust: none;
+    background: ButtonText;
+  }
+}
+
 .mapHint {
   position: absolute;
   bottom: 8px;

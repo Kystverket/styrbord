@@ -96,11 +96,8 @@ export interface GeoJsonViewerProps extends MapBaseProps {
   className?: string;
   /** Whether to show the layer toggle control on the map. Defaults to `false`. */
   showLayerToggle?: boolean;
-  /**
-   * Whether to show controls for fitting the map to all features and stepping
-   * between them one at a time. Defaults to `true`.
-   */
-  showFeatureNavigation?: boolean;
+  /** Whether to show a button that fits the map to all features. Defaults to `true`. */
+  showFitBoundsControl?: boolean;
   /**
    * Whether features can be hovered to show tooltips. Defaults to `true`.
    */
