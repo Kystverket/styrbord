@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.7.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.6.0...styrbord-v2.7.0) (2026-10-29)
+
+
+### Features
+
+* Datepicker default width ([#363](https://github.com/Kystverket/styrbord/issues/363)) ([8fe72ee](https://github.com/Kystverket/styrbord/commit/8fe72eeb94d0aee8c3b36c604dc5ae1f2719f3c9))
+
+
+### Bug Fixes
+
+* **base:** Several style and bugfixes to TextInput, Link, KyvDivider and Summary components ([#360](https://github.com/Kystverket/styrbord/issues/360)) ([347ce2d](https://github.com/Kystverket/styrbord/commit/347ce2d6d17e9941907882b145a9c19279c4b8dc))
+
 ## [2.6.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.5.0...styrbord-v2.6.0) (2026-10-20)
 
 
