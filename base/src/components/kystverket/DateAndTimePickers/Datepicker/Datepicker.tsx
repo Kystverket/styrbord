@@ -7,6 +7,7 @@ import styles from '../PickerInput.module.css';
 export interface DatepickerProps {
   className?: string;
   loading?: boolean;
+  /** Defaults to a fixed width that fits a date. */
   width?: InputSize;
   optional?: boolean | string;
   required?: boolean | string;
@@ -31,7 +32,7 @@ const toDateString = (date: Date | undefined): string => {
 };
 
 export const Datepicker = ({
-  width = 'full',
+  width,
   className,
   label,
   loading,
@@ -46,7 +47,7 @@ export const Datepicker = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <Field className={`${className} ${inputWidthClass(width)}`}>
+    <Field className={`${className} ${width ? inputWidthClass(width) : styles.dateWidth}`}>
       <Label style={{ display: 'block', width: 'fit-content' }}>
         <LabelContent text={label} required={required} optional={optional} loading={loading} />
       </Label>

@@ -38,7 +38,6 @@ const defaultProps: DatepickerProps = {
   label: 'Datepicker',
   description: 'Description',
   value: undefined,
-  width: 'full',
   onChange: (date) => console.log('onChange ', date),
 };
 
