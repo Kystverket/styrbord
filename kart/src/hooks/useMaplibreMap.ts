@@ -158,14 +158,15 @@ export function useMaplibreMap({
       }
 
       const map = new maplibregl.Map(mapOptions);
+      // Bottom controls stack upwards, so fullscreen goes first to end up below zoom.
+      if (showFullscreenControl) {
+        map.addControl(new maplibregl.FullscreenControl(), "bottom-right");
+      }
       if (showZoomControls) {
         map.addControl(
           new maplibregl.NavigationControl({ showCompass: false }),
           "bottom-right",
         );
-      }
-      if (showFullscreenControl) {
-        map.addControl(new maplibregl.FullscreenControl(), "bottom-right");
       }
 
       // Record that the initial base layer is already on the map, so the

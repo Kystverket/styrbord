@@ -39,7 +39,7 @@ import {
 } from "./GeoJsonViewer.utils";
 import { LayerToggle } from "../LayerToggle/LayerToggle";
 import { GeoJsonViewerHoverPopup } from "./GeoJsonViewerHoverPopup";
-import { GeoJsonViewerNavigation } from "./GeoJsonViewerNavigation";
+import { GeoJsonViewerFitBoundsControl } from "./GeoJsonViewerFitBoundsControl";
 import { MapCenterAction } from "../shared/MapCenterAction";
 
 // ---------------------------------------------------------------------------
@@ -67,7 +67,7 @@ export function GeoJsonViewer({
   fitBoundsPadding = 40,
   geoJsonStyle: styleProp,
   showLayerToggle = true,
-  showFeatureNavigation = true,
+  showFitBoundsControl = true,
   height,
   className,
   disabled,
@@ -357,9 +357,10 @@ export function GeoJsonViewer({
       className={[styles.mapContainer, className].filter(Boolean).join(" ")}
     >
       {showLayerToggle && <LayerToggle />}
-      {showFeatureNavigation && !disabled && (
-        <GeoJsonViewerNavigation
+      {showFitBoundsControl && !disabled && (
+        <GeoJsonViewerFitBoundsControl
           mapRef={mapRef}
+          mapVersion={mapVersion}
           fc={fc}
           padding={fitBoundsPadding}
         />
