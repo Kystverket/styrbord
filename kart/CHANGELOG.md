@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/Kystverket/styrbord/compare/styrbord-kart-v1.2.0...styrbord-kart-v1.3.0) (2026-10-29)
+
+
+### Features
+
+* **base:** Kart feature navigation ([#364](https://github.com/Kystverket/styrbord/issues/364)) ([2b1475b](https://github.com/Kystverket/styrbord/commit/2b1475ba812fa4aa0b6ba23f2e37b0b9b34efa06))
+
 ## [1.2.0](https://github.com/Kystverket/styrbord/compare/styrbord-kart-v1.1.0...styrbord-kart-v1.2.0) (2026-10-21)
 
 
