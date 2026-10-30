@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.7.1](https://github.com/Kystverket/styrbord/compare/styrbord-v2.7.0...styrbord-v2.7.1) (2026-10-30)
+
+
+### Bug Fixes
+
+* **base:** hide Logo product name when there is no room for it ([#367](https://github.com/Kystverket/styrbord/issues/367)) ([7746448](https://github.com/Kystverket/styrbord/commit/7746448af48a3fc58f8e0b49629bd502d30e81e5))
+
 ## [2.7.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.6.0...styrbord-v2.7.0) (2026-10-29)
 
 
