@@ -1,7 +1,7 @@
 import type { Meta, StoryFn } from '@storybook/react-vite';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import Icon from '~/components/kystverket/Icon/icon';
-import { IconId, iconIdList } from './icon.types';
+import { fileIconIdList, IconId, iconIdList } from './icon.types';
 import { Paragraph, Surface } from '~/main';
 import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
 import { Fragment } from 'react';
@@ -99,5 +99,27 @@ export const IconIndicator: StoryFn = () => {
         </Fragment>
       ))}
     </Surface>
+  );
+};
+
+export const IconFile: StoryFn = () => {
+  return (
+    <table>
+      {[...fileIconIdList, 'doc', 'csv'].map((file) => (
+        <tr key={file}>
+          {sizes.map((size) => (
+            <td key={size} style={{ padding: '0.5rem', textAlign: 'center' }}>
+              <Icon size={size} file={file} />
+            </td>
+          ))}
+          <td style={{ padding: '0.5rem' }}>
+            <Icon size="lg" file={file} background="lyng" />
+          </td>
+          <td style={{ padding: '0.5rem' }}>
+            file="{file}" {fileIconIdList.includes(file as (typeof fileIconIdList)[number]) ? '' : '(tekst)'}
+          </td>
+        </tr>
+      ))}
+    </table>
   );
 };

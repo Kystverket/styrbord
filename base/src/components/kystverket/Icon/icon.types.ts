@@ -196,3 +196,7 @@ export const iconIdList = [
 ] as const;
 
 export type IconId = (typeof iconIdList)[number];
+
+export const fileIconIdList = ['json', 'pdf', 'xls'] as const;
+
+export type FileIconId = (typeof fileIconIdList)[number];
