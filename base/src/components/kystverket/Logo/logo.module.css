@@ -1,13 +1,20 @@
 .product-logo-container {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
+  align-content: flex-start;
+  column-gap: calc(var(--logo-height) * 0.35 * 0.75);
+  /* Clip to a single row: when the product name does not fit beside the logo it wraps
+     to a second row and is hidden, so the logo never grows taller on narrow screens */
+  height: var(--logo-height);
+  overflow: hidden;
 }
 .product-logo-text {
   /* Scales with the logo: --logo-height is set inline from the rendered logo height */
   font-size: calc(var(--logo-height) * 0.35);
-  line-height: 0;
-  margin-left: 0.75em;
+  line-height: 1;
+  white-space: nowrap;
   text-transform: uppercase;
   letter-spacing: 0.12em;
 }

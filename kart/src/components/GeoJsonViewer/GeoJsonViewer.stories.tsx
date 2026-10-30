@@ -88,6 +88,14 @@ export const Points: Story = {
   },
 };
 
+// ---- Feature navigation ----
+/** One feature: pan or zoom away, then "Vis markering" brings it back into view. */
+export const FeatureNavigationSingle: Story = {
+  args: {
+    data: singlePolygon,
+  },
+};
+
 // ---- Custom styling ----
 export const CustomStyle: Story = {
   args: {

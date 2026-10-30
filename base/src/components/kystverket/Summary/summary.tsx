@@ -1,79 +1,131 @@
-import { Accent, Surface, Heading, Paragraph } from '~/main';
-import { ContentRowProps, HeadingRowProps, SummaryRowProps, TitleRowProps, ValueRowProps } from './summary.types';
+import { Surface, Heading, Paragraph, Icon } from '~/main';
+import { ContentRowProps, HeadingRowProps, SummaryRowProps, ValueRowProps } from './summary.types';
 import classes from './summary.module.css';
 
-const SummaryHeading = ({ title, editButton }: HeadingRowProps) => {
-  return (
-    <Surface className={classes.heading} horizontal justify="between" align="center">
-      <Heading>{title}</Heading>
-      <button className={classes.editButton} onClick={editButton.onClick} aria-label={editButton.ariaLabel}>
-        {editButton.label}
-      </button>
-    </Surface>
-  );
-};
+type SummaryItem = ValueRowProps | ContentRowProps;
 
-const SummaryTitle = ({ title }: TitleRowProps) => {
-  return (
-    <Accent className={classes.title} size="sm">
-      {title}
-    </Accent>
-  );
+interface SummaryList {
+  title?: string;
+  items: SummaryItem[];
+}
+
+interface SummaryPage {
+  heading?: HeadingRowProps;
+  lists: SummaryList[];
+}
+
+/**
+ * Groups the flat row list into pages (one per heading row) and lists (one per title row),
+ * so each title gets its own bordered list instead of sharing one grid.
+ */
+const groupRows = (rows: SummaryRowProps[]): SummaryPage[] => {
+  const pages: SummaryPage[] = [];
+  const currentPage = () => {
+    if (pages.length === 0) pages.push({ lists: [] });
+    return pages[pages.length - 1];
+  };
+  const currentList = () => {
+    const page = currentPage();
+    if (page.lists.length === 0) page.lists.push({ items: [] });
+    return page.lists[page.lists.length - 1];
+  };
+
+  for (const row of rows) {
+    if ('editButton' in row) {
+      pages.push({ heading: row, lists: [] });
+    } else if ('title' in row) {
+      currentPage().lists.push({ title: row.title, items: [] });
+    } else if ('value' in row || 'content' in row) {
+      currentList().items.push(row);
+    }
+  }
+  return pages;
 };
 
 const SummaryValue = ({ label, value, error = undefined }: ValueRowProps) => {
   return (
-    <>
-      <Paragraph className={classes.valueLabel} data-weight="medium" data-size="sm">
+    <div className={classes.valueRow}>
+      <Paragraph className={classes.valueLabel} data-size="md">
         {label}
       </Paragraph>
-      <Paragraph className={classes.valueText} data-size="sm">
+      <Paragraph className={classes.valueText} data-size="md">
         {value}
       </Paragraph>
       {error && (
-        <Paragraph className={classes.valueError} data-size="sm">
+        <Paragraph className={classes.error} data-size="sm">
           {error}
         </Paragraph>
       )}
-    </>
+    </div>
   );
 };
 
 const SummaryContent = ({ label, content, error = undefined }: ContentRowProps) => {
   return (
-    <>
-      <Paragraph className={classes.contentLabel} data-weight="medium" data-size="sm">
+    <div className={classes.contentRow}>
+      <Paragraph className={classes.contentLabel} data-weight="medium" data-size="md">
         {label}
       </Paragraph>
       <div className={classes.contentArea}>{content}</div>
       {error && (
-        <Paragraph className={classes.contentError} data-size="sm">
+        <Paragraph className={classes.error} data-size="sm">
           {error}
         </Paragraph>
       )}
-    </>
+    </div>
   );
 };
 
-const SummaryRow = (props: SummaryRowProps) => {
-  if ('editButton' in props) {
-    return <SummaryHeading {...props} />;
-  } else if ('title' in props) {
-    return <SummaryTitle {...props} />;
-  } else if ('value' in props) {
+const SummaryItemRow = (props: SummaryItem) => {
+  if ('value' in props) {
     return <SummaryValue {...props} />;
-  } else if ('content' in props) {
-    return <SummaryContent {...props} />;
   }
-  return <></>;
+  return <SummaryContent {...props} />;
+};
+
+const SummaryListView = ({ title, items }: SummaryList) => {
+  return (
+    <div className={classes.list}>
+      {title && (
+        <Paragraph className={classes.title} data-weight="medium" data-size="md">
+          {title}
+        </Paragraph>
+      )}
+      {items.map((item, index) => (
+        <SummaryItemRow key={index} {...item} />
+      ))}
+    </div>
+  );
+};
+
+const SummaryPageView = ({ heading, lists }: SummaryPage) => {
+  return (
+    <Surface gap={5}>
+      {heading && <Heading data-size="sm">{heading.title}</Heading>}
+      {lists.map((list, index) => (
+        <SummaryListView key={index} {...list} />
+      ))}
+      {heading && (
+        <button
+          type="button"
+          className={classes.editButton}
+          onClick={heading.editButton.onClick}
+          aria-label={heading.editButton.ariaLabel}
+        >
+          <Icon material="edit_square" size="md" />
+          <span className={classes.editButtonText}>{heading.editButton.label}</span>
+        </button>
+      )}
+    </Surface>
+  );
 };
 
 export const Summary = ({ rows }: { rows: SummaryRowProps[] }) => {
   return (
-    <div className={classes.grid}>
-      {rows.map((row, index) => (
-        <SummaryRow key={index} {...row} />
+    <Surface gap={12}>
+      {groupRows(rows).map((page, index) => (
+        <SummaryPageView key={index} {...page} />
       ))}
-    </div>
+    </Surface>
   );
 };
