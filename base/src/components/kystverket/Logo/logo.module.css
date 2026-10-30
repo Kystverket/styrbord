@@ -3,24 +3,18 @@
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  /* Gap instead of margin so a wrapped product name sits flush under the logo */
+  align-content: flex-start;
   column-gap: calc(var(--logo-height) * 0.35 * 0.75);
-  row-gap: calc(var(--logo-height) * 0.1);
-}
-/* Indent a wrapped product name to the K (0.898 logo-heights), less Museo Sans' ~0.05em glyph bearing */
-.product-logo-container.logo-variant-horizontal,
-.product-logo-container.logo-variant-horizontal-en {
-  --wordmark-indent: calc(var(--logo-height) * (0.898 - 0.35 * 0.05));
-  padding-left: var(--wordmark-indent);
-}
-.product-logo-container.logo-variant-horizontal > svg,
-.product-logo-container.logo-variant-horizontal-en > svg {
-  margin-left: calc(var(--wordmark-indent) * -1);
+  /* Clip to a single row: when the product name does not fit beside the logo it wraps
+     to a second row and is hidden, so the logo never grows taller on narrow screens */
+  height: var(--logo-height);
+  overflow: hidden;
 }
 .product-logo-text {
   /* Scales with the logo: --logo-height is set inline from the rendered logo height */
   font-size: calc(var(--logo-height) * 0.35);
   line-height: 1;
+  white-space: nowrap;
   text-transform: uppercase;
   letter-spacing: 0.12em;
 }
