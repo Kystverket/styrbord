@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.8.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.7.1...styrbord-v2.8.0) (2026-10-30)
+
+
+### Features
+
+* Legg inn ikoner for filtype ([#369](https://github.com/Kystverket/styrbord/issues/369)) ([b6cfdb5](https://github.com/Kystverket/styrbord/commit/b6cfdb5243f97c0948a773e6be575ace48abb2ff))
+
 ## [2.7.1](https://github.com/Kystverket/styrbord/compare/styrbord-v2.7.0...styrbord-v2.7.1) (2026-10-30)
 
 
