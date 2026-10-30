@@ -102,7 +102,7 @@ export const IconIndicator: StoryFn = () => {
   );
 };
 
-const textFileExamples: string[] = ['svg', 'png', 'docx', 'csv', 'txt', 'zip'];
+const otherFileExamples: string[] = ['svg', 'gif', 'webp'];
 
 export const IconFile: StoryFn<{ file: string }> = ({ file }) => {
   return (
@@ -119,12 +119,10 @@ export const IconFile: StoryFn<{ file: string }> = ({ file }) => {
       </Surface>
       <Paragraph data-weight="medium">Examples:</Paragraph>
       <Surface gap={2}>
-        {[...fileIconIdList, ...textFileExamples].map((id) => (
+        {[...fileIconIdList, ...otherFileExamples].map((id) => (
           <Surface key={id} horizontal gap={3} align="center">
             <Icon size="xl" file={id} />
-            <Paragraph>
-              {id} {textFileExamples.includes(id) ? '(text)' : ''}
-            </Paragraph>
+            <Paragraph>{id}</Paragraph>
           </Surface>
         ))}
       </Surface>
@@ -135,6 +133,6 @@ IconFile.args = { file: 'pdf' };
 IconFile.argTypes = {
   file: {
     control: 'text',
-    description: `Try these file extensions: ${fileIconIdList.join(', ')}. Anything else is printed on the label as text.`,
+    description: `Try these file extensions: ${fileIconIdList.join(', ')}. Longer ones get their usual short form (docx → DOC, json → JSO); anything else is cut to three characters.`,
   },
 };
