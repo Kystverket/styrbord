@@ -196,3 +196,25 @@ export const iconIdList = [
 ] as const;
 
 export type IconId = (typeof iconIdList)[number];
+
+export const fileIconIdList = [
+  'csv',
+  'docx',
+  'geojson',
+  'html',
+  'jpeg',
+  'json',
+  'markdown',
+  'mpeg',
+  'pdf',
+  'png',
+  'pptx',
+  'tiff',
+  'txt',
+  'xls',
+  'xlsx',
+  'yaml',
+  'zip',
+] as const;
+
+export type FileIconId = (typeof fileIconIdList)[number];

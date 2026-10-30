@@ -1,0 +1,23 @@
+@layer styrbord-modules {
+  .file {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .fileSvg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .fileSvg + .fileSvg {
+    position: absolute;
+    inset: 0;
+  }
+  .fileLabel {
+    font-size: 6.5px;
+    font-weight: var(--ds-font-weight-semibold);
+    letter-spacing: 0.02em;
+    fill: var(--ds-color-neutral-background-default);
+  }
+}

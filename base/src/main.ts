@@ -83,8 +83,8 @@ export type { KyvSpinnerProps } from './components/kystverket/KyvSpinner/KyvSpin
 export { default as LabelContent, type LabelContentProps } from './components/kystverket/LabelContent/labelContent';
 
 export { default as Icon } from './components/kystverket/Icon/icon';
-export type { IconId } from './components/kystverket/Icon/icon.types';
-export type { MaterialIconProps } from './components/kystverket/Icon/icon';
+export type { IconId, FileIconId } from './components/kystverket/Icon/icon.types';
+export type { MaterialIconProps, FileIconProps, IconProps } from './components/kystverket/Icon/icon';
 
 export * from './components/kystverket/Image/svgImage';
 

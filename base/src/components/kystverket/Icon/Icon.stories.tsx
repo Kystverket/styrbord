@@ -1,7 +1,7 @@
 import type { Meta, StoryFn } from '@storybook/react-vite';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import Icon from '~/components/kystverket/Icon/icon';
-import { IconId, iconIdList } from './icon.types';
+import { fileIconIdList, IconId, iconIdList } from './icon.types';
 import { Paragraph, Surface } from '~/main';
 import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
 import { Fragment } from 'react';
@@ -100,4 +100,39 @@ export const IconIndicator: StoryFn = () => {
       ))}
     </Surface>
   );
+};
+
+const otherFileExamples: string[] = ['svg', 'gif', 'webp'];
+
+export const IconFile: StoryFn<{ file: string }> = ({ file }) => {
+  return (
+    <Surface gap={6}>
+      <Surface gap={1}>
+        <Paragraph data-weight="medium">Sizes</Paragraph>
+        <Paragraph data-size="sm">Try to change file in story</Paragraph>
+      </Surface>
+      <Surface horizontal gap={4} align="center">
+        {sizes.map((size) => (
+          <Icon key={size} size={size} file={file} />
+        ))}
+        <Icon size="lg" file={file} background="lyng" />
+      </Surface>
+      <Paragraph data-weight="medium">Examples:</Paragraph>
+      <Surface gap={2}>
+        {[...fileIconIdList, ...otherFileExamples].map((id) => (
+          <Surface key={id} horizontal gap={3} align="center">
+            <Icon size="xl" file={id} />
+            <Paragraph>{id}</Paragraph>
+          </Surface>
+        ))}
+      </Surface>
+    </Surface>
+  );
+};
+IconFile.args = { file: 'pdf' };
+IconFile.argTypes = {
+  file: {
+    control: 'text',
+    description: `Try these file extensions: ${fileIconIdList.join(', ')}. Longer ones get their usual short form (docx → DOC, json → JSO); anything else is cut to three characters.`,
+  },
 };
