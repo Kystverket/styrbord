@@ -102,24 +102,39 @@ export const IconIndicator: StoryFn = () => {
   );
 };
 
-export const IconFile: StoryFn = () => {
+const textFileExamples: string[] = ['svg', 'png', 'docx', 'csv', 'txt', 'zip'];
+
+export const IconFile: StoryFn<{ file: string }> = ({ file }) => {
   return (
-    <table>
-      {[...fileIconIdList, 'doc', 'csv'].map((file) => (
-        <tr key={file}>
-          {sizes.map((size) => (
-            <td key={size} style={{ padding: '0.5rem', textAlign: 'center' }}>
-              <Icon size={size} file={file} />
-            </td>
-          ))}
-          <td style={{ padding: '0.5rem' }}>
-            <Icon size="lg" file={file} background="lyng" />
-          </td>
-          <td style={{ padding: '0.5rem' }}>
-            file="{file}" {fileIconIdList.includes(file as (typeof fileIconIdList)[number]) ? '' : '(tekst)'}
-          </td>
-        </tr>
-      ))}
-    </table>
+    <Surface gap={6}>
+      <Surface gap={1}>
+        <Paragraph data-weight="medium">Sizes</Paragraph>
+        <Paragraph data-size="sm">Try to change file in story</Paragraph>
+      </Surface>
+      <Surface horizontal gap={4} align="center">
+        {sizes.map((size) => (
+          <Icon key={size} size={size} file={file} />
+        ))}
+        <Icon size="lg" file={file} background="lyng" />
+      </Surface>
+      <Paragraph data-weight="medium">Examples:</Paragraph>
+      <Surface gap={2}>
+        {[...fileIconIdList, ...textFileExamples].map((id) => (
+          <Surface key={id} horizontal gap={3} align="center">
+            <Icon size="xl" file={id} />
+            <Paragraph>
+              {id} {textFileExamples.includes(id) ? '(text)' : ''}
+            </Paragraph>
+          </Surface>
+        ))}
+      </Surface>
+    </Surface>
   );
+};
+IconFile.args = { file: 'pdf' };
+IconFile.argTypes = {
+  file: {
+    control: 'text',
+    description: `Try these file extensions: ${fileIconIdList.join(', ')}. Anything else is printed on the label as text.`,
+  },
 };
