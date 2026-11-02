@@ -1,9 +1,11 @@
 import { imageInlineComponent } from '@milkdown/components/image-inline';
 import type { InlineImageConfig } from '@milkdown/components/image-inline';
 import { history } from '@milkdown/plugin-history';
-import { commonmark } from '@milkdown/preset-commonmark';
+import { commonmark, syncHeadingIdPlugin } from '@milkdown/preset-commonmark';
 import { listener } from '@milkdown/plugin-listener';
+import type { MilkdownPlugin } from '@milkdown/ctx';
 import { sinkListItem } from '@milkdown/prose/schema-list';
+import { $remark } from '@milkdown/utils';
 import type { EditorView } from '@milkdown/prose/view';
 
 import { normalizeHref } from './utils/linkUtils';
@@ -16,6 +18,46 @@ export const richTextCommonmarkPlugins = commonmark.filter((plugin) => {
   const group = plugin.meta?.group ?? '';
   return !blockedCommonmarkGroups.has(group);
 });
+
+export type RichTextFeatures = { headings: boolean; links: boolean };
+
+type MarkdownNode = { type: string; children?: MarkdownNode[] };
+
+// The editor throws on a markdown node its schema cannot parse, so a heading or link in the value
+// must become something it can: a heading becomes a paragraph, a link becomes its text.
+const flattenDisabledNodes = (node: MarkdownNode, features: RichTextFeatures) => {
+  if (!node.children) {
+    return;
+  }
+
+  node.children = node.children.flatMap((child): MarkdownNode[] => {
+    flattenDisabledNodes(child, features);
+    if (!features.headings && child.type === 'heading') {
+      return [{ type: 'paragraph', children: child.children ?? [] }];
+    }
+    if (!features.links && child.type === 'link') {
+      return child.children ?? [];
+    }
+    return [child];
+  });
+};
+
+export const createRichTextCommonmarkPlugins = (features: RichTextFeatures) => {
+  if (features.headings && features.links) {
+    return richTextCommonmarkPlugins;
+  }
+
+  const disabledGroups = [!features.headings && 'Heading', !features.links && 'Link'];
+  // Outside the Heading group, but it reads the heading id context and fails without it.
+  const isDisabled = (plugin: MilkdownPlugin) =>
+    disabledGroups.includes(plugin.meta?.group ?? '') || (!features.headings && plugin === syncHeadingIdPlugin);
+  const flattenPlugin = $remark(
+    'richTextFlattenDisabledNodes',
+    () => () => (tree: MarkdownNode) => flattenDisabledNodes(tree, features),
+  );
+
+  return [...richTextCommonmarkPlugins.filter((plugin) => !isDisabled(plugin)), ...flattenPlugin];
+};
 
 export const richTextEditorPlugins = [richTextCommonmarkPlugins, imageInlineComponent, history, listener] as const;
 

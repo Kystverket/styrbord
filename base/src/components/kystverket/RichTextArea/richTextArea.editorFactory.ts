@@ -12,8 +12,9 @@ import {
   createRichTextAreaEditorPaste,
   handleRichTextAreaEditorClick,
   createRichTextAreaEditorKeydown,
-  richTextCommonmarkPlugins,
+  createRichTextCommonmarkPlugins,
 } from './richTextArea.editor';
+import type { RichTextFeatures } from './richTextArea.editor';
 
 type CreateRichTextAreaEditorParams = {
   root: HTMLElement;
@@ -24,6 +25,7 @@ type CreateRichTextAreaEditorParams = {
   /** Whether Alt+F10 has a toolbar item to go to; without one, Tab must be allowed to leave a list. */
   canReachToolbar: () => boolean;
   canUploadImage: boolean;
+  features: RichTextFeatures;
   dispatchImageFromFile: (file: File) => void;
   updateInlineImageConfig: (config: InlineImageConfig) => InlineImageConfig;
   updateToolbarState: (ctx: Ctx) => void;
@@ -39,6 +41,7 @@ export const createRichTextAreaEditor = ({
   describedBy,
   canReachToolbar,
   canUploadImage,
+  features,
   dispatchImageFromFile,
   updateInlineImageConfig,
   updateToolbarState,
@@ -83,7 +86,7 @@ export const createRichTextAreaEditor = ({
         ),
       );
     })
-    .use(richTextCommonmarkPlugins)
+    .use(createRichTextCommonmarkPlugins(features))
     .use(imageInlineComponent)
     .use(history)
     .use(listener);
