@@ -40,8 +40,6 @@ export const useRichTextToolbarState = () => {
   const updateToolbarState = (ctx: Ctx) => {
     const view = ctx.get(editorViewCtx);
     const { state } = view;
-    // En overskrift i startverdien gir en endring mens editoren fortsatt opprettes, før viewet har state.
-    // Kaster vi her, blir oppstarten avbrutt, og editoren melder aldri endringer videre.
     if (!state) {
       return;
     }
