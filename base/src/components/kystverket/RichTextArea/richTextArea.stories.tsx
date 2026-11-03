@@ -116,6 +116,18 @@ const greet = (name: string) => \`Hei, \${name}\`;
   render: renderInteractive,
 };
 
+export const WithHeading: Story = {
+  args: {
+    ...defaultArgs,
+    label: 'Rikt tekstfelt med overskrift',
+    description: 'Startverdien har en overskrift. Endringer skal fortsatt lagres.',
+    value: `# Rutiner
+
+Tekst`,
+  },
+  render: renderInteractive,
+};
+
 export const WithError: Story = {
   args: {
     ...defaultArgs,
