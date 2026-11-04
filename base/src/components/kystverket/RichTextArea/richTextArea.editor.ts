@@ -3,6 +3,10 @@ import type { InlineImageConfig } from '@milkdown/components/image-inline';
 import { history } from '@milkdown/plugin-history';
 import { commonmark } from '@milkdown/preset-commonmark';
 import { listener } from '@milkdown/plugin-listener';
+import { Slice } from '@milkdown/prose/model';
+import type { Fragment, Node as ProseNode } from '@milkdown/prose/model';
+import { Plugin } from '@milkdown/prose/state';
+import type { Transaction } from '@milkdown/prose/state';
 import { sinkListItem } from '@milkdown/prose/schema-list';
 import type { EditorView } from '@milkdown/prose/view';
 
@@ -207,6 +211,143 @@ export const createRichTextAreaInlineImageConfig = (
       }
 
       return url;
+    },
+  });
+};
+
+// Visible text, not markdown. A block break or hard break counts as 1, like a newline in a textarea.
+// Images count as nothing.
+export const getTextLength = (content: Fragment) => content.textBetween(0, content.size, '\n').length;
+
+// Same rule as a native maxlength: a change may not make the text longer than the limit. A value that
+// is already too long (an old value) can still be edited, as long as the change does not make it longer.
+const fitsMaxLength = (maxLength: number, before: ProseNode, after: ProseNode) => {
+  const afterLength = getTextLength(after.content);
+  return afterLength <= maxLength || afterLength <= getTextLength(before.content);
+};
+
+// The first `maxChars` characters of a slice, with its formatting and block structure kept.
+const truncateSlice = (slice: Slice, maxChars: number): Slice => {
+  const { content } = slice;
+  let low = 0;
+  let high = content.size;
+  while (low < high) {
+    const mid = Math.ceil((low + high) / 2);
+    if (content.textBetween(0, mid, '\n').length <= maxChars) {
+      low = mid;
+    } else {
+      high = mid - 1;
+    }
+  }
+
+  const cut = content.cut(0, low);
+  if (cut.size === 0) {
+    return Slice.empty;
+  }
+  const open = Slice.maxOpen(cut);
+  return new Slice(cut, Math.min(slice.openStart, open.openStart), open.openEnd);
+};
+
+// After a composition, delete the characters past the limit just before the cursor, where the composed
+// text went. Same rule as fitsMaxLength, measured against the length before the composition started.
+const trimAfterComposition = (view: EditorView, maxLength: number, lengthBefore: number) => {
+  const { state } = view;
+  const excess = getTextLength(state.doc.content) - Math.max(maxLength, lengthBefore);
+  const { $head } = state.selection;
+  if (view.composing || excess <= 0 || $head.parentOffset < excess) {
+    return;
+  }
+  view.dispatch(state.tr.delete($head.pos - excess, $head.pos));
+};
+
+/**
+ * Hard character limit, like maxlength on TextArea. Typing, drop and toolbar changes past the limit are
+ * blocked; a paste is cut to the part that fits. Changes from the `value` prop are never blocked.
+ *
+ * IME composition (dead keys, Android keyboards) is not blocked while it runs: rejecting it makes the
+ * browser drop the composition without a compositionend, and ProseMirror then stays in composing mode.
+ * As with a native maxlength, the text past the limit is removed when the composition ends.
+ */
+export const createRichTextAreaMaxLengthPlugin = (
+  getMaxLength: () => number | undefined,
+  isExternalUpdate: () => boolean,
+) => {
+  let editorView: EditorView | null = null;
+  let lengthBeforeComposition = 0;
+
+  return new Plugin({
+    view: (view) => {
+      editorView = view;
+      return {
+        destroy: () => {
+          editorView = null;
+        },
+      };
+    },
+    filterTransaction: (tr, state) => {
+      const maxLength = getMaxLength();
+      if (maxLength === undefined || !tr.docChanged || isExternalUpdate() || editorView?.composing) {
+        return true;
+      }
+      return fitsMaxLength(maxLength, state.doc, tr.doc);
+    },
+    props: {
+      handleDOMEvents: {
+        compositionstart: (view) => {
+          if (!view.composing) {
+            lengthBeforeComposition = getTextLength(view.state.doc.content);
+          }
+          return false;
+        },
+        compositionend: (view) => {
+          const maxLength = getMaxLength();
+          if (maxLength !== undefined) {
+            // ProseMirror reads the last composed text in a microtask after this event; trim after that.
+            setTimeout(() => {
+              if (editorView === view) {
+                trimAfterComposition(view, maxLength, lengthBeforeComposition);
+              }
+            });
+          }
+          return false;
+        },
+      },
+      handlePaste: (view, _event, slice) => {
+        const maxLength = getMaxLength();
+        if (maxLength === undefined) {
+          return false;
+        }
+
+        const { state } = view;
+        const pasteIfItFits = (candidate: Slice) => {
+          const tr = state.tr.replaceSelection(candidate);
+          return fitsMaxLength(maxLength, state.doc, tr.doc) ? tr : null;
+        };
+
+        if (pasteIfItFits(slice)) {
+          return false;
+        }
+
+        // Find the longest start of the pasted content that fits, measured on the real result.
+        let best: Transaction | null = null;
+        let low = 0;
+        let high = getTextLength(slice.content) - 1;
+        while (low <= high) {
+          const mid = Math.floor((low + high) / 2);
+          const tr = pasteIfItFits(truncateSlice(slice, mid));
+          if (tr) {
+            best = tr;
+            low = mid + 1;
+          } else {
+            high = mid - 1;
+          }
+        }
+
+        if (best?.docChanged) {
+          view.dispatch(best.scrollIntoView().setMeta('paste', true).setMeta('uiEvent', 'paste'));
+        }
+        return true;
+      },
     },
   });
 };

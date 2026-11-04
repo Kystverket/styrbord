@@ -15,8 +15,10 @@ export type RichTextAreaProps = {
   required?: boolean | string;
   error?: string;
   /**
-   * Shows a character counter under the editor. A soft limit: the user can still type past it.
-   * Counts the visible text, not the markdown, and each line or paragraph break as one character.
+   * Maximum number of characters, like `maxLength` on TextArea: typing stops at the limit, a paste is
+   * cut to fit, and a counter shows under the editor. Counts the visible text, not the markdown, and
+   * each line or paragraph break as one character. A `value` that is already longer is shown in full,
+   * and the counter shows how much too long it is.
    */
   maxLength?: number;
   /** Used for the bottomToolbar */

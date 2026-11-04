@@ -109,10 +109,13 @@ const RichTextAreaContainer = ({
   const lastKnownMarkdownRef = useRef(normalizedValue);
   const lastSyncedEditorMarkdownRef = useRef(normalizedValue);
   const pendingImageSelectionRef = useRef<{ from: number; to: number } | null>(null);
+  const maxLengthRef = useRef(maxLength);
+  const isSyncingFromValueRef = useRef(false);
 
   latestOnChangeRef.current = onChange;
   latestOnUploadRef.current = onImageUpload;
   latestOnRemoveRef.current = onImageRemove;
+  maxLengthRef.current = maxLength;
 
   // Resolve stable image refs to display URLs before markdown is loaded into the editor.
   useEffect(() => {
@@ -212,6 +215,8 @@ const RichTextAreaContainer = ({
         },
         onEmptyChange: setIsEditorEmpty,
         onTextLengthChange: setTextLength,
+        getMaxLength: () => maxLengthRef.current,
+        isExternalUpdate: () => isSyncingFromValueRef.current,
       }),
     [disabled],
   );
@@ -278,7 +283,13 @@ const RichTextAreaContainer = ({
 
     lastKnownMarkdownRef.current = normalizedValue;
     lastSyncedEditorMarkdownRef.current = editorMarkdown;
-    editor.action(replaceAll(editorMarkdown));
+    // replaceAll dispatches synchronously, so the flag covers exactly this change.
+    isSyncingFromValueRef.current = true;
+    try {
+      editor.action(replaceAll(editorMarkdown));
+    } finally {
+      isSyncingFromValueRef.current = false;
+    }
   }, [editorMarkdown, get, normalizedValue]);
 
   // Sett knappestatus når editoren er tilgjengelig.

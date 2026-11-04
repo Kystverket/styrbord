@@ -3,7 +3,6 @@ import { imageInlineComponent, inlineImageConfig } from '@milkdown/components/im
 import type { InlineImageConfig } from '@milkdown/components/image-inline';
 import { history } from '@milkdown/plugin-history';
 import { listener, listenerCtx } from '@milkdown/plugin-listener';
-import type { Node as ProseNode } from '@milkdown/prose/model';
 import { Plugin } from '@milkdown/prose/state';
 import type { Ctx } from '@milkdown/ctx';
 
@@ -13,6 +12,8 @@ import {
   createRichTextAreaEditorPaste,
   handleRichTextAreaEditorClick,
   createRichTextAreaEditorKeydown,
+  createRichTextAreaMaxLengthPlugin,
+  getTextLength,
   richTextCommonmarkPlugins,
 } from './richTextArea.editor';
 
@@ -33,11 +34,11 @@ type CreateRichTextAreaEditorParams = {
   onEmptyChange: (isEmpty: boolean) => void;
   /** Visible text length, see getTextLength. Fires on init and on every doc change. */
   onTextLengthChange: (length: number) => void;
+  /** Read on each change, so a new maxLength applies without a new editor. */
+  getMaxLength: () => number | undefined;
+  /** True while the editor loads a new value from the `value` prop, which the limit must not block. */
+  isExternalUpdate: () => boolean;
 };
-
-// Visible text, not markdown. A block break or hard break counts as 1, like a newline in a textarea.
-// Images count as nothing.
-const getTextLength = (doc: ProseNode) => doc.textBetween(0, doc.content.size, '\n').length;
 
 export const createRichTextAreaEditor = ({
   root,
@@ -52,6 +53,8 @@ export const createRichTextAreaEditor = ({
   onMarkdownUpdated,
   onEmptyChange,
   onTextLengthChange,
+  getMaxLength,
+  isExternalUpdate,
 }: CreateRichTextAreaEditorParams) => {
   return Editor.make()
     .config((ctx) => {
@@ -80,7 +83,7 @@ export const createRichTextAreaEditor = ({
         plugins.concat(
           new Plugin({
             view: (initialView) => {
-              onTextLengthChange(getTextLength(initialView.state.doc));
+              onTextLengthChange(getTextLength(initialView.state.doc.content));
               return {
                 update: (view, prevState) => {
                   const { doc } = view.state;
@@ -88,12 +91,13 @@ export const createRichTextAreaEditor = ({
                     doc.childCount === 1 && doc.firstChild!.isTextblock && doc.firstChild!.content.size === 0;
                   onEmptyChange(isEmpty);
                   if (doc !== prevState.doc) {
-                    onTextLengthChange(getTextLength(doc));
+                    onTextLengthChange(getTextLength(doc.content));
                   }
                 },
               };
             },
           }),
+          createRichTextAreaMaxLengthPlugin(getMaxLength, isExternalUpdate),
         ),
       );
     })

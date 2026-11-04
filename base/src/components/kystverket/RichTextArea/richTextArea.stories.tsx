@@ -130,7 +130,7 @@ export const WithMaxLength: Story = {
     docs: {
       description: {
         story:
-          'Med `maxLength` viser editoren en teller under feltet. Grensen er myk: brukeren kan skrive forbi den, og applikasjonen viser selv feilmeldingen. Telleren teller den synlige teksten, ikke markdown, og hvert linjeskift eller avsnitt som ett tegn.',
+          'Med `maxLength` stopper editoren ved grensen, som `TextArea`: skriving stopper, og innliming blir kuttet til det som får plass. En teller under feltet viser hvor mange tegn som er igjen. Telleren teller den synlige teksten, ikke markdown, og hvert linjeskift eller avsnitt som ett tegn.',
       },
     },
   },
@@ -143,10 +143,18 @@ export const WithMaxLength: Story = {
 };
 
 export const WithMaxLengthExceeded: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'En verdi som allerede er lengre enn `maxLength` (for eksempel en eldre verdi) vises i sin helhet. Telleren viser hvor mange tegn for mye det er. Brukeren kan slette, men ikke legge til tekst.',
+      },
+    },
+  },
   args: {
     ...defaultArgs,
     maxLength: 50,
-    value: 'Denne teksten er lengre enn grensen. Det kan skje med eldre verdier eller når brukeren limer inn tekst.',
+    value: 'Denne teksten er lengre enn grensen. Det kan skje med eldre verdier som ble lagret før grensen kom.',
   },
   render: renderInteractive,
 };
