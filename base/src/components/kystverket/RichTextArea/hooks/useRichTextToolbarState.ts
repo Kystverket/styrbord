@@ -40,6 +40,9 @@ export const useRichTextToolbarState = () => {
   const updateToolbarState = (ctx: Ctx) => {
     const view = ctx.get(editorViewCtx);
     const { state } = view;
+    if (!state) {
+      return;
+    }
     const { from, to, empty, $from } = state.selection;
 
     const hasMark = (markNames: string[]) => {
