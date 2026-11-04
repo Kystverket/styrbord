@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.8.1](https://github.com/Kystverket/styrbord/compare/styrbord-v2.8.0...styrbord-v2.8.1) (2026-11-04)
+
+
+### Bug Fixes
+
+* **base:** Editoren lagrer ikke når startverdien har en overskrift ([#372](https://github.com/Kystverket/styrbord/issues/372)) ([f288d02](https://github.com/Kystverket/styrbord/commit/f288d02ed2c6674e53a692b22922bc1b7ea60f63))
+
 ## [2.8.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.7.1...styrbord-v2.8.0) (2026-10-30)
 
 
