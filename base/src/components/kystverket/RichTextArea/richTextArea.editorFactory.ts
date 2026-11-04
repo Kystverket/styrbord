@@ -3,6 +3,7 @@ import { imageInlineComponent, inlineImageConfig } from '@milkdown/components/im
 import type { InlineImageConfig } from '@milkdown/components/image-inline';
 import { history } from '@milkdown/plugin-history';
 import { listener, listenerCtx } from '@milkdown/plugin-listener';
+import type { Node as ProseNode } from '@milkdown/prose/model';
 import { Plugin } from '@milkdown/prose/state';
 import type { Ctx } from '@milkdown/ctx';
 
@@ -30,7 +31,13 @@ type CreateRichTextAreaEditorParams = {
   onMarkdownUpdated: (ctx: Ctx, markdown: string) => void;
   /** Fires synchronously on every doc-changing transaction, unlike onMarkdownUpdated which is debounced by @milkdown/plugin-listener. */
   onEmptyChange: (isEmpty: boolean) => void;
+  /** Visible text length, see getTextLength. Fires on init and on every doc change. */
+  onTextLengthChange: (length: number) => void;
 };
+
+// Visible text, not markdown. A block break or hard break counts as 1, like a newline in a textarea.
+// Images count as nothing.
+const getTextLength = (doc: ProseNode) => doc.textBetween(0, doc.content.size, '\n').length;
 
 export const createRichTextAreaEditor = ({
   root,
@@ -44,6 +51,7 @@ export const createRichTextAreaEditor = ({
   updateToolbarState,
   onMarkdownUpdated,
   onEmptyChange,
+  onTextLengthChange,
 }: CreateRichTextAreaEditorParams) => {
   return Editor.make()
     .config((ctx) => {
@@ -71,14 +79,20 @@ export const createRichTextAreaEditor = ({
       ctx.update(prosePluginsCtx, (plugins) =>
         plugins.concat(
           new Plugin({
-            view: () => ({
-              update: (view) => {
-                const { doc } = view.state;
-                const isEmpty =
-                  doc.childCount === 1 && doc.firstChild!.isTextblock && doc.firstChild!.content.size === 0;
-                onEmptyChange(isEmpty);
-              },
-            }),
+            view: (initialView) => {
+              onTextLengthChange(getTextLength(initialView.state.doc));
+              return {
+                update: (view, prevState) => {
+                  const { doc } = view.state;
+                  const isEmpty =
+                    doc.childCount === 1 && doc.firstChild!.isTextblock && doc.firstChild!.content.size === 0;
+                  onEmptyChange(isEmpty);
+                  if (doc !== prevState.doc) {
+                    onTextLengthChange(getTextLength(doc));
+                  }
+                },
+              };
+            },
           }),
         ),
       );

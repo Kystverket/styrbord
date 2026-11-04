@@ -14,6 +14,11 @@ export type RichTextAreaProps = {
   optional?: boolean | string;
   required?: boolean | string;
   error?: string;
+  /**
+   * Shows a character counter under the editor. A soft limit: the user can still type past it.
+   * Counts the visible text, not the markdown, and each line or paragraph break as one character.
+   */
+  maxLength?: number;
   /** Used for the bottomToolbar */
   bottomToolbar?: ReactNode;
   /** Optional upload handler that returns a display src and optional stable image ref. */

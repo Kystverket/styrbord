@@ -125,6 +125,32 @@ export const WithError: Story = {
   render: renderInteractive,
 };
 
+export const WithMaxLength: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Med `maxLength` viser editoren en teller under feltet. Grensen er myk: brukeren kan skrive forbi den, og applikasjonen viser selv feilmeldingen. Telleren teller den synlige teksten, ikke markdown, og hvert linjeskift eller avsnitt som ett tegn.',
+      },
+    },
+  },
+  args: {
+    ...defaultArgs,
+    maxLength: 200,
+    value: 'Dette er **fet** tekst og en [lenke](https://www.kystverket.no).\n\nAndre avsnitt.',
+  },
+  render: renderInteractive,
+};
+
+export const WithMaxLengthExceeded: Story = {
+  args: {
+    ...defaultArgs,
+    maxLength: 50,
+    value: 'Denne teksten er lengre enn grensen. Det kan skje med eldre verdier eller når brukeren limer inn tekst.',
+  },
+  render: renderInteractive,
+};
+
 export const WithBottomToolbar: Story = {
   parameters: {
     docs: {

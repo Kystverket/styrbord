@@ -76,6 +76,7 @@
     "unpin": "Løsne sidepanel"
   },
   "textArea": {
-    "charactersRemaining": "Du har {count} tegn igjen."
+    "charactersRemaining": "Du har {count} tegn igjen.",
+    "charactersOver": "Du har {count} tegn for mye."
   }
 }

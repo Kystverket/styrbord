@@ -14,6 +14,7 @@ import classes from './richTextArea.module.css';
 import { Fieldset, LabelContent, ValidationMessage } from '~/main';
 import { FileRetrieverContext } from '../FileUploader/FileRetriever.context';
 import LinkEditor from './components/LinkEditor/linkEditor';
+import { CharacterCounter } from './components/CharacterCounter/CharacterCounter';
 import { getToolbarItems, Toolbar } from './components/Toolbar/toolbar';
 import { useRichTextToolbarState } from './hooks/useRichTextToolbarState';
 import { useRichTextLinkEditor } from './hooks/useRichTextLinkEditor';
@@ -74,6 +75,7 @@ const RichTextAreaContainer = ({
   required = false,
   showToolbar,
   rows,
+  maxLength,
   error: externalError,
 }: RichTextAreaProps) => {
   // Owned here so useEditor config can close over them before useRichTextImageUpload is called.
@@ -99,6 +101,8 @@ const RichTextAreaContainer = ({
   const normalizedValue = normalizeMarkdownBreakTags(value ?? '');
   const [editorMarkdown, setEditorMarkdown] = useState(normalizedValue);
   const [isEditorEmpty, setIsEditorEmpty] = useState(!normalizedValue);
+  // null until the editor has loaded and counted its content.
+  const [textLength, setTextLength] = useState<number | null>(null);
   const latestOnChangeRef = useRef(onChange);
   const latestOnUploadRef = useRef(onImageUpload);
   const latestOnRemoveRef = useRef(onImageRemove);
@@ -163,6 +167,7 @@ const RichTextAreaContainer = ({
   const { toolbarState, updateToolbarState } = useRichTextToolbarState();
   const linkEditorAnchorId = `rich-text-link-editor-${useId().replaceAll(':', '')}`;
   const toolbarHintId = useId();
+  const counterId = useId();
   const toolbarRef = useRef<HTMLDivElement>(null);
   const editorWrapperRef = useRef<HTMLDivElement>(null);
   const bottomToolbarRef = useRef<HTMLDivElement>(null);
@@ -178,7 +183,7 @@ const RichTextAreaContainer = ({
         root,
         disabled,
         editorMarkdown,
-        describedBy: toolbarHintId,
+        describedBy: maxLength === undefined ? toolbarHintId : `${toolbarHintId} ${counterId}`,
         canReachToolbar: () => Boolean(toolbarRef.current && getToolbarItems(toolbarRef.current).length > 0),
         canUploadImage: Boolean(latestOnUploadRef.current),
         dispatchImageFromFile,
@@ -206,6 +211,7 @@ const RichTextAreaContainer = ({
           updateToolbarState(ctx);
         },
         onEmptyChange: setIsEditorEmpty,
+        onTextLengthChange: setTextLength,
       }),
     [disabled],
   );
@@ -408,6 +414,9 @@ const RichTextAreaContainer = ({
           {!!bottomToolbar && <div ref={bottomToolbarRef}>{bottomToolbar}</div>}
         </div>
 
+        {maxLength !== undefined && textLength !== null && (
+          <CharacterCounter id={counterId} count={textLength} maxLength={maxLength} focusScopeRef={editorWrapperRef} />
+        )}
         {displayedError && <ValidationMessage className={classes.error}>{displayedError}</ValidationMessage>}
       </div>
     </Fieldset>
