@@ -14,12 +14,6 @@ export type RichTextAreaProps = {
   optional?: boolean | string;
   required?: boolean | string;
   error?: string;
-  /**
-   * Maximum number of characters, like `maxLength` on TextArea: typing stops at the limit, a paste is
-   * cut to fit, and a counter shows under the editor. Counts the visible text, not the markdown, and
-   * each line or paragraph break as one character. A `value` that is already longer is shown in full,
-   * and the counter shows how much too long it is.
-   */
   maxLength?: number;
   /** Used for the bottomToolbar */
   bottomToolbar?: ReactNode;

@@ -215,18 +215,13 @@ export const createRichTextAreaInlineImageConfig = (
   });
 };
 
-// Visible text, not markdown. A block break or hard break counts as 1, like a newline in a textarea.
-// Images count as nothing.
 export const getTextLength = (content: Fragment) => content.textBetween(0, content.size, '\n').length;
 
-// Same rule as a native maxlength: a change may not make the text longer than the limit. A value that
-// is already too long (an old value) can still be edited, as long as the change does not make it longer.
 const fitsMaxLength = (maxLength: number, before: ProseNode, after: ProseNode) => {
   const afterLength = getTextLength(after.content);
   return afterLength <= maxLength || afterLength <= getTextLength(before.content);
 };
 
-// The first `maxChars` characters of a slice, with its formatting and block structure kept.
 const truncateSlice = (slice: Slice, maxChars: number): Slice => {
   const { content } = slice;
   let low = 0;
@@ -248,8 +243,6 @@ const truncateSlice = (slice: Slice, maxChars: number): Slice => {
   return new Slice(cut, Math.min(slice.openStart, open.openStart), open.openEnd);
 };
 
-// After a composition, delete the characters past the limit just before the cursor, where the composed
-// text went. Same rule as fitsMaxLength, measured against the length before the composition started.
 const trimAfterComposition = (view: EditorView, maxLength: number, lengthBefore: number) => {
   const { state } = view;
   const excess = getTextLength(state.doc.content) - Math.max(maxLength, lengthBefore);
@@ -260,14 +253,6 @@ const trimAfterComposition = (view: EditorView, maxLength: number, lengthBefore:
   view.dispatch(state.tr.delete($head.pos - excess, $head.pos));
 };
 
-/**
- * Hard character limit, like maxlength on TextArea. Typing, drop and toolbar changes past the limit are
- * blocked; a paste is cut to the part that fits. Changes from the `value` prop are never blocked.
- *
- * IME composition (dead keys, Android keyboards) is not blocked while it runs: rejecting it makes the
- * browser drop the composition without a compositionend, and ProseMirror then stays in composing mode.
- * As with a native maxlength, the text past the limit is removed when the composition ends.
- */
 export const createRichTextAreaMaxLengthPlugin = (
   getMaxLength: () => number | undefined,
   isExternalUpdate: () => boolean,
@@ -302,7 +287,6 @@ export const createRichTextAreaMaxLengthPlugin = (
         compositionend: (view) => {
           const maxLength = getMaxLength();
           if (maxLength !== undefined) {
-            // ProseMirror reads the last composed text in a microtask after this event; trim after that.
             setTimeout(() => {
               if (editorView === view) {
                 trimAfterComposition(view, maxLength, lengthBeforeComposition);
@@ -328,7 +312,6 @@ export const createRichTextAreaMaxLengthPlugin = (
           return false;
         }
 
-        // Find the longest start of the pasted content that fits, measured on the real result.
         let best: Transaction | null = null;
         let low = 0;
         let high = getTextLength(slice.content) - 1;

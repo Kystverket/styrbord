@@ -9,17 +9,11 @@ type CharacterCounterProps = {
   id: string;
   count: number;
   maxLength: number;
-  /** The counter only announces changes while focus is inside this element, i.e. while the user edits. */
   focusScopeRef: RefObject<HTMLElement | null>;
 };
 
-// Pause in typing before the count is read aloud.
 const ANNOUNCE_DELAY_MS = 500;
 
-/**
- * Field.Counter reads `input.value`, so it cannot count a contenteditable. This copies its behaviour:
- * the same texts as TextArea, danger styling over the limit, and a debounced polite announcement.
- */
 export const CharacterCounter = ({ id, count, maxLength, focusScopeRef }: CharacterCounterProps): ReactElement => {
   const { scopedT } = useTranslation();
   const t = scopedT('textArea');
@@ -32,8 +26,6 @@ export const CharacterCounter = ({ id, count, maxLength, focusScopeRef }: Charac
 
   const [announcement, setAnnouncement] = useState('');
 
-  // Read the count aloud after a pause in typing, not on every keystroke. Mount, load and reload from
-  // `value` happen without focus in the editor, so they stay silent.
   useEffect(() => {
     if (!focusScopeRef.current?.contains(document.activeElement)) {
       return;

@@ -32,11 +32,8 @@ type CreateRichTextAreaEditorParams = {
   onMarkdownUpdated: (ctx: Ctx, markdown: string) => void;
   /** Fires synchronously on every doc-changing transaction, unlike onMarkdownUpdated which is debounced by @milkdown/plugin-listener. */
   onEmptyChange: (isEmpty: boolean) => void;
-  /** Visible text length, see getTextLength. Fires on init and on every doc change. */
   onTextLengthChange: (length: number) => void;
-  /** Read on each change, so a new maxLength applies without a new editor. */
   getMaxLength: () => number | undefined;
-  /** True while the editor loads a new value from the `value` prop, which the limit must not block. */
   isExternalUpdate: () => boolean;
 };
 

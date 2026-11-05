@@ -2,8 +2,6 @@
   padding-top: var(--ds-size-2);
 }
 
-/* Under the limit the counter is plain text, as in Designsystemet's Field.Counter.
-   Two classes, so this wins over .ds-validation-message whatever the CSS load order is. */
 .counter.under {
   color: inherit;
   padding-inline-start: 0;

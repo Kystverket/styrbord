@@ -101,7 +101,6 @@ const RichTextAreaContainer = ({
   const normalizedValue = normalizeMarkdownBreakTags(value ?? '');
   const [editorMarkdown, setEditorMarkdown] = useState(normalizedValue);
   const [isEditorEmpty, setIsEditorEmpty] = useState(!normalizedValue);
-  // null until the editor has loaded and counted its content.
   const [textLength, setTextLength] = useState<number | null>(null);
   const latestOnChangeRef = useRef(onChange);
   const latestOnUploadRef = useRef(onImageUpload);
@@ -283,7 +282,6 @@ const RichTextAreaContainer = ({
 
     lastKnownMarkdownRef.current = normalizedValue;
     lastSyncedEditorMarkdownRef.current = editorMarkdown;
-    // replaceAll dispatches synchronously, so the flag covers exactly this change.
     isSyncingFromValueRef.current = true;
     try {
       editor.action(replaceAll(editorMarkdown));
