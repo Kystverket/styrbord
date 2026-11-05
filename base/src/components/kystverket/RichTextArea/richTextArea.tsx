@@ -14,7 +14,7 @@ import classes from './richTextArea.module.css';
 import { Fieldset, LabelContent, ValidationMessage } from '~/main';
 import { FileRetrieverContext } from '../FileUploader/FileRetriever.context';
 import LinkEditor from './components/LinkEditor/linkEditor';
-import { CharacterCounter } from './components/CharacterCounter/CharacterCounter';
+import { CharacterCounter } from '~/components/shared/CharacterCounter/CharacterCounter';
 import { getToolbarItems, Toolbar } from './components/Toolbar/toolbar';
 import { useRichTextToolbarState } from './hooks/useRichTextToolbarState';
 import { useRichTextLinkEditor } from './hooks/useRichTextLinkEditor';
