@@ -185,7 +185,7 @@ const RichTextAreaContainer = ({
         root,
         disabled,
         editorMarkdown,
-        describedBy: maxLength === undefined ? toolbarHintId : `${toolbarHintId} ${counterId}`,
+        describedBy: `${toolbarHintId} ${counterId}`,
         canReachToolbar: () => Boolean(toolbarRef.current && getToolbarItems(toolbarRef.current).length > 0),
         canUploadImage: Boolean(latestOnUploadRef.current),
         dispatchImageFromFile,
