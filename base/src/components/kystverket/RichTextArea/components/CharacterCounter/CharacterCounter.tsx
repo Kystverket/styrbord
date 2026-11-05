@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { ReactElement, RefObject } from 'react';
 
 import { ValidationMessage } from '~/main';
@@ -13,9 +13,8 @@ type CharacterCounterProps = {
   focusScopeRef: RefObject<HTMLElement | null>;
 };
 
-// Same delays as Designsystemet's Field.Counter: Windows screen readers need a longer pause.
-const getAnnounceDelay = () => (/Windows/i.test(navigator.userAgent) ? 800 : 200);
-const ANNOUNCE_CLEAR_MS = 2000;
+// Pause in typing before the count is read aloud.
+const ANNOUNCE_DELAY_MS = 500;
 
 /**
  * Field.Counter reads `input.value`, so it cannot count a contenteditable. This copies its behaviour:
@@ -32,31 +31,16 @@ export const CharacterCounter = ({ id, count, maxLength, focusScopeRef }: Charac
     : t('charactersRemaining').replace('{count}', String(remaining));
 
   const [announcement, setAnnouncement] = useState('');
-  const previousLabelRef = useRef(label);
 
+  // Read the count aloud after a pause in typing, not on every keystroke. Mount, load and reload from
+  // `value` happen without focus in the editor, so they stay silent.
   useEffect(() => {
-    if (label === previousLabelRef.current) {
-      return;
-    }
-    previousLabelRef.current = label;
-
-    // Load and reload from `value` happen without focus in the editor, and are not announced.
     if (!focusScopeRef.current?.contains(document.activeElement)) {
       return;
     }
-
-    const timer = setTimeout(() => setAnnouncement(label), getAnnounceDelay());
+    const timer = setTimeout(() => setAnnouncement(label), ANNOUNCE_DELAY_MS);
     return () => clearTimeout(timer);
   }, [label, focusScopeRef]);
-
-  // Empty the live region again, so the same text is announced the next time it comes.
-  useEffect(() => {
-    if (!announcement) {
-      return;
-    }
-    const timer = setTimeout(() => setAnnouncement(''), ANNOUNCE_CLEAR_MS);
-    return () => clearTimeout(timer);
-  }, [announcement]);
 
   return (
     <>
