@@ -1,8 +1,9 @@
-import { Editor, defaultValueCtx, editorViewOptionsCtx, prosePluginsCtx, rootCtx } from '@milkdown/core';
+import { Editor, defaultValueCtx, editorViewOptionsCtx, prosePluginsCtx, rootCtx, serializerCtx } from '@milkdown/core';
 import { imageInlineComponent, inlineImageConfig } from '@milkdown/components/image-inline';
 import type { InlineImageConfig } from '@milkdown/components/image-inline';
 import { history } from '@milkdown/plugin-history';
 import { listener, listenerCtx } from '@milkdown/plugin-listener';
+import type { Node as ProseNode } from '@milkdown/prose/model';
 import { Plugin } from '@milkdown/prose/state';
 import type { Ctx } from '@milkdown/ctx';
 
@@ -12,8 +13,10 @@ import {
   createRichTextAreaEditorPaste,
   handleRichTextAreaEditorClick,
   createRichTextAreaEditorKeydown,
+  createRichTextAreaMaxLengthPlugin,
   richTextCommonmarkPlugins,
 } from './richTextArea.editor';
+import type { MeasureValueLength } from './richTextArea.editor';
 
 type CreateRichTextAreaEditorParams = {
   root: HTMLElement;
@@ -30,6 +33,33 @@ type CreateRichTextAreaEditorParams = {
   onMarkdownUpdated: (ctx: Ctx, markdown: string) => void;
   /** Fires synchronously on every doc-changing transaction, unlike onMarkdownUpdated which is debounced by @milkdown/plugin-listener. */
   onEmptyChange: (isEmpty: boolean) => void;
+  toValue: (markdown: string) => string;
+  onValueLengthChange: (length: number) => void;
+  getMaxLength: () => number | undefined;
+  isExternalUpdate: () => boolean;
+};
+
+const trailingEmptyParagraph = '<br />\n';
+
+const serializeLikeListener = (ctx: Ctx, doc: ProseNode) => {
+  const markdown = ctx.get(serializerCtx)(doc);
+  const { lastChild } = doc;
+  const endsWithEmptyParagraph = lastChild?.type.name === 'paragraph' && lastChild.content.size === 0;
+  return endsWithEmptyParagraph && markdown.endsWith(trailingEmptyParagraph)
+    ? markdown.slice(0, -trailingEmptyParagraph.length)
+    : markdown;
+};
+
+const createValueLengthMeasure = (ctx: Ctx, toValue: (markdown: string) => string): MeasureValueLength => {
+  let lastDoc: ProseNode | null = null;
+  let lastLength = 0;
+  return (doc) => {
+    if (doc !== lastDoc) {
+      lastDoc = doc;
+      lastLength = toValue(serializeLikeListener(ctx, doc)).length;
+    }
+    return lastLength;
+  };
 };
 
 export const createRichTextAreaEditor = ({
@@ -44,9 +74,14 @@ export const createRichTextAreaEditor = ({
   updateToolbarState,
   onMarkdownUpdated,
   onEmptyChange,
+  toValue,
+  onValueLengthChange,
+  getMaxLength,
+  isExternalUpdate,
 }: CreateRichTextAreaEditorParams) => {
   return Editor.make()
     .config((ctx) => {
+      const measure = createValueLengthMeasure(ctx, toValue);
       ctx.set(rootCtx, root);
       ctx.set(defaultValueCtx, editorMarkdown);
       ctx.update(inlineImageConfig.key, updateInlineImageConfig);
@@ -71,15 +106,22 @@ export const createRichTextAreaEditor = ({
       ctx.update(prosePluginsCtx, (plugins) =>
         plugins.concat(
           new Plugin({
-            view: () => ({
-              update: (view) => {
-                const { doc } = view.state;
-                const isEmpty =
-                  doc.childCount === 1 && doc.firstChild!.isTextblock && doc.firstChild!.content.size === 0;
-                onEmptyChange(isEmpty);
-              },
-            }),
+            view: (initialView) => {
+              onValueLengthChange(measure(initialView.state.doc));
+              return {
+                update: (view, prevState) => {
+                  const { doc } = view.state;
+                  const isEmpty =
+                    doc.childCount === 1 && doc.firstChild!.isTextblock && doc.firstChild!.content.size === 0;
+                  onEmptyChange(isEmpty);
+                  if (doc !== prevState.doc) {
+                    onValueLengthChange(measure(doc));
+                  }
+                },
+              };
+            },
           }),
+          createRichTextAreaMaxLengthPlugin(getMaxLength, isExternalUpdate, measure),
         ),
       );
     })

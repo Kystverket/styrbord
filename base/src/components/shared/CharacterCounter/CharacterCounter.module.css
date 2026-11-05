@@ -1,0 +1,13 @@
+.counter:global(.ds-validation-message) {
+  padding-top: var(--ds-size-2);
+  font-weight: var(--ds-font-weight-regular);
+}
+
+.counter.under {
+  color: inherit;
+  padding-inline-start: 0;
+}
+
+.counter.under::before {
+  display: none;
+}

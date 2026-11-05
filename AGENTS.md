@@ -61,6 +61,7 @@ There are no meaningful tests in either workspace (`test` scripts are no-ops).
 - `kystverket/` — Kystverket-specific components (marked ⚓ in Storybook): `Alert`, `Button`, `Datepicker`, `FileUploader`, `Footer`, `Header`, `Icon`, `Logo`, `PageHeading`, `RichTextArea`, `Stepper`, `Summary`, `Surface`, `Tabs`, etc.
 - `designsystemet/` — Extended/overridden Designsystemet components (marked 🌈+⚓): `Button`, `TextInput`, `NumberInput`, `Select`, `Tabs`, `Tag`, etc.
 - `deprecated/` — Components being phased out, exported with a `Deprecated` prefix.
+- `shared/` — Internal building blocks used by more than one component (e.g. `CharacterCounter`). Not exported from `main.ts`.
 
 **Layout: use `Surface`, never `Box`.** `Surface` replaces `Box`, which is `@deprecated` and will be removed in a future major. Don't add new `Box` usages, and don't fix Box's own issues — migrate the call site instead. Box spacing is pixels, Surface spacing is a step on the `--ds-size-*` scale (divide by 4); `color="x"` becomes `data-color="x" data-color-variant="subtle"`. Migration details are in `base/v2.md`.
 

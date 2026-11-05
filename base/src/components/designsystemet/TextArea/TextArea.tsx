@@ -1,6 +1,7 @@
+import { useId, useRef } from 'react';
 import { Textfield as DsTextField, ValidationMessage } from '@digdir/designsystemet-react';
 import { Surface, LabelContent } from '~/main';
-import { useTranslation } from '~/translations';
+import { CharacterCounter } from '~/components/shared/CharacterCounter/CharacterCounter';
 import { InputSize, inputWidthClass } from '~/utils/input/input';
 import classes from './TextArea.module.scss';
 
@@ -39,11 +40,11 @@ export const TextArea = ({
   error,
   ...props
 }: TextAreaProps) => {
-  const { scopedT } = useTranslation();
-  const t = scopedT('textArea');
+  const counterId = useId();
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   return (
-    <Surface gap={2}>
+    <Surface gap={2} ref={wrapperRef}>
       <DsTextField
         className={`${classes.textArea} ${classes[minHeight]} ${className} ${inputWidthClass(width)}`}
         label={<LabelContent text={label} required={required} optional={optional} />}
@@ -54,10 +55,16 @@ export const TextArea = ({
         maxLength={maxLength}
         multiline
         aria-invalid={Boolean(error) || undefined}
+        aria-describedby={maxLength === undefined ? undefined : counterId}
         {...props}
       />
-      {maxLength && (
-        <span>{t('charactersRemaining').replace('{count}', String(maxLength - (value ?? '').length))}</span>
+      {maxLength !== undefined && (
+        <CharacterCounter
+          id={counterId}
+          count={(value ?? '').length}
+          maxLength={maxLength}
+          focusScopeRef={wrapperRef}
+        />
       )}
       {typeof error === 'string' && <ValidationMessage>{error}</ValidationMessage>}
     </Surface>
