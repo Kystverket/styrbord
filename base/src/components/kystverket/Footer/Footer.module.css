@@ -109,7 +109,7 @@
     background: url(keyboard_arrow_down.svg) right 8px center no-repeat;
   }
 
-  select:hover {
+  .select:hover {
     border-color: var(--ds-color-primary-base-contrast-default);
   }
 
@@ -150,7 +150,7 @@
       flex-direction: column;
       align-items: center;
     }
-    select {
+    .select {
       min-width: 100% !important;
       max-width: 100% !important;
     }
