@@ -76,7 +76,7 @@
     "unpin": "Løysne sidepanel"
   },
   "textArea": {
-    "charactersRemaining": "Du har {count} teikn igjen.",
-    "charactersOver": "Du har {count} teikn for mykje."
+    "charactersOver": "Du har {count} teikn for mykje.",
+    "charactersRemaining": "Du har {count} teikn igjen."
   }
 }

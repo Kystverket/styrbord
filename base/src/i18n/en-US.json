@@ -76,7 +76,7 @@
     "unpin": "Unpin side panel"
   },
   "textArea": {
-    "charactersRemaining": "You have {count} characters remaining.",
-    "charactersOver": "You have {count} characters too many."
+    "charactersOver": "You have {count} characters too many.",
+    "charactersRemaining": "You have {count} characters remaining."
   }
 }
