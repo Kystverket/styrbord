@@ -142,23 +142,6 @@ export const WithMaxLength: Story = {
   render: renderInteractive,
 };
 
-export const WithMaxLengthExceeded: Story = {
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'En verdi som allerede er lengre enn `maxLength` (for eksempel en eldre verdi) vises i sin helhet. Telleren viser hvor mange tegn for mye det er. Brukeren kan slette, men ikke legge til tekst.',
-      },
-    },
-  },
-  args: {
-    ...defaultArgs,
-    maxLength: 50,
-    value: 'Denne teksten er lengre enn grensen. Det kan skje med eldre verdier som ble lagret før grensen kom.',
-  },
-  render: renderInteractive,
-};
-
 export const WithBottomToolbar: Story = {
   parameters: {
     docs: {
