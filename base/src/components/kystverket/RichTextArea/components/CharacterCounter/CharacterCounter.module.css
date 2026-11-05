@@ -1,5 +1,6 @@
-.counter {
+.counter:global(.ds-validation-message) {
   padding-top: var(--ds-size-2);
+  font-weight: var(--ds-font-weight-regular);
 }
 
 .counter.under {
