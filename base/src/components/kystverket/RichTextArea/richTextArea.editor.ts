@@ -215,11 +215,13 @@ export const createRichTextAreaInlineImageConfig = (
   });
 };
 
-export const getTextLength = (content: Fragment) => content.textBetween(0, content.size, '\n').length;
+const getTextLength = (content: Fragment) => content.textBetween(0, content.size, '\n').length;
 
-const fitsMaxLength = (maxLength: number, before: ProseNode, after: ProseNode) => {
-  const afterLength = getTextLength(after.content);
-  return afterLength <= maxLength || afterLength <= getTextLength(before.content);
+export type MeasureValueLength = (doc: ProseNode) => number;
+
+const fitsMaxLength = (maxLength: number, measure: MeasureValueLength, before: ProseNode, after: ProseNode) => {
+  const afterLength = measure(after);
+  return afterLength <= maxLength || afterLength <= measure(before);
 };
 
 const truncateSlice = (slice: Slice, maxChars: number): Slice => {
@@ -243,19 +245,43 @@ const truncateSlice = (slice: Slice, maxChars: number): Slice => {
   return new Slice(cut, Math.min(slice.openStart, open.openStart), open.openEnd);
 };
 
-const trimAfterComposition = (view: EditorView, maxLength: number, lengthBefore: number) => {
+const trimAfterComposition = (
+  view: EditorView,
+  maxLength: number,
+  measure: MeasureValueLength,
+  lengthBefore: number,
+) => {
   const { state } = view;
-  const excess = getTextLength(state.doc.content) - Math.max(maxLength, lengthBefore);
+  const limit = Math.max(maxLength, lengthBefore);
   const { $head } = state.selection;
-  if (view.composing || excess <= 0 || $head.parentOffset < excess) {
+  if (view.composing || measure(state.doc) <= limit) {
     return;
   }
-  view.dispatch(state.tr.delete($head.pos - excess, $head.pos));
+
+  const deleteBeforeHead = (count: number) => state.tr.delete($head.pos - count, $head.pos);
+  let best: Transaction | null = null;
+  let low = 1;
+  let high = $head.parentOffset;
+  while (low <= high) {
+    const mid = Math.floor((low + high) / 2);
+    const tr = deleteBeforeHead(mid);
+    if (measure(tr.doc) <= limit) {
+      best = tr;
+      high = mid - 1;
+    } else {
+      low = mid + 1;
+    }
+  }
+
+  if (best) {
+    view.dispatch(best);
+  }
 };
 
 export const createRichTextAreaMaxLengthPlugin = (
   getMaxLength: () => number | undefined,
   isExternalUpdate: () => boolean,
+  measure: MeasureValueLength,
 ) => {
   let editorView: EditorView | null = null;
   let lengthBeforeComposition = 0;
@@ -274,13 +300,13 @@ export const createRichTextAreaMaxLengthPlugin = (
       if (maxLength === undefined || !tr.docChanged || isExternalUpdate() || editorView?.composing) {
         return true;
       }
-      return fitsMaxLength(maxLength, state.doc, tr.doc);
+      return fitsMaxLength(maxLength, measure, state.doc, tr.doc);
     },
     props: {
       handleDOMEvents: {
         compositionstart: (view) => {
           if (!view.composing) {
-            lengthBeforeComposition = getTextLength(view.state.doc.content);
+            lengthBeforeComposition = measure(view.state.doc);
           }
           return false;
         },
@@ -289,7 +315,7 @@ export const createRichTextAreaMaxLengthPlugin = (
           if (maxLength !== undefined) {
             setTimeout(() => {
               if (editorView === view) {
-                trimAfterComposition(view, maxLength, lengthBeforeComposition);
+                trimAfterComposition(view, maxLength, measure, lengthBeforeComposition);
               }
             });
           }
@@ -305,7 +331,7 @@ export const createRichTextAreaMaxLengthPlugin = (
         const { state } = view;
         const pasteIfItFits = (candidate: Slice) => {
           const tr = state.tr.replaceSelection(candidate);
-          return fitsMaxLength(maxLength, state.doc, tr.doc) ? tr : null;
+          return fitsMaxLength(maxLength, measure, state.doc, tr.doc) ? tr : null;
         };
 
         if (pasteIfItFits(slice)) {

@@ -101,7 +101,7 @@ const RichTextAreaContainer = ({
   const normalizedValue = normalizeMarkdownBreakTags(value ?? '');
   const [editorMarkdown, setEditorMarkdown] = useState(normalizedValue);
   const [isEditorEmpty, setIsEditorEmpty] = useState(!normalizedValue);
-  const [textLength, setTextLength] = useState<number | null>(null);
+  const [valueLength, setValueLength] = useState<number | null>(null);
   const latestOnChangeRef = useRef(onChange);
   const latestOnUploadRef = useRef(onImageUpload);
   const latestOnRemoveRef = useRef(onImageRemove);
@@ -175,6 +175,8 @@ const RichTextAreaContainer = ({
   const bottomToolbarRef = useRef<HTMLDivElement>(null);
 
   const dispatchImageFromFile = (file: File) => insertImageFromFileRef.current(file);
+  const toValue = (markdown: string) =>
+    replaceImageUrlsWithRefs(normalizeMarkdownBreakTags(markdown), sasToRefMap.current);
   const updateInlineImageConfig = (config: InlineImageConfig) => inlineImageConfigUpdaterRef.current(config);
 
   // Oppretter Milkdown-editor med schema, historikk og listeners.
@@ -192,8 +194,7 @@ const RichTextAreaContainer = ({
         updateInlineImageConfig,
         updateToolbarState,
         onMarkdownUpdated: (ctx, markdown) => {
-          const normalizedMarkdown = normalizeMarkdownBreakTags(markdown);
-          const transformedMarkdown = replaceImageUrlsWithRefs(normalizedMarkdown, sasToRefMap.current);
+          const transformedMarkdown = toValue(markdown);
           const previousMarkdown = lastKnownMarkdownRef.current;
 
           if (transformedMarkdown === previousMarkdown) {
@@ -213,7 +214,8 @@ const RichTextAreaContainer = ({
           updateToolbarState(ctx);
         },
         onEmptyChange: setIsEditorEmpty,
-        onTextLengthChange: setTextLength,
+        toValue,
+        onValueLengthChange: setValueLength,
         getMaxLength: () => maxLengthRef.current,
         isExternalUpdate: () => isSyncingFromValueRef.current,
       }),
@@ -423,8 +425,8 @@ const RichTextAreaContainer = ({
           {!!bottomToolbar && <div ref={bottomToolbarRef}>{bottomToolbar}</div>}
         </div>
 
-        {maxLength !== undefined && textLength !== null && (
-          <CharacterCounter id={counterId} count={textLength} maxLength={maxLength} focusScopeRef={editorWrapperRef} />
+        {maxLength !== undefined && valueLength !== null && (
+          <CharacterCounter id={counterId} count={valueLength} maxLength={maxLength} focusScopeRef={editorWrapperRef} />
         )}
         {displayedError && <ValidationMessage className={classes.error}>{displayedError}</ValidationMessage>}
       </div>

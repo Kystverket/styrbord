@@ -130,7 +130,7 @@ export const WithMaxLength: Story = {
     docs: {
       description: {
         story:
-          'Med `maxLength` stopper editoren ved grensen, som `TextArea`: skriving stopper, og innliming blir kuttet til det som får plass. En teller under feltet viser hvor mange tegn som er igjen. Telleren teller den synlige teksten, ikke markdown, og hvert linjeskift eller avsnitt som ett tegn.',
+          'Med `maxLength` stopper editoren ved grensen, som `TextArea`: skriving stopper, og innliming blir kuttet til det som får plass. En teller under feltet viser hvor mange tegn som er igjen. Grensen gjelder markdown-verdien som sendes til `onChange`, så formatering, lenker og bilder bruker også tegn. Da kan samme grense brukes i API-et og databasen.',
       },
     },
   },
