@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.9.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.8.1...styrbord-v2.9.0) (2026-11-05)
+
+
+### Features
+
+* **base:** maxLength med teller i RichTextArea, som i TextArea ([#374](https://github.com/Kystverket/styrbord/issues/374)) ([c933a3c](https://github.com/Kystverket/styrbord/commit/c933a3c64d3b9dfd676273a4b659c251f947ea0a))
+
 ## [2.8.1](https://github.com/Kystverket/styrbord/compare/styrbord-v2.8.0...styrbord-v2.8.1) (2026-11-04)
 
 
