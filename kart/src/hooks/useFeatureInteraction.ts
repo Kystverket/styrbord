@@ -96,7 +96,43 @@ export function useFeatureInteraction({
   );
 
   /**
-   * Query features at a given point.
+   * Screen-space distance (in pixels) from a click point to a feature.
+   * Point/MultiPoint geometries are compared by their actual projected
+   * position — needed because points are hit-tested against an invisible,
+   * enlarged hit-area layer (see `POINT_HIT_LAYER`), so a click can be
+   * "inside" several nearby points' hit areas at once. Other geometry types
+   * (polygons, lines) are hit-tested precisely already, so they're always
+   * treated as distance 0.
+   */
+  const getFeatureScreenDistance = useCallback(
+    (
+      map: maplibregl.Map,
+      feature: InteractiveFeature,
+      point: { x: number; y: number },
+    ): number => {
+      const geometry = feature.geometry;
+      if (!geometry) return 0;
+
+      const distanceTo = (coord: number[]): number => {
+        const screenPoint = map.project(coord as [number, number]);
+        return Math.hypot(screenPoint.x - point.x, screenPoint.y - point.y);
+      };
+
+      if (geometry.type === "Point") {
+        return distanceTo(geometry.coordinates);
+      }
+      if (geometry.type === "MultiPoint") {
+        return Math.min(...geometry.coordinates.map(distanceTo));
+      }
+      return 0;
+    },
+    [],
+  );
+
+  /**
+   * Query features at a given point, nearest first. Nearness only
+   * disambiguates between point features whose (enlarged) hit areas
+   * overlap — non-point features are always treated as distance 0.
    */
   const queryFeaturesAtPoint = useCallback(
     (
@@ -108,11 +144,22 @@ export function useFeatureInteraction({
 
       const features = map.queryRenderedFeatures(point, {
         layers: existingLayers,
-      });
+      }) as InteractiveFeature[];
 
-      return features as InteractiveFeature[];
+      if (features.length <= 1) return features;
+
+      // Normalise PointLike (either [x, y] or {x, y}) for distance calc.
+      const origin = Array.isArray(point)
+        ? { x: point[0], y: point[1] }
+        : point;
+
+      return [...features].sort(
+        (a, b) =>
+          getFeatureScreenDistance(map, a, origin) -
+          getFeatureScreenDistance(map, b, origin),
+      );
     },
-    [layerIds],
+    [layerIds, getFeatureScreenDistance],
   );
 
   // Clear selection helper
