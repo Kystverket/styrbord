@@ -14,6 +14,7 @@ import classes from './richTextArea.module.css';
 import { Fieldset, LabelContent, ValidationMessage } from '~/main';
 import { FileRetrieverContext } from '../FileUploader/FileRetriever.context';
 import LinkEditor from './components/LinkEditor/linkEditor';
+import { CharacterCounter } from '~/components/shared/CharacterCounter/CharacterCounter';
 import { getToolbarItems, Toolbar } from './components/Toolbar/toolbar';
 import { useRichTextToolbarState } from './hooks/useRichTextToolbarState';
 import { useRichTextLinkEditor } from './hooks/useRichTextLinkEditor';
@@ -76,6 +77,7 @@ const RichTextAreaContainer = ({
   headings = true,
   links = true,
   rows,
+  maxLength,
   error: externalError,
 }: RichTextAreaProps) => {
   // Owned here so useEditor config can close over them before useRichTextImageUpload is called.
@@ -101,16 +103,20 @@ const RichTextAreaContainer = ({
   const normalizedValue = normalizeMarkdownBreakTags(value ?? '');
   const [editorMarkdown, setEditorMarkdown] = useState(normalizedValue);
   const [isEditorEmpty, setIsEditorEmpty] = useState(!normalizedValue);
+  const [valueLength, setValueLength] = useState<number | null>(null);
   const latestOnChangeRef = useRef(onChange);
   const latestOnUploadRef = useRef(onImageUpload);
   const latestOnRemoveRef = useRef(onImageRemove);
   const lastKnownMarkdownRef = useRef(normalizedValue);
   const lastSyncedEditorMarkdownRef = useRef(normalizedValue);
   const pendingImageSelectionRef = useRef<{ from: number; to: number } | null>(null);
+  const maxLengthRef = useRef(maxLength);
+  const isSyncingFromValueRef = useRef(false);
 
   latestOnChangeRef.current = onChange;
   latestOnUploadRef.current = onImageUpload;
   latestOnRemoveRef.current = onImageRemove;
+  maxLengthRef.current = maxLength;
 
   // Resolve stable image refs to display URLs before markdown is loaded into the editor.
   useEffect(() => {
@@ -165,11 +171,14 @@ const RichTextAreaContainer = ({
   const { toolbarState, updateToolbarState } = useRichTextToolbarState();
   const linkEditorAnchorId = `rich-text-link-editor-${useId().replaceAll(':', '')}`;
   const toolbarHintId = useId();
+  const counterId = useId();
   const toolbarRef = useRef<HTMLDivElement>(null);
   const editorWrapperRef = useRef<HTMLDivElement>(null);
   const bottomToolbarRef = useRef<HTMLDivElement>(null);
 
   const dispatchImageFromFile = (file: File) => insertImageFromFileRef.current(file);
+  const toValue = (markdown: string) =>
+    replaceImageUrlsWithRefs(normalizeMarkdownBreakTags(markdown), sasToRefMap.current);
   const updateInlineImageConfig = (config: InlineImageConfig) => inlineImageConfigUpdaterRef.current(config);
 
   // Oppretter Milkdown-editor med schema, historikk og listeners.
@@ -180,7 +189,7 @@ const RichTextAreaContainer = ({
         root,
         disabled,
         editorMarkdown,
-        describedBy: toolbarHintId,
+        describedBy: `${toolbarHintId} ${counterId}`,
         canReachToolbar: () => Boolean(toolbarRef.current && getToolbarItems(toolbarRef.current).length > 0),
         canUploadImage: Boolean(latestOnUploadRef.current),
         features: { headings, links },
@@ -188,8 +197,7 @@ const RichTextAreaContainer = ({
         updateInlineImageConfig,
         updateToolbarState,
         onMarkdownUpdated: (ctx, markdown) => {
-          const normalizedMarkdown = normalizeMarkdownBreakTags(markdown);
-          const transformedMarkdown = replaceImageUrlsWithRefs(normalizedMarkdown, sasToRefMap.current);
+          const transformedMarkdown = toValue(markdown);
           const previousMarkdown = lastKnownMarkdownRef.current;
 
           if (transformedMarkdown === previousMarkdown) {
@@ -209,6 +217,10 @@ const RichTextAreaContainer = ({
           updateToolbarState(ctx);
         },
         onEmptyChange: setIsEditorEmpty,
+        toValue,
+        onValueLengthChange: setValueLength,
+        getMaxLength: () => maxLengthRef.current,
+        isExternalUpdate: () => isSyncingFromValueRef.current,
       }),
     [disabled, headings, links],
   );
@@ -275,7 +287,12 @@ const RichTextAreaContainer = ({
 
     lastKnownMarkdownRef.current = normalizedValue;
     lastSyncedEditorMarkdownRef.current = editorMarkdown;
-    editor.action(replaceAll(editorMarkdown));
+    isSyncingFromValueRef.current = true;
+    try {
+      editor.action(replaceAll(editorMarkdown));
+    } finally {
+      isSyncingFromValueRef.current = false;
+    }
   }, [editorMarkdown, get, normalizedValue]);
 
   // Sett knappestatus når editoren er tilgjengelig.
@@ -415,6 +432,9 @@ const RichTextAreaContainer = ({
           {!!bottomToolbar && <div ref={bottomToolbarRef}>{bottomToolbar}</div>}
         </div>
 
+        {maxLength !== undefined && valueLength !== null && (
+          <CharacterCounter id={counterId} count={valueLength} maxLength={maxLength} focusScopeRef={editorWrapperRef} />
+        )}
         {displayedError && <ValidationMessage className={classes.error}>{displayedError}</ValidationMessage>}
       </div>
     </Fieldset>

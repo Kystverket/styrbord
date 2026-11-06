@@ -139,6 +139,23 @@ export const WithError: Story = {
   render: renderInteractive,
 };
 
+export const WithMaxLength: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Med `maxLength` stopper editoren ved grensen, som `TextArea`: skriving stopper, og innliming blir kuttet til det som får plass. En teller under feltet viser hvor mange tegn som er igjen. Grensen gjelder markdown-verdien som sendes til `onChange`, så formatering, lenker og bilder bruker også tegn. Da kan samme grense brukes i API-et og databasen.',
+      },
+    },
+  },
+  args: {
+    ...defaultArgs,
+    maxLength: 200,
+    value: 'Dette er **fet** tekst og en [lenke](https://www.kystverket.no).\n\nAndre avsnitt.',
+  },
+  render: renderInteractive,
+};
+
 export const WithBottomToolbar: Story = {
   parameters: {
     docs: {
