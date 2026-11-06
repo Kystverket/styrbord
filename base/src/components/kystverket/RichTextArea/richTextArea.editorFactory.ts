@@ -1,4 +1,12 @@
-import { Editor, defaultValueCtx, editorViewOptionsCtx, prosePluginsCtx, rootCtx, serializerCtx } from '@milkdown/core';
+import {
+  Editor,
+  defaultValueCtx,
+  editorViewCtx,
+  editorViewOptionsCtx,
+  prosePluginsCtx,
+  rootCtx,
+  serializerCtx,
+} from '@milkdown/core';
 import { imageInlineComponent, inlineImageConfig } from '@milkdown/components/image-inline';
 import type { InlineImageConfig } from '@milkdown/components/image-inline';
 import { history } from '@milkdown/plugin-history';
@@ -82,6 +90,7 @@ export const createRichTextAreaEditor = ({
   return Editor.make()
     .config((ctx) => {
       const measure = createValueLengthMeasure(ctx, toValue);
+      let reportedDoc: ProseNode | null = null;
       ctx.set(rootCtx, root);
       ctx.set(defaultValueCtx, editorMarkdown);
       ctx.update(inlineImageConfig.key, updateInlineImageConfig);
@@ -95,9 +104,18 @@ export const createRichTextAreaEditor = ({
           keydown: createRichTextAreaEditorKeydown(canReachToolbar),
           paste: createRichTextAreaEditorPaste(canUploadImage, dispatchImageFromFile),
           drop: createRichTextAreaEditorDrop(canUploadImage, dispatchImageFromFile),
+          focusout: (view) => {
+            const { doc } = view.state;
+            if (reportedDoc && !reportedDoc.eq(doc)) {
+              reportedDoc = doc;
+              onMarkdownUpdated(ctx, ctx.get(serializerCtx)(doc));
+            }
+            return false;
+          },
         },
       }));
       ctx.get(listenerCtx).markdownUpdated((listenerContext, markdown) => {
+        reportedDoc = listenerContext.get(editorViewCtx).state.doc;
         onMarkdownUpdated(listenerContext, markdown);
       });
       ctx.get(listenerCtx).selectionUpdated((listenerContext) => {
@@ -107,6 +125,7 @@ export const createRichTextAreaEditor = ({
         plugins.concat(
           new Plugin({
             view: (initialView) => {
+              reportedDoc = initialView.state.doc;
               onValueLengthChange(measure(initialView.state.doc));
               return {
                 update: (view, prevState) => {
