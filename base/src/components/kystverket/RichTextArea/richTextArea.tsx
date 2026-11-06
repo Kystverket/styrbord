@@ -74,6 +74,8 @@ const RichTextAreaContainer = ({
   optional = false,
   required = false,
   showToolbar,
+  headings = true,
+  links = true,
   rows,
   maxLength,
   error: externalError,
@@ -190,6 +192,7 @@ const RichTextAreaContainer = ({
         describedBy: `${toolbarHintId} ${counterId}`,
         canReachToolbar: () => Boolean(toolbarRef.current && getToolbarItems(toolbarRef.current).length > 0),
         canUploadImage: Boolean(latestOnUploadRef.current),
+        features: { headings, links },
         dispatchImageFromFile,
         updateInlineImageConfig,
         updateToolbarState,
@@ -219,7 +222,7 @@ const RichTextAreaContainer = ({
         getMaxLength: () => maxLengthRef.current,
         isExternalUpdate: () => isSyncingFromValueRef.current,
       }),
-    [disabled],
+    [disabled, headings, links],
   );
 
   const imageUpload = useRichTextImageUpload({
@@ -383,6 +386,8 @@ const RichTextAreaContainer = ({
               })
             }
             showToolbar={showToolbar}
+            headings={headings}
+            links={links}
             onOrderedList={() =>
               toggleList({
                 isTargetListActive: toolbarState.isOrderedListActive,
@@ -413,15 +418,17 @@ const RichTextAreaContainer = ({
               <Milkdown />
             </div>
           </div>
-          <LinkEditor
-            open={linkEditorOpen}
-            anchorId={linkEditorAnchorId}
-            href={linkEditorState?.href ?? ''}
-            hasSelection={linkEditorState?.hasSelection ?? false}
-            onSave={handleLinkSave}
-            onRemove={handleLinkRemove}
-            onClose={closeLinkEditor}
-          />
+          {links && (
+            <LinkEditor
+              open={linkEditorOpen}
+              anchorId={linkEditorAnchorId}
+              href={linkEditorState?.href ?? ''}
+              hasSelection={linkEditorState?.hasSelection ?? false}
+              onSave={handleLinkSave}
+              onRemove={handleLinkRemove}
+              onClose={closeLinkEditor}
+            />
+          )}
           {!!bottomToolbar && <div ref={bottomToolbarRef}>{bottomToolbar}</div>}
         </div>
 
