@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.11.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.10.0...styrbord-v2.11.0) (2026-11-09)
+
+
+### Features
+
+* **base:** Header-avatar tar alle Avatar-props og seedes fra profile.id ([#382](https://github.com/Kystverket/styrbord/issues/382)) ([737f06d](https://github.com/Kystverket/styrbord/commit/737f06d4a42caabf25d3a315b44ea3b7cbae8997))
+
 ## [2.10.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.9.1...styrbord-v2.10.0) (2026-11-09)
 
 
