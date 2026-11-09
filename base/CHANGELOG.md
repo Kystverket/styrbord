@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.9.1](https://github.com/Kystverket/styrbord/compare/styrbord-v2.9.0...styrbord-v2.9.1) (2026-11-09)
+
+
+### Bug Fixes
+
+* **base:** MarkdownToReact-lenker arver farge i stedet for accent ([#378](https://github.com/Kystverket/styrbord/issues/378)) ([e4d3ceb](https://github.com/Kystverket/styrbord/commit/e4d3ceb1fda1d9caeedb5f2fa34111bb66996031))
+* Footer now properly selects the class instead of all selects ([#376](https://github.com/Kystverket/styrbord/issues/376)) ([055bf44](https://github.com/Kystverket/styrbord/commit/055bf44459fa31bfab04721e4a581208db3302cb))
+
 ## [2.9.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.8.1...styrbord-v2.9.0) (2026-11-05)
 
 
