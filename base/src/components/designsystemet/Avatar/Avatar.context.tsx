@@ -10,15 +10,14 @@ export type AvatarProviderProps = {
    */
   auto?: AvatarAuto;
   /**
-   * A seed, typically the logged-in user's id, that gets a generated color no other seed inside
-   * gets: a fixed color with `auto="solid"`, and the only pattern that uses that color otherwise.
-   * Matched against each avatar's `auto-seed`, or its `aria-label` when it has none.
+   * A seed, typically the logged-in user's id, that gets a `solid` color no other seed inside
+   * gets. Matched against each avatar's `auto-seed`, or its `aria-label` when it has none.
+   * Generated patterns ignore it.
    */
   'auto-reserved-seed'?: string;
   /**
-   * Which palette color `auto-reserved-seed` gets. Any integer works: it wraps around each
-   * palette's length, and `solid` and the patterns have separate palettes, so the same index
-   * can give a different color in each.
+   * Which `solid` palette color `auto-reserved-seed` gets. Any integer works: it wraps around
+   * the palette's length, so -1 is the last color.
    * @default 0
    */
   'auto-reserved-index'?: number;

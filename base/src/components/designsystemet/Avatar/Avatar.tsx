@@ -5,7 +5,7 @@ import classes from './Avatar.module.scss';
 import {
   autoSolidStyles,
   borderStyleClasses,
-  boringColorsFor,
+  boringColors,
   sizeClasses,
   determineAutoMode,
   matchReservedSeed,
@@ -100,13 +100,7 @@ export const Avatar: FC<AvatarProps> = ({
   let content = null;
 
   const boringAvatar = isBoring ? (
-    <BoringAvatar
-      variant={autoMode}
-      name={seedAutoFrom ?? ''}
-      colors={boringColorsFor(isReserved, context.reservedIndex)}
-      size="100%"
-      square
-    />
+    <BoringAvatar variant={autoMode} name={seedAutoFrom ?? ''} colors={boringColors} size="100%" square />
   ) : null;
 
   if (isBoring && children) {

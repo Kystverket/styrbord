@@ -45,13 +45,6 @@ export const matchReservedSeed = (seed: string | undefined, reservedSeed: string
 };
 
 /**
- * The palette for a generated pattern. With a reservation, only the reserved seed may use the
- * color at `reservedIndex`.
- */
-export const boringColorsFor = (isReserved: boolean | undefined, reservedIndex = 0) =>
-  isReserved === false ? withoutIndex(boringColors, wrapIndex(reservedIndex, boringColors.length)) : boringColors;
-
-/**
  * Picks an item deterministically from a name, so the same person always gets the same one.
  * The name is normalized first, so casing, surrounding whitespace and Unicode form don't matter.
  */
