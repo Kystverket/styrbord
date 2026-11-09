@@ -25,11 +25,31 @@ const colorBaseOptions = [
 ];
 
 /**
+ * Wraps a reserved-color index onto a palette, so any integer (also negative) is valid.
+ * A non-finite index counts as 0.
+ */
+const wrapIndex = (index: number, length: number) =>
+  Number.isFinite(index) ? ((Math.trunc(index) % length) + length) % length : 0;
+
+const withoutIndex = <T>(options: readonly T[], index: number) => options.filter((_, i) => i !== index);
+
+/** Casing, surrounding whitespace and Unicode form don't make two seeds different. */
+const normalizeSeed = (seed: string) => seed.normalize('NFC').trim().toLowerCase();
+
+/**
+ * `undefined` when there is no reservation, otherwise whether `seed` is the reserved one.
+ */
+export const matchReservedSeed = (seed: string | undefined, reservedSeed: string | undefined) => {
+  if (!reservedSeed?.trim()) return undefined;
+  return !!seed && normalizeSeed(seed) === normalizeSeed(reservedSeed);
+};
+
+/**
  * Picks an item deterministically from a name, so the same person always gets the same one.
  * The name is normalized first, so casing, surrounding whitespace and Unicode form don't matter.
  */
 function pickByName<T>(name: string, options: readonly T[]): T {
-  const normalized = name.normalize('NFC').trim().toLowerCase();
+  const normalized = normalizeSeed(name);
   let hash = 0;
 
   // hash * 31 + char, truncated to 32 bits
@@ -50,10 +70,21 @@ export const borderStyleClasses = (borderStyle: string | undefined) => {
   }
 };
 
-export const autoSolidStyles = (ariaLabel?: string) => {
+/**
+ * @param isReserved From `matchReservedSeed`: `true` gets the reserved color, `false` never does,
+ * `undefined` (no reservation) picks from the full palette.
+ * @param reservedIndex Which palette color is reserved, wrapped to the palette's length.
+ */
+export const autoSolidStyles = (ariaLabel?: string, isReserved?: boolean, reservedIndex = 0) => {
   const styles: Record<string, string> = {};
   if (ariaLabel) {
-    styles['--ds-color-base-default'] = pickByName(ariaLabel, colorBaseOptions);
+    const reserved = wrapIndex(reservedIndex, colorBaseOptions.length);
+    let color = isReserved ? colorBaseOptions[reserved] : pickByName(ariaLabel, colorBaseOptions);
+    // Re-pick only on a collision, so a reservation leaves every other seed's color as it was
+    if (isReserved === false && color === colorBaseOptions[reserved]) {
+      color = pickByName(ariaLabel, withoutIndex(colorBaseOptions, reserved));
+    }
+    styles['--ds-color-base-default'] = color;
     styles['--ds-color-base-contrast-default'] = 'white';
   } else {
     styles['--ds-color-base-default'] = colors.light.neutral.surfaceTinted;

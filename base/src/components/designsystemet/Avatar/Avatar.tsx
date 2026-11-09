@@ -2,7 +2,14 @@ import { FC, useContext } from 'react';
 import { Avatar as DsAvatar, AvatarProps as DsAvatarProps, MergeRight, Tooltip } from '@digdir/designsystemet-react';
 import BoringAvatar from 'boring-avatars';
 import classes from './Avatar.module.scss';
-import { autoSolidStyles, borderStyleClasses, boringColors, sizeClasses, determineAutoMode } from './Avatar.helpers';
+import {
+  autoSolidStyles,
+  borderStyleClasses,
+  boringColors,
+  sizeClasses,
+  determineAutoMode,
+  matchReservedSeed,
+} from './Avatar.helpers';
 import { AvatarContext } from './Avatar.context';
 import { DataColor, DataColorVariant } from '~/main';
 
@@ -31,6 +38,7 @@ type AriaHidden = Partial<AriaLabel> & {
 export type AvatarProps = MergeRight<
   DsAvatarProps,
   (AriaLabel | AriaHidden) & {
+    'auto-seed'?: string;
     'data-color'?: DataColor;
     'data-color-variant'?: DataColorVariant;
     'data-size'?: '2xs' | '3xs' | DsAvatarProps['data-size'];
@@ -62,12 +70,16 @@ export const Avatar: FC<AvatarProps> = ({
   checked,
   auto,
   children,
+  'auto-seed': autoSeed,
   ...rest
 }) => {
   const classList = [className, sizeClasses(size), borderStyleClasses(borderStyle)];
+  // An empty or blank seed (e.g. a missing id) falls back to the label rather than seeding every such avatar alike
+  const seedAutoFrom = autoSeed?.trim() ? autoSeed : rest['aria-label'];
 
   const context = useContext(AvatarContext);
-  const autoMode = determineAutoMode(auto ?? context.auto, rest['aria-label']);
+  const autoMode = determineAutoMode(auto ?? context.auto, seedAutoFrom);
+  const isReserved = matchReservedSeed(seedAutoFrom, context.reservedSeed);
   const isBoring = autoMode !== undefined && autoMode !== 'solid';
 
   if (isBoring) {
@@ -77,7 +89,7 @@ export const Avatar: FC<AvatarProps> = ({
   const wrapperClass = [classes.wrapper, checked ? classes.checked : undefined].filter(Boolean).join(' ');
   // A data-color on the avatar itself sets --ds-color-base-default, so it wins over the solid colors
   const solidStyles: Record<string, string> =
-    autoMode === 'solid' && !rest['data-color'] ? autoSolidStyles(rest['aria-label']) : {};
+    autoMode === 'solid' && !rest['data-color'] ? autoSolidStyles(seedAutoFrom, isReserved, context.reservedIndex) : {};
 
   const props = {
     'data-size': size,
@@ -88,7 +100,7 @@ export const Avatar: FC<AvatarProps> = ({
   let content = null;
 
   const boringAvatar = isBoring ? (
-    <BoringAvatar variant={autoMode} name={rest['aria-label'] ?? ''} colors={boringColors} size="100%" square />
+    <BoringAvatar variant={autoMode} name={seedAutoFrom ?? ''} colors={boringColors} size="100%" square />
   ) : null;
 
   if (isBoring && children) {
