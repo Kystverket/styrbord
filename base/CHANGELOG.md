@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.10.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.9.1...styrbord-v2.10.0) (2026-11-09)
+
+
+### Features
+
+* **base:** auto-seed på Avatar og auto-reserved-seed på AvatarProvider ([#380](https://github.com/Kystverket/styrbord/issues/380)) ([1a36af0](https://github.com/Kystverket/styrbord/commit/1a36af0ef74b34267ea69e2c8e2124428251a39c))
+
 ## [2.9.1](https://github.com/Kystverket/styrbord/compare/styrbord-v2.9.0...styrbord-v2.9.1) (2026-11-09)
 
 
