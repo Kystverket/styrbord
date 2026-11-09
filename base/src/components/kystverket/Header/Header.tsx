@@ -50,13 +50,23 @@ export interface HeaderProps {
 }
 
 type HeaderProfile = {
+  /**
+   * A stable id for the user. Seeds the avatar's generated color or pattern, and is what an
+   * `AvatarProvider`'s `auto-reserved-seed` should be set to. Falls back to `name`.
+   */
+  id?: string;
   name: string;
   department?: string;
   /**
    * URL of a profile picture. Falls back to initials when unset or when the image fails to load.
    */
   image?: string;
-  avatarStyle?: Pick<AvatarProps, 'data-color' | 'data-color-variant' | 'border-style'>;
+  /**
+   * Props for the profile avatar. Every `Avatar` prop is accepted except those the header sets
+   * itself, so new `Avatar` props reach the header without changes here.
+   * Without it, the avatar is `data-color="success"` unless an `AvatarProvider` sets `auto`.
+   */
+  avatarStyle?: Omit<AvatarProps, 'aria-label' | 'aria-hidden' | 'initials' | 'children' | 'data-size'>;
 };
 
 export const nameToInitials = (name?: string): string => {

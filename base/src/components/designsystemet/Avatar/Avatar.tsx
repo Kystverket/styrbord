@@ -38,6 +38,11 @@ type AriaHidden = Partial<AriaLabel> & {
 export type AvatarProps = MergeRight<
   DsAvatarProps,
   (AriaLabel | AriaHidden) & {
+    /**
+     * What `auto` seeds the generated color or pattern from, typically a user id. Use it when two
+     * people can share a name, or when `aria-label` holds more than the name. Falls back to
+     * `aria-label` when unset or blank.
+     */
     'auto-seed'?: string;
     'data-color'?: DataColor;
     'data-color-variant'?: DataColorVariant;
@@ -53,7 +58,7 @@ export type AvatarProps = MergeRight<
     checked?: boolean;
     /**
      * Renders a generated [boring avatar](https://boringavatars.com) in Kystverket's colors,
-     * seeded from `aria-label`. Ignored when `children` is set.
+     * seeded from `auto-seed`, or `aria-label` when that is unset. Ignored when `children` is set.
      *
      * Defaults to the `auto` of the nearest `AvatarProvider`. Set to `false` to opt this avatar
      * out of a provider's default and render it without generated colors.
