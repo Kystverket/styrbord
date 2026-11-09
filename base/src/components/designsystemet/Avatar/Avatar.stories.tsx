@@ -281,6 +281,101 @@ export const WithProvider: Story = () => (
   </AvatarProvider>
 );
 
+const seededUsers = [
+  { id: 'a3f1c9e2', name: 'Ola Nordmann' },
+  { id: '7b20d4aa', name: 'Ola Nordmann' },
+  { id: 'e91c03f5', name: 'Kari Nordmann' },
+];
+
+/**
+ * `auto-seed` decouples the generated pattern from `aria-label`. Seed from something stable,
+ * like a user id, so two people with the same name look different and a person keeps their
+ * pattern when the label changes.
+ */
+export const AutoSeed: Story = () => (
+  <Surface gap={4}>
+    <Surface horizontal align="center" gap={2}>
+      <Avatar auto="beam" aria-label="Ola Nordmann" tooltip="Ola Nordmann" />
+      <Avatar auto="beam" aria-label="Ola Nordmann" tooltip="Ola Nordmann" />
+      same name, no seed: identical
+    </Surface>
+    <Surface horizontal align="center" gap={2}>
+      {seededUsers.slice(0, 2).map((user) => (
+        <Avatar key={user.id} auto="beam" auto-seed={user.id} aria-label={user.name} tooltip={user.id} />
+      ))}
+      same name, seeded by id: distinct
+    </Surface>
+    <Surface horizontal align="center" gap={2}>
+      <Avatar auto="beam" auto-seed="a3f1c9e2" aria-label="Ola Nordmann" tooltip="Ola Nordmann" />
+      <Avatar auto="beam" auto-seed="a3f1c9e2" aria-label="Ola Nordmann (deg)" tooltip="Ola Nordmann (deg)" />
+      <Avatar auto="solid" auto-seed="a3f1c9e2" aria-label="Ola Nordmann" tooltip="solid" />
+      <Avatar auto="solid" auto-seed="a3f1c9e2" aria-label="Ola Nordmann (deg)" tooltip="solid (deg)" />
+      same seed, different labels: stable
+    </Surface>
+    {(['beam', 'solid'] as const).map((variant) => (
+      <Surface key={variant} horizontal align="center" gap={2}>
+        <Avatar auto={variant} aria-label="Ola Nordmann" tooltip="no seed" />
+        <Avatar auto={variant} auto-seed="" aria-label="Ola Nordmann" tooltip='auto-seed=""' />
+        <Avatar auto={variant} auto-seed="   " aria-label="Ola Nordmann" tooltip='auto-seed="   "' />
+        <Avatar auto={variant} auto-seed="   " aria-label="Kari Nordmann" tooltip='auto-seed="   "' />
+        {variant}: empty or blank seed falls back to aria-label
+      </Surface>
+    ))}
+  </Surface>
+);
+
+/**
+ * Decorative avatars next to a visible name are `aria-hidden` and have no `aria-label` to seed
+ * from. With an `AvatarProvider` setting `auto`, `auto-seed` is all each avatar needs.
+ */
+export const AutoSeedWithProvider: Story = () => (
+  <AvatarProvider auto="marble">
+    <Surface gap={2}>
+      {seededUsers.map((user) => (
+        <Surface key={user.id} horizontal align="center" gap={2}>
+          <Avatar aria-hidden auto-seed={user.id} data-size="sm" />
+          {user.name}
+        </Surface>
+      ))}
+      <Surface horizontal align="center" gap={2}>
+        <Avatar aria-hidden data-size="sm" />
+        Uten seed (faller tilbake til solid)
+      </Surface>
+    </Surface>
+  </AvatarProvider>
+);
+
+const loggedInUser = seededUsers[0];
+const otherUsers = [...seededUsers.slice(1), ...boringNames.map((name) => ({ id: name, name }))];
+
+/**
+ * `auto-reserved-seed` on the provider gives one seed, typically the logged-in user, a color no
+ * other avatar inside gets. With `solid` it is a fixed color; with a pattern it is the only one
+ * using that color. Other avatars only change if they would have landed on the reserved color.
+ */
+export const AutoReservedSeed: Story = () => (
+  <Surface gap={4}>
+    {(['solid', 'marble'] as const).map((variant) =>
+      [undefined, loggedInUser.id].map((reservedSeed) => (
+        <AvatarProvider key={`${variant}-${reservedSeed}`} auto={variant} auto-reserved-seed={reservedSeed}>
+          <Surface horizontal align="center" gap={2}>
+            <Avatar
+              auto-seed={loggedInUser.id}
+              aria-label={loggedInUser.name}
+              tooltip={`${loggedInUser.name} (deg)`}
+              border-style="solid"
+            />
+            {otherUsers.map((user) => (
+              <Avatar key={user.id} auto-seed={user.id} aria-label={user.name} tooltip={user.name} />
+            ))}
+            {variant}, {reservedSeed ? 'reserved for the first avatar' : 'no reservation'}
+          </Surface>
+        </AvatarProvider>
+      )),
+    )}
+  </Surface>
+);
+
 export const AsLink: Story = () => (
   <a href="#">
     <Avatar aria-label="Ola Nordmann" />
