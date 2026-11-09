@@ -25,13 +25,13 @@ const colorBaseOptions = [
 ];
 
 /**
- * The color held back for an `AvatarProvider`'s `auto-reserved-seed`: that seed always gets it,
- * and no other seed does. It is in both palettes above.
+ * Wraps a reserved-color index onto a palette, so any integer (also negative) is valid.
+ * A non-finite index counts as 0.
  */
-export const reservedColor = colors.light.hav.baseDefault;
+const wrapIndex = (index: number, length: number) =>
+  Number.isFinite(index) ? ((Math.trunc(index) % length) + length) % length : 0;
 
-const boringColorsWithoutReserved = boringColors.filter((color) => color !== reservedColor);
-const colorBaseOptionsWithoutReserved = colorBaseOptions.filter((color) => color !== reservedColor);
+const withoutIndex = <T>(options: readonly T[], index: number) => options.filter((_, i) => i !== index);
 
 /** Casing, surrounding whitespace and Unicode form don't make two seeds different. */
 const normalizeSeed = (seed: string) => seed.normalize('NFC').trim().toLowerCase();
@@ -46,10 +46,10 @@ export const matchReservedSeed = (seed: string | undefined, reservedSeed: string
 
 /**
  * The palette for a generated pattern. With a reservation, only the reserved seed may use the
- * reserved color.
+ * color at `reservedIndex`.
  */
-export const boringColorsFor = (isReserved: boolean | undefined) =>
-  isReserved === false ? boringColorsWithoutReserved : boringColors;
+export const boringColorsFor = (isReserved: boolean | undefined, reservedIndex = 0) =>
+  isReserved === false ? withoutIndex(boringColors, wrapIndex(reservedIndex, boringColors.length)) : boringColors;
 
 /**
  * Picks an item deterministically from a name, so the same person always gets the same one.
@@ -80,14 +80,16 @@ export const borderStyleClasses = (borderStyle: string | undefined) => {
 /**
  * @param isReserved From `matchReservedSeed`: `true` gets the reserved color, `false` never does,
  * `undefined` (no reservation) picks from the full palette.
+ * @param reservedIndex Which palette color is reserved, wrapped to the palette's length.
  */
-export const autoSolidStyles = (ariaLabel?: string, isReserved?: boolean) => {
+export const autoSolidStyles = (ariaLabel?: string, isReserved?: boolean, reservedIndex = 0) => {
   const styles: Record<string, string> = {};
   if (ariaLabel) {
-    let color = isReserved ? reservedColor : pickByName(ariaLabel, colorBaseOptions);
+    const reserved = wrapIndex(reservedIndex, colorBaseOptions.length);
+    let color = isReserved ? colorBaseOptions[reserved] : pickByName(ariaLabel, colorBaseOptions);
     // Re-pick only on a collision, so a reservation leaves every other seed's color as it was
-    if (isReserved === false && color === reservedColor) {
-      color = pickByName(ariaLabel, colorBaseOptionsWithoutReserved);
+    if (isReserved === false && color === colorBaseOptions[reserved]) {
+      color = pickByName(ariaLabel, withoutIndex(colorBaseOptions, reserved));
     }
     styles['--ds-color-base-default'] = color;
     styles['--ds-color-base-contrast-default'] = 'white';

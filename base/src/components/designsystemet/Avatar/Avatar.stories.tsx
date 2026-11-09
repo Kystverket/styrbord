@@ -352,12 +352,25 @@ const otherUsers = [...seededUsers.slice(1), ...boringNames.map((name) => ({ id:
  * `auto-reserved-seed` on the provider gives one seed, typically the logged-in user, a color no
  * other avatar inside gets. With `solid` it is a fixed color; with a pattern it is the only one
  * using that color. Other avatars only change if they would have landed on the reserved color.
+ * `auto-reserved-index` picks which palette color is reserved; it wraps around the palette.
  */
+const reservations: { seed?: string; index?: number; label: string }[] = [
+  { label: 'no reservation' },
+  { seed: loggedInUser.id, label: 'reserved, default index (0)' },
+  { seed: loggedInUser.id, index: 2, label: 'reserved, index 2' },
+  { seed: loggedInUser.id, index: -1, label: 'reserved, index -1 (last color)' },
+];
+
 export const AutoReservedSeed: Story = () => (
   <Surface gap={4}>
     {(['solid', 'marble'] as const).map((variant) =>
-      [undefined, loggedInUser.id].map((reservedSeed) => (
-        <AvatarProvider key={`${variant}-${reservedSeed}`} auto={variant} auto-reserved-seed={reservedSeed}>
+      reservations.map((reservation) => (
+        <AvatarProvider
+          key={`${variant}-${reservation.label}`}
+          auto={variant}
+          auto-reserved-seed={reservation.seed}
+          auto-reserved-index={reservation.index}
+        >
           <Surface horizontal align="center" gap={2}>
             <Avatar
               auto-seed={loggedInUser.id}
@@ -368,7 +381,7 @@ export const AutoReservedSeed: Story = () => (
             {otherUsers.map((user) => (
               <Avatar key={user.id} auto-seed={user.id} aria-label={user.name} tooltip={user.name} />
             ))}
-            {variant}, {reservedSeed ? 'reserved for the first avatar' : 'no reservation'}
+            {variant}, {reservation.label}
           </Surface>
         </AvatarProvider>
       )),

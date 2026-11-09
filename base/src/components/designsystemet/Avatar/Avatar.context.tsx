@@ -1,7 +1,7 @@
 import { createContext, ReactNode } from 'react';
 import type { AvatarAuto } from './Avatar';
 
-export const AvatarContext = createContext<{ auto?: AvatarAuto; reservedSeed?: string }>({});
+export const AvatarContext = createContext<{ auto?: AvatarAuto; reservedSeed?: string; reservedIndex?: number }>({});
 
 export type AvatarProviderProps = {
   /**
@@ -15,9 +15,21 @@ export type AvatarProviderProps = {
    * Matched against each avatar's `auto-seed`, or its `aria-label` when it has none.
    */
   'auto-reserved-seed'?: string;
+  /**
+   * Which palette color `auto-reserved-seed` gets. Any integer works: it wraps around each
+   * palette's length, and `solid` and the patterns have separate palettes, so the same index
+   * can give a different color in each.
+   * @default 0
+   */
+  'auto-reserved-index'?: number;
   children: ReactNode;
 };
 
-export const AvatarProvider = ({ auto, 'auto-reserved-seed': reservedSeed, children }: AvatarProviderProps) => (
-  <AvatarContext.Provider value={{ auto, reservedSeed }}>{children}</AvatarContext.Provider>
+export const AvatarProvider = ({
+  auto,
+  'auto-reserved-seed': reservedSeed,
+  'auto-reserved-index': reservedIndex,
+  children,
+}: AvatarProviderProps) => (
+  <AvatarContext.Provider value={{ auto, reservedSeed, reservedIndex }}>{children}</AvatarContext.Provider>
 );

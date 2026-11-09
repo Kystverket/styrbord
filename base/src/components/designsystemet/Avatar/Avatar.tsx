@@ -89,7 +89,7 @@ export const Avatar: FC<AvatarProps> = ({
   const wrapperClass = [classes.wrapper, checked ? classes.checked : undefined].filter(Boolean).join(' ');
   // A data-color on the avatar itself sets --ds-color-base-default, so it wins over the solid colors
   const solidStyles: Record<string, string> =
-    autoMode === 'solid' && !rest['data-color'] ? autoSolidStyles(seedAutoFrom, isReserved) : {};
+    autoMode === 'solid' && !rest['data-color'] ? autoSolidStyles(seedAutoFrom, isReserved, context.reservedIndex) : {};
 
   const props = {
     'data-size': size,
@@ -103,7 +103,7 @@ export const Avatar: FC<AvatarProps> = ({
     <BoringAvatar
       variant={autoMode}
       name={seedAutoFrom ?? ''}
-      colors={boringColorsFor(isReserved)}
+      colors={boringColorsFor(isReserved, context.reservedIndex)}
       size="100%"
       square
     />
