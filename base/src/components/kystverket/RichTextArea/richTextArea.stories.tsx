@@ -121,8 +121,8 @@ export const WithoutHeadingsAndLinks: Story = {
     ...defaultArgs,
     label: 'Rikt tekstfelt uten overskrifter og lenker',
     description: 'Overskrifter i verdien lastes som avsnitt, og lenker som teksten sin.',
-    showHeadingSelect: false,
-    showLinkButton: false,
+    allowHeading: false,
+    allowLink: false,
     value: `## Overskrift
 
 Les mer på [Kystverkets nettsider](https://www.kystverket.no).`,

@@ -20,9 +20,9 @@ export type RichTextAreaProps = {
   /** Optional upload handler that returns a display src and optional stable image ref. */
   showToolbar?: boolean;
   /** Allow headings. When false, the format menu is hidden and headings in the value load as paragraphs. Defaults to true. */
-  showHeadingSelect?: boolean;
+  allowHeading?: boolean;
   /** Allow links. When false, the link button is hidden and links in the value load as their text. Defaults to true. */
-  showLinkButton?: boolean;
+  allowLink?: boolean;
   onImageUpload?: OnImageUploadFn;
   /** Optional remove handler for deleting persisted images by stable ref. */
   onImageRemove?: (ref: string) => Promise<void>;

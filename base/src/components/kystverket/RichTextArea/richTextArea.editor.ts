@@ -23,7 +23,7 @@ export const richTextCommonmarkPlugins = commonmark.filter((plugin) => {
   return !blockedCommonmarkGroups.has(group);
 });
 
-export type RichTextFeatures = { headings: boolean; links: boolean };
+export type RichTextFeatures = { allowHeading: boolean; allowLink: boolean };
 
 type MarkdownNode = { type: string; children?: MarkdownNode[] };
 
@@ -36,10 +36,10 @@ const flattenDisabledNodes = (node: MarkdownNode, features: RichTextFeatures) =>
 
   node.children = node.children.flatMap((child): MarkdownNode[] => {
     flattenDisabledNodes(child, features);
-    if (!features.headings && child.type === 'heading') {
+    if (!features.allowHeading && child.type === 'heading') {
       return [{ type: 'paragraph', children: child.children ?? [] }];
     }
-    if (!features.links && child.type === 'link') {
+    if (!features.allowLink && child.type === 'link') {
       return child.children ?? [];
     }
     return [child];
@@ -47,14 +47,14 @@ const flattenDisabledNodes = (node: MarkdownNode, features: RichTextFeatures) =>
 };
 
 export const createRichTextCommonmarkPlugins = (features: RichTextFeatures) => {
-  if (features.headings && features.links) {
+  if (features.allowHeading && features.allowLink) {
     return richTextCommonmarkPlugins;
   }
 
-  const disabledGroups = [!features.headings && 'Heading', !features.links && 'Link'];
+  const disabledGroups = [!features.allowHeading && 'Heading', !features.allowLink && 'Link'];
   // Outside the Heading group, but it reads the heading id context and fails without it.
   const isDisabled = (plugin: MilkdownPlugin) =>
-    disabledGroups.includes(plugin.meta?.group ?? '') || (!features.headings && plugin === syncHeadingIdPlugin);
+    disabledGroups.includes(plugin.meta?.group ?? '') || (!features.allowHeading && plugin === syncHeadingIdPlugin);
   const flattenPlugin = $remark(
     'richTextFlattenDisabledNodes',
     () => () => (tree: MarkdownNode) => flattenDisabledNodes(tree, features),

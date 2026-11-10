@@ -26,8 +26,8 @@ type ToolbarProps = {
   linkPopoverTarget?: string;
   canUploadImage?: boolean;
   showToolbar?: boolean;
-  showHeadingSelect?: boolean;
-  showLinkButton?: boolean;
+  allowHeading?: boolean;
+  allowLink?: boolean;
 
   onBold: () => void;
   onItalic: () => void;
@@ -187,8 +187,8 @@ export const Toolbar = ({
   onLink,
   onImageUpload,
   showToolbar = true,
-  showHeadingSelect = true,
-  showLinkButton = true,
+  allowHeading = true,
+  allowLink = true,
 }: ToolbarProps) => {
   if (!showToolbar) return;
 
@@ -202,7 +202,7 @@ export const Toolbar = ({
         disabled={disabled}
         onClick={onItalic}
       />
-      {showHeadingSelect && (
+      {allowHeading && (
         <FormatSelectButton disabled={disabled} selectedFormat={selectedFormat} onFormatChange={onFormatChange} />
       )}
       <div className={styles.divider} aria-hidden />
@@ -220,7 +220,7 @@ export const Toolbar = ({
         disabled={disabled}
         onClick={onOrderedList}
       />
-      {showLinkButton && (
+      {allowLink && (
         <ToolbarButton
           label="Link"
           icon="link"
@@ -235,7 +235,7 @@ export const Toolbar = ({
         <ToolbarButton label="Upload image" icon="image" disabled={disabled} onClick={onImageUpload || (() => {})} />
       )}
       <div className={styles.divider} aria-hidden />
-      {showHeadingSelect && (
+      {allowHeading && (
         <FormatSelect disabled={disabled} selectedFormat={selectedFormat} onFormatChange={onFormatChange} />
       )}
       <div className={styles.undoRedoGroup}>
