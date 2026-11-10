@@ -46,24 +46,61 @@ export interface CustomLayersProviderProps {
   children: ReactNode;
   /** Layers to register on mount. More can be added dynamically via `addLayer`. */
   initialLayers?: LayerDefinition[];
+  /**
+   * Controlled list of layers. When set, this list replaces `initialLayers`,
+   * `addLayer` and `removeLayer`: the map shows exactly these layers and
+   * follows changes to the array, including new GeoJSON `data` for an
+   * existing id. Visibility is still managed by the provider — a new id
+   * starts from its `defaultVisible`, and an id that stays keeps whatever the
+   * user toggled it to.
+   *
+   * Pass a memoised array; a new array every render re-checks every layer.
+   */
+  layers?: LayerDefinition[];
+}
+
+function defaultVisibleIds(defs: LayerDefinition[]): Set<string> {
+  return new Set(
+    defs.filter((l) => l.defaultVisible !== false).map((l) => l.id),
+  );
 }
 
 export const CustomLayersProvider = ({
   children,
   initialLayers,
+  layers: controlledLayers,
 }: CustomLayersProviderProps) => {
-  const [layers, setLayers] = React.useState<LayerDefinition[]>(
+  const [uncontrolledLayers, setLayers] = React.useState<LayerDefinition[]>(
     () => initialLayers ?? [],
   );
+  const layers = controlledLayers ?? uncontrolledLayers;
 
   const [visibleLayerIds, setVisibleLayerIds] = React.useState<Set<string>>(
-    () =>
-      new Set(
-        (initialLayers ?? [])
-          .filter((l) => l.defaultVisible !== false)
-          .map((l) => l.id),
-      ),
+    () => defaultVisibleIds(controlledLayers ?? initialLayers ?? []),
   );
+
+  // Controlled mode: give new ids their default visibility and forget
+  // removed ones. Ids present before and after keep the user's choice.
+  const knownIdsRef = React.useRef<Set<string>>(
+    new Set((controlledLayers ?? []).map((l) => l.id)),
+  );
+  React.useEffect(() => {
+    if (!controlledLayers) return;
+    const known = knownIdsRef.current;
+    const currentIds = new Set(controlledLayers.map((l) => l.id));
+    const added = controlledLayers.filter((l) => !known.has(l.id));
+    const removed = [...known].filter((id) => !currentIds.has(id));
+    knownIdsRef.current = currentIds;
+    if (added.length === 0 && removed.length === 0) return;
+    setVisibleLayerIds((prev) => {
+      const next = new Set(prev);
+      for (const id of removed) next.delete(id);
+      for (const def of added) {
+        if (def.defaultVisible !== false) next.add(def.id);
+      }
+      return next;
+    });
+  }, [controlledLayers]);
 
   const addLayer = useCallback((def: LayerDefinition) => {
     setLayers((prev) => {

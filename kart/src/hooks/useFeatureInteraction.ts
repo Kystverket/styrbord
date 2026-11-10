@@ -88,11 +88,16 @@ export function useFeatureInteraction({
    */
   const getFeatureId = useCallback(
     (feature: InteractiveFeature): string | number => {
-      if (feature.id !== undefined) return feature.id;
       // Fallback: use stringified properties as ID (not ideal but works)
-      return JSON.stringify(feature.properties);
+      const id = feature.id ?? JSON.stringify(feature.properties);
+      // Features from different sources can share an id; qualify it with the
+      // source so hovering from one layer to another registers as a change.
+      const source = (feature as { source?: unknown }).source;
+      return typeof source === "string" && source !== sourceId
+        ? `${source}:${id}`
+        : id;
     },
-    [],
+    [sourceId],
   );
 
   /**

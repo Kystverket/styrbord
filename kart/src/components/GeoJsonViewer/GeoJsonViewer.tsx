@@ -1,6 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState, useCallback, useRef } from "react";
+import {
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  useCallback,
+  useRef,
+} from "react";
 import type { GeoJSONSource } from "maplibre-gl";
 import type * as maplibregl from "maplibre-gl";
 import type {
@@ -14,6 +21,8 @@ import styles from "~/components/shared/MapPicker.module.css";
 import type { GeoJsonStyle, GeoJsonViewerProps } from "./GeoJsonViewer.types";
 import { computeBounds } from "~/utility/geojson";
 import { useMaplibreMap } from "~/hooks/useMaplibreMap";
+import { CustomLayersContext } from "~/utility/customLayersContext";
+import type { LayerDefinition } from "~/utility/layers.types";
 import {
   useFeatureInteraction,
   type InteractiveFeature,
@@ -30,6 +39,8 @@ import {
   SOURCE_ID,
   INTERACTIVE_LAYERS,
   LABEL_LAYER,
+  ALL_LAYERS,
+  HIGHLIGHT_LAYERS,
   removeLayers,
   toFeatureCollection,
   addHighlightLayers,
@@ -38,6 +49,7 @@ import {
   addStyledLayers,
 } from "./GeoJsonViewer.utils";
 import { LayerToggle } from "../LayerToggle/LayerToggle";
+import type { LayerToggleExtraLayer } from "../LayerToggle/LayerToggle.types";
 import { GeoJsonViewerHoverPopup } from "./GeoJsonViewerHoverPopup";
 import { GeoJsonViewerFitBoundsControl } from "./GeoJsonViewerFitBoundsControl";
 import { MapCenterAction } from "../shared/MapCenterAction";
@@ -47,6 +59,40 @@ import { MapCenterAction } from "../shared/MapCenterAction";
 // ---------------------------------------------------------------------------
 
 const LABEL_SOURCE = "geojson-viewer-labels";
+
+const EMPTY_FC: FeatureCollection = { type: "FeatureCollection", features: [] };
+
+/**
+ * `fc` plus the features of every given custom layer whose GeoJSON source
+ * holds inline data. Sources given as a URL are skipped — their extent is
+ * unknown until MapLibre loads them.
+ */
+function visibleFeatures(
+  fc: FeatureCollection,
+  layers: LayerDefinition[],
+): FeatureCollection {
+  const extra: Feature[] = [];
+  for (const layer of layers) {
+    for (const source of Object.values(layer.sources)) {
+      if (source.type !== "geojson" || typeof source.data !== "object") {
+        continue;
+      }
+      const sourceData = source.data as GeoJSON.GeoJSON;
+      if (sourceData.type === "FeatureCollection") {
+        extra.push(...sourceData.features);
+      } else if (sourceData.type === "Feature") {
+        extra.push(sourceData);
+      }
+    }
+  }
+  if (extra.length === 0) return fc;
+  return { ...fc, features: [...fc.features, ...extra] };
+}
+
+/** Whether a hovered/clicked feature belongs to the viewer's own `data`. */
+function isViewerFeature(feature: InteractiveFeature): boolean {
+  return (feature as { source?: unknown }).source === SOURCE_ID;
+}
 
 /** Stable default for the `getLabel` prop — avoids a new function reference on every render. */
 const DEFAULT_GET_LABEL = (feature: Feature<Geometry, GeoJsonProperties>) =>
@@ -66,6 +112,7 @@ export function GeoJsonViewer({
   fitBounds = true,
   fitBoundsPadding = 40,
   geoJsonStyle: styleProp,
+  dataLayer,
   showLayerToggle = true,
   showFitBoundsControl = true,
   height,
@@ -89,6 +136,29 @@ export function GeoJsonViewer({
 
   // Strip foreign members and normalise to FeatureCollection
   const fc = useMemo(() => toFeatureCollection(data), [data]);
+
+  // Visibility of `data`, switchable from the layer menu when `dataLayer` is set
+  const [dataVisible, setDataVisible] = useState(
+    dataLayer?.defaultVisible ?? true,
+  );
+
+  // What "fit to data" covers: whatever is switched on — `data` when visible,
+  // plus the inline GeoJSON of visible custom layers (`<CustomLayersProvider
+  // layers>`), so the map frames what the user is actually looking at.
+  const { layers: customLayers, visibleLayerIds: visibleCustomIds } =
+    useContext(CustomLayersContext);
+  const boundsFc = useMemo(
+    () =>
+      visibleFeatures(
+        dataVisible ? fc : EMPTY_FC,
+        customLayers.filter((def) => visibleCustomIds.has(def.id)),
+      ),
+    [fc, dataVisible, customLayers, visibleCustomIds],
+  );
+  // Read inside the setup effect without re-running it (which would re-add the
+  // source and layers) every time a custom layer changes.
+  const boundsFcRef = useRef(boundsFc);
+  boundsFcRef.current = boundsFc;
 
   // Track whether layers are ready for interaction
   const [layersReady, setLayersReady] = useState(false);
@@ -147,7 +217,10 @@ export function GeoJsonViewer({
       // Update hover highlight
       const map = mapRef.current;
       if (map && layersReady) {
-        const featureId = feature?.id ?? null;
+        // The highlight layers only cover `data`; features from custom
+        // layers get the popup but no highlight.
+        const featureId =
+          feature && isViewerFeature(feature) ? (feature.id ?? null) : null;
         updateHoverHighlight(map, featureId);
       }
 
@@ -170,7 +243,8 @@ export function GeoJsonViewer({
       if (map && layersReady) {
         const featureIds =
           features
-            ?.map((f) => f.id)
+            ?.filter(isViewerFeature)
+            .map((f) => f.id)
             .filter((id): id is string | number => id !== undefined) ?? [];
         updateSelectionHighlight(map, featureIds);
       }
@@ -178,9 +252,24 @@ export function GeoJsonViewer({
     [onSelect, mapRef, layersReady],
   );
 
+  // Hover and select also reach the GeoJSON layers from
+  // `<CustomLayersProvider>`. Hidden layers return no features, so a layer
+  // switched off in the menu stops reacting by itself.
+  const interactiveLayerIds = useMemo(
+    () => [
+      ...customLayers
+        .filter((def) =>
+          Object.values(def.sources).some((src) => src.type === "geojson"),
+        )
+        .flatMap((def) => def.layers.map((l) => l.id)),
+      ...INTERACTIVE_LAYERS,
+    ],
+    [customLayers],
+  );
+
   const { hoveredFeature } = useFeatureInteraction({
     mapRef,
-    layerIds: INTERACTIVE_LAYERS,
+    layerIds: interactiveLayerIds,
     sourceId: SOURCE_ID,
     enabled: layersReady && !disabled,
     hoverable,
@@ -225,7 +314,7 @@ export function GeoJsonViewer({
 
         // Fit bounds
         if (fitBounds) {
-          const bounds = computeBounds(fc);
+          const bounds = computeBounds(boundsFcRef.current);
           if (bounds) {
             map.fitBounds(bounds, {
               padding: fitBoundsPadding,
@@ -351,17 +440,57 @@ export function GeoJsonViewer({
     }
   }, [mapVersion, fc]);
 
+  // ----- Show / hide `data` from the layer menu -----
+  // Re-applied whenever the layers are (re)created, since they are added
+  // visible.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapReady || !layersReady) return;
+    const visibility = dataVisible ? "visible" : "none";
+    for (const id of [...ALL_LAYERS, ...HIGHLIGHT_LAYERS, LABEL_LAYER]) {
+      if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", visibility);
+    }
+  }, [dataVisible, layersReady, mapReady, mapVersion, fc]);
+
+  const extraLayers = useMemo<LayerToggleExtraLayer[] | undefined>(
+    () =>
+      dataLayer && [
+        {
+          id: SOURCE_ID,
+          label: dataLayer.label,
+          description: dataLayer.description,
+          category: dataLayer.category,
+          legend: {
+            fillColor: layerStyle.fillColor,
+            fillOpacity: layerStyle.fillOpacity,
+            lineColor: layerStyle.lineColor,
+          },
+          visible: dataVisible,
+          onToggle: () => setDataVisible((v) => !v),
+        },
+      ],
+    [
+      dataLayer?.label,
+      dataLayer?.description,
+      dataLayer?.category,
+      layerStyle.fillColor,
+      layerStyle.fillOpacity,
+      layerStyle.lineColor,
+      dataVisible,
+    ],
+  );
+
   return (
     <div
       ref={mapContainerRef}
       className={[styles.mapContainer, className].filter(Boolean).join(" ")}
     >
-      {showLayerToggle && <LayerToggle />}
+      {showLayerToggle && <LayerToggle extraLayers={extraLayers} />}
       {showFitBoundsControl && !disabled && (
         <GeoJsonViewerFitBoundsControl
           mapRef={mapRef}
           mapVersion={mapVersion}
-          fc={fc}
+          fc={boundsFc}
           padding={fitBoundsPadding}
         />
       )}

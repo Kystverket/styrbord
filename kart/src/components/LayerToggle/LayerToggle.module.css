@@ -2,12 +2,16 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  z-index: 2;
+  /* Above MapLibre's control corners (z-index 2) and the other map buttons. */
+  z-index: 3;
   font-family: inherit;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 4px;
+  max-width: calc(100% - 20px);
+  /* Keep the open panel inside the map: 10px inset top and bottom. */
+  max-height: calc(100% - 20px);
 }
 
 .toggleButton {
@@ -37,105 +41,146 @@
   flex-shrink: 0;
 }
 
+/* --- Panel (Figma "Kart_dropdown") --------------------------------------- */
+
 .panel {
-  margin-top: 4px;
-  background: var(--ds-color-neutral-background-default);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
-  border-radius: var(--ds-border-radius-md);
-  padding: 8px 0;
-  min-width: 200px;
-  max-height: 320px;
+  box-sizing: border-box;
+  width: 352px;
+  max-width: 100%;
+  max-height: 700px;
+  /* Let the panel shrink below its content inside .root, then scroll. */
+  min-height: 0;
+  flex-shrink: 1;
   overflow-y: auto;
+  padding: var(--ds-size-2);
+  background: var(--ds-color-neutral-surface-default);
+  border-radius: var(--ds-border-radius-lg);
+  box-shadow: var(--ds-shadow-md);
+  color: var(--ds-color-neutral-text-default);
+  font-size: var(--ds-font-size-4);
+  line-height: 1.5;
 }
 
 .filterWrapper {
-  padding: 6px 8px;
-  border-bottom: 1px solid var(--ds-color-neutral-border-subtle);
+  padding: var(--ds-size-3);
 }
 
-.filterInput {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 5px 8px;
-  border: 1px solid var(--ds-color-neutral-border-default);
-  border-radius: var(--ds-border-radius-sm);
-  font-size: 0.8125rem;
-  font-family: inherit;
-  color: var(--ds-color-neutral-text-default);
-  background: var(--ds-color-neutral-background-default);
-  outline: none;
+/* Each section is separated from the one above it by a divider. */
+.section {
+  border-top: 1px solid var(--ds-color-neutral-border-subtle);
+  margin-top: var(--ds-size-2);
+  padding-top: var(--ds-size-2);
 }
 
-.filterInput:focus {
-  border-color: var(--ds-color-accent-base-default);
-  box-shadow: 0 0 0 1px var(--ds-color-accent-base-default);
-}
-
-.filterInput::placeholder {
-  color: var(--ds-color-neutral-text-subtle);
-}
-
-.categoryHeading {
+.sectionHeading {
   display: flex;
   align-items: center;
-  gap: 4px;
-  width: 100%;
-  padding: 6px 12px 2px;
-  border: none;
-  background: none;
-  font-size: 0.6875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  gap: var(--ds-size-2);
+  padding: var(--ds-size-3);
   color: var(--ds-color-neutral-text-subtle);
-  user-select: none;
+  font-weight: var(--ds-font-weight-regular);
+}
+
+.groupToggle {
+  width: 100%;
+  border: none;
+  border-radius: var(--ds-border-radius-default);
+  background: none;
+  font: inherit;
+  text-align: start;
   cursor: pointer;
 }
 
-.categoryHeading:hover {
+.groupToggle:hover {
   color: var(--ds-color-neutral-text-default);
+  background: var(--ds-color-neutral-surface-hover);
 }
 
 .chevron {
-  width: 12px;
-  height: 12px;
+  display: inline-flex;
+  flex-shrink: 0;
+  transform: rotate(-90deg);
+  transition: transform 150ms ease;
+}
+
+.chevron[data-expanded="true"] {
+  transform: none;
+}
+
+.groupName {
+  flex: 1;
+  min-width: 0;
+}
+
+.groupCount {
   flex-shrink: 0;
 }
+
+/* --- Layer rows ---------------------------------------------------------- */
 
 .layerItem {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 5px 12px;
-  cursor: pointer;
-  font-size: 0.8125rem;
-  color: var(--ds-color-neutral-text-default);
-  user-select: none;
+  gap: var(--ds-size-2);
+  padding: var(--ds-size-3);
+  border-radius: var(--ds-border-radius-default);
+  min-width: 0;
 }
 
 .layerItem:hover {
   background: var(--ds-color-neutral-surface-hover);
 }
 
-.checkbox {
-  width: 16px;
-  height: 16px;
-  accent-color: var(--ds-color-accent-base-default);
+.richLabel {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--ds-size-3);
+  min-width: 0;
   cursor: pointer;
-  margin: 0;
 }
 
-.radio {
-  width: 16px;
-  height: 16px;
-  accent-color: var(--ds-color-accent-base-default);
-  cursor: pointer;
-  margin: 0;
+.swatch {
+  position: relative;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: var(--ds-size-6);
+  height: var(--ds-size-6);
+  border: 2px solid;
+  border-radius: var(--ds-border-radius-default);
+  overflow: hidden;
+}
+
+.swatchFill {
+  position: absolute;
+  inset: 0;
+}
+
+.richText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.richTitle,
+.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.richTitle {
+  font-weight: var(--ds-font-weight-medium);
+}
+
+.description {
+  color: var(--ds-color-neutral-text-subtle);
+  font-size: var(--ds-font-size-3);
 }
 
 .emptyMessage {
-  padding: 12px;
-  font-size: 0.8125rem;
+  padding: var(--ds-size-3);
+  font-size: var(--ds-font-size-3);
   color: var(--ds-color-neutral-text-subtle);
   text-align: center;
 }
