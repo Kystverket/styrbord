@@ -3,6 +3,10 @@ import type { InlineImageConfig } from '@milkdown/components/image-inline';
 import { history } from '@milkdown/plugin-history';
 import { commonmark } from '@milkdown/preset-commonmark';
 import { listener } from '@milkdown/plugin-listener';
+import { Slice } from '@milkdown/prose/model';
+import type { Fragment, Node as ProseNode } from '@milkdown/prose/model';
+import { Plugin } from '@milkdown/prose/state';
+import type { Transaction } from '@milkdown/prose/state';
 import { sinkListItem } from '@milkdown/prose/schema-list';
 import type { EditorView } from '@milkdown/prose/view';
 
@@ -207,6 +211,152 @@ export const createRichTextAreaInlineImageConfig = (
       }
 
       return url;
+    },
+  });
+};
+
+const getTextLength = (content: Fragment) => content.textBetween(0, content.size, '\n').length;
+
+export type MeasureValueLength = (doc: ProseNode) => number;
+
+const fitsMaxLength = (maxLength: number, measure: MeasureValueLength, before: ProseNode, after: ProseNode) => {
+  const afterLength = measure(after);
+  return afterLength <= maxLength || afterLength <= measure(before);
+};
+
+const truncateSlice = (slice: Slice, maxChars: number): Slice => {
+  const { content } = slice;
+  let low = 0;
+  let high = content.size;
+  while (low < high) {
+    const mid = Math.ceil((low + high) / 2);
+    if (content.textBetween(0, mid, '\n').length <= maxChars) {
+      low = mid;
+    } else {
+      high = mid - 1;
+    }
+  }
+
+  const cut = content.cut(0, low);
+  if (cut.size === 0) {
+    return Slice.empty;
+  }
+  const open = Slice.maxOpen(cut);
+  return new Slice(cut, Math.min(slice.openStart, open.openStart), open.openEnd);
+};
+
+const trimAfterComposition = (
+  view: EditorView,
+  maxLength: number,
+  measure: MeasureValueLength,
+  lengthBefore: number,
+) => {
+  const { state } = view;
+  const limit = Math.max(maxLength, lengthBefore);
+  const { $head } = state.selection;
+  if (view.composing || measure(state.doc) <= limit) {
+    return;
+  }
+
+  const deleteBeforeHead = (count: number) => state.tr.delete($head.pos - count, $head.pos);
+  let best: Transaction | null = null;
+  let low = 1;
+  let high = $head.parentOffset;
+  while (low <= high) {
+    const mid = Math.floor((low + high) / 2);
+    const tr = deleteBeforeHead(mid);
+    if (measure(tr.doc) <= limit) {
+      best = tr;
+      high = mid - 1;
+    } else {
+      low = mid + 1;
+    }
+  }
+
+  if (best) {
+    view.dispatch(best);
+  }
+};
+
+export const createRichTextAreaMaxLengthPlugin = (
+  getMaxLength: () => number | undefined,
+  isExternalUpdate: () => boolean,
+  measure: MeasureValueLength,
+) => {
+  let editorView: EditorView | null = null;
+  let lengthBeforeComposition = 0;
+
+  return new Plugin({
+    view: (view) => {
+      editorView = view;
+      return {
+        destroy: () => {
+          editorView = null;
+        },
+      };
+    },
+    filterTransaction: (tr, state) => {
+      const maxLength = getMaxLength();
+      if (maxLength === undefined || !tr.docChanged || isExternalUpdate() || editorView?.composing) {
+        return true;
+      }
+      return fitsMaxLength(maxLength, measure, state.doc, tr.doc);
+    },
+    props: {
+      handleDOMEvents: {
+        compositionstart: (view) => {
+          if (!view.composing) {
+            lengthBeforeComposition = measure(view.state.doc);
+          }
+          return false;
+        },
+        compositionend: (view) => {
+          const maxLength = getMaxLength();
+          if (maxLength !== undefined) {
+            setTimeout(() => {
+              if (editorView === view) {
+                trimAfterComposition(view, maxLength, measure, lengthBeforeComposition);
+              }
+            });
+          }
+          return false;
+        },
+      },
+      handlePaste: (view, _event, slice) => {
+        const maxLength = getMaxLength();
+        if (maxLength === undefined) {
+          return false;
+        }
+
+        const { state } = view;
+        const pasteIfItFits = (candidate: Slice) => {
+          const tr = state.tr.replaceSelection(candidate);
+          return fitsMaxLength(maxLength, measure, state.doc, tr.doc) ? tr : null;
+        };
+
+        if (pasteIfItFits(slice)) {
+          return false;
+        }
+
+        let best: Transaction | null = null;
+        let low = 0;
+        let high = getTextLength(slice.content) - 1;
+        while (low <= high) {
+          const mid = Math.floor((low + high) / 2);
+          const tr = pasteIfItFits(truncateSlice(slice, mid));
+          if (tr) {
+            best = tr;
+            low = mid + 1;
+          } else {
+            high = mid - 1;
+          }
+        }
+
+        if (best?.docChanged) {
+          view.dispatch(best.scrollIntoView().setMeta('paste', true).setMeta('uiEvent', 'paste'));
+        }
+        return true;
+      },
     },
   });
 };

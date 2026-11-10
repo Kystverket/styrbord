@@ -1,5 +1,34 @@
 # Changelog
 
+## [2.11.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.10.0...styrbord-v2.11.0) (2026-11-09)
+
+
+### Features
+
+* **base:** Header-avatar tar alle Avatar-props og seedes fra profile.id ([#382](https://github.com/Kystverket/styrbord/issues/382)) ([737f06d](https://github.com/Kystverket/styrbord/commit/737f06d4a42caabf25d3a315b44ea3b7cbae8997))
+
+## [2.10.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.9.1...styrbord-v2.10.0) (2026-11-09)
+
+
+### Features
+
+* **base:** auto-seed på Avatar og auto-reserved-seed på AvatarProvider ([#380](https://github.com/Kystverket/styrbord/issues/380)) ([1a36af0](https://github.com/Kystverket/styrbord/commit/1a36af0ef74b34267ea69e2c8e2124428251a39c))
+
+## [2.9.1](https://github.com/Kystverket/styrbord/compare/styrbord-v2.9.0...styrbord-v2.9.1) (2026-11-09)
+
+
+### Bug Fixes
+
+* **base:** MarkdownToReact-lenker arver farge i stedet for accent ([#378](https://github.com/Kystverket/styrbord/issues/378)) ([e4d3ceb](https://github.com/Kystverket/styrbord/commit/e4d3ceb1fda1d9caeedb5f2fa34111bb66996031))
+* Footer now properly selects the class instead of all selects ([#376](https://github.com/Kystverket/styrbord/issues/376)) ([055bf44](https://github.com/Kystverket/styrbord/commit/055bf44459fa31bfab04721e4a581208db3302cb))
+
+## [2.9.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.8.1...styrbord-v2.9.0) (2026-11-05)
+
+
+### Features
+
+* **base:** maxLength med teller i RichTextArea, som i TextArea ([#374](https://github.com/Kystverket/styrbord/issues/374)) ([c933a3c](https://github.com/Kystverket/styrbord/commit/c933a3c64d3b9dfd676273a4b659c251f947ea0a))
+
 ## [2.8.1](https://github.com/Kystverket/styrbord/compare/styrbord-v2.8.0...styrbord-v2.8.1) (2026-11-04)
 
 

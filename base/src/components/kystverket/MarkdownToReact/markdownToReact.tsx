@@ -76,11 +76,7 @@ const MarkdownToReact = ({ markdown }: MarkdownToReactProps) => {
           li: ({ children }) => <li>{children}</li>,
           ul: ({ children }) => <ul>{children}</ul>,
           ol: ({ children }) => <ol>{children}</ol>,
-          a: ({ href, children }) => (
-            <Link data-color="accent" href={href}>
-              {children}
-            </Link>
-          ),
+          a: ({ href, children }) => <Link href={href}>{children}</Link>,
         }}
       >
         {renderedMarkdown}

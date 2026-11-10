@@ -3,6 +3,7 @@ import { Header, HeaderProps } from './Header';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { ApplicationHeaderContext } from './headerContext';
 import cat from '@assets/img/cats/Cat 3.jpg';
+import { Avatar, AvatarProvider, Surface } from '~/main';
 
 const meta = {
   title: 'Page/Header',
@@ -207,6 +208,35 @@ export const medProfilbilde: Story = {
       <div style={{ marginBottom: '150px' }}>
         <Story />
       </div>
+    ),
+  ],
+};
+
+/**
+ * Inside an `AvatarProvider` with `auto`, the header avatar gets a generated color seeded from
+ * `profile.id`. With `auto-reserved-seed` set to the same id, the logged-in user keeps a color
+ * no one else on the page gets, and looks the same in the header as in the list below.
+ */
+export const medAvatarProvider: Story = {
+  args: {
+    ...defaultProps,
+    profile: {
+      id: 'a3f1c9e2',
+      name: 'Ola Nordmann',
+      department: 'Hav- og kystforvaltning',
+    },
+  },
+  decorators: [
+    (Story) => (
+      <AvatarProvider auto="solid" auto-reserved-seed="a3f1c9e2">
+        <Story />
+        <Surface horizontal gap={2} style={{ marginTop: '150px' }}>
+          <Avatar auto-seed="a3f1c9e2" aria-label="Ola Nordmann" tooltip="Ola Nordmann (deg)" />
+          {['Kari Nordmann', 'Per Hansen', 'Anne Olsen', 'Lars Berg', 'Ingrid Dahl'].map((name) => (
+            <Avatar key={name} aria-label={name} tooltip={name} />
+          ))}
+        </Surface>
+      </AvatarProvider>
     ),
   ],
 };
