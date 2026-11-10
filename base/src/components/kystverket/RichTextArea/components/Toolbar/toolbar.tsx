@@ -26,8 +26,8 @@ type ToolbarProps = {
   linkPopoverTarget?: string;
   canUploadImage?: boolean;
   showToolbar?: boolean;
-  headings?: boolean;
-  links?: boolean;
+  showHeadingSelect?: boolean;
+  showLinkButton?: boolean;
 
   onBold: () => void;
   onItalic: () => void;
@@ -187,8 +187,8 @@ export const Toolbar = ({
   onLink,
   onImageUpload,
   showToolbar = true,
-  headings = true,
-  links = true,
+  showHeadingSelect = true,
+  showLinkButton = true,
 }: ToolbarProps) => {
   if (!showToolbar) return;
 
@@ -202,7 +202,7 @@ export const Toolbar = ({
         disabled={disabled}
         onClick={onItalic}
       />
-      {headings && (
+      {showHeadingSelect && (
         <FormatSelectButton disabled={disabled} selectedFormat={selectedFormat} onFormatChange={onFormatChange} />
       )}
       <div className={styles.divider} aria-hidden />
@@ -220,7 +220,7 @@ export const Toolbar = ({
         disabled={disabled}
         onClick={onOrderedList}
       />
-      {links && (
+      {showLinkButton && (
         <ToolbarButton
           label="Link"
           icon="link"
@@ -235,7 +235,9 @@ export const Toolbar = ({
         <ToolbarButton label="Upload image" icon="image" disabled={disabled} onClick={onImageUpload || (() => {})} />
       )}
       <div className={styles.divider} aria-hidden />
-      {headings && <FormatSelect disabled={disabled} selectedFormat={selectedFormat} onFormatChange={onFormatChange} />}
+      {showHeadingSelect && (
+        <FormatSelect disabled={disabled} selectedFormat={selectedFormat} onFormatChange={onFormatChange} />
+      )}
       <div className={styles.undoRedoGroup}>
         <ToolbarButton label="Undo" icon="undo" disabled={disabled} onClick={onUndo} />
         <ToolbarButton label="Redo" icon="redo" disabled={disabled} onClick={onRedo} />

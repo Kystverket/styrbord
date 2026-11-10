@@ -74,8 +74,8 @@ const RichTextAreaContainer = ({
   optional = false,
   required = false,
   showToolbar,
-  headings = true,
-  links = true,
+  showHeadingSelect = true,
+  showLinkButton = true,
   rows,
   maxLength,
   error: externalError,
@@ -192,7 +192,7 @@ const RichTextAreaContainer = ({
         describedBy: `${toolbarHintId} ${counterId}`,
         canReachToolbar: () => Boolean(toolbarRef.current && getToolbarItems(toolbarRef.current).length > 0),
         canUploadImage: Boolean(latestOnUploadRef.current),
-        features: { headings, links },
+        features: { headings: showHeadingSelect, links: showLinkButton },
         dispatchImageFromFile,
         updateInlineImageConfig,
         updateToolbarState,
@@ -222,7 +222,7 @@ const RichTextAreaContainer = ({
         getMaxLength: () => maxLengthRef.current,
         isExternalUpdate: () => isSyncingFromValueRef.current,
       }),
-    [disabled, headings, links],
+    [disabled, showHeadingSelect, showLinkButton],
   );
 
   const imageUpload = useRichTextImageUpload({
@@ -386,8 +386,8 @@ const RichTextAreaContainer = ({
               })
             }
             showToolbar={showToolbar}
-            headings={headings}
-            links={links}
+            showHeadingSelect={showHeadingSelect}
+            showLinkButton={showLinkButton}
             onOrderedList={() =>
               toggleList({
                 isTargetListActive: toolbarState.isOrderedListActive,
@@ -418,7 +418,7 @@ const RichTextAreaContainer = ({
               <Milkdown />
             </div>
           </div>
-          {links && (
+          {showLinkButton && (
             <LinkEditor
               open={linkEditorOpen}
               anchorId={linkEditorAnchorId}
