@@ -2,7 +2,7 @@
 
 import { useContext, useEffect, useId, useRef, useState } from 'react';
 import type { KeyboardEvent } from 'react';
-import { Milkdown, MilkdownProvider, useEditor } from '@milkdown/react';
+import { Milkdown, MilkdownProvider, useEditor, useInstance } from '@milkdown/react';
 import { editorViewCtx } from '@milkdown/core';
 import type { InlineImageConfig } from '@milkdown/components/image-inline';
 import { redoCommand, undoCommand } from '@milkdown/plugin-history';
@@ -107,6 +107,8 @@ const RichTextAreaContainer = ({
   const latestOnRemoveRef = useRef(onImageRemove);
   const lastKnownMarkdownRef = useRef(normalizedValue);
   const lastSyncedEditorMarkdownRef = useRef(normalizedValue);
+  const editorMarkdownSourceRef = useRef(normalizedValue);
+  const isValueFromEditorRef = useRef(false);
   const pendingImageSelectionRef = useRef<{ from: number; to: number } | null>(null);
   const maxLengthRef = useRef(maxLength);
   const isSyncingFromValueRef = useRef(false);
@@ -144,6 +146,7 @@ const RichTextAreaContainer = ({
           refToPreviewMap.current.set(ref, src);
         }
 
+        editorMarkdownSourceRef.current = normalizedValue;
         setEditorMarkdown(resolvedMarkdown);
       } catch {
         if (isCancelled) {
@@ -152,6 +155,7 @@ const RichTextAreaContainer = ({
 
         sasToRefMap.current.clear();
         refToPreviewMap.current.clear();
+        editorMarkdownSourceRef.current = normalizedValue;
         setEditorMarkdown(normalizedValue);
       }
     };
@@ -210,6 +214,7 @@ const RichTextAreaContainer = ({
           );
 
           lastKnownMarkdownRef.current = transformedMarkdown;
+          isValueFromEditorRef.current = true;
           latestOnChangeRef.current(transformedMarkdown);
           updateToolbarState(ctx);
         },
@@ -221,6 +226,8 @@ const RichTextAreaContainer = ({
       }),
     [disabled],
   );
+
+  const [, getEditor] = useInstance();
 
   const imageUpload = useRichTextImageUpload({
     disabled,
@@ -263,14 +270,24 @@ const RichTextAreaContainer = ({
 
   // Synker ekstern verdi til editor ved endringer.
   useEffect(() => {
-    const editor = get();
+    const editor = getEditor();
 
     if (!editor) {
       return;
     }
 
-    if (normalizedValue === lastKnownMarkdownRef.current && editorMarkdown === lastSyncedEditorMarkdownRef.current) {
+    if (editorMarkdownSourceRef.current !== normalizedValue) {
       return;
+    }
+
+    if (normalizedValue === lastKnownMarkdownRef.current) {
+      if (isValueFromEditorRef.current) {
+        isValueFromEditorRef.current = false;
+        lastSyncedEditorMarkdownRef.current = editorMarkdown;
+      }
+      if (editorMarkdown === lastSyncedEditorMarkdownRef.current) {
+        return;
+      }
     }
 
     // Ikke synk ekstern verdi mens bruker aktivt redigerer – i teksten, toolbaren eller lenkeeditoren.
@@ -284,13 +301,14 @@ const RichTextAreaContainer = ({
 
     lastKnownMarkdownRef.current = normalizedValue;
     lastSyncedEditorMarkdownRef.current = editorMarkdown;
+    isValueFromEditorRef.current = false;
     isSyncingFromValueRef.current = true;
     try {
       editor.action(replaceAll(editorMarkdown));
     } finally {
       isSyncingFromValueRef.current = false;
     }
-  }, [editorMarkdown, get, normalizedValue]);
+  }, [editorMarkdown, getEditor, loading, normalizedValue]);
 
   // Sett knappestatus når editoren er tilgjengelig.
   useEffect(() => {
