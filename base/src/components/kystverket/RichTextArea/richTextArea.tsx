@@ -107,7 +107,7 @@ const RichTextAreaContainer = ({
   const latestOnRemoveRef = useRef(onImageRemove);
   const lastKnownMarkdownRef = useRef(normalizedValue);
   const lastSyncedEditorMarkdownRef = useRef(normalizedValue);
-  const editorMarkdownSourceRef = useRef(normalizedValue);
+  const resolvedValueRef = useRef(normalizedValue);
   const isValueFromEditorRef = useRef(false);
   const pendingImageSelectionRef = useRef<{ from: number; to: number } | null>(null);
   const maxLengthRef = useRef(maxLength);
@@ -146,7 +146,7 @@ const RichTextAreaContainer = ({
           refToPreviewMap.current.set(ref, src);
         }
 
-        editorMarkdownSourceRef.current = normalizedValue;
+        resolvedValueRef.current = normalizedValue;
         setEditorMarkdown(resolvedMarkdown);
       } catch {
         if (isCancelled) {
@@ -155,7 +155,7 @@ const RichTextAreaContainer = ({
 
         sasToRefMap.current.clear();
         refToPreviewMap.current.clear();
-        editorMarkdownSourceRef.current = normalizedValue;
+        resolvedValueRef.current = normalizedValue;
         setEditorMarkdown(normalizedValue);
       }
     };
@@ -276,18 +276,18 @@ const RichTextAreaContainer = ({
       return;
     }
 
-    if (editorMarkdownSourceRef.current !== normalizedValue) {
+    const isResolvingNewValue = resolvedValueRef.current !== normalizedValue;
+    if (isResolvingNewValue) {
       return;
     }
 
-    if (normalizedValue === lastKnownMarkdownRef.current) {
-      if (isValueFromEditorRef.current) {
-        isValueFromEditorRef.current = false;
-        lastSyncedEditorMarkdownRef.current = editorMarkdown;
-      }
-      if (editorMarkdown === lastSyncedEditorMarkdownRef.current) {
-        return;
-      }
+    const editorShowsValue =
+      normalizedValue === lastKnownMarkdownRef.current &&
+      (isValueFromEditorRef.current || editorMarkdown === lastSyncedEditorMarkdownRef.current);
+    if (editorShowsValue) {
+      isValueFromEditorRef.current = false;
+      lastSyncedEditorMarkdownRef.current = editorMarkdown;
+      return;
     }
 
     // Ikke synk ekstern verdi mens bruker aktivt redigerer – i teksten, toolbaren eller lenkeeditoren.
