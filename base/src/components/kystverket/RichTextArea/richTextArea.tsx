@@ -74,6 +74,8 @@ const RichTextAreaContainer = ({
   optional = false,
   required = false,
   showToolbar,
+  allowHeading = true,
+  allowLink = true,
   rows,
   maxLength,
   error: externalError,
@@ -190,6 +192,7 @@ const RichTextAreaContainer = ({
         describedBy: `${toolbarHintId} ${counterId}`,
         canReachToolbar: () => Boolean(toolbarRef.current && getToolbarItems(toolbarRef.current).length > 0),
         canUploadImage: Boolean(latestOnUploadRef.current),
+        features: { allowHeading, allowLink },
         dispatchImageFromFile,
         updateInlineImageConfig,
         updateToolbarState,
@@ -219,7 +222,7 @@ const RichTextAreaContainer = ({
         getMaxLength: () => maxLengthRef.current,
         isExternalUpdate: () => isSyncingFromValueRef.current,
       }),
-    [disabled],
+    [disabled, allowHeading, allowLink],
   );
 
   const imageUpload = useRichTextImageUpload({
@@ -383,6 +386,8 @@ const RichTextAreaContainer = ({
               })
             }
             showToolbar={showToolbar}
+            allowHeading={allowHeading}
+            allowLink={allowLink}
             onOrderedList={() =>
               toggleList({
                 isTargetListActive: toolbarState.isOrderedListActive,
@@ -413,15 +418,17 @@ const RichTextAreaContainer = ({
               <Milkdown />
             </div>
           </div>
-          <LinkEditor
-            open={linkEditorOpen}
-            anchorId={linkEditorAnchorId}
-            href={linkEditorState?.href ?? ''}
-            hasSelection={linkEditorState?.hasSelection ?? false}
-            onSave={handleLinkSave}
-            onRemove={handleLinkRemove}
-            onClose={closeLinkEditor}
-          />
+          {allowLink && (
+            <LinkEditor
+              open={linkEditorOpen}
+              anchorId={linkEditorAnchorId}
+              href={linkEditorState?.href ?? ''}
+              hasSelection={linkEditorState?.hasSelection ?? false}
+              onSave={handleLinkSave}
+              onRemove={handleLinkRemove}
+              onClose={closeLinkEditor}
+            />
+          )}
           {!!bottomToolbar && <div ref={bottomToolbarRef}>{bottomToolbar}</div>}
         </div>
 

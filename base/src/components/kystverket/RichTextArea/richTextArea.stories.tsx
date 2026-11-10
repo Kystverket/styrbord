@@ -116,6 +116,20 @@ const greet = (name: string) => \`Hei, \${name}\`;
   render: renderInteractive,
 };
 
+export const WithoutHeadingsAndLinks: Story = {
+  args: {
+    ...defaultArgs,
+    label: 'Rikt tekstfelt uten overskrifter og lenker',
+    description: 'Overskrifter i verdien lastes som avsnitt, og lenker som teksten sin.',
+    allowHeading: false,
+    allowLink: false,
+    value: `## Overskrift
+
+Les mer på [Kystverkets nettsider](https://www.kystverket.no).`,
+  },
+  render: renderInteractive,
+};
+
 export const WithError: Story = {
   args: {
     ...defaultArgs,
