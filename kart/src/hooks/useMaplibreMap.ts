@@ -17,6 +17,7 @@ import type {
   LayerDefinition,
 } from "~/utility/layers.types";
 import { useTranslation } from "~/translations";
+import { trackLoad, whenLoaded } from "~/utility/whenLoaded";
 
 export interface UseMaplibreMapOptions {
   /** Initial coordinate to center the map on. Falls back to context `defaultCenter`. */
@@ -158,7 +159,7 @@ export function useMaplibreMap({
       }
 
       const map = new maplibregl.Map(mapOptions);
-      map.once("load", () => loadedMaps.add(map));
+      trackLoad(map);
       // Bottom controls stack upwards, so fullscreen goes first to end up below zoom.
       if (showFullscreenControl) {
         map.addControl(new maplibregl.FullscreenControl(), "bottom-right");
@@ -348,12 +349,16 @@ export function useMaplibreMap({
       for (const def of allDefs) {
         const visibility = allVisibleIds.has(def.id) ? "visible" : "none";
         const prevDef = applied.get(def.id);
+        // Where a re-added layer goes, so replacing it keeps its place in
+        // the stack instead of jumping to the top.
+        let beforeId: string | undefined;
 
         if (prevDef && prevDef !== def) {
           if (canUpdateInPlace(prevDef, def)) {
             updateGeoJsonData(map, prevDef, def);
             applied.set(def.id, def);
           } else {
+            beforeId = layerAbove(map, prevDef);
             removeFromMap(map, prevDef);
             applied.delete(def.id);
           }
@@ -369,7 +374,7 @@ export function useMaplibreMap({
           // Add layers
           for (const layerSpec of def.layers) {
             if (!map.getLayer(layerSpec.id)) {
-              map.addLayer(layerSpec);
+              map.addLayer(layerSpec, beforeId);
             }
             map.setLayoutProperty(layerSpec.id, "visibility", visibility);
           }
@@ -445,28 +450,6 @@ export function useMaplibreMap({
 // Helpers (module-level to avoid re-creation)
 // ---------------------------------------------------------------------------
 
-/** Maps whose one-time `load` event has fired. */
-const loadedMaps = new WeakSet<maplibregl.Map>();
-
-/**
- * Run `fn` now if the map has finished its initial load, otherwise on `load`.
- * Returns a cleanup that cancels the pending call.
- *
- * Not `map.loaded()`: that is also `false` whenever tiles are loading — e.g.
- * right after a layer is switched on — and `load` never fires again, so a
- * change made in that window would wait forever and be lost.
- */
-function whenLoaded(map: maplibregl.Map, fn: () => void): () => void {
-  if (loadedMaps.has(map)) {
-    fn();
-    return () => {};
-  }
-  map.once("load", fn);
-  return () => {
-    map.off("load", fn);
-  };
-}
-
 /**
  * Whether `next` can replace `prev` on the map by swapping GeoJSON data
  * alone: same source ids and types, and identical layer specs.
@@ -482,6 +465,17 @@ function canUpdateInPlace(prev: LayerDefinition, next: LayerDefinition) {
     }
   }
   return JSON.stringify(prev.layers) === JSON.stringify(next.layers);
+}
+
+/** Id of the style layer directly above `def`'s topmost layer, if any. */
+function layerAbove(
+  map: maplibregl.Map,
+  def: LayerDefinition,
+): string | undefined {
+  const order = map.getLayersOrder();
+  const ownIds = new Set(def.layers.map((l) => l.id));
+  const top = order.findLastIndex((id) => ownIds.has(id));
+  return top === -1 ? undefined : order[top + 1];
 }
 
 /** Push changed GeoJSON `data` from `next` into the sources already on the map. */

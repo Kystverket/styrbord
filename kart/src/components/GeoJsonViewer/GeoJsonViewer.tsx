@@ -21,6 +21,7 @@ import styles from "~/components/shared/MapPicker.module.css";
 import type { GeoJsonStyle, GeoJsonViewerProps } from "./GeoJsonViewer.types";
 import { computeBounds } from "~/utility/geojson";
 import { useMaplibreMap } from "~/hooks/useMaplibreMap";
+import { whenLoaded } from "~/utility/whenLoaded";
 import { CustomLayersContext } from "~/utility/customLayersContext";
 import type { LayerDefinition } from "~/utility/layers.types";
 import {
@@ -64,8 +65,9 @@ const EMPTY_FC: FeatureCollection = { type: "FeatureCollection", features: [] };
 
 /**
  * `fc` plus the features of every given custom layer whose GeoJSON source
- * holds inline data. Sources given as a URL are skipped — their extent is
- * unknown until MapLibre loads them.
+ * holds inline data (a FeatureCollection, Feature or bare geometry). Sources
+ * given as a URL are skipped — their extent is unknown until MapLibre loads
+ * them.
  */
 function visibleFeatures(
   fc: FeatureCollection,
@@ -82,6 +84,8 @@ function visibleFeatures(
         extra.push(...sourceData.features);
       } else if (sourceData.type === "Feature") {
         extra.push(sourceData);
+      } else {
+        extra.push({ type: "Feature", geometry: sourceData, properties: {} });
       }
     }
   }
@@ -91,7 +95,7 @@ function visibleFeatures(
 
 /** Whether a hovered/clicked feature belongs to the viewer's own `data`. */
 function isViewerFeature(feature: InteractiveFeature): boolean {
-  return (feature as { source?: unknown }).source === SOURCE_ID;
+  return feature.source === SOURCE_ID;
 }
 
 /** Stable default for the `getLabel` prop — avoids a new function reference on every render. */
@@ -129,18 +133,21 @@ export function GeoJsonViewer({
   showFullscreenControl,
   getLabel = DEFAULT_GET_LABEL,
 }: GeoJsonViewerProps) {
-  const layerStyle: Required<GeoJsonStyle> = {
-    ...DEFAULT_STYLE,
-    ...styleProp,
-  };
+  const layerStyle = useMemo<Required<GeoJsonStyle>>(
+    () => ({ ...DEFAULT_STYLE, ...styleProp }),
+    [styleProp],
+  );
 
   // Strip foreign members and normalise to FeatureCollection
   const fc = useMemo(() => toFeatureCollection(data), [data]);
 
-  // Visibility of `data`, switchable from the layer menu when `dataLayer` is set
+  // Visibility of `data`, switchable from the layer menu when `dataLayer` is
+  // set. Without `dataLayer` there is no switch, so `data` is always shown —
+  // also if it was hidden before `dataLayer` was taken away.
   const [dataVisible, setDataVisible] = useState(
     dataLayer?.defaultVisible ?? true,
   );
+  const dataShown = !dataLayer || dataVisible;
 
   // What "fit to data" covers: whatever is switched on — `data` when visible,
   // plus the inline GeoJSON of visible custom layers (`<CustomLayersProvider
@@ -150,10 +157,10 @@ export function GeoJsonViewer({
   const boundsFc = useMemo(
     () =>
       visibleFeatures(
-        dataVisible ? fc : EMPTY_FC,
+        dataShown ? fc : EMPTY_FC,
         customLayers.filter((def) => visibleCustomIds.has(def.id)),
       ),
-    [fc, dataVisible, customLayers, visibleCustomIds],
+    [fc, dataShown, customLayers, visibleCustomIds],
   );
   // Read inside the setup effect without re-running it (which would re-add the
   // source and layers) every time a custom layer changes.
@@ -333,18 +340,12 @@ export function GeoJsonViewer({
       }
     };
 
-    // Run setup as soon as the style is ready. isStyleLoaded() handles the
-    // case where "load" already fired; once("load") handles the case where
-    // it hasn't.  The base layer is now baked into the initial style by
-    // useMaplibreMap so there is no ordering race.
-    if (map.isStyleLoaded()) {
-      setup();
-    } else {
-      map.once("load", setup);
-    }
+    // Run setup once the map has loaded. The base layer is baked into the
+    // initial style by useMaplibreMap so there is no ordering race.
+    const cancelSetup = whenLoaded(map, setup);
 
     return () => {
-      map.off("load", setup);
+      cancelSetup();
       setLayersReady(false);
       removeLayers(map);
     };
@@ -389,14 +390,10 @@ export function GeoJsonViewer({
       }
     };
 
-    if (map.isStyleLoaded()) {
-      ensureLayer();
-    } else {
-      map.once("load", ensureLayer);
-    }
+    const cancelEnsureLayer = whenLoaded(map, ensureLayer);
 
     return () => {
-      map.off("load", ensureLayer);
+      cancelEnsureLayer();
       try {
         if (map.getLayer(LABEL_LAYER)) map.removeLayer(LABEL_LAYER);
         if (map.getSource(LABEL_SOURCE)) map.removeSource(LABEL_SOURCE);
@@ -433,24 +430,22 @@ export function GeoJsonViewer({
       }
     };
 
-    if (map.isStyleLoaded()) {
-      updateData();
-    } else {
-      map.once("load", updateData);
-    }
+    return whenLoaded(map, updateData);
   }, [mapVersion, fc]);
 
   // ----- Show / hide `data` from the layer menu -----
-  // Re-applied whenever the layers are (re)created, since they are added
-  // visible.
+  // The effects above add their layers visible, and the setup effect re-adds
+  // them whenever `fc` or the map changes. `fc` and `mapVersion` are deps
+  // for that reason alone: this effect is declared after those, so it runs
+  // after them and hides the fresh layers again when `data` is switched off.
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !mapReady || !layersReady) return;
-    const visibility = dataVisible ? "visible" : "none";
+    const visibility = dataShown ? "visible" : "none";
     for (const id of [...ALL_LAYERS, ...HIGHLIGHT_LAYERS, LABEL_LAYER]) {
       if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", visibility);
     }
-  }, [dataVisible, layersReady, mapReady, mapVersion, fc]);
+  }, [dataShown, layersReady, mapReady, mapVersion, fc]);
 
   const extraLayers = useMemo<LayerToggleExtraLayer[] | undefined>(
     () =>
@@ -469,15 +464,7 @@ export function GeoJsonViewer({
           onToggle: () => setDataVisible((v) => !v),
         },
       ],
-    [
-      dataLayer?.label,
-      dataLayer?.description,
-      dataLayer?.category,
-      layerStyle.fillColor,
-      layerStyle.fillOpacity,
-      layerStyle.lineColor,
-      dataVisible,
-    ],
+    [dataLayer, layerStyle, dataVisible],
   );
 
   return (

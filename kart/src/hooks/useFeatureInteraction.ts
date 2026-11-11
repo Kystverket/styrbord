@@ -7,6 +7,11 @@ import type * as maplibregl from "maplibre-gl";
  */
 export type InteractiveFeature = Feature<Geometry, GeoJsonProperties> & {
   id?: string | number;
+  /**
+   * Id of the MapLibre source the feature was rendered from. Set on features
+   * from hover and click; tells a map's own data apart from other layers.
+   */
+  source?: string;
 };
 
 export interface UseFeatureInteractionOptions {
@@ -92,10 +97,8 @@ export function useFeatureInteraction({
       const id = feature.id ?? JSON.stringify(feature.properties);
       // Features from different sources can share an id; qualify it with the
       // source so hovering from one layer to another registers as a change.
-      const source = (feature as { source?: unknown }).source;
-      return typeof source === "string" && source !== sourceId
-        ? `${source}:${id}`
-        : id;
+      const { source } = feature;
+      return source && source !== sourceId ? `${source}:${id}` : id;
     },
     [sourceId],
   );

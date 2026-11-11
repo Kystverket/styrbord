@@ -137,6 +137,10 @@ export interface GeoJsonViewerProps extends MapBaseProps {
   /**
    * Called when the hovered feature changes.
    * Receives the feature and the original mouse event, or null when hover ends.
+   *
+   * Also fires for features of GeoJSON layers from `<CustomLayersProvider>`,
+   * not only for `data`. Tell them apart by `feature.source`, which is
+   * `"geojson-data"` for `data` and the layer's own source id otherwise.
    */
   onHover?: (
     feature: InteractiveFeature | null,
@@ -145,6 +149,9 @@ export interface GeoJsonViewerProps extends MapBaseProps {
   /**
    * Called when the selection changes.
    * Receives array of selected features, or null when selection is cleared.
+   *
+   * Like `onHover`, this includes features of GeoJSON layers from
+   * `<CustomLayersProvider>`; check `feature.source`.
    */
   onSelect?: (features: InteractiveFeature[] | null) => void;
   /**

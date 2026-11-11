@@ -1,5 +1,11 @@
 import type { LayerDefinition } from "~/utility/layers.types";
 
+/** The parts of a layer the layer menu shows. */
+export type LayerMenuItem = Pick<
+  LayerDefinition,
+  "id" | "label" | "category" | "description" | "legend"
+>;
+
 /**
  * A row in the layer menu for a layer the parent draws itself, rather than one
  * registered through the layer contexts. The parent owns the visibility: it
@@ -7,10 +13,7 @@ import type { LayerDefinition } from "~/utility/layers.types";
  *
  * `GeoJsonViewer` uses this to list its own `data` (see its `dataLayer` prop).
  */
-export interface LayerToggleExtraLayer extends Pick<
-  LayerDefinition,
-  "id" | "label" | "category" | "description" | "legend"
-> {
+export interface LayerToggleExtraLayer extends LayerMenuItem {
   /** Whether the layer is currently shown. */
   visible: boolean;
   /** Called when the user flips the layer's switch. */
