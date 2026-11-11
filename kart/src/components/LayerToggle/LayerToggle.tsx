@@ -1,7 +1,6 @@
 import { useCallback, useId, useMemo, useState } from "react";
 import { Icon, Radio, Search, SearchInput, Switch } from "@kystverket/styrbord";
 import { useMapLayers } from "~/hooks/useMapLayers";
-import type { LayerEntry } from "~/hooks/useMapLayers";
 import type { LayerLegend } from "~/utility/layers.types";
 import type { LayerMenuItem, LayerToggleProps } from "./LayerToggle.types";
 import styles from "./LayerToggle.module.css";
@@ -33,17 +32,11 @@ function LayersIcon({ className }: { className?: string }) {
 // Rows
 // ---------------------------------------------------------------------------
 
-/**
- * What the menu needs to know about one layer — either a {@link LayerEntry}
- * from the layer contexts or an `extraLayers` item from the parent.
- */
+/** One layer in the menu, from the layer contexts or `extraLayers`. */
 interface MenuEntry {
   definition: LayerMenuItem;
   visible: boolean;
-  /**
-   * Listed in the top section, always expanded: custom layers and
-   * `extraLayers`, the application's own data.
-   */
+  /** Custom and extra layers: listed first, always expanded. */
   pinned: boolean;
   onToggle: () => void;
 }
@@ -67,12 +60,11 @@ function LegendSwatch({ legend }: { legend: LayerLegend }) {
 }
 
 /**
- * A layer with a swatch and/or a description: switch, swatch, then the label
- * over the description. The switch is labelled by the visible text, and the
+ * Switch, optional swatch, then the label over an optional description. The
  * text is a `<label>`, stretched over the whole row in CSS, so clicking
  * anywhere on the row toggles the layer.
  */
-function RichLayerRow({ entry }: { entry: MenuEntry }) {
+function LayerRow({ entry }: { entry: MenuEntry }) {
   const id = useId();
   const { label, description, legend } = entry.definition;
   return (
@@ -84,10 +76,13 @@ function RichLayerRow({ entry }: { entry: MenuEntry }) {
         aria-labelledby={`${id}-label`}
         aria-describedby={description ? `${id}-description` : undefined}
       />
-      <label htmlFor={id} className={styles.richLabel}>
+      <label htmlFor={id} className={styles.rowLabel}>
         {legend && <LegendSwatch legend={legend} />}
-        <span className={styles.richText}>
-          <span id={`${id}-label`} className={styles.richTitle}>
+        <span className={styles.rowText}>
+          <span
+            id={`${id}-label`}
+            className={description ? styles.rowTitle : undefined}
+          >
             {label}
           </span>
           {description && (
@@ -101,34 +96,13 @@ function RichLayerRow({ entry }: { entry: MenuEntry }) {
   );
 }
 
-function LayerRow({ entry }: { entry: MenuEntry }) {
-  const { definition } = entry;
-  if (definition.legend || definition.description) {
-    return <RichLayerRow entry={entry} />;
-  }
-  return (
-    <div className={styles.layerItem}>
-      <Switch
-        label={definition.label}
-        checked={entry.visible}
-        onChange={entry.onToggle}
-      />
-    </div>
-  );
-}
-
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
 
 interface LayerGroup {
   category: string;
-  /** The group's entries that match the filter. */
   entries: MenuEntry[];
-  /** How many of the group's layers are visible, filter or not. */
-  visibleCount: number;
-  /** How many layers the group has, filter or not. */
-  totalCount: number;
 }
 
 /**
@@ -211,7 +185,7 @@ export function LayerToggle({
         }),
       ),
       ...allLayers.map(
-        (entry: LayerEntry): MenuEntry => ({
+        (entry): MenuEntry => ({
           definition: entry.definition,
           visible: entry.visible,
           pinned: entry.origin === "custom",
@@ -224,23 +198,17 @@ export function LayerToggle({
       label.toLowerCase().includes(normalizedFilter) ||
       !!description?.toLowerCase().includes(normalizedFilter);
 
-    const pinned = new Map<string, LayerGroup>();
-    const other = new Map<string, LayerGroup>();
+    const pinned = new Map<string, MenuEntry[]>();
+    const other = new Map<string, MenuEntry[]>();
     for (const entry of menuEntries) {
+      if (!matchesFilter(entry.definition)) continue;
       const target = entry.pinned ? pinned : other;
       const category = entry.definition.category ?? t("layers.defaultCategory");
-      let group = target.get(category);
-      if (!group) {
-        group = { category, entries: [], visibleCount: 0, totalCount: 0 };
-        target.set(category, group);
-      }
-      group.totalCount++;
-      if (entry.visible) group.visibleCount++;
-      if (matchesFilter(entry.definition)) group.entries.push(entry);
+      target.set(category, [...(target.get(category) ?? []), entry]);
     }
-    const nonEmpty = (groups: Map<string, LayerGroup>) =>
-      [...groups.values()].filter((group) => group.entries.length > 0);
-    return { pinnedGroups: nonEmpty(pinned), otherGroups: nonEmpty(other) };
+    const toGroups = (groups: Map<string, MenuEntry[]>): LayerGroup[] =>
+      Array.from(groups, ([category, entries]) => ({ category, entries }));
+    return { pinnedGroups: toGroups(pinned), otherGroups: toGroups(other) };
   }, [allLayers, extraLayers, normalizedFilter, t, toggleLayer]);
 
   // When a filter is active, expand all groups so results are visible
@@ -324,41 +292,40 @@ export function LayerToggle({
                 </section>
               )}
 
-              {otherGroups.map(
-                ({ category, entries, visibleCount, totalCount }) => {
-                  const expanded = !showHeadings || isGroupExpanded(category);
-                  return (
-                    <section
-                      key={`other-${category}`}
-                      className={styles.section}
-                    >
-                      {showHeadings && (
-                        <button
-                          type="button"
-                          className={`${styles.sectionHeading} ${styles.groupToggle}`}
-                          onClick={() => toggleGroup(category)}
-                          aria-expanded={expanded}
+              {otherGroups.map(({ category, entries }) => {
+                const expanded = !showHeadings || isGroupExpanded(category);
+                return (
+                  <section key={`other-${category}`} className={styles.section}>
+                    {showHeadings && (
+                      <button
+                        type="button"
+                        className={`${styles.sectionHeading} ${styles.groupToggle}`}
+                        onClick={() => toggleGroup(category)}
+                        aria-expanded={expanded}
+                      >
+                        <span
+                          className={styles.chevron}
+                          data-expanded={expanded}
                         >
-                          <span
-                            className={styles.chevron}
-                            data-expanded={expanded}
-                          >
-                            <Icon material="keyboard_arrow_down" size="sm" />
-                          </span>
-                          <span className={styles.groupName}>{category}</span>
+                          <Icon material="keyboard_arrow_down" size="sm" />
+                        </span>
+                        <span className={styles.groupName}>{category}</span>
+                        {/* Counts of filtered lists would mislead. */}
+                        {!normalizedFilter && (
                           <span className={styles.groupCount}>
-                            {visibleCount}/{totalCount}
+                            {entries.filter((e) => e.visible).length}/
+                            {entries.length}
                           </span>
-                        </button>
-                      )}
-                      {expanded &&
-                        entries.map((entry) => (
-                          <LayerRow key={entry.definition.id} entry={entry} />
-                        ))}
-                    </section>
-                  );
-                },
-              )}
+                        )}
+                      </button>
+                    )}
+                    {expanded &&
+                      entries.map((entry) => (
+                        <LayerRow key={entry.definition.id} entry={entry} />
+                      ))}
+                  </section>
+                );
+              })}
             </>
           )}
         </div>

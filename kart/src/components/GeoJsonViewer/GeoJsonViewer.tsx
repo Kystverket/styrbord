@@ -65,9 +65,8 @@ const EMPTY_FC: FeatureCollection = { type: "FeatureCollection", features: [] };
 
 /**
  * `fc` plus the features of every given custom layer whose GeoJSON source
- * holds inline data (a FeatureCollection, Feature or bare geometry). Sources
- * given as a URL are skipped — their extent is unknown until MapLibre loads
- * them.
+ * holds an inline Feature or FeatureCollection. Sources given as a URL are
+ * skipped — their extent is unknown until MapLibre loads them.
  */
 function visibleFeatures(
   fc: FeatureCollection,
@@ -84,18 +83,11 @@ function visibleFeatures(
         extra.push(...sourceData.features);
       } else if (sourceData.type === "Feature") {
         extra.push(sourceData);
-      } else {
-        extra.push({ type: "Feature", geometry: sourceData, properties: {} });
       }
     }
   }
   if (extra.length === 0) return fc;
   return { ...fc, features: [...fc.features, ...extra] };
-}
-
-/** Whether a hovered/clicked feature belongs to the viewer's own `data`. */
-function isViewerFeature(feature: InteractiveFeature): boolean {
-  return feature.source === SOURCE_ID;
 }
 
 /** Stable default for the `getLabel` prop — avoids a new function reference on every render. */
@@ -141,17 +133,15 @@ export function GeoJsonViewer({
   // Strip foreign members and normalise to FeatureCollection
   const fc = useMemo(() => toFeatureCollection(data), [data]);
 
-  // Visibility of `data`, switchable from the layer menu when `dataLayer` is
-  // set. Without `dataLayer` there is no switch, so `data` is always shown —
-  // also if it was hidden before `dataLayer` was taken away.
+  // Visibility of `data`, switchable from the layer menu. Without `dataLayer`
+  // there is no switch, so `data` is always shown.
   const [dataVisible, setDataVisible] = useState(
     dataLayer?.defaultVisible ?? true,
   );
   const dataShown = !dataLayer || dataVisible;
 
-  // What "fit to data" covers: whatever is switched on — `data` when visible,
-  // plus the inline GeoJSON of visible custom layers (`<CustomLayersProvider
-  // layers>`), so the map frames what the user is actually looking at.
+  // "Fit to data" covers whatever is switched on: `data` and the visible
+  // custom layers.
   const { layers: customLayers, visibleLayerIds: visibleCustomIds } =
     useContext(CustomLayersContext);
   const boundsFc = useMemo(
@@ -162,8 +152,7 @@ export function GeoJsonViewer({
       ),
     [fc, dataShown, customLayers, visibleCustomIds],
   );
-  // Read inside the setup effect without re-running it (which would re-add the
-  // source and layers) every time a custom layer changes.
+  // Read in the setup effect without re-running it on every layer change.
   const boundsFcRef = useRef(boundsFc);
   boundsFcRef.current = boundsFc;
 
@@ -224,10 +213,9 @@ export function GeoJsonViewer({
       // Update hover highlight
       const map = mapRef.current;
       if (map && layersReady) {
-        // The highlight layers only cover `data`; features from custom
-        // layers get the popup but no highlight.
+        // The highlight layers only cover `data`, not custom layers.
         const featureId =
-          feature && isViewerFeature(feature) ? (feature.id ?? null) : null;
+          feature?.source === SOURCE_ID ? (feature.id ?? null) : null;
         updateHoverHighlight(map, featureId);
       }
 
@@ -250,7 +238,7 @@ export function GeoJsonViewer({
       if (map && layersReady) {
         const featureIds =
           features
-            ?.filter(isViewerFeature)
+            ?.filter((f) => f.source === SOURCE_ID)
             .map((f) => f.id)
             .filter((id): id is string | number => id !== undefined) ?? [];
         updateSelectionHighlight(map, featureIds);
@@ -259,59 +247,32 @@ export function GeoJsonViewer({
     [onSelect, mapRef, layersReady],
   );
 
-  // Hover and select also reach the GeoJSON layers from
-  // `<CustomLayersProvider>`. Hidden layers return no features, so a layer
-  // switched off in the menu stops reacting by itself.
+  // Hover and select reach `data` and the visible GeoJSON layers from
+  // `<CustomLayersProvider>`.
   const interactiveLayerIds = useMemo(
     () => [
       ...customLayers
-        .filter((def) =>
-          Object.values(def.sources).some((src) => src.type === "geojson"),
+        .filter(
+          (def) =>
+            visibleCustomIds.has(def.id) &&
+            Object.values(def.sources).some((src) => src.type === "geojson"),
         )
         .flatMap((def) => def.layers.map((l) => l.id)),
-      ...INTERACTIVE_LAYERS,
+      ...(dataShown ? INTERACTIVE_LAYERS : []),
     ],
-    [customLayers],
+    [customLayers, visibleCustomIds, dataShown],
   );
 
-  const { hoveredFeature, clearHoverWhere, deselectWhere } =
-    useFeatureInteraction({
-      mapRef,
-      layerIds: interactiveLayerIds,
-      sourceId: SOURCE_ID,
-      enabled: layersReady && !disabled,
-      hoverable,
-      selectable,
-      onHover: handleHover,
-      onSelect: handleSelect,
-    });
-
-  // Hover and selection are only refreshed when the pointer moves, so a
-  // layer hidden or removed some other way (keyboard, props) would leave its
-  // feature hovered — popup and all — or selected. Sources whose features
-  // can be on the map right now, and those of them that are visible:
-  const { presentSources, visibleSources } = useMemo(() => {
-    const present = new Set([SOURCE_ID]);
-    const visible = new Set(dataShown ? [SOURCE_ID] : []);
-    for (const def of customLayers) {
-      for (const sourceId of Object.keys(def.sources)) {
-        present.add(sourceId);
-        if (visibleCustomIds.has(def.id)) visible.add(sourceId);
-      }
-    }
-    return { presentSources: present, visibleSources: visible };
-  }, [customLayers, visibleCustomIds, dataShown]);
-
-  // A hidden layer ends the hover on its features; its selection is kept and
-  // comes back with the layer.
-  useEffect(() => {
-    clearHoverWhere((f) => !!f.source && !visibleSources.has(f.source));
-  }, [visibleSources, clearHoverWhere]);
-
-  // A removed layer takes its features out of the selection too.
-  useEffect(() => {
-    deselectWhere((f) => !!f.source && !presentSources.has(f.source));
-  }, [presentSources, deselectWhere]);
+  const { hoveredFeature } = useFeatureInteraction({
+    mapRef,
+    layerIds: interactiveLayerIds,
+    sourceId: SOURCE_ID,
+    enabled: layersReady && !disabled,
+    hoverable,
+    selectable,
+    onHover: handleHover,
+    onSelect: handleSelect,
+  });
 
   // ----- Single effect: add / update GeoJSON source + layers -----
   useEffect(() => {
@@ -462,10 +423,8 @@ export function GeoJsonViewer({
   }, [mapVersion, fc]);
 
   // ----- Show / hide `data` from the layer menu -----
-  // The effects above add their layers visible, and the setup effect re-adds
-  // them whenever `fc` or the map changes. `fc` and `mapVersion` are deps
-  // for that reason alone: this effect is declared after those, so it runs
-  // after them and hides the fresh layers again when `data` is switched off.
+  // `fc` and `mapVersion` are deps because the effects above re-add the
+  // layers visible when they change; this one runs after them.
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !mapReady || !layersReady) return;

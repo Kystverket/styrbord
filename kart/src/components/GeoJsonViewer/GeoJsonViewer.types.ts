@@ -108,8 +108,8 @@ export interface GeoJsonViewerProps extends MapBaseProps {
    * List `data` in the layer menu so the user can switch it off and on.
    * Without this, `data` is always shown and does not appear in the menu.
    *
-   * The row gets a colour swatch from `geoJsonStyle`. Hover and selection
-   * are paused while the layer is hidden.
+   * The row gets a colour swatch from `geoJsonStyle`. Hiding the layer
+   * ends hover and selection on it.
    *
    * @example
    * ```tsx
@@ -138,9 +138,8 @@ export interface GeoJsonViewerProps extends MapBaseProps {
    * Called when the hovered feature changes.
    * Receives the feature and the original mouse event, or null when hover ends.
    *
-   * Also fires for features of GeoJSON layers from `<CustomLayersProvider>`,
-   * not only for `data`. Tell them apart by `feature.source`, which is
-   * `"geojson-data"` for `data` and the layer's own source id otherwise.
+   * Also fires for GeoJSON layers from `<CustomLayersProvider>`;
+   * `feature.source` is `"geojson-data"` for `data`.
    */
   onHover?: (
     feature: InteractiveFeature | null,
@@ -149,9 +148,7 @@ export interface GeoJsonViewerProps extends MapBaseProps {
   /**
    * Called when the selection changes.
    * Receives array of selected features, or null when selection is cleared.
-   *
-   * Like `onHover`, this includes features of GeoJSON layers from
-   * `<CustomLayersProvider>`; check `feature.source`.
+   * Like `onHover`, includes custom GeoJSON layers.
    */
   onSelect?: (features: InteractiveFeature[] | null) => void;
   /**

@@ -57,13 +57,17 @@ export interface CustomLayersProviderProps {
    * Controlled list of layers. When set, this list replaces `initialLayers`,
    * `addLayer` and `removeLayer`: the map shows exactly these layers and
    * follows changes to the array, including new GeoJSON `data` for an
-   * existing id. Visibility is still managed by the provider — an id starts
-   * from its `defaultVisible` and then keeps whatever the user toggled it to,
-   * also if it is removed from the array and comes back.
+   * existing id. Visibility is still managed by the provider.
    *
    * Pass a memoised array; a new array every render re-checks every layer.
    */
   layers?: LayerDefinition[];
+}
+
+function warnControlled(call: string) {
+  console.warn(
+    `CustomLayersProvider: ${call} ignored — layers come from the \`layers\` prop.`,
+  );
 }
 
 export const CustomLayersProvider = ({
@@ -77,9 +81,8 @@ export const CustomLayersProvider = ({
   const isControlled = controlledLayers !== undefined;
   const layers = controlledLayers ?? uncontrolledLayers;
 
-  // Visibility the user has set, by id. Anything not in here follows the
-  // layer's `defaultVisible`, so a layer is visible from its very first
-  // render — there is no state to bring in line after `layers` changes.
+  // Visibility the user has set, by id; other layers follow `defaultVisible`.
+  // A layer removed and added again keeps the user's choice.
   const [overrides, setOverrides] = useState<ReadonlyMap<string, boolean>>(
     () => new Map(),
   );
@@ -114,40 +117,18 @@ export const CustomLayersProvider = ({
 
   const addLayer = useCallback(
     (def: LayerDefinition) => {
-      if (isControlled) {
-        console.warn(
-          `CustomLayersProvider: addLayer("${def.id}") ignored — the provider is controlled by its \`layers\` prop.`,
-        );
-        return;
-      }
-      setLayers((prev) => {
-        if (prev.some((l) => l.id === def.id)) return prev;
-        return [...prev, def];
-      });
+      if (isControlled) return warnControlled("addLayer");
+      setLayers((prev) =>
+        prev.some((l) => l.id === def.id) ? prev : [...prev, def],
+      );
     },
     [isControlled],
   );
 
   const removeLayer = useCallback(
     (id: string) => {
-      if (isControlled) {
-        console.warn(
-          `CustomLayersProvider: removeLayer("${id}") ignored — the provider is controlled by its \`layers\` prop.`,
-        );
-        return;
-      }
-      setLayers((prev) => {
-        const filtered = prev.filter((l) => l.id !== id);
-        if (filtered.length === prev.length) return prev;
-        return filtered;
-      });
-      // A layer added again later starts from its `defaultVisible`.
-      setOverrides((prev) => {
-        if (!prev.has(id)) return prev;
-        const next = new Map(prev);
-        next.delete(id);
-        return next;
-      });
+      if (isControlled) return warnControlled("removeLayer");
+      setLayers((prev) => prev.filter((l) => l.id !== id));
     },
     [isControlled],
   );

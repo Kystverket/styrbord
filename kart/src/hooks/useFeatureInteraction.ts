@@ -7,11 +7,9 @@ import type * as maplibregl from "maplibre-gl";
  */
 export type InteractiveFeature = Feature<Geometry, GeoJsonProperties> & {
   id?: string | number;
-  /**
-   * Id of the MapLibre source the feature was rendered from. Set on features
-   * from hover and click; tells a map's own data apart from other layers.
-   */
+  /** MapLibre source and layer the feature was hovered or clicked on. */
   source?: string;
+  layer?: { id: string };
 };
 
 export interface UseFeatureInteractionOptions {
@@ -53,20 +51,6 @@ export interface UseFeatureInteractionResult {
   clearSelection: () => void;
   /** Programmatically select features by their IDs. */
   selectByIds: (ids: (string | number)[]) => void;
-  /**
-   * End the hover if the hovered feature matches `predicate`, calling
-   * `onHover(null, null)`. For when a feature stops being hoverable without
-   * the pointer moving, e.g. its layer is hidden from the keyboard.
-   */
-  clearHoverWhere: (
-    predicate: (feature: InteractiveFeature) => boolean,
-  ) => void;
-  /**
-   * Drop the selected features that match `predicate`, calling `onSelect`
-   * with what is left. For when features leave the map, e.g. their layer is
-   * removed.
-   */
-  deselectWhere: (predicate: (feature: InteractiveFeature) => boolean) => void;
 }
 
 /**
@@ -162,27 +146,23 @@ export function useFeatureInteraction({
     [mapRef, sourceId],
   );
 
-  const clearHoverWhere = useCallback(
-    (predicate: (feature: InteractiveFeature) => boolean) => {
-      if (!hoveredFeature || !predicate(hoveredFeature)) return;
+  // A layer leaving `layerIds` (hidden or removed) takes its features out of
+  // hover and selection — the pointer may not move to tell us.
+  useEffect(() => {
+    const isGone = (f: InteractiveFeature) =>
+      !!f.layer && !layerIds.includes(f.layer.id);
+    if (hoveredFeature && isGone(hoveredFeature)) {
       prevHoveredIdRef.current = null;
       setHoveredFeature(null);
       onHoverRef.current?.(null, null);
-      const canvas = mapRef.current?.getCanvas();
-      if (canvas) canvas.style.cursor = "";
-    },
-    [hoveredFeature, mapRef],
-  );
-
-  const deselectWhere = useCallback(
-    (predicate: (feature: InteractiveFeature) => boolean) => {
-      const remaining = selectedFeatures.filter((f) => !predicate(f));
-      if (remaining.length === selectedFeatures.length) return;
+      if (mapRef.current) mapRef.current.getCanvas().style.cursor = "";
+    }
+    if (selectedFeatures.some(isGone)) {
+      const remaining = selectedFeatures.filter((f) => !isGone(f));
       setSelectedFeatures(remaining);
       onSelectRef.current?.(remaining.length > 0 ? remaining : null);
-    },
-    [selectedFeatures],
-  );
+    }
+  }, [layerIds, hoveredFeature, selectedFeatures, mapRef]);
 
   // ----- Setup map event handlers -----
   useEffect(() => {
@@ -304,7 +284,5 @@ export function useFeatureInteraction({
     hasSelection: selectedFeatures.length > 0,
     clearSelection,
     selectByIds,
-    clearHoverWhere,
-    deselectWhere,
   };
 }

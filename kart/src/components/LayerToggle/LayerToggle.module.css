@@ -150,7 +150,7 @@
   z-index: 1;
 }
 
-.richLabel {
+.rowLabel {
   display: flex;
   flex: 1;
   align-items: center;
@@ -175,20 +175,20 @@
   inset: 0;
 }
 
-.richText {
+.rowText {
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
 
-.richTitle,
+.rowTitle,
 .description {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.richTitle {
+.rowTitle {
   font-weight: var(--ds-font-weight-medium);
 }
 

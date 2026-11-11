@@ -324,23 +324,6 @@ export const WithLayerToggle: Story = {
   ),
 };
 
-// ---- With `data` listed in the layer toggle ----
-/**
- * `dataLayer` lists the viewer's own `data` in the layer menu, with a colour
- * swatch from `geoJsonStyle`, so it can be switched off and on.
- */
-export const WithDataInLayerToggle: Story = {
-  args: {
-    data: sampleGeoJson as FeatureCollection,
-    dataLayer: {
-      label: "tillatelse-til-tiltak-wgs84",
-      description: "14.10.2026 · Søknad",
-      category: "Tiltak",
-    },
-  },
-  render: WithLayerToggle.render,
-};
-
 // ---- Multiple GeoJSON layers in the layer toggle ----
 const token = colors.light;
 

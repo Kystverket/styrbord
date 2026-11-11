@@ -311,9 +311,8 @@ export function useMaplibreMap({
   }, [baseCtx.activeBaseLayerId, baseCtx.availableBaseLayers, mapVersion]);
 
   // ----- Sync overlay layers to the MapLibre instance -----
-  // Definitions currently on the map, keyed by id. Keeping the definition
-  // (not just the id) is what lets a layer that has left the contexts still be
-  // taken off the map — by then it is no longer in any current list.
+  // Definitions on the map by id — kept so a layer that has left the contexts
+  // can still be taken off.
   const appliedLayersRef = useRef<Map<string, LayerDefinition>>(new Map());
 
   useEffect(() => {
@@ -451,31 +450,19 @@ export function useMaplibreMap({
 // ---------------------------------------------------------------------------
 
 /**
- * Whether `next` can replace `prev` on the map by swapping GeoJSON data
- * alone: same source ids, identical source specs apart from GeoJSON `data`,
- * and identical layer specs. Any other GeoJSON option (`cluster`,
- * `generateId`, `promoteId`, …) is fixed once the source is added, so a
- * change to one needs a rebuild.
+ * Whether `next` can replace `prev` on the map with `setData` alone: same
+ * source specs apart from GeoJSON `data`, and same layer specs.
  */
 function canUpdateInPlace(prev: LayerDefinition, next: LayerDefinition) {
-  const prevSources = Object.entries(prev.sources);
-  if (prevSources.length !== Object.keys(next.sources).length) return false;
-  for (const [srcId, srcSpec] of prevSources) {
-    const nextSpec = next.sources[srcId];
-    if (!nextSpec) return false;
-    if (
-      JSON.stringify(withoutGeoJsonData(srcSpec)) !==
-      JSON.stringify(withoutGeoJsonData(nextSpec))
-    ) {
-      return false;
-    }
-  }
-  return JSON.stringify(prev.layers) === JSON.stringify(next.layers);
-}
-
-/** `spec` with GeoJSON `data` left out — the one part `setData` can change. */
-function withoutGeoJsonData(spec: maplibregl.SourceSpecification) {
-  return spec.type === "geojson" ? { ...spec, data: undefined } : spec;
+  const withoutData = (def: LayerDefinition) =>
+    JSON.stringify([
+      Object.entries(def.sources).map(([id, spec]) => [
+        id,
+        { ...spec, data: undefined },
+      ]),
+      def.layers,
+    ]);
+  return withoutData(prev) === withoutData(next);
 }
 
 /** Id of the style layer directly above `def`'s topmost layer, if any. */

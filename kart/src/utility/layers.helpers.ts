@@ -1,5 +1,4 @@
 import type { LayerSpecification } from "maplibre-gl";
-import type { Feature, FeatureCollection } from "geojson";
 import type {
   LayerDefinition,
   LayerFilterConfig,
@@ -46,37 +45,6 @@ export function isLayerIncluded(
 // ---------------------------------------------------------------------------
 
 /**
- * `data` with an id on every feature that has none. Hover and selection tell
- * features apart by id, so without one, features with equal properties —
- * e.g. several bare points with `properties: {}` — would count as one.
- *
- * Supplied ids are kept; the new ones are integers no feature already uses.
- * MapLibre's `generateId` is not used because it overwrites supplied ids.
- * URL data is returned as is: its features are unknown until it loads.
- */
-function withFeatureIds(
-  data: Feature | FeatureCollection | string,
-): Feature | FeatureCollection | string {
-  if (typeof data === "string") return data;
-  if (data.type === "Feature") {
-    return data.id === undefined ? { ...data, id: 0 } : data;
-  }
-  if (data.features.every((f) => f.id !== undefined)) return data;
-
-  const usedIds = new Set(data.features.map((f) => f.id));
-  let nextId = 0;
-  return {
-    ...data,
-    features: data.features.map((feature) => {
-      if (feature.id !== undefined) return feature;
-      while (usedIds.has(nextId)) nextId++;
-      usedIds.add(nextId);
-      return { ...feature, id: nextId };
-    }),
-  };
-}
-
-/**
  * Create a `LayerDefinition` from a simplified description.
  *
  * Consumers who need full MapLibre control can construct
@@ -111,7 +79,10 @@ export function createSimpleLayer(
         sources: {
           [sourceId]: {
             type: "geojson",
-            data: withFeatureIds(opts.data) as GeoJSON.GeoJSON,
+            data: opts.data as GeoJSON.GeoJSON,
+            // Hover and selection tell features apart by id; without one,
+            // features with equal properties would count as one.
+            generateId: true,
           },
         },
         layers: [
