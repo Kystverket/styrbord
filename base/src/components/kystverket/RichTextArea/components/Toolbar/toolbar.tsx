@@ -26,6 +26,8 @@ type ToolbarProps = {
   linkPopoverTarget?: string;
   canUploadImage?: boolean;
   showToolbar?: boolean;
+  allowHeading?: boolean;
+  allowLink?: boolean;
 
   onBold: () => void;
   onItalic: () => void;
@@ -185,6 +187,8 @@ export const Toolbar = ({
   onLink,
   onImageUpload,
   showToolbar = true,
+  allowHeading = true,
+  allowLink = true,
 }: ToolbarProps) => {
   if (!showToolbar) return;
 
@@ -198,7 +202,9 @@ export const Toolbar = ({
         disabled={disabled}
         onClick={onItalic}
       />
-      <FormatSelectButton disabled={disabled} selectedFormat={selectedFormat} onFormatChange={onFormatChange} />
+      {allowHeading && (
+        <FormatSelectButton disabled={disabled} selectedFormat={selectedFormat} onFormatChange={onFormatChange} />
+      )}
       <div className={styles.divider} aria-hidden />
       <ToolbarButton
         label="Bullet List"
@@ -214,20 +220,24 @@ export const Toolbar = ({
         disabled={disabled}
         onClick={onOrderedList}
       />
-      <ToolbarButton
-        label="Link"
-        icon="link"
-        active={isLinkActive}
-        disabled={disabled}
-        id={linkPopoverTarget}
-        popoverTarget={linkPopoverTarget}
-        onClick={onLink}
-      />
+      {allowLink && (
+        <ToolbarButton
+          label="Link"
+          icon="link"
+          active={isLinkActive}
+          disabled={disabled}
+          id={linkPopoverTarget}
+          popoverTarget={linkPopoverTarget}
+          onClick={onLink}
+        />
+      )}
       {canUploadImage && Boolean(onImageUpload) && (
         <ToolbarButton label="Upload image" icon="image" disabled={disabled} onClick={onImageUpload || (() => {})} />
       )}
       <div className={styles.divider} aria-hidden />
-      <FormatSelect disabled={disabled} selectedFormat={selectedFormat} onFormatChange={onFormatChange} />
+      {allowHeading && (
+        <FormatSelect disabled={disabled} selectedFormat={selectedFormat} onFormatChange={onFormatChange} />
+      )}
       <div className={styles.undoRedoGroup}>
         <ToolbarButton label="Undo" icon="undo" disabled={disabled} onClick={onUndo} />
         <ToolbarButton label="Redo" icon="redo" disabled={disabled} onClick={onRedo} />

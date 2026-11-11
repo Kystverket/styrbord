@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.12.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.11.0...styrbord-v2.12.0) (2026-11-10)
+
+
+### Features
+
+* **base:** Valgfrie overskrifter og lenker i RichTextArea ([#371](https://github.com/Kystverket/styrbord/issues/371)) ([362a863](https://github.com/Kystverket/styrbord/commit/362a863e44a8f6b770ec396410a75a8e6da56fdc))
+
 ## [2.11.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.10.0...styrbord-v2.11.0) (2026-11-09)
 
 
