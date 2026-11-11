@@ -1,4 +1,12 @@
-import React, { createContext, ReactNode, useCallback, useMemo } from "react";
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import type { LayerDefinition } from "~/utility/layers.types";
 
 // ---------------------------------------------------------------------------
@@ -70,21 +78,21 @@ export const CustomLayersProvider = ({
   initialLayers,
   layers: controlledLayers,
 }: CustomLayersProviderProps) => {
-  const [uncontrolledLayers, setLayers] = React.useState<LayerDefinition[]>(
+  const [uncontrolledLayers, setLayers] = useState<LayerDefinition[]>(
     () => initialLayers ?? [],
   );
   const layers = controlledLayers ?? uncontrolledLayers;
 
-  const [visibleLayerIds, setVisibleLayerIds] = React.useState<Set<string>>(
-    () => defaultVisibleIds(controlledLayers ?? initialLayers ?? []),
+  const [visibleLayerIds, setVisibleLayerIds] = useState<Set<string>>(() =>
+    defaultVisibleIds(controlledLayers ?? initialLayers ?? []),
   );
 
   // Controlled mode: give new ids their default visibility and forget
   // removed ones. Ids present before and after keep the user's choice.
-  const knownIdsRef = React.useRef<Set<string>>(
+  const knownIdsRef = useRef<Set<string>>(
     new Set((controlledLayers ?? []).map((l) => l.id)),
   );
-  React.useEffect(() => {
+  useEffect(() => {
     if (!controlledLayers) return;
     const known = knownIdsRef.current;
     const currentIds = new Set(controlledLayers.map((l) => l.id));
