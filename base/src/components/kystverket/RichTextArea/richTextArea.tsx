@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext, useEffect, useId, useRef, useState } from 'react';
-import type { FocusEvent, KeyboardEvent } from 'react';
+import type { KeyboardEvent } from 'react';
 import { Milkdown, MilkdownProvider, useEditor, useInstance } from '@milkdown/react';
 import { editorViewCtx } from '@milkdown/core';
 import type { InlineImageConfig } from '@milkdown/components/image-inline';
@@ -110,7 +110,7 @@ const RichTextAreaContainer = ({
   const resolvedValueRef = useRef(normalizedValue);
   const isValueFromEditorRef = useRef(false);
   const hasPendingSyncRef = useRef(false);
-  const [focusLeftCount, setFocusLeftCount] = useState(0);
+  const [isEditing, setIsEditing] = useState(false);
   const pendingImageSelectionRef = useRef<{ from: number; to: number } | null>(null);
   const maxLengthRef = useRef(maxLength);
   const isSyncingFromValueRef = useRef(false);
@@ -300,7 +300,7 @@ const RichTextAreaContainer = ({
     // Toolbaren flytter ikke lenger fokus til editoren, så å bare sjekke editorens fokus lot en utdatert
     // verdi overskrive første formatendring. Konsumentens bottomToolbar teller ikke: en knapp der som
     // nullstiller verdien skal slå gjennom.
-    if (isEditingInField(document.activeElement)) {
+    if (isEditing) {
       hasPendingSyncRef.current = true;
       return;
     }
@@ -315,7 +315,7 @@ const RichTextAreaContainer = ({
     } finally {
       isSyncingFromValueRef.current = false;
     }
-  }, [editorMarkdown, focusLeftCount, getEditor, loading, normalizedValue]);
+  }, [editorMarkdown, getEditor, isEditing, loading, normalizedValue]);
 
   // Sett knappestatus når editoren er tilgjengelig.
   useEffect(() => {
@@ -329,12 +329,6 @@ const RichTextAreaContainer = ({
       updateToolbarState(ctx);
     });
   }, [get]);
-
-  const handleEditorWrapperBlur = (e: FocusEvent<HTMLDivElement>) => {
-    if (hasPendingSyncRef.current && !isEditingInField(e.relatedTarget)) {
-      setFocusLeftCount((count) => count + 1);
-    }
-  };
 
   const showPlaceholder = isEditorEmpty && Boolean(placeholder);
 
@@ -383,7 +377,8 @@ const RichTextAreaContainer = ({
             .join(' ')}
           ref={editorWrapperRef}
           onKeyDown={handleEditorWrapperKeyDown}
-          onBlur={handleEditorWrapperBlur}
+          onFocus={(e) => setIsEditing(isEditingInField(e.target))}
+          onBlur={(e) => setIsEditing(isEditingInField(e.relatedTarget))}
         >
           {showToolbar !== false && (
             <span id={toolbarHintId} className="ds-sr-only">
