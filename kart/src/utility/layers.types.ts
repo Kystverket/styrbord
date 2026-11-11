@@ -31,6 +31,19 @@ export interface BaseLayerDefinition {
 // ---------------------------------------------------------------------------
 
 /**
+ * Colour swatch describing how a layer is drawn, for layer switcher UIs.
+ * `createSimpleLayer({ type: "geojson" })` fills this in from its paint colours.
+ */
+export interface LayerLegend {
+  /** Fill colour of the swatch. */
+  fillColor?: string;
+  /** Opacity of the fill, `0`–`1`. Defaults to `1`. */
+  fillOpacity?: number;
+  /** Border colour of the swatch. */
+  lineColor?: string;
+}
+
+/**
  * A complete layer definition that can be registered with either
  * the built-in or custom layers context.
  *
@@ -44,6 +57,13 @@ export interface LayerDefinition {
   label: string;
   /** Optional grouping category (e.g. "Havnedata", "Fiskeri"). */
   category?: string;
+  /**
+   * Secondary line shown under the label in layer switcher UIs
+   * (e.g. `"16.10.2026 · Søknad"`).
+   */
+  description?: string;
+  /** Colour swatch shown next to the label in layer switcher UIs. */
+  legend?: LayerLegend;
   /** Whether the layer starts visible. Defaults to `true`. */
   defaultVisible?: boolean;
   /** MapLibre sources keyed by source id. */
@@ -71,6 +91,8 @@ export interface SimpleLayerOptions {
   id: string;
   label: string;
   category?: string;
+  /** Secondary line shown under the label in the layer menu. */
+  description?: string;
   defaultVisible?: boolean;
   metadata?: Record<string, unknown>;
 }

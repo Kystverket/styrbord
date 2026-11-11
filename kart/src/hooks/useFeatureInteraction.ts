@@ -7,6 +7,9 @@ import type * as maplibregl from "maplibre-gl";
  */
 export type InteractiveFeature = Feature<Geometry, GeoJsonProperties> & {
   id?: string | number;
+  /** MapLibre source and layer the feature was hovered or clicked on. */
+  source?: string;
+  layer?: { id: string };
 };
 
 export interface UseFeatureInteractionOptions {
@@ -88,11 +91,14 @@ export function useFeatureInteraction({
    */
   const getFeatureId = useCallback(
     (feature: InteractiveFeature): string | number => {
-      if (feature.id !== undefined) return feature.id;
       // Fallback: use stringified properties as ID (not ideal but works)
-      return JSON.stringify(feature.properties);
+      const id = feature.id ?? JSON.stringify(feature.properties);
+      // Features from different sources can share an id; qualify it with the
+      // source so hovering from one layer to another registers as a change.
+      const { source } = feature;
+      return source && source !== sourceId ? `${source}:${id}` : id;
     },
-    [],
+    [sourceId],
   );
 
   /**
@@ -139,6 +145,24 @@ export function useFeatureInteraction({
     },
     [mapRef, sourceId],
   );
+
+  // A layer leaving `layerIds` (hidden or removed) takes its features out of
+  // hover and selection — the pointer may not move to tell us.
+  useEffect(() => {
+    const isGone = (f: InteractiveFeature) =>
+      !!f.layer && !layerIds.includes(f.layer.id);
+    if (hoveredFeature && isGone(hoveredFeature)) {
+      prevHoveredIdRef.current = null;
+      setHoveredFeature(null);
+      onHoverRef.current?.(null, null);
+      if (mapRef.current) mapRef.current.getCanvas().style.cursor = "";
+    }
+    if (selectedFeatures.some(isGone)) {
+      const remaining = selectedFeatures.filter((f) => !isGone(f));
+      setSelectedFeatures(remaining);
+      onSelectRef.current?.(remaining.length > 0 ? remaining : null);
+    }
+  }, [layerIds, hoveredFeature, selectedFeatures, mapRef]);
 
   // ----- Setup map event handlers -----
   useEffect(() => {

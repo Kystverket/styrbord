@@ -17,6 +17,7 @@ import type {
   LayerDefinition,
 } from "~/utility/layers.types";
 import { useTranslation } from "~/translations";
+import { trackLoad, whenLoaded } from "~/utility/whenLoaded";
 
 export interface UseMaplibreMapOptions {
   /** Initial coordinate to center the map on. Falls back to context `defaultCenter`. */
@@ -158,6 +159,7 @@ export function useMaplibreMap({
       }
 
       const map = new maplibregl.Map(mapOptions);
+      trackLoad(map);
       // Bottom controls stack upwards, so fullscreen goes first to end up below zoom.
       if (showFullscreenControl) {
         map.addControl(new maplibregl.FullscreenControl(), "bottom-right");
@@ -198,7 +200,7 @@ export function useMaplibreMap({
       mapRef.current = null;
       setMapVersion(0);
       appliedBaseLayerRef.current = null;
-      appliedLayerIdsRef.current = new Set();
+      appliedLayersRef.current = new Map();
     };
 
     // Create the map immediately if the container is already visible; otherwise
@@ -305,19 +307,13 @@ export function useMaplibreMap({
       appliedBaseLayerRef.current = desired ?? null;
     };
 
-    if (map.loaded()) {
-      syncBaseLayer();
-    } else {
-      map.once("load", syncBaseLayer);
-    }
-
-    return () => {
-      map.off("load", syncBaseLayer);
-    };
+    return whenLoaded(map, syncBaseLayer);
   }, [baseCtx.activeBaseLayerId, baseCtx.availableBaseLayers, mapVersion]);
 
   // ----- Sync overlay layers to the MapLibre instance -----
-  const appliedLayerIdsRef = useRef<Set<string>>(new Set());
+  // Definitions on the map by id — kept so a layer that has left the contexts
+  // can still be taken off.
+  const appliedLayersRef = useRef<Map<string, LayerDefinition>>(new Map());
 
   useEffect(() => {
     if (!mapReady) return;
@@ -338,23 +334,36 @@ export function useMaplibreMap({
       ]);
 
       const desiredIds = new Set(allDefs.map((d) => d.id));
-      const previousIds = appliedLayerIdsRef.current;
+      const applied = appliedLayersRef.current;
 
       // 1. Remove layers that are no longer in the definitions
-      for (const prevId of previousIds) {
+      for (const [prevId, prevDef] of applied) {
         if (!desiredIds.has(prevId)) {
-          const def = findPreviousDef(prevId, allDefs);
-          if (def) removeFromMap(map, def);
-          previousIds.delete(prevId);
+          removeFromMap(map, prevDef);
+          applied.delete(prevId);
         }
       }
 
-      // 2. Add new layers / update visibility
+      // 2. Add new layers / update changed ones / update visibility
       for (const def of allDefs) {
-        const isOnMap = previousIds.has(def.id);
-        const shouldBeVisible = allVisibleIds.has(def.id);
+        const visibility = allVisibleIds.has(def.id) ? "visible" : "none";
+        const prevDef = applied.get(def.id);
+        // Where a re-added layer goes, so replacing it keeps its place in
+        // the stack instead of jumping to the top.
+        let beforeId: string | undefined;
 
-        if (!isOnMap) {
+        if (prevDef && prevDef !== def) {
+          if (canUpdateInPlace(prevDef, def)) {
+            updateGeoJsonData(map, prevDef, def);
+            applied.set(def.id, def);
+          } else {
+            beforeId = layerAbove(map, prevDef);
+            removeFromMap(map, prevDef);
+            applied.delete(def.id);
+          }
+        }
+
+        if (!applied.has(def.id)) {
           // Add sources
           for (const [srcId, srcSpec] of Object.entries(def.sources)) {
             if (!map.getSource(srcId)) {
@@ -364,24 +373,16 @@ export function useMaplibreMap({
           // Add layers
           for (const layerSpec of def.layers) {
             if (!map.getLayer(layerSpec.id)) {
-              map.addLayer(layerSpec);
+              map.addLayer(layerSpec, beforeId);
             }
-            map.setLayoutProperty(
-              layerSpec.id,
-              "visibility",
-              shouldBeVisible ? "visible" : "none",
-            );
+            map.setLayoutProperty(layerSpec.id, "visibility", visibility);
           }
-          previousIds.add(def.id);
+          applied.set(def.id, def);
         } else {
           // Already on map — just update visibility
           for (const layerSpec of def.layers) {
             if (map.getLayer(layerSpec.id)) {
-              map.setLayoutProperty(
-                layerSpec.id,
-                "visibility",
-                shouldBeVisible ? "visible" : "none",
-              );
+              map.setLayoutProperty(layerSpec.id, "visibility", visibility);
             }
           }
         }
@@ -389,15 +390,7 @@ export function useMaplibreMap({
     };
 
     // The map might still be loading its initial style. Wait for "load" if so.
-    if (map.loaded()) {
-      syncLayers();
-    } else {
-      map.once("load", syncLayers);
-    }
-
-    return () => {
-      map.off("load", syncLayers);
-    };
+    return whenLoaded(map, syncLayers);
   }, [
     builtInCtx.availableLayers,
     builtInCtx.visibleLayerIds,
@@ -456,11 +449,48 @@ export function useMaplibreMap({
 // Helpers (module-level to avoid re-creation)
 // ---------------------------------------------------------------------------
 
-function findPreviousDef(
-  id: string,
-  currentDefs: LayerDefinition[],
-): LayerDefinition | undefined {
-  return currentDefs.find((d) => d.id === id);
+/**
+ * Whether `next` can replace `prev` on the map with `setData` alone: same
+ * source specs apart from GeoJSON `data`, and same layer specs.
+ */
+function canUpdateInPlace(prev: LayerDefinition, next: LayerDefinition) {
+  const withoutData = (def: LayerDefinition) =>
+    JSON.stringify([
+      Object.entries(def.sources).map(([id, spec]) => [
+        id,
+        { ...spec, data: undefined },
+      ]),
+      def.layers,
+    ]);
+  return withoutData(prev) === withoutData(next);
+}
+
+/** Id of the style layer directly above `def`'s topmost layer, if any. */
+function layerAbove(
+  map: maplibregl.Map,
+  def: LayerDefinition,
+): string | undefined {
+  const order = map.getLayersOrder();
+  const ownIds = new Set(def.layers.map((l) => l.id));
+  const top = order.findLastIndex((id) => ownIds.has(id));
+  return top === -1 ? undefined : order[top + 1];
+}
+
+/** Push changed GeoJSON `data` from `next` into the sources already on the map. */
+function updateGeoJsonData(
+  map: maplibregl.Map,
+  prev: LayerDefinition,
+  next: LayerDefinition,
+) {
+  for (const [srcId, nextSpec] of Object.entries(next.sources)) {
+    const prevSpec = prev.sources[srcId];
+    if (nextSpec.type !== "geojson" || prevSpec?.type !== "geojson") continue;
+    if (prevSpec.data === nextSpec.data) continue;
+    const source = map.getSource(srcId);
+    if (source instanceof maplibregl.GeoJSONSource) {
+      source.setData(nextSpec.data);
+    }
+  }
 }
 
 function removeFromMap(

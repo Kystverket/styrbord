@@ -55,11 +55,12 @@ export function createSimpleLayer(
 ): LayerDefinition {
   const base: Pick<
     LayerDefinition,
-    "id" | "label" | "category" | "defaultVisible" | "metadata"
+    "id" | "label" | "category" | "description" | "defaultVisible" | "metadata"
   > = {
     id: opts.id,
     label: opts.label,
     category: opts.category,
+    description: opts.description,
     defaultVisible: opts.defaultVisible ?? true,
     metadata: opts.metadata,
   };
@@ -70,10 +71,18 @@ export function createSimpleLayer(
     case "geojson": {
       return {
         ...base,
+        legend: {
+          fillColor: opts.fillColor ?? VIEW_FILL_COLOR,
+          fillOpacity: opts.fillOpacity ?? VIEW_FILL_OPACITY,
+          lineColor: opts.lineColor ?? VIEW_LINE_COLOR,
+        },
         sources: {
           [sourceId]: {
             type: "geojson",
             data: opts.data as GeoJSON.GeoJSON,
+            // Hover and selection tell features apart by id; without one,
+            // features with equal properties would count as one.
+            generateId: true,
           },
         },
         layers: [

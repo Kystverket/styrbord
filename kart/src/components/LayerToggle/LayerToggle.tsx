@@ -1,7 +1,8 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useId, useMemo, useState } from "react";
+import { Icon, Radio, Search, SearchInput, Switch } from "@kystverket/styrbord";
 import { useMapLayers } from "~/hooks/useMapLayers";
-import type { LayerEntry } from "~/hooks/useMapLayers";
-import type { LayerToggleProps } from "./LayerToggle.types";
+import type { LayerLegend } from "~/utility/layers.types";
+import type { LayerMenuItem, LayerToggleProps } from "./LayerToggle.types";
 import styles from "./LayerToggle.module.css";
 import { useTranslation } from "~/translations";
 
@@ -28,32 +29,70 @@ function LayersIcon({ className }: { className?: string }) {
 }
 
 // ---------------------------------------------------------------------------
-// Chevron icon for collapsible groups
+// Rows
 // ---------------------------------------------------------------------------
-function ChevronIcon({
-  expanded,
-  className,
-}: {
-  expanded: boolean;
-  className?: string;
-}) {
+
+/** One layer in the menu, from the layer contexts or `extraLayers`. */
+interface MenuEntry {
+  definition: LayerMenuItem;
+  visible: boolean;
+  /** Custom and extra layers: listed first, always expanded. */
+  pinned: boolean;
+  onToggle: () => void;
+}
+
+function LegendSwatch({ legend }: { legend: LayerLegend }) {
   return (
-    <svg
-      className={className}
-      viewBox="0 0 16 16"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
+    <span
+      className={styles.swatch}
+      style={{ borderColor: legend.lineColor ?? legend.fillColor }}
       aria-hidden="true"
-      style={{
-        transform: expanded ? "rotate(90deg)" : undefined,
-        transition: "transform 150ms ease",
-      }}
     >
-      <polyline points="6 4 10 8 6 12" />
-    </svg>
+      <span
+        className={styles.swatchFill}
+        style={{
+          background: legend.fillColor,
+          opacity: legend.fillOpacity ?? 1,
+        }}
+      />
+    </span>
+  );
+}
+
+/**
+ * Switch, optional swatch, then the label over an optional description. The
+ * text is a `<label>`, stretched over the whole row in CSS, so clicking
+ * anywhere on the row toggles the layer.
+ */
+function LayerRow({ entry }: { entry: MenuEntry }) {
+  const id = useId();
+  const { label, description, legend } = entry.definition;
+  return (
+    <div className={styles.layerItem}>
+      <Switch
+        id={id}
+        checked={entry.visible}
+        onChange={entry.onToggle}
+        aria-labelledby={`${id}-label`}
+        aria-describedby={description ? `${id}-description` : undefined}
+      />
+      <label htmlFor={id} className={styles.rowLabel}>
+        {legend && <LegendSwatch legend={legend} />}
+        <span className={styles.rowText}>
+          <span
+            id={`${id}-label`}
+            className={description ? styles.rowTitle : undefined}
+          >
+            {label}
+          </span>
+          {description && (
+            <span id={`${id}-description`} className={styles.description}>
+              {description}
+            </span>
+          )}
+        </span>
+      </label>
+    </div>
   );
 }
 
@@ -61,14 +100,27 @@ function ChevronIcon({
 // Component
 // ---------------------------------------------------------------------------
 
+interface LayerGroup {
+  category: string;
+  entries: MenuEntry[];
+}
+
 /**
  * LayerToggle — a map overlay control that lets users turn map layers
  * on and off.
  *
  * Place this component **inside** the map container element (the same
  * `<div>` whose ref is `mapContainerRef`) so it is positioned over the
- * map. It reads all available layers from `useMapLayers` and groups
- * them by category.
+ * map. It reads all available layers from `useMapLayers`.
+ *
+ * The panel lists, in order:
+ * 1. Custom layers (from `CustomLayersProvider`), grouped by category and
+ *    always expanded. Layers with a `legend` or `description` — such as
+ *    GeoJSON layers from `createSimpleLayer` — show a colour swatch and a
+ *    second line.
+ * 2. Background maps, as radio buttons, when more than one is available.
+ * 3. Built-in and WMS catalog layers, in collapsible groups showing how many
+ *    of their layers are visible.
  *
  * @example
  * ```tsx
@@ -80,8 +132,10 @@ function ChevronIcon({
 export function LayerToggle({
   className,
   defaultOpen = false,
+  extraLayers,
 }: LayerToggleProps) {
   const { t } = useTranslation();
+  const baseLayerName = useId();
   const [open, setOpen] = useState(defaultOpen);
   const [filter, setFilter] = useState("");
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
@@ -92,7 +146,6 @@ export function LayerToggle({
     activeBaseLayerId,
     setActiveBaseLayer,
   } = useMapLayers();
-  const panelRef = useRef<HTMLDivElement>(null);
 
   const showBaseLayerGroup = availableBaseLayers.length > 1;
 
@@ -118,42 +171,59 @@ export function LayerToggle({
     );
   }, [availableBaseLayers, normalizedFilter]);
 
-  // Group layers by category, applying filter
-  const grouped = useMemo(() => {
-    const map = new Map<string, LayerEntry[]>();
-    for (const entry of allLayers) {
-      if (
-        normalizedFilter &&
-        !entry.definition.label.toLowerCase().includes(normalizedFilter)
-      ) {
-        continue;
-      }
-      const cat = entry.definition.category ?? t("layers.defaultCategory");
-      const list = map.get(cat);
-      if (list) {
-        list.push(entry);
-      } else {
-        map.set(cat, [entry]);
-      }
+  // Group layers by category, applying filter. Pinned layers (custom and
+  // `extraLayers`) are kept apart from built-in/WMS ones: they are the
+  // application's own data and are listed first, always expanded.
+  const { pinnedGroups, otherGroups } = useMemo(() => {
+    const menuEntries: MenuEntry[] = [
+      ...(extraLayers ?? []).map(
+        ({ visible, onToggle, ...definition }): MenuEntry => ({
+          definition,
+          visible,
+          pinned: true,
+          onToggle,
+        }),
+      ),
+      ...allLayers.map(
+        (entry): MenuEntry => ({
+          definition: entry.definition,
+          visible: entry.visible,
+          pinned: entry.origin === "custom",
+          onToggle: () => toggleLayer(entry.definition.id),
+        }),
+      ),
+    ];
+    const matchesFilter = ({ label, description }: LayerMenuItem) =>
+      !normalizedFilter ||
+      label.toLowerCase().includes(normalizedFilter) ||
+      !!description?.toLowerCase().includes(normalizedFilter);
+
+    const pinned = new Map<string, MenuEntry[]>();
+    const other = new Map<string, MenuEntry[]>();
+    for (const entry of menuEntries) {
+      if (!matchesFilter(entry.definition)) continue;
+      const target = entry.pinned ? pinned : other;
+      const category = entry.definition.category ?? t("layers.defaultCategory");
+      target.set(category, [...(target.get(category) ?? []), entry]);
     }
-    return map;
-  }, [allLayers, normalizedFilter, t]);
+    const toGroups = (groups: Map<string, MenuEntry[]>): LayerGroup[] =>
+      Array.from(groups, ([category, entries]) => ({ category, entries }));
+    return { pinnedGroups: toGroups(pinned), otherGroups: toGroups(other) };
+  }, [allLayers, extraLayers, normalizedFilter, t, toggleLayer]);
 
   // When a filter is active, expand all groups so results are visible
-  const isGroupExpanded = useCallback(
-    (group: string) => {
-      if (normalizedFilter) return true;
-      return expandedGroups.has(group);
-    },
-    [normalizedFilter, expandedGroups],
-  );
+  const isGroupExpanded = (group: string) =>
+    normalizedFilter !== "" || expandedGroups.has(group);
 
   const rootClassName = [styles.root, className].filter(Boolean).join(" ");
 
   const showBaseGroup = showBaseLayerGroup && filteredBaseLayers.length > 0;
-  const hasContent = grouped.size > 0 || showBaseGroup;
+  const sectionCount =
+    pinnedGroups.length + otherGroups.length + (showBaseGroup ? 1 : 0);
+  // A lone group of layers needs no heading — there is nothing to tell apart.
+  const showHeadings = sectionCount > 1;
 
-  if (allLayers.length === 0 && !showBaseLayerGroup) {
+  if (allLayers.length === 0 && !extraLayers?.length && !showBaseLayerGroup) {
     return null;
   }
 
@@ -172,19 +242,19 @@ export function LayerToggle({
       </button>
 
       {open && (
-        <div className={styles.panel} ref={panelRef} role="group">
+        <div className={styles.panel} role="group" data-size="sm">
           <div className={styles.filterWrapper}>
-            <input
-              type="text"
-              className={styles.filterInput}
-              placeholder={t("layers.searchPlaceholder")}
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              aria-label={t("layers.filterAriaLabel")}
-            />
+            <Search>
+              <SearchInput
+                aria-label={t("layers.filterAriaLabel")}
+                placeholder={t("layers.searchPlaceholder")}
+                value={filter}
+                onChange={(e) => setFilter(e.target.value)}
+              />
+            </Search>
           </div>
 
-          {!hasContent ? (
+          {sectionCount === 0 ? (
             <div className={styles.emptyMessage}>
               {normalizedFilter
                 ? t("layers.noResults")
@@ -192,60 +262,68 @@ export function LayerToggle({
             </div>
           ) : (
             <>
+              {pinnedGroups.map(({ category, entries }) => (
+                <section key={`pinned-${category}`} className={styles.section}>
+                  {showHeadings && (
+                    <div className={styles.sectionHeading}>{category}</div>
+                  )}
+                  {entries.map((entry) => (
+                    <LayerRow key={entry.definition.id} entry={entry} />
+                  ))}
+                </section>
+              ))}
+
               {showBaseGroup && (
-                <div>
-                  <span className={styles.categoryHeading}>
+                <section className={styles.section}>
+                  <div className={styles.sectionHeading}>
                     {t("layers.backgroundMaps")}
-                  </span>
+                  </div>
                   {filteredBaseLayers.map((bl) => (
-                    <label key={bl.id} className={styles.layerItem}>
-                      <input
-                        type="radio"
-                        className={styles.radio}
-                        name="base-layer"
+                    <div key={bl.id} className={styles.layerItem}>
+                      <Radio
+                        label={bl.label}
+                        name={baseLayerName}
+                        value={bl.id}
                         checked={bl.id === activeBaseLayerId}
                         onChange={() => setActiveBaseLayer(bl.id)}
                       />
-                      {bl.label}
-                    </label>
+                    </div>
                   ))}
-                </div>
+                </section>
               )}
-              {Array.from(grouped.entries()).map(([category, entries]) => {
-                const showHeading = grouped.size > 1 || showBaseGroup;
-                const expanded = isGroupExpanded(category);
+
+              {otherGroups.map(({ category, entries }) => {
+                const expanded = !showHeadings || isGroupExpanded(category);
                 return (
-                  <div key={category}>
-                    {showHeading ? (
+                  <section key={`other-${category}`} className={styles.section}>
+                    {showHeadings && (
                       <button
                         type="button"
-                        className={styles.categoryHeading}
+                        className={`${styles.sectionHeading} ${styles.groupToggle}`}
                         onClick={() => toggleGroup(category)}
                         aria-expanded={expanded}
                       >
-                        <ChevronIcon
-                          expanded={expanded}
+                        <span
                           className={styles.chevron}
-                        />
-                        {category}
-                      </button>
-                    ) : null}
-                    {(!showHeading || expanded) &&
-                      entries.map((entry) => (
-                        <label
-                          key={entry.definition.id}
-                          className={styles.layerItem}
+                          data-expanded={expanded}
                         >
-                          <input
-                            type="checkbox"
-                            className={styles.checkbox}
-                            checked={entry.visible}
-                            onChange={() => toggleLayer(entry.definition.id)}
-                          />
-                          {entry.definition.label}
-                        </label>
+                          <Icon material="keyboard_arrow_down" size="sm" />
+                        </span>
+                        <span className={styles.groupName}>{category}</span>
+                        {/* Counts of filtered lists would mislead. */}
+                        {!normalizedFilter && (
+                          <span className={styles.groupCount}>
+                            {entries.filter((e) => e.visible).length}/
+                            {entries.length}
+                          </span>
+                        )}
+                      </button>
+                    )}
+                    {expanded &&
+                      entries.map((entry) => (
+                        <LayerRow key={entry.definition.id} entry={entry} />
                       ))}
-                  </div>
+                  </section>
                 );
               })}
             </>
