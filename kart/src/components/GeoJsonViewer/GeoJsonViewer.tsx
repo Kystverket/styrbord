@@ -274,16 +274,44 @@ export function GeoJsonViewer({
     [customLayers],
   );
 
-  const { hoveredFeature } = useFeatureInteraction({
-    mapRef,
-    layerIds: interactiveLayerIds,
-    sourceId: SOURCE_ID,
-    enabled: layersReady && !disabled,
-    hoverable,
-    selectable,
-    onHover: handleHover,
-    onSelect: handleSelect,
-  });
+  const { hoveredFeature, clearHoverWhere, deselectWhere } =
+    useFeatureInteraction({
+      mapRef,
+      layerIds: interactiveLayerIds,
+      sourceId: SOURCE_ID,
+      enabled: layersReady && !disabled,
+      hoverable,
+      selectable,
+      onHover: handleHover,
+      onSelect: handleSelect,
+    });
+
+  // Hover and selection are only refreshed when the pointer moves, so a
+  // layer hidden or removed some other way (keyboard, props) would leave its
+  // feature hovered — popup and all — or selected. Sources whose features
+  // can be on the map right now, and those of them that are visible:
+  const { presentSources, visibleSources } = useMemo(() => {
+    const present = new Set([SOURCE_ID]);
+    const visible = new Set(dataShown ? [SOURCE_ID] : []);
+    for (const def of customLayers) {
+      for (const sourceId of Object.keys(def.sources)) {
+        present.add(sourceId);
+        if (visibleCustomIds.has(def.id)) visible.add(sourceId);
+      }
+    }
+    return { presentSources: present, visibleSources: visible };
+  }, [customLayers, visibleCustomIds, dataShown]);
+
+  // A hidden layer ends the hover on its features; its selection is kept and
+  // comes back with the layer.
+  useEffect(() => {
+    clearHoverWhere((f) => !!f.source && !visibleSources.has(f.source));
+  }, [visibleSources, clearHoverWhere]);
+
+  // A removed layer takes its features out of the selection too.
+  useEffect(() => {
+    deselectWhere((f) => !!f.source && !presentSources.has(f.source));
+  }, [presentSources, deselectWhere]);
 
   // ----- Single effect: add / update GeoJSON source + layers -----
   useEffect(() => {

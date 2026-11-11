@@ -452,19 +452,30 @@ export function useMaplibreMap({
 
 /**
  * Whether `next` can replace `prev` on the map by swapping GeoJSON data
- * alone: same source ids and types, and identical layer specs.
+ * alone: same source ids, identical source specs apart from GeoJSON `data`,
+ * and identical layer specs. Any other GeoJSON option (`cluster`,
+ * `generateId`, `promoteId`, …) is fixed once the source is added, so a
+ * change to one needs a rebuild.
  */
 function canUpdateInPlace(prev: LayerDefinition, next: LayerDefinition) {
   const prevSources = Object.entries(prev.sources);
   if (prevSources.length !== Object.keys(next.sources).length) return false;
   for (const [srcId, srcSpec] of prevSources) {
     const nextSpec = next.sources[srcId];
-    if (!nextSpec || nextSpec.type !== srcSpec.type) return false;
-    if (srcSpec.type !== "geojson") {
-      if (JSON.stringify(srcSpec) !== JSON.stringify(nextSpec)) return false;
+    if (!nextSpec) return false;
+    if (
+      JSON.stringify(withoutGeoJsonData(srcSpec)) !==
+      JSON.stringify(withoutGeoJsonData(nextSpec))
+    ) {
+      return false;
     }
   }
   return JSON.stringify(prev.layers) === JSON.stringify(next.layers);
+}
+
+/** `spec` with GeoJSON `data` left out — the one part `setData` can change. */
+function withoutGeoJsonData(spec: maplibregl.SourceSpecification) {
+  return spec.type === "geojson" ? { ...spec, data: undefined } : spec;
 }
 
 /** Id of the style layer directly above `def`'s topmost layer, if any. */

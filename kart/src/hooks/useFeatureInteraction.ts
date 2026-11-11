@@ -53,6 +53,20 @@ export interface UseFeatureInteractionResult {
   clearSelection: () => void;
   /** Programmatically select features by their IDs. */
   selectByIds: (ids: (string | number)[]) => void;
+  /**
+   * End the hover if the hovered feature matches `predicate`, calling
+   * `onHover(null, null)`. For when a feature stops being hoverable without
+   * the pointer moving, e.g. its layer is hidden from the keyboard.
+   */
+  clearHoverWhere: (
+    predicate: (feature: InteractiveFeature) => boolean,
+  ) => void;
+  /**
+   * Drop the selected features that match `predicate`, calling `onSelect`
+   * with what is left. For when features leave the map, e.g. their layer is
+   * removed.
+   */
+  deselectWhere: (predicate: (feature: InteractiveFeature) => boolean) => void;
 }
 
 /**
@@ -146,6 +160,28 @@ export function useFeatureInteraction({
       onSelectRef.current?.(matched.length > 0 ? matched : null);
     },
     [mapRef, sourceId],
+  );
+
+  const clearHoverWhere = useCallback(
+    (predicate: (feature: InteractiveFeature) => boolean) => {
+      if (!hoveredFeature || !predicate(hoveredFeature)) return;
+      prevHoveredIdRef.current = null;
+      setHoveredFeature(null);
+      onHoverRef.current?.(null, null);
+      const canvas = mapRef.current?.getCanvas();
+      if (canvas) canvas.style.cursor = "";
+    },
+    [hoveredFeature, mapRef],
+  );
+
+  const deselectWhere = useCallback(
+    (predicate: (feature: InteractiveFeature) => boolean) => {
+      const remaining = selectedFeatures.filter((f) => !predicate(f));
+      if (remaining.length === selectedFeatures.length) return;
+      setSelectedFeatures(remaining);
+      onSelectRef.current?.(remaining.length > 0 ? remaining : null);
+    },
+    [selectedFeatures],
   );
 
   // ----- Setup map event handlers -----
@@ -268,5 +304,7 @@ export function useFeatureInteraction({
     hasSelection: selectedFeatures.length > 0,
     clearSelection,
     selectByIds,
+    clearHoverWhere,
+    deselectWhere,
   };
 }
