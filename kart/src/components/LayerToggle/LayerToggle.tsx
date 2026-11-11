@@ -70,7 +70,8 @@ function LegendSwatch({ legend }: { legend: LayerLegend }) {
 /**
  * A layer with a swatch and/or a description: switch, swatch, then the label
  * over the description. The switch is labelled by the visible text, and the
- * text is a `<label>` so clicking it toggles the layer like a normal label.
+ * text is a `<label>`, stretched over the whole row in CSS, so clicking
+ * anywhere on the row toggles the layer.
  */
 function RichLayerRow({
   entry,

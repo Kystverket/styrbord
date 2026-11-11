@@ -125,10 +125,29 @@
   padding: var(--ds-size-3);
   border-radius: var(--ds-border-radius-default);
   min-width: 0;
+  /* Containing block for the label overlay below. */
+  position: relative;
 }
 
 .layerItem:hover {
   background: var(--ds-color-neutral-surface-hover);
+}
+
+/*
+ * Stretch the row's label over the whole row, so a click anywhere on it
+ * (padding, gap, swatch) toggles the control. A label click toggles its
+ * input exactly once, so there is no extra click handler to double up.
+ */
+.layerItem label::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+/* Keep the control itself above the overlay so its own hover styles work. */
+.layerItem input {
+  z-index: 1;
 }
 
 .richLabel {
