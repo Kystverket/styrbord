@@ -2,7 +2,7 @@
 
 import { useContext, useEffect, useId, useRef, useState } from 'react';
 import type { KeyboardEvent } from 'react';
-import { Milkdown, MilkdownProvider, useEditor } from '@milkdown/react';
+import { Milkdown, MilkdownProvider, useEditor, useInstance } from '@milkdown/react';
 import { editorViewCtx } from '@milkdown/core';
 import type { InlineImageConfig } from '@milkdown/components/image-inline';
 import { redoCommand, undoCommand } from '@milkdown/plugin-history';
@@ -109,6 +109,10 @@ const RichTextAreaContainer = ({
   const latestOnRemoveRef = useRef(onImageRemove);
   const lastKnownMarkdownRef = useRef(normalizedValue);
   const lastSyncedEditorMarkdownRef = useRef(normalizedValue);
+  const resolvedValueRef = useRef(normalizedValue);
+  const isValueFromEditorRef = useRef(false);
+  const hasPendingSyncRef = useRef(false);
+  const [isEditing, setIsEditing] = useState(false);
   const pendingImageSelectionRef = useRef<{ from: number; to: number } | null>(null);
   const maxLengthRef = useRef(maxLength);
   const isSyncingFromValueRef = useRef(false);
@@ -117,6 +121,16 @@ const RichTextAreaContainer = ({
   latestOnUploadRef.current = onImageUpload;
   latestOnRemoveRef.current = onImageRemove;
   maxLengthRef.current = maxLength;
+
+  const keepImageMappingsInValue = (markdown: string) => {
+    const refsInValue = new Set(getImageRefsFromMarkdown(markdown));
+    for (const [src, ref] of sasToRefMap.current) {
+      if (!refsInValue.has(ref)) sasToRefMap.current.delete(src);
+    }
+    for (const ref of refToPreviewMap.current.keys()) {
+      if (!refsInValue.has(ref)) refToPreviewMap.current.delete(ref);
+    }
+  };
 
   // Resolve stable image refs to display URLs before markdown is loaded into the editor.
   useEffect(() => {
@@ -139,21 +153,21 @@ const RichTextAreaContainer = ({
           return;
         }
 
-        sasToRefMap.current.clear();
-        refToPreviewMap.current.clear();
+        keepImageMappingsInValue(normalizedValue);
         for (const [src, ref] of nextSasToRefMap.entries()) {
           sasToRefMap.current.set(src, ref);
           refToPreviewMap.current.set(ref, src);
         }
 
+        resolvedValueRef.current = normalizedValue;
         setEditorMarkdown(resolvedMarkdown);
       } catch {
         if (isCancelled) {
           return;
         }
 
-        sasToRefMap.current.clear();
-        refToPreviewMap.current.clear();
+        keepImageMappingsInValue(normalizedValue);
+        resolvedValueRef.current = normalizedValue;
         setEditorMarkdown(normalizedValue);
       }
     };
@@ -213,6 +227,7 @@ const RichTextAreaContainer = ({
           );
 
           lastKnownMarkdownRef.current = transformedMarkdown;
+          isValueFromEditorRef.current = true;
           latestOnChangeRef.current(transformedMarkdown);
           updateToolbarState(ctx);
         },
@@ -224,6 +239,8 @@ const RichTextAreaContainer = ({
       }),
     [disabled, allowHeading, allowLink],
   );
+
+  const [, getEditor] = useInstance();
 
   const imageUpload = useRichTextImageUpload({
     disabled,
@@ -264,15 +281,29 @@ const RichTextAreaContainer = ({
       executeInEditor,
     });
 
+  const isEditingInField = (element: Element | null) =>
+    Boolean(editorWrapperRef.current?.contains(element) && !bottomToolbarRef.current?.contains(element));
+
   // Synker ekstern verdi til editor ved endringer.
   useEffect(() => {
-    const editor = get();
+    const editor = getEditor();
 
     if (!editor) {
       return;
     }
 
-    if (normalizedValue === lastKnownMarkdownRef.current && editorMarkdown === lastSyncedEditorMarkdownRef.current) {
+    const isResolvingNewValue = resolvedValueRef.current !== normalizedValue;
+    if (isResolvingNewValue) {
+      return;
+    }
+
+    const editorShowsValue =
+      !hasPendingSyncRef.current &&
+      normalizedValue === lastKnownMarkdownRef.current &&
+      (isValueFromEditorRef.current || editorMarkdown === lastSyncedEditorMarkdownRef.current);
+    if (editorShowsValue) {
+      isValueFromEditorRef.current = false;
+      lastSyncedEditorMarkdownRef.current = editorMarkdown;
       return;
     }
 
@@ -280,20 +311,22 @@ const RichTextAreaContainer = ({
     // Toolbaren flytter ikke lenger fokus til editoren, så å bare sjekke editorens fokus lot en utdatert
     // verdi overskrive første formatendring. Konsumentens bottomToolbar teller ikke: en knapp der som
     // nullstiller verdien skal slå gjennom.
-    const { activeElement } = document;
-    if (editorWrapperRef.current?.contains(activeElement) && !bottomToolbarRef.current?.contains(activeElement)) {
+    if (isEditing) {
+      hasPendingSyncRef.current = true;
       return;
     }
 
+    hasPendingSyncRef.current = false;
     lastKnownMarkdownRef.current = normalizedValue;
     lastSyncedEditorMarkdownRef.current = editorMarkdown;
+    isValueFromEditorRef.current = false;
     isSyncingFromValueRef.current = true;
     try {
       editor.action(replaceAll(editorMarkdown));
     } finally {
       isSyncingFromValueRef.current = false;
     }
-  }, [editorMarkdown, get, normalizedValue]);
+  }, [editorMarkdown, getEditor, isEditing, loading, normalizedValue]);
 
   // Sett knappestatus når editoren er tilgjengelig.
   useEffect(() => {
@@ -355,6 +388,8 @@ const RichTextAreaContainer = ({
             .join(' ')}
           ref={editorWrapperRef}
           onKeyDown={handleEditorWrapperKeyDown}
+          onFocus={(e) => setIsEditing(isEditingInField(e.target))}
+          onBlur={(e) => setIsEditing(isEditingInField(e.relatedTarget))}
         >
           {showToolbar !== false && (
             <span id={toolbarHintId} className="ds-sr-only">

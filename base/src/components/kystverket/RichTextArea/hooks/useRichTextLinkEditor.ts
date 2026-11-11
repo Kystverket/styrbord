@@ -64,6 +64,7 @@ export const useRichTextLinkEditor = ({ disabled, executeInEditor }: UseRichText
 
       view.dispatch(tr);
       closeLinkEditor();
+      view.focus();
     });
   };
 
@@ -84,6 +85,7 @@ export const useRichTextLinkEditor = ({ disabled, executeInEditor }: UseRichText
 
       view.dispatch(view.state.tr.removeMark(linkEditorState.from, linkEditorState.to, linkMarkType));
       closeLinkEditor();
+      view.focus();
     });
   };
 
