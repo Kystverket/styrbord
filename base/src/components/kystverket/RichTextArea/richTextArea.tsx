@@ -120,6 +120,16 @@ const RichTextAreaContainer = ({
   latestOnRemoveRef.current = onImageRemove;
   maxLengthRef.current = maxLength;
 
+  const keepImageMappingsInValue = (markdown: string) => {
+    const refsInValue = new Set(getImageRefsFromMarkdown(markdown));
+    for (const [src, ref] of sasToRefMap.current) {
+      if (!refsInValue.has(ref)) sasToRefMap.current.delete(src);
+    }
+    for (const ref of refToPreviewMap.current.keys()) {
+      if (!refsInValue.has(ref)) refToPreviewMap.current.delete(ref);
+    }
+  };
+
   // Resolve stable image refs to display URLs before markdown is loaded into the editor.
   useEffect(() => {
     let isCancelled = false;
@@ -141,8 +151,7 @@ const RichTextAreaContainer = ({
           return;
         }
 
-        sasToRefMap.current.clear();
-        refToPreviewMap.current.clear();
+        keepImageMappingsInValue(normalizedValue);
         for (const [src, ref] of nextSasToRefMap.entries()) {
           sasToRefMap.current.set(src, ref);
           refToPreviewMap.current.set(ref, src);
@@ -155,8 +164,7 @@ const RichTextAreaContainer = ({
           return;
         }
 
-        sasToRefMap.current.clear();
-        refToPreviewMap.current.clear();
+        keepImageMappingsInValue(normalizedValue);
         resolvedValueRef.current = normalizedValue;
         setEditorMarkdown(normalizedValue);
       }
