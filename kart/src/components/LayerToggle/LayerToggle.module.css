@@ -150,6 +150,15 @@
   z-index: 1;
 }
 
+/*
+ * Designsystemet nudges a toggle down to the first line of the label inside
+ * its own field. The switch's label sits outside that field, beside it, and
+ * the row already centres the switch — the nudge only puts it off centre.
+ */
+.layerItem input[role="switch"] {
+  translate: none;
+}
+
 .rowLabel {
   display: flex;
   flex: 1;
