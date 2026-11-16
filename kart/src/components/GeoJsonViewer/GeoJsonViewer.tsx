@@ -69,6 +69,23 @@ interface LoadedUrlData {
   data: GeoJSON.GeoJSON;
 }
 
+/** The GeoJSON sources of `def` that load their data from a URL. */
+function urlSourcesOf(def: LayerDefinition): { srcId: string; url: string }[] {
+  return Object.entries(def.sources).flatMap(([srcId, src]) =>
+    src.type === "geojson" && typeof src.data === "string"
+      ? [{ srcId, url: src.data }]
+      : [],
+  );
+}
+
+/** Whether `loaded` holds the data of `srcId` for its current `url`. */
+function isUrlLoaded(
+  loaded: Record<string, LoadedUrlData>,
+  { srcId, url }: { srcId: string; url: string },
+): boolean {
+  return loaded[srcId]?.url === url;
+}
+
 /**
  * The GeoJSON behind a custom layer's source: its inline data, or for a URL
  * source what `loaded` holds for that URL. `undefined` for anything else.
@@ -80,8 +97,9 @@ function sourceGeoJson(
 ): GeoJSON.GeoJSON | undefined {
   if (source.type !== "geojson") return undefined;
   if (typeof source.data !== "string") return source.data as GeoJSON.GeoJSON;
-  const entry = loaded[srcId];
-  return entry?.url === source.data ? entry.data : undefined;
+  return isUrlLoaded(loaded, { srcId, url: source.data })
+    ? loaded[srcId].data
+    : undefined;
 }
 
 /**
@@ -99,7 +117,8 @@ function visibleFeatures(
       const sourceData = sourceGeoJson(srcId, source, loaded);
       if (!sourceData) continue;
       if (sourceData.type === "FeatureCollection") {
-        extra.push(...sourceData.features);
+        // Not push(...features): a large collection exceeds the argument limit.
+        for (const feature of sourceData.features) extra.push(feature);
       } else if (sourceData.type === "Feature") {
         extra.push(sourceData);
       }
@@ -179,6 +198,21 @@ export function GeoJsonViewer({
   // Read in the setup effect without re-running it on every layer change.
   const boundsFcRef = useRef(boundsFc);
   boundsFcRef.current = boundsFc;
+  // Visible custom layers whose data comes from a URL not loaded yet — the
+  // automatic fit can't cover them, so it is finished once they load.
+  const unloadedUrlSources = useMemo(
+    () =>
+      customLayers
+        .filter((def) => visibleCustomIds.has(def.id))
+        .flatMap(urlSourcesOf)
+        .filter((s) => !isUrlLoaded(loadedUrlData, s)),
+    [customLayers, visibleCustomIds, loadedUrlData],
+  );
+  const unloadedUrlSourcesRef = useRef(unloadedUrlSources);
+  unloadedUrlSourcesRef.current = unloadedUrlSources;
+  // Set when the last automatic fit was missing URL data: fit again once
+  // `unloadedUrlSources` is empty, unless the user has moved the map since.
+  const pendingUrlFitRef = useRef(false);
 
   // Track whether layers are ready for interaction
   const [layersReady, setLayersReady] = useState(false);
@@ -234,13 +268,7 @@ export function GeoJsonViewer({
     const map = mapRef.current;
     if (!map || !mapReady) return;
 
-    const urlSources = customLayers.flatMap((def) =>
-      Object.entries(def.sources).flatMap(([srcId, src]) =>
-        src.type === "geojson" && typeof src.data === "string"
-          ? [{ srcId, url: src.data }]
-          : [],
-      ),
-    );
+    const urlSources = customLayers.flatMap(urlSourcesOf);
     if (urlSources.length === 0) return;
 
     let cancelled = false;
@@ -275,6 +303,44 @@ export function GeoJsonViewer({
       urlReadsRef.current.clear();
     };
   }, [mapRef, mapReady, mapVersion, customLayers]);
+
+  // ----- Automatic fit -----
+  const fitToData = useCallback(
+    (map: maplibregl.Map) => {
+      const bounds = computeBounds(boundsFcRef.current);
+      if (bounds) {
+        map.fitBounds(bounds, {
+          padding: fitBoundsPadding,
+          maxZoom: 16,
+          duration: 300,
+        });
+      }
+    },
+    [fitBoundsPadding],
+  );
+
+  // Finish a fit that was missing URL data once it has loaded. A layer
+  // switched on later doesn't set the fit pending, so it never refits.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !pendingUrlFitRef.current) return;
+    if (unloadedUrlSources.length > 0) return;
+    pendingUrlFitRef.current = false;
+    fitToData(map);
+  }, [mapRef, unloadedUrlSources, fitToData]);
+
+  // Moving the map by hand cancels a pending fit — it would undo the move.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapReady) return;
+    const cancel = (e: maplibregl.MapLibreEvent<unknown>) => {
+      if (e.originalEvent) pendingUrlFitRef.current = false;
+    };
+    map.on("movestart", cancel);
+    return () => {
+      map.off("movestart", cancel);
+    };
+  }, [mapRef, mapReady, mapVersion]);
 
   // ----- Feature interaction hook -----
   const handleHover = useCallback(
@@ -384,14 +450,8 @@ export function GeoJsonViewer({
 
         // Fit bounds
         if (fitBounds) {
-          const bounds = computeBounds(boundsFcRef.current);
-          if (bounds) {
-            map.fitBounds(bounds, {
-              padding: fitBoundsPadding,
-              maxZoom: 16,
-              duration: 300,
-            });
-          }
+          fitToData(map);
+          pendingUrlFitRef.current = unloadedUrlSourcesRef.current.length > 0;
         }
 
         // Force re-layout + repaint to ensure vector layers composite

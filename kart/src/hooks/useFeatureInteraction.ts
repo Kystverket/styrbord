@@ -55,44 +55,75 @@ export interface UseFeatureInteractionResult {
 
 type FeatureKey = (feature: InteractiveFeature) => string | number;
 
-/** Same feature (by `key`) with the same properties. */
-function isSameFeature(
-  a: InteractiveFeature | null,
-  b: InteractiveFeature | null,
-  key: FeatureKey,
-): boolean {
-  if (!a || !b) return a === b;
-  return (
-    key(a) === key(b) &&
-    JSON.stringify(a.properties) === JSON.stringify(b.properties)
-  );
+/**
+ * The id MapLibre reports for a GeoJSON feature with `id`: strings go through
+ * `parseInt`, as `@maplibre/vt-pbf` does, so they match what hover and click
+ * return.
+ */
+function reportedId(id: Feature["id"]): number | undefined {
+  if (typeof id === "string") return parseInt(id, 10);
+  return typeof id === "number" && !Number.isNaN(id) ? id : undefined;
 }
 
 /**
- * `selected` with each feature from a source in `changedSources` matched
- * against the features rendered in `layerIds`: its fresh copy if still there,
- * dropped if not. Others are kept as they are. `null` when nothing changed.
+ * Every feature of GeoJSON source `srcId`, whole and with the id MapLibre
+ * gives it — unlike the rendered features, which are clipped to tiles and
+ * limited to the view. `null` for a source that isn't GeoJSON.
  */
-function refreshSelection(
+async function readSourceFeatures(
   map: maplibregl.Map,
-  layerIds: string[],
-  changedSources: Set<string>,
-  selected: InteractiveFeature[],
+  srcId: string,
+): Promise<InteractiveFeature[] | null> {
+  const source = map.getSource(srcId);
+  if (source?.type !== "geojson") return null;
+  const geojson = source as maplibregl.GeoJSONSource;
+  const { generateId, promoteId } = geojson.serialize();
+  const data = await geojson.getData();
+  let features: Feature[] = [];
+  if (data.type === "FeatureCollection") features = data.features;
+  else if (data.type === "Feature") features = [data];
+
+  const idOf = (f: Feature, index: number) => {
+    if (generateId) return index;
+    if (typeof promoteId === "string") return f.properties?.[promoteId];
+    return reportedId(f.id);
+  };
+  return features.map((f, i) => ({ ...f, id: idOf(f, i), source: srcId }));
+}
+
+/** Geometry and properties of a source feature, for spotting edits. */
+const snapshotOf = (f: InteractiveFeature) =>
+  JSON.stringify([f.geometry, f.properties]);
+
+type FeatureCheck =
+  | { status: "same" }
+  | { status: "removed" }
+  | { status: "edited"; fresh: InteractiveFeature };
+
+/**
+ * How `feature` fared in a source update. `bySource` holds the new data of
+ * each changed source, by feature key; a feature from any other source is
+ * `same`. A feature still there is `edited` when its geometry or properties
+ * differ from `snapshots` — or when it has no snapshot yet, which only costs
+ * one redundant callback. `snapshots` is updated with what was found.
+ */
+function checkFeature(
+  feature: InteractiveFeature,
+  bySource: Map<string, Map<string | number, InteractiveFeature>>,
+  snapshots: Map<string | number, string>,
   key: FeatureKey,
-): InteractiveFeature[] | null {
-  const layers = layerIds.filter((id) => map.getLayer(id));
-  const rendered = map.queryRenderedFeatures({
-    layers,
-  }) as InteractiveFeature[];
-  // A feature crossing tile edges is returned once per tile.
-  const byKey = new Map(rendered.map((f) => [key(f), f]));
-  const next = selected.flatMap((f) =>
-    f.source && changedSources.has(f.source) ? (byKey.get(key(f)) ?? []) : f,
-  );
-  const changed =
-    next.length !== selected.length ||
-    next.some((f, i) => !isSameFeature(f, selected[i], key));
-  return changed ? next : null;
+): FeatureCheck {
+  const features = feature.source ? bySource.get(feature.source) : undefined;
+  if (!features) return { status: "same" };
+  const k = key(feature);
+  const fresh = features.get(k);
+  if (!fresh) return { status: "removed" };
+  const snapshot = snapshotOf(fresh);
+  const before = snapshots.get(k);
+  snapshots.set(k, snapshot);
+  return before === snapshot
+    ? { status: "same" }
+    : { status: "edited", fresh: { ...fresh, layer: feature.layer } };
 }
 
 /**
@@ -214,51 +245,114 @@ export function useFeatureInteraction({
     }
   }, [layerIds, hoveredFeature, selectedFeatures, mapRef]);
 
+  // Geometry and properties of hovered and selected features as last read
+  // from their source, by feature key — see `checkFeature`.
+  const snapshotsRef = useRef(new Map<string | number, string>());
+
   // New data in a source behind `layerIds` (e.g. `setData` on a GeoJSON
   // source) can change or remove hovered and selected features while their
-  // layers stay put. Once the map has redrawn, read them again: a feature
-  // still there is replaced by its fresh copy, one that is gone is dropped.
+  // layers stay put. Once the map has redrawn, check them against the
+  // source's data: an edited feature is replaced by its fresh copy, a removed
+  // one is dropped. The source data is whole, so a selected feature outside
+  // the view is kept as long as it still exists.
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !enabled) return;
+    let cancelled = false;
 
-    // Hover: whatever is under the pointer now.
-    const reconcileHover = () => {
-      const lastEvent = lastMouseEventRef.current;
-      const top = lastEvent
-        ? (queryFeaturesAtPoint(map, lastEvent.point)[0] ?? null)
-        : null;
-      if (isSameFeature(hoveredRef.current, top, getFeatureId)) return;
-      prevHoveredIdRef.current = top ? getFeatureId(top) : null;
-      setHoveredFeature(top);
-      onHoverRef.current?.(top, top ? lastEvent : null);
-      map.getCanvas().style.cursor = top ? "pointer" : "";
+    // New data of each changed source holding a hovered or selected feature.
+    const readChanged = async (changed: Set<string>) => {
+      const involved = [hoveredRef.current, ...selectedRef.current];
+      const sources = new Set(
+        involved.flatMap((f) =>
+          f?.source && changed.has(f.source) ? [f.source] : [],
+        ),
+      );
+      const bySource = new Map<
+        string,
+        Map<string | number, InteractiveFeature>
+      >();
+      for (const srcId of sources) {
+        const features = await readSourceFeatures(map, srcId);
+        if (features) {
+          bySource.set(
+            srcId,
+            new Map(features.map((f) => [getFeatureId(f), f])),
+          );
+        }
+      }
+      return bySource;
     };
 
-    // Selection: matched against the features rendered on screen, so a
-    // selected feature outside the view is dropped as well — but only when
-    // its own source changed.
-    const changedSources = new Set<string>();
-    const reconcileSelection = () => {
-      if (selectedRef.current.length === 0) return;
-      const next = refreshSelection(
-        map,
-        layerIds,
-        changedSources,
-        selectedRef.current,
-        getFeatureId,
-      );
-      if (!next) return;
+    // Hover: whatever is under the pointer now, or the hovered feature's
+    // fresh copy if it is still there but was edited.
+    const reconcileHover = (check: FeatureCheck | null) => {
+      const hovered = hoveredRef.current;
+      const lastEvent = lastMouseEventRef.current;
+      let next = lastEvent
+        ? (queryFeaturesAtPoint(map, lastEvent.point)[0] ?? null)
+        : null;
+      const sameKey =
+        !!hovered && !!next && getFeatureId(hovered) === getFeatureId(next);
+      if (sameKey && check?.status === "edited") next = check.fresh;
+      else if (sameKey || (!hovered && !next)) return;
+      prevHoveredIdRef.current = next ? getFeatureId(next) : null;
+      setHoveredFeature(next);
+      onHoverRef.current?.(next, next ? lastEvent : null);
+      map.getCanvas().style.cursor = next ? "pointer" : "";
+    };
+
+    const reconcileSelection = (checks: FeatureCheck[]) => {
+      if (checks.every((c) => c.status === "same")) return;
+      const next = selectedRef.current.flatMap((f, i) => {
+        const check = checks[i];
+        if (check.status === "removed") return [];
+        return check.status === "edited" ? [check.fresh] : [f];
+      });
       setSelectedFeatures(next);
       onSelectRef.current?.(next.length > 0 ? next : null);
+    };
+
+    const changedSources = new Set<string>();
+    const reconcile = async () => {
+      const changed = new Set(changedSources);
+      changedSources.clear();
+      const bySource = await readChanged(changed);
+      if (cancelled) return;
+
+      const snapshots = snapshotsRef.current;
+      // One check per feature: the first updates its snapshot, so checking
+      // a feature both hovered and selected twice would call it unchanged.
+      const checks = new Map<string | number, FeatureCheck>();
+      const check = (f: InteractiveFeature) => {
+        const k = getFeatureId(f);
+        let result = checks.get(k);
+        if (!result) {
+          result = checkFeature(f, bySource, snapshots, getFeatureId);
+          checks.set(k, result);
+        }
+        return result;
+      };
+      const hovered = hoveredRef.current;
+      const selected = selectedRef.current;
+      if (hoverable) reconcileHover(hovered ? check(hovered) : null);
+      reconcileSelection(selected.map(check));
+
+      // Keep snapshots only for what is still hovered or selected.
+      const keep = new Set(
+        [hoveredRef.current, ...selectedRef.current].flatMap((f) =>
+          f ? [getFeatureId(f)] : [],
+        ),
+      );
+      for (const k of snapshots.keys()) if (!keep.has(k)) snapshots.delete(k);
     };
 
     let scheduled = false;
     const runOnIdle = () => {
       scheduled = false;
-      if (hoverable) reconcileHover();
-      reconcileSelection();
-      changedSources.clear();
+      reconcile().catch(() => {
+        // Source gone mid-read (map torn down); the next update retries.
+      });
     };
     const handleSourceData = (e: maplibregl.MapSourceDataEvent) => {
       if (e.sourceDataType !== "content") return;
@@ -274,6 +368,7 @@ export function useFeatureInteraction({
 
     map.on("sourcedata", handleSourceData);
     return () => {
+      cancelled = true;
       map.off("sourcedata", handleSourceData);
       map.off("idle", runOnIdle);
     };

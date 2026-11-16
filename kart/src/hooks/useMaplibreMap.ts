@@ -364,11 +364,12 @@ export function useMaplibreMap({
         }
 
         if (!applied.has(def.id)) {
-          // Add sources
+          // Add sources. One shared with another definition is still on the
+          // map; bring it up to date rather than skip it.
           for (const [srcId, srcSpec] of Object.entries(def.sources)) {
-            if (!map.getSource(srcId)) {
-              map.addSource(srcId, srcSpec);
-            }
+            const specOnMap =
+              prevDef?.sources[srcId] ?? appliedSourceSpec(applied, srcId);
+            syncSource(map, srcId, srcSpec, specOnMap);
           }
           // Add layers
           for (const layerSpec of def.layers) {
@@ -504,15 +505,78 @@ function removeFromMap(
   }
   // A source another definition's layers still use must stay — MapLibre
   // refuses to remove it, and those layers would lose their data.
-  const inUse = new Set(
-    map
-      .getStyle()
-      .layers.flatMap((l) => ("source" in l && l.source ? [l.source] : [])),
-  );
   for (const srcId of Object.keys(def.sources)) {
-    if (map.getSource(srcId) && !inUse.has(srcId)) {
+    if (map.getSource(srcId) && layersUsing(map, srcId).length === 0) {
       map.removeSource(srcId);
     }
+  }
+}
+
+/** Ids of the style layers drawing from `srcId`, bottom to top. */
+function layersUsing(map: maplibregl.Map, srcId: string): string[] {
+  return map
+    .getLayersOrder()
+    .filter((id) => map.getLayer(id)?.source === srcId);
+}
+
+/** The spec an applied definition put on the map for `srcId`, if any. */
+function appliedSourceSpec(
+  applied: Map<string, LayerDefinition>,
+  srcId: string,
+): maplibregl.SourceSpecification | undefined {
+  for (const def of applied.values()) {
+    if (def.sources[srcId]) return def.sources[srcId];
+  }
+  return undefined;
+}
+
+/**
+ * Put `spec` on the map as `srcId`. `specOnMap` is what is there now, if
+ * known. A missing source is added. A GeoJSON source whose spec only differs
+ * in `data` gets the new data. Any other change means recreating the source,
+ * which MapLibre only allows with no layer using it — so the layers drawing
+ * from it are taken off first and put back in their place after.
+ */
+function syncSource(
+  map: maplibregl.Map,
+  srcId: string,
+  spec: maplibregl.SourceSpecification,
+  specOnMap: maplibregl.SourceSpecification | undefined,
+) {
+  const source = map.getSource(srcId);
+  if (!source) {
+    map.addSource(srcId, spec);
+    return;
+  }
+  if (!specOnMap || specOnMap === spec) return;
+
+  const withoutData = (s: maplibregl.SourceSpecification) =>
+    JSON.stringify({ ...s, data: undefined });
+  if (withoutData(specOnMap) === withoutData(spec)) {
+    if (
+      spec.type === "geojson" &&
+      specOnMap.type === "geojson" &&
+      spec.data !== specOnMap.data &&
+      source instanceof maplibregl.GeoJSONSource
+    ) {
+      source.setData(spec.data);
+    }
+    return;
+  }
+
+  const order = map.getLayersOrder();
+  const users = new Set(layersUsing(map, srcId));
+  const saved = order.flatMap((id, i) => {
+    const layer = map.getLayer(id);
+    if (!users.has(id) || !layer) return [];
+    const beforeId = order.slice(i + 1).find((above) => !users.has(above));
+    return [{ spec: layer.serialize(), beforeId }];
+  });
+  for (const id of users) map.removeLayer(id);
+  map.removeSource(srcId);
+  map.addSource(srcId, spec);
+  for (const { spec: layerSpec, beforeId } of saved) {
+    map.addLayer(layerSpec, beforeId);
   }
 }
 
