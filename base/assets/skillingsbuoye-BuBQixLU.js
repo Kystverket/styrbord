@@ -1,0 +1,1 @@
+import{j as e}from"./iframe-c1DvC_2c.js";const o=""+new URL("Skillingsbuoye-BlMqbUtn.png",import.meta.url).href,s=()=>e.jsx("img",{src:o,alt:"skillingsbuoye"});s.__docgenInfo={description:"",methods:[],displayName:"Skillingsbuoye"};export{s as S};
