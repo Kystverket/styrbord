@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.13.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.12.0...styrbord-v2.13.0) (2026-11-16)
+
+
+### Features
+
+* **base:** egne handlinger i knapprad og per fil i FileUploader ([#388](https://github.com/Kystverket/styrbord/issues/388)) ([3bfdc6b](https://github.com/Kystverket/styrbord/commit/3bfdc6b8bc121cc774ca897e08f07b316dc7e9cb)), closes [#387](https://github.com/Kystverket/styrbord/issues/387)
+
 ## [2.12.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.11.0...styrbord-v2.12.0) (2026-11-10)
 
 
