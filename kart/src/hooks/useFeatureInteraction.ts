@@ -347,12 +347,20 @@ export function useFeatureInteraction({
       for (const k of snapshots.keys()) if (!keep.has(k)) snapshots.delete(k);
     };
 
+    // Passes run one at a time: an older pass finishing last would overwrite
+    // the newer one's result. Changes arriving mid-pass wait in
+    // `changedSources` for the next.
     let scheduled = false;
+    let running = Promise.resolve();
     const runOnIdle = () => {
       scheduled = false;
-      reconcile().catch(() => {
-        // Source gone mid-read (map torn down); the next update retries.
-      });
+      running = running
+        .then(() => {
+          if (!cancelled && changedSources.size > 0) return reconcile();
+        })
+        .catch(() => {
+          // Source gone mid-read (map torn down); the next update retries.
+        });
     };
     const handleSourceData = (e: maplibregl.MapSourceDataEvent) => {
       if (e.sourceDataType !== "content") return;
