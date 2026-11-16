@@ -1,4 +1,19 @@
+import { MaterialIconProps } from '~/components/kystverket/Icon/icon';
+
 export type FileStatus = 'uploading' | 'uploaded' | 'error';
+
+/** An extra button in the FileUploader's button row, after the built-in upload buttons. */
+export type FileUploaderAction = {
+  icon: MaterialIconProps['material'];
+  label: string;
+  onClick: () => void;
+  disabled?: boolean;
+};
+
+/** An extra icon button on a single file in the FileUploader's file list. `label` is used as aria-label. */
+export type FileUploaderFileAction = Omit<FileUploaderAction, 'onClick'> & {
+  onClick: (file: FileInfo) => void;
+};
 
 export type FileInfo = {
   contextId: string;
