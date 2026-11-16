@@ -232,6 +232,41 @@ export const WithExistingFiles: Story = {
   },
 };
 
+export const WithCustomActions: Story = {
+  args: {
+    ...defaultProps,
+    description: 'Egne knapper i knappraden, og «Rediger» på GeoJSON-filer',
+    files: [
+      ...defaultProps.files,
+      {
+        fileName: 'tegning.geojson',
+        status: 'uploaded',
+        contentType: 'application/geo+json',
+        contextId: '7c1d2e3f-4a5b-4c6d-8e7f-9a0b1c2d3e4f',
+        storageId: '4',
+      },
+    ],
+    existingFilesProvider: existingFilesProvider,
+    uploadActions: [
+      {
+        icon: 'stylus',
+        label: 'Legg til tegning',
+        onClick: () => console.log('Legg til tegning'),
+      },
+    ],
+    fileActions: (file) =>
+      file.contentType.endsWith('json')
+        ? [
+            {
+              icon: 'edit',
+              label: 'Rediger',
+              onClick: (f) => console.log('Rediger', f),
+            },
+          ]
+        : [],
+  },
+};
+
 const uploadFileWithSizeLimit = async (file: FormData): Promise<UploadFileResult> => {
   return new Promise<UploadFileResult>((resolve) => {
     const fileEntry = file.get('file') as File;

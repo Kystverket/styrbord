@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode, useContext, useEffect, useRef, useState } from 'react';
-import { Exif, ExtraFileInfo, FileInfo } from './FileUploader.types';
+import { Exif, ExtraFileInfo, FileInfo, FileUploaderAction, FileUploaderFileAction } from './FileUploader.types';
 import { Field, Label, Spinner, ValidationMessage } from '@digdir/designsystemet-react';
 import classes from './FileUploader.module.css';
 import { Icon, LabelContent } from '~/main';
@@ -74,6 +74,18 @@ export interface FileUploaderProps {
    * When enabled, a preview button appears on each uploaded file that can be previewed.
    */
   allowFilePreview?: boolean;
+
+  /**
+   * Extra buttons in the button row, after "Upload" / "Choose existing".
+   * Hidden together with the built-in buttons when the field is full or a file is uploading.
+   */
+  uploadActions?: FileUploaderAction[];
+
+  /**
+   * Extra icon buttons per file, before preview and delete.
+   * Only shown when the file's status is 'uploaded'.
+   */
+  fileActions?: (file: FileInfo) => FileUploaderFileAction[];
 }
 
 const defaultAllowedFileTypes = ['.pdf', '.jpg', '.jpeg', '.png'];
@@ -94,6 +106,8 @@ export const FileUploader = ({
   existingFilesProvider,
   variant = 'buttons',
   allowFilePreview,
+  uploadActions,
+  fileActions,
 }: FileUploaderProps) => {
   const { scopedT } = useTranslation();
   const t = scopedT('fileUploader');
@@ -209,6 +223,7 @@ export const FileUploader = ({
             t={t}
             existingFilesProvider={existingFilesProvider}
             variant={variant}
+            uploadActions={uploadActions}
           />
         )}
         {showMaxReachedWarning && (
@@ -233,6 +248,7 @@ export const FileUploader = ({
                 extraInfo={file.storageId ? storageIdToExtraFileInfo.get(file.storageId) : undefined}
                 t={t}
                 onDeleteFile={onDeleteFile}
+                actions={fileActions?.(file)}
                 onPreviewFile={
                   allowFilePreview && file.storageId && storageIdToPreviewIndex.has(file.storageId)
                     ? () => setPreviewStartIndex(storageIdToPreviewIndex.get(file.storageId!)!)
