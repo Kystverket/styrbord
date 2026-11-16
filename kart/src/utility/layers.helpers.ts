@@ -1,3 +1,4 @@
+import type { Feature, FeatureCollection } from "geojson";
 import type { LayerSpecification } from "maplibre-gl";
 import type {
   LayerDefinition,
@@ -41,6 +42,53 @@ export function isLayerIncluded(
 }
 
 // ---------------------------------------------------------------------------
+// Feature ids
+// ---------------------------------------------------------------------------
+
+/**
+ * The id MapLibre keeps for `id`, or `undefined` if it can't keep it. MapLibre
+ * only stores non-negative integer feature ids; a string is run through
+ * `parseInt`, so `"42"` survives (as `42`) and `"application-42"` does not.
+ */
+function mapLibreId(id: Feature["id"]): number | undefined {
+  const n = typeof id === "string" && /^\d+$/.test(id) ? Number(id) : id;
+  return typeof n === "number" && Number.isSafeInteger(n) && n >= 0
+    ? n
+    : undefined;
+}
+
+const withIdsCache = new WeakMap<object, Feature | FeatureCollection>();
+
+/**
+ * `data` with an id on every feature. Ids MapLibre can keep are left alone;
+ * the rest get one above the highest existing id, so the two never collide.
+ * Returns `data` itself when nothing needs an id, and the same copy for the
+ * same input otherwise — a new object would make the map reload the source.
+ */
+function withFeatureIds(
+  data: Feature | FeatureCollection,
+): Feature | FeatureCollection {
+  const features = data.type === "FeatureCollection" ? data.features : [data];
+  if (features.every((f) => mapLibreId(f.id) !== undefined)) return data;
+
+  const cached = withIdsCache.get(data);
+  if (cached) return cached;
+
+  // reduce, not Math.max(...spread): a large collection overflows the stack.
+  let next =
+    features.reduce((max, f) => Math.max(max, mapLibreId(f.id) ?? -1), -1) + 1;
+  const withIds = features.map((f) =>
+    mapLibreId(f.id) !== undefined ? f : { ...f, id: next++ },
+  );
+  const result =
+    data.type === "FeatureCollection"
+      ? { ...data, features: withIds }
+      : withIds[0];
+  withIdsCache.set(data, result);
+  return result;
+}
+
+// ---------------------------------------------------------------------------
 // Simple layer factory (higher-level API for custom layers)
 // ---------------------------------------------------------------------------
 
@@ -55,11 +103,12 @@ export function createSimpleLayer(
 ): LayerDefinition {
   const base: Pick<
     LayerDefinition,
-    "id" | "label" | "category" | "defaultVisible" | "metadata"
+    "id" | "label" | "category" | "description" | "defaultVisible" | "metadata"
   > = {
     id: opts.id,
     label: opts.label,
     category: opts.category,
+    description: opts.description,
     defaultVisible: opts.defaultVisible ?? true,
     metadata: opts.metadata,
   };
@@ -70,11 +119,20 @@ export function createSimpleLayer(
     case "geojson": {
       return {
         ...base,
+        legend: {
+          fillColor: opts.fillColor ?? VIEW_FILL_COLOR,
+          fillOpacity: opts.fillOpacity ?? VIEW_FILL_OPACITY,
+          lineColor: opts.lineColor ?? VIEW_LINE_COLOR,
+        },
         sources: {
-          [sourceId]: {
-            type: "geojson",
-            data: opts.data as GeoJSON.GeoJSON,
-          },
+          // Hover and selection tell features apart by id; without one,
+          // features with equal properties would count as one. Inline data
+          // keeps the ids it has; data from a URL can't be read in advance,
+          // so MapLibre numbers those features by position instead.
+          [sourceId]:
+            typeof opts.data === "string"
+              ? { type: "geojson", data: opts.data, generateId: true }
+              : { type: "geojson", data: withFeatureIds(opts.data) },
         },
         layers: [
           {

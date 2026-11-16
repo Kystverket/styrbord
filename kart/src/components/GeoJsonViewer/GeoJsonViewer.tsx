@@ -1,7 +1,14 @@
 "use client";
 
-import { useEffect, useMemo, useState, useCallback, useRef } from "react";
-import type { GeoJSONSource } from "maplibre-gl";
+import {
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  useCallback,
+  useRef,
+} from "react";
+import type { GeoJSONSource, SourceSpecification } from "maplibre-gl";
 import type * as maplibregl from "maplibre-gl";
 import type {
   Feature,
@@ -14,6 +21,9 @@ import styles from "~/components/shared/MapPicker.module.css";
 import type { GeoJsonStyle, GeoJsonViewerProps } from "./GeoJsonViewer.types";
 import { computeBounds } from "~/utility/geojson";
 import { useMaplibreMap } from "~/hooks/useMaplibreMap";
+import { whenLoaded } from "~/utility/whenLoaded";
+import { CustomLayersContext } from "~/utility/customLayersContext";
+import type { LayerDefinition } from "~/utility/layers.types";
 import {
   useFeatureInteraction,
   type InteractiveFeature,
@@ -30,6 +40,8 @@ import {
   SOURCE_ID,
   INTERACTIVE_LAYERS,
   LABEL_LAYER,
+  ALL_LAYERS,
+  HIGHLIGHT_LAYERS,
   removeLayers,
   toFeatureCollection,
   addHighlightLayers,
@@ -38,6 +50,7 @@ import {
   addStyledLayers,
 } from "./GeoJsonViewer.utils";
 import { LayerToggle } from "../LayerToggle/LayerToggle";
+import type { LayerToggleExtraLayer } from "../LayerToggle/LayerToggle.types";
 import { GeoJsonViewerHoverPopup } from "./GeoJsonViewerHoverPopup";
 import { GeoJsonViewerFitBoundsControl } from "./GeoJsonViewerFitBoundsControl";
 import { MapCenterAction } from "../shared/MapCenterAction";
@@ -47,6 +60,73 @@ import { MapCenterAction } from "../shared/MapCenterAction";
 // ---------------------------------------------------------------------------
 
 const LABEL_SOURCE = "geojson-viewer-labels";
+
+const EMPTY_FC: FeatureCollection = { type: "FeatureCollection", features: [] };
+
+/** GeoJSON a custom layer loads from `url`, as MapLibre fetched it. */
+interface LoadedUrlData {
+  url: string;
+  data: GeoJSON.GeoJSON;
+}
+
+/** The GeoJSON sources of `def` that load their data from a URL. */
+function urlSourcesOf(def: LayerDefinition): { srcId: string; url: string }[] {
+  return Object.entries(def.sources).flatMap(([srcId, src]) =>
+    src.type === "geojson" && typeof src.data === "string"
+      ? [{ srcId, url: src.data }]
+      : [],
+  );
+}
+
+/** Whether `loaded` holds the data of `srcId` for its current `url`. */
+function isUrlLoaded(
+  loaded: Record<string, LoadedUrlData>,
+  { srcId, url }: { srcId: string; url: string },
+): boolean {
+  return loaded[srcId]?.url === url;
+}
+
+/**
+ * The GeoJSON behind a custom layer's source: its inline data, or for a URL
+ * source what `loaded` holds for that URL. `undefined` for anything else.
+ */
+function sourceGeoJson(
+  srcId: string,
+  source: SourceSpecification,
+  loaded: Record<string, LoadedUrlData>,
+): GeoJSON.GeoJSON | undefined {
+  if (source.type !== "geojson") return undefined;
+  if (typeof source.data !== "string") return source.data as GeoJSON.GeoJSON;
+  return isUrlLoaded(loaded, { srcId, url: source.data })
+    ? loaded[srcId].data
+    : undefined;
+}
+
+/**
+ * `fc` plus the features of every given custom layer's GeoJSON source. A
+ * URL source adds nothing until it has loaded.
+ */
+function visibleFeatures(
+  fc: FeatureCollection,
+  layers: LayerDefinition[],
+  loaded: Record<string, LoadedUrlData>,
+): FeatureCollection {
+  const extra: Feature[] = [];
+  for (const layer of layers) {
+    for (const [srcId, source] of Object.entries(layer.sources)) {
+      const sourceData = sourceGeoJson(srcId, source, loaded);
+      if (!sourceData) continue;
+      if (sourceData.type === "FeatureCollection") {
+        // Not push(...features): a large collection exceeds the argument limit.
+        for (const feature of sourceData.features) extra.push(feature);
+      } else if (sourceData.type === "Feature") {
+        extra.push(sourceData);
+      }
+    }
+  }
+  if (extra.length === 0) return fc;
+  return { ...fc, features: [...fc.features, ...extra] };
+}
 
 /** Stable default for the `getLabel` prop — avoids a new function reference on every render. */
 const DEFAULT_GET_LABEL = (feature: Feature<Geometry, GeoJsonProperties>) =>
@@ -66,6 +146,7 @@ export function GeoJsonViewer({
   fitBounds = true,
   fitBoundsPadding = 40,
   geoJsonStyle: styleProp,
+  dataLayer,
   showLayerToggle = true,
   showFitBoundsControl = true,
   height,
@@ -82,13 +163,56 @@ export function GeoJsonViewer({
   showFullscreenControl,
   getLabel = DEFAULT_GET_LABEL,
 }: GeoJsonViewerProps) {
-  const layerStyle: Required<GeoJsonStyle> = {
-    ...DEFAULT_STYLE,
-    ...styleProp,
-  };
+  const layerStyle = useMemo<Required<GeoJsonStyle>>(
+    () => ({ ...DEFAULT_STYLE, ...styleProp }),
+    [styleProp],
+  );
 
   // Strip foreign members and normalise to FeatureCollection
   const fc = useMemo(() => toFeatureCollection(data), [data]);
+
+  // Visibility of `data`, switchable from the layer menu. Without `dataLayer`
+  // there is no switch, so `data` is always shown.
+  const [dataVisible, setDataVisible] = useState(
+    dataLayer?.defaultVisible ?? true,
+  );
+  const dataShown = !dataLayer || dataVisible;
+
+  // "Fit to data" covers whatever is switched on: `data` and the visible
+  // custom layers.
+  const { layers: customLayers, visibleLayerIds: visibleCustomIds } =
+    useContext(CustomLayersContext);
+  // Custom layers given a URL: their data, by source id, once loaded.
+  const [loadedUrlData, setLoadedUrlData] = useState<
+    Record<string, LoadedUrlData>
+  >({});
+  const boundsFc = useMemo(
+    () =>
+      visibleFeatures(
+        dataShown ? fc : EMPTY_FC,
+        customLayers.filter((def) => visibleCustomIds.has(def.id)),
+        loadedUrlData,
+      ),
+    [fc, dataShown, customLayers, visibleCustomIds, loadedUrlData],
+  );
+  // Read in the setup effect without re-running it on every layer change.
+  const boundsFcRef = useRef(boundsFc);
+  boundsFcRef.current = boundsFc;
+  // Visible custom layers whose data comes from a URL not loaded yet — the
+  // automatic fit can't cover them, so it is finished once they load.
+  const unloadedUrlSources = useMemo(
+    () =>
+      customLayers
+        .filter((def) => visibleCustomIds.has(def.id))
+        .flatMap(urlSourcesOf)
+        .filter((s) => !isUrlLoaded(loadedUrlData, s)),
+    [customLayers, visibleCustomIds, loadedUrlData],
+  );
+  const unloadedUrlSourcesRef = useRef(unloadedUrlSources);
+  unloadedUrlSourcesRef.current = unloadedUrlSources;
+  // Set when the last automatic fit was missing URL data: fit again once
+  // `unloadedUrlSources` is empty, unless the user has moved the map since.
+  const pendingUrlFitRef = useRef(false);
 
   // Track whether layers are ready for interaction
   const [layersReady, setLayersReady] = useState(false);
@@ -136,6 +260,88 @@ export function GeoJsonViewer({
     }
   }, [featureInfoResult]);
 
+  // ----- Data of custom layers given a URL, for "fit to data" -----
+  // Which URL each source was last read for, so the frequent `sourcedata`
+  // events don't read the same data again.
+  const urlReadsRef = useRef(new Map<string, string>());
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapReady) return;
+
+    const urlSources = customLayers.flatMap(urlSourcesOf);
+    if (urlSources.length === 0) return;
+
+    let cancelled = false;
+    const read = () => {
+      for (const { srcId, url } of urlSources) {
+        if (urlReadsRef.current.get(srcId) === url) continue;
+        const source = map.getSource(srcId);
+        if (source?.type !== "geojson" || !map.isSourceLoaded(srcId)) continue;
+        urlReadsRef.current.set(srcId, url);
+        (source as GeoJSONSource)
+          .getData()
+          .then((loaded) => {
+            if (cancelled) return;
+            setLoadedUrlData((prev) => ({
+              ...prev,
+              [srcId]: { url, data: loaded },
+            }));
+          })
+          .catch(() => {
+            // Read again on the next `sourcedata`.
+            urlReadsRef.current.delete(srcId);
+          });
+      }
+    };
+
+    read();
+    map.on("sourcedata", read);
+    return () => {
+      cancelled = true;
+      map.off("sourcedata", read);
+      // A read cut short by `cancelled` must be allowed to run again.
+      urlReadsRef.current.clear();
+    };
+  }, [mapRef, mapReady, mapVersion, customLayers]);
+
+  // ----- Automatic fit -----
+  const fitToData = useCallback(
+    (map: maplibregl.Map) => {
+      const bounds = computeBounds(boundsFcRef.current);
+      if (bounds) {
+        map.fitBounds(bounds, {
+          padding: fitBoundsPadding,
+          maxZoom: 16,
+          duration: 300,
+        });
+      }
+    },
+    [fitBoundsPadding],
+  );
+
+  // Finish a fit that was missing URL data once it has loaded. A layer
+  // switched on later doesn't set the fit pending, so it never refits.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !pendingUrlFitRef.current) return;
+    if (unloadedUrlSources.length > 0) return;
+    pendingUrlFitRef.current = false;
+    fitToData(map);
+  }, [mapRef, unloadedUrlSources, fitToData]);
+
+  // Moving the map by hand cancels a pending fit — it would undo the move.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapReady) return;
+    const cancel = (e: maplibregl.MapLibreEvent<unknown>) => {
+      if (e.originalEvent) pendingUrlFitRef.current = false;
+    };
+    map.on("movestart", cancel);
+    return () => {
+      map.off("movestart", cancel);
+    };
+  }, [mapRef, mapReady, mapVersion]);
+
   // ----- Feature interaction hook -----
   const handleHover = useCallback(
     (
@@ -147,7 +353,9 @@ export function GeoJsonViewer({
       // Update hover highlight
       const map = mapRef.current;
       if (map && layersReady) {
-        const featureId = feature?.id ?? null;
+        // The highlight layers only cover `data`, not custom layers.
+        const featureId =
+          feature?.source === SOURCE_ID ? (feature.id ?? null) : null;
         updateHoverHighlight(map, featureId);
       }
 
@@ -170,7 +378,8 @@ export function GeoJsonViewer({
       if (map && layersReady) {
         const featureIds =
           features
-            ?.map((f) => f.id)
+            ?.filter((f) => f.source === SOURCE_ID)
+            .map((f) => f.id)
             .filter((id): id is string | number => id !== undefined) ?? [];
         updateSelectionHighlight(map, featureIds);
       }
@@ -178,9 +387,25 @@ export function GeoJsonViewer({
     [onSelect, mapRef, layersReady],
   );
 
+  // Hover and select reach `data` and the visible GeoJSON layers from
+  // `<CustomLayersProvider>`.
+  const interactiveLayerIds = useMemo(
+    () => [
+      ...customLayers
+        .filter(
+          (def) =>
+            visibleCustomIds.has(def.id) &&
+            Object.values(def.sources).some((src) => src.type === "geojson"),
+        )
+        .flatMap((def) => def.layers.map((l) => l.id)),
+      ...(dataShown ? INTERACTIVE_LAYERS : []),
+    ],
+    [customLayers, visibleCustomIds, dataShown],
+  );
+
   const { hoveredFeature } = useFeatureInteraction({
     mapRef,
-    layerIds: INTERACTIVE_LAYERS,
+    layerIds: interactiveLayerIds,
     sourceId: SOURCE_ID,
     enabled: layersReady && !disabled,
     hoverable,
@@ -225,14 +450,8 @@ export function GeoJsonViewer({
 
         // Fit bounds
         if (fitBounds) {
-          const bounds = computeBounds(fc);
-          if (bounds) {
-            map.fitBounds(bounds, {
-              padding: fitBoundsPadding,
-              maxZoom: 16,
-              duration: 300,
-            });
-          }
+          fitToData(map);
+          pendingUrlFitRef.current = unloadedUrlSourcesRef.current.length > 0;
         }
 
         // Force re-layout + repaint to ensure vector layers composite
@@ -244,18 +463,12 @@ export function GeoJsonViewer({
       }
     };
 
-    // Run setup as soon as the style is ready. isStyleLoaded() handles the
-    // case where "load" already fired; once("load") handles the case where
-    // it hasn't.  The base layer is now baked into the initial style by
-    // useMaplibreMap so there is no ordering race.
-    if (map.isStyleLoaded()) {
-      setup();
-    } else {
-      map.once("load", setup);
-    }
+    // Run setup once the map has loaded. The base layer is baked into the
+    // initial style by useMaplibreMap so there is no ordering race.
+    const cancelSetup = whenLoaded(map, setup);
 
     return () => {
-      map.off("load", setup);
+      cancelSetup();
       setLayersReady(false);
       removeLayers(map);
     };
@@ -300,14 +513,10 @@ export function GeoJsonViewer({
       }
     };
 
-    if (map.isStyleLoaded()) {
-      ensureLayer();
-    } else {
-      map.once("load", ensureLayer);
-    }
+    const cancelEnsureLayer = whenLoaded(map, ensureLayer);
 
     return () => {
-      map.off("load", ensureLayer);
+      cancelEnsureLayer();
       try {
         if (map.getLayer(LABEL_LAYER)) map.removeLayer(LABEL_LAYER);
         if (map.getSource(LABEL_SOURCE)) map.removeSource(LABEL_SOURCE);
@@ -344,24 +553,52 @@ export function GeoJsonViewer({
       }
     };
 
-    if (map.isStyleLoaded()) {
-      updateData();
-    } else {
-      map.once("load", updateData);
-    }
+    return whenLoaded(map, updateData);
   }, [mapVersion, fc]);
+
+  // ----- Show / hide `data` from the layer menu -----
+  // `fc` and `mapVersion` are deps because the effects above re-add the
+  // layers visible when they change; this one runs after them.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapReady || !layersReady) return;
+    const visibility = dataShown ? "visible" : "none";
+    for (const id of [...ALL_LAYERS, ...HIGHLIGHT_LAYERS, LABEL_LAYER]) {
+      if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", visibility);
+    }
+  }, [dataShown, layersReady, mapReady, mapVersion, fc]);
+
+  const extraLayers = useMemo<LayerToggleExtraLayer[] | undefined>(
+    () =>
+      dataLayer && [
+        {
+          id: SOURCE_ID,
+          label: dataLayer.label,
+          description: dataLayer.description,
+          category: dataLayer.category,
+          legend: {
+            fillColor: layerStyle.fillColor,
+            fillOpacity: layerStyle.fillOpacity,
+            lineColor: layerStyle.lineColor,
+          },
+          visible: dataVisible,
+          onToggle: () => setDataVisible((v) => !v),
+        },
+      ],
+    [dataLayer, layerStyle, dataVisible],
+  );
 
   return (
     <div
       ref={mapContainerRef}
       className={[styles.mapContainer, className].filter(Boolean).join(" ")}
     >
-      {showLayerToggle && <LayerToggle />}
+      {showLayerToggle && <LayerToggle extraLayers={extraLayers} />}
       {showFitBoundsControl && !disabled && (
         <GeoJsonViewerFitBoundsControl
           mapRef={mapRef}
           mapVersion={mapVersion}
-          fc={fc}
+          fc={boundsFc}
           padding={fitBoundsPadding}
         />
       )}

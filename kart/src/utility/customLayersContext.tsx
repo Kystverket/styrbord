@@ -1,4 +1,11 @@
-import React, { createContext, ReactNode, useCallback, useMemo } from "react";
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import type { LayerDefinition } from "~/utility/layers.types";
 
 // ---------------------------------------------------------------------------
@@ -46,83 +53,100 @@ export interface CustomLayersProviderProps {
   children: ReactNode;
   /** Layers to register on mount. More can be added dynamically via `addLayer`. */
   initialLayers?: LayerDefinition[];
+  /**
+   * Controlled list of layers. When set, this list replaces `initialLayers`,
+   * `addLayer` and `removeLayer`: the map shows exactly these layers and
+   * follows changes to the array, including new GeoJSON `data` for an
+   * existing id. Visibility is still managed by the provider.
+   *
+   * Pass a memoised array; a new array every render re-checks every layer.
+   */
+  layers?: LayerDefinition[];
+}
+
+function warnControlled(call: string) {
+  console.warn(
+    `CustomLayersProvider: ${call} ignored — layers come from the \`layers\` prop.`,
+  );
 }
 
 export const CustomLayersProvider = ({
   children,
   initialLayers,
+  layers: controlledLayers,
 }: CustomLayersProviderProps) => {
-  const [layers, setLayers] = React.useState<LayerDefinition[]>(
+  const [uncontrolledLayers, setLayers] = useState<LayerDefinition[]>(
     () => initialLayers ?? [],
   );
+  const isControlled = controlledLayers !== undefined;
+  const layers = controlledLayers ?? uncontrolledLayers;
 
-  const [visibleLayerIds, setVisibleLayerIds] = React.useState<Set<string>>(
-    () =>
-      new Set(
-        (initialLayers ?? [])
-          .filter((l) => l.defaultVisible !== false)
-          .map((l) => l.id),
-      ),
+  // Visibility the user has set, by id; other layers follow `defaultVisible`.
+  // A layer removed and added again keeps the user's choice.
+  const [overrides, setOverrides] = useState<ReadonlyMap<string, boolean>>(
+    () => new Map(),
   );
 
-  const addLayer = useCallback((def: LayerDefinition) => {
-    setLayers((prev) => {
-      if (prev.some((l) => l.id === def.id)) return prev;
-      return [...prev, def];
-    });
-    if (def.defaultVisible !== false) {
-      setVisibleLayerIds((prev) => {
-        if (prev.has(def.id)) return prev;
-        const next = new Set(prev);
-        next.add(def.id);
-        return next;
+  const visibleLayerIds = useMemo(
+    () =>
+      new Set(
+        layers
+          .filter((l) => overrides.get(l.id) ?? l.defaultVisible !== false)
+          .map((l) => l.id),
+      ),
+    [layers, overrides],
+  );
+
+  // Lets toggleLayer resolve an id's default without depending on `layers`.
+  const layersRef = useRef(layers);
+  layersRef.current = layers;
+
+  const setOverride = useCallback(
+    (id: string, update: (current: boolean) => boolean) => {
+      setOverrides((prev) => {
+        const current =
+          prev.get(id) ??
+          layersRef.current.find((l) => l.id === id)?.defaultVisible !== false;
+        const next = update(current);
+        if (prev.get(id) === next) return prev;
+        return new Map(prev).set(id, next);
       });
-    }
-  }, []);
+    },
+    [],
+  );
 
-  const removeLayer = useCallback((id: string) => {
-    setLayers((prev) => {
-      const filtered = prev.filter((l) => l.id !== id);
-      if (filtered.length === prev.length) return prev;
-      return filtered;
-    });
-    setVisibleLayerIds((prev) => {
-      if (!prev.has(id)) return prev;
-      const next = new Set(prev);
-      next.delete(id);
-      return next;
-    });
-  }, []);
+  const addLayer = useCallback(
+    (def: LayerDefinition) => {
+      if (isControlled) return warnControlled("addLayer");
+      setLayers((prev) =>
+        prev.some((l) => l.id === def.id) ? prev : [...prev, def],
+      );
+    },
+    [isControlled],
+  );
 
-  const toggleLayer = useCallback((id: string) => {
-    setVisibleLayerIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
-      }
-      return next;
-    });
-  }, []);
+  const removeLayer = useCallback(
+    (id: string) => {
+      if (isControlled) return warnControlled("removeLayer");
+      setLayers((prev) => prev.filter((l) => l.id !== id));
+    },
+    [isControlled],
+  );
 
-  const showLayer = useCallback((id: string) => {
-    setVisibleLayerIds((prev) => {
-      if (prev.has(id)) return prev;
-      const next = new Set(prev);
-      next.add(id);
-      return next;
-    });
-  }, []);
+  const toggleLayer = useCallback(
+    (id: string) => setOverride(id, (current) => !current),
+    [setOverride],
+  );
 
-  const hideLayer = useCallback((id: string) => {
-    setVisibleLayerIds((prev) => {
-      if (!prev.has(id)) return prev;
-      const next = new Set(prev);
-      next.delete(id);
-      return next;
-    });
-  }, []);
+  const showLayer = useCallback(
+    (id: string) => setOverride(id, () => true),
+    [setOverride],
+  );
+
+  const hideLayer = useCallback(
+    (id: string) => setOverride(id, () => false),
+    [setOverride],
+  );
 
   const isVisible = useCallback(
     (id: string) => visibleLayerIds.has(id),

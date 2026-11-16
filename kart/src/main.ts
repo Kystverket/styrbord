@@ -14,6 +14,7 @@ export type { CoordinateGeoJSON } from "./utility/types";
 export { GeoJsonViewer } from "./components/GeoJsonViewer/GeoJsonViewer";
 export type {
   GeoJsonViewerProps,
+  GeoJsonViewerDataLayer,
   GeoJsonStyle,
   FeatureStyleProperties,
 } from "./components/GeoJsonViewer/GeoJsonViewer.types";
@@ -32,7 +33,10 @@ export { MapField } from "./components/MapField/MapField";
 export type { MapFieldProps } from "./components/MapField/MapField.types";
 
 export { LayerToggle } from "./components/LayerToggle/LayerToggle";
-export type { LayerToggleProps } from "./components/LayerToggle/LayerToggle.types";
+export type {
+  LayerToggleProps,
+  LayerToggleExtraLayer,
+} from "./components/LayerToggle/LayerToggle.types";
 
 export { MapCenterAction } from "./components/shared/MapCenterAction";
 export type { MapCenterActionProps } from "./components/shared/MapCenterAction";
@@ -83,6 +87,7 @@ export type { ViewBoundsProviderProps } from "./utility/viewBoundsContext";
 export type {
   BaseLayerDefinition,
   LayerDefinition,
+  LayerLegend,
   LayerFilterConfig,
   CreateSimpleLayerOptions,
   SimpleGeoJsonLayerOptions,

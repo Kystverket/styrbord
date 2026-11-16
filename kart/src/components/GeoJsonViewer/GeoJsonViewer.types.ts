@@ -72,6 +72,18 @@ export interface GeoJsonStyle {
   pointStrokeWidth?: number;
 }
 
+/** How `GeoJsonViewer`'s own `data` is listed in the layer menu. */
+export interface GeoJsonViewerDataLayer {
+  /** Name shown in the layer menu. */
+  label: string;
+  /** Second line under the name, e.g. a date and status. */
+  description?: string;
+  /** Group heading in the layer menu. Defaults to the menu's default group. */
+  category?: string;
+  /** Whether `data` starts visible. Defaults to `true`. */
+  defaultVisible?: boolean;
+}
+
 export interface GeoJsonViewerProps extends MapBaseProps {
   /**
    * GeoJSON data to display on the map. Accepts a Feature or FeatureCollection.
@@ -92,6 +104,22 @@ export interface GeoJsonViewerProps extends MapBaseProps {
   fitBoundsPadding?: number;
   /** Styling overrides for the rendered GeoJSON layers. */
   geoJsonStyle?: GeoJsonStyle;
+  /**
+   * List `data` in the layer menu so the user can switch it off and on.
+   * Without this, `data` is always shown and does not appear in the menu.
+   *
+   * The row gets a colour swatch from `geoJsonStyle`. Hiding the layer
+   * ends hover and selection on it.
+   *
+   * @example
+   * ```tsx
+   * <GeoJsonViewer
+   *   data={soknad}
+   *   dataLayer={{ label: "Søknad", description: "14.10.2026" }}
+   * />
+   * ```
+   */
+  dataLayer?: GeoJsonViewerDataLayer;
   /** Additional CSS class applied to the root element. */
   className?: string;
   /** Whether to show the layer toggle control on the map. Defaults to `false`. */
@@ -109,6 +137,9 @@ export interface GeoJsonViewerProps extends MapBaseProps {
   /**
    * Called when the hovered feature changes.
    * Receives the feature and the original mouse event, or null when hover ends.
+   *
+   * Also fires for GeoJSON layers from `<CustomLayersProvider>`;
+   * `feature.source` is `"geojson-data"` for `data`.
    */
   onHover?: (
     feature: InteractiveFeature | null,
@@ -117,6 +148,7 @@ export interface GeoJsonViewerProps extends MapBaseProps {
   /**
    * Called when the selection changes.
    * Receives array of selected features, or null when selection is cleared.
+   * Like `onHover`, includes custom GeoJSON layers.
    */
   onSelect?: (features: InteractiveFeature[] | null) => void;
   /**

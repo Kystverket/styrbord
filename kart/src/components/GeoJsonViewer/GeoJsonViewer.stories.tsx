@@ -8,6 +8,8 @@ import { BaseLayersProvider } from "~/utility/baseLayersContext";
 import { BuiltInLayersProvider } from "~/utility/builtInLayersContext";
 import { WmsCatalogLayersProvider } from "~/utility/wmsCatalogLayersContext";
 import { CustomLayersProvider } from "~/utility/customLayersContext";
+import { createSimpleLayer } from "~/utility/layers.helpers";
+import { colors } from "@kystverket/styrbord-tokens/colors";
 import issoner from "./issoner.json";
 
 const meta = {
@@ -314,6 +316,125 @@ export const WithLayerToggle: Story = {
       <BaseLayersProvider>
         <BuiltInLayersProvider>
           <CustomLayersProvider>
+            <GeoJsonViewer {...args} />
+          </CustomLayersProvider>
+        </BuiltInLayersProvider>
+      </BaseLayersProvider>
+    </ViewBoundsProvider>
+  ),
+};
+
+// ---- Multiple GeoJSON layers in the layer toggle ----
+const token = colors.light;
+
+/** A rectangle around `[lng, lat]`, `w`×`h` degrees. */
+function rect(lng: number, lat: number, w: number, h: number): Feature {
+  return {
+    type: "Feature",
+    properties: {},
+    geometry: {
+      type: "Polygon",
+      coordinates: [
+        [
+          [lng - w / 2, lat - h / 2],
+          [lng + w / 2, lat - h / 2],
+          [lng + w / 2, lat + h / 2],
+          [lng - w / 2, lat + h / 2],
+          [lng - w / 2, lat - h / 2],
+        ],
+      ],
+    },
+  };
+}
+
+// Extra files placed around `sampleGeoJson` (≈ 6.1527, 62.4683), so all of
+// them are in view when the viewer fits to its own data.
+const extraTiltakLayers = [
+  createSimpleLayer({
+    type: "geojson",
+    id: "tiltak-kai",
+    label: "tillatelse-til-tiltak-wgs84[1]",
+    description: "16.10.2026 · Ettersending av informasjon",
+    category: "Tiltak",
+    data: {
+      type: "FeatureCollection",
+      // rect(lng, lat, width, height) — the last two set the size.
+      features: [rect(6.1515, 62.4686, 0.006, 0.002)],
+    },
+    fillColor: token.danger.baseDefault,
+    lineColor: token.danger.borderDefault,
+  }),
+  createSimpleLayer({
+    type: "geojson",
+    id: "tiltak-ledning",
+    label: "sjokabel-trase.geojson",
+    description: "02.11.2026 · Under behandling",
+    category: "Tiltak",
+    data: {
+      type: "FeatureCollection",
+      features: [
+        {
+          type: "Feature",
+          properties: {},
+          geometry: {
+            type: "LineString",
+            coordinates: [
+              [6.1505, 62.4668],
+              [6.153, 62.4662],
+              [6.156, 62.4665],
+            ],
+          },
+        },
+      ],
+    },
+    lineColor: token.success.baseDefault,
+  }),
+  createSimpleLayer({
+    type: "geojson",
+    id: "tiltak-fortoyning",
+    label: "fortoyningsbøyer.geojson",
+    description: "28.10.2026 · Vedtak",
+    category: "Tiltak",
+    defaultVisible: false,
+    data: {
+      type: "FeatureCollection",
+      features: [
+        [6.1558, 62.4688],
+        [6.1565, 62.468],
+        [6.1572, 62.4672],
+      ].map(
+        (coordinates): Feature => ({
+          type: "Feature",
+          properties: {},
+          geometry: { type: "Point", coordinates },
+        }),
+      ),
+    },
+    fillColor: token.warning.baseDefault,
+    lineColor: token.warning.borderDefault,
+    pointColor: token.warning.baseDefault,
+  }),
+];
+
+/**
+ * Several GeoJSON files in the layer menu: the viewer's own `data` (via
+ * `dataLayer`) plus three more passed to `<CustomLayersProvider layers>`.
+ * Each can be switched off and on; the last one starts hidden.
+ */
+export const WithMultipleGeoJsonLayers: Story = {
+  args: {
+    data: sampleGeoJson as FeatureCollection,
+    dataLayer: {
+      label: "tillatelse-til-tiltak-wgs84",
+      description: "14.10.2026 · Søknad",
+      category: "Tiltak",
+    },
+  },
+  render: (args) => (
+    <ViewBoundsProvider>
+      <BaseLayersProvider>
+        <BuiltInLayersProvider>
+          <CustomLayersProvider layers={extraTiltakLayers}>
             <GeoJsonViewer {...args} />
           </CustomLayersProvider>
         </BuiltInLayersProvider>
