@@ -1,4 +1,4 @@
-import { ExtraFileInfo, FileInfo } from '../FileUploader.types';
+import { ExtraFileInfo, FileInfo, FileUploaderFileAction } from '../FileUploader.types';
 import { Surface, Button, Icon, Paragraph, Spinner, ValidationMessage } from '~/main';
 import classes from './FileUploaderItem.module.css';
 import { MaterialIconProps } from '~/components/kystverket/Icon/icon';
@@ -10,6 +10,7 @@ type FileUploaderItemProps = {
   t: (key: string) => string;
   onDeleteFile: (file: FileInfo) => void;
   onPreviewFile?: () => void;
+  actions?: FileUploaderFileAction[];
 };
 
 export const getPrefixIcon = (contentType: FileInfo['contentType']): MaterialIconProps['material'] => {
@@ -19,7 +20,7 @@ export const getPrefixIcon = (contentType: FileInfo['contentType']): MaterialIco
   return 'anchor';
 };
 
-export function FileUploaderItem({ file, extraInfo, t, onDeleteFile, onPreviewFile }: FileUploaderItemProps) {
+export function FileUploaderItem({ file, extraInfo, t, onDeleteFile, onPreviewFile, actions }: FileUploaderItemProps) {
   return (
     <Surface className={classes.itemWrapper}>
       <Surface className={classes.filePreview}>
@@ -37,6 +38,20 @@ export function FileUploaderItem({ file, extraInfo, t, onDeleteFile, onPreviewFi
         {file.status === 'error' && <ValidationMessage>{file.error}</ValidationMessage>}
       </Surface>
       <Surface align="center" horizontal className={classes.buttonContainer}>
+        {file.status === 'uploaded' &&
+          actions?.map((action) => (
+            <Button
+              key={action.label}
+              onClick={() => action.onClick(file)}
+              aria-label={action.label}
+              disabled={action.disabled}
+              icon
+              variant="ghost"
+              color="neutral"
+            >
+              <Icon material={action.icon} />
+            </Button>
+          ))}
         {onPreviewFile && file.status === 'uploaded' && (
           <Button onClick={onPreviewFile} aria-label={t('previewFileAriaLabel')} icon variant="ghost" color="neutral">
             <Icon material="visibility" />

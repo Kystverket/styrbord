@@ -10,7 +10,7 @@ type FileUploadActionsProps = {
   t: (key: string) => string;
   onUploadFile: (uploadedFiles: File[]) => void;
   allowedFileTypes: string[];
-} & Pick<FileUploaderProps, 'variant' | 'existingFilesProvider' | 'withCaptureButton' | 'multiple'>;
+} & Pick<FileUploaderProps, 'variant' | 'existingFilesProvider' | 'withCaptureButton' | 'multiple' | 'uploadActions'>;
 
 export function FileUploadActions({
   variant,
@@ -22,6 +22,7 @@ export function FileUploadActions({
   allowedFileTypes,
   withCaptureButton,
   multiple,
+  uploadActions,
   t,
 }: FileUploadActionsProps) {
   const [isDropzoneActive, setIsDropzoneActive] = useState(false);
@@ -123,6 +124,18 @@ export function FileUploadActions({
               {t('existingFiles.buttonOpen')}
             </Button>
           )}
+          {uploadActions?.map((action) => (
+            <Button
+              key={action.label}
+              variant="outline"
+              disabled={action.disabled}
+              className={`${classes.uploadButton} ${stretchButtons ? classes.stretch : ''}`}
+              onClick={action.onClick}
+            >
+              <Icon material={action.icon} />
+              {action.label}
+            </Button>
+          ))}
         </Surface>
       </Surface>
     </>
