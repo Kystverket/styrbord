@@ -53,6 +53,48 @@ export interface UseFeatureInteractionResult {
   selectByIds: (ids: (string | number)[]) => void;
 }
 
+type FeatureKey = (feature: InteractiveFeature) => string | number;
+
+/** Same feature (by `key`) with the same properties. */
+function isSameFeature(
+  a: InteractiveFeature | null,
+  b: InteractiveFeature | null,
+  key: FeatureKey,
+): boolean {
+  if (!a || !b) return a === b;
+  return (
+    key(a) === key(b) &&
+    JSON.stringify(a.properties) === JSON.stringify(b.properties)
+  );
+}
+
+/**
+ * `selected` with each feature from a source in `changedSources` matched
+ * against the features rendered in `layerIds`: its fresh copy if still there,
+ * dropped if not. Others are kept as they are. `null` when nothing changed.
+ */
+function refreshSelection(
+  map: maplibregl.Map,
+  layerIds: string[],
+  changedSources: Set<string>,
+  selected: InteractiveFeature[],
+  key: FeatureKey,
+): InteractiveFeature[] | null {
+  const layers = layerIds.filter((id) => map.getLayer(id));
+  const rendered = map.queryRenderedFeatures({
+    layers,
+  }) as InteractiveFeature[];
+  // A feature crossing tile edges is returned once per tile.
+  const byKey = new Map(rendered.map((f) => [key(f), f]));
+  const next = selected.flatMap((f) =>
+    f.source && changedSources.has(f.source) ? (byKey.get(key(f)) ?? []) : f,
+  );
+  const changed =
+    next.length !== selected.length ||
+    next.some((f, i) => !isSameFeature(f, selected[i], key));
+  return changed ? next : null;
+}
+
 /**
  * Hook for managing feature hover and selection interactions on a MapLibre map.
  *
@@ -84,6 +126,14 @@ export function useFeatureInteraction({
 
   // Track previous hover state for change detection
   const prevHoveredIdRef = useRef<string | number | null>(null);
+
+  // Read when a source's data changes, outside the render that set them.
+  const hoveredRef = useRef(hoveredFeature);
+  hoveredRef.current = hoveredFeature;
+  const selectedRef = useRef(selectedFeatures);
+  selectedRef.current = selectedFeatures;
+  // Last pointer position over the map, to hover again after a data change.
+  const lastMouseEventRef = useRef<maplibregl.MapMouseEvent | null>(null);
 
   /**
    * Get a stable ID for a feature.
@@ -164,6 +214,78 @@ export function useFeatureInteraction({
     }
   }, [layerIds, hoveredFeature, selectedFeatures, mapRef]);
 
+  // New data in a source behind `layerIds` (e.g. `setData` on a GeoJSON
+  // source) can change or remove hovered and selected features while their
+  // layers stay put. Once the map has redrawn, read them again: a feature
+  // still there is replaced by its fresh copy, one that is gone is dropped.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !enabled) return;
+
+    // Hover: whatever is under the pointer now.
+    const reconcileHover = () => {
+      const lastEvent = lastMouseEventRef.current;
+      const top = lastEvent
+        ? (queryFeaturesAtPoint(map, lastEvent.point)[0] ?? null)
+        : null;
+      if (isSameFeature(hoveredRef.current, top, getFeatureId)) return;
+      prevHoveredIdRef.current = top ? getFeatureId(top) : null;
+      setHoveredFeature(top);
+      onHoverRef.current?.(top, top ? lastEvent : null);
+      map.getCanvas().style.cursor = top ? "pointer" : "";
+    };
+
+    // Selection: matched against the features rendered on screen, so a
+    // selected feature outside the view is dropped as well — but only when
+    // its own source changed.
+    const changedSources = new Set<string>();
+    const reconcileSelection = () => {
+      if (selectedRef.current.length === 0) return;
+      const next = refreshSelection(
+        map,
+        layerIds,
+        changedSources,
+        selectedRef.current,
+        getFeatureId,
+      );
+      if (!next) return;
+      setSelectedFeatures(next);
+      onSelectRef.current?.(next.length > 0 ? next : null);
+    };
+
+    let scheduled = false;
+    const runOnIdle = () => {
+      scheduled = false;
+      if (hoverable) reconcileHover();
+      reconcileSelection();
+      changedSources.clear();
+    };
+    const handleSourceData = (e: maplibregl.MapSourceDataEvent) => {
+      if (e.sourceDataType !== "content") return;
+      const watched = layerIds.some(
+        (id) => map.getLayer(id)?.source === e.sourceId,
+      );
+      if (!watched) return;
+      changedSources.add(e.sourceId);
+      if (scheduled) return;
+      scheduled = true;
+      map.once("idle", runOnIdle);
+    };
+
+    map.on("sourcedata", handleSourceData);
+    return () => {
+      map.off("sourcedata", handleSourceData);
+      map.off("idle", runOnIdle);
+    };
+  }, [
+    mapRef,
+    enabled,
+    hoverable,
+    layerIds,
+    queryFeaturesAtPoint,
+    getFeatureId,
+  ]);
+
   // ----- Setup map event handlers -----
   useEffect(() => {
     const map = mapRef.current;
@@ -172,6 +294,7 @@ export function useFeatureInteraction({
     // ----- Hover handlers -----
     const handleMouseMove = (e: maplibregl.MapMouseEvent) => {
       if (!hoverable) return;
+      lastMouseEventRef.current = e;
 
       const features = queryFeaturesAtPoint(map, e.point);
       const topFeature = features.length > 0 ? features[0] : null;
@@ -190,6 +313,7 @@ export function useFeatureInteraction({
 
     const handleMouseLeave = () => {
       if (!hoverable) return;
+      lastMouseEventRef.current = null;
 
       if (prevHoveredIdRef.current !== null) {
         prevHoveredIdRef.current = null;

@@ -502,8 +502,15 @@ function removeFromMap(
       map.removeLayer(layerSpec.id);
     }
   }
+  // A source another definition's layers still use must stay — MapLibre
+  // refuses to remove it, and those layers would lose their data.
+  const inUse = new Set(
+    map
+      .getStyle()
+      .layers.flatMap((l) => ("source" in l && l.source ? [l.source] : [])),
+  );
   for (const srcId of Object.keys(def.sources)) {
-    if (map.getSource(srcId)) {
+    if (map.getSource(srcId) && !inUse.has(srcId)) {
       map.removeSource(srcId);
     }
   }

@@ -99,6 +99,14 @@ export interface SimpleLayerOptions {
 
 export interface SimpleGeoJsonLayerOptions extends SimpleLayerOptions {
   type: "geojson";
+  /**
+   * Inline GeoJSON, or a URL to load it from.
+   *
+   * Hover and selection report features by `id`. MapLibre only keeps
+   * non-negative integer ids (`"42"` arrives as `42`), so inline features
+   * keep such ids and every other feature gets a generated one. Features
+   * loaded from a URL are always numbered by their position.
+   */
   data: Feature | FeatureCollection | string;
   /** Fill color. Defaults to the `primary` base color. */
   fillColor?: string;

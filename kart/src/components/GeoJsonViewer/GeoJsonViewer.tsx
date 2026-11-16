@@ -8,7 +8,7 @@ import {
   useCallback,
   useRef,
 } from "react";
-import type { GeoJSONSource } from "maplibre-gl";
+import type { GeoJSONSource, SourceSpecification } from "maplibre-gl";
 import type * as maplibregl from "maplibre-gl";
 import type {
   Feature,
@@ -63,22 +63,41 @@ const LABEL_SOURCE = "geojson-viewer-labels";
 
 const EMPTY_FC: FeatureCollection = { type: "FeatureCollection", features: [] };
 
+/** GeoJSON a custom layer loads from `url`, as MapLibre fetched it. */
+interface LoadedUrlData {
+  url: string;
+  data: GeoJSON.GeoJSON;
+}
+
 /**
- * `fc` plus the features of every given custom layer whose GeoJSON source
- * holds an inline Feature or FeatureCollection. Sources given as a URL are
- * skipped — their extent is unknown until MapLibre loads them.
+ * The GeoJSON behind a custom layer's source: its inline data, or for a URL
+ * source what `loaded` holds for that URL. `undefined` for anything else.
+ */
+function sourceGeoJson(
+  srcId: string,
+  source: SourceSpecification,
+  loaded: Record<string, LoadedUrlData>,
+): GeoJSON.GeoJSON | undefined {
+  if (source.type !== "geojson") return undefined;
+  if (typeof source.data !== "string") return source.data as GeoJSON.GeoJSON;
+  const entry = loaded[srcId];
+  return entry?.url === source.data ? entry.data : undefined;
+}
+
+/**
+ * `fc` plus the features of every given custom layer's GeoJSON source. A
+ * URL source adds nothing until it has loaded.
  */
 function visibleFeatures(
   fc: FeatureCollection,
   layers: LayerDefinition[],
+  loaded: Record<string, LoadedUrlData>,
 ): FeatureCollection {
   const extra: Feature[] = [];
   for (const layer of layers) {
-    for (const source of Object.values(layer.sources)) {
-      if (source.type !== "geojson" || typeof source.data !== "object") {
-        continue;
-      }
-      const sourceData = source.data as GeoJSON.GeoJSON;
+    for (const [srcId, source] of Object.entries(layer.sources)) {
+      const sourceData = sourceGeoJson(srcId, source, loaded);
+      if (!sourceData) continue;
       if (sourceData.type === "FeatureCollection") {
         extra.push(...sourceData.features);
       } else if (sourceData.type === "Feature") {
@@ -144,13 +163,18 @@ export function GeoJsonViewer({
   // custom layers.
   const { layers: customLayers, visibleLayerIds: visibleCustomIds } =
     useContext(CustomLayersContext);
+  // Custom layers given a URL: their data, by source id, once loaded.
+  const [loadedUrlData, setLoadedUrlData] = useState<
+    Record<string, LoadedUrlData>
+  >({});
   const boundsFc = useMemo(
     () =>
       visibleFeatures(
         dataShown ? fc : EMPTY_FC,
         customLayers.filter((def) => visibleCustomIds.has(def.id)),
+        loadedUrlData,
       ),
-    [fc, dataShown, customLayers, visibleCustomIds],
+    [fc, dataShown, customLayers, visibleCustomIds, loadedUrlData],
   );
   // Read in the setup effect without re-running it on every layer change.
   const boundsFcRef = useRef(boundsFc);
@@ -201,6 +225,56 @@ export function GeoJsonViewer({
       onCoordinateClickRef.current?.(featureInfoResult);
     }
   }, [featureInfoResult]);
+
+  // ----- Data of custom layers given a URL, for "fit to data" -----
+  // Which URL each source was last read for, so the frequent `sourcedata`
+  // events don't read the same data again.
+  const urlReadsRef = useRef(new Map<string, string>());
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapReady) return;
+
+    const urlSources = customLayers.flatMap((def) =>
+      Object.entries(def.sources).flatMap(([srcId, src]) =>
+        src.type === "geojson" && typeof src.data === "string"
+          ? [{ srcId, url: src.data }]
+          : [],
+      ),
+    );
+    if (urlSources.length === 0) return;
+
+    let cancelled = false;
+    const read = () => {
+      for (const { srcId, url } of urlSources) {
+        if (urlReadsRef.current.get(srcId) === url) continue;
+        const source = map.getSource(srcId);
+        if (source?.type !== "geojson" || !map.isSourceLoaded(srcId)) continue;
+        urlReadsRef.current.set(srcId, url);
+        (source as GeoJSONSource)
+          .getData()
+          .then((loaded) => {
+            if (cancelled) return;
+            setLoadedUrlData((prev) => ({
+              ...prev,
+              [srcId]: { url, data: loaded },
+            }));
+          })
+          .catch(() => {
+            // Read again on the next `sourcedata`.
+            urlReadsRef.current.delete(srcId);
+          });
+      }
+    };
+
+    read();
+    map.on("sourcedata", read);
+    return () => {
+      cancelled = true;
+      map.off("sourcedata", read);
+      // A read cut short by `cancelled` must be allowed to run again.
+      urlReadsRef.current.clear();
+    };
+  }, [mapRef, mapReady, mapVersion, customLayers]);
 
   // ----- Feature interaction hook -----
   const handleHover = useCallback(
