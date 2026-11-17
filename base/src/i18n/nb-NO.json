@@ -1,4 +1,9 @@
 {
+  "filePreviewer": {
+    "download": "Last ned",
+    "noFileSelected": "Ingen fil valgt.",
+    "openInNewTab": "Åpne i ny fane"
+  },
   "fileUploader": {
     "attachmentsCount": "Vedlegg ({count})",
     "buttonLabel": "Last opp fil",
@@ -59,8 +64,10 @@
   "loading": "Laster",
   "organisasjonsnummer": "Organisasjonsnummer",
   "saksbehandlingShell": {
+    "comparison": "Sammenligning",
     "hideComparison": "Skjul sammenligning",
     "hideItemList": "Skjul elementliste",
+    "itemList": "Elementliste",
     "pinSidePanel": "Fest sidepanel",
     "showComparison": "Vis sammenligning",
     "showItemList": "Vis elementliste",

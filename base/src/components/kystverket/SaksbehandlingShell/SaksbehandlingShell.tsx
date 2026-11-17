@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
-import { Surface, Icon, IconButton, SideSheet } from '~/main';
+import { Surface, Icon, IconButton } from '~/main';
 import { ItemList } from './ItemList/ItemList';
+import { ShellSideSheet, ShellSideSheetLayout } from './ShellSideSheet/ShellSideSheet';
 import classes from './SaksbehandlingShell.module.css';
 import type { SaksbehandlingShellProps } from './SaksbehandlingShell.types';
 import { useTranslation } from '~/translations';
@@ -20,15 +21,23 @@ export function SaksbehandlingShell({
   comparisonContent,
   defaultItemListOpen = true,
   defaultComparisonOpen = false,
+  comparisonOpen,
+  onComparisonOpenChange,
   children,
   className = '',
 }: Readonly<SaksbehandlingShellProps>) {
   const { scopedT } = useTranslation();
   const t = scopedT('saksbehandlingShell');
   const [isItemListOpen, setIsItemListOpen] = useState(defaultItemListOpen);
-  const [isComparisonOpen, setIsComparisonOpen] = useState(defaultComparisonOpen);
+  const [comparisonOpenState, setComparisonOpenState] = useState(defaultComparisonOpen);
+  const isComparisonControlled = comparisonOpen !== undefined;
+  const isComparisonOpen = isComparisonControlled ? comparisonOpen : comparisonOpenState;
+  const setIsComparisonOpen = (open: boolean) => {
+    if (!isComparisonControlled) setComparisonOpenState(open);
+    onComparisonOpenChange?.(open);
+  };
   const [isItemListPinned, setIsItemListPinned] = useState(defaultItemListOpen);
-  const [isComparisonPinned, setIsComparisonPinned] = useState(defaultComparisonOpen);
+  const [isComparisonPinned, setIsComparisonPinned] = useState(comparisonOpen ?? defaultComparisonOpen);
 
   const toggleItemList = () => {
     setIsItemListOpen((open) => !open);
@@ -38,7 +47,7 @@ export function SaksbehandlingShell({
   };
 
   const toggleComparison = () => {
-    setIsComparisonOpen((open) => !open);
+    setIsComparisonOpen(!isComparisonOpen);
     if (isComparisonOpen) {
       setIsComparisonPinned(false);
     }
@@ -117,19 +126,18 @@ export function SaksbehandlingShell({
         </Surface>
       </Surface>
 
-      <SideSheet.Layout>
+      <ShellSideSheetLayout>
         {items !== undefined && (
-          <SideSheet
+          <ShellSideSheet
             open={isItemListOpen}
             onClose={() => setIsItemListOpen(false)}
             pinned={isItemListPinned}
-            onPinnedChange={setIsItemListPinned}
             placement="left"
-            showCloseButton={false}
             style={ITEM_LIST_WIDTH_STYLE}
+            aria-label={t('itemList')}
           >
             <ItemList items={items} selectedItemId={selectedItemId} onSelectItemId={onSelectItemId} />
-          </SideSheet>
+          </ShellSideSheet>
         )}
 
         <div className={classes.mainContainer}>
@@ -144,19 +152,18 @@ export function SaksbehandlingShell({
         </div>
 
         {comparisonContent && (
-          <SideSheet
+          <ShellSideSheet
             open={isComparisonOpen}
             onClose={() => setIsComparisonOpen(false)}
             pinned={isComparisonPinned}
-            onPinnedChange={setIsComparisonPinned}
             placement="right"
             size={isItemListPinned ? '40%' : '50%'}
-            showCloseButton={false}
+            aria-label={t('comparison')}
           >
             {comparisonContent}
-          </SideSheet>
+          </ShellSideSheet>
         )}
-      </SideSheet.Layout>
+      </ShellSideSheetLayout>
     </div>
   );
 }

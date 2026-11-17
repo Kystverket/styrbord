@@ -27,6 +27,13 @@ export interface SaksbehandlingShellProps {
   defaultItemListOpen?: boolean;
   /** Default open state of the comparison panel. Default: `false`. */
   defaultComparisonOpen?: boolean;
+  /**
+   * Controlled open state of the comparison panel, e.g. to open it when the user clicks an
+   * attachment in the main section. Use together with `onComparisonOpenChange`.
+   */
+  comparisonOpen?: boolean;
+  /** Called when the comparison panel is opened or closed from the toolbar, Escape or backdrop. */
+  onComparisonOpenChange?: (open: boolean) => void;
   /** Main section content for the currently selected item. */
   children?: ReactNode;
   className?: string;
