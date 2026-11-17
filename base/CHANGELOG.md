@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.14.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.13.0...styrbord-v2.14.0) (2026-11-17)
+
+
+### Features
+
+* **base:** SaksbehandlingShell med egen sidesheet, styrbart sammenligningspanel og FilePreviewer.Panel ([#391](https://github.com/Kystverket/styrbord/issues/391)) ([105bf02](https://github.com/Kystverket/styrbord/commit/105bf0246e14020e210097a1fdcb8b28f56ab375))
+
 ## [2.13.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.12.0...styrbord-v2.13.0) (2026-11-16)
 
 
