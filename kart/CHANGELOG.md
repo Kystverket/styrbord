@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/Kystverket/styrbord/compare/styrbord-kart-v1.3.0...styrbord-kart-v1.4.0) (2026-11-17)
+
+
+### Features
+
+* **kart:** Oppdater kart med bedre layer-velger, samt valg av hvilke geojson imports som skal vises ([#385](https://github.com/Kystverket/styrbord/issues/385)) ([f69bdb0](https://github.com/Kystverket/styrbord/commit/f69bdb000564795492e24bf750e8eb229ce63317))
+
 ## [1.3.0](https://github.com/Kystverket/styrbord/compare/styrbord-kart-v1.2.0...styrbord-kart-v1.3.0) (2026-10-29)
 
 
