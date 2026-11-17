@@ -1,1 +1,0 @@
-import{j as i}from"./iframe-c1DvC_2c.js";const e="_kyvDivider_ukpgq_1",r={kyvDivider:e},s=()=>i.jsx("hr",{"aria-hidden":!0,className:r.kyvDivider});s.__docgenInfo={description:"",methods:[],displayName:"KyvDivider"};export{s as K};
