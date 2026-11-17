@@ -51,20 +51,27 @@ export function ShellSideSheet({
   children,
   className = '',
   style,
+  'aria-label': ariaLabel,
 }: Readonly<ShellSideSheetProps>) {
   const sheetRef = useRef<HTMLElement>(null);
   const previousFocusRef = useRef<Element | null>(null);
+  const pinnedRef = useRef(pinned);
+  pinnedRef.current = pinned;
 
   const isModal = open && !pinned && backdrop;
 
+  // Move focus in only when the sheet opens over the content. A pinned sheet is part of the
+  // page, so opening it must not pull focus away from where the user is working.
   useEffect(() => {
     if (open) {
+      if (pinnedRef.current) return;
       previousFocusRef.current = document.activeElement;
       requestAnimationFrame(() => {
         sheetRef.current?.querySelector<HTMLElement>(FOCUSABLE)?.focus();
       });
     } else if (previousFocusRef.current instanceof HTMLElement) {
       previousFocusRef.current.focus();
+      previousFocusRef.current = null;
     }
   }, [open]);
 
@@ -114,8 +121,9 @@ export function ShellSideSheet({
         ref={sheetRef}
         className={sheetClasses}
         style={style}
-        role="dialog"
-        aria-modal={isModal}
+        role={pinned ? undefined : 'dialog'}
+        aria-modal={isModal || undefined}
+        aria-label={ariaLabel}
         aria-hidden={!open}
       >
         <div className={classes.body}>{children}</div>

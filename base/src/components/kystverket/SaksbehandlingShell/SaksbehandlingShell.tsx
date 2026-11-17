@@ -134,6 +134,7 @@ export function SaksbehandlingShell({
             pinned={isItemListPinned}
             placement="left"
             style={ITEM_LIST_WIDTH_STYLE}
+            aria-label={t('itemList')}
           >
             <ItemList items={items} selectedItemId={selectedItemId} onSelectItemId={onSelectItemId} />
           </ShellSideSheet>
@@ -157,6 +158,7 @@ export function SaksbehandlingShell({
             pinned={isComparisonPinned}
             placement="right"
             size={isItemListPinned ? '40%' : '50%'}
+            aria-label={t('comparison')}
           >
             {comparisonContent}
           </ShellSideSheet>

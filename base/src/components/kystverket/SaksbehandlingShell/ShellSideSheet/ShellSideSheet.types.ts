@@ -17,6 +17,8 @@ export interface ShellSideSheetProps {
   pinned?: boolean;
   /** Dim the content and trap focus while overlaying. Default: `true`. */
   backdrop?: boolean;
+  /** Accessible name of the sheet. Required: the shell's sheets have no visible heading. */
+  'aria-label': string;
   children?: ReactNode;
   className?: string;
   style?: CSSProperties;

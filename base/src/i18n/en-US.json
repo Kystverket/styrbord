@@ -1,4 +1,9 @@
 {
+  "filePreviewer": {
+    "download": "Download",
+    "noFileSelected": "No file selected.",
+    "openInNewTab": "Open in new tab"
+  },
   "fileUploader": {
     "attachmentsCount": "Attachments ({count})",
     "buttonLabel": "Upload file",
@@ -59,8 +64,10 @@
   "loading": "Loading",
   "organisasjonsnummer": "Organization number",
   "saksbehandlingShell": {
+    "comparison": "Comparison",
     "hideComparison": "Hide comparison",
     "hideItemList": "Hide item list",
+    "itemList": "Item list",
     "pinSidePanel": "Pin side panel",
     "showComparison": "Show comparison",
     "showItemList": "Show item list",

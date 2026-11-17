@@ -9,7 +9,7 @@ import { handleDownload } from '../FilePreviewer-handleFileDownload';
 import { convertBytesToReadable } from '~/utils/convertBytesToReadable';
 import { openFileInNewTab } from '../FilePreviewer-openInNew';
 
-const getButtonConfig = (file: FileInfo) => {
+export const getButtonConfig = (file: FileInfo) => {
   const defaults = defaultButtonsByType[file.contentType];
   return { ...defaults, ...file.buttons };
 };

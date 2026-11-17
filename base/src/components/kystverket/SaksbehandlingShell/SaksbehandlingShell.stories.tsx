@@ -15,15 +15,12 @@ import {
   Popover,
   Summary,
   convertBytesToReadable,
+  FilePreviewer,
+  type FilePreviewerPanelProps,
 } from '~/main';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { SaksbehandlingShell } from './SaksbehandlingShell';
 import type { SaksbehandlingItem } from './SaksbehandlingShell.types';
-import { FileRenderer } from '../FilePreviewer/renderer/FileRenderer';
-import { handleDownload } from '../FilePreviewer/FilePreviewer-handleFileDownload';
-import { openFileInNewTab } from '../FilePreviewer/FilePreviewer-openInNew';
-import type { FileInfo } from '../FilePreviewer/FilePreviewer.types';
-import storyClasses from './SaksbehandlingShell.stories.module.css';
 import atlas from '@assets/img/atlas/atlas 1.jpeg';
 import pikekyst from '@assets/documents/Pikekyst Oppskrift.pdf';
 import geojson from '@assets/documents/geojson.json';
@@ -445,6 +442,8 @@ export const WithHeaderAndFooter: StoryFn<typeof SaksbehandlingShell> = () => (
 );
 WithHeaderAndFooter.storyName = 'Med header og footer';
 
+type FileInfo = NonNullable<FilePreviewerPanelProps['file']>;
+
 type InnsendingStatus = 'ny' | 'behandlet' | 'slettet';
 
 type Innsending = {
@@ -747,7 +746,7 @@ function AttachmentList({
             variant="ghost"
             color="neutral"
             aria-pressed={file === active}
-            className={storyClasses.attachment}
+            style={{ justifyContent: 'flex-start', width: '100%' }}
             onClick={() => onOpen(file)}
           >
             <Icon file={fileExtension(file)} size="md" />
@@ -761,42 +760,6 @@ function AttachmentList({
         ))}
       </Surface>
     </Surface>
-  );
-}
-
-/** The selected attachment in the right panel, with the same actions as FilePreviewer's dialog. */
-function AttachmentViewer({ file }: Readonly<{ file?: FileInfo }>) {
-  if (!file) {
-    return <Paragraph>Velg et vedlegg for å vise det her.</Paragraph>;
-  }
-
-  return (
-    <div className={storyClasses.viewer}>
-      <Surface horizontal align="center" justify="between" gap={2}>
-        <Surface horizontal align="center" gap={2}>
-          <Icon file={fileExtension(file)} size="lg" />
-          <Surface>
-            <Heading level={2} data-size="xs" style={{ margin: 0 }}>
-              {file.fileName}
-            </Heading>
-            {file.fileSizeInBytes && (
-              <Paragraph data-size="sm" data-color-variant="subtle">
-                {convertBytesToReadable(file.fileSizeInBytes)}
-              </Paragraph>
-            )}
-          </Surface>
-        </Surface>
-        <Surface horizontal align="center" gap={1}>
-          {file.contentType !== 'txt' && (
-            <Action label="Åpne i ny fane" icon="open_in_new" onClick={() => openFileInNewTab(file)} />
-          )}
-          <Action label="Last ned" icon="download" onClick={() => handleDownload(file)} />
-        </Surface>
-      </Surface>
-      <div className={storyClasses.preview}>
-        <FileRenderer file={file} mode="full" className={storyClasses.previewFile} />
-      </div>
-    </div>
   );
 }
 
@@ -921,7 +884,12 @@ export const Postmottak: StoryFn<typeof SaksbehandlingShell> = () => {
             items={filtered.map(toItem)}
             selectedItemId={selected?.id}
             onSelectItemId={setSelectedId}
-            comparisonContent={<AttachmentViewer file={shownVedlegg} />}
+            comparisonContent={
+              <FilePreviewer.Panel
+                file={shownVedlegg}
+                emptyContent={<Paragraph>Velg et vedlegg for å vise det her.</Paragraph>}
+              />
+            }
             comparisonOpen={isViewerOpen}
             onComparisonOpenChange={setIsViewerOpen}
           >
