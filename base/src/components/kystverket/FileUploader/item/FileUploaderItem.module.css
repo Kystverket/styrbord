@@ -19,6 +19,7 @@
 
   .title {
     font-weight: var(--ds-font-weight-medium);
+    -webkit-text-stroke-width: 0;
   }
 
   .filePreview {

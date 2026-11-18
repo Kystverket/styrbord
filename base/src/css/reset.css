@@ -94,6 +94,7 @@ Add the correct font weight in Edge and Safari.
 b,
 strong {
   font-weight: bolder;
+  -webkit-text-stroke-width: 0;
 }
 
 /*

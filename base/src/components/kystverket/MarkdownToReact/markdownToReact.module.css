@@ -32,9 +32,11 @@
 .heading1 {
   font-size: var(--ds-font-size-5);
   font-weight: var(--ds-font-weight-medium);
+  -webkit-text-stroke-width: 0;
 }
 
 .heading2 {
   font-size: var(--ds-font-size-4);
   font-weight: var(--ds-font-weight-medium);
+  -webkit-text-stroke-width: 0;
 }

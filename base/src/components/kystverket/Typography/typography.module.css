@@ -41,21 +41,25 @@
   .body-xl-strong {
     composes: body-xl;
     font-weight: var(--ds-font-weight-medium);
+    -webkit-text-stroke-width: 0;
   }
 
   .body-lg-strong {
     composes: body-lg;
     font-weight: var(--ds-font-weight-medium);
+    -webkit-text-stroke-width: 0;
   }
 
   .body-md-strong {
     composes: body-md;
     font-weight: var(--ds-font-weight-medium);
+    -webkit-text-stroke-width: 0;
   }
 
   .body-sm-strong {
     composes: body-sm;
     font-weight: var(--ds-font-weight-medium);
+    -webkit-text-stroke-width: 0;
   }
 
   .label-xl {
@@ -89,41 +93,49 @@
   .label-xl-strong {
     composes: label-xl;
     font-weight: var(--ds-font-weight-medium);
+    -webkit-text-stroke-width: 0;
   }
 
   .label-lg-strong {
     composes: label-lg;
     font-weight: var(--ds-font-weight-medium);
+    -webkit-text-stroke-width: 0;
   }
 
   .label-md-strong {
     composes: label-md;
     font-weight: var(--ds-font-weight-medium);
+    -webkit-text-stroke-width: 0;
   }
 
   .label-sm-strong {
     composes: label-sm;
     font-weight: var(--ds-font-weight-medium);
+    -webkit-text-stroke-width: 0;
   }
 
   .label-xl-semibold {
     composes: label-xl;
     font-weight: var(--ds-font-weight-semibold);
+    -webkit-text-stroke-width: 0;
   }
 
   .label-lg-semibold {
     composes: label-lg;
     font-weight: var(--ds-font-weight-semibold);
+    -webkit-text-stroke-width: 0;
   }
 
   .label-md-semibold {
     composes: label-md;
     font-weight: var(--ds-font-weight-semibold);
+    -webkit-text-stroke-width: 0;
   }
 
   .label-sm-semibold {
     composes: label-sm;
     font-weight: var(--ds-font-weight-semibold);
+    -webkit-text-stroke-width: 0;
   }
 
   .accent {
@@ -150,20 +162,24 @@
   .accent-md-strong {
     composes: accent-md;
     font-weight: var(--ds-font-weight-medium);
+    -webkit-text-stroke-width: 0;
   }
 
   .accent-sm-strong {
     composes: accent-sm;
     font-weight: var(--ds-font-weight-medium);
+    -webkit-text-stroke-width: 0;
   }
 
   .accent-md-semibold {
     composes: accent-md;
     font-weight: var(--ds-font-weight-semibold);
+    -webkit-text-stroke-width: 0;
   }
 
   .accent-sm-semibold {
     composes: accent-sm;
     font-weight: var(--ds-font-weight-semibold);
+    -webkit-text-stroke-width: 0;
   }
 }

@@ -51,11 +51,13 @@ span[data-weight='regular'] {
 p[data-weight='medium'],
 span[data-weight='medium'] {
   font-weight: var(--ds-font-weight-medium);
+  -webkit-text-stroke-width: 0;
 }
 .ds-paragraph[data-weight='semibold'],
 p[data-weight='semibold'],
 span[data-weight='semibold'] {
   font-weight: var(--ds-font-weight-semibold);
+  -webkit-text-stroke-width: 0;
 }
 
 *[data-text-case='upper'] {

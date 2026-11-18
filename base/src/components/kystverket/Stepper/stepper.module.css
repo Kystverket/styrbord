@@ -53,6 +53,7 @@
 
   .step .icon > * {
     font-weight: var(--ds-font-weight-medium);
+    -webkit-text-stroke-width: 0;
     font-size: var(--ds-body-sm-font-size);
   }
   .step.has-variant-subtle .icon {
@@ -79,6 +80,7 @@
 
   .label {
     font-weight: var(--ds-font-weight-medium);
+    -webkit-text-stroke-width: 0;
     font-size: var(--ds-body-md-font-size);
     line-height: var(--ds-body-md-line-height);
     letter-spacing: var(--ds-body-md-letter-spacing);
