@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.15.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.14.0...styrbord-v2.15.0) (2026-11-18)
+
+
+### Features
+
+* **base,kart,consent:** Designsystemet 1.24.0, styrbord-tokens 1.2.0 og egen Search ([#394](https://github.com/Kystverket/styrbord/issues/394)) ([cba92f8](https://github.com/Kystverket/styrbord/commit/cba92f8446f98b1cd8dc4c9aa123cba7e2026d78))
+* **base:** tykk opp tekst i vekt 300 og 500 med text-stroke ([#395](https://github.com/Kystverket/styrbord/issues/395)) ([9b3cd5a](https://github.com/Kystverket/styrbord/commit/9b3cd5a9bc3bbaf62bdf990c018f76c7ec7f44e1))
+
+
+### Bug Fixes
+
+* **base:** bruk border-subtle på kantlinjer i stedet for surface-hover/active ([#392](https://github.com/Kystverket/styrbord/issues/392)) ([9532bd5](https://github.com/Kystverket/styrbord/commit/9532bd54e2424531bca47eeeb3c47b6e4b511b12))
+
+
+### Reverts
+
+* **base:** fjern text-stroke på tekst i vekt 300 og 500 ([#396](https://github.com/Kystverket/styrbord/issues/396)) ([c3efc59](https://github.com/Kystverket/styrbord/commit/c3efc593b98e7d8496ca342d35a8d806ad2b76ea))
+
 ## [2.14.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.13.0...styrbord-v2.14.0) (2026-11-17)
 
 
