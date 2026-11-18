@@ -73,6 +73,10 @@
     "showItemList": "Vis elementliste",
     "unpinSidePanel": "Løsne sidepanel"
   },
+  "search": {
+    "button": "Søk",
+    "clear": "Fjern tekst"
+  },
   "sentralbord": "Sentralbord",
   "sideSheet": {
     "back": "Gå tilbake",

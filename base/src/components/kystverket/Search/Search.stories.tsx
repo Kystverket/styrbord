@@ -6,12 +6,12 @@ import { Label } from '@digdir/designsystemet-react';
 export default {
   title: 'Components/Search',
   component: Search,
-  tags: ['autodocs', 'ds', 'deprecated'],
+  tags: ['autodocs', 'kyv'],
   parameters: {
     docs: {
       description: {
         component:
-          '**Deprecated:** `Search` fjernes i neste major-versjon av Designsystemet. Bruk `Input` med `type="search"` i et `Field` i stedet. Se [Search is being removed, what should you do?](https://designsystemet.no/en/blog/search-is-being-removed-what-should-you-do).\n\n[Dokumentasjon fra Designsystemet](https://designsystemet.no/no/components/docs/search/overview)',
+          'Søkefelt med tømmeknapp og søkeknapp. Designsystemet fjerner sin `Search` i neste major-versjon ([les mer](https://designsystemet.no/en/blog/search-is-being-removed-what-should-you-do)), så Styrbord har sin egen med samme API. `Search.Clear` tømmer bare søkefeltet, ikke resten av skjemaet, og fungerer også når feltet er kontrollert.',
       },
     },
   },
@@ -26,7 +26,7 @@ export const Preview: StoryFn<typeof Search> = (args) => (
 );
 
 export const Controlled: StoryFn<typeof Search> = () => {
-  const [value, setValue] = useState<string>();
+  const [value, setValue] = useState('');
   return (
     <>
       <Search>
@@ -63,7 +63,7 @@ export const Variants: StoryFn<typeof Search> = () => (
     <Search>
       <Search.Input aria-label="Søk" />
       <Search.Clear />
-      <Search.Button variant="primary" />
+      <Search.Button variant="outline" />
     </Search>
   </>
 );
@@ -80,8 +80,8 @@ export const WithLabel: StoryFn<typeof Search> = () => (
 );
 
 export const Form: StoryFn<typeof Search> = () => {
-  const [value, setValue] = useState<string>();
-  const [submittedValue, setSubmittedValue] = useState<string>();
+  const [value, setValue] = useState('');
+  const [submittedValue, setSubmittedValue] = useState('');
 
   return (
     <>
