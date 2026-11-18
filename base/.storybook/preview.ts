@@ -32,6 +32,19 @@ export const globalTypes = {
       dynamicTitle: true,
     },
   },
+  sizeScale: {
+    name: 'Størrelsesskala',
+    description: 'Prototype for SAK-1157: dagens størrelsesskala eller forslaget med felles 4 px-skala',
+    toolbar: {
+      icon: 'ruler',
+      items: [
+        { value: 'current', title: 'Dagens skala' },
+        { value: 'proposal', title: 'Forslag (4 px)' },
+      ],
+      showName: true,
+      dynamicTitle: true,
+    },
+  },
 };
 
 const preview: Preview = {
