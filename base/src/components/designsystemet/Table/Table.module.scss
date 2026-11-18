@@ -14,7 +14,6 @@
 .table th {
   white-space: nowrap;
   font-weight: var(--ds-font-weight-medium);
-  -webkit-text-stroke-width: 0.2px; // Overstyrer nullstillingen på th, som er 700 i Designsystemet
 }
 .table th[data-wrap] {
   white-space: initial;
