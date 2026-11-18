@@ -72,7 +72,6 @@
   .fileName,
   .selectFilesLabel {
     font-weight: var(--ds-font-weight-medium);
-    -webkit-text-stroke-width: 0;
   }
   .subtitle {
     color: var(--ds-color-neutral-text-subtle);

@@ -72,14 +72,12 @@
   max-width: min-content;
   overflow: hidden;
   font-weight: var(--ds-font-weight-medium);
-  -webkit-text-stroke-width: 0;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .fileExtension {
   font-weight: var(--ds-font-weight-medium);
-  -webkit-text-stroke-width: 0;
 }
 
 .fileSize {

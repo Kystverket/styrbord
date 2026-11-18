@@ -54,7 +54,6 @@
     border-radius: var(--ds-border-radius-md);
     color: var(--ds-color-text-default);
     font-weight: var(--ds-font-weight-medium);
-    -webkit-text-stroke-width: 0;
     text-decoration: none;
     text-transform: none;
     white-space: nowrap;

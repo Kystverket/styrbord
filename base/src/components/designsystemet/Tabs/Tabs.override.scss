@@ -3,7 +3,6 @@
 :is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) > [role='tab'],
 :is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) > u-tab {
   font-weight: 500;
-  -webkit-text-stroke-width: 0;
   padding-inline: 0;
   gap: 7px;
 }

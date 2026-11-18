@@ -127,14 +127,12 @@
 .editor :global(.ProseMirror h1) {
   font-size: var(--ds-font-size-5);
   font-weight: var(--ds-font-weight-medium);
-  -webkit-text-stroke-width: 0;
   color: var(--ds-color-neutral-text-default);
 }
 
 .editor :global(.ProseMirror h2) {
   font-size: var(--ds-font-size-4);
   font-weight: var(--ds-font-weight-medium);
-  -webkit-text-stroke-width: 0;
   color: var(--ds-color-neutral-text-default);
 }
 

@@ -47,7 +47,6 @@
     color: white;
     background-color: transparent;
     font-weight: var(--ds-font-weight-medium);
-    -webkit-text-stroke-width: 0;
   }
   .footer .link:hover {
     color: var(--ds-color-primary-base-contrast-subtle);
