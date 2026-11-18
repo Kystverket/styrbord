@@ -111,11 +111,11 @@
 
   .push.placement-left {
     order: -1;
-    border-right: 1px solid var(--ds-color-neutral-surface-hover);
+    border-right: 1px solid var(--ds-color-neutral-border-subtle);
   }
   .push.placement-right {
     order: 1;
-    border-left: 1px solid var(--ds-color-neutral-surface-hover);
+    border-left: 1px solid var(--ds-color-neutral-border-subtle);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -185,7 +185,7 @@
   .headerDivider {
     margin: 0;
     border: none;
-    border-top: 1px solid var(--ds-color-neutral-surface-hover);
+    border-top: 1px solid var(--ds-color-neutral-border-subtle);
   }
 
   .body {
@@ -203,7 +203,7 @@
   .footerDivider {
     margin: 0;
     border: none;
-    border-top: 1px solid var(--ds-color-neutral-surface-hover);
+    border-top: 1px solid var(--ds-color-neutral-border-subtle);
   }
 
   .buttonBlock {

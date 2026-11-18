@@ -18,7 +18,7 @@
 
 .ds-card[data-variant='default'],
 .ds-card {
-  border-color: var(--ds-color-surface-hover);
+  border-color: var(--ds-color-border-subtle);
   color: var(--ds-color-text-default);
 }
 
@@ -27,7 +27,7 @@
 }
 
 .ds-card:not([data-color]) {
-  border-color: var(--ds-color-neutral-surface-hover);
+  border-color: var(--ds-color-neutral-border-subtle);
   color: var(--ds-color-neutral-text-default);
 }
 .ds-card:not([data-color])[data-variant='tinted'] {

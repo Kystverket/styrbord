@@ -2,7 +2,7 @@
   .list {
     display: flex;
     flex-direction: column;
-    border: var(--ds-border-width-default) solid var(--ds-color-neutral-surface-hover);
+    border: var(--ds-border-width-default) solid var(--ds-color-neutral-border-subtle);
     border-radius: var(--ds-border-radius-xl);
     overflow: hidden;
   }
@@ -10,7 +10,7 @@
   .title,
   .valueRow,
   .contentRow {
-    border-bottom: var(--ds-border-width-default) solid var(--ds-color-neutral-surface-hover);
+    border-bottom: var(--ds-border-width-default) solid var(--ds-color-neutral-border-subtle);
   }
 
   .list > :last-child {
