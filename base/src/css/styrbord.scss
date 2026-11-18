@@ -40,6 +40,22 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-smooth: never;
+
+  // Tykner opp regular (300) og medium (500) litt. Arves nedover; der vekten settes til
+  // semibold (700) nullstilles den med -webkit-text-stroke-width: 0 rett under font-weight.
+  -webkit-text-stroke: 0.2px currentColor;
+}
+
+// Elementer som får vekt 700 fra nettleseren eller Designsystemet, ikke fra vår CSS.
+// .ds-heading er 500 i vårt tema, så overskrifter med den klassen beholder stroke-en.
+:where(h1, h2, h3, h4, h5, h6):where(:not(.ds-heading)),
+:where(th, .ds-label[data-weight='semibold']) {
+  -webkit-text-stroke-width: 0;
+}
+
+// Tekst i vekt 300 som ligger inni fet tekst og ellers ville arvet nullstillingen.
+:where(.ds-tag, [data-weight='regular']) {
+  -webkit-text-stroke-width: 0.2px;
 }
 
 .ds-validation-message {

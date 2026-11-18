@@ -56,6 +56,7 @@ span[data-weight='medium'] {
 p[data-weight='semibold'],
 span[data-weight='semibold'] {
   font-weight: var(--ds-font-weight-semibold);
+  -webkit-text-stroke-width: 0;
 }
 
 *[data-text-case='upper'] {

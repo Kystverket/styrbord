@@ -109,21 +109,25 @@
   .label-xl-semibold {
     composes: label-xl;
     font-weight: var(--ds-font-weight-semibold);
+    -webkit-text-stroke-width: 0;
   }
 
   .label-lg-semibold {
     composes: label-lg;
     font-weight: var(--ds-font-weight-semibold);
+    -webkit-text-stroke-width: 0;
   }
 
   .label-md-semibold {
     composes: label-md;
     font-weight: var(--ds-font-weight-semibold);
+    -webkit-text-stroke-width: 0;
   }
 
   .label-sm-semibold {
     composes: label-sm;
     font-weight: var(--ds-font-weight-semibold);
+    -webkit-text-stroke-width: 0;
   }
 
   .accent {
@@ -160,10 +164,12 @@
   .accent-md-semibold {
     composes: accent-md;
     font-weight: var(--ds-font-weight-semibold);
+    -webkit-text-stroke-width: 0;
   }
 
   .accent-sm-semibold {
     composes: accent-sm;
     font-weight: var(--ds-font-weight-semibold);
+    -webkit-text-stroke-width: 0;
   }
 }
