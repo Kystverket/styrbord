@@ -35,7 +35,7 @@
 .subtle {
   color: var(--ds-color-text-default);
   background: var(--ds-color-background-tinted);
-  border: 1px solid var(--ds-color-surface-active);
+  border: 1px solid var(--ds-color-border-subtle);
 
   &:hover {
     background: var(--ds-color-surface-tinted);

@@ -22,7 +22,7 @@
     flex-direction: row;
     padding: var(--ds-size-5);
     gap: var(--spacing-12);
-    border: 2px solid var(--ds-color-neutral-surface-hover);
+    border: 2px solid var(--ds-color-neutral-border-subtle);
     border-radius: var(--ds-border-radius-md);
 
     &:hover {
