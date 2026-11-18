@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/Kystverket/styrbord/compare/styrbord-kart-v1.4.0...styrbord-kart-v1.5.0) (2026-11-18)
+
+
+### Features
+
+* **base,kart,consent:** Designsystemet 1.24.0, styrbord-tokens 1.2.0 og egen Search ([#394](https://github.com/Kystverket/styrbord/issues/394)) ([cba92f8](https://github.com/Kystverket/styrbord/commit/cba92f8446f98b1cd8dc4c9aa123cba7e2026d78))
+
 ## [1.4.0](https://github.com/Kystverket/styrbord/compare/styrbord-kart-v1.3.0...styrbord-kart-v1.4.0) (2026-11-17)
 
 
