@@ -1,5 +1,5 @@
 import { useCallback, useId, useMemo, useState } from "react";
-import { Icon, Radio, Search, SearchInput, Switch } from "@kystverket/styrbord";
+import { Field, Icon, Input, Radio, Switch } from "@kystverket/styrbord";
 import { useMapLayers } from "~/hooks/useMapLayers";
 import type { LayerLegend } from "~/utility/layers.types";
 import type { LayerMenuItem, LayerToggleProps } from "./LayerToggle.types";
@@ -244,14 +244,15 @@ export function LayerToggle({
       {open && (
         <div className={styles.panel} role="group" data-size="sm">
           <div className={styles.filterWrapper}>
-            <Search>
-              <SearchInput
+            <Field>
+              <Input
+                type="search"
                 aria-label={t("layers.filterAriaLabel")}
                 placeholder={t("layers.searchPlaceholder")}
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}
               />
-            </Search>
+            </Field>
           </div>
 
           {sectionCount === 0 ? (
