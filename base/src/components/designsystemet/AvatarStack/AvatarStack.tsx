@@ -1,6 +1,6 @@
 import { CSSProperties, Ref } from 'react';
 import {
-  EXPERIMENTAL_AvatarStack as DsAvatarStack,
+  AvatarStack as DsAvatarStack,
   type AvatarStackProps as DsAvatarStackProps,
 } from '@digdir/designsystemet-react';
 

@@ -22,7 +22,7 @@
   /* export const imageColors = ['primary', 'info', 'accent', 'sand', 'neutral', 'white'] as const; */
 
   .slukkede_fyrlys.filled svg path:nth-child(9) {
-    fill: var(--ds-color-accent-base-default) !important;
+    fill: var(--ds-color-accent-brand) !important;
   }
   .slukkede_fyrlys.filled svg path:nth-child(4) {
     fill: var(--ds-color-primary-surface-tinted) !important;

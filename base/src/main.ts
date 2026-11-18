@@ -113,6 +113,14 @@ export type { SummaryProps, SummaryRowProps } from './components/kystverket/Summ
 export { Logo } from './components/kystverket/Logo/Logo';
 export type { LogoProps, LogoVariant } from './components/kystverket/Logo/Logo';
 
+export { Search, SearchInput, SearchClear, SearchButton } from './components/kystverket/Search/Search';
+export type {
+  SearchProps,
+  SearchInputProps,
+  SearchClearProps,
+  SearchButtonProps,
+} from './components/kystverket/Search/Search.types';
+
 export { Footer } from './components/kystverket/Footer/Footer';
 export type { FooterProps } from './components/kystverket/Footer/Footer';
 
@@ -343,8 +351,6 @@ export type { PopoverProps, PopoverTriggerContextProps, PopoverTriggerProps } fr
 export { Popover, PopoverTrigger, PopoverTriggerContext } from '@digdir/designsystemet-react';
 export type { RadioProps } from '@digdir/designsystemet-react';
 export { Radio } from '@digdir/designsystemet-react';
-export type { SearchButtonProps, SearchClearProps, SearchInputProps, SearchProps } from '@digdir/designsystemet-react';
-export { Search, SearchButton, SearchClear, SearchInput } from '@digdir/designsystemet-react';
 export type { SelectOptgroupProps, SelectOptionProps } from '@digdir/designsystemet-react';
 export { SelectOptgroup } from '@digdir/designsystemet-react';
 export type { SkeletonProps } from '@digdir/designsystemet-react';

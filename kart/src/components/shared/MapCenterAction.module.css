@@ -10,7 +10,7 @@
 
 .crosshairSvg {
   display: block;
-  color: var(--ds-color-accent-base-default);
+  color: var(--ds-color-accent-brand);
   opacity: 0.7;
   filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.8));
 }

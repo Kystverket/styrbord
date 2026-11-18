@@ -89,8 +89,8 @@ export const Spacings: Story = {
         .map(([key, value]) => `${key}={${value}}`)
         .join(' ');
       return (
-        <Surface key={label} data-color="neutral" data-color-variant="tinted" border-style="solid">
-          <Surface data-color="warning" {...spacing}>
+        <Surface key={label} data-color="gress" data-color-variant="tinted" border-style="solid">
+          <Surface data-color="sol" data-color-variant="tinted" {...spacing}>
             {label}
           </Surface>
         </Surface>
