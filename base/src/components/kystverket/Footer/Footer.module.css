@@ -58,7 +58,7 @@
   }
 
   .icon {
-    color: var(--ds-color-accent-base-default);
+    color: var(--ds-color-accent-brand);
   }
   .textContainer {
     display: flex;

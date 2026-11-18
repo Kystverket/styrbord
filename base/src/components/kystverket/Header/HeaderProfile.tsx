@@ -34,69 +34,67 @@ export function HeaderProfile({ links, profile, logoutHandler }: HeaderProfilePr
 
   return (
     <div ref={profileButtonRef}>
-      <Dropdown.TriggerContext>
-        <Button
-          popoverTarget={id}
-          className={classes.dropdownButton}
-          variant="ghost"
-          onClick={() => openMenu()}
-          aria-label={t('header.openProfileMenu')}
-        >
-          <Surface horizontal gap={1} align="center">
-            <HeaderAvatar profile={profile} />
-            <Icon material="keyboard_arrow_down" aria-hidden />
-          </Surface>
-        </Button>
-        <Dropdown id={id} open={isMenuOpen} data-color="neutral">
-          <Dropdown.List data-color="neutral">
-            <Dropdown.Item>
-              <Surface horizontal align="center" p={2} gap={3} px={3}>
-                <HeaderAvatar profile={profile} />
-                <Surface className={classes.profileMeta}>
-                  <Label className={`${classes.profileDisplayName} ${classes.truncateOverflow}`}>{profile.name}</Label>
-                  {profile.department && (
-                    <Label data-size="sm" className={`${classes.profileDepartment} ${classes.truncateOverflow}`}>
-                      {profile.department}
-                    </Label>
-                  )}
-                </Surface>
+      <Button
+        popoverTarget={id}
+        className={classes.dropdownButton}
+        variant="ghost"
+        onClick={() => openMenu()}
+        aria-label={t('header.openProfileMenu')}
+      >
+        <Surface horizontal gap={1} align="center">
+          <HeaderAvatar profile={profile} />
+          <Icon material="keyboard_arrow_down" aria-hidden />
+        </Surface>
+      </Button>
+      <Dropdown id={id} open={isMenuOpen} data-color="neutral">
+        <Dropdown.List data-color="neutral">
+          <Dropdown.Item>
+            <Surface horizontal align="center" p={2} gap={3} px={3}>
+              <HeaderAvatar profile={profile} />
+              <Surface className={classes.profileMeta}>
+                <Label className={`${classes.profileDisplayName} ${classes.truncateOverflow}`}>{profile.name}</Label>
+                {profile.department && (
+                  <Label data-size="sm" className={`${classes.profileDepartment} ${classes.truncateOverflow}`}>
+                    {profile.department}
+                  </Label>
+                )}
               </Surface>
-              <Divider />
-            </Dropdown.Item>
-            {profileLinks.map((link, index) => (
-              <Dropdown.Item key={index}>
-                <Dropdown.Button asChild>
-                  {link.url ? (
-                    <LinkComponent href={link.url} onClick={closeMenu}>
-                      {link.icon && <Icon material={link.icon} aria-hidden />}
-                      {link.label}
-                    </LinkComponent>
-                  ) : (
-                    link.children
-                  )}
-                </Dropdown.Button>
-              </Dropdown.Item>
-            ))}
-            {logoutHandler && profile && (
-              <Dropdown.Item>
-                <Dropdown.Button asChild>
-                  <LinkComponent
-                    href="#"
-                    onClick={(e) => {
-                      e?.preventDefault();
-                      logoutHandler?.();
-                      closeMenu();
-                    }}
-                  >
-                    <Icon material="logout" />
-                    {t('header.logout')}
+            </Surface>
+            <Divider />
+          </Dropdown.Item>
+          {profileLinks.map((link, index) => (
+            <Dropdown.Item key={index}>
+              <Dropdown.Button asChild>
+                {link.url ? (
+                  <LinkComponent href={link.url} onClick={closeMenu}>
+                    {link.icon && <Icon material={link.icon} aria-hidden />}
+                    {link.label}
                   </LinkComponent>
-                </Dropdown.Button>
-              </Dropdown.Item>
-            )}
-          </Dropdown.List>
-        </Dropdown>
-      </Dropdown.TriggerContext>
+                ) : (
+                  link.children
+                )}
+              </Dropdown.Button>
+            </Dropdown.Item>
+          ))}
+          {logoutHandler && profile && (
+            <Dropdown.Item>
+              <Dropdown.Button asChild>
+                <LinkComponent
+                  href="#"
+                  onClick={(e) => {
+                    e?.preventDefault();
+                    logoutHandler?.();
+                    closeMenu();
+                  }}
+                >
+                  <Icon material="logout" />
+                  {t('header.logout')}
+                </LinkComponent>
+              </Dropdown.Button>
+            </Dropdown.Item>
+          )}
+        </Dropdown.List>
+      </Dropdown>
     </div>
   );
 }

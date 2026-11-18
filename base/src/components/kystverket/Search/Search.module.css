@@ -1,0 +1,107 @@
+@layer styrbord-modules {
+  .search {
+    --search-icon-size: var(--ds-icon-size);
+    --search-icon-spacing: var(--ds-size-3);
+    --search-clear-size: var(--ds-size-9);
+    --search-clear-gap: var(--ds-size-2);
+    --search-icon-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M10.5 3.25a7.25 7.25 0 1 0 4.57 12.88l5.41 5.41a.75.75 0 1 0 1.06-1.06l-5.41-5.41A7.25 7.25 0 0 0 10.5 3.25M4.75 10.5a5.75 5.75 0 1 1 11.5 0 5.75 5.75 0 0 1-11.5 0'/%3E%3C/svg%3E");
+    --search-clear-icon-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M6.53 5.47a.75.75 0 0 0-1.06 1.06L10.94 12l-5.47 5.47a.75.75 0 1 0 1.06 1.06L12 13.06l5.47 5.47a.75.75 0 1 0 1.06-1.06L13.06 12l5.47-5.47a.75.75 0 0 0-1.06-1.06L12 10.94z'/%3E%3C/svg%3E");
+
+    display: grid;
+    grid-template: 'input submit' auto / 1fr auto;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  .search > input {
+    grid-area: input;
+    padding-inline-end: calc(var(--search-clear-size) + var(--search-clear-gap));
+  }
+
+  /* Magnifying glass, only for type="search" */
+  .search > input[type='search'] {
+    padding-inline-start: calc(var(--search-icon-spacing) + var(--search-icon-size) + var(--search-clear-gap));
+  }
+
+  .search > input[type='search']::-webkit-search-cancel-button {
+    display: none;
+  }
+
+  .search:has(> input[type='search'])::after {
+    content: '';
+    grid-area: input;
+    margin-inline-start: var(--search-icon-spacing);
+    width: var(--search-icon-size);
+    height: var(--search-icon-size);
+    pointer-events: none;
+    background: currentcolor;
+    forced-color-adjust: none;
+    mask: var(--search-icon-url) center / contain no-repeat;
+  }
+
+  /* Clear button, inside the end of the field */
+  .clear {
+    grid-area: input;
+    justify-self: end;
+    align-self: center;
+    box-sizing: border-box;
+    width: var(--search-clear-size);
+    height: var(--search-clear-size);
+    margin: 0;
+    margin-inline-end: var(--search-clear-gap);
+    padding: var(--ds-size-1);
+    scale: 0.75;
+    border: none;
+    border-radius: var(--ds-border-radius-md);
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .clear:empty::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: currentcolor;
+    forced-color-adjust: none;
+    mask: var(--search-clear-icon-url) center / contain no-repeat;
+  }
+
+  .clear:focus-visible {
+    outline: var(--ds-border-width-focus) solid var(--ds-color-focus-outer);
+    box-shadow: 0 0 0 var(--ds-border-width-focus) var(--ds-color-focus-inner);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .clear:hover {
+      background: var(--ds-color-neutral-surface-hover);
+    }
+  }
+
+  .clear:active {
+    background: var(--ds-color-neutral-surface-active);
+  }
+
+  /* Hidden while the field is empty, read-only or disabled */
+  .search > input:placeholder-shown ~ .clear,
+  .search > input:is(:read-only, :disabled, [aria-disabled='true']) ~ .clear {
+    display: none;
+  }
+
+  /* Submit button attached to the end of the field */
+  .search > .button {
+    grid-area: submit;
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+  }
+
+  .search > .button:not(:focus-visible) {
+    border-inline-start: 0;
+  }
+
+  .search:has(> .button) > input {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+  }
+}

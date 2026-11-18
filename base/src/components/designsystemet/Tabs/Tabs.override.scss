@@ -24,7 +24,7 @@
   :is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) > [role='tab'][aria-selected='true'],
   :is(.ds-tabs [role='tablist'], .ds-tabs u-tablist) > u-tab[aria-selected='true']
 ):after {
-  background: var(--ds-color-accent-base-default);
+  background: var(--ds-color-accent-brand);
   transform: translateY(1px);
 }
 

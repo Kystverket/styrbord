@@ -73,6 +73,10 @@
     "showItemList": "Show item list",
     "unpinSidePanel": "Unpin side panel"
   },
+  "search": {
+    "button": "Search",
+    "clear": "Clear text"
+  },
   "sentralbord": "Switchboard",
   "sideSheet": {
     "back": "Go back",

@@ -6,10 +6,12 @@ import {
   AvatarProvider,
   Badge,
   Surface,
+  Button,
   Dropdown,
   Icon,
   DataColorVariant,
 } from '~/main';
+import { useId } from 'react';
 import cat1 from '@assets/img/cats/Cat 3.jpg';
 import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
 type Story = StoryFn<typeof Avatar>;
@@ -136,39 +138,43 @@ export const WithImage: Story = () => (
   </Avatar>
 );
 
-export const InDropdown: Story = () => (
-  <Dropdown.TriggerContext>
-    <Dropdown.Trigger variant="tertiary">
-      <Avatar aria-label="Ola Nordmann" data-size="sm">
-        ON
-      </Avatar>
-      Velg Profil
-    </Dropdown.Trigger>
-    <Dropdown placement="bottom-end" autoPlacement={false} data-size="md" open>
-      <Dropdown.List>
-        <Dropdown.Item>
-          <Dropdown.Button>
-            <Badge.Position overlap="circle">
-              <Badge data-color="danger" data-size="sm"></Badge>
-              <Avatar aria-label="Ola Nordmann" data-size="xs">
-                ON
+export const InDropdown: Story = () => {
+  const id = useId();
+
+  return (
+    <>
+      <Button popoverTarget={id} variant="ghost">
+        <Avatar aria-label="Ola Nordmann" data-size="sm">
+          ON
+        </Avatar>
+        Velg Profil
+      </Button>
+      <Dropdown id={id} placement="bottom-end" autoPlacement={false} data-size="md" open>
+        <Dropdown.List>
+          <Dropdown.Item>
+            <Dropdown.Button>
+              <Badge.Position overlap="circle">
+                <Badge data-color="danger" data-size="sm"></Badge>
+                <Avatar aria-label="Ola Nordmann" data-size="xs">
+                  ON
+                </Avatar>
+              </Badge.Position>
+              Ola Nordmann
+            </Dropdown.Button>
+          </Dropdown.Item>
+          <Dropdown.Item>
+            <Dropdown.Button>
+              <Avatar data-size="xs" aria-label="Sogndal Kommune">
+                <Icon material="download" />
               </Avatar>
-            </Badge.Position>
-            Ola Nordmann
-          </Dropdown.Button>
-        </Dropdown.Item>
-        <Dropdown.Item>
-          <Dropdown.Button>
-            <Avatar data-size="xs" aria-label="Sogndal Kommune">
-              <Icon material="download" />
-            </Avatar>
-            Sogndal kommune
-          </Dropdown.Button>
-        </Dropdown.Item>
-      </Dropdown.List>
-    </Dropdown>
-  </Dropdown.TriggerContext>
-);
+              Sogndal kommune
+            </Dropdown.Button>
+          </Dropdown.Item>
+        </Dropdown.List>
+      </Dropdown>
+    </>
+  );
+};
 InDropdown.parameters = {
   layout: 'fullscreen',
   customStyles: {
