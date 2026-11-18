@@ -1,7 +1,7 @@
 import { Dropdown, Button, Icon } from '~/main';
 import type { Meta, StoryFn } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
-import { useState } from 'react';
+import { Fragment, useId, useState } from 'react';
 import { styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
 
 const colorVariants = [...styrbordSemanticColors] as const;
@@ -49,10 +49,14 @@ export default {
 } satisfies Meta;
 
 export const Preview: StoryFn<typeof Dropdown> = (args) => {
+  const id = useId();
+
   return (
-    <Dropdown.TriggerContext>
-      <Dropdown.Trigger data-color={args['data-color']}>Dropdown</Dropdown.Trigger>
-      <Dropdown {...args}>
+    <>
+      <Button popoverTarget={id} data-color={args['data-color']}>
+        Dropdown
+      </Button>
+      <Dropdown {...args} id={id}>
         <Dropdown.Heading>First heading</Dropdown.Heading>
         <Dropdown.List>
           <Dropdown.Item>
@@ -72,7 +76,7 @@ export const Preview: StoryFn<typeof Dropdown> = (args) => {
           </Dropdown.Item>
         </Dropdown.List>
       </Dropdown>
-    </Dropdown.TriggerContext>
+    </>
   );
 };
 
@@ -81,10 +85,12 @@ Preview.args = {
 };
 
 export const Icons: StoryFn<typeof Dropdown> = (args) => {
+  const id = useId();
+
   return (
-    <Dropdown.TriggerContext>
-      <Dropdown.Trigger>Dropdown</Dropdown.Trigger>
-      <Dropdown {...args}>
+    <>
+      <Button popoverTarget={id}>Dropdown</Button>
+      <Dropdown {...args} id={id}>
         <Dropdown.List>
           <Dropdown.Item>
             <Dropdown.Button asChild>
@@ -104,20 +110,21 @@ export const Icons: StoryFn<typeof Dropdown> = (args) => {
           </Dropdown.Item>
         </Dropdown.List>
       </Dropdown>
-    </Dropdown.TriggerContext>
+    </>
   );
 };
 
 export const Controlled: StoryFn<typeof Dropdown> = () => {
+  const id = useId();
   const [open, setOpen] = useState(false);
 
   return (
-    <Dropdown.TriggerContext>
-      <Dropdown.Trigger onClick={() => setOpen(!open)}>
+    <>
+      <Button popoverTarget={id} onClick={() => setOpen(!open)}>
         Dropdown
         {open ? <Icon material="keyboard_arrow_down" aria-hidden /> : <Icon material="keyboard_arrow_up" aria-hidden />}
-      </Dropdown.Trigger>
-      <Dropdown open={open} onClose={() => setOpen(false)}>
+      </Button>
+      <Dropdown id={id} open={open} onClose={() => setOpen(false)}>
         <Dropdown.List>
           <Dropdown.Item>
             <Dropdown.Button onClick={() => setOpen(false)}>Trykk på meg lukker</Dropdown.Button>
@@ -127,11 +134,13 @@ export const Controlled: StoryFn<typeof Dropdown> = () => {
           </Dropdown.Item>
         </Dropdown.List>
       </Dropdown>
-    </Dropdown.TriggerContext>
+    </>
   );
 };
 
 export const Colors: StoryFn<typeof Dropdown> = () => {
+  const id = useId();
+
   return (
     <div
       style={{
@@ -143,9 +152,11 @@ export const Colors: StoryFn<typeof Dropdown> = () => {
       }}
     >
       {colorVariants.map((color) => (
-        <Dropdown.TriggerContext key={color}>
-          <Dropdown.Trigger data-color={color}>{color}</Dropdown.Trigger>
-          <Dropdown data-color={color} placement="bottom-start" open>
+        <Fragment key={color}>
+          <Button popoverTarget={`${id}-${color}`} data-color={color}>
+            {color}
+          </Button>
+          <Dropdown id={`${id}-${color}`} data-color={color} placement="bottom-start" open>
             <Dropdown.List data-color="neutral">
               <Dropdown.Item>
                 <Dropdown.Button>Val 1</Dropdown.Button>
@@ -155,7 +166,7 @@ export const Colors: StoryFn<typeof Dropdown> = () => {
               </Dropdown.Item>
             </Dropdown.List>
           </Dropdown>
-        </Dropdown.TriggerContext>
+        </Fragment>
       ))}
     </div>
   );

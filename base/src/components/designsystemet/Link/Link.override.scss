@@ -1,9 +1,3 @@
-.ds-link {
-  --dsc-link-color--visited: var(--ds-link-color-visited);
-}
-.ds-link:visited:hover {
-  color: var(--dsc-link-color--visited);
-}
 .ds-link > svg {
   display: inline-block;
 }

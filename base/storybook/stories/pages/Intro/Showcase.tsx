@@ -7,11 +7,11 @@ import {
   Field,
   Fieldset,
   Heading,
+  Input,
   Link,
   Pagination,
   Paragraph,
   Radio,
-  Search,
   Select,
   EXPERIMENTAL_Suggestion as Suggestion,
   Switch,
@@ -87,10 +87,9 @@ export function Showcase({ className, ...props }: ShowcaseProps) {
               Utfør
             </Button>
           </div>
-          <Search className={classes.tableSearch}>
-            <Search.Input aria-label="Søk" />
-            <Search.Clear />
-          </Search>
+          <Field className={classes.tableSearch}>
+            <Input type="search" aria-label="Søk" />
+          </Field>
         </div>
         <Table border className={classes.table}>
           <Table.Head>

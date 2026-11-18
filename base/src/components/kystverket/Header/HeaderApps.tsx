@@ -38,33 +38,31 @@ export function HeaderApps({ links, applications }: HeaderAppsProps) {
 
   return (
     <div ref={appsButtonRef}>
-      <Dropdown.TriggerContext>
-        <Button
-          popoverTarget={id}
-          className={classes.dropdownButton}
-          variant="ghost"
-          onClick={openMenu}
-          aria-label={t('header.openApplicationsMenu')}
-        >
-          <Surface horizontal gap={4} align="center">
-            <Icon material="apps" aria-hidden />
-          </Surface>
-        </Button>
-        <Dropdown id={id} open={isMenuOpen} data-color="neutral">
-          <Dropdown.List data-color="neutral">
-            {applications.map((app) => (
-              <Dropdown.Item key={app.id}>
-                <Dropdown.Button asChild>
-                  <LinkComponent href={firstLinkPerApplication[app.id]?.url ?? '#'} onClick={closeMenu}>
-                    {app.icon && <Icon material={app.icon} aria-hidden />}
-                    {app.name}
-                  </LinkComponent>
-                </Dropdown.Button>
-              </Dropdown.Item>
-            ))}
-          </Dropdown.List>
-        </Dropdown>
-      </Dropdown.TriggerContext>
+      <Button
+        popoverTarget={id}
+        className={classes.dropdownButton}
+        variant="ghost"
+        onClick={openMenu}
+        aria-label={t('header.openApplicationsMenu')}
+      >
+        <Surface horizontal gap={4} align="center">
+          <Icon material="apps" aria-hidden />
+        </Surface>
+      </Button>
+      <Dropdown id={id} open={isMenuOpen} data-color="neutral">
+        <Dropdown.List data-color="neutral">
+          {applications.map((app) => (
+            <Dropdown.Item key={app.id}>
+              <Dropdown.Button asChild>
+                <LinkComponent href={firstLinkPerApplication[app.id]?.url ?? '#'} onClick={closeMenu}>
+                  {app.icon && <Icon material={app.icon} aria-hidden />}
+                  {app.name}
+                </LinkComponent>
+              </Dropdown.Button>
+            </Dropdown.Item>
+          ))}
+        </Dropdown.List>
+      </Dropdown>
     </div>
   );
 }

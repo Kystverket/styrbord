@@ -52,94 +52,86 @@ export function HeaderMobile({ logoutHandler, loginHandler, profile, slots, link
 
   return (
     <div ref={appsButtonRef}>
-      <Dialog.TriggerContext>
-        <Button
-          popoverTarget={id}
-          className={classes.dropdownButton}
-          variant="ghost"
-          onClick={openMenu}
-          aria-label={t('header.openMenu')}
-        >
-          <Surface horizontal gap={4} align="center">
-            <Icon material="menu" aria-hidden />
-          </Surface>
-        </Button>
-        <Dialog id={id} open={isMenuOpen} onClose={() => setIsMenuOpen(false)} placement="right">
-          {profile && (
-            <Dialog.Block>
-              <Surface horizontal align="center" p={2} gap={3} px={3}>
-                <HeaderAvatar profile={profile} />
-                <Surface className={classes.profileMeta}>
-                  <Label className={`${classes.profileDisplayName} ${classes.truncateOverflow}`}>{profile.name}</Label>
-                  {profile.department && (
-                    <Label data-size="sm" className={`${classes.profileDepartment} ${classes.truncateOverflow}`}>
-                      {profile.department}
-                    </Label>
-                  )}
-                </Surface>
-                {slots?.widgets}
+      <Button className={classes.dropdownButton} variant="ghost" onClick={openMenu} aria-label={t('header.openMenu')}>
+        <Surface horizontal gap={4} align="center">
+          <Icon material="menu" aria-hidden />
+        </Surface>
+      </Button>
+      <Dialog id={id} open={isMenuOpen} onClose={() => setIsMenuOpen(false)} placement="right">
+        {profile && (
+          <Dialog.Block>
+            <Surface horizontal align="center" p={2} gap={3} px={3}>
+              <HeaderAvatar profile={profile} />
+              <Surface className={classes.profileMeta}>
+                <Label className={`${classes.profileDisplayName} ${classes.truncateOverflow}`}>{profile.name}</Label>
+                {profile.department && (
+                  <Label data-size="sm" className={`${classes.profileDepartment} ${classes.truncateOverflow}`}>
+                    {profile.department}
+                  </Label>
+                )}
               </Surface>
-            </Dialog.Block>
-          )}
-          {(slots?.preLinks || slots?.postLinks || mainLinks.length > 0) && (
-            <Dialog.Block>
-              <Surface>
-                {slots?.preLinks}
-                {mainLinks.map((link, index) => (
-                  <MainLinkItem key={index} {...link} onClick={closeMenu} />
-                ))}
-                {slots?.postLinks}
-              </Surface>
-            </Dialog.Block>
-          )}
-          {applications && applications.length > 1 && (
-            <Dialog.Block>
-              {applications.map((app) => (
-                <MainLinkItem
-                  key={app.id}
-                  icon={app.icon}
-                  label={app.name}
-                  url={firstLinkPerApplication[app.id].url}
-                  onClick={closeMenu}
-                />
+              {slots?.widgets}
+            </Surface>
+          </Dialog.Block>
+        )}
+        {(slots?.preLinks || slots?.postLinks || mainLinks.length > 0) && (
+          <Dialog.Block>
+            <Surface>
+              {slots?.preLinks}
+              {mainLinks.map((link, index) => (
+                <MainLinkItem key={index} {...link} onClick={closeMenu} />
               ))}
-            </Dialog.Block>
-          )}
-          {(logoutHandler || profileLinks.length > 0) && (
-            <Dialog.Block>
-              <Surface horizontal wrap align="center" gap={4} justify="between" width="full">
-                {profileLinks.map((link, index) => (
-                  <MainLinkItem key={index} {...link} onClick={closeMenu} />
-                ))}
-                {logoutHandler && profile && (
-                  <Button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      logoutHandler?.();
-                      closeMenu();
-                    }}
-                  >
-                    <Icon material="logout" />
-                    {t('header.logout')}
-                  </Button>
-                )}
-                {loginHandler && !profile && (
-                  <Button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      loginHandler?.();
-                      closeMenu();
-                    }}
-                  >
-                    <Icon material="login" />
-                    {t('header.login')}
-                  </Button>
-                )}
-              </Surface>
-            </Dialog.Block>
-          )}
-        </Dialog>
-      </Dialog.TriggerContext>
+              {slots?.postLinks}
+            </Surface>
+          </Dialog.Block>
+        )}
+        {applications && applications.length > 1 && (
+          <Dialog.Block>
+            {applications.map((app) => (
+              <MainLinkItem
+                key={app.id}
+                icon={app.icon}
+                label={app.name}
+                url={firstLinkPerApplication[app.id].url}
+                onClick={closeMenu}
+              />
+            ))}
+          </Dialog.Block>
+        )}
+        {(logoutHandler || profileLinks.length > 0) && (
+          <Dialog.Block>
+            <Surface horizontal wrap align="center" gap={4} justify="between" width="full">
+              {profileLinks.map((link, index) => (
+                <MainLinkItem key={index} {...link} onClick={closeMenu} />
+              ))}
+              {logoutHandler && profile && (
+                <Button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    logoutHandler?.();
+                    closeMenu();
+                  }}
+                >
+                  <Icon material="logout" />
+                  {t('header.logout')}
+                </Button>
+              )}
+              {loginHandler && !profile && (
+                <Button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    loginHandler?.();
+                    closeMenu();
+                  }}
+                >
+                  <Icon material="login" />
+                  {t('header.login')}
+                </Button>
+              )}
+            </Surface>
+          </Dialog.Block>
+        )}
+      </Dialog>
     </div>
   );
 }

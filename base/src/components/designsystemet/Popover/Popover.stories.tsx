@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useId, useState } from 'react';
 
 import { Popover, Paragraph, Button, Surface, Icon } from '~/main';
 
@@ -60,6 +60,7 @@ export default {
 } satisfies Meta;
 
 export const Preview: StoryFn<typeof Popover> = (args) => {
+  const id = useId();
   const [open, setOpen] = useState(false);
 
   return (
@@ -67,12 +68,12 @@ export const Preview: StoryFn<typeof Popover> = (args) => {
       <Paragraph>
         This popover is kept open for testing purposes. Normally, it closes when clicking outside of it.
       </Paragraph>
-      <Popover.TriggerContext>
-        <Popover.Trigger onClick={() => setOpen((prev) => !prev)}>My trigger!</Popover.Trigger>
-        <Popover open={open} {...args}>
-          popover content
-        </Popover>
-      </Popover.TriggerContext>
+      <Button popoverTarget={id} onClick={() => setOpen((prev) => !prev)}>
+        My trigger!
+      </Button>
+      <Popover {...args} id={id} open={open}>
+        popover content
+      </Popover>
     </Surface>
   );
 };
@@ -85,12 +86,14 @@ Preview.args = {
 };
 
 export const Interactive: StoryFn<typeof Popover> = () => {
+  const id = useId();
+
   return (
-    <Popover.TriggerContext>
-      <Popover.Trigger data-color="danger" aria-label="Slett rad">
+    <>
+      <Button popoverTarget={id} data-color="danger" aria-label="Slett rad">
         <Icon material="delete" title="Slett rad" />
-      </Popover.Trigger>
-      <Popover data-color="danger">
+      </Button>
+      <Popover id={id} data-color="danger">
         <Paragraph>Er du sikker på at du vil slette raden? Handlingen kan ikke angres.</Paragraph>
         <div
           style={{
@@ -105,7 +108,7 @@ export const Interactive: StoryFn<typeof Popover> = () => {
           </Button>
         </div>
       </Popover>
-    </Popover.TriggerContext>
+    </>
   );
 };
 Interactive.parameters = {
@@ -115,12 +118,18 @@ Interactive.parameters = {
 };
 
 export const DottedUnderline: StoryFn<typeof Popover> = () => {
+  const id = useId();
+
   return (
-    <Popover.TriggerContext>
+    <>
       <Paragraph>
-        Vi bruker <Popover.Trigger inline>design tokens</Popover.Trigger> for å sikre at vi har en konsistent design.
+        Vi bruker{' '}
+        <button type="button" popoverTarget={id} data-popover="inline">
+          design tokens
+        </button>{' '}
+        for å sikre at vi har en konsistent design.
       </Paragraph>
-      <Popover data-color="neutral">
+      <Popover id={id} data-color="neutral">
         <Paragraph>
           <strong
             style={{
@@ -132,7 +141,7 @@ export const DottedUnderline: StoryFn<typeof Popover> = () => {
           Design tokens er en samling av variabler som definerer designet i et designsystem.
         </Paragraph>
       </Popover>
-    </Popover.TriggerContext>
+    </>
   );
 };
 DottedUnderline.parameters = {
@@ -175,6 +184,7 @@ const VariantsMap: {
 };
 
 export const Variants: StoryFn<typeof Popover> = () => {
+  const id = useId();
   const [open, setOpen] = useState(false);
 
   useEffect(() => setOpen(true), []);
@@ -182,12 +192,18 @@ export const Variants: StoryFn<typeof Popover> = () => {
   return (
     <Surface gap={30} align="start" px={30}>
       {Object.entries(VariantsMap).map(([key, props], index) => (
-        <Popover.TriggerContext key={key}>
-          <Popover.Trigger>popover</Popover.Trigger>
-          <Popover open={open} placement={index >= 4 ? 'bottom' : 'top'} autoPlacement={false} {...props}>
+        <Fragment key={key}>
+          <Button popoverTarget={`${id}-${key}`}>popover</Button>
+          <Popover
+            id={`${id}-${key}`}
+            open={open}
+            placement={index >= 4 ? 'bottom' : 'top'}
+            autoPlacement={false}
+            {...props}
+          >
             {key}
           </Popover>
-        </Popover.TriggerContext>
+        </Fragment>
       ))}
     </Surface>
   );
@@ -199,12 +215,15 @@ Variants.parameters = {
 };
 
 export const Controlled: StoryFn<typeof Popover> = () => {
+  const id = useId();
   const [open, setOpen] = useState(false);
 
   return (
-    <Popover.TriggerContext>
-      <Popover.Trigger onClick={() => setOpen(!open)}>My trigger</Popover.Trigger>
-      <Popover open={open} onClose={() => setOpen(false)} data-color="neutral">
+    <>
+      <Button popoverTarget={id} onClick={() => setOpen(!open)}>
+        My trigger
+      </Button>
+      <Popover id={id} open={open} onClose={() => setOpen(false)} data-color="neutral">
         <Paragraph>Er du sikker på at du vil slette?</Paragraph>
         <Button
           data-color="danger"
@@ -215,7 +234,7 @@ export const Controlled: StoryFn<typeof Popover> = () => {
           Slett
         </Button>
       </Popover>
-    </Popover.TriggerContext>
+    </>
   );
 };
 Controlled.parameters = {
@@ -225,6 +244,7 @@ Controlled.parameters = {
 };
 
 export const Sizes: StoryFn<typeof Popover> = () => {
+  const id = useId();
   const [open, setOpen] = useState(false);
 
   useEffect(() => setOpen(true), []);
@@ -232,12 +252,12 @@ export const Sizes: StoryFn<typeof Popover> = () => {
   return (
     <Surface gap={30} align="start" px={30}>
       {(['sm', 'md', 'lg'] as const).map((size) => (
-        <Popover.TriggerContext key={size}>
-          <Popover.Trigger>popover</Popover.Trigger>
-          <Popover open={open} placement="top" autoPlacement={false} data-size={size}>
+        <Fragment key={size}>
+          <Button popoverTarget={`${id}-${size}`}>popover</Button>
+          <Popover id={`${id}-${size}`} open={open} placement="top" autoPlacement={false} data-size={size}>
             {size}
           </Popover>
-        </Popover.TriggerContext>
+        </Fragment>
       ))}
     </Surface>
   );

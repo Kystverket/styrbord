@@ -30,7 +30,19 @@ const DialogRoot = forwardRef<HTMLDialogElement, DialogProps>(function Dialog(
 });
 
 type DialogComponent = typeof DialogRoot & {
+  /**
+   * @deprecated Will be removed in the next major version. Connect a `Button` to the dialog with
+   * `command="show-modal"` and `commandfor` set to the dialog's `id` instead.
+   *
+   * @example
+   * <Button command="show-modal" commandfor="my-dialog">Open Dialog</Button>
+   * <Dialog id="my-dialog">Content</Dialog>
+   */
   TriggerContext: typeof DialogTriggerContext;
+  /**
+   * @deprecated Will be removed in the next major version. Use a `Button` with `command="show-modal"` and
+   * `commandfor` set to the dialog's `id` instead.
+   */
   Trigger: typeof DialogTrigger;
   Block: typeof DialogBlock;
 };

@@ -1,7 +1,7 @@
 import { Dialog, Heading, Paragraph, Button, Field, EXPERIMENTAL_Suggestion as Suggestion, Surface } from '~/main';
 import type { Meta, StoryFn } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
-import { useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import { Label, Textfield } from '@digdir/designsystemet-react';
 
 export default {
@@ -56,23 +56,27 @@ export default {
   },
 } satisfies Meta;
 
-export const Preview: StoryFn<typeof Dialog> = (args) => (
-  <Dialog.TriggerContext>
-    <Dialog.Trigger data-color={args['data-color']} data-size={args['data-size']}>
-      Open Dialog
-    </Dialog.Trigger>
-    <Dialog {...args}>
-      <Heading style={{ marginBottom: 'var(--ds-size-2)' }}>Dialog header</Heading>
-      <Paragraph style={{ marginBottom: 'var(--ds-size-2)' }}>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis doloremque obcaecati assumenda odio ducimus
-        sunt et.
-      </Paragraph>
-      <Paragraph data-size="sm">Dialog footer</Paragraph>
-    </Dialog>
-  </Dialog.TriggerContext>
-);
+export const Preview: StoryFn<typeof Dialog> = (args) => {
+  const id = useId();
 
-export const WithoutDialogTriggerContext: StoryFn<typeof Dialog> = (args) => {
+  return (
+    <>
+      <Button command="show-modal" commandfor={id} data-color={args['data-color']} data-size={args['data-size']}>
+        Open Dialog
+      </Button>
+      <Dialog {...args} id={id}>
+        <Heading style={{ marginBottom: 'var(--ds-size-2)' }}>Dialog header</Heading>
+        <Paragraph style={{ marginBottom: 'var(--ds-size-2)' }}>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis doloremque obcaecati assumenda odio
+          ducimus sunt et.
+        </Paragraph>
+        <Paragraph data-size="sm">Dialog footer</Paragraph>
+      </Dialog>
+    </>
+  );
+};
+
+export const WithRef: StoryFn<typeof Dialog> = (args) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   return (
@@ -111,12 +115,15 @@ export const DialogWithOpenProp: StoryFn<typeof Dialog> = (args) => {
 };
 
 export const BackdropClosedbyAny: StoryFn<typeof Dialog> = () => {
+  const id = useId();
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   return (
-    <Dialog.TriggerContext>
-      <Dialog.Trigger>Open Dialog</Dialog.Trigger>
-      <Dialog ref={dialogRef} closedby="any">
+    <>
+      <Button command="show-modal" commandfor={id}>
+        Open Dialog
+      </Button>
+      <Dialog id={id} ref={dialogRef} closedby="any">
         <Heading>
           Dialog med <code>closedby="any"</code> og en veldig lang tittel
         </Heading>
@@ -126,49 +133,58 @@ export const BackdropClosedbyAny: StoryFn<typeof Dialog> = () => {
         </Paragraph>
         <Paragraph data-size="sm">Dialog footer</Paragraph>
       </Dialog>
-    </Dialog.TriggerContext>
+    </>
   );
 };
 
-export const WithHeaderAndFooter: StoryFn<typeof Dialog> = () => (
-  <Dialog.TriggerContext>
-    <Dialog.Trigger>Open Dialog</Dialog.Trigger>
-    <Dialog>
-      <Dialog.Block>
-        <Paragraph data-size="sm">Her er det også divider</Paragraph>
-        <Heading>Vi kan legge divider under header</Heading>
-      </Dialog.Block>
-      <Dialog.Block>
-        <Paragraph style={{ marginBottom: 'var(--ds-size-2)' }}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales eros justo. Aenean non mi ipsum.
-          Cras viverra elit nec vulputate mattis. Nunc placerat euismod pulvinar. Sed nec fringilla nulla, sit amet
-          ultricies ante. Morbi egestas venenatis massa, eu interdum leo rutrum eu. Nulla varius, mi ac feugiat lacinia,
-          magna eros ullamcorper arcu, vel tincidunt erat leo nec tortor. Sed ut dui arcu. Morbi commodo ipsum hendrerit
-          est imperdiet imperdiet. Etiam sed maximus nisi. Quisque posuere posuere orci, non egestas risus facilisis a.
-          Vivamus non tempus felis, in maximus lorem. Class aptent taciti sociosqu ad litora torquent per conubia
-          nostra, per inceptos himenaeos.
-        </Paragraph>
-        <Paragraph>
-          Etiam nec tincidunt est. Integer semper sodales efficitur. Pellentesque pellentesque varius leo id congue.
-          Integer lacinia porttitor massa id euismod. Maecenas porta, magna nec interdum eleifend, risus magna
-          condimentum neque, a gravida nisl risus a elit. Donec accumsan metus et lectus placerat varius. Donec
-          tristique odio arcu. Donec cursus leo a dui auctor pulvinar. Sed in elit urna. Nunc vitae magna sed nibh
-          elementum dignissim et ut massa.
-        </Paragraph>
-      </Dialog.Block>
-      <Dialog.Block>Og over footer</Dialog.Block>
-    </Dialog>
-  </Dialog.TriggerContext>
-);
+export const WithHeaderAndFooter: StoryFn<typeof Dialog> = () => {
+  const id = useId();
+
+  return (
+    <>
+      <Button command="show-modal" commandfor={id}>
+        Open Dialog
+      </Button>
+      <Dialog id={id}>
+        <Dialog.Block>
+          <Paragraph data-size="sm">Her er det også divider</Paragraph>
+          <Heading>Vi kan legge divider under header</Heading>
+        </Dialog.Block>
+        <Dialog.Block>
+          <Paragraph style={{ marginBottom: 'var(--ds-size-2)' }}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales eros justo. Aenean non mi ipsum.
+            Cras viverra elit nec vulputate mattis. Nunc placerat euismod pulvinar. Sed nec fringilla nulla, sit amet
+            ultricies ante. Morbi egestas venenatis massa, eu interdum leo rutrum eu. Nulla varius, mi ac feugiat
+            lacinia, magna eros ullamcorper arcu, vel tincidunt erat leo nec tortor. Sed ut dui arcu. Morbi commodo
+            ipsum hendrerit est imperdiet imperdiet. Etiam sed maximus nisi. Quisque posuere posuere orci, non egestas
+            risus facilisis a. Vivamus non tempus felis, in maximus lorem. Class aptent taciti sociosqu ad litora
+            torquent per conubia nostra, per inceptos himenaeos.
+          </Paragraph>
+          <Paragraph>
+            Etiam nec tincidunt est. Integer semper sodales efficitur. Pellentesque pellentesque varius leo id congue.
+            Integer lacinia porttitor massa id euismod. Maecenas porta, magna nec interdum eleifend, risus magna
+            condimentum neque, a gravida nisl risus a elit. Donec accumsan metus et lectus placerat varius. Donec
+            tristique odio arcu. Donec cursus leo a dui auctor pulvinar. Sed in elit urna. Nunc vitae magna sed nibh
+            elementum dignissim et ut massa.
+          </Paragraph>
+        </Dialog.Block>
+        <Dialog.Block>Og over footer</Dialog.Block>
+      </Dialog>
+    </>
+  );
+};
 
 export const DialogWithForm: StoryFn<typeof Dialog> = () => {
+  const id = useId();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [input, setInput] = useState('');
 
   return (
-    <Dialog.TriggerContext>
-      <Dialog.Trigger>Open Dialog</Dialog.Trigger>
-      <Dialog ref={dialogRef} onClose={() => setInput('')} closedby="any">
+    <>
+      <Button command="show-modal" commandfor={id}>
+        Open Dialog
+      </Button>
+      <Dialog id={id} ref={dialogRef} onClose={() => setInput('')} closedby="any">
         <Heading style={{ marginBottom: 'var(--ds-size-2)' }}>Dialog med skjema</Heading>
         <Textfield
           // @ts-expect-error We want the native "autofocus" and Reacts onMount smartness (see https://react.dev/reference/react-dom/components/input#input)
@@ -197,61 +213,68 @@ export const DialogWithForm: StoryFn<typeof Dialog> = () => {
           </Button>
         </div>
       </Dialog>
-    </Dialog.TriggerContext>
+    </>
   );
 };
 
-export const DialogWithMaxWidth: StoryFn<typeof Dialog> = () => (
-  <Dialog.TriggerContext>
-    <Dialog.Trigger>Open Dialog</Dialog.Trigger>
-    <Dialog style={{ maxWidth: 1200 }}>
-      <Heading style={{ marginBottom: 'var(--ds-size-2)' }}>Dialog med en veldig lang bredde</Heading>
-      <Paragraph>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis doloremque obcaecati assumenda odio ducimus
-        sunt et.
-      </Paragraph>
-    </Dialog>
-  </Dialog.TriggerContext>
-);
+export const DialogWithMaxWidth: StoryFn<typeof Dialog> = () => {
+  const id = useId();
+
+  return (
+    <>
+      <Button command="show-modal" commandfor={id}>
+        Open Dialog
+      </Button>
+      <Dialog id={id} style={{ maxWidth: 1200 }}>
+        <Heading style={{ marginBottom: 'var(--ds-size-2)' }}>Dialog med en veldig lang bredde</Heading>
+        <Paragraph>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis doloremque obcaecati assumenda odio
+          ducimus sunt et.
+        </Paragraph>
+      </Dialog>
+    </>
+  );
+};
 
 const DATA_PLACES = ['Sogndal', 'Oslo', 'Brønnøysund', 'Stavanger', 'Trondheim', 'Bergen', 'Lillestrøm'];
 
 export const DialogWithSuggestion: StoryFn<typeof Dialog> = () => {
+  const id = useId();
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   return (
     <>
-      <Dialog.TriggerContext>
-        <Dialog.Trigger>Open Dialog</Dialog.Trigger>
-        <Dialog style={{ overflow: 'visible' }} ref={dialogRef}>
-          <Dialog.Block>
-            <Heading>Dialog med suggestion</Heading>
-          </Dialog.Block>
-          <Dialog.Block>
-            <Field>
-              <Label>Velg en destinasjon</Label>
-              <Suggestion>
-                <Suggestion.Input />
-                <Suggestion.Clear />
-                <Suggestion.List>
-                  <Suggestion.Empty>Tomt</Suggestion.Empty>
-                  {DATA_PLACES.map((place) => (
-                    <Suggestion.Option key={place} value={place}>
-                      {place}
-                      <div>Kommune</div>
-                    </Suggestion.Option>
-                  ))}
-                </Suggestion.List>
-              </Suggestion>
-            </Field>
-          </Dialog.Block>
-          <Dialog.Block>
-            <Button variant="outline" onClick={() => dialogRef.current?.close()}>
-              Avbryt
-            </Button>
-          </Dialog.Block>
-        </Dialog>
-      </Dialog.TriggerContext>
+      <Button command="show-modal" commandfor={id}>
+        Open Dialog
+      </Button>
+      <Dialog id={id} style={{ overflow: 'visible' }} ref={dialogRef}>
+        <Dialog.Block>
+          <Heading>Dialog med suggestion</Heading>
+        </Dialog.Block>
+        <Dialog.Block>
+          <Field>
+            <Label>Velg en destinasjon</Label>
+            <Suggestion>
+              <Suggestion.Input />
+              <Suggestion.Clear />
+              <Suggestion.List>
+                <Suggestion.Empty>Tomt</Suggestion.Empty>
+                {DATA_PLACES.map((place) => (
+                  <Suggestion.Option key={place} value={place}>
+                    {place}
+                    <div>Kommune</div>
+                  </Suggestion.Option>
+                ))}
+              </Suggestion.List>
+            </Suggestion>
+          </Field>
+        </Dialog.Block>
+        <Dialog.Block>
+          <Button variant="outline" onClick={() => dialogRef.current?.close()}>
+            Avbryt
+          </Button>
+        </Dialog.Block>
+      </Dialog>
     </>
   );
 };
@@ -296,8 +319,10 @@ export const NestedDialogs: StoryFn<typeof Dialog> = () => {
   const innerDialogRef = useRef<HTMLDialogElement>(null);
 
   return (
-    <Dialog.TriggerContext>
-      <Dialog.Trigger>Open Outer Dialog</Dialog.Trigger>
+    <>
+      <Button command="show-modal" commandfor="OuterDialog">
+        Open Outer Dialog
+      </Button>
       <Dialog
         id={'OuterDialog'}
         ref={outerDialogRef}
@@ -334,6 +359,6 @@ export const NestedDialogs: StoryFn<typeof Dialog> = () => {
           </Button>
         </Dialog>
       </Dialog>
-    </Dialog.TriggerContext>
+    </>
   );
 };
