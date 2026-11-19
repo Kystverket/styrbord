@@ -1,0 +1,170 @@
+@layer styrbord-modules {
+  /* Colour variant. The light/dark values are set inline from the token package, see ColorSchemeToggle.tsx. */
+  .toggle {
+    --_border: var(--kyv-scheme-toggle-border-light);
+    --_sky: var(--kyv-scheme-toggle-sky-light);
+    --_sea: var(--kyv-scheme-toggle-sea-light);
+    --_wave: var(--kyv-scheme-toggle-wave-light);
+    --_sun-fill: var(--kyv-scheme-toggle-sun-fill);
+    --_sun-stroke: var(--kyv-scheme-toggle-sun-stroke);
+    --_night: var(--kyv-scheme-toggle-night);
+
+    display: inline-block;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: 2px solid var(--_border);
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--_sky);
+    cursor: pointer;
+    transition: border-color 0.3s;
+  }
+
+  .toggle[data-mode='dark'] {
+    --_border: var(--kyv-scheme-toggle-border-dark);
+    --_sky: var(--kyv-scheme-toggle-sky-dark);
+    --_sea: var(--kyv-scheme-toggle-sea-dark);
+    --_wave: var(--kyv-scheme-toggle-wave-dark);
+  }
+
+  .toggle:focus-visible {
+    outline: var(--ds-border-width-focus) solid var(--ds-color-focus-outer);
+    outline-offset: var(--ds-border-width-focus);
+    box-shadow: 0 0 0 var(--ds-border-width-focus) var(--ds-color-focus-inner);
+  }
+
+  .svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .sunDisc,
+  .sunRays,
+  .moonShape,
+  .horizon,
+  .wave {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .sky {
+    fill: var(--_sky);
+    transition: fill 0.4s;
+  }
+
+  .sea {
+    fill: var(--_sea);
+    transition: fill 0.4s;
+  }
+
+  .stars {
+    fill: var(--_night);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .toggle[data-mode='dark'] .stars {
+    opacity: 1;
+  }
+
+  .sun,
+  .moon {
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Sun: above the horizon in light, sunk behind the sea in dark. */
+  .sun {
+    transform: translateY(0);
+  }
+
+  .toggle[data-mode='dark'] .sun {
+    transform: translateY(30px);
+  }
+
+  .sunDisc {
+    fill: var(--_sun-fill);
+    stroke: var(--_sun-stroke);
+    stroke-width: 1.8;
+  }
+
+  .sunRays {
+    fill: none;
+    stroke: var(--_sun-stroke);
+    stroke-width: 1.8;
+  }
+
+  /* Moon: out of view above in light, in the sky in dark. */
+  .moon {
+    transform: translateY(-34px);
+  }
+
+  .toggle[data-mode='dark'] .moon {
+    transform: translateY(0);
+  }
+
+  .moonShape {
+    fill: var(--_night);
+    stroke: none;
+  }
+
+  .horizon {
+    display: none;
+    fill: none;
+  }
+
+  .wave {
+    fill: none;
+    stroke: var(--_wave);
+    stroke-width: 1.4;
+    transition: stroke 0.4s;
+  }
+
+  /* Mono variant: semantic tokens, so it follows the page's colour scheme rather than data-mode. */
+  .toggle[data-variant='mono'] {
+    --_ink: var(--ds-color-primary-base-default);
+    --_surface: var(--ds-color-primary-surface-default);
+    --_border: var(--_ink);
+    --_sky: var(--_surface);
+    --_sea: var(--_surface);
+    --_wave: var(--_ink);
+    --_night: var(--_ink);
+  }
+
+  .toggle[data-variant='mono'] .sunDisc {
+    fill: none;
+    stroke: var(--_ink);
+    stroke-width: 2;
+  }
+
+  .toggle[data-variant='mono'] .sunRays {
+    stroke: var(--_ink);
+    stroke-width: 2;
+  }
+
+  .toggle[data-variant='mono'] .moonShape {
+    fill: none;
+    stroke: var(--_ink);
+    stroke-width: 2.7; /* drawn at scale 0.75, so about 2 on screen */
+  }
+
+  .toggle[data-variant='mono'] .horizon {
+    display: inline;
+    stroke: var(--_ink);
+    stroke-width: 2;
+  }
+
+  .toggle[data-variant='mono'] .wave {
+    stroke-width: 1.6;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sun,
+    .moon {
+      transition: none;
+    }
+  }
+}
