@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.15.1](https://github.com/Kystverket/styrbord/compare/styrbord-v2.15.0...styrbord-v2.15.1) (2026-11-19)
+
+
+### Bug Fixes
+
+* **base:** bruk riktig hvit logo i footer og legg til hvite logovarianter ([#397](https://github.com/Kystverket/styrbord/issues/397)) ([c50caa1](https://github.com/Kystverket/styrbord/commit/c50caa1d65a6e673cc5a102ec6957b1d9d603b8b))
+* **base:** ikke les HTMLInputElement ved import av Search ([#399](https://github.com/Kystverket/styrbord/issues/399)) ([fb25c49](https://github.com/Kystverket/styrbord/commit/fb25c493383d1505c66b6faea9513939cc14d967))
+
 ## [2.15.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.14.0...styrbord-v2.15.0) (2026-11-18)
 
 
