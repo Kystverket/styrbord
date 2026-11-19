@@ -600,10 +600,14 @@ export function GeoJsonViewer({
       {!disabled && (
         <MapCenterAction mapRef={mapRef} visible={showCenterAction} />
       )}
-      {hoverable && hoveredFeature && hoverAnchor && mapRef.current && (
+      {hoverable && (
         <GeoJsonViewerHoverPopup
-          feature={hoveredFeature}
-          anchor={{ map: mapRef.current, lngLat: hoverAnchor }}
+          feature={hoverAnchor ? hoveredFeature : null}
+          anchor={
+            hoverAnchor && mapRef.current
+              ? { map: mapRef.current, lngLat: hoverAnchor }
+              : undefined
+          }
           hoverContent={hoverContent}
         />
       )}

@@ -1,4 +1,10 @@
-import { useLayoutEffect, useRef, type ReactNode } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import type { LngLat, Map as MaplibreMap } from "maplibre-gl";
 import type { InteractiveFeature } from "~/hooks/useFeatureInteraction";
 
@@ -9,8 +15,13 @@ const OFFSET_X = 12;
 const OFFSET_Y = 12;
 
 export interface GeoJsonViewerHoverPopupProps {
-  /** The feature currently being hovered. */
-  feature: InteractiveFeature;
+  /**
+   * The feature currently being hovered, or `null` when nothing is.
+   * Keep the component mounted while hover is enabled: its root is the live
+   * region that announces the popup, and a live region must already be in
+   * the DOM for screen readers to pick up what is added to it.
+   */
+  feature: InteractiveFeature | null;
   /** Position of the popup relative to the map container. */
   position?: { x: number; y: number };
   /**
@@ -30,6 +41,8 @@ export interface GeoJsonViewerHoverPopupProps {
 /**
  * Popup component that displays when hovering over a map feature.
  * Content is customizable per feature type via the `hoverContent` prop.
+ *
+ * Escape hides the popup until another feature is hovered (WCAG 1.4.13).
  */
 export function GeoJsonViewerHoverPopup({
   feature,
@@ -38,13 +51,15 @@ export function GeoJsonViewerHoverPopup({
   hoverContent,
 }: GeoJsonViewerHoverPopupProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const [dismissed, setDismissed] = useState<InteractiveFeature | null>(null);
+  const visible = feature !== null && feature !== dismissed;
   const map = anchor?.map;
   const lngLat = anchor?.lngLat;
 
   // Layout effect: placed before paint, so the popup never flashes at 0,0.
   useLayoutEffect(() => {
     const el = ref.current;
-    if (!el || !map || !lngLat) return;
+    if (!visible || !el || !map || !lngLat) return;
     const place = () => {
       const { x, y } = map.project(lngLat);
       el.style.left = `${x + OFFSET_X}px`;
@@ -55,34 +70,53 @@ export function GeoJsonViewerHoverPopup({
     return () => {
       map.off("move", place);
     };
-  }, [map, lngLat]);
+  }, [visible, map, lngLat]);
 
+  // Listen on the document: the pointer is over the map, but keyboard focus
+  // can be anywhere on the page.
+  useEffect(() => {
+    if (!visible) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setDismissed(feature);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [visible, feature]);
+
+  return (
+    <div className={styles.liveRegion} aria-live="polite" aria-atomic="true">
+      {visible && (
+        <div
+          ref={ref}
+          className={styles.popup}
+          style={
+            position && !anchor
+              ? { left: position.x + OFFSET_X, top: position.y + OFFSET_Y }
+              : undefined
+          }
+        >
+          <HoverContent feature={feature} hoverContent={hoverContent} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function HoverContent({
+  feature,
+  hoverContent,
+}: {
+  feature: InteractiveFeature;
+  hoverContent: GeoJsonViewerHoverPopupProps["hoverContent"];
+}) {
   const featureType = (feature.properties?.type as string | undefined) ?? "_";
-
-  // Get custom render function for this feature type
-  const renderFn = featureType ? hoverContent?.[featureType] : undefined;
-
-  // Render content
-  const content = renderFn ? (
+  const renderFn = hoverContent?.[featureType];
+  return renderFn ? (
     renderFn(feature)
   ) : (
     <DefaultHoverContent feature={feature} />
-  );
-
-  return (
-    <div
-      ref={ref}
-      className={styles.popup}
-      style={
-        position && !anchor
-          ? { left: position.x + OFFSET_X, top: position.y + OFFSET_Y }
-          : undefined
-      }
-      role="tooltip"
-      aria-live="polite"
-    >
-      {content}
-    </div>
   );
 }
 

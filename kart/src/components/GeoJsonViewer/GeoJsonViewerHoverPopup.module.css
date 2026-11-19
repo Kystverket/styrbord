@@ -1,3 +1,15 @@
+/*
+ * Always-mounted live region around the popup. Zero-sized at the container's
+ * origin, so the popup inside is placed exactly as if it had no wrapper.
+ */
+.liveRegion {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+}
+
 /* Figma "Tooltip" (Nautisk vurdering, node 14234:103765). */
 .popup {
   position: absolute;
