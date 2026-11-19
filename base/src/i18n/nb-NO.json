@@ -1,4 +1,7 @@
 {
+  "colorSchemeToggle": {
+    "label": "Mørk modus"
+  },
   "filePreviewer": {
     "download": "Last ned",
     "noFileSelected": "Ingen fil valgt.",

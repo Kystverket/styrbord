@@ -1,0 +1,337 @@
+@layer styrbord-modules {
+  .toggle {
+    --cst-height: var(--ds-size-8);
+    --cst-padding: calc(var(--ds-size-1) * 0.75);
+    --cst-thumb-size: calc(var(--cst-height) - 2 * var(--cst-padding));
+    /* Track width minus thumb minus padding on both sides. */
+    --cst-travel: calc(var(--cst-height) * 2 - var(--cst-thumb-size) - 2 * var(--cst-padding));
+    --cst-duration: 550ms;
+    --cst-ease: cubic-bezier(0.65, 0, 0.35, 1);
+
+    position: relative;
+    display: inline-block;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    inline-size: calc(var(--cst-height) * 2);
+    block-size: var(--cst-height);
+    padding: 0;
+    border: 0;
+    border-radius: var(--ds-border-radius-full);
+    overflow: hidden;
+    isolation: isolate;
+    background: none;
+    cursor: pointer;
+    vertical-align: middle;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Inner rim, drawn above the scene so it reads as a recessed track. */
+  .toggle::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    border-radius: inherit;
+    box-shadow: inset 0 1px 3px rgb(0 0 0 / 0.35);
+    pointer-events: none;
+  }
+
+  .toggle:focus-visible {
+    outline: 3px solid var(--ds-color-focus-outer);
+    outline-offset: 2px;
+  }
+
+  .toggle:disabled {
+    cursor: not-allowed;
+    opacity: var(--ds-opacity-disabled);
+  }
+
+  /* `[data-color-scheme]` gives every pinned element a page background; the scene paints its own. */
+  .toggle [data-color-scheme] {
+    background: none;
+    color: inherit;
+  }
+
+  /* ---------- Sky ---------- */
+
+  .sky {
+    position: absolute;
+    inset: 0;
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .nightSky {
+    opacity: 0;
+    transition: opacity var(--cst-duration) var(--cst-ease);
+  }
+
+  .toggle[aria-checked='true'] .nightSky {
+    opacity: 1;
+  }
+
+  .daySkyTop {
+    stop-color: var(--ds-color-himmel-base-default);
+  }
+
+  .daySkyBottom {
+    stop-color: var(--ds-color-himmel-surface-tinted);
+  }
+
+  .nightSkyTop {
+    stop-color: var(--ds-color-dyphav-background-tinted);
+  }
+
+  .nightSkyBottom {
+    stop-color: var(--ds-color-dyphav-surface-active);
+  }
+
+  .daySky .seaBack {
+    fill: var(--ds-color-hav-surface-active);
+  }
+
+  .daySky .seaFront {
+    fill: var(--ds-color-hav-base-default);
+  }
+
+  .nightSky .seaBack {
+    fill: var(--ds-color-hav-surface-active);
+  }
+
+  .nightSky .seaFront {
+    fill: var(--ds-color-dyphav-surface-tinted);
+  }
+
+  .cloud {
+    fill: var(--ds-color-neutral-background-default);
+    opacity: 0.9;
+  }
+
+  .stars circle {
+    fill: var(--ds-color-sol-text-default);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: twinkle 3s ease-in-out infinite;
+  }
+
+  .stars circle:nth-child(2n) {
+    animation-delay: -1.2s;
+  }
+
+  .stars circle:nth-child(3n) {
+    animation-delay: -2.1s;
+    animation-duration: 4s;
+  }
+
+  /* ---------- Lighthouse ---------- */
+
+  /*
+   * One lighthouse per scene, each living in the half of the track the thumb leaves open.
+   * It leaves through the edge it is closest to, and the other one comes in through its own edge
+   * once the thumb has started moving.
+   */
+  .lighthouse {
+    position: absolute;
+    inset-block: 0;
+    z-index: 1;
+    inline-size: 50%;
+    pointer-events: none;
+    /* Leaving: accelerate out, no delay. */
+    transition: transform calc(var(--cst-duration) * 0.55) cubic-bezier(0.5, 0, 0.75, 0);
+  }
+
+  .lighthouse svg {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    overflow: visible;
+  }
+
+  .lighthouseDay {
+    right: 0;
+    --cst-lighthouse-white: var(--ds-color-neutral-background-default);
+  }
+
+  .lighthouseNight {
+    left: 0;
+    --cst-lighthouse-white: var(--ds-color-stein-text-default);
+    transform: translateX(-100%);
+  }
+
+  .toggle[aria-checked='true'] .lighthouseDay {
+    transform: translateX(100%);
+  }
+
+  /* Arriving: wait for the thumb to clear the way, then settle with a small overshoot. */
+  .toggle[aria-checked='false'] .lighthouseDay,
+  .toggle[aria-checked='true'] .lighthouseNight {
+    transform: translateX(0);
+    transition: transform calc(var(--cst-duration) * 0.8) cubic-bezier(0.34, 1.4, 0.64, 1)
+      calc(var(--cst-duration) * 0.35);
+  }
+
+  .rock {
+    fill: var(--ds-color-stein-border-default);
+  }
+
+  .towerLight {
+    fill: var(--cst-lighthouse-white);
+  }
+
+  .towerStripe,
+  .roof {
+    fill: var(--ds-color-fyr-base-default);
+  }
+
+  .gallery {
+    fill: var(--ds-color-stein-base-default);
+  }
+
+  .lantern {
+    fill: var(--ds-color-himmel-surface-tinted);
+  }
+
+  .lighthouseNight .lantern {
+    fill: var(--ds-color-sol-brand);
+    filter: drop-shadow(0 0 1.5px var(--ds-color-sol-brand));
+  }
+
+  .beamStart {
+    stop-color: var(--ds-color-sol-brand);
+    stop-opacity: 0.7;
+  }
+
+  .beamEnd {
+    stop-color: var(--ds-color-sol-brand);
+    stop-opacity: 0;
+  }
+
+  .beam {
+    opacity: 0;
+    transform-box: view-box;
+    transform-origin: 16px 9.2px;
+    transition: opacity calc(var(--cst-duration) * 0.4) ease;
+    animation: sweep 4s ease-in-out infinite;
+  }
+
+  .toggle[aria-checked='true'] .beam {
+    opacity: 1;
+    transition-delay: var(--cst-duration);
+  }
+
+  /* ---------- Thumb ---------- */
+
+  .thumb {
+    position: absolute;
+    inset-block-start: var(--cst-padding);
+    inset-inline-start: var(--cst-padding);
+    z-index: 2;
+    inline-size: var(--cst-thumb-size);
+    block-size: var(--cst-thumb-size);
+    border-radius: 50%;
+    transition:
+      transform var(--cst-duration) var(--cst-ease),
+      scale 150ms ease;
+  }
+
+  /* The thumb rolls across the track, so the sun's rays turn as it goes. */
+  .toggle[aria-checked='true'] .thumb {
+    transform: translateX(var(--cst-travel)) rotate(360deg);
+  }
+
+  .toggle:not(:disabled):hover .thumb {
+    scale: 1.06;
+  }
+
+  .toggle:not(:disabled):active .thumb {
+    scale: 0.94;
+  }
+
+  .sun,
+  .moon {
+    position: absolute;
+    inset: 0;
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    transition:
+      opacity calc(var(--cst-duration) * 0.6) var(--cst-ease),
+      transform var(--cst-duration) var(--cst-ease);
+  }
+
+  /* Yellow on a pale sky has little contrast, so the sun gets warm edges and a shadow to stand out. */
+  .sun {
+    filter: drop-shadow(0 1px 1.5px rgb(0 0 0 / 0.3));
+  }
+
+  .rays {
+    fill: var(--ds-color-warning-base-default);
+  }
+
+  .sunDisc {
+    fill: var(--ds-color-sol-brand);
+    stroke: var(--ds-color-warning-base-default);
+    stroke-width: 1.2;
+  }
+
+  .moon {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.6);
+    filter: drop-shadow(0 0 2px var(--ds-color-sol-text-default));
+  }
+
+  .moonDisc {
+    fill: var(--ds-color-sol-text-default);
+  }
+
+  .crater {
+    fill: var(--ds-color-sol-border-default);
+    opacity: 0.45;
+  }
+
+  .toggle[aria-checked='true'] .sun {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.6);
+  }
+
+  .toggle[aria-checked='true'] .moon {
+    opacity: 1;
+    transform: none;
+  }
+
+  @keyframes twinkle {
+    0%,
+    100% {
+      opacity: 1;
+      scale: 1;
+    }
+
+    50% {
+      opacity: 0.35;
+      scale: 0.7;
+    }
+  }
+
+  @keyframes sweep {
+    0%,
+    100% {
+      transform: scaleX(1);
+    }
+
+    50% {
+      transform: scaleX(-1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .toggle {
+      --cst-duration: 1ms;
+    }
+
+    .stars circle,
+    .beam {
+      animation: none;
+    }
+  }
+}

@@ -121,6 +121,12 @@ export type {
   SearchButtonProps,
 } from './components/kystverket/Search/Search.types';
 
+export { ColorSchemeToggle } from './components/kystverket/ColorSchemeToggle/ColorSchemeToggle';
+export type {
+  ColorScheme,
+  ColorSchemeToggleProps,
+} from './components/kystverket/ColorSchemeToggle/ColorSchemeToggle.types';
+
 export { Footer } from './components/kystverket/Footer/Footer';
 export type { FooterProps } from './components/kystverket/Footer/Footer';
 

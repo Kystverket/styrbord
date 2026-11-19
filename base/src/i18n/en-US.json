@@ -1,4 +1,7 @@
 {
+  "colorSchemeToggle": {
+    "label": "Dark mode"
+  },
   "filePreviewer": {
     "download": "Download",
     "noFileSelected": "No file selected.",
