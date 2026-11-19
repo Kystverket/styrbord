@@ -14,7 +14,7 @@ const meta = {
         component: [
           'Kystverket-logoen finnes i to varianter, og hvilken du bruker avhenger av bakgrunnen:',
           '',
-          '- **Blå** (`color="blue"`, standard) brukes på lys bakgrunn.',
+          '- **Blå** (`color="blue"`, standard) er mørk blå i lys modus og følger tekstfargen i mørk modus.',
           '- **Hvit** (`color="white"`) brukes på mørk bakgrunn, for eksempel i footeren. Den hvite logoen er en egen tegning med fylt emblem og kontur rundt skjoldet, ikke den blå logoen farget hvit.',
           '',
           'Begge finnes liggende, stående og som symbol, på norsk og engelsk (`variant`).',

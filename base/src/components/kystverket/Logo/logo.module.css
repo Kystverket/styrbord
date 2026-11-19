@@ -26,5 +26,9 @@
   color: #000000;
 }
 .logo-color-blue {
-  color: var(--ds-color-base-default);
+  /* Light: base-default (#001955), the brand navy; text-default is #0e295f there.
+     Dark: text-default, which styrbord-tokens 1.2.1 makes near-white.
+     light-dark() follows the nearest scheme ancestor, because the tokens CSS sets
+     color-scheme on every [data-color-scheme], including auto. */
+  color: light-dark(var(--ds-color-base-default), var(--ds-color-text-default));
 }
