@@ -1,3 +1,5 @@
+@use 'sass:map';
+@use 'sass:math';
 @use 'sass:meta';
 
 @font-face {
@@ -37,3 +39,107 @@
 }
 
 @include meta.load-css('../src/css/index.scss');
+
+// ---------------------------------------------------------------------------
+// SAK-1157: prototype for a new size scale. Storybook only, not shipped.
+//
+// Toggled with "Størrelsesskala" in the toolbar (sets data-size-scale="proposal").
+// Values come from the "Size" collection in the Figma branch: one shared 4 px
+// scale, where large uses it as is, medium sits one step down and small two
+// steps down. Font sizes are unchanged.
+//
+// Unlayered CSS beats @layer ds.theme.size, and the tokens re-declare the
+// scale on every [data-size] element, so each mode is matched explicitly.
+// ---------------------------------------------------------------------------
+
+// Token name → px, per mode.
+$proposal-size-scale: (
+  lg: (
+    0: 0,
+    1: 4,
+    2: 8,
+    3: 12,
+    4: 16,
+    5: 20,
+    6: 24,
+    7: 28,
+    8: 32,
+    9: 36,
+    10: 40,
+    11: 44,
+    12: 48,
+    13: 52,
+    14: 56,
+    15: 60,
+    18: 72,
+    22: 88,
+    26: 104,
+    30: 120,
+  ),
+  md: (
+    0: 0,
+    1: 2,
+    2: 4,
+    3: 8,
+    4: 12,
+    5: 16,
+    6: 20,
+    7: 24,
+    8: 28,
+    9: 32,
+    10: 36,
+    11: 40,
+    12: 44,
+    13: 48,
+    14: 52,
+    15: 56,
+    18: 60,
+    22: 72,
+    26: 88,
+    30: 104,
+  ),
+  sm: (
+    0: 0,
+    1: 1,
+    2: 2,
+    3: 4,
+    4: 8,
+    5: 12,
+    6: 16,
+    7: 20,
+    8: 24,
+    9: 28,
+    10: 32,
+    11: 36,
+    12: 40,
+    13: 44,
+    14: 48,
+    15: 52,
+    18: 56,
+    22: 60,
+    26: 72,
+    30: 88,
+  ),
+);
+
+@mixin proposal-size-tokens($mode) {
+  @each $token, $px in map.get($proposal-size-scale, $mode) {
+    --ds-size-#{$token}: #{math.div($px, 16)}rem;
+  }
+}
+
+// md is the default when no data-size is set.
+[data-size-scale='proposal'],
+[data-size-scale='proposal'] [data-size='md'] {
+  @include proposal-size-tokens(md);
+}
+
+[data-size-scale='proposal'][data-size='sm'],
+[data-size-scale='proposal'] [data-size='sm'] {
+  @include proposal-size-tokens(sm);
+}
+
+[data-size-scale='proposal'][data-size='lg'],
+[data-size-scale='proposal'] [data-size='lg'] {
+  @include proposal-size-tokens(lg);
+}

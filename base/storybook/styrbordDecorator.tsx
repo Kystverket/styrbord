@@ -8,10 +8,14 @@ const StyrbordDecorator = (Story: PartialStoryFn, context: StoryContext) => {
   const locale = context.globals?.locale ?? 'nb-NO';
   const colorScheme = context.globals?.colorScheme ?? 'light';
 
+  const sizeScale = context.globals?.sizeScale ?? 'current';
+
   document.documentElement.lang = locale;
+  // Also on <html>, so portals and popovers rendered outside the wrapper get the same scale.
+  document.documentElement.dataset.sizeScale = sizeScale;
 
   return (
-    <div data-color-scheme={colorScheme}>
+    <div data-color-scheme={colorScheme} data-size-scale={sizeScale}>
       <SprakProvider locale={locale} defaultNamespace={STYRBORD_TRANSLATIONS_NAMESPACE}>
         <StyrbordTranslations>
           <Story />
