@@ -8,6 +8,22 @@ const meta = {
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],
   argTypes: {},
+  parameters: {
+    docs: {
+      description: {
+        component: [
+          'Kystverket-logoen finnes i to varianter, og hvilken du bruker avhenger av bakgrunnen:',
+          '',
+          '- **Blå** (`color="blue"`, standard) brukes på lys bakgrunn.',
+          '- **Hvit** (`color="white"`) brukes på mørk bakgrunn, for eksempel i footeren. Den hvite logoen er en egen tegning med fylt emblem og kontur rundt skjoldet, ikke den blå logoen farget hvit.',
+          '',
+          'Begge finnes liggende, stående og som symbol, på norsk og engelsk (`variant`).',
+          '',
+          'Se [Logo og emblem i Kystverkets profilhåndbok](https://www.kystverket.no/om-kystverket/profilhandbok/logo-og-emblem/) for når og hvordan logoen skal brukes.',
+        ].join('\n'),
+      },
+    },
+  },
 } satisfies Meta<typeof Logo>;
 
 export default meta;
@@ -38,8 +54,49 @@ export const EnglishHorizontal: Story = {
   args: { ...defaultProps, height: 100, variant: 'horizontal-en' },
 };
 
+export const SymbolVariant: Story = {
+  args: { ...defaultProps, variant: 'symbol' },
+};
+
+/** Den hvite logoen er laget for mørk bakgrunn, så historiene under vises på primærfargen. */
+const darkBackground: Story['decorators'] = [
+  (Story) => (
+    <div
+      data-color="primary"
+      style={{
+        backgroundColor: 'var(--ds-color-base-default)',
+        padding: 'var(--ds-size-6)',
+        display: 'inline-block',
+      }}
+    >
+      <Story />
+    </div>
+  ),
+];
+
 export const White: Story = {
   args: { ...defaultProps, variant: 'vertical', color: 'white' },
+  decorators: darkBackground,
+};
+
+export const WhiteHorizontal: Story = {
+  args: { ...defaultProps, color: 'white' },
+  decorators: darkBackground,
+};
+
+export const WhiteSymbol: Story = {
+  args: { ...defaultProps, variant: 'symbol', color: 'white' },
+  decorators: darkBackground,
+};
+
+export const WhiteEnglishVertical: Story = {
+  args: { ...defaultProps, height: 200, variant: 'vertical-en', color: 'white' },
+  decorators: darkBackground,
+};
+
+export const WhiteEnglishHorizontal: Story = {
+  args: { ...defaultProps, height: 100, variant: 'horizontal-en', color: 'white' },
+  decorators: darkBackground,
 };
 
 export const Black: Story = {
