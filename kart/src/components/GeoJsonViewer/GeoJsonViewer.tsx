@@ -217,11 +217,11 @@ export function GeoJsonViewer({
   // Track whether layers are ready for interaction
   const [layersReady, setLayersReady] = useState(false);
 
-  // Track hover popup position
-  const [hoverPosition, setHoverPosition] = useState<{
-    x: number;
-    y: number;
-  } | null>(null);
+  // Hover popup: pinned to the map coordinate the pointer entered the
+  // feature at, so it stays on the feature while panning and zooming.
+  const [hoverAnchor, setHoverAnchor] = useState<maplibregl.LngLat | null>(
+    null,
+  );
 
   // ----- Coordinate click → WMS feature info -----
   const [clickedCoordinate, setClickedCoordinate] = useState<Coordinate | null>(
@@ -359,12 +359,7 @@ export function GeoJsonViewer({
         updateHoverHighlight(map, featureId);
       }
 
-      // Update hover popup position
-      if (event && feature) {
-        setHoverPosition({ x: event.point.x, y: event.point.y });
-      } else {
-        setHoverPosition(null);
-      }
+      setHoverAnchor(event && feature ? event.lngLat : null);
     },
     [onHover, mapRef, layersReady],
   );
@@ -605,10 +600,10 @@ export function GeoJsonViewer({
       {!disabled && (
         <MapCenterAction mapRef={mapRef} visible={showCenterAction} />
       )}
-      {hoverable && hoveredFeature && hoverPosition && (
+      {hoverable && hoveredFeature && hoverAnchor && mapRef.current && (
         <GeoJsonViewerHoverPopup
           feature={hoveredFeature}
-          position={hoverPosition}
+          anchor={{ map: mapRef.current, lngLat: hoverAnchor }}
           hoverContent={hoverContent}
         />
       )}
