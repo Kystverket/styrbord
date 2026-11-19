@@ -16,7 +16,8 @@
     "pretty:fix": "npm run pretty:fix --workspaces --if-present",
     "lint:check": "npm run lint:check --workspaces --if-present",
     "lint:fix": "npm run lint:fix --workspaces --if-present",
-    "tokens:check": "node scripts/check-design-tokens.mjs"
+    "tokens:check": "node scripts/check-design-tokens.mjs",
+    "ssr:check": "node scripts/check-ssr-import.mjs"
   },
   "version": "",
   "devDependencies": {
