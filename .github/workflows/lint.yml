@@ -47,3 +47,4 @@ jobs:
       - run: npm run lint:check -w consent
       - run: npm run pretty:check -w consent
       - run: npm run build -w consent
+      - run: npm run ssr:check -- base consent

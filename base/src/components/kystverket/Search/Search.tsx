@@ -32,8 +32,6 @@ export function SearchInput({ type = 'search', placeholder = ' ', ...rest }: Sea
   return <Input type={type} placeholder={placeholder} enterKeyHint="search" {...rest} />;
 }
 
-const setNativeValue = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')?.set;
-
 /**
  * Clears the search field. Only visible while the field has a value.
  *
@@ -50,6 +48,9 @@ export function SearchClear({ onClick, 'aria-label': ariaLabel, className, ...re
     const input = event.currentTarget.parentElement?.querySelector<HTMLInputElement>(':scope > input');
     if (!input) return;
 
+    // Looked up here rather than at module level: `HTMLInputElement` does not exist outside the browser,
+    // and the whole package is evaluated on import — including during SSR and in Node test runners.
+    const setNativeValue = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')?.set;
     setNativeValue?.call(input, '');
     input.dispatchEvent(new Event('input', { bubbles: true }));
     input.focus();
