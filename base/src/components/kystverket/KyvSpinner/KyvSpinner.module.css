@@ -1,139 +1,307 @@
+/*
+ * Dag og natt styres av light-dark(), som følger `color-scheme` — den settes av token-CSS-en
+ * sammen med `data-color-scheme` (inkludert `auto`). Paletttokenene skifter selv verdi i mørk
+ * modus, så første argument er alltid lys-verdien og andre alltid mørk-verdien.
+ */
 @layer styrbord-modules {
   .container {
-    --kyv-spinner-color: var(--ds-color-accent-brand);
+    --kyv-spinner-period: 4s;
+    --kyv-spinner-sky-top: light-dark(var(--ds-color-himmel-base-default), var(--ds-color-dyphav-background-default));
+    --kyv-spinner-sky-horizon: light-dark(
+      var(--ds-color-himmel-background-tinted),
+      var(--ds-color-dyphav-surface-tinted)
+    );
+    --kyv-spinner-light: light-dark(var(--ds-color-sol-surface-active), var(--ds-color-sol-text-default));
+    --kyv-spinner-ink: light-dark(var(--ds-color-dyphav-base-default), var(--ds-color-neutral-background-default));
+
     display: inline-flex;
-    flex-direction: column;
-    align-items: center;
   }
 
-  .container.sm .row {
+  .svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .scene .svg {
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .container.sm {
     width: 6rem;
     height: 6rem;
   }
 
-  .container.md .row {
+  .container.md {
     width: 12rem;
     height: 12rem;
   }
 
-  .container.lg .row {
+  .container.lg {
     width: 18rem;
     height: 18rem;
   }
 
-  /* ── Layout row: [left beam] [lighthouse] [right beam] ── */
-  .row {
-    position: relative;
+  /* ── Himmel ── */
+  .skyTop {
+    stop-color: var(--kyv-spinner-sky-top);
+  }
+
+  .skyHorizon {
+    stop-color: var(--kyv-spinner-sky-horizon);
+  }
+
+  .star {
+    fill: light-dark(transparent, var(--ds-color-sol-text-default));
+    animation: twinkle 2.8s ease-in-out infinite;
+  }
+
+  .moon {
+    fill: light-dark(transparent, var(--ds-color-sol-text-default));
+  }
+
+  .sun {
+    fill: light-dark(var(--ds-color-sol-surface-tinted), transparent);
+  }
+
+  .sunHalo {
+    fill: light-dark(var(--ds-color-sol-background-default), transparent);
+    opacity: 0.5;
+  }
+
+  .cloud {
+    fill: light-dark(var(--ds-color-neutral-background-default), var(--ds-color-dyphav-surface-tinted));
+    animation: drift 18s linear infinite;
+  }
+
+  .cloudSlow {
+    animation-duration: 26s;
+    animation-delay: -12s;
+  }
+
+  /* ── Lys ── */
+  .beamStart {
+    stop-color: var(--kyv-spinner-light);
+    stop-opacity: 0.9;
+  }
+
+  .beamEnd {
+    stop-color: var(--kyv-spinner-light);
+    stop-opacity: 0;
+  }
+
+  .beam {
+    transform-box: view-box;
+    transform-origin: 0 0;
+    animation: sweep var(--kyv-spinner-period) cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  }
+
+  .beamFront {
+    animation: front-half var(--kyv-spinner-period) step-end infinite;
+  }
+
+  .beamBack {
+    opacity: 0;
+    animation: back-half var(--kyv-spinner-period) step-end infinite;
+  }
+
+  .glow {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: flash var(--kyv-spinner-period) linear infinite;
+  }
+
+  /* ── Hav ── */
+  .wave {
+    animation: swell 3s linear infinite;
+  }
+
+  .waveBack {
+    fill: var(--ds-color-hav-base-default);
+    animation-duration: 5s;
+    animation-direction: reverse;
+  }
+
+  .waveMid {
+    fill: var(--ds-color-hav-base-hover);
+    animation-duration: 3.5s;
+  }
+
+  .waveFront {
+    fill: var(--ds-color-hav-base-active);
+    animation-duration: 2.5s;
+  }
+
+  /* ── Øy og fyr ── */
+  .island {
+    fill: var(--ds-color-skog-base-default);
+  }
+
+  .grass {
+    fill: light-dark(var(--ds-color-gress-base-default), var(--ds-color-skog-base-hover));
   }
 
   .lighthouse {
-    position: absolute;
-    top: 25%;
-    left: 25%;
-    width: 50%;
-    height: 50%;
-    flex-shrink: 0;
-    z-index: 1;
+    stroke: var(--kyv-spinner-ink);
+    stroke-width: 0.6;
+    stroke-linejoin: round;
   }
 
-  .beamLeft,
-  .beamRight,
-  .flash {
-    position: absolute;
-    flex-shrink: 0;
-    width: 35%;
-    height: 8%;
-    position: absolute;
-    top: 30%;
-    border-radius: 1px;
+  .tower {
+    fill: light-dark(var(--ds-color-neutral-background-default), var(--ds-color-neutral-base-default));
   }
 
-  .flash {
-    left: 30%;
-    width: 40%;
-    background: linear-gradient(to left, transparent, var(--kyv-spinner-color), transparent);
-    animation: sweepalt 3s ease-in-out infinite;
-    animation-delay: -1.5s;
-    z-index: 2;
+  .stripe {
+    fill: var(--ds-color-fyr-base-default);
   }
 
-  .beamLeft {
-    left: 13%;
-    transform-origin: right center;
-    background: linear-gradient(to left, var(--kyv-spinner-color), transparent);
-    animation: sweep 3s ease-in-out infinite;
-    /* Offset by half the period so beams are always in opposite phases */
-    animation-delay: -1.5s;
+  .detail {
+    fill: var(--kyv-spinner-ink);
   }
 
-  .beamRight {
-    left: 52%;
-    transform-origin: left center;
-    transform: scaleX(-1);
-    background: linear-gradient(to right, var(--kyv-spinner-color), transparent);
-    animation: sweep 3s ease-in-out infinite;
+  .lantern {
+    fill: light-dark(var(--ds-color-sol-surface-tinted), var(--ds-color-sol-text-default));
+  }
+
+  .mullion {
+    stroke-width: 0.4;
+  }
+
+  /* ── Variant: outline ──
+     Strektegning i samme stil som fyr-ikonet: primærfarge på strekene og accent-brand i lyset,
+     som den gamle spinneren. Primærfargen er lys i mørk modus, så strekene følger fargemodus selv. */
+  .outline {
+    --kyv-spinner-light: var(--ds-color-accent-brand);
+
+    color: var(--ds-color-primary-base-default);
+  }
+
+  .outline .lines,
+  .outline .lighthouse {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .outline .lighthouse > *,
+  .outline .wave {
+    fill: none;
+  }
+
+  .outline .mullion {
+    stroke-width: 1;
+  }
+
+  .outline .star {
+    fill: light-dark(transparent, currentColor);
+  }
+
+  .outline .moon {
+    fill: none;
+    stroke: light-dark(transparent, currentColor);
+    stroke-width: 1.2;
+    stroke-linejoin: round;
+  }
+
+  .outline .sun {
+    fill: none;
+    stroke: light-dark(currentColor, transparent);
+    stroke-width: 1.2;
   }
 
   /* ── Keyframes ── */
+
+  /* Én runde: høyre (0 %) → mot betrakteren (25 %) → venstre (50 %) → bort (75 %) → høyre.
+     Sinus-easing per halvdel gjør skaleringen tilnærmet lik cos(vinkel). */
   @keyframes sweep {
-    0% {
-      transform: scaleX(0);
-      opacity: 0;
-    }
-    15% {
-      transform: scaleX(0);
-      opacity: 0;
+    0%,
+    100% {
+      transform: scaleX(1);
     }
     50% {
-      transform: scaleX(1);
-      opacity: 0.85;
+      transform: scaleX(-1);
     }
-    85% {
-      transform: scaleX(0);
-      opacity: 0;
-    }
+  }
+
+  @keyframes flash {
+    0%,
+    10%,
+    40%,
     100% {
-      transform: scaleX(0);
+      opacity: 0.25;
+      transform: scale(0.6);
+    }
+    25% {
+      opacity: 1;
+      transform: scale(1.3);
+    }
+  }
+
+  /* 0–180° (0–50 %) peker strålen mot betrakteren, 180–360° bort. step-end gir et hardt bytte
+     akkurat når strålen er vannrett, der den fremre og den speilede kopien er identiske. */
+  @keyframes front-half {
+    0% {
+      opacity: 1;
+    }
+    50%,
+    100% {
       opacity: 0;
     }
   }
 
-  /* ── Keyframes ── */
-  @keyframes sweepalt {
+  @keyframes back-half {
     0% {
-      transform: scaleX(0);
       opacity: 0;
     }
-    20% {
-      transform: scaleX(1);
+    50%,
+    100% {
       opacity: 1;
     }
-    30% {
-      transform: scaleX(1);
+  }
+
+  /* Én bølgeperiode (20 enheter), så loopen er sømløs. */
+  @keyframes swell {
+    to {
+      transform: translateX(20px);
+    }
+  }
+
+  @keyframes drift {
+    from {
+      transform: translateX(-40px);
+    }
+    to {
+      transform: translateX(130px);
+    }
+  }
+
+  @keyframes twinkle {
+    0%,
+    100% {
       opacity: 1;
     }
     50% {
-      transform: scaleX(0);
-      opacity: 0;
-    }
-    100% {
-      transform: scaleX(0);
-      opacity: 0;
+      opacity: 0.3;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .beamLeft,
-    .beamRight,
-    .flash {
+    .beam,
+    .beamFront,
+    .beamBack,
+    .glow,
+    .wave,
+    .cloud,
+    .star {
       animation: none;
     }
 
-    /* Show beams statically at half extension when motion is reduced */
-    .beamLeft,
-    .beamRight {
-      transform: scaleX(0.5);
-      opacity: 0.4;
+    /* Statisk strålen mot høyre og et dempet lys i lykta. */
+    .glow {
+      opacity: 0.5;
     }
   }
 }
