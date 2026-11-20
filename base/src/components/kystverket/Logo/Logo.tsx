@@ -57,6 +57,24 @@ const logoVariants: Record<LogoVariant, { default: LogoImage; white: LogoImage }
   },
 };
 
+function logoSize(logo: LogoImage, height?: number, width?: number): { height: number; width: number } {
+  const logoRatio = logo.width / logo.height;
+
+  if (height && width) {
+    return { height, width };
+  } else if (height) {
+    return { height, width: height * logoRatio };
+  } else if (width) {
+    return { height: width / logoRatio, width };
+  }
+  return { height: logo.height, width: logo.width };
+}
+
+/**
+ * `color="blue"` følger fargemodusen: i mørk modus vises den hvite tegningen i stedet, siden
+ * profilhåndboka krever den på mørk bakgrunn. Begge tegningene rendres, og CSS viser den som
+ * passer nærmeste `data-color-scheme` (se logo.module.css). `white` og `black` byttes aldri.
+ */
 export function Logo({
   product,
   className,
@@ -66,45 +84,52 @@ export function Logo({
   height,
   width,
 }: Readonly<LogoProps>) {
-  const logo = logoVariants[variant][color === 'white' ? 'white' : 'default'];
+  const drawings = logoVariants[variant];
+  const logo = drawings[color === 'white' ? 'white' : 'default'];
   const LogoImage = logo.image;
-  let logoHeight = logo.height;
-  let logoWidth = logo.width;
+  const size = logoSize(logo, height, width);
 
-  const logoRatio = logoWidth / logoHeight;
+  const followsColorScheme = color === 'blue';
+  const DarkLogoImage = drawings.white.image;
+  const darkSize = logoSize(drawings.white, height, width);
+
   const colorClassName = classes['logo-color-' + color];
   const variantClassName = classes['logo-variant-' + variant];
-
-  if (height && width) {
-    logoHeight = height;
-    logoWidth = width;
-  } else if (height && !width) {
-    logoWidth = height * logoRatio;
-    logoHeight = height;
-  } else if (width && !height) {
-    logoWidth = width;
-    logoHeight = width / logoRatio;
-  }
+  const lightClassName = followsColorScheme ? classes['logo-scheme-light'] : undefined;
+  const darkClassName = classes['logo-scheme-dark'];
 
   if (product) {
     return (
       <div
         aria-label={alt}
         className={[className, classes['product-logo-container'], colorClassName, variantClassName].join(' ')}
-        style={{ '--logo-height': `${logoHeight}px` } as CSSProperties}
+        style={{ '--logo-height': `${size.height}px` } as CSSProperties}
       >
-        <LogoImage height={logoHeight} width={logoWidth} />
+        <LogoImage className={lightClassName} height={size.height} width={size.width} />
+        {followsColorScheme && (
+          <DarkLogoImage className={darkClassName} height={darkSize.height} width={darkSize.width} />
+        )}
         <span className={classes['product-logo-text']}>{product}</span>
       </div>
     );
   } else {
     return (
-      <LogoImage
-        className={[className, colorClassName, variantClassName].join(' ')}
-        aria-label={alt}
-        height={logoHeight}
-        width={logoWidth}
-      />
+      <>
+        <LogoImage
+          className={[className, colorClassName, variantClassName, lightClassName].join(' ')}
+          aria-label={alt}
+          height={size.height}
+          width={size.width}
+        />
+        {followsColorScheme && (
+          <DarkLogoImage
+            className={[className, colorClassName, variantClassName, darkClassName].join(' ')}
+            aria-label={alt}
+            height={darkSize.height}
+            width={darkSize.width}
+          />
+        )}
+      </>
     );
   }
 }
