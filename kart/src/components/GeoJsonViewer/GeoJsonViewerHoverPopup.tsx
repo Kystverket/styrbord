@@ -120,16 +120,34 @@ function HoverContent({
   );
 }
 
+/** Property keys tried, in order, for the default hover label. Matched case-insensitively. */
+const LABEL_KEYS = ["name", "navn", "type"];
+
+/** First non-empty property whose key matches one of `keys`, ignoring case. */
+function findLabelProperty(
+  properties: InteractiveFeature["properties"],
+  keys: string[],
+): unknown {
+  if (!properties) return undefined;
+  const entries = Object.entries(properties);
+  for (const key of keys) {
+    const match = entries.find(
+      ([k, v]) => k.toLowerCase() === key && v != null && v !== "",
+    );
+    if (match) return match[1];
+  }
+  return undefined;
+}
+
 /**
  * Default hover content shown when no custom render function is provided.
- * Shows the feature's `name`, falling back to its `type` property, then
- * its geometry type.
+ * Shows the first non-empty of the feature's `name`, `navn` and `type`
+ * properties (keys matched case-insensitively), then its geometry type.
  */
 function DefaultHoverContent({ feature }: { feature: InteractiveFeature }) {
   // `||`, not `??`: an empty name should fall through, not render a blank tooltip.
   const label =
-    feature.properties?.name ||
-    feature.properties?.type ||
+    findLabelProperty(feature.properties, LABEL_KEYS) ||
     feature.geometry?.type ||
     "Feature";
 
