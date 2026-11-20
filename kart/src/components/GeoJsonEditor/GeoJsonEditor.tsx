@@ -872,10 +872,10 @@ export function GeoJsonEditor({
             }
           />
         )}
-        {hoverable && hoveredFeature && hoverPosition && (
+        {hoverable && (
           <GeoJsonViewerHoverPopup
-            feature={hoveredFeature}
-            position={hoverPosition}
+            feature={hoverPosition ? hoveredFeature : null}
+            position={hoverPosition ?? undefined}
             hoverContent={hoverContent}
           />
         )}

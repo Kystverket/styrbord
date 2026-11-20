@@ -1,30 +1,33 @@
+/*
+ * Always-mounted live region around the popup. Zero-sized at the container's
+ * origin, so the popup inside is placed exactly as if it had no wrapper.
+ */
+.liveRegion {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Figma "Tooltip" (Nautisk vurdering, node 14234:103765). */
 .popup {
   position: absolute;
   z-index: 10;
-  background: var(--ds-color-neutral-background-default);
-  border: 1px solid var(--ds-color-neutral-border-default);
-  border-radius: var(--ds-border-radius-md);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  padding: 8px 12px;
-  pointer-events: none;
+  box-sizing: border-box;
+  /* The zero-width live region is the containing block, so `auto` width
+     would shrink to min-content and wrap at every space. */
+  width: max-content;
   max-width: 280px;
+  padding: var(--ds-size-1) var(--ds-size-2);
+  background: var(--ds-color-neutral-text-default);
+  border: 1px solid var(--ds-color-neutral-text-default);
+  border-radius: var(--ds-border-radius-default);
+  box-shadow: var(--ds-shadow-md);
+  pointer-events: none;
   font-family: inherit;
-  font-size: 0.875rem;
-  line-height: 1.4;
-  color: var(--ds-color-neutral-text-default);
-}
-
-.defaultContent {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.featureType {
-  font-weight: 600;
-  color: var(--ds-color-accent-text-default);
-}
-
-.featureName {
-  color: var(--ds-color-neutral-text-default);
+  font-size: var(--ds-font-size-3);
+  font-weight: var(--ds-font-weight-medium);
+  line-height: 1.5;
+  color: var(--ds-color-neutral-base-contrast-default);
 }
