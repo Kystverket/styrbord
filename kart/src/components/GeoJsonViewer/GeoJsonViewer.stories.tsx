@@ -328,10 +328,16 @@ export const WithLayerToggle: Story = {
 const token = colors.light;
 
 /** A rectangle around `[lng, lat]`, `w`×`h` degrees. */
-function rect(lng: number, lat: number, w: number, h: number): Feature {
+function rect(
+  lng: number,
+  lat: number,
+  w: number,
+  h: number,
+  properties: Feature["properties"] = {},
+): Feature {
   return {
     type: "Feature",
-    properties: {},
+    properties,
     geometry: {
       type: "Polygon",
       coordinates: [
@@ -359,7 +365,7 @@ const extraTiltakLayers = [
     data: {
       type: "FeatureCollection",
       // rect(lng, lat, width, height) — the last two set the size.
-      features: [rect(6.1515, 62.4686, 0.006, 0.002)],
+      features: [rect(6.1515, 62.4686, 0.006, 0.002, { NAVN: "Utvida kai" })],
     },
     fillColor: token.danger.baseDefault,
     lineColor: token.danger.borderDefault,
@@ -375,7 +381,7 @@ const extraTiltakLayers = [
       features: [
         {
           type: "Feature",
-          properties: {},
+          properties: { Name: "Sjøkabel Ålesund–Ellingsøya" },
           geometry: {
             type: "LineString",
             coordinates: [
@@ -403,9 +409,9 @@ const extraTiltakLayers = [
         [6.1565, 62.468],
         [6.1572, 62.4672],
       ].map(
-        (coordinates): Feature => ({
+        (coordinates, i): Feature => ({
           type: "Feature",
-          properties: {},
+          properties: { navn: `Fortøyingsbøye ${i + 1}` },
           geometry: { type: "Point", coordinates },
         }),
       ),
