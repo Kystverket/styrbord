@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Logo, LogoProps } from '~/components/kystverket/Logo/Logo';
+import faviconUrl from './kyv-2026-favicon.svg?url';
 
 const meta = {
   title: 'Page/Logo',
@@ -129,4 +130,42 @@ export const Selvbetjening: Story = {
 
 export const SelvbetjeningEnglish: Story = {
   args: { ...defaultProps, height: 83, product: 'Selvbetjening', variant: 'horizontal-en' },
+};
+
+/**
+ * Faviconet er det blå skjoldet fra logoen på hvit bakgrunn med avrundede hjørner. Det er ikke en
+ * React-komponent: last ned SVG-en, legg den i appens `public`-mappe og pek på den fra `<head>`:
+ *
+ * ```html
+ * <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+ * ```
+ *
+ * Vist i 16, 32 og 48 px (nettleserfaner) og 180 px (Apple touch-ikon).
+ */
+export const Favicon: Story = {
+  parameters: { controls: { disable: true } },
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ds-size-4)', alignItems: 'flex-start' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-end', gap: 'var(--ds-size-6)' }}>
+        {[16, 32, 48, 180].map((size) => (
+          <figure
+            key={size}
+            style={{
+              margin: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 'var(--ds-size-2)',
+            }}
+          >
+            <img src={faviconUrl} width={size} height={size} alt="" />
+            <figcaption>{size} px</figcaption>
+          </figure>
+        ))}
+      </div>
+      <a href={faviconUrl} download="favicon.svg">
+        Last ned favicon.svg
+      </a>
+    </div>
+  ),
 };
