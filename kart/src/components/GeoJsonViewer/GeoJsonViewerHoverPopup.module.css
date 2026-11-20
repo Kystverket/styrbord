@@ -15,6 +15,9 @@
   position: absolute;
   z-index: 10;
   box-sizing: border-box;
+  /* The zero-width live region is the containing block, so `auto` width
+     would shrink to min-content and wrap at every space. */
+  width: max-content;
   max-width: 280px;
   padding: var(--ds-size-1) var(--ds-size-2);
   background: var(--ds-color-neutral-text-default);
