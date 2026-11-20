@@ -1,4 +1,8 @@
 {
+  "colorSchemeToggle": {
+    "toDark": "Switch to dark mode",
+    "toLight": "Switch to light mode"
+  },
   "filePreviewer": {
     "download": "Download",
     "noFileSelected": "No file selected.",

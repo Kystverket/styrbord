@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.16.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.15.1...styrbord-v2.16.0) (2026-11-19)
+
+
+### Features
+
+* **base:** legg til ColorSchemeToggle med horisontmotiv og useColorScheme ([#404](https://github.com/Kystverket/styrbord/issues/404)) ([44d7704](https://github.com/Kystverket/styrbord/commit/44d7704fb1b26025e040af50ba1ffe7eceecde99))
+* **base:** ny KyvSpinner med fyr på øy, roterende lysstråle og bølger ([#402](https://github.com/Kystverket/styrbord/issues/402)) ([0e4e01a](https://github.com/Kystverket/styrbord/commit/0e4e01ac31e1e67ad88bb94fe771cc228ef87d02))
+
+## [2.15.1](https://github.com/Kystverket/styrbord/compare/styrbord-v2.15.0...styrbord-v2.15.1) (2026-11-19)
+
+
+### Bug Fixes
+
+* **base:** bruk riktig hvit logo i footer og legg til hvite logovarianter ([#397](https://github.com/Kystverket/styrbord/issues/397)) ([c50caa1](https://github.com/Kystverket/styrbord/commit/c50caa1d65a6e673cc5a102ec6957b1d9d603b8b))
+* **base:** ikke les HTMLInputElement ved import av Search ([#399](https://github.com/Kystverket/styrbord/issues/399)) ([fb25c49](https://github.com/Kystverket/styrbord/commit/fb25c493383d1505c66b6faea9513939cc14d967))
+
 ## [2.15.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.14.0...styrbord-v2.15.0) (2026-11-18)
 
 

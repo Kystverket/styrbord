@@ -1,4 +1,8 @@
 {
+  "colorSchemeToggle": {
+    "toDark": "Byt til mørk modus",
+    "toLight": "Byt til lys modus"
+  },
   "filePreviewer": {
     "download": "Last ned",
     "noFileSelected": "Inga fil er vald.",

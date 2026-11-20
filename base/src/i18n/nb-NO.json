@@ -1,4 +1,8 @@
 {
+  "colorSchemeToggle": {
+    "toDark": "Bytt til mørk modus",
+    "toLight": "Bytt til lys modus"
+  },
   "filePreviewer": {
     "download": "Last ned",
     "noFileSelected": "Ingen fil valgt.",
