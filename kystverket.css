@@ -942,7 +942,7 @@ Import this file after @digdir/designsystemet-css, for example:
   --ds-color-primary-border-default: #518b9f;
   --ds-color-primary-border-strong: #67a1b6;
   --ds-color-primary-text-subtle: #a0dcf1;
-  --ds-color-primary-text-default: #bbecff;
+  --ds-color-primary-text-default: #e4f5fb;
   --ds-color-primary-base-default: #a9e5fb;
   --ds-color-primary-base-hover: #9bd6ec;
   --ds-color-primary-base-active: #92cde3;
@@ -964,7 +964,7 @@ Import this file after @digdir/designsystemet-css, for example:
   --ds-color-accent-border-default: #cc654f;
   --ds-color-accent-border-strong: #e07e6a;
   --ds-color-accent-text-subtle: #ffc7ba;
-  --ds-color-accent-text-default: #ffddd6;
+  --ds-color-accent-text-default: #ffefeb;
   --ds-color-accent-base-default: #ff6a4c;
   --ds-color-accent-base-hover: #ff896f;
   --ds-color-accent-base-active: #ff9982;
@@ -982,7 +982,7 @@ Import this file after @digdir/designsystemet-css, for example:
   --ds-color-neutral-border-default: #788498;
   --ds-color-neutral-border-strong: #8f9aad;
   --ds-color-neutral-text-subtle: #c8d4e8;
-  --ds-color-neutral-text-default: #dce5f6;
+  --ds-color-neutral-text-default: #ebf3ff;
   --ds-color-neutral-base-default: #879abd;
   --ds-color-neutral-base-hover: #96aacd;
   --ds-color-neutral-base-active: #a0b4d8;
@@ -1000,7 +1000,7 @@ Import this file after @digdir/designsystemet-css, for example:
   --ds-color-extra1-border-default: #688c5f;
   --ds-color-extra1-border-strong: #7da274;
   --ds-color-extra1-text-subtle: #b6deac;
-  --ds-color-extra1-text-default: #cbefc2;
+  --ds-color-extra1-text-default: #eaf5e8;
   --ds-color-extra1-base-default: #acea9d;
   --ds-color-extra1-base-hover: #9edb8f;
   --ds-color-extra1-base-active: #96d287;
@@ -1020,7 +1020,7 @@ Import this file after @digdir/designsystemet-css, for example:
   --ds-color-extra2-border-default: #4e8aa8;
   --ds-color-extra2-border-strong: #6aa0bc;
   --ds-color-extra2-text-subtle: #a3dbf9;
-  --ds-color-extra2-text-default: #c5eaff;
+  --ds-color-extra2-text-default: #e5f5fd;
   --ds-color-extra2-base-default: #27a4da;
   --ds-color-extra2-base-hover: #3eb5eb;
   --ds-color-extra2-base-active: #4abef6;
@@ -1038,7 +1038,7 @@ Import this file after @digdir/designsystemet-css, for example:
   --ds-color-lyng-border-default: #b26d94;
   --ds-color-lyng-border-strong: #c685a9;
   --ds-color-lyng-text-subtle: #ffc2e2;
-  --ds-color-lyng-text-default: #ffdbed;
+  --ds-color-lyng-text-default: #fdeef5;
   --ds-color-lyng-base-default: #e870b7;
   --ds-color-lyng-base-hover: #fa80c7;
   --ds-color-lyng-base-active: #ff8ecf;
@@ -1104,7 +1104,7 @@ Import this file after @digdir/designsystemet-css, for example:
   --ds-color-sol-border-default: #95822d;
   --ds-color-sol-border-strong: #a9984e;
   --ds-color-sol-text-subtle: #e5d488;
-  --ds-color-sol-text-default: #f3e5a8;
+  --ds-color-sol-text-default: #f6f2e3;
   --ds-color-sol-base-default: #b29800;
   --ds-color-sol-base-hover: #c2a826;
   --ds-color-sol-base-active: #ccb234;
@@ -1202,7 +1202,7 @@ Import this file after @digdir/designsystemet-css, for example:
   --ds-color-success-border-default: #579056;
   --ds-color-success-border-strong: #71a56f;
   --ds-color-success-text-subtle: #aae1a7;
-  --ds-color-success-text-default: #c3f0c1;
+  --ds-color-success-text-default: #eaf5e9;
   --ds-color-success-base-default: #42ae45;
   --ds-color-success-base-hover: #54bf55;
   --ds-color-success-base-active: #5ec95f;
@@ -1218,7 +1218,7 @@ Import this file after @digdir/designsystemet-css, for example:
   --ds-color-danger-border-default: #c4695e;
   --ds-color-danger-border-strong: #d88177;
   --ds-color-danger-text-subtle: #ffc6bd;
-  --ds-color-danger-text-default: #ffddd8;
+  --ds-color-danger-text-default: #ffefec;
   --ds-color-danger-base-default: #ff685b;
   --ds-color-danger-base-hover: #ff8779;
   --ds-color-danger-base-active: #ff978a;
@@ -1234,7 +1234,7 @@ Import this file after @digdir/designsystemet-css, for example:
   --ds-color-info-border-default: #5786b6;
   --ds-color-info-border-strong: #719cc9;
   --ds-color-info-text-subtle: #b1d7ff;
-  --ds-color-info-text-default: #d1e7ff;
+  --ds-color-info-text-default: #e9f3ff;
   --ds-color-info-base-default: #469ef0;
   --ds-color-info-base-hover: #5bafff;
   --ds-color-info-base-active: #71b8ff;
@@ -1250,7 +1250,7 @@ Import this file after @digdir/designsystemet-css, for example:
   --ds-color-warning-border-default: #a77a41;
   --ds-color-warning-border-strong: #bb915d;
   --ds-color-warning-text-subtle: #f8cc96;
-  --ds-color-warning-text-default: #ffe0bb;
+  --ds-color-warning-text-default: #fbf1e4;
   --ds-color-warning-base-default: #d48a00;
   --ds-color-warning-base-hover: #e59a26;
   --ds-color-warning-base-active: #efa435;
@@ -1275,7 +1275,7 @@ Import this file after @digdir/designsystemet-css, for example:
   --ds-color-primary-border-default: #518b9f;
   --ds-color-primary-border-strong: #67a1b6;
   --ds-color-primary-text-subtle: #a0dcf1;
-  --ds-color-primary-text-default: #bbecff;
+  --ds-color-primary-text-default: #e4f5fb;
   --ds-color-primary-base-default: #a9e5fb;
   --ds-color-primary-base-hover: #9bd6ec;
   --ds-color-primary-base-active: #92cde3;
@@ -1297,7 +1297,7 @@ Import this file after @digdir/designsystemet-css, for example:
   --ds-color-accent-border-default: #cc654f;
   --ds-color-accent-border-strong: #e07e6a;
   --ds-color-accent-text-subtle: #ffc7ba;
-  --ds-color-accent-text-default: #ffddd6;
+  --ds-color-accent-text-default: #ffefeb;
   --ds-color-accent-base-default: #ff6a4c;
   --ds-color-accent-base-hover: #ff896f;
   --ds-color-accent-base-active: #ff9982;
@@ -1315,7 +1315,7 @@ Import this file after @digdir/designsystemet-css, for example:
   --ds-color-neutral-border-default: #788498;
   --ds-color-neutral-border-strong: #8f9aad;
   --ds-color-neutral-text-subtle: #c8d4e8;
-  --ds-color-neutral-text-default: #dce5f6;
+  --ds-color-neutral-text-default: #ebf3ff;
   --ds-color-neutral-base-default: #879abd;
   --ds-color-neutral-base-hover: #96aacd;
   --ds-color-neutral-base-active: #a0b4d8;
@@ -1333,7 +1333,7 @@ Import this file after @digdir/designsystemet-css, for example:
   --ds-color-extra1-border-default: #688c5f;
   --ds-color-extra1-border-strong: #7da274;
   --ds-color-extra1-text-subtle: #b6deac;
-  --ds-color-extra1-text-default: #cbefc2;
+  --ds-color-extra1-text-default: #eaf5e8;
   --ds-color-extra1-base-default: #acea9d;
   --ds-color-extra1-base-hover: #9edb8f;
   --ds-color-extra1-base-active: #96d287;
@@ -1353,7 +1353,7 @@ Import this file after @digdir/designsystemet-css, for example:
   --ds-color-extra2-border-default: #4e8aa8;
   --ds-color-extra2-border-strong: #6aa0bc;
   --ds-color-extra2-text-subtle: #a3dbf9;
-  --ds-color-extra2-text-default: #c5eaff;
+  --ds-color-extra2-text-default: #e5f5fd;
   --ds-color-extra2-base-default: #27a4da;
   --ds-color-extra2-base-hover: #3eb5eb;
   --ds-color-extra2-base-active: #4abef6;
@@ -1371,7 +1371,7 @@ Import this file after @digdir/designsystemet-css, for example:
   --ds-color-lyng-border-default: #b26d94;
   --ds-color-lyng-border-strong: #c685a9;
   --ds-color-lyng-text-subtle: #ffc2e2;
-  --ds-color-lyng-text-default: #ffdbed;
+  --ds-color-lyng-text-default: #fdeef5;
   --ds-color-lyng-base-default: #e870b7;
   --ds-color-lyng-base-hover: #fa80c7;
   --ds-color-lyng-base-active: #ff8ecf;
@@ -1437,7 +1437,7 @@ Import this file after @digdir/designsystemet-css, for example:
   --ds-color-sol-border-default: #95822d;
   --ds-color-sol-border-strong: #a9984e;
   --ds-color-sol-text-subtle: #e5d488;
-  --ds-color-sol-text-default: #f3e5a8;
+  --ds-color-sol-text-default: #f6f2e3;
   --ds-color-sol-base-default: #b29800;
   --ds-color-sol-base-hover: #c2a826;
   --ds-color-sol-base-active: #ccb234;
@@ -1535,7 +1535,7 @@ Import this file after @digdir/designsystemet-css, for example:
   --ds-color-success-border-default: #579056;
   --ds-color-success-border-strong: #71a56f;
   --ds-color-success-text-subtle: #aae1a7;
-  --ds-color-success-text-default: #c3f0c1;
+  --ds-color-success-text-default: #eaf5e9;
   --ds-color-success-base-default: #42ae45;
   --ds-color-success-base-hover: #54bf55;
   --ds-color-success-base-active: #5ec95f;
@@ -1551,7 +1551,7 @@ Import this file after @digdir/designsystemet-css, for example:
   --ds-color-danger-border-default: #c4695e;
   --ds-color-danger-border-strong: #d88177;
   --ds-color-danger-text-subtle: #ffc6bd;
-  --ds-color-danger-text-default: #ffddd8;
+  --ds-color-danger-text-default: #ffefec;
   --ds-color-danger-base-default: #ff685b;
   --ds-color-danger-base-hover: #ff8779;
   --ds-color-danger-base-active: #ff978a;
@@ -1567,7 +1567,7 @@ Import this file after @digdir/designsystemet-css, for example:
   --ds-color-info-border-default: #5786b6;
   --ds-color-info-border-strong: #719cc9;
   --ds-color-info-text-subtle: #b1d7ff;
-  --ds-color-info-text-default: #d1e7ff;
+  --ds-color-info-text-default: #e9f3ff;
   --ds-color-info-base-default: #469ef0;
   --ds-color-info-base-hover: #5bafff;
   --ds-color-info-base-active: #71b8ff;
@@ -1583,7 +1583,7 @@ Import this file after @digdir/designsystemet-css, for example:
   --ds-color-warning-border-default: #a77a41;
   --ds-color-warning-border-strong: #bb915d;
   --ds-color-warning-text-subtle: #f8cc96;
-  --ds-color-warning-text-default: #ffe0bb;
+  --ds-color-warning-text-default: #fbf1e4;
   --ds-color-warning-base-default: #d48a00;
   --ds-color-warning-base-hover: #e59a26;
   --ds-color-warning-base-active: #efa435;
