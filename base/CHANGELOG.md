@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.17.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.16.0...styrbord-v2.17.0) (2026-11-23)
+
+
+### Features
+
+* **base:** favicon i Storybook og som ferdige filer i pakken ([#407](https://github.com/Kystverket/styrbord/issues/407)) ([a0e4325](https://github.com/Kystverket/styrbord/commit/a0e43257dc913df120f6decdbf274ae6a3273868))
+* **base:** Logo bytter til hvit variant i mørk modus ([#408](https://github.com/Kystverket/styrbord/issues/408)) ([a03d3e4](https://github.com/Kystverket/styrbord/commit/a03d3e4714f698e5487ba7afed5e2053c8ca7c0e))
+
+
+### Bug Fixes
+
+* **base:** Footer beholder mørke farger i mørk modus ([#409](https://github.com/Kystverket/styrbord/issues/409)) ([ad8b8dc](https://github.com/Kystverket/styrbord/commit/ad8b8dc99eb2257b883e7d73fd44408e773a5458))
+
 ## [2.16.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.15.1...styrbord-v2.16.0) (2026-11-19)
 
 
