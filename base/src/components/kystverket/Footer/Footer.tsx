@@ -65,7 +65,9 @@ export function Footer({ additionalLogo, text = '', copyright = '', contacts, li
   }
 
   return (
-    <div className={classes.footer}>
+    // Footeren er en mørk, invertert flate bygget på lys modus sine base/base-contrast-tokens.
+    // Låst til lys modus beholder den navy bakgrunn og hvit logo også når siden er i mørk modus.
+    <div className={classes.footer} data-color-scheme="light">
       <div className={classes.footerContainer}>
         <div className={classes.footerContentContainer}>
           <div className={classes.logoContainer}>

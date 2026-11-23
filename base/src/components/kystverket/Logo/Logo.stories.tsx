@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Logo, LogoProps } from '~/components/kystverket/Logo/Logo';
+import faviconUrl from '@assets/favicon/favicon.svg?url';
 
 const meta = {
   title: 'Page/Logo',
@@ -129,4 +130,47 @@ export const Selvbetjening: Story = {
 
 export const SelvbetjeningEnglish: Story = {
   args: { ...defaultProps, height: 83, product: 'Selvbetjening', variant: 'horizontal-en' },
+};
+
+/**
+ * Faviconet er det blå skjoldet fra logoen på hvit bakgrunn med avrundede hjørner. Det er ikke en
+ * React-komponent, men ferdige filer i pakken under `@kystverket/styrbord/favicon/`: `favicon.svg`,
+ * `favicon.ico` (16, 32 og 48 px), `apple-touch-icon.png` (180 px, kvadratisk, siden iOS runder
+ * hjørnene selv) og `icon-192.png` / `icon-512.png` til web app manifest. Kopier dem til appens
+ * `public`-mappe og pek på dem fra `<head>`:
+ *
+ * ```html
+ * <link rel="icon" href="/favicon.ico" sizes="32x32" />
+ * <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+ * <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+ * ```
+ *
+ * Vist i 16, 32, 48 og 180 px.
+ */
+export const Favicon: Story = {
+  parameters: { controls: { disable: true } },
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ds-size-4)', alignItems: 'flex-start' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-end', gap: 'var(--ds-size-6)' }}>
+        {[16, 32, 48, 180].map((size) => (
+          <figure
+            key={size}
+            style={{
+              margin: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 'var(--ds-size-2)',
+            }}
+          >
+            <img src={faviconUrl} width={size} height={size} alt="" />
+            <figcaption>{size} px</figcaption>
+          </figure>
+        ))}
+      </div>
+      <a href={faviconUrl} download="favicon.svg">
+        Last ned favicon.svg
+      </a>
+    </div>
+  ),
 };

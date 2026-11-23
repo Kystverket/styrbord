@@ -16,7 +16,8 @@
     "./*.css": {
       "import": "./dist/*.css",
       "require": "./dist/*.css"
-    }
+    },
+    "./favicon/*": "./dist/favicon/*"
   },
   "main": "./dist/style.js",
   "typings": "./dist/src/main.d.ts",
@@ -24,7 +25,7 @@
     "dist/**/*"
   ],
   "scripts": {
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && node scripts/build-favicons.mjs",
     "test": "echo \"Warning: no test specified\" && exit 0",
     "build:css": "sass src/css/index.scss dist/index.css --style=compressed",
     "storybook": "storybook dev -p 6006",
@@ -57,5 +58,8 @@
     "react-dom": "^19.0.0",
     "react-markdown": "^10.1.0",
     "uuid": "^14.0.0"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2"
   }
 }
