@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Logo, LogoProps } from '~/components/kystverket/Logo/Logo';
-import faviconUrl from './kyv-2026-favicon.svg?url';
+import faviconUrl from '@assets/favicon/favicon.svg?url';
 
 const meta = {
   title: 'Page/Logo',
@@ -134,13 +134,18 @@ export const SelvbetjeningEnglish: Story = {
 
 /**
  * Faviconet er det blå skjoldet fra logoen på hvit bakgrunn med avrundede hjørner. Det er ikke en
- * React-komponent: last ned SVG-en, legg den i appens `public`-mappe og pek på den fra `<head>`:
+ * React-komponent, men ferdige filer i pakken under `@kystverket/styrbord/favicon/`: `favicon.svg`,
+ * `favicon.ico` (16, 32 og 48 px), `apple-touch-icon.png` (180 px, kvadratisk, siden iOS runder
+ * hjørnene selv) og `icon-192.png` / `icon-512.png` til web app manifest. Kopier dem til appens
+ * `public`-mappe og pek på dem fra `<head>`:
  *
  * ```html
+ * <link rel="icon" href="/favicon.ico" sizes="32x32" />
  * <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+ * <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
  * ```
  *
- * Vist i 16, 32 og 48 px (nettleserfaner) og 180 px (Apple touch-ikon).
+ * Vist i 16, 32, 48 og 180 px.
  */
 export const Favicon: Story = {
   parameters: { controls: { disable: true } },
