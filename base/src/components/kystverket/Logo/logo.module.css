@@ -19,8 +19,9 @@
   letter-spacing: 0.12em;
 }
 
+/* Fast hvit i begge moduser og uavhengig av data-color: base-contrast-default er navy i mørk modus. */
 .logo-color-white {
-  color: var(--ds-color-base-contrast-default);
+  color: var(--ds-color-primary-brand-contrast);
 }
 .logo-color-black {
   color: #000000;
