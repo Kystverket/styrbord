@@ -65,6 +65,32 @@ function App() {
 }
 ```
 
+### Favicon
+
+Pakken har ferdige favicon-filer under `@kystverket/styrbord/favicon/`:
+
+| Fil                    | Bruk                                |
+| ---------------------- | ----------------------------------- |
+| `favicon.svg`          | Moderne nettlesere                  |
+| `favicon.ico`          | Reserve (16, 32 og 48 px)           |
+| `apple-touch-icon.png` | iOS, 180 px, uten avrundede hjørner |
+| `icon-192.png`         | Web app manifest                    |
+| `icon-512.png`         | Web app manifest                    |
+
+Kopier filene til appens `public`-mappe, eller importer dem så bundleren gir dem en URL:
+
+```js
+import faviconSvg from '@kystverket/styrbord/favicon/favicon.svg?url';
+```
+
+```html
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+```
+
+PNG- og ICO-filene genereres fra `assets/favicon/favicon.svg` av `scripts/build-favicons.mjs` når pakken bygges.
+
 ## Design Tokens
 
 Styrbords design tokens hentes fra [@Kystverket/styrbord-tokens](https://github.com/Kystverket/styrbord-tokens).
