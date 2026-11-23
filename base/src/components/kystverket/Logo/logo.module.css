@@ -25,6 +25,38 @@
 .logo-color-black {
   color: #000000;
 }
+/* Profilfargen er lik i begge moduser. I mørk modus viser .logo-scheme-dark den hvite tegningen,
+   så light-dark() gjør den hvit der, og produktnavnet ved siden av følger med. */
 .logo-color-blue {
-  color: var(--ds-color-base-default);
+  color: light-dark(var(--ds-color-primary-brand), var(--ds-color-primary-brand-contrast));
+}
+
+/* color="blue" rendrer både den blå og den hvite tegningen. Hvilken som vises, styres av egenskaper
+   satt på hvert data-color-scheme-element: de arves, så nærmeste forelder vinner, også når en lys
+   flate ligger inni en mørk. Uten data-color-scheme vises den blå. */
+:global([data-color-scheme='light']) {
+  --kyv-logo-light-display: inline;
+  --kyv-logo-dark-display: none;
+}
+:global([data-color-scheme='dark']) {
+  --kyv-logo-light-display: none;
+  --kyv-logo-dark-display: inline;
+}
+@media (prefers-color-scheme: light) {
+  :global([data-color-scheme='auto']) {
+    --kyv-logo-light-display: inline;
+    --kyv-logo-dark-display: none;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :global([data-color-scheme='auto']) {
+    --kyv-logo-light-display: none;
+    --kyv-logo-dark-display: inline;
+  }
+}
+.logo-scheme-light {
+  display: var(--kyv-logo-light-display, inline);
+}
+.logo-scheme-dark {
+  display: var(--kyv-logo-dark-display, none);
 }
