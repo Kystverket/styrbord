@@ -9,10 +9,12 @@ type FileUploadActionsProps = {
   dialogRef: React.RefObject<ExistingFilesDialogHandle | null>;
   t: (key: string) => string;
   onUploadFile: (uploadedFiles: File[]) => void;
+  inputId: string;
   allowedFileTypes: string[];
 } & Pick<FileUploaderProps, 'variant' | 'existingFilesProvider' | 'withCaptureButton' | 'multiple' | 'uploadActions'>;
 
 export function FileUploadActions({
+  inputId,
   variant,
   fileInputRef,
   onUploadFile,
@@ -50,7 +52,7 @@ export function FileUploadActions({
         type="file"
         style={{ display: 'none' }}
         ref={fileInputRef}
-        id="fileUploadButton"
+        id={inputId}
         name="fileUploadButton"
         accept={allowedFileTypes?.join(',')}
         multiple={multiple}
@@ -62,7 +64,7 @@ export function FileUploadActions({
         type="file"
         style={{ display: 'none' }}
         ref={fileCameraInputRef}
-        id="fileCaptureUploadButton"
+        id={`${inputId}-capture`}
         name="fileCaptureUploadButton"
         accept={allowedFileTypes.join(',')}
         onChange={onChangeFileUpload}

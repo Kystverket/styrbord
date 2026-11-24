@@ -5,6 +5,8 @@ import { useRef } from 'react';
 import styles from '../PickerInput.module.css';
 
 export interface TimePickerProps {
+  /** Id on the underlying `<input>`, e.g. for linking from an ErrorSummary. Generated if omitted. */
+  id?: string;
   className?: string;
   loading?: boolean;
   width?: InputSize;
@@ -52,6 +54,7 @@ export const TimePicker = ({
       {props.description && <Field.Description>{props.description}</Field.Description>}
       <div className={styles.wrapper}>
         <Input
+          id={props.id}
           ref={inputRef}
           className={styles.input}
           type="time"

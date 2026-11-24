@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useContext, useEffect, useRef, useState } from 'react';
+import { ReactNode, useContext, useEffect, useId, useRef, useState } from 'react';
 import { Exif, ExtraFileInfo, FileInfo, FileUploaderAction, FileUploaderFileAction } from './FileUploader.types';
 import { Field, Label, Spinner, ValidationMessage } from '@digdir/designsystemet-react';
 import classes from './FileUploader.module.css';
@@ -43,6 +43,8 @@ export interface ExistingFilesProviderItem {
 }
 
 export interface FileUploaderProps {
+  /** Id on the underlying file `<input>`. Generated if omitted, so several uploaders on one page don't collide. */
+  id?: string;
   label: string;
   description?: string | string[] | ReactNode;
   error?: string | null;
@@ -91,6 +93,7 @@ export interface FileUploaderProps {
 const defaultAllowedFileTypes = ['.pdf', '.jpg', '.jpeg', '.png'];
 
 export const FileUploader = ({
+  id,
   label,
   maxSizeInBytes,
   required,
@@ -109,6 +112,8 @@ export const FileUploader = ({
   uploadActions,
   fileActions,
 }: FileUploaderProps) => {
+  const generatedId = useId();
+  const inputId = id ?? generatedId;
   const { scopedT } = useTranslation();
   const t = scopedT('fileUploader');
 
@@ -213,6 +218,7 @@ export const FileUploader = ({
         {description && <Field.Description>{description}</Field.Description>}
         {showUploadActions && (
           <FileUploadActions
+            inputId={inputId}
             fileCameraInputRef={fileCameraInputRef}
             allowedFileTypes={allowedFileTypes}
             multiple={multiple}
