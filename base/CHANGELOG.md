@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.18.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.17.0...styrbord-v2.18.0) (2026-11-24)
+
+
+### Features
+
+* **base:** Avatar bruker base- og contrast-farger fra tokens ([#413](https://github.com/Kystverket/styrbord/issues/413)) ([665be2d](https://github.com/Kystverket/styrbord/commit/665be2d4a7121d591ff22100e2de0dd18081925f))
+
+
+### Bug Fixes
+
+* **base:** hvit logo er hvit også i mørk modus ([#414](https://github.com/Kystverket/styrbord/issues/414)) ([8aa382d](https://github.com/Kystverket/styrbord/commit/8aa382dcf738b8f79af8fc044e1eb3de240b5696))
+* **base:** la Datepicker, TimePicker, DateTimePicker og FileUploader ta imot id ([#417](https://github.com/Kystverket/styrbord/issues/417)) ([67f9ae2](https://github.com/Kystverket/styrbord/commit/67f9ae2531ea71898a90ec4121854f5b97bd8897))
+* **base:** skjermleser leser feilmeldingen i BorderedRadioGroup og BorderedToggleGroup ([#415](https://github.com/Kystverket/styrbord/issues/415)) ([be7cd2e](https://github.com/Kystverket/styrbord/commit/be7cd2ee56d4281e2c8c4e4e3ea47c3b0060ce26))
+
 ## [2.17.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.16.0...styrbord-v2.17.0) (2026-11-23)
 
 
