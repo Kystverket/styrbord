@@ -3,7 +3,8 @@ import { Avatar as DsAvatar, AvatarProps as DsAvatarProps, MergeRight, Tooltip }
 import BoringAvatar from 'boring-avatars';
 import classes from './Avatar.module.scss';
 import {
-  autoSolidStyles,
+  autoSolidColor,
+  noSeedStyles,
   borderStyleClasses,
   boringColors,
   sizeClasses,
@@ -44,6 +45,10 @@ export type AvatarProps = MergeRight<
      * `aria-label` when unset or blank.
      */
     'auto-seed'?: string;
+    /**
+     * Prefer `accent`, `extra1`, `extra2`, `lyng` or `sol`: their base colors are balanced with
+     * each other, and they are the ones `auto="solid"` picks from. `primary` and `neutral` work too.
+     */
     'data-color'?: DataColor;
     'data-color-variant'?: DataColorVariant;
     'data-size'?: '2xs' | '3xs' | DsAvatarProps['data-size'];
@@ -92,14 +97,16 @@ export const Avatar: FC<AvatarProps> = ({
   }
 
   const wrapperClass = [classes.wrapper, checked ? classes.checked : undefined].filter(Boolean).join(' ');
-  // A data-color on the avatar itself sets --ds-color-base-default, so it wins over the solid colors
-  const solidStyles: Record<string, string> =
-    autoMode === 'solid' && !rest['data-color'] ? autoSolidStyles(seedAutoFrom, isReserved, context.reservedIndex) : {};
+  // A data-color on the avatar itself wins over the solid color
+  const isSolid = autoMode === 'solid' && !rest['data-color'];
+  const solidColor = isSolid ? autoSolidColor(seedAutoFrom, isReserved, context.reservedIndex) : undefined;
+  const solidStyles = isSolid && !solidColor ? noSeedStyles : {};
 
   const props = {
     'data-size': size,
     className: classList.join(' '),
     ...rest,
+    'data-color': rest['data-color'] ?? solidColor,
     style: { ...solidStyles, ...rest.style },
   } as DsAvatarProps;
   let content = null;

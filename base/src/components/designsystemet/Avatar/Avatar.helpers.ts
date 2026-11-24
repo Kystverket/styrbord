@@ -1,6 +1,7 @@
 import { AvatarAuto, AvatarBoringVariant } from './Avatar';
 import classes from './Avatar.module.scss';
 import { colors } from '@kystverket/styrbord-tokens/colors';
+import type { DataColor } from '~/main';
 
 /**
  * Kystverket's avatar palette. boring-avatars needs hex strings (some variants compute
@@ -14,15 +15,12 @@ export const boringColors = [
   colors.light.skog.baseDefault,
 ];
 
-const colorBaseOptions = [
-  colors.light.skog.baseDefault,
-  colors.light.gress.borderDefault,
-  colors.light.hav.baseDefault,
-  colors.light.dyphav.borderStrong,
-  colors.light.neutral.borderDefault,
-  colors.light.warning.borderDefault,
-  colors.light.lyng.borderDefault,
-];
+/**
+ * The colors `solid` picks from. Their base colors are tuned to a similar lightness and
+ * saturation and carry the same contrast color, so no avatar stands out. Primary and neutral
+ * are left out, as are the status colors, which would read as a status.
+ */
+const colorBaseOptions: readonly DataColor[] = ['accent', 'extra1', 'extra2', 'lyng', 'sol'];
 
 /**
  * Wraps a reserved-color index onto a palette, so any integer (also negative) is valid.
@@ -71,26 +69,30 @@ export const borderStyleClasses = (borderStyle: string | undefined) => {
 };
 
 /**
+ * The `data-color` a `solid` avatar gets, so its base and contrast colors come from the tokens
+ * and follow the color scheme. `undefined` without a seed: see `noSeedStyles`.
  * @param isReserved From `matchReservedSeed`: `true` gets the reserved color, `false` never does,
  * `undefined` (no reservation) picks from the full palette.
  * @param reservedIndex Which palette color is reserved, wrapped to the palette's length.
  */
-export const autoSolidStyles = (ariaLabel?: string, isReserved?: boolean, reservedIndex = 0) => {
-  const styles: Record<string, string> = {};
-  if (ariaLabel) {
-    const reserved = wrapIndex(reservedIndex, colorBaseOptions.length);
-    let color = isReserved ? colorBaseOptions[reserved] : pickByName(ariaLabel, colorBaseOptions);
-    // Re-pick only on a collision, so a reservation leaves every other seed's color as it was
-    if (isReserved === false && color === colorBaseOptions[reserved]) {
-      color = pickByName(ariaLabel, withoutIndex(colorBaseOptions, reserved));
-    }
-    styles['--ds-color-base-default'] = color;
-    styles['--ds-color-base-contrast-default'] = 'white';
-  } else {
-    styles['--ds-color-base-default'] = colors.light.neutral.surfaceTinted;
-    styles['--ds-color-base-contrast-default'] = colors.light.neutral.textSubtle;
+export const autoSolidColor = (seed?: string, isReserved?: boolean, reservedIndex = 0): DataColor | undefined => {
+  if (!seed) return undefined;
+  const reserved = wrapIndex(reservedIndex, colorBaseOptions.length);
+  const color = isReserved ? colorBaseOptions[reserved] : pickByName(seed, colorBaseOptions);
+  // Re-pick only on a collision, so a reservation leaves every other seed's color as it was
+  if (isReserved === false && color === colorBaseOptions[reserved]) {
+    return pickByName(seed, withoutIndex(colorBaseOptions, reserved));
   }
-  return styles;
+  return color;
+};
+
+/**
+ * A `solid` avatar without a seed, e.g. one that stands for "not assigned", is muted so it stands
+ * apart from the colored ones next to it.
+ */
+export const noSeedStyles: Record<string, string> = {
+  '--ds-color-base-default': 'var(--ds-color-neutral-surface-tinted)',
+  '--ds-color-base-contrast-default': 'var(--ds-color-neutral-text-subtle)',
 };
 
 /**

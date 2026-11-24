@@ -53,6 +53,8 @@
   // Boring avatar: the SVG fills the avatar, so drop the icon padding
   .boring:global(.ds-avatar) {
     padding: 0;
+    // Anchors .boringChildren, which otherwise lands relative to the page
+    position: relative;
   }
   .boringChildren {
     position: absolute;

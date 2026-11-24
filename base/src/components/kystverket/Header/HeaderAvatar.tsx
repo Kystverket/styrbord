@@ -14,7 +14,7 @@ export function HeaderAvatar({ profile }: HeaderAvatarProps) {
 
   const context = useContext(AvatarContext);
   const avatarStyle = profile.avatarStyle ?? {};
-  // The success color is only a fallback: it would override generated solid colors
+  // The extra1 color is only a fallback: it would override generated solid colors
   const usesDefaultColor = !profile.avatarStyle && !context.auto;
 
   return (
@@ -24,7 +24,7 @@ export function HeaderAvatar({ profile }: HeaderAvatarProps) {
       initials={nameToInitials(profile.name)}
       // Seed from the person, not the label, so they look the same here as in other avatars
       auto-seed={profile.id ?? profile.name}
-      {...(usesDefaultColor && { 'data-color': 'success' as const })}
+      {...(usesDefaultColor && { 'data-color': 'extra1' as const })}
       {...avatarStyle}
       // An AvatarProvider's generated pattern would otherwise sit behind the picture
       {...(showImage && { auto: false })}
