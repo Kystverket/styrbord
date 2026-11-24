@@ -5,6 +5,8 @@ import { useRef } from 'react';
 import styles from '../PickerInput.module.css';
 
 export interface DatepickerProps {
+  /** Id on the underlying `<input>`, e.g. for linking from an ErrorSummary. Generated if omitted. */
+  id?: string;
   className?: string;
   loading?: boolean;
   /** Defaults to a fixed width that fits a date. */
@@ -54,6 +56,7 @@ export const Datepicker = ({
       {props.description && <Field.Description>{props.description}</Field.Description>}
       <div className={styles.wrapper}>
         <Input
+          id={props.id}
           ref={inputRef}
           className={styles.input}
           type="date"

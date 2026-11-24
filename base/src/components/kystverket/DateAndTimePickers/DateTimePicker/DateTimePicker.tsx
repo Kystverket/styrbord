@@ -5,6 +5,8 @@ import { useRef } from 'react';
 import styles from '../PickerInput.module.css';
 
 export interface DateTimePickerProps {
+  /** Id on the underlying `<input>`, e.g. for linking from an ErrorSummary. Generated if omitted. */
+  id?: string;
   className?: string;
   optional?: boolean | string | undefined;
   required?: boolean | string | undefined;
@@ -55,6 +57,7 @@ export const DateTimePicker = ({
       {props.description && <Field.Description>{props.description}</Field.Description>}
       <div className={styles.wrapper}>
         <Input
+          id={props.id}
           ref={inputRef}
           className={styles.input}
           type="datetime-local"

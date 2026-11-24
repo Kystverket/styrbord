@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useContext, useEffect, useRef, useState } from 'react';
+import { ReactNode, useContext, useEffect, useId, useRef, useState } from 'react';
 import { Exif, ExtraFileInfo, FileInfo, FileUploaderAction, FileUploaderFileAction } from './FileUploader.types';
 import { Field, Label, Spinner, ValidationMessage } from '@digdir/designsystemet-react';
 import classes from './FileUploader.module.css';
@@ -43,6 +43,13 @@ export interface ExistingFilesProviderItem {
 }
 
 export interface FileUploaderProps {
+  /**
+   * Id on the visible control the user uploads with (upload button, dropzone or camera button),
+   * so an ErrorSummary link to `#id` moves focus there. The hidden file input gets `${id}-input`.
+   * When no control is shown (max files reached, or a file is uploading) the id moves to the field itself.
+   * Generated if omitted, so several uploaders on one page don't collide.
+   */
+  id?: string;
   label: string;
   description?: string | string[] | ReactNode;
   error?: string | null;
@@ -91,6 +98,7 @@ export interface FileUploaderProps {
 const defaultAllowedFileTypes = ['.pdf', '.jpg', '.jpeg', '.png'];
 
 export const FileUploader = ({
+  id,
   label,
   maxSizeInBytes,
   required,
@@ -109,6 +117,11 @@ export const FileUploader = ({
   uploadActions,
   fileActions,
 }: FileUploaderProps) => {
+  const generatedId = useId();
+  const controlId = id ?? generatedId;
+  const labelId = `${controlId}-label`;
+  const descriptionId = `${controlId}-description`;
+  const errorId = `${controlId}-error`;
   const { scopedT } = useTranslation();
   const t = scopedT('fileUploader');
 
@@ -203,16 +216,31 @@ export const FileUploader = ({
   const showMaxReachedWarning = !showUploadingWarning && maxFiles && files.length >= maxFiles;
   const showUploadActions = !showMaxReachedWarning && !showUploadingWarning;
   const attachmentsHeading = t('attachmentsCount').replace('{count}', String(files.length));
+  const describedBy = [labelId, error && errorId, description && descriptionId].filter(Boolean).join(' ');
+
+  // With no upload controls shown (max reached or uploading), the field itself takes the id so an
+  // ErrorSummary link to `#id` still lands somewhere. tabIndex -1: focusable by the link, not a tab stop.
+  const fieldTargetProps = showUploadActions
+    ? {}
+    : {
+        id: controlId,
+        role: 'group',
+        tabIndex: -1,
+        'aria-labelledby': labelId,
+        'aria-describedby': [error && errorId, description && descriptionId].filter(Boolean).join(' ') || undefined,
+      };
 
   return (
     <>
-      <Field>
-        <Label style={{ pointerEvents: 'none' }}>
+      <Field {...fieldTargetProps}>
+        <Label id={labelId} style={{ pointerEvents: 'none' }}>
           <LabelContent text={label} required={required} optional={optional} />
         </Label>
-        {description && <Field.Description>{description}</Field.Description>}
+        {description && <Field.Description id={descriptionId}>{description}</Field.Description>}
         {showUploadActions && (
           <FileUploadActions
+            controlId={controlId}
+            describedBy={describedBy}
             fileCameraInputRef={fileCameraInputRef}
             allowedFileTypes={allowedFileTypes}
             multiple={multiple}
@@ -258,7 +286,7 @@ export const FileUploader = ({
             ))}
           </div>
         )}
-        {error && <ValidationMessage>{error}</ValidationMessage>}
+        {error && <ValidationMessage id={errorId}>{error}</ValidationMessage>}
       </Field>
       {previewStartIndex !== null && previewFiles.length > 0 && (
         <FilePreviewerDialog
