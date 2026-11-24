@@ -43,7 +43,11 @@ export interface ExistingFilesProviderItem {
 }
 
 export interface FileUploaderProps {
-  /** Id on the underlying file `<input>`. Generated if omitted, so several uploaders on one page don't collide. */
+  /**
+   * Id on the visible control the user uploads with (upload button, dropzone or camera button),
+   * so an ErrorSummary link to `#id` moves focus there. The hidden file input gets `${id}-input`.
+   * Generated if omitted, so several uploaders on one page don't collide.
+   */
   id?: string;
   label: string;
   description?: string | string[] | ReactNode;
@@ -113,7 +117,10 @@ export const FileUploader = ({
   fileActions,
 }: FileUploaderProps) => {
   const generatedId = useId();
-  const inputId = id ?? generatedId;
+  const controlId = id ?? generatedId;
+  const labelId = `${controlId}-label`;
+  const descriptionId = `${controlId}-description`;
+  const errorId = `${controlId}-error`;
   const { scopedT } = useTranslation();
   const t = scopedT('fileUploader');
 
@@ -212,13 +219,14 @@ export const FileUploader = ({
   return (
     <>
       <Field>
-        <Label style={{ pointerEvents: 'none' }}>
+        <Label id={labelId} style={{ pointerEvents: 'none' }}>
           <LabelContent text={label} required={required} optional={optional} />
         </Label>
-        {description && <Field.Description>{description}</Field.Description>}
+        {description && <Field.Description id={descriptionId}>{description}</Field.Description>}
         {showUploadActions && (
           <FileUploadActions
-            inputId={inputId}
+            controlId={controlId}
+            describedBy={[labelId, error && errorId, description && descriptionId].filter(Boolean).join(' ')}
             fileCameraInputRef={fileCameraInputRef}
             allowedFileTypes={allowedFileTypes}
             multiple={multiple}
@@ -264,7 +272,7 @@ export const FileUploader = ({
             ))}
           </div>
         )}
-        {error && <ValidationMessage>{error}</ValidationMessage>}
+        {error && <ValidationMessage id={errorId}>{error}</ValidationMessage>}
       </Field>
       {previewStartIndex !== null && previewFiles.length > 0 && (
         <FilePreviewerDialog
