@@ -46,6 +46,7 @@ export interface FileUploaderProps {
   /**
    * Id on the visible control the user uploads with (upload button, dropzone or camera button),
    * so an ErrorSummary link to `#id` moves focus there. The hidden file input gets `${id}-input`.
+   * When no control is shown (max files reached, or a file is uploading) the id moves to the field itself.
    * Generated if omitted, so several uploaders on one page don't collide.
    */
   id?: string;
@@ -215,10 +216,23 @@ export const FileUploader = ({
   const showMaxReachedWarning = !showUploadingWarning && maxFiles && files.length >= maxFiles;
   const showUploadActions = !showMaxReachedWarning && !showUploadingWarning;
   const attachmentsHeading = t('attachmentsCount').replace('{count}', String(files.length));
+  const describedBy = [labelId, error && errorId, description && descriptionId].filter(Boolean).join(' ');
+
+  // With no upload controls shown (max reached or uploading), the field itself takes the id so an
+  // ErrorSummary link to `#id` still lands somewhere. tabIndex -1: focusable by the link, not a tab stop.
+  const fieldTargetProps = showUploadActions
+    ? {}
+    : {
+        id: controlId,
+        role: 'group',
+        tabIndex: -1,
+        'aria-labelledby': labelId,
+        'aria-describedby': [error && errorId, description && descriptionId].filter(Boolean).join(' ') || undefined,
+      };
 
   return (
     <>
-      <Field>
+      <Field {...fieldTargetProps}>
         <Label id={labelId} style={{ pointerEvents: 'none' }}>
           <LabelContent text={label} required={required} optional={optional} />
         </Label>
@@ -226,7 +240,7 @@ export const FileUploader = ({
         {showUploadActions && (
           <FileUploadActions
             controlId={controlId}
-            describedBy={[labelId, error && errorId, description && descriptionId].filter(Boolean).join(' ')}
+            describedBy={describedBy}
             fileCameraInputRef={fileCameraInputRef}
             allowedFileTypes={allowedFileTypes}
             multiple={multiple}
