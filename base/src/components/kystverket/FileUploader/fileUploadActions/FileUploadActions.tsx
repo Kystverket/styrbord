@@ -58,9 +58,12 @@ export function FileUploadActions({
 
   return (
     <>
+      {/* `hidden` (not just display: none) keeps Field from treating these as its input: the visible
+          controls carry the id and aria wiring instead, and Field warns when it finds two inputs. */}
       {/* Default */}
       <input
         type="file"
+        hidden
         style={{ display: 'none' }}
         ref={fileInputRef}
         id={`${controlId}-input`}
@@ -73,6 +76,7 @@ export function FileUploadActions({
       <input
         capture="environment"
         type="file"
+        hidden
         style={{ display: 'none' }}
         ref={fileCameraInputRef}
         id={`${controlId}-capture`}
