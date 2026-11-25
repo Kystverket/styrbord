@@ -25,7 +25,7 @@ const sceneColors = {
 } as CSSProperties;
 
 /**
- * Round 48 px button that switches between light and dark colour scheme. Shows a sun over the sea in
+ * Round button (32 px by default, see `data-size`) that switches between light and dark colour scheme. Shows a sun over the sea in
  * light mode; in dark mode the sun sinks and a crescent moon and stars appear.
  *
  * Controlled: pair it with `useColorScheme`, which stores the choice and sets `data-color-scheme`
@@ -39,7 +39,8 @@ const sceneColors = {
 export function ColorSchemeToggle({
   colorScheme,
   onColorSchemeChange,
-  variant = 'color',
+  variant = 'mono',
+  'data-size': size = 'md',
   className,
   style,
   onClick,
@@ -61,6 +62,7 @@ export function ColorSchemeToggle({
       className={cl(classes.toggle, className)}
       style={{ ...sceneColors, ...style }}
       data-variant={variant}
+      data-size={size}
       data-mode={colorScheme}
       aria-label={label}
       title={label}

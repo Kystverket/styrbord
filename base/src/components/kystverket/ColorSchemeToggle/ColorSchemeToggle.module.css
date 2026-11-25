@@ -8,19 +8,49 @@
     --_sun-fill: var(--kyv-scheme-toggle-sun-fill);
     --_sun-stroke: var(--kyv-scheme-toggle-sun-stroke);
     --_night: var(--kyv-scheme-toggle-night);
+    --_diameter: var(--ds-size-9);
+    --_border-width: 2px;
 
     display: inline-block;
     flex-shrink: 0;
     box-sizing: border-box;
-    width: 48px;
-    height: 48px;
+    width: var(--_diameter);
+    height: var(--_diameter);
     padding: 0;
-    border: 2px solid var(--_border);
+    border: var(--_border-width) solid var(--_border);
     border-radius: 50%;
     overflow: hidden;
     background: var(--_sky);
     cursor: pointer;
     transition: border-color 0.3s;
+  }
+
+  /*
+   * Sizes. data-size sits on the button itself, so the --ds-size-* steps are resolved in the button's
+   * own size mode: sm shrinks the unit and lg grows it, while xs and xl fall back to md. The steps are
+   * picked so the result lands on the target diameter in each mode.
+   */
+  .toggle[data-size='xs'] {
+    --_diameter: var(--ds-size-5); /* ≈ 16px */
+    --_border-width: 1px;
+  }
+
+  .toggle[data-size='sm'] {
+    --_diameter: var(--ds-size-8); /* ≈ 24px */
+    --_border-width: 1px;
+  }
+
+  .toggle[data-size='md'] {
+    --_diameter: var(--ds-size-9); /* ≈ 32px */
+  }
+
+  .toggle[data-size='lg'] {
+    --_diameter: var(--ds-size-12); /* ≈ 48px */
+  }
+
+  .toggle[data-size='xl'] {
+    --_diameter: var(--ds-size-18); /* ≈ 64px */
+    --_border-width: 3px;
   }
 
   .toggle[data-mode='dark'] {
