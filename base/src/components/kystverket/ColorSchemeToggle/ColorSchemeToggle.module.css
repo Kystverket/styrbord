@@ -9,7 +9,7 @@
     --_sun-stroke: var(--kyv-scheme-toggle-sun-stroke);
     --_night: var(--kyv-scheme-toggle-night);
     --_diameter: var(--ds-size-9);
-    --_border-width: 2px;
+    --_border-width: 1.5px;
 
     display: inline-block;
     flex-shrink: 0;
@@ -50,7 +50,7 @@
 
   .toggle[data-size='xl'] {
     --_diameter: var(--ds-size-18); /* ≈ 64px */
-    --_border-width: 3px;
+    --_border-width: 2px;
   }
 
   .toggle[data-mode='dark'] {
