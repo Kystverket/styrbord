@@ -32,6 +32,7 @@ const growShrink = (value: boolean | number) => (value === true ? '1' : !value ?
  * spacing is a step on the Designsystemet size scale (`4` = `var(--ds-size-4)`), colour follows `data-color`,
  * and all other `div` attributes and a `ref` are passed through.
  */
+// eslint-disable-next-line @typescript-eslint/no-shadow -- named so React DevTools shows "Surface"
 const Surface = forwardRef<HTMLDivElement, SurfaceProps>(function Surface(
   {
     horizontal,

@@ -32,6 +32,7 @@ export interface ExistingFilesDialogHandle {
 }
 
 export const ExistingFilesDialog = forwardRef<ExistingFilesDialogHandle, ExistingFilesDialogProps>(
+  // eslint-disable-next-line @typescript-eslint/no-shadow -- named so React DevTools shows "ExistingFilesDialog"
   function ExistingFilesDialog({ t, existingFiles, existingFilesProvider, onConfirm }, ref) {
     const [loadingAllExistingFiles, setLoadingAllExistingFiles] = useState(false);
 
