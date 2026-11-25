@@ -31,7 +31,7 @@ const meta = {
           'Rund knapp som bytter mellom lys og mørk modus. I lys modus står sola over havet; i mørk modus synker den bak horisonten og månen og tre stjerner kommer fram. ' +
           'Komponenten er kontrollert — bruk `useColorScheme`. Som standard følger siden systeminnstillingen (`data-color-scheme="auto"` på `<html>`). Velger brukeren noe annet enn systemet, lagres valget i `localStorage` (`styrbord-color-scheme`); velger de det systemet viser, slettes valget og siden følger systemet igjen. ' +
           'Tilgjengelig navn beskriver handlingen («Bytt til mørk modus») og bytter med tilstanden, så knappen har ikke `aria-pressed`. ' +
-          '`mono` (standard) er et strekikon i `primary-base-default` som følger sidens fargemodus; `color` har himmel, hav og gul sol med faste farger; `icon` er bare en fylt sol eller måne uten kant og bakgrunn, laget for de små størrelsene (`xs`, `sm`) der scenen blir for detaljert. Animasjonen er den samme. ' +
+          '`mono` (standard) er et strekikon i `primary-base-default` som følger sidens fargemodus; `color` har himmel, hav og gul sol med faste farger; `icon` er bare en fylt sol eller måne innenfor kanten, uten himmel og hav, laget for de små størrelsene (`xs`, `sm`) der scenen blir for detaljert. Animasjonen er den samme. ' +
           'Størrelse settes med `data-size`: `xs` ≈ 16 px, `sm` ≈ 24 px, `md` ≈ 32 px (standard), `lg` ≈ 48 px og `xl` ≈ 64 px.',
       },
     },

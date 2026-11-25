@@ -17,7 +17,7 @@ export type ColorSchemeToggleProps = Omit<
   /**
    * `color` draws sky, sea and a yellow sun. `mono` is a single-colour line icon in
    * `primary-base-default` on `primary-surface-default`, and follows the page's colour scheme.
-   * `icon` is just a solid sun or moon in `primary-base-default`, with no border, sky or sea. Made for
+   * `icon` is just a solid sun or moon in `primary-base-default` inside the border, with no sky or sea. Made for
    * the small sizes (`xs`, `sm`), where the scene is too detailed to read.
    * @default 'mono'
    */

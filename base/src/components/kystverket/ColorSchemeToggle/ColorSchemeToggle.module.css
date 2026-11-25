@@ -192,8 +192,8 @@
   }
 
   /*
-   * Icon variant: only the sun and moon, solid, for the small sizes where the scene does not read.
-   * The celestial group is scaled up and moved from the sky (centre y 16) to the middle of the button.
+   * Icon variant: only the sun and moon, solid, inside the same border as mono, for the small sizes where the scene does not read.
+   * The celestial group is scaled up (as far as the rays clear the border) and moved from the sky (centre y 16) to the middle of the button.
    * --_ray is the ray thickness on the 48 grid; it is heavier on smaller sizes so the rays stay
    * visible, and divided by the scale since the group is scaled. With no sea to hide behind, the sun
    * sinks out through the bottom edge and the moon drops in from the top — the same movement as the
@@ -201,9 +201,9 @@
    */
   .toggle[data-variant='icon'] {
     --_ink: var(--ds-color-primary-base-default);
-    --_scale: 1.9;
+    --_scale: 1.6;
     --_ray: 3;
-    --_border-width: 0px;
+    --_border: var(--_ink);
     --_sky: transparent;
 
     transition: background-color 0.2s;
