@@ -25,7 +25,7 @@
     "dist/**/*"
   ],
   "scripts": {
-    "build": "tsc && vite build && node scripts/build-favicons.mjs",
+    "build": "tsc && vite build && node scripts/build-favicons.mjs && node scripts/build-docs.mjs",
     "test": "echo \"Warning: no test specified\" && exit 0",
     "build:css": "sass src/css/index.scss dist/index.css --style=compressed",
     "storybook": "storybook dev -p 6006",
