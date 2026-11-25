@@ -5,7 +5,7 @@ import { Heading } from '~/main';
 import { boxBackgroundColors, boxBackgroundVariants } from './box.types';
 
 const meta = {
-  title: 'Deprecated/Box',
+  title: 'Utgått/Box',
   component: Box,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'deprecated'],

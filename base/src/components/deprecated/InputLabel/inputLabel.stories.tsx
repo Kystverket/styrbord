@@ -3,7 +3,7 @@ import InputLabel, { InputLabelProps } from './inputLabel';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Deprecated/InputLabel',
+  title: 'Utgått/InputLabel',
   component: InputLabel,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'deprecated'],

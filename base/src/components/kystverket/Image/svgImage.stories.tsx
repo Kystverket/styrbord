@@ -60,7 +60,7 @@ import { Paragraph } from '~/main';
 import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
 
 const meta = {
-  title: 'Foundations/Images and Illustrations',
+  title: 'Grunnlag/Images and Illustrations',
   component: ImageSoeknadOmFarledsbevis,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],

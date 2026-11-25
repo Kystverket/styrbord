@@ -5,7 +5,7 @@ import type { BoxProps } from '../Box/box';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Foundations/Typography/Accent',
+  title: 'Grunnlag/Typografi/Accent',
   component: Accent,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'ds-override'],

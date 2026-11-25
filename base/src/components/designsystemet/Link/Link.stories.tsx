@@ -5,7 +5,7 @@ import { Link, Surface, Icon } from '~/main';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Components/Actions/Link',
+  title: 'Komponenter/Handlinger/Link',
   component: Link,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'ds-override'],

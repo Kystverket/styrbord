@@ -98,7 +98,7 @@ const ColorTokens = ({ colorScheme }: StoryArgs) => {
 };
 
 const meta = {
-  title: 'Foundations/Colors',
+  title: 'Grunnlag/Colors',
   tags: ['autodocs'],
   component: ColorTokens,
   args: {

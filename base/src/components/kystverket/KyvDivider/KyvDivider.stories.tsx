@@ -3,7 +3,7 @@ import KyvDivider from './KyvDivider';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Components/Layout/KyvDivider',
+  title: 'Komponenter/Oppsett/KyvDivider',
   component: KyvDivider,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],

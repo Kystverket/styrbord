@@ -6,7 +6,7 @@ import cat from '@assets/img/cats/Cat 3.jpg';
 import { Avatar, AvatarProvider, Surface } from '~/main';
 
 const meta = {
-  title: 'Page/Header',
+  title: 'Side/Header',
   component: Header,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],

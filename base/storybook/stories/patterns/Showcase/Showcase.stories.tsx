@@ -8,7 +8,7 @@ import { Showcase } from './Showcase';
 import StyrbordDecorator from '../../../styrbordDecorator';
 
 export default {
-  title: 'Patterns/Showcase',
+  title: 'Mønstre/Showcase',
   decorators: [StyrbordDecorator],
   parameters: {
     chromatic: {

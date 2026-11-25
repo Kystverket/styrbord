@@ -4,7 +4,7 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Card, Details, DetailsProps, Surface } from '~/main';
 
 const meta = {
-  title: 'Components/Data display/Details',
+  title: 'Komponenter/Datavisning/Details',
   component: Details,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'ds-override'],

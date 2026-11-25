@@ -3,7 +3,7 @@ import { Select, SelectProps } from './Select';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Components/Form/Select',
+  title: 'Komponenter/Skjema/Select',
   component: Select,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'ds-override'],

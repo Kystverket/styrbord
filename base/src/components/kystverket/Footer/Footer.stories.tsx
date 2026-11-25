@@ -5,7 +5,7 @@ import { Footer, FooterProps } from '~/components/kystverket/Footer/Footer';
 import Musea from './musea.svg?react';
 
 const meta = {
-  title: 'Page/Footer',
+  title: 'Side/Footer',
   component: Footer,
 
   decorators: [StyrbordDecorator],

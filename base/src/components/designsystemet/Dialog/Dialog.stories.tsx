@@ -5,7 +5,7 @@ import { useId, useRef, useState } from 'react';
 import { Label, Textfield } from '@digdir/designsystemet-react';
 
 export default {
-  title: 'Components/Overlays/Dialog',
+  title: 'Komponenter/Overlegg/Dialog',
   component: Dialog,
   tags: ['autodocs', 'ds'],
   parameters: {

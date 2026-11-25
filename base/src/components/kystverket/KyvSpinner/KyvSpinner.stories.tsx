@@ -3,7 +3,7 @@ import KyvSpinner from './KyvSpinner';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Components/Feedback/KyvSpinner',
+  title: 'Komponenter/Tilbakemelding/KyvSpinner',
   component: KyvSpinner,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],

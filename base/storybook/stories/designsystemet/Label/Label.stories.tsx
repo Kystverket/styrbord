@@ -2,7 +2,7 @@ import { Label } from '@digdir/designsystemet-react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const meta: Meta<typeof Label> = {
-  title: 'Components/Form/Label',
+  title: 'Komponenter/Skjema/Label',
   component: Label,
   tags: ['autodocs', 'ds'],
   parameters: {

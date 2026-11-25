@@ -7,7 +7,7 @@ import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrb
 import { Fragment } from 'react';
 
 const meta = {
-  title: 'Foundations/Icon',
+  title: 'Grunnlag/Icon',
   component: Icon,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],

@@ -4,7 +4,7 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Tag, Breadcrumbs, Button, Icon, Surface } from '~/main';
 
 const meta = {
-  title: 'Page/PageHeading',
+  title: 'Side/PageHeading',
   component: PageHeading,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],

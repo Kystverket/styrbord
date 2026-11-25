@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Label } from '@digdir/designsystemet-react';
 
 export default {
-  title: 'Components/Form/Search',
+  title: 'Komponenter/Skjema/Search',
   component: Search,
   tags: ['autodocs', 'kyv'],
   parameters: {

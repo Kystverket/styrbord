@@ -6,7 +6,7 @@ import { Label } from '@digdir/designsystemet-react';
 type Story = StoryObj<typeof Textarea>;
 
 export default {
-  title: 'Components/Form/Textarea 2',
+  title: 'Komponenter/Skjema/Textarea 2',
   component: Textarea,
   tags: ['autodocs', 'ds'],
   decorators: [

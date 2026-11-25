@@ -6,7 +6,7 @@ import { Divider, Field, Input, Textarea, ValidationMessage } from '~/main';
 type Story = StoryFn<typeof Field>;
 
 export default {
-  title: 'Components/Form/Field',
+  title: 'Komponenter/Skjema/Field',
   component: Field,
   tags: ['autodocs', 'ds'],
   parameters: {

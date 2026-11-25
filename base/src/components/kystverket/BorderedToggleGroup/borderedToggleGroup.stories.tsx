@@ -15,7 +15,7 @@ const Wrapper = ({ values: propValues, ...props }: BorderedToggleGroupProps) => 
 };
 
 const meta = {
-  title: 'Components/Form/BorderedToggleGroup',
+  title: 'Komponenter/Skjema/BorderedToggleGroup',
   component: Wrapper,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],

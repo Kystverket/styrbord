@@ -2,7 +2,7 @@ import { ValidationMessage } from '~/main';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const meta: Meta<typeof ValidationMessage> = {
-  title: 'Components/Form/ValidationMessage',
+  title: 'Komponenter/Skjema/ValidationMessage',
   component: ValidationMessage,
   tags: ['autodocs', 'ds'],
   parameters: {

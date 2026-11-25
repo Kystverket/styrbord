@@ -6,7 +6,7 @@ import ClickableCard from './ClickableCard';
 import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
 
 const meta = {
-  title: 'Components/Data display/ClickableCard',
+  title: 'Komponenter/Datavisning/ClickableCard',
   component: ClickableCard,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],

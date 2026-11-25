@@ -3,7 +3,7 @@ import LabelContent, { LabelContentProps } from './labelContent';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Components/Form/LabelContent',
+  title: 'Komponenter/Skjema/LabelContent',
   component: LabelContent,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],

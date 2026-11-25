@@ -18,7 +18,7 @@ const Wrapper = (props: DatepickerProps) => {
 };
 
 const meta = {
-  title: 'Components/Form/Datepicker',
+  title: 'Komponenter/Skjema/Datepicker',
   component: Wrapper,
   decorators: [StyrbordDecorator, (Story) => <Story />],
   tags: ['autodocs', 'kyv'],

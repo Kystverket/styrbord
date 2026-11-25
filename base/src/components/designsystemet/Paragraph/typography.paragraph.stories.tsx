@@ -5,7 +5,7 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Paragraph } from '~/main';
 
 const meta = {
-  title: 'Foundations/Typography/Paragraph',
+  title: 'Grunnlag/Typografi/Paragraph',
   component: Paragraph,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'ds-override'],

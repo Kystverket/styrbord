@@ -4,7 +4,7 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Details, DetailsProps } from './Details';
 
 const meta = {
-  title: 'Deprecated/Details',
+  title: 'Utgått/Details',
   component: Details,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'deprecated'],

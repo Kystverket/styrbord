@@ -8,7 +8,7 @@ import cat4 from '@assets/img/cats/Cat 4.jpg';
 type Story = StoryFn<typeof AvatarStack>;
 
 const meta: Meta<typeof AvatarStack> = {
-  title: 'Components/Data display/AvatarStack',
+  title: 'Komponenter/Datavisning/AvatarStack',
   component: AvatarStack,
   tags: ['autodocs', 'kyv', 'beta'],
   parameters: {

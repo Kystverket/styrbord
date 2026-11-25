@@ -2,7 +2,7 @@ import { Breadcrumbs } from '~/main';
 import type { Meta, StoryFn } from '@storybook/react-vite';
 
 export default {
-  title: 'Components/Navigation/Breadcrumbs',
+  title: 'Komponenter/Navigasjon/Breadcrumbs',
   component: Breadcrumbs,
   tags: ['autodocs', 'ds'],
   parameters: {

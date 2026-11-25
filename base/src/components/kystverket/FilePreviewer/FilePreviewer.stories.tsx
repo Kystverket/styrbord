@@ -41,7 +41,7 @@ const defaultProps: FilePreviewerDialogProps = {
 };
 
 const meta = {
-  title: 'Components/Data display/FilePreviewer',
+  title: 'Komponenter/Datavisning/FilePreviewer',
   component: FilePreviewer,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv', 'beta'],

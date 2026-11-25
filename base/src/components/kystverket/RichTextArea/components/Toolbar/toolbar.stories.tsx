@@ -5,7 +5,7 @@ import StyrbordDecorator from '../../../../../../storybook/styrbordDecorator';
 import { Toolbar, type BlockType } from './toolbar';
 
 const meta = {
-  title: 'Components/Form/RichTextArea/Toolbar',
+  title: 'Komponenter/Skjema/RichTextArea/Toolbar',
   component: Toolbar,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv', 'beta'],

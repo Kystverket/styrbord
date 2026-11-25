@@ -4,7 +4,7 @@ import { TextArea, TextAreaProps } from './TextArea';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Components/Form/TextArea',
+  title: 'Komponenter/Skjema/TextArea',
   component: TextArea,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'ds-override'],

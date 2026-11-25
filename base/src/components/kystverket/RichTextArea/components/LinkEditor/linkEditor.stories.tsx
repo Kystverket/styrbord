@@ -6,7 +6,7 @@ import StyrbordDecorator from '../../../../../../storybook/styrbordDecorator';
 import LinkEditor from './linkEditor';
 
 const meta = {
-  title: 'Components/Form/RichTextArea/LinkEditor',
+  title: 'Komponenter/Skjema/RichTextArea/LinkEditor',
   component: LinkEditor,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv', 'beta'],

@@ -6,7 +6,7 @@ import Card from './Card';
 import { Heading, Paragraph } from '@digdir/designsystemet-react';
 
 const meta = {
-  title: 'Deprecated/Card',
+  title: 'Utgått/Card',
   component: Card,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'deprecated'],
@@ -60,7 +60,7 @@ export const CardWithLinkInTitle: Story = {
     variant: 'tinted',
     title: 'Kort med lenke i tittel og ikon',
     icon: 'arrow_right_alt',
-    link: '/?path=/docs/components-data-display-card--docs',
+    link: '/?path=/docs/komponenter-datavisning-card--docs',
   },
 };
 
@@ -68,7 +68,7 @@ export const CardAsLink: Story = {
   args: {
     asChild: true,
     children: (
-      <a href="/?path=/docs/components-data-display-card--docs" rel="noopener noreferrer" target="_blank">
+      <a href="/?path=/docs/komponenter-datavisning-card--docs" rel="noopener noreferrer" target="_blank">
         Dette er et kort med navigering
       </a>
     ),

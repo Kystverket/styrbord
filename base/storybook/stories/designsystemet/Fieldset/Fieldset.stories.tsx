@@ -4,7 +4,7 @@ import type { Meta, StoryFn } from '@storybook/react-vite';
 type Story = StoryFn<typeof Fieldset>;
 
 export default {
-  title: 'Components/Form/Fieldset',
+  title: 'Komponenter/Skjema/Fieldset',
   component: Fieldset,
   tags: ['autodocs', 'ds'],
   parameters: {

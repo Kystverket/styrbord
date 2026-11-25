@@ -23,7 +23,7 @@ const Wrapper = (props: NumberInputProps & { externallyChanging?: boolean }) => 
 };
 
 const meta = {
-  title: 'Components/Form/NumberInput',
+  title: 'Komponenter/Skjema/NumberInput',
   component: Wrapper,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'ds-override'],

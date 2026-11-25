@@ -5,7 +5,7 @@ import { Fragment, useEffect, useId, useState } from 'react';
 import { Popover, Paragraph, Button, Surface, Icon } from '~/main';
 
 export default {
-  title: 'Components/Overlays/Popover',
+  title: 'Komponenter/Overlegg/Popover',
   component: Popover,
   tags: ['autodocs', 'ds'],
   parameters: {

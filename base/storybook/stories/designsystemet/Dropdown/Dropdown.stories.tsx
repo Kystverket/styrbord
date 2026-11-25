@@ -7,7 +7,7 @@ import { styrbordSemanticColors } from '@kystverket/styrbord-tokens/colors';
 const colorVariants = [...styrbordSemanticColors] as const;
 
 export default {
-  title: 'Components/Overlays/Dropdown',
+  title: 'Komponenter/Overlegg/Dropdown',
   component: Dropdown,
   tags: ['autodocs', 'ds'],
   parameters: {

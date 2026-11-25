@@ -8,7 +8,7 @@ import { Button, ErrorSummary } from '~/main';
 type Story = StoryFn<typeof ErrorSummary>;
 
 export default {
-  title: 'Components/Form/ErrorSummary',
+  title: 'Komponenter/Skjema/ErrorSummary',
   component: ErrorSummary,
   tags: ['autodocs', 'ds'],
   parameters: {

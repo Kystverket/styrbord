@@ -2,7 +2,7 @@ import * as stories from './Input.stories';
 
 export default {
   ...stories.default,
-  title: 'Components/Form/Input (Forced Colors)',
+  title: 'Komponenter/Skjema/Input (Forced Colors)',
   parameters: {
     chromatic: {
       forcedColors: 'active',

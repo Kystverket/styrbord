@@ -3,7 +3,7 @@ import ErrorLabel, { ErrorLabelProps } from './errorLabel';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Deprecated/ErrorLabel',
+  title: 'Utgått/ErrorLabel',
   component: ErrorLabel,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'deprecated'],
