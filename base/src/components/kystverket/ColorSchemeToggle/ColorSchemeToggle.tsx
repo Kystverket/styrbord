@@ -80,9 +80,11 @@ export function ColorSchemeToggle({
         <g className={classes.celestial}>
           <g className={classes.sun}>
             <circle className={classes.sunDisc} cx="24" cy="16" r="5.5" />
+            <path className={classes.sunRays} d="M24 5v2.5M24 24.5v2.5M13 16h2.5M32.5 16h2.5" />
+            {/* Separate so the smallest icon can drop them; eight rays blur together at 16 px. */}
             <path
-              className={classes.sunRays}
-              d="M24 5v2.5M24 24.5v2.5M13 16h2.5M32.5 16h2.5M16.2 8.2l1.8 1.8M30 22l1.8 1.8M16.2 23.8l1.8-1.8M30 10l1.8-1.8"
+              className={cl(classes.sunRays, classes.sunRaysDiagonal)}
+              d="M16.2 8.2l1.8 1.8M30 22l1.8 1.8M16.2 23.8l1.8-1.8M30 10l1.8-1.8"
             />
           </g>
           <g className={classes.moon}>

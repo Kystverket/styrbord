@@ -249,6 +249,11 @@
     transform: translate(13.2px, 5.2px) scale(0.9);
   }
 
+  /* At xs only the four straight rays, so they stay apart. */
+  .toggle[data-variant='icon'][data-size='xs'] .sunRaysDiagonal {
+    display: none;
+  }
+
   .toggle[data-variant='icon'] .sunRays {
     stroke: var(--_ink);
     stroke-width: calc(var(--_ray) / var(--_scale));
