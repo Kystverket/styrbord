@@ -1,0 +1,8 @@
+import{S as c,j as a}from"./iframe-XfBZCEPN.js";import{S as l}from"./Dialog-DJYFinJA.js";import"./shipTypes-hFnSBndP.js";import"./Details-DE_XSW-5.js";import"./KyvDivider-OfUbcri2.js";import"./KyvSpinner-BSg30L3X.js";import"./skillingsbuoye-D5je9UzI.js";import"./Logo-BaU98RJo.js";import{H as o,P as f}from"./tooltip-BI6fFoMv.js";import"./preload-helper-Dp1pzeXC.js";import"./color-tokens-BWmLKHwz.js";import"./index-Bq4C9D42.js";import"./index-f2TudgNm.js";const b={title:"Foundations/Typography/Heading",component:o,decorators:[c],tags:["autodocs","ds-override"],argTypes:{}},u=["2xs","xs","sm","md","lg","xl","2xl"],p={children:a.jsxs(l,{gap:4,children:[a.jsx(f,{"data-size":"md",children:"Ved endringer av typografi er det viktig å merke seg at Figma rapporterer feil font-weight for medium-bold tekst. Den får font-weight: 400 i Figma men det korrekte skal være 500. Gyldige font-vekter for kystinn er 300, 500 og 700"}),u.toReversed().map(t=>a.jsxs(o,{"data-size":t,children:["Heading ",t]},t))]})},r={args:p},e={args:{...p,children:a.jsx(o,{"data-size":"lg",children:"Søke om farvannsskilt og navigasjonsinnretninger"})}};var s,n,i;r.parameters={...r.parameters,docs:{...(s=r.parameters)==null?void 0:s.docs,source:{originalSource:`{
+  args: defaultProps
+}`,...(i=(n=r.parameters)==null?void 0:n.docs)==null?void 0:i.source}}};var d,m,g;e.parameters={...e.parameters,docs:{...(d=e.parameters)==null?void 0:d.docs,source:{originalSource:`{
+  args: {
+    ...defaultProps,
+    children: <Heading data-size="lg">Søke om farvannsskilt og navigasjonsinnretninger</Heading>
+  }
+}`,...(g=(m=e.parameters)==null?void 0:m.docs)==null?void 0:g.source}}};const w=["Default","LangTittel"];export{r as Default,e as LangTittel,w as __namedExportsOrder,b as default};
