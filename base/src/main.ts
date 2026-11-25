@@ -125,6 +125,7 @@ export { ColorSchemeToggle } from './components/kystverket/ColorSchemeToggle/Col
 export type {
   ColorScheme,
   ColorSchemeToggleProps,
+  ColorSchemeToggleSize,
   ColorSchemeToggleVariant,
 } from './components/kystverket/ColorSchemeToggle/ColorSchemeToggle.types';
 export { useColorScheme, COLOR_SCHEME_STORAGE_KEY } from './components/kystverket/ColorSchemeToggle/useColorScheme';
