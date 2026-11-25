@@ -191,6 +191,69 @@
     stroke-width: 1.6;
   }
 
+  /*
+   * Icon variant: only the sun and moon, solid, for the small sizes where the scene does not read.
+   * The celestial group is scaled up and moved from the sky (centre y 16) to the middle of the button.
+   * --_ray is the ray thickness on the 48 grid; it is heavier on smaller sizes so the rays stay
+   * visible, and divided by the scale since the group is scaled. With no sea to hide behind, the sun
+   * sinks out through the bottom edge and the moon drops in from the top — the same movement as the
+   * other variants.
+   */
+  .toggle[data-variant='icon'] {
+    --_ink: var(--ds-color-primary-base-default);
+    --_scale: 1.9;
+    --_ray: 3;
+    --_border-width: 0px;
+    --_sky: transparent;
+
+    transition: background-color 0.2s;
+  }
+
+  .toggle[data-variant='icon'][data-size='xs'] {
+    --_ray: 4.5; /* ≈ 1.5px */
+  }
+
+  .toggle[data-variant='icon'][data-size='sm'] {
+    --_ray: 4; /* ≈ 2px */
+  }
+
+  .toggle[data-variant='icon'][data-size='lg'] {
+    --_ray: 2.5;
+  }
+
+  .toggle[data-variant='icon'][data-size='xl'] {
+    --_ray: 2;
+  }
+
+  .toggle[data-variant='icon']:hover {
+    background: var(--ds-color-primary-surface-hover);
+  }
+
+  .toggle[data-variant='icon'] :is(.sky, .sea, .horizon, .wave, .stars) {
+    display: none;
+  }
+
+  .toggle[data-variant='icon'] .celestial {
+    transform: translate(24px, 24px) scale(var(--_scale)) translate(-24px, -16px);
+  }
+
+  .toggle[data-variant='icon'] .sunDisc,
+  .toggle[data-variant='icon'] .moonShape {
+    fill: var(--_ink);
+    stroke: none;
+  }
+
+  /* Larger than in the scene, so it weighs about the same as the sun with its rays. Overrides the
+     path's transform attribute: the 24-grid moon centred on (24, 16) at 0.9 instead of 0.75. */
+  .toggle[data-variant='icon'] .moonShape {
+    transform: translate(13.2px, 5.2px) scale(0.9);
+  }
+
+  .toggle[data-variant='icon'] .sunRays {
+    stroke: var(--_ink);
+    stroke-width: calc(var(--_ray) / var(--_scale));
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .sun,
     .moon {

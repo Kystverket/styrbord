@@ -17,7 +17,7 @@ const meta = {
     onColorSchemeChange: { control: false },
     variant: {
       control: 'inline-radio',
-      options: ['mono', 'color'],
+      options: ['mono', 'color', 'icon'],
     },
     'data-size': {
       control: 'inline-radio',
@@ -31,7 +31,7 @@ const meta = {
           'Rund knapp som bytter mellom lys og mørk modus. I lys modus står sola over havet; i mørk modus synker den bak horisonten og månen og tre stjerner kommer fram. ' +
           'Komponenten er kontrollert — bruk `useColorScheme`. Som standard følger siden systeminnstillingen (`data-color-scheme="auto"` på `<html>`). Velger brukeren noe annet enn systemet, lagres valget i `localStorage` (`styrbord-color-scheme`); velger de det systemet viser, slettes valget og siden følger systemet igjen. ' +
           'Tilgjengelig navn beskriver handlingen («Bytt til mørk modus») og bytter med tilstanden, så knappen har ikke `aria-pressed`. ' +
-          '`mono` (standard) er et strekikon i `primary-base-default` som følger sidens fargemodus; `color` har himmel, hav og gul sol med faste farger. ' +
+          '`mono` (standard) er et strekikon i `primary-base-default` som følger sidens fargemodus; `color` har himmel, hav og gul sol med faste farger; `icon` er bare en fylt sol eller måne uten kant og bakgrunn, laget for de små størrelsene (`xs`, `sm`) der scenen blir for detaljert. Animasjonen er den samme. ' +
           'Størrelse settes med `data-size`: `xs` ≈ 16 px, `sm` ≈ 24 px, `md` ≈ 32 px (standard), `lg` ≈ 48 px og `xl` ≈ 64 px.',
       },
     },
@@ -81,6 +81,7 @@ export const Variants: Story = {
       <Page colorScheme={colorScheme}>
         <ColorSchemeToggle colorScheme={colorScheme} onColorSchemeChange={setColorScheme} variant="mono" />
         <ColorSchemeToggle colorScheme={colorScheme} onColorSchemeChange={setColorScheme} variant="color" />
+        <ColorSchemeToggle colorScheme={colorScheme} onColorSchemeChange={setColorScheme} variant="icon" />
       </Page>
     );
   },
@@ -92,7 +93,7 @@ export const Sizes: Story = {
     const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
     return (
       <div style={{ display: 'grid', gap: 'var(--ds-size-4)' }}>
-        {(['mono', 'color'] as const).map((variant) => (
+        {(['mono', 'color', 'icon'] as const).map((variant) => (
           <Page key={variant} colorScheme={colorScheme}>
             {sizes.map((size) => (
               <ColorSchemeToggle
@@ -119,6 +120,7 @@ export const AllStates: Story = {
           <Page key={scheme} colorScheme={scheme}>
             <ColorSchemeToggle colorScheme={scheme} onColorSchemeChange={noop} variant="mono" />
             <ColorSchemeToggle colorScheme={scheme} onColorSchemeChange={noop} variant="color" />
+            <ColorSchemeToggle colorScheme={scheme} onColorSchemeChange={noop} variant="icon" />
             <Paragraph>{scheme}</Paragraph>
           </Page>
         ))}

@@ -68,7 +68,7 @@ export function ColorSchemeToggle({
       title={label}
       onClick={toggle}
     >
-      {/* Draw order matters: the sea is drawn after the sun and moon so it covers them. */}
+      {/* Draw order matters: the sea is drawn after the sun and moon so it covers them. The icon variant hides all but the sun and moon. */}
       <svg className={classes.svg} viewBox="0 0 48 48" aria-hidden="true" focusable="false">
         <rect className={classes.sky} x="0" y="0" width="48" height="48" />
         <g className={classes.stars}>
@@ -76,19 +76,22 @@ export function ColorSchemeToggle({
           <circle cx="37" cy="10" r="1" />
           <circle cx="38" cy="22" r="0.9" />
         </g>
-        <g className={classes.sun}>
-          <circle className={classes.sunDisc} cx="24" cy="16" r="5.5" />
-          <path
-            className={classes.sunRays}
-            d="M24 5v2.5M24 24.5v2.5M13 16h2.5M32.5 16h2.5M16.2 8.2l1.8 1.8M30 22l1.8 1.8M16.2 23.8l1.8-1.8M30 10l1.8-1.8"
-          />
-        </g>
-        <g className={classes.moon}>
-          <path
-            className={classes.moonShape}
-            transform="translate(15 6) scale(0.75)"
-            d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"
-          />
+        {/* The icon variant scales and centres this group; the others leave it as drawn. */}
+        <g className={classes.celestial}>
+          <g className={classes.sun}>
+            <circle className={classes.sunDisc} cx="24" cy="16" r="5.5" />
+            <path
+              className={classes.sunRays}
+              d="M24 5v2.5M24 24.5v2.5M13 16h2.5M32.5 16h2.5M16.2 8.2l1.8 1.8M30 22l1.8 1.8M16.2 23.8l1.8-1.8M30 10l1.8-1.8"
+            />
+          </g>
+          <g className={classes.moon}>
+            <path
+              className={classes.moonShape}
+              transform="translate(15 6) scale(0.75)"
+              d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"
+            />
+          </g>
         </g>
         <rect className={classes.sea} x="0" y="29" width="48" height="19" />
         <path className={classes.horizon} d="M0 29h48" />
