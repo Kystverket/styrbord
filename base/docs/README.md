@@ -49,15 +49,23 @@ export const App = () => (
 4. **Avstand settes med steg på størrelsesskalaen** (`gap={4}` = `var(--ds-size-4)`), ikke i piksler.
 5. **Ikke bruk komponenter med `Deprecated` foran navnet** i ny kode.
 6. **Følg et mønster** når det finnes et for det du lager.
+7. **Følg Designsystemets mønstre** for feilmeldinger, påkrevde felt, knapper, lenker og systemvarsler. De er
+   oversatt til Styrbord i filene under, med lenke til kilden.
 
 ## Innhold
 
 | Fil                                      | Innhold                                                             |
 | ---------------------------------------- | ------------------------------------------------------------------- |
 | [komponenter.md](komponenter.md)         | Hvilken komponent du skal velge, layout, farger og typografi        |
-| [skjema.md](skjema.md)                   | Felt, validering og feilmeldinger                                   |
+| [skjema.md](skjema.md)                   | Felt, påkrevd og valgfritt, feilmeldinger, dato og klokkeslett      |
+| [knapper.md](knapper.md)                 | Plassering, rekkefølge og tekst på knapper                          |
+| [lenker.md](lenker.md)                   | Lenketekst, ny fane, eksterne lenker og filer                       |
+| [varsler.md](varsler.md)                 | Systemvarsler: feilsider, `Alert`, `Dialog`, opplesning             |
+| [representasjon.md](representasjon.md)   | Innlogging og å handle på vegne av andre                            |
 | [patterns/README.md](patterns/README.md) | Ferdige mønstre (skjemaer, dashbord, sider) med kode du kan kopiere |
 | [migrering-v2.md](migrering-v2.md)       | Endringer fra 1.x til 2.x                                           |
 
 Storybook med alle komponentene: <https://kystverket.github.io/styrbord/base>. For komponenter Styrbord
-eksporterer uendret, gjelder også [Designsystemets dokumentasjon](https://designsystemet.no).
+eksporterer uendret, gjelder også [Designsystemets dokumentasjon](https://designsystemet.no). Designsystemets
+[mønstre](https://designsystemet.no/no/patterns) er kilden til retningslinjene i `skjema.md`, `knapper.md`,
+`lenker.md`, `varsler.md` og `representasjon.md`.

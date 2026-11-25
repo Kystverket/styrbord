@@ -28,7 +28,7 @@ export const TomInnsending: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(canvas.getByRole('button', { name: 'Send søknad' }));
-    const summary = await canvas.findByText('For å sende søknaden må du rette opp følgende:');
+    const summary = await canvas.findByText('For å sende søknaden må du rette opp dette:');
     const summaryRoot = summary.closest('[tabindex]');
     await expect(summaryRoot).toHaveFocus();
     await expect(canvas.getByRole('link', { name: 'Skriv inn navnet ditt' })).toHaveAttribute('href', '#soknad-navn');

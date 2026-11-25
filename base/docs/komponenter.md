@@ -27,7 +27,8 @@ virker ikke:
 | `secondary`    | `outline` |
 | `tertiary`     | `ghost`   |
 
-Bruk én `filled`-knapp for hovedhandlingen i en visning, og `outline` eller `ghost` for resten.
+Bruk én `filled`-knapp for hovedhandlingen i en visning, og `outline` eller `ghost` for resten. Plassering,
+rekkefølge og tekst: se [knapper.md](knapper.md).
 
 ## Layout: Surface
 
