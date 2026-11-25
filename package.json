@@ -37,7 +37,7 @@
     "@types/react-syntax-highlighter": "^15.5.13",
     "@vitejs/plugin-react": "^4.3.4",
     "clsx": "^2.1.1",
-    "esbuild": "^0.24.2",
+    "esbuild": "^0.25.0",
     "eslint": "^9.22.0",
     "eslint-plugin-css": "^0.11.0",
     "eslint-plugin-jsx-a11y": "^6.10.0",
@@ -50,7 +50,7 @@
     "publint": "^0.2.12",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-syntax-highlighter": "^15.6.1",
+    "react-syntax-highlighter": "^16.1.2",
     "rollup-plugin-preserve-use-client": "^3.0.1",
     "rollup-plugin-typescript-paths": "^1.5.0",
     "sass": "^1.85.1",
@@ -61,5 +61,10 @@
     "typescript-eslint": "^8.26.1",
     "vite": "^6.4.1",
     "vite-plugin-svgr": "^4.5.0"
+  },
+  "overrides": {
+    "@joshwooding/vite-plugin-react-docgen-typescript": {
+      "glob": "^14.0.2"
+    }
   }
 }
