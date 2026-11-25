@@ -3,7 +3,7 @@ import { useArgs } from 'storybook/preview-api';
 import type { Meta, StoryFn } from '@storybook/react-vite';
 
 export default {
-  title: 'Komponenter/Navigasjon/Pagination',
+  title: 'Components/Navigation/Pagination',
   component: Pagination,
   tags: ['autodocs', 'ds'],
   parameters: {

@@ -6,7 +6,7 @@ import CardTitle from '../CardTitle/CardTitle';
 import { Surface } from '~/main';
 
 const meta = {
-  title: 'Komponenter/Datavisning/Card',
+  title: 'Components/Data display/Card',
   component: Card,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'ds-override'],
@@ -96,7 +96,7 @@ export const CardWithLinkInTitle: Story = {
     variant: 'tinted',
     children: (
       <>
-        <CardTitle icon="arrow_right_alt" href="/?path=/docs/komponenter-datavisning-card--docs">
+        <CardTitle icon="arrow_right_alt" href="/?path=/docs/components-data-display-card--docs">
           Kort med lenke i tittel og ikon
         </CardTitle>
         <p>Dette er et kort med linktittel og et ikon</p>
@@ -109,7 +109,7 @@ export const CardAsLink: Story = {
   args: {
     asChild: true,
     children: (
-      <a href="/?path=/docs/komponenter-datavisning-card--docs" rel="noopener noreferrer" target="_blank">
+      <a href="/?path=/docs/components-data-display-card--docs" rel="noopener noreferrer" target="_blank">
         Dette er et kort med navigering
       </a>
     ),

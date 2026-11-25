@@ -6,7 +6,7 @@ import { Textfield } from '@digdir/designsystemet-react';
 type Story = StoryFn<typeof Table>;
 
 export default {
-  title: 'Komponenter/Datavisning/Table',
+  title: 'Components/Data display/Table',
   component: Table,
   tags: ['autodocs', 'ds-override'],
   parameters: {

@@ -19,7 +19,7 @@ import { useMemo, useState } from 'react';
 type Story = StoryObj<typeof Checkbox>;
 
 export default {
-  title: 'Komponenter/Skjema/Checkbox',
+  title: 'Components/Form/Checkbox',
   component: Checkbox,
   tags: ['autodocs', 'ds-override'],
   parameters: {

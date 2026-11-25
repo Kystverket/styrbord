@@ -3,7 +3,7 @@ import { Radio, UseRadioGroupProps, Fieldset, ValidationMessage } from '~/main';
 import type { Meta, StoryFn, StoryObj } from '@storybook/react-vite';
 
 export default {
-  title: 'Komponenter/Skjema/Radio',
+  title: 'Components/Form/Radio',
   component: Radio,
   tags: ['autodocs', 'ds'],
   parameters: {

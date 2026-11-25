@@ -7,7 +7,7 @@ type Story = StoryObj<typeof Tooltip>;
 const defaultChildren = <Button>My trigger</Button>;
 
 export default {
-  title: 'Komponenter/Overlegg/Tooltip',
+  title: 'Components/Overlays/Tooltip',
   component: Tooltip,
   tags: ['autodocs', 'ds'],
   parameters: {

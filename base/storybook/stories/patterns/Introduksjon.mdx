@@ -1,28 +1,28 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Mønstre/Introduksjon" />
+<Meta title="Patterns/Introduksjon" />
 
 # Mønstre
 
-Komponentene viser hver byggekloss for seg. Her under **Mønstre** viser vi hvordan de settes sammen til
+Komponentene viser hver byggekloss for seg. Her under **Patterns** viser vi hvordan de settes sammen til
 noe en løsning faktisk trenger: skjemaer, dashbord, hele sider.
 
 ## Kategorier
 
-| Gruppe             | Innhold                                                      |
-| ------------------ | ------------------------------------------------------------ |
-| `Mønstre/Showcase` | Oversikt over Designsystemet-temaet med Kystverket-profil    |
-| `Mønstre/Skjema`   | Eksempelskjemaer: felter, validering, feiloppsummering, steg |
-| `Mønstre/Dashbord` | Oversikter med kort, tabeller, nøkkeltall og filtre          |
-| `Mønstre/Sider`    | Hele sider med `Header`, `PageHeading`, innhold og `Footer`  |
+| Gruppe                | Innhold                                                      |
+| --------------------- | ------------------------------------------------------------ |
+| `Patterns/Showcase`   | Oversikt over Designsystemet-temaet med Kystverket-profil    |
+| `Patterns/Forms`      | Eksempelskjemaer: felter, validering, feiloppsummering, steg |
+| `Patterns/Dashboards` | Oversikter med kort, tabeller, nøkkeltall og filtre          |
+| `Patterns/Pages`      | Hele sider med `Header`, `PageHeading`, innhold og `Footer`  |
 
-Finnes ikke gruppen du trenger, legg til en ny under `Mønstre/`.
+Finnes ikke gruppen du trenger, legg til en ny under `Patterns/`.
 
 ## Slik legger du til et mønster
 
 1. Lag en mappe under `base/storybook/stories/patterns/<Gruppe>/<Navn>/`, for eksempel
-   `patterns/Skjema/Soknadsskjema/Soknadsskjema.stories.tsx`.
-2. Gi historien tittelen `Mønstre/<Gruppe>/<Navn>`.
+   `patterns/Forms/Soknadsskjema/Soknadsskjema.stories.tsx`.
+2. Gi historien tittelen `Patterns/<Gruppe>/<Navn>`.
 3. Importer komponentene fra `~/main`, ikke fra komponentmappene. Mønstrene skal vise det en
    applikasjon faktisk har tilgang til.
 4. Bruk `Surface` til layout, ikke `Box`.

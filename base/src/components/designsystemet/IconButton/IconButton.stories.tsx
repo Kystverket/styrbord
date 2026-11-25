@@ -4,7 +4,7 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Icon } from '~/main';
 
 const meta = {
-  title: 'Komponenter/Handlinger/IconButton',
+  title: 'Components/Actions/IconButton',
   component: IconButton,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],

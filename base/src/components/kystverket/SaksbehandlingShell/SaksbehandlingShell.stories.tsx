@@ -27,7 +27,7 @@ import geojson from '@assets/documents/geojson.json';
 import tekstfil from '@assets/documents/tekstfil.txt';
 
 const meta = {
-  title: 'Side/SaksbehandlingShell',
+  title: 'Page/SaksbehandlingShell',
   component: SaksbehandlingShell,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'beta'],

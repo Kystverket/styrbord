@@ -4,7 +4,7 @@ import { Surface } from '~/main';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Komponenter/Navigasjon/Stepper',
+  title: 'Components/Navigation/Stepper',
   component: Stepper,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],

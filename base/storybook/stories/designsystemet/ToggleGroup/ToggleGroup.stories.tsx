@@ -4,7 +4,7 @@ import type { Meta, StoryFn } from '@storybook/react-vite';
 import { useState } from 'react';
 
 export default {
-  title: 'Komponenter/Skjema/ToggleGroup',
+  title: 'Components/Form/ToggleGroup',
   component: ToggleGroup,
   tags: ['autodocs', 'ds'],
   decorators: [

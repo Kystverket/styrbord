@@ -3,7 +3,7 @@ import Alert, { AlertProps } from './alert';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Komponenter/Tilbakemelding/Alert',
+  title: 'Components/Feedback/Alert',
   component: Alert,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'ds-override'],

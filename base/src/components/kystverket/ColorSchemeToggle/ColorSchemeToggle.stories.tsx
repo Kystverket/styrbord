@@ -3,7 +3,7 @@ import { useState, type ReactNode } from 'react';
 import { ColorSchemeToggle, Paragraph, useColorScheme, type ColorScheme } from '~/main';
 
 const meta = {
-  title: 'Komponenter/Handlinger/ColorSchemeToggle',
+  title: 'Components/Actions/ColorSchemeToggle',
   component: ColorSchemeToggle,
   tags: ['autodocs', 'kyv'],
   args: {

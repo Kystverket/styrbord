@@ -6,7 +6,7 @@ import { Label, Size } from '@digdir/designsystemet-react';
 type Story = StoryObj<typeof Input>;
 
 export default {
-  title: 'Komponenter/Skjema/Input',
+  title: 'Components/Form/Input',
   component: Input,
   tags: ['autodocs', 'ds'],
   argTypes: {

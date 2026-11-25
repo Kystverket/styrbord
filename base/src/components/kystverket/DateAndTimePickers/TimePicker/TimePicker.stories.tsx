@@ -18,7 +18,7 @@ const Wrapper = (props: TimePickerProps) => {
 };
 
 const meta = {
-  title: 'Komponenter/Skjema/TimePicker',
+  title: 'Components/Form/TimePicker',
   component: Wrapper,
   decorators: [StyrbordDecorator, (Story) => <Story />],
   tags: ['autodocs', 'kyv'],

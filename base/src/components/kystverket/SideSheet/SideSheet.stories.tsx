@@ -4,7 +4,7 @@ import { SideSheetButtons } from '~/components/kystverket/SideSheet/Buttons/Side
 import { Button, Icon, Paragraph, SideSheet, Tabs, Tooltip } from '~/main';
 
 export default {
-  title: 'Komponenter/Overlegg/SideSheet',
+  title: 'Components/Overlays/SideSheet',
   component: SideSheet,
 
   tags: ['autodocs', 'beta'],
