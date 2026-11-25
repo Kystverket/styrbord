@@ -61,7 +61,19 @@ const preview: Preview = {
     options: {
       storySort: {
         method: 'alphabetical',
-        order: ['Readme', 'Demosider', 'Typography', 'Page', 'Helpers', 'Form', 'Components'],
+        order: [
+          'Readme',
+          'Changelog',
+          'Foundations',
+          ['Colors', 'Color Collections', 'Typography', 'Icon', 'Images and Illustrations', 'Logo', '*'],
+          'Components',
+          ['Actions', 'Form', 'Feedback', 'Navigation', 'Overlays', 'Data display', 'Layout'],
+          'Page',
+          'Patterns',
+          ['Introduksjon', 'Showcase', 'Forms', 'Dashboards', 'Pages', '*'],
+          'Utilities',
+          'Deprecated',
+        ],
       },
     },
   },

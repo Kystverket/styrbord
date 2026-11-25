@@ -45,7 +45,7 @@ const LinkTranslationsDecorator = (Story: PartialStoryFn) => (
 );
 
 const meta = {
-  title: 'Sprak/Link Translations',
+  title: 'Foundations/Språk/Link Translations',
   component: Wrapper,
   decorators: [LinkTranslationsDecorator, StyrbordDecorator],
   tags: ['autodocs', 'kyv', 'beta'],

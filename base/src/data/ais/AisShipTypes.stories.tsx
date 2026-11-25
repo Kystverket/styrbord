@@ -2,7 +2,7 @@ import type { Meta, StoryFn } from '@storybook/react-vite';
 import { AIS_SHIP_TYPES, getShipTypeByAisCode } from './shipTypes';
 
 const meta = {
-  title: 'Data/AIS Ship Types',
+  title: 'Utilities/AIS Ship Types',
   tags: ['autodocs'],
 } satisfies Meta;
 

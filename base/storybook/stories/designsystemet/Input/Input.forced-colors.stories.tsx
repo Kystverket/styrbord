@@ -2,7 +2,7 @@ import * as stories from './Input.stories';
 
 export default {
   ...stories.default,
-  title: 'Components/Input/Forced Colors',
+  title: 'Components/Form/Input (Forced Colors)',
   parameters: {
     chromatic: {
       forcedColors: 'active',

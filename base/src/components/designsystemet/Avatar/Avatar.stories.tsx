@@ -17,7 +17,7 @@ import { styrbordPaletteColors, styrbordSemanticColors } from '@kystverket/styrb
 type Story = StoryFn<typeof Avatar>;
 
 const meta: Meta<typeof Avatar> = {
-  title: 'Components/Avatar',
+  title: 'Components/Data display/Avatar',
   component: Avatar,
   tags: ['autodocs', 'ds-override'],
   parameters: {

@@ -3,7 +3,7 @@ import Skillingsbuoye from './skillingsbuoye';
 import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 
 const meta = {
-  title: 'Components/Skillingsbuoye',
+  title: 'Foundations/Skillingsbuoye',
   component: Skillingsbuoye,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],

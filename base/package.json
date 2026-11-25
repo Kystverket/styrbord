@@ -60,6 +60,7 @@
     "uuid": "^14.0.0"
   },
   "devDependencies": {
-    "@resvg/resvg-js": "^2.6.2"
+    "@resvg/resvg-js": "^2.6.2",
+    "remark-gfm": "^4.0.1"
   }
 }
