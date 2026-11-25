@@ -8,7 +8,8 @@
 }
 
 .white {
-  --dsc-table-background: white;
+  /* Samme som Box color="white": hvit i lys modus, mørk flate i mørk modus. */
+  --dsc-table-background: var(--ds-color-primary-surface-default);
 }
 
 .table th {
