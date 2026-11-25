@@ -97,7 +97,7 @@ const renderChip = (
 };
 
 const meta = {
-  title: 'Components/Chip',
+  title: 'Components/Form/Chip',
   component: Chip.Radio,
   tags: ['autodocs', 'ds'],
   parameters: {

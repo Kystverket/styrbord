@@ -18,7 +18,7 @@ type MultipleSuggestionProps = SuggestionMultipleProps & {
 };
 
 const meta = {
-  title: 'Components/Suggestion',
+  title: 'Components/Form/Suggestion',
   component: Suggestion,
   tags: ['autodocs', 'ds-override'],
   args: {

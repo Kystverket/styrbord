@@ -5,7 +5,7 @@ import { expect, userEvent, within } from 'storybook/test';
 type Story = StoryFn<typeof SkipLink>;
 
 export default {
-  title: 'Components/SkipLink',
+  title: 'Components/Navigation/SkipLink',
   component: SkipLink,
   tags: ['autodocs', 'ds'],
   parameters: {

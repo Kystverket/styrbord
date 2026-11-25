@@ -4,7 +4,7 @@ import { Logo, LogoProps } from '~/components/kystverket/Logo/Logo';
 import faviconUrl from '@assets/favicon/favicon.svg?url';
 
 const meta = {
-  title: 'Page/Logo',
+  title: 'Foundations/Logo',
   component: Logo,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],

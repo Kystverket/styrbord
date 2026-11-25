@@ -8,7 +8,7 @@ import { Button, ErrorSummary } from '~/main';
 type Story = StoryFn<typeof ErrorSummary>;
 
 export default {
-  title: 'Components/ErrorSummary',
+  title: 'Components/Form/ErrorSummary',
   component: ErrorSummary,
   tags: ['autodocs', 'ds'],
   parameters: {

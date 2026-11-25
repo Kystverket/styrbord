@@ -5,7 +5,7 @@ import { Badge, Tabs, Button, Icon } from '~/main';
 type Story = StoryFn<typeof Badge>;
 
 const meta: Meta<typeof Badge> = {
-  title: 'Components/Badge',
+  title: 'Components/Feedback/Badge',
   component: Badge,
   tags: ['autodocs', 'ds'],
   parameters: {

@@ -202,6 +202,14 @@ kart's **CSS** uses bare `var(--ds-color-*)` with no hex fallback. `@kystverket/
 - **Where stories go** — depends on whether Styrbord wraps the component:
   - Styrbord has a wrapper component in `src/` → story is co-located: `ComponentName/ComponentName.stories.tsx`. This is the common case (~65 stories).
   - Styrbord only re-exports the Designsystemet component (no `.tsx` in `src/`, at most a `.override.scss`) → story lives in `base/storybook/stories/designsystemet/ComponentName/` (~20 stories).
+- **Story titles (base)** follow purpose, not where the file lives. Top level, in sidebar order:
+  `Foundations` (tokens, typography, icons, logo, språk) · `Components/{Actions, Form, Feedback,
+Navigation, Overlays, Data display, Layout}` · `Page` (header, footer, shells) · `Patterns`
+  (compositions) · `Utilities` · `Deprecated`. The order is set in `base/.storybook/preview.ts`;
+  a new subgroup must be added there too.
+- **Patterns** are compositions of several components — example forms, dashboards, whole pages.
+  They live in `base/storybook/stories/patterns/<Group>/<Name>/`, are titled
+  `Patterns/<Group>/<Name>`, and import only from `~/main`. See `patterns/Introduksjon.mdx`.
 - Storybook configuration, static pages and the decorator live in `storybook/` (not `src/`).
 - Shared CSS for map pickers: `components/shared/MapPicker.module.css`.
 

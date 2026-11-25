@@ -118,7 +118,7 @@ const ColorTokenCollections = ({ dataColor, dataColorScheme }: StoryArgs) => {
 };
 
 const meta = {
-  title: 'Tokens/Color Collections',
+  title: 'Foundations/Color Collections',
   tags: ['autodocs'],
   component: ColorTokenCollections,
   args: {

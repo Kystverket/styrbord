@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 type Story = StoryObj<typeof Switch>;
 
 export default {
-  title: 'Components/Switch',
+  title: 'Components/Form/Switch',
   component: Switch,
   tags: ['autodocs', 'ds'],
   parameters: {

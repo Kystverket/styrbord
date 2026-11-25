@@ -4,7 +4,7 @@ import type { Meta, StoryFn } from '@storybook/react-vite';
 type Story = StoryFn<typeof List.Unordered>;
 
 export default {
-  title: 'Components/List',
+  title: 'Components/Data display/List',
   component: List.Unordered,
   tags: ['autodocs', 'ds'],
 } satisfies Meta;

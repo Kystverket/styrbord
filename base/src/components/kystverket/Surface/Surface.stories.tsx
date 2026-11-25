@@ -6,7 +6,7 @@ import Surface from './Surface';
 import { SurfaceProps, surfaceBorderStyles, surfaceColorVariants, surfaceSizes } from './Surface.types';
 
 const meta = {
-  title: 'Components/Surface',
+  title: 'Components/Layout/Surface',
   component: Surface,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],

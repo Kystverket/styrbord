@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Surface, Button, Chip, Dropdown, Icon } from '~/main';
 
 const meta = {
-  title: 'Form/RichTextArea/RichTextArea',
+  title: 'Components/Form/RichTextArea/RichTextArea',
   component: RichTextArea,
   decorators: [
     (Story) => (

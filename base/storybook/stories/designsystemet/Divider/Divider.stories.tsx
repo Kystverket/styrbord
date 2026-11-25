@@ -4,7 +4,7 @@ import type { Meta, StoryFn } from '@storybook/react-vite';
 type Story = StoryFn<typeof Divider>;
 
 export default {
-  title: 'Components/Divider',
+  title: 'Components/Layout/Divider',
   component: Divider,
   tags: ['autodocs', 'ds'],
   parameters: {

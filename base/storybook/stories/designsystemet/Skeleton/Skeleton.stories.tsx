@@ -4,7 +4,7 @@ import type { Meta, StoryFn, StoryObj } from '@storybook/react-vite';
 type Story = StoryObj<typeof Skeleton>;
 
 export default {
-  title: 'Components/Loaders/Skeleton',
+  title: 'Components/Feedback/Skeleton',
   component: Skeleton,
   tags: ['autodocs', 'ds'],
   parameters: {

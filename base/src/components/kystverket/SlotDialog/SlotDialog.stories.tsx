@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import { Surface, Button, Input, Label, Paragraph, SlotDialog, type DialogSize } from '~/main';
 
 export default {
-  title: 'Components/SlotDialog',
+  title: 'Components/Overlays/SlotDialog',
   component: SlotDialog,
   tags: ['autodocs', 'beta'],
   parameters: {

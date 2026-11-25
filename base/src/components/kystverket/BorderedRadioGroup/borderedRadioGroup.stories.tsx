@@ -5,7 +5,7 @@ import { Surface } from '~/main';
 import { useState } from 'react';
 
 const meta = {
-  title: 'Components/BorderedRadioGroup',
+  title: 'Components/Form/BorderedRadioGroup',
   component: BorderedRadioGroup,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],

@@ -4,7 +4,7 @@ import { styrbordSemanticColors, styrbordPaletteColors } from '@kystverket/styrb
 type Story = StoryObj<typeof Tag>;
 
 export default {
-  title: 'Components/Tag',
+  title: 'Components/Data display/Tag',
   component: Tag,
   tags: ['autodocs', 'ds'],
   argTypes: {

@@ -4,7 +4,7 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Surface } from '~/main';
 
 const meta = {
-  title: 'Form/TextInput',
+  title: 'Components/Form/TextInput',
   component: TextInput,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'ds-override'],

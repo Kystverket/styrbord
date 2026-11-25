@@ -60,7 +60,7 @@ export const CardWithLinkInTitle: Story = {
     variant: 'tinted',
     title: 'Kort med lenke i tittel og ikon',
     icon: 'arrow_right_alt',
-    link: '/?path=/docs/komponenter-card--docs',
+    link: '/?path=/docs/components-data-display-card--docs',
   },
 };
 
@@ -68,7 +68,7 @@ export const CardAsLink: Story = {
   args: {
     asChild: true,
     children: (
-      <a href="/?path=/docs/komponenter-card--docs" rel="noopener noreferrer" target="_blank">
+      <a href="/?path=/docs/components-data-display-card--docs" rel="noopener noreferrer" target="_blank">
         Dette er et kort med navigering
       </a>
     ),
