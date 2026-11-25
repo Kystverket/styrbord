@@ -208,8 +208,26 @@ Navigation, Overlays, Data display, Layout}` · `Page` (header, footer, shells) 
   (compositions) · `Utilities` · `Deprecated`. The order is set in `base/.storybook/preview.ts`;
   a new subgroup must be added there too.
 - **Patterns** are compositions of several components — example forms, dashboards, whole pages.
-  They live in `base/storybook/stories/patterns/<Group>/<Name>/`, are titled
-  `Patterns/<Group>/<Name>`, and import only from `~/main`. See `patterns/Introduksjon.mdx`.
+  They live in `base/storybook/stories/patterns/<Group>/<Name>/` as `<Name>.tsx` + `README.md` +
+  `<Name>.stories.tsx`, are titled `Patterns/<Group>/<Name>`, and import only from `~/main`.
+  See `patterns/Introduksjon.mdx` and `Forms/Soknadsskjema/` for the worked example.
+
+### Shipped guidance (`base/docs/` → `dist/docs/`)
+
+Applications and their AI tools read Styrbord's guidance from
+`node_modules/@kystverket/styrbord/dist/docs/`, so it always matches the installed version.
+`scripts/build-docs.mjs` (last step of `npm run build`) assembles it: `base/docs/*.md` as-is,
+`v2.md` as `migrering-v2.md`, and every pattern folder that has a `README.md` — code and README,
+not stories — with `~/main` rewritten to `@kystverket/styrbord`, plus a generated
+`patterns/README.md` index. The build fails if a pattern imports anything else from inside the
+package. Consequences:
+
+- **`base/docs/` is public, versioned guidance.** Write it for app developers and agents, not for
+  Styrbord contributors. When a change alters how a component should be used (new prop, renamed
+  variant, deprecation), update `docs/komponenter.md` or `docs/skjema.md` in the same PR.
+- **A pattern's code is copied into apps verbatim**, so it must compile on the React versions
+  consumers use — e.g. `SyntheticEvent` rather than `FormEvent` (deprecated in React 19 types) or
+  `SubmitEvent` (missing from React 18's).
 - Storybook configuration, static pages and the decorator live in `storybook/` (not `src/`).
 - Shared CSS for map pickers: `components/shared/MapPicker.module.css`.
 
