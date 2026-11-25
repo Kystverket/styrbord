@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.19.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.18.1...styrbord-v2.19.0) (2026-11-25)
+
+
+### Features
+
+* **base:** veiledning og mønstre følger med pakken for utviklere og KI-verktøy ([#421](https://github.com/Kystverket/styrbord/issues/421)) ([8abac52](https://github.com/Kystverket/styrbord/commit/8abac522efa323086333d0e78932f73e8e0ef839))
+
 ## [2.18.1](https://github.com/Kystverket/styrbord/compare/styrbord-v2.18.0...styrbord-v2.18.1) (2026-11-25)
 
 
