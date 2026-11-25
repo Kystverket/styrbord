@@ -217,17 +217,17 @@ Navigation, Overlays, Data display, Layout}` · `Page` (header, footer, shells) 
 Applications and their AI tools read Styrbord's guidance from
 `node_modules/@kystverket/styrbord/dist/docs/`, so it always matches the installed version.
 `scripts/build-docs.mjs` (last step of `npm run build`) assembles it: `base/docs/*.md` as-is,
-`v2.md` as `migrering-v2.md`, and every pattern folder that has a `README.md` — code and README,
-not stories — with `~/main` rewritten to `@kystverket/styrbord`, plus a generated
-`patterns/README.md` index. The build fails if a pattern imports anything else from inside the
-package. Consequences:
+`v2.md` as `migrering-v2.md`, each pattern's `README.md`, and a generated `patterns/README.md`
+index. Consequences:
 
 - **`base/docs/` is public, versioned guidance.** Write it for app developers and agents, not for
   Styrbord contributors. When a change alters how a component should be used (new prop, renamed
   variant, deprecation), update `docs/komponenter.md` or `docs/skjema.md` in the same PR.
-- **A pattern's code is copied into apps verbatim**, so it must compile on the React versions
-  consumers use — e.g. `SyntheticEvent` rather than `FormEvent` (deprecated in React 19 types) or
-  `SubmitEvent` (missing from React 18's).
+- **A pattern ships as guidance, not code.** Its `README.md` (rules, reasoning, short snippets) is
+  what reaches apps; the `.tsx` is only the Storybook demo. This is deliberate: each app does
+  validation, state and data fetching its own way, and a full component to copy would suggest
+  otherwise. Keep snippets to how Styrbord is wired (ids, `error`, `ErrorSummary`, focus) and import
+  from `@kystverket/styrbord` — the build fails on a `~/` import in a pattern README.
 - Storybook configuration, static pages and the decorator live in `storybook/` (not `src/`).
 - Shared CSS for map pickers: `components/shared/MapPicker.module.css`.
 

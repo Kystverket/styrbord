@@ -54,16 +54,16 @@ export const App = () => (
 
 ## Innhold
 
-| Fil                                      | Innhold                                                             |
-| ---------------------------------------- | ------------------------------------------------------------------- |
-| [komponenter.md](komponenter.md)         | Hvilken komponent du skal velge, layout, farger og typografi        |
-| [skjema.md](skjema.md)                   | Felt, påkrevd og valgfritt, feilmeldinger, dato og klokkeslett      |
-| [knapper.md](knapper.md)                 | Plassering, rekkefølge og tekst på knapper                          |
-| [lenker.md](lenker.md)                   | Lenketekst, ny fane, eksterne lenker og filer                       |
-| [varsler.md](varsler.md)                 | Systemvarsler: feilsider, `Alert`, `Dialog`, opplesning             |
-| [representasjon.md](representasjon.md)   | Innlogging og å handle på vegne av andre                            |
-| [patterns/README.md](patterns/README.md) | Ferdige mønstre (skjemaer, dashbord, sider) med kode du kan kopiere |
-| [migrering-v2.md](migrering-v2.md)       | Endringer fra 1.x til 2.x                                           |
+| Fil                                      | Innhold                                                        |
+| ---------------------------------------- | -------------------------------------------------------------- |
+| [komponenter.md](komponenter.md)         | Hvilken komponent du skal velge, layout, farger og typografi   |
+| [skjema.md](skjema.md)                   | Felt, påkrevd og valgfritt, feilmeldinger, dato og klokkeslett |
+| [knapper.md](knapper.md)                 | Plassering, rekkefølge og tekst på knapper                     |
+| [lenker.md](lenker.md)                   | Lenketekst, ny fane, eksterne lenker og filer                  |
+| [varsler.md](varsler.md)                 | Systemvarsler: feilsider, `Alert`, `Dialog`, opplesning        |
+| [representasjon.md](representasjon.md)   | Innlogging og å handle på vegne av andre                       |
+| [patterns/README.md](patterns/README.md) | Mønstre (skjemaer, dashbord, sider): regler og kodeeksempler   |
+| [migrering-v2.md](migrering-v2.md)       | Endringer fra 1.x til 2.x                                      |
 
 Storybook med alle komponentene: <https://kystverket.github.io/styrbord/base>. For komponenter Styrbord
 eksporterer uendret, gjelder også [Designsystemets dokumentasjon](https://designsystemet.no). Designsystemets
