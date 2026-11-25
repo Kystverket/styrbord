@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.18.1](https://github.com/Kystverket/styrbord/compare/styrbord-v2.18.0...styrbord-v2.18.1) (2026-11-25)
+
+
+### Bug Fixes
+
+* **base:** Table body="white" følger fargemodus ([#418](https://github.com/Kystverket/styrbord/issues/418)) ([ff20670](https://github.com/Kystverket/styrbord/commit/ff20670a11d856e910f8bee7048c76eb4bf11459))
+
 ## [2.18.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.17.0...styrbord-v2.18.0) (2026-11-24)
 
 
