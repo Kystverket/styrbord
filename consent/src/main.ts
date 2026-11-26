@@ -46,6 +46,7 @@ export type { ConsentLanguage, ConsentTranslations } from './utility/translation
 export type {
   ConsentCategory,
   ConsentConfig,
+  ConsentLayout,
   ConsentService,
   ConsentState,
   ConsentUI,

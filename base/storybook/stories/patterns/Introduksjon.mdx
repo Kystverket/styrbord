@@ -1,0 +1,48 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Patterns/Introduksjon" />
+
+# Mønstre
+
+Komponentene viser hver byggekloss for seg. Her under **Patterns** viser vi hvordan de settes sammen til
+noe en løsning faktisk trenger: skjemaer, dashbord, hele sider.
+
+## Kategorier
+
+| Gruppe                | Innhold                                                      |
+| --------------------- | ------------------------------------------------------------ |
+| `Patterns/Showcase`   | Oversikt over Designsystemet-temaet med Kystverket-profil    |
+| `Patterns/Forms`      | Eksempelskjemaer: felter, validering, feiloppsummering, steg |
+| `Patterns/Dashboards` | Oversikter med kort, tabeller, nøkkeltall og filtre          |
+| `Patterns/Pages`      | Hele sider med `Header`, `PageHeading`, innhold og `Footer`  |
+
+Finnes ikke gruppen du trenger, legg til en ny under `Patterns/`.
+
+## Slik legger du til et mønster
+
+Se `Forms/Soknadsskjema/` for et komplett eksempel. Et mønster er tre filer i
+`base/storybook/stories/patterns/<Gruppe>/<Navn>/`:
+
+| Fil                  | Innhold                                                                                                                      |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `README.md`          | `# Tittel`, ett avsnitt om hva det er, så når det brukes, reglene og korte kodeeksempler. Det er denne som følger med pakken |
+| `<Navn>.tsx`         | En levende demo av mønsteret, som vises i Storybook                                                                          |
+| `<Navn>.stories.tsx` | Historien, med tittelen `Patterns/<Gruppe>/<Navn>` og README-en som dokumentasjon                                            |
+
+Regler:
+
+1. README-en er mønsteret. Skriv reglene og begrunnelsen der, og vis bare kode for det som handler om
+   Styrbord: hvilke komponenter, hvilke props, hvordan de kobles sammen. La validering, tilstand og
+   datahenting være opp til applikasjonen.
+2. Kodeeksemplene i README-en importerer fra `@kystverket/styrbord`. Bygget stopper hvis et eksempel
+   importerer fra `~/`.
+3. Demoen importerer fra `~/main`, ikke fra komponentmappene, så den bare bruker det en applikasjon har
+   tilgang til.
+4. Bruk `Surface` til layout, ikke `Box`.
+
+## Mønstrene følger med pakken
+
+`npm run build` kopierer README-en (ikke demoen eller historien) til `dist/docs/patterns/` og lager en
+oversikt. Applikasjoner og KI-verktøy finner dem i
+`node_modules/@kystverket/styrbord/dist/docs/`, for den versjonen de har installert. Mapper uten
+`README.md` (som Showcase) blir bare i Storybook.

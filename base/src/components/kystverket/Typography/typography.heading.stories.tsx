@@ -6,7 +6,7 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { Heading } from '@digdir/designsystemet-react';
 
 const meta = {
-  title: 'Typography/Heading',
+  title: 'Foundations/Typography/Heading',
   component: Heading,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'ds-override'],

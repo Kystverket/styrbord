@@ -1,17 +1,18 @@
 {
   "banner": {
-    "heading": "Informasjonskapslar",
-    "body": "Vi brukar informasjonskapslar for å forstå korleis tenesta blir brukt, slik at vi kan gjere henne betre. Du vel sjølv kva du samtykkjer til.",
-    "acceptAll": "Godta alle",
-    "rejectAll": "Berre nødvendige",
+    "heading": "Kan vi måle korleis tenesta blir brukt?",
+    "body": "Vi vil gjerne lagre litt informasjon på eininga di for å sjå korleis tenesta blir brukt, slik at vi kan gjere henne betre. Du kan endre svaret når som helst.",
+    "acceptAll": "Godta",
+    "rejectAll": "Avslå",
     "managePreferences": "Vel sjølv"
   },
   "dialog": {
-    "heading": "Innstillingar for informasjonskapslar",
+    "heading": "Vel kva vi kan lagre",
     "body": "Nødvendige informasjonskapslar er alltid på, fordi tenesta ikkje fungerer utan dei. Dei andre vel du sjølv.",
+    "legend": "Kva kan vi lagre?",
     "savePreferences": "Lagre val",
     "acceptAll": "Godta alle",
-    "rejectAll": "Berre nødvendige",
+    "rejectAll": "Avslå alle",
     "close": "Lukk",
     "servicesLabel": "Tenester",
     "showCookies": "Vis informasjonskapslar",
@@ -53,5 +54,5 @@
       "description": "Blir brukt til å tilpasse annonsar. Kystverket brukar ikkje dette i dag."
     }
   },
-  "manageLink": "Administrer informasjonskapslar"
+  "manageLink": "Endre samtykke"
 }

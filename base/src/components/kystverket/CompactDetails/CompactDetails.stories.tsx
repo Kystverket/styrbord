@@ -6,7 +6,7 @@ import { Surface, BorderedRadioGroup, Paragraph } from '~/main';
 import type { RadioGroupValueType } from '../BorderedRadioGroup/borderedRadioGroup';
 
 const meta = {
-  title: 'Components/CompactDetails',
+  title: 'Components/Data display/CompactDetails',
   component: CompactDetails,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv', 'beta'],

@@ -1,5 +1,53 @@
 # Changelog
 
+## [2.20.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.19.0...styrbord-v2.20.0) (2026-11-26)
+
+
+### Features
+
+* **base:** ColorSchemeToggle får data-size, icon-variant og mono som standard ([#429](https://github.com/Kystverket/styrbord/issues/429)) ([b14a5cf](https://github.com/Kystverket/styrbord/commit/b14a5cf510d2e2db48b83eae876ceed5110506bd))
+
+## [2.19.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.18.1...styrbord-v2.19.0) (2026-11-25)
+
+
+### Features
+
+* **base:** veiledning og mønstre følger med pakken for utviklere og KI-verktøy ([#421](https://github.com/Kystverket/styrbord/issues/421)) ([8abac52](https://github.com/Kystverket/styrbord/commit/8abac522efa323086333d0e78932f73e8e0ef839))
+
+## [2.18.1](https://github.com/Kystverket/styrbord/compare/styrbord-v2.18.0...styrbord-v2.18.1) (2026-11-25)
+
+
+### Bug Fixes
+
+* **base:** Table body="white" følger fargemodus ([#418](https://github.com/Kystverket/styrbord/issues/418)) ([ff20670](https://github.com/Kystverket/styrbord/commit/ff20670a11d856e910f8bee7048c76eb4bf11459))
+
+## [2.18.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.17.0...styrbord-v2.18.0) (2026-11-24)
+
+
+### Features
+
+* **base:** Avatar bruker base- og contrast-farger fra tokens ([#413](https://github.com/Kystverket/styrbord/issues/413)) ([665be2d](https://github.com/Kystverket/styrbord/commit/665be2d4a7121d591ff22100e2de0dd18081925f))
+
+
+### Bug Fixes
+
+* **base:** hvit logo er hvit også i mørk modus ([#414](https://github.com/Kystverket/styrbord/issues/414)) ([8aa382d](https://github.com/Kystverket/styrbord/commit/8aa382dcf738b8f79af8fc044e1eb3de240b5696))
+* **base:** la Datepicker, TimePicker, DateTimePicker og FileUploader ta imot id ([#417](https://github.com/Kystverket/styrbord/issues/417)) ([67f9ae2](https://github.com/Kystverket/styrbord/commit/67f9ae2531ea71898a90ec4121854f5b97bd8897))
+* **base:** skjermleser leser feilmeldingen i BorderedRadioGroup og BorderedToggleGroup ([#415](https://github.com/Kystverket/styrbord/issues/415)) ([be7cd2e](https://github.com/Kystverket/styrbord/commit/be7cd2ee56d4281e2c8c4e4e3ea47c3b0060ce26))
+
+## [2.17.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.16.0...styrbord-v2.17.0) (2026-11-23)
+
+
+### Features
+
+* **base:** favicon i Storybook og som ferdige filer i pakken ([#407](https://github.com/Kystverket/styrbord/issues/407)) ([a0e4325](https://github.com/Kystverket/styrbord/commit/a0e43257dc913df120f6decdbf274ae6a3273868))
+* **base:** Logo bytter til hvit variant i mørk modus ([#408](https://github.com/Kystverket/styrbord/issues/408)) ([a03d3e4](https://github.com/Kystverket/styrbord/commit/a03d3e4714f698e5487ba7afed5e2053c8ca7c0e))
+
+
+### Bug Fixes
+
+* **base:** Footer beholder mørke farger i mørk modus ([#409](https://github.com/Kystverket/styrbord/issues/409)) ([ad8b8dc](https://github.com/Kystverket/styrbord/commit/ad8b8dc99eb2257b883e7d73fd44408e773a5458))
+
 ## [2.16.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.15.1...styrbord-v2.16.0) (2026-11-19)
 
 

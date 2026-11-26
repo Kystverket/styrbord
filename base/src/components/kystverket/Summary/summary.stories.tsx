@@ -4,7 +4,7 @@ import StyrbordDecorator from '../../../../storybook/styrbordDecorator';
 import { SummaryProps } from './summary.types';
 
 const meta = {
-  title: 'Components/Summary',
+  title: 'Components/Data display/Summary',
   component: Summary,
   decorators: [StyrbordDecorator],
   tags: ['autodocs', 'kyv'],

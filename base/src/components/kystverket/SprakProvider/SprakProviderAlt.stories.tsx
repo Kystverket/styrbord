@@ -43,7 +43,7 @@ const AlternateTranslationsDecorator = (Story: PartialStoryFn) => (
 );
 
 const meta = {
-  title: 'Sprak/Alternate Translations',
+  title: 'Foundations/Språk/Alternate Translations',
   component: Wrapper,
   decorators: [AlternateTranslationsDecorator, StyrbordDecorator],
   tags: ['autodocs', 'kyv', 'beta'],

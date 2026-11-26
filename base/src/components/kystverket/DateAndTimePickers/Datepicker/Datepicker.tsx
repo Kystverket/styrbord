@@ -7,6 +7,8 @@ import { usePickerText } from '../PickerControl/usePickerText';
 import styles from '../PickerControl/PickerControl.module.css';
 
 export interface DatepickerProps {
+  /** Id on the underlying `<input>`, e.g. for linking from an ErrorSummary. Generated if omitted. */
+  id?: string;
   className?: string;
   loading?: boolean;
   /** Defaults to a fixed width that fits a date. */
@@ -62,7 +64,7 @@ export const Datepicker = ({
         <LabelContent text={label} required={required} optional={optional} loading={loading} />
       </Label>
       {props.description && <Field.Description>{props.description}</Field.Description>}
-      <PickerControl {...control} />
+      <PickerControl {...control} id={props.id} />
       {shownError && <ValidationMessage>{shownError}</ValidationMessage>}
     </Field>
   );

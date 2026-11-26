@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/Kystverket/styrbord/compare/styrbord-kart-v1.5.0...styrbord-kart-v1.6.0) (2026-11-23)
+
+
+### Features
+
+* **kart:** Endre farge på hover popup og fiks så tooltip følger på kart movement ([#405](https://github.com/Kystverket/styrbord/issues/405)) ([5b42277](https://github.com/Kystverket/styrbord/commit/5b422772543aaedd7de565e9f472ca2c5a09ffbe))
+
 ## [1.5.0](https://github.com/Kystverket/styrbord/compare/styrbord-kart-v1.4.0...styrbord-kart-v1.5.0) (2026-11-18)
 
 

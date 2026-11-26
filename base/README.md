@@ -22,6 +22,19 @@ Alle komponentene og typene i Designsystemet er tilgjengelig i Styrbord med føl
 Default weight på label endret til medium fra semibold.
 data-font-weight endret til data-weight for å matche designsystemet.
 
+## Veiledning for utviklere og KI-verktøy
+
+Pakken har med seg retningslinjer og ferdige mønstre (skjemaer, dashbord, sider) i `dist/docs/`, for den
+versjonen du har installert. Legg dette i applikasjonens `AGENTS.md` eller `CLAUDE.md`, så bruker Claude
+Code, Copilot og andre verktøy dem:
+
+```md
+## Brukergrensesnitt
+
+Vi bruker Styrbord (`@kystverket/styrbord`). Før du lager eller endrer UI, les
+`node_modules/@kystverket/styrbord/dist/docs/README.md` og følg retningslinjene og mønstrene der.
+```
+
 ## Migrere fra 1.x?
 
 Mat KI-agenten med [v2.md](Versjon 2 - Endringer). Den vil da klare å migrere det meste uten problemer. Testet med Claude Code med Opus 5.5.
@@ -64,6 +77,32 @@ function App() {
   );
 }
 ```
+
+### Favicon
+
+Pakken har ferdige favicon-filer under `@kystverket/styrbord/favicon/`:
+
+| Fil                    | Bruk                                |
+| ---------------------- | ----------------------------------- |
+| `favicon.svg`          | Moderne nettlesere                  |
+| `favicon.ico`          | Reserve (16, 32 og 48 px)           |
+| `apple-touch-icon.png` | iOS, 180 px, uten avrundede hjørner |
+| `icon-192.png`         | Web app manifest                    |
+| `icon-512.png`         | Web app manifest                    |
+
+Kopier filene til appens `public`-mappe, eller importer dem så bundleren gir dem en URL:
+
+```js
+import faviconSvg from '@kystverket/styrbord/favicon/favicon.svg?url';
+```
+
+```html
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+```
+
+PNG- og ICO-filene genereres fra `assets/favicon/favicon.svg` av `scripts/build-favicons.mjs` når pakken bygges.
 
 ## Design Tokens
 

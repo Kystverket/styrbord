@@ -64,7 +64,7 @@ type HeaderProfile = {
   /**
    * Props for the profile avatar. Every `Avatar` prop is accepted except those the header sets
    * itself, so new `Avatar` props reach the header without changes here.
-   * Without it, the avatar is `data-color="success"` unless an `AvatarProvider` sets `auto`.
+   * Without it, the avatar is `data-color="extra1"` unless an `AvatarProvider` sets `auto`.
    */
   avatarStyle?: Omit<AvatarProps, 'aria-label' | 'aria-hidden' | 'initials' | 'children' | 'data-size'>;
 };

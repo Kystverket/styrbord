@@ -8,7 +8,7 @@
   "features": [
     {
       "type": "Feature",
-      "properties": { "name": "", "category": "" },
+      "properties": { "navn": "Ny flytebrygge", "kategori": "Tiltak" },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
@@ -24,7 +24,7 @@
     },
     {
       "type": "Feature",
-      "properties": { "name": "", "category": "" },
+      "properties": { "name": "Moloforlenging", "category": "Tiltak" },
       "geometry": {
         "type": "LineString",
         "coordinates": [

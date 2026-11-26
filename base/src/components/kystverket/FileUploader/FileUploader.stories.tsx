@@ -52,7 +52,7 @@ const Wrapper = (props: FileUploaderProps) => {
 };
 
 const meta = {
-  title: 'Form/FileUploader',
+  title: 'Components/Form/FileUploader',
   component: Wrapper,
   decorators: [
     (Story) => (

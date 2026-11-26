@@ -17,6 +17,7 @@ export type BorderedRadioGroupProps = BorderedGroupProps & {
 const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
   const generatedId = useId();
   const groupName = props.id ?? generatedId;
+  const errorId = useId();
   const errorText = typeof props.error === 'string' && props.error.length > 0 ? props.error : undefined;
   const hasError = !!props.error;
 
@@ -40,10 +41,21 @@ const BorderedRadioGroup = (props: BorderedRadioGroupProps) => {
             onChange={() => props.onChange?.(el.value)}
             onBlur={() => props.onBlur?.()}
             aria-invalid={hasError ? true : undefined}
+            aria-describedby={errorText ? errorId : undefined}
           />
         ))}
       </div>
-      {errorText && <ValidationMessage>{errorText}</ValidationMessage>}
+      {/*
+        Vi kobler feilmeldingen til radioknappene selv. ds-field (designsystemet-web) gjør det bare for en
+        feilmelding som er direkte barn av fieldset-et, og bare hvis den fantes da radioknappene ble rendret,
+        så en feil som dukker opp etter innsending blir aldri koblet. div-en holder ds-field unna, så id-en
+        ikke havner to ganger i aria-describedby når feilen finnes fra start.
+      */}
+      {errorText && (
+        <div>
+          <ValidationMessage id={errorId}>{errorText}</ValidationMessage>
+        </div>
+      )}
     </Fieldset>
   );
 };

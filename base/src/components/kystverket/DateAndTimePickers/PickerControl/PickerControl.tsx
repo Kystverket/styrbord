@@ -6,6 +6,8 @@ import styles from './PickerControl.module.css';
 
 export interface PickerControlProps {
   kind: PickerKind;
+  /** Id on the text input — the field's input as far as Label and ErrorSummary go. */
+  id?: string;
   textRef: RefObject<HTMLInputElement | null>;
   nativeRef: RefObject<HTMLInputElement | null>;
   text: string;
@@ -32,6 +34,7 @@ export interface PickerControlProps {
 export const PickerControl = ({ kind, ...props }: PickerControlProps) => (
   <div className={styles.wrapper} data-button={kind.button} data-picked={props.picked || undefined}>
     <Input
+      id={props.id}
       ref={props.textRef}
       className={styles.input}
       type="text"

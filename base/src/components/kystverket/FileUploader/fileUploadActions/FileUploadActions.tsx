@@ -9,10 +9,16 @@ type FileUploadActionsProps = {
   dialogRef: React.RefObject<ExistingFilesDialogHandle | null>;
   t: (key: string) => string;
   onUploadFile: (uploadedFiles: File[]) => void;
+  /** Goes on the primary visible control; the hidden inputs derive their ids from it. */
+  controlId: string;
+  /** Space-separated ids for the visible controls' aria-describedby (label, error, description). */
+  describedBy: string;
   allowedFileTypes: string[];
 } & Pick<FileUploaderProps, 'variant' | 'existingFilesProvider' | 'withCaptureButton' | 'multiple' | 'uploadActions'>;
 
 export function FileUploadActions({
+  controlId,
+  describedBy,
   variant,
   fileInputRef,
   onUploadFile,
@@ -35,6 +41,13 @@ export function FileUploadActions({
   const showDefaultUploadButton = variant === 'buttons' || (variant === 'capture' && !canUseCamera);
   const stretchButtons = !showDefaultUploadButton;
 
+  // Exactly one visible control carries the field id, so an ErrorSummary link to `#id` can focus it.
+  const primaryControl = variant === 'dropzone' ? 'dropzone' : showDefaultUploadButton ? 'upload' : 'capture';
+  const controlProps = (control: typeof primaryControl) => ({
+    id: control === primaryControl ? controlId : undefined,
+    'aria-describedby': describedBy || undefined,
+  });
+
   const onChangeFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
@@ -45,12 +58,15 @@ export function FileUploadActions({
 
   return (
     <>
+      {/* `hidden` (not just display: none) keeps Field from treating these as its input: the visible
+          controls carry the id and aria wiring instead, and Field warns when it finds two inputs. */}
       {/* Default */}
       <input
         type="file"
+        hidden
         style={{ display: 'none' }}
         ref={fileInputRef}
-        id="fileUploadButton"
+        id={`${controlId}-input`}
         name="fileUploadButton"
         accept={allowedFileTypes?.join(',')}
         multiple={multiple}
@@ -60,9 +76,10 @@ export function FileUploadActions({
       <input
         capture="environment"
         type="file"
+        hidden
         style={{ display: 'none' }}
         ref={fileCameraInputRef}
-        id="fileCaptureUploadButton"
+        id={`${controlId}-capture`}
         name="fileCaptureUploadButton"
         accept={allowedFileTypes.join(',')}
         onChange={onChangeFileUpload}
@@ -71,6 +88,7 @@ export function FileUploadActions({
         {variant === 'dropzone' && (
           <div
             role="button"
+            {...controlProps('dropzone')}
             aria-label={t('dropzoneText')}
             tabIndex={0}
             onKeyDown={(e) => {
@@ -99,7 +117,12 @@ export function FileUploadActions({
         )}
         <Surface gap={2} className={classes.buttonRow} horizontal wrap>
           {showDefaultUploadButton && (
-            <Button className={classes.uploadButton} variant="outline" onClick={() => fileInputRef.current?.click()}>
+            <Button
+              className={classes.uploadButton}
+              variant="outline"
+              {...controlProps('upload')}
+              onClick={() => fileInputRef.current?.click()}
+            >
               <Icon material="upload" />
               {t('buttonLabel')}
             </Button>
@@ -107,6 +130,7 @@ export function FileUploadActions({
           {showCaptureButton && (
             <Button
               variant="outline"
+              {...controlProps('capture')}
               className={`${classes.uploadButton} ${stretchButtons ? classes.stretch : ''}`}
               onClick={() => fileCameraInputRef.current?.click()}
             >

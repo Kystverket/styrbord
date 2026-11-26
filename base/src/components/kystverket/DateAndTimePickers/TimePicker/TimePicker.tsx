@@ -6,6 +6,8 @@ import { timeKind } from '../PickerControl/pickerKinds';
 import { usePickerText } from '../PickerControl/usePickerText';
 
 export interface TimePickerProps {
+  /** Id on the underlying `<input>`, e.g. for linking from an ErrorSummary. Generated if omitted. */
+  id?: string;
   className?: string;
   loading?: boolean;
   width?: InputSize;
@@ -74,7 +76,7 @@ export const TimePicker = ({
         <LabelContent text={label} required={required} optional={optional} loading={loading} />
       </Label>
       {props.description && <Field.Description>{props.description}</Field.Description>}
-      <PickerControl {...control} />
+      <PickerControl {...control} id={props.id} />
       {shownError && <ValidationMessage>{shownError}</ValidationMessage>}
     </Field>
   );

@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/react-vite';
+import remarkGfm from 'remark-gfm';
 
 const config: StorybookConfig = {
   stories: [
@@ -13,7 +14,11 @@ const config: StorybookConfig = {
     '@storybook/addon-links',
     '@chromatic-com/storybook',
     'storybook-addon-tag-badges',
-    '@storybook/addon-docs',
+    {
+      name: '@storybook/addon-docs',
+      // MDX støtter ikke GitHub-markdown (tabeller, gjennomstreking, oppgavelister) uten remark-gfm.
+      options: { mdxPluginOptions: { mdxCompileOptions: { remarkPlugins: [remarkGfm] } } },
+    },
   ],
 
   core: {

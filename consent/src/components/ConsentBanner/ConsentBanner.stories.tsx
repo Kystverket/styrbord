@@ -19,17 +19,19 @@ type Story = StoryObj<ConsentStoryArgs>;
 
 /**
  * Banneret er ikke en modal: det låser verken fokus eller siden bak seg. Et samtykke som er
- * framtvunget ved å sperre innholdet er ikke gyldig etter GDPR, og de tre valgene er derfor
+ * framtvunget ved å sperre innholdet er ikke gyldig etter GDPR, og «Godta» og «Avslå» er derfor
  * også likestilte visuelt.
  *
- * `ConsentPreferencesDialog` står mountet ved siden av, som den må gjøre i en applikasjon også:
+ * I standardvarianten `floating` må `ConsentPreferencesDialog` stå mountet ved siden av, som her:
  * «Velg selv» setter `activeUI` til `dialog`, og da skjuler banneret seg selv. Er ikke dialogen
- * der til å ta over, forsvinner banneret uten at noe kommer i stedet, og brukeren sitter igjen
- * uten vei videre.
+ * der til å ta over, forsvinner banneret uten at noe kommer i stedet.
+ *
+ * Med `layout="banner"` ligger det øverst i innholdet, og «Velg selv» utvider banneret med
+ * innstillingene.
  */
 export const Default: Story = {
-  render: ({ language }) => (
-    <ConsentDemo language={language}>
+  render: ({ language, layout }) => (
+    <ConsentDemo language={language} layout={layout}>
       <ConsentBanner />
       <ConsentPreferencesDialog />
     </ConsentDemo>

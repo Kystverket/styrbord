@@ -76,9 +76,16 @@ There are no meaningful tests in either workspace (`test` scripts are no-ops).
 **Components** (`consent/src/components/`):
 
 - `ConsentProvider` — Creates the consent store and provides it. Everything else must live inside it.
-- `CookieConsent` — Banner, preferences dialog and settings button in one. What apps normally mount.
+  Its `layout` prop picks `floating` (default, the 2.x placement: fixed banner at the bottom that does not
+  block the page, preferences in a modal dialog opened on request) or `banner` (Designsystemet's pattern:
+  in-flow at the top of the page, preferences expand inside the banner). `floating` is the default on
+  purpose — it doesn't force a layout change or an immediate choice on apps.
+- `CookieConsent` — Banner, preferences and settings button in one. What apps normally mount. With
+  `layout="banner"` it must go first in `<body>`, since that is where the banner renders.
 - `ConsentBanner` / `ConsentPreferencesDialog` / `ConsentSettingsButton` — The individual surfaces, exported
-  for apps that want to place them themselves.
+  for apps that want to place them themselves. The dialog renders nothing with `layout="banner"`.
+- `ConsentPreferences/` (internal) — The checkbox `fieldset` and the save/accept/reject buttons, shared by
+  the expanded banner and the dialog.
 - `ManageConsentLink` — Text-link alternative to the floating settings button.
 
 **State** lives in `utility/consentStore.ts` (c15t, offline mode) and is read through `hooks/useConsent.ts`.
@@ -87,7 +94,7 @@ Translations for nb-NO, nn-NO and en-US ship with the package in `src/i18n/`.
 **No Styrbord dependency — on purpose.** Some applications cannot take on the whole design system,
 and a consent banner is exactly the thing they still need. So consent depends only on
 `@kystverket/styrbord-tokens`, and the handful of controls it needs live in
-`components/shared/` (`Button`, `Switch`); the dialog is a native `<dialog>` with `showModal()`,
+`components/shared/` (`Button`, `Checkbox`); the dialog is a native `<dialog>` with `showModal()`,
 the settings icon is an inline SVG, and `ManageConsentLink` is a `<button>` styled as a link.
 Do not reach for `@kystverket/styrbord` here, and do not add a component to `shared/` that the
 consent surfaces don't actually use — it is not a second design system.
@@ -108,12 +115,14 @@ Consequences worth knowing:
   plugin in `vite.config.mts` builds `theme.css` and fails the build if `style.css` ever
   contains `:root` or a `ds` layer again. Standalone apps import `theme.css` + `style.css`;
   Styrbord apps import `style.css` only.
-- **`ConsentPreferencesDialog` must be mounted wherever `ConsentBanner` or
-  `ConsentSettingsButton` is.** Both hide themselves when they set `activeUI` to `dialog`, so
-  without the dialog the surface vanishes with nothing to replace it and the user can neither
-  give nor withdraw consent. `utility/dialogRegistry.ts` counts mounted dialogs and warns on the
-  console when a visible surface has none — the check is deferred one tick because sibling
-  effects run in order and the dialog registers after the banner above it.
+- **The surface that shows the preferences must be mounted wherever one that opens them is** —
+  `ConsentPreferencesDialog` with `layout="floating"`, `ConsentBanner` with `layout="banner"`.
+  `activeUI === 'dialog'` means "preferences open" in both layouts. The banner and the settings
+  button hide themselves when they set it, so without the right surface the user is left with
+  nothing and can neither give nor withdraw consent. `utility/dialogRegistry.ts` counts the
+  mounted surface for the current layout and warns on the console when a visible opener has
+  none — the check is deferred one tick because sibling effects run in order and the surface may
+  register after the one above it.
 - **React 18.2 is supported**, so no React 19-only APIs. Exported components carry an explicit
   `ReactElement` return type: an inferred return type emits `React.JSX.Element`, which does not
   exist in `@types/react` 18.2 and breaks consumers on that version.
@@ -202,6 +211,32 @@ kart's **CSS** uses bare `var(--ds-color-*)` with no hex fallback. `@kystverket/
 - **Where stories go** — depends on whether Styrbord wraps the component:
   - Styrbord has a wrapper component in `src/` → story is co-located: `ComponentName/ComponentName.stories.tsx`. This is the common case (~65 stories).
   - Styrbord only re-exports the Designsystemet component (no `.tsx` in `src/`, at most a `.override.scss`) → story lives in `base/storybook/stories/designsystemet/ComponentName/` (~20 stories).
+- **Story titles (base)** follow purpose, not where the file lives. Top level, in sidebar order:
+  `Foundations` (tokens, typography, icons, logo, språk) · `Components/{Actions, Form, Feedback,
+Navigation, Overlays, Data display, Layout}` · `Page` (header, footer, shells) · `Patterns`
+  (compositions) · `Utilities` · `Deprecated`. The order is set in `base/.storybook/preview.ts`;
+  a new subgroup must be added there too.
+- **Patterns** are compositions of several components — example forms, dashboards, whole pages.
+  They live in `base/storybook/stories/patterns/<Group>/<Name>/` as `<Name>.tsx` + `README.md` +
+  `<Name>.stories.tsx`, are titled `Patterns/<Group>/<Name>`, and import only from `~/main`.
+  See `patterns/Introduksjon.mdx` and `Forms/Soknadsskjema/` for the worked example.
+
+### Shipped guidance (`base/docs/` → `dist/docs/`)
+
+Applications and their AI tools read Styrbord's guidance from
+`node_modules/@kystverket/styrbord/dist/docs/`, so it always matches the installed version.
+`scripts/build-docs.mjs` (last step of `npm run build`) assembles it: `base/docs/*.md` as-is,
+`v2.md` as `migrering-v2.md`, each pattern's `README.md`, and a generated `patterns/README.md`
+index. Consequences:
+
+- **`base/docs/` is public, versioned guidance.** Write it for app developers and agents, not for
+  Styrbord contributors. When a change alters how a component should be used (new prop, renamed
+  variant, deprecation), update `docs/komponenter.md` or `docs/skjema.md` in the same PR.
+- **A pattern ships as guidance, not code.** Its `README.md` (rules, reasoning, short snippets) is
+  what reaches apps; the `.tsx` is only the Storybook demo. This is deliberate: each app does
+  validation, state and data fetching its own way, and a full component to copy would suggest
+  otherwise. Keep snippets to how Styrbord is wired (ids, `error`, `ErrorSummary`, focus) and import
+  from `@kystverket/styrbord` — the build fails on a `~/` import in a pattern README.
 - Storybook configuration, static pages and the decorator live in `storybook/` (not `src/`).
 - Shared CSS for map pickers: `components/shared/MapPicker.module.css`.
 
@@ -264,4 +299,8 @@ Run `npm run pretty:fix` (or `npm run pretty:fix --workspace base`) and `npm run
   through the wrapper. The mapping table lives in the `ButtonProps.variant` JSDoc and in the
   Storybook docs page; keep all three in sync. Note this is about `variant` only — `color` being
   capped at `primary | neutral | danger` is a separate, still-open issue.
+- **No outreach labels on GitHub issues.** When you create an issue, do not add `good first issue`,
+  `help wanted`, `hacktoberfest` or any other label that invites outside contributors. The repo is
+  public, but it is maintained by Kystverket, and those labels draw in third-party developers we have no
+  capacity to onboard or review. Plain topic labels such as `documentation` or `bug` are fine.
 - **Prop naming.** Match existing prop conventions instead of inventing new ones — color picks use `data-color`, style variants (e.g. `subtle`, `tinted`) use `data-color-variant`. Keep prop names short: drop redundant prefixes (`weight` not `fontWeight` on `Text` — `font` adds nothing).

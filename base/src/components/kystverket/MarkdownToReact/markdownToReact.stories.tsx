@@ -7,7 +7,7 @@ import { ExtraFileInfo } from '../FileUploader/FileUploader.types';
 import atlas from '@assets/img/atlas/atlas 1.jpeg';
 
 const meta = {
-  title: 'Components/MarkdownToReact',
+  title: 'Components/Data display/MarkdownToReact',
   component: MarkdownToReact,
   decorators: [
     (Story) => (

@@ -252,7 +252,7 @@ function ComponentsSideBySide() {
 }
 
 const meta: Meta = {
-  title: 'Tokens/Størrelsesskala (forslag)',
+  title: 'Foundations/Størrelsesskala (forslag)',
   tags: ['!autodocs'],
   // The toolbar sets data-size-scale on <html>, which would leak into the "Dagens" column.
   globals: { sizeScale: 'current' },

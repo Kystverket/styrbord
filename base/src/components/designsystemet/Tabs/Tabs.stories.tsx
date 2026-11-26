@@ -3,7 +3,7 @@ import type { Meta, StoryFn } from '@storybook/react-vite';
 import { useState } from 'react';
 
 export default {
-  title: 'Components/Tabs',
+  title: 'Components/Navigation/Tabs',
   component: Tabs,
   tags: ['autodocs', 'ds-override'],
   parameters: {

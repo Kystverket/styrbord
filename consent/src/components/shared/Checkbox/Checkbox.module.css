@@ -1,5 +1,5 @@
 @layer styrbord-consent {
-  .switch {
+  .checkbox {
     display: grid;
     grid-template-columns: auto 1fr;
     align-items: center;
@@ -8,31 +8,23 @@
   }
 
   .input {
-    /* Sporet tegnes på selve avkrysningsboksen. `appearance: none` fjerner nettleserens egen
-       tegning, men beholder elementet — og dermed all oppførselen vi ellers måtte bygget selv. */
+    /* `appearance: none` fjerner nettleserens egen tegning, men beholder elementet — og dermed
+       all oppførselen vi ellers måtte bygget selv. */
     appearance: none;
     position: relative;
     flex-shrink: 0;
-    width: var(--ds-size-12);
-    height: var(--ds-size-7);
+    width: var(--ds-size-6);
+    height: var(--ds-size-6);
     margin: 0;
     padding: 0;
-    border: var(--ds-border-width-default) solid var(--ds-color-neutral-border-default);
-    border-radius: var(--ds-border-radius-full);
-    background: var(--ds-color-neutral-surface-default);
+    border: var(--ds-border-width-default) solid var(--ds-color-neutral-border-strong);
+    border-radius: var(--ds-border-radius-sm);
+    background: var(--ds-color-neutral-background-default);
     cursor: pointer;
-    transition: background 120ms ease-in-out;
   }
 
-  .input::after {
-    content: '';
-    position: absolute;
-    inset-block: 2px;
-    inset-inline-start: 2px;
-    aspect-ratio: 1;
-    border-radius: var(--ds-border-radius-full);
-    background: var(--ds-color-neutral-base-default);
-    transition: translate 120ms ease-in-out;
+  .input:hover:not(:checked) {
+    background: var(--ds-color-neutral-surface-hover);
   }
 
   .input:checked {
@@ -40,9 +32,18 @@
     border-color: var(--ds-color-base-default);
   }
 
+  /* Haken tegnes som to kanter på et rotert rektangel, så den følger fargetokenet og trenger
+     verken bilde eller ikonfont. */
   .input:checked::after {
-    background: var(--ds-color-base-contrast-default);
-    translate: calc(var(--ds-size-12) - var(--ds-size-7)) 0;
+    content: '';
+    position: absolute;
+    inset-block-start: 15%;
+    inset-inline-start: 32%;
+    width: 30%;
+    height: 55%;
+    border: solid var(--ds-color-base-contrast-default);
+    border-width: 0 var(--ds-border-width-focus) var(--ds-border-width-focus) 0;
+    rotate: 45deg;
   }
 
   .input:focus-visible {

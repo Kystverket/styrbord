@@ -6,6 +6,8 @@ import { dateTimeKind } from '../PickerControl/pickerKinds';
 import { usePickerText } from '../PickerControl/usePickerText';
 
 export interface DateTimePickerProps {
+  /** Id on the underlying `<input>`, e.g. for linking from an ErrorSummary. Generated if omitted. */
+  id?: string;
   className?: string;
   optional?: boolean | string | undefined;
   required?: boolean | string | undefined;
@@ -62,7 +64,7 @@ export const DateTimePicker = ({
         <LabelContent text={label} required={required} optional={optional} loading={loading} />
       </Label>
       {props.description && <Field.Description>{props.description}</Field.Description>}
-      <PickerControl {...control} />
+      <PickerControl {...control} id={props.id} />
       {shownError && <ValidationMessage>{shownError}</ValidationMessage>}
     </Field>
   );

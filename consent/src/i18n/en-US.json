@@ -1,17 +1,18 @@
 {
   "banner": {
-    "heading": "Cookies",
-    "body": "We use cookies to understand how this service is used, so that we can improve it. You decide what you consent to.",
-    "acceptAll": "Accept all",
-    "rejectAll": "Necessary only",
+    "heading": "May we measure how the service is used?",
+    "body": "We would like to store a little information on your device to see how the service is used, so that we can improve it. You can change your answer at any time.",
+    "acceptAll": "Accept",
+    "rejectAll": "Decline",
     "managePreferences": "Choose yourself"
   },
   "dialog": {
-    "heading": "Cookie settings",
+    "heading": "Choose what we may store",
     "body": "Necessary cookies are always on, because the service does not work without them. The rest is up to you.",
+    "legend": "What may we store?",
     "savePreferences": "Save choices",
     "acceptAll": "Accept all",
-    "rejectAll": "Necessary only",
+    "rejectAll": "Decline all",
     "close": "Close",
     "servicesLabel": "Services",
     "showCookies": "Show cookies",
@@ -53,5 +54,5 @@
       "description": "Used to tailor advertising. Kystverket does not use this today."
     }
   },
-  "manageLink": "Manage cookies"
+  "manageLink": "Change consent"
 }
