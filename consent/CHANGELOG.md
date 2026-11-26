@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/Kystverket/styrbord/compare/styrbord-consent-v2.2.1...styrbord-consent-v3.0.0) (2026-11-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* **consent:** Plasseringen er uendret fra 2.x som standard (`layout="floating"`). Det nye toppbanneret slås på med `layout="banner"`, og `<CookieConsent />` må da stå først i `<body>`. Innstillingene bruker avkrysningsbokser i stedet for brytere, «Godta» og «Avslå» ser like ut, og standardtekstene er endret. `dialog.legend` er en ny påkrevd tekst, så egne `translations.dialog`-overstyringer må få den.
+
+### Features
+
+* **consent:** følg Designsystemets samtykkemønster, toppbanner som valg ([0278732](https://github.com/Kystverket/styrbord/commit/02787324da71b241dcf37f6e5af574b528eb6eee))
+
 ## [2.2.1](https://github.com/Kystverket/styrbord/compare/styrbord-consent-v2.2.0...styrbord-consent-v2.2.1) (2026-11-26)
 
 
