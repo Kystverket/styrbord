@@ -8,15 +8,20 @@
     border-bottom: 1px solid var(--ds-color-border-subtle);
   }
 
-  /* `floating`-varianten: fast nederst i vinduet, over innholdet. */
+  /* `floating`-varianten: et kort fast nederst i vinduet, midtstilt over innholdet. Med både
+     `inset-inline` og `max-width` satt sentrerer `margin-inline: auto` kortet, og på smale
+     skjermer blir `inset-inline` til en marg mot kantene. */
   .floating {
     position: fixed;
-    inset-inline: 0;
+    inset-inline: var(--ds-size-4);
     bottom: calc(var(--ds-size-14) + env(safe-area-inset-bottom, 0px));
     z-index: 1000;
-    padding: var(--ds-size-14) var(--ds-size-7);
+    max-width: 48rem;
+    margin-inline: auto;
+    padding: var(--ds-size-6);
     background: var(--ds-color-neutral-background-default);
     border-bottom: none;
+    border-radius: var(--ds-border-radius-lg);
     box-shadow: var(--ds-shadow-lg);
   }
 
