@@ -1,0 +1,1 @@
+import{K as o}from"./KyvDivider-DRhHbJ6A.js";import{S as t}from"./iframe-BpVtr7CM.js";import"./preload-helper-Dp1pzeXC.js";const s={title:"Components/Layout/KyvDivider",component:o,decorators:[t],tags:["autodocs","kyv"],argTypes:{}},m={args:{}},d=["Default"];export{m as Default,d as __namedExportsOrder,s as default};
