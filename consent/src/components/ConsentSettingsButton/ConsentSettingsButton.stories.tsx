@@ -33,3 +33,21 @@ export const Default: Story = {
     </ConsentDemo>
   ),
 };
+
+/**
+ * Med `layout="modal"` åpner knappen innstillingene i en modal dialog, slik i 2.x. Knappen gjør
+ * det samme i begge varianter — setter `activeUI` til `dialog` — og det er varianten som avgjør
+ * om banneret utvides eller dialogen åpnes.
+ *
+ * Her trengs bare dialogen ved siden av knappen; banneret er ikke med fordi brukeren alt har
+ * svart.
+ */
+export const Modal: Story = {
+  args: { layout: 'modal' },
+  render: ({ language, layout }) => (
+    <ConsentDemo language={language} layout={layout} start="answered">
+      <ConsentSettingsButton />
+      <ConsentPreferencesDialog />
+    </ConsentDemo>
+  ),
+};
