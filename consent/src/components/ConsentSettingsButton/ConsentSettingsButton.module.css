@@ -32,9 +32,4 @@
     outline: var(--ds-border-width-focus) solid var(--ds-color-focus-outer);
     outline-offset: var(--ds-border-width-focus);
   }
-
-  .icon {
-    width: var(--ds-size-6);
-    height: var(--ds-size-6);
-  }
 }
