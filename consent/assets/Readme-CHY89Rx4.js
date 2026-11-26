@@ -1,6 +1,6 @@
-import{j as e}from"./iframe-BOepwi60.js";import{u as s,a as o,b as i}from"./blocks-Cd0CbxHh.js";import"./preload-helper-Dp1pzeXC.js";import"./index-aht3whl9.js";const a=`# Styrbord Consent
+import{j as e}from"./iframe-Dri1631o.js";import{u as s,a as o,b as i}from"./blocks-BC5WWe3l.js";import"./preload-helper-Dp1pzeXC.js";import"./index-DP9UQ_Ze.js";const a=`# Styrbord Consent
 
-Samtykke for informasjonskapsler (cookie-banner, innstillingsdialog og tilhørende logikk) for
+Samtykke for informasjonskapsler (cookie-banner, innstillinger og tilhørende logikk) for
 Kystverkets interne og eksterne applikasjoner.
 
 Pakken står på egne bein: den bruker ikke \`@kystverket/styrbord\`, bare designtokenene, slik at
@@ -38,13 +38,20 @@ import '@kystverket/styrbord-consent/style.css';
 > samme cascade layer som i Styrbord (\`dsno\`), så importeres det likevel i en Styrbord-app, slår
 > kopiene seg sammen i stedet for å overstyre hverandre.
 
-Legg \`ConsentProvider\` rundt applikasjonen og \`CookieConsent\` inni. Sistnevnte gir banner,
-innstillingsdialog og den flytende knappen som åpner innstillingene igjen.
+Legg \`ConsentProvider\` rundt applikasjonen og \`CookieConsent\` inni. Sistnevnte gir banneret,
+innstillingene og den flytende knappen som åpner innstillingene igjen.
 
-> Plasserer du flatene hver for seg i stedet, må \`ConsentPreferencesDialog\` alltid være med.
-> Både banneret og innstillingsknappen skjuler seg selv når de åpner innstillingene, så uten
-> dialogen forsvinner flaten uten at noe kommer i stedet. Pakken advarer i konsollet om den
-> oppdager det.
+### Plassering: \`layout\`
+
+Samtykket kan vises på to måter, valgt med \`layout\` på \`ConsentProvider\`:
+
+- **\`floating\`** (standard) legger banneret fast nederst i vinduet. Det låser ikke siden, så
+  brukeren kan lese og bruke tjenesten uten å svare først. «Velg selv» åpner innstillingene i en
+  modal dialog. Plasseringen av \`<CookieConsent />\` spiller ingen rolle.
+- **\`banner\`** følger [Designsystemets mønster](https://designsystemet.no/no/patterns/consent-banner):
+  banneret ligger i innholdet og skyver siden ned, i stedet for å dekke den. «Velg selv» utvider
+  banneret med innstillingene. Banneret havner der \`<CookieConsent />\` står, så den må stå
+  **først i \`<body>\`, før «Hopp til hovedinnhold»**.
 
 \`\`\`tsx
 import { ConsentProvider, CookieConsent, hotjarService, plausibleService } from '@kystverket/styrbord-consent';
@@ -58,6 +65,31 @@ import { ConsentProvider, CookieConsent, hotjarService, plausibleService } from 
   <CookieConsent />
 </ConsentProvider>;
 \`\`\`
+
+Med toppbanner:
+
+\`\`\`tsx
+<ConsentProvider layout="banner" …>
+  <CookieConsent />
+  <a href="#main">Hopp til hovedinnhold</a>
+  {children}
+</ConsentProvider>
+\`\`\`
+
+> Plasserer du flatene hver for seg i stedet for gjennom \`CookieConsent\`, må flaten som viser
+> innstillingene være med: \`ConsentPreferencesDialog\` i \`floating\`-varianten, \`ConsentBanner\` i
+> \`banner\`-varianten. Banneret og innstillingsknappen skjuler seg selv når de åpner innstillingene,
+> så uten den forsvinner flaten uten at noe kommer i stedet. Pakken advarer i konsollet om den
+> oppdager det.
+
+### Oppgradering fra 2.x
+
+- Plasseringen er uendret som standard (\`layout="floating"\`). Det nye toppbanneret slås på med
+  \`layout="banner"\`.
+- Innstillingene bruker avkrysningsbokser i stedet for brytere, og «Godta» og «Avslå» ser like ut.
+- Tekstene er skrevet om etter Designsystemets råd: overskriften er et spørsmål om formålet, og
+  avslå-knappen heter «Avslå» / «Avslå alle» i stedet for «Kun nødvendige». Har du overstyrt tekster
+  med \`translations\`, sjekk at de fortsatt passer. Ny tekst: \`dialog.legend\`.
 
 Les samtykke i egen kode med \`useConsent\`:
 
@@ -168,4 +200,4 @@ Følgende peer dependencies må være tilgjengelige i applikasjonen:
 \`c15t\` og \`@kystverket/styrbord-tokens\` følger med som vanlige avhengigheter.
 `;function r(n){const t={p:"p",...s(),...n.components};return e.jsxs(e.Fragment,{children:[e.jsx(o,{title:"Readme"}),`
 `,e.jsxs(t.p,{children:["Følgende tekst hentes fra README.md i ",e.jsx("a",{href:"https://github.com/Kystverket/styrbord",children:"rotmappen til prosjektet"}),"."]}),`
-`,e.jsx(i,{children:a})]})}function m(n={}){const{wrapper:t}={...s(),...n.components};return t?e.jsx(t,{...n,children:e.jsx(r,{...n})}):r(n)}export{m as default};
+`,e.jsx(i,{children:a})]})}function p(n={}){const{wrapper:t}={...s(),...n.components};return t?e.jsx(t,{...n,children:e.jsx(r,{...n})}):r(n)}export{p as default};
