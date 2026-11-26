@@ -1,8 +1,9 @@
-import { Field, Input, Label, ValidationMessage } from '@digdir/designsystemet-react';
-import { Icon, IconButton, InputSize, LabelContent } from '~/main';
+import { Field, Label, ValidationMessage } from '@digdir/designsystemet-react';
+import { InputSize, LabelContent } from '~/main';
 import { inputWidthClass } from '~/utils/input/input';
-import { useRef } from 'react';
-import styles from '../PickerInput.module.css';
+import { PickerControl } from '../PickerControl/PickerControl';
+import { dateTimeKind } from '../PickerControl/pickerKinds';
+import { usePickerText } from '../PickerControl/usePickerText';
 
 export interface DateTimePickerProps {
   className?: string;
@@ -10,27 +11,21 @@ export interface DateTimePickerProps {
   required?: boolean | string | undefined;
   label: string;
   description?: string;
+  /** Takes precedence over the built-in format and min/max messages. */
   error?: string;
   loading?: boolean;
   onBlur?: () => void;
   value: Date | undefined;
+  /** Called with a valid date and time, or `undefined` when the field is emptied or the typed text is invalid. */
   onChange?: (date: Date | undefined) => void;
+  /** Compared to the minute. */
   minDate?: Date;
+  /** Compared to the minute. */
   maxDate?: Date;
   width?: InputSize;
   disabled?: boolean;
   readOnly?: boolean;
 }
-
-const toDateTimeString = (date: Date | undefined): string => {
-  if (!date) return '';
-  const y = date.getFullYear().toString().padStart(4, '0');
-  const mo = (date.getMonth() + 1).toString().padStart(2, '0');
-  const d = date.getDate().toString().padStart(2, '0');
-  const h = date.getHours().toString().padStart(2, '0');
-  const mi = date.getMinutes().toString().padStart(2, '0');
-  return `${y}-${mo}-${d}T${h}:${mi}`;
-};
 
 export const DateTimePicker = ({
   width = 'full',
@@ -40,53 +35,35 @@ export const DateTimePicker = ({
   required,
   optional,
   onChange,
+  onBlur,
   value,
   minDate,
   maxDate,
+  disabled,
+  readOnly,
   ...props
 }: DateTimePickerProps) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const { error, control } = usePickerText({
+    kind: dateTimeKind,
+    value,
+    min: minDate,
+    max: maxDate,
+    disabled,
+    readOnly,
+    onChange: (date) => onChange?.(date),
+    onBlur,
+  });
+
+  const shownError = props.error || error;
 
   return (
-    <Field className={`${className} ${inputWidthClass(width)}`}>
+    <Field className={[className, inputWidthClass(width)].filter(Boolean).join(' ')}>
       <Label style={{ display: 'block', width: 'fit-content' }}>
         <LabelContent text={label} required={required} optional={optional} loading={loading} />
       </Label>
       {props.description && <Field.Description>{props.description}</Field.Description>}
-      <div className={styles.wrapper}>
-        <Input
-          ref={inputRef}
-          className={styles.input}
-          type="datetime-local"
-          value={toDateTimeString(value)}
-          min={toDateTimeString(minDate)}
-          max={toDateTimeString(maxDate)}
-          disabled={props.disabled}
-          readOnly={props.readOnly}
-          onBlur={props.onBlur}
-          onChange={(e) => {
-            const val = e.target.value;
-            onChange?.(val ? new Date(val) : undefined);
-          }}
-        />
-        <IconButton
-          className={styles.pickerButton}
-          variant="outline"
-          color="neutral"
-          type="button"
-          disabled={props.disabled}
-          tabIndex={props.readOnly ? -1 : 0}
-          aria-hidden={props.readOnly}
-          aria-label="Åpne dato- og klokkeslettvelger"
-          onClick={() => {
-            if (props.readOnly) return;
-            inputRef.current?.showPicker?.();
-          }}
-        >
-          <Icon material="calendar_month" />
-        </IconButton>
-      </div>
-      {props.error && <ValidationMessage>{props.error}</ValidationMessage>}
+      <PickerControl {...control} />
+      {shownError && <ValidationMessage>{shownError}</ValidationMessage>}
     </Field>
   );
 };

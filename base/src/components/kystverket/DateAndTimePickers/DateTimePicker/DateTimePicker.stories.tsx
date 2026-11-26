@@ -22,6 +22,20 @@ const meta = {
   component: Wrapper,
   decorators: [StyrbordDecorator, (Story) => <Story />],
   tags: ['autodocs', 'kyv'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'Tekstfelt for dato og klokkeslett i formatet `dd.mm.åååå tt:mm`, med en knapp som åpner nettleserens ' +
+          'dato- og klokkeslettvelger. Skilletegnene er valgfrie: når feltet mister fokus, vises tidspunktet ' +
+          'som `dd.mm.åååå tt:mm`. Årstallet kan også ha to sifre (`1209011430` eller `120901 1430`), ' +
+          'og tolkes da som for `Datepicker`. Et tidspunkt som ikke finnes (f.eks. `33.09.2001 25:00`) gir en egen feilmelding. ' +
+          'Ugyldig tekst eller tidspunkt utenfor `minDate`/`maxDate` (sammenlignet på minuttet) gir ' +
+          '`onChange(undefined)` og en innebygd feilmelding når feltet mister fokus. ' +
+          '`error` fra applikasjonen vises i stedet for den innebygde meldingen.',
+      },
+    },
+  },
   argTypes: {
     width: {
       control: 'select',

@@ -3,6 +3,22 @@
     "toDark": "Switch to dark mode",
     "toLight": "Switch to light mode"
   },
+  "datepicker": {
+    "afterMax": "The date cannot be after {{date}}",
+    "beforeMin": "The date cannot be before {{date}}",
+    "invalidDate": "This date does not exist. Check the day and month",
+    "invalidFormat": "Invalid date. Enter the date as dd.mm.yyyy, ddmmyyyy or ddmmyy",
+    "open": "Open date picker",
+    "placeholder": "dd.mm.yyyy"
+  },
+  "dateTimePicker": {
+    "afterMax": "The time cannot be after {{date}}",
+    "beforeMin": "The time cannot be before {{date}}",
+    "invalidDateTime": "This date or time does not exist. Check the day, month, hours and minutes",
+    "invalidFormat": "Invalid date and time. Enter it as dd.mm.yyyy hh:mm, ddmmyyyyhhmm or ddmmyy hhmm",
+    "open": "Open date and time picker",
+    "placeholder": "dd.mm.yyyy hh:mm"
+  },
   "filePreviewer": {
     "download": "Download",
     "noFileSelected": "No file selected.",
@@ -93,5 +109,13 @@
   "textArea": {
     "charactersOver": "You have {count} characters too many.",
     "charactersRemaining": "You have {count} characters remaining."
+  },
+  "timePicker": {
+    "afterMax": "The time cannot be after {{time}}",
+    "beforeMin": "The time cannot be before {{time}}",
+    "invalidFormat": "Invalid time. Enter the time as hh:mm or hhmm",
+    "invalidTime": "This time does not exist. Check the hours and minutes",
+    "open": "Open time picker",
+    "placeholder": "hh:mm"
   }
 }

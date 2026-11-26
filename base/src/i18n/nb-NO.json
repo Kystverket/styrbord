@@ -3,6 +3,22 @@
     "toDark": "Bytt til mørk modus",
     "toLight": "Bytt til lys modus"
   },
+  "datepicker": {
+    "afterMax": "Datoen kan ikke være etter {{date}}",
+    "beforeMin": "Datoen kan ikke være før {{date}}",
+    "invalidDate": "Datoen finnes ikke. Sjekk dag og måned",
+    "invalidFormat": "Ugyldig dato. Skriv datoen som dd.mm.åååå, ddmmåååå eller ddmmåå",
+    "open": "Åpne datovelger",
+    "placeholder": "dd.mm.åååå"
+  },
+  "dateTimePicker": {
+    "afterMax": "Tidspunktet kan ikke være etter {{date}}",
+    "beforeMin": "Tidspunktet kan ikke være før {{date}}",
+    "invalidDateTime": "Tidspunktet finnes ikke. Sjekk dag, måned, timer og minutter",
+    "invalidFormat": "Ugyldig tidspunkt. Skriv tidspunktet som dd.mm.åååå tt:mm, ddmmååååttmm eller ddmmåå ttmm",
+    "open": "Åpne dato- og klokkeslettvelger",
+    "placeholder": "dd.mm.åååå tt:mm"
+  },
   "filePreviewer": {
     "download": "Last ned",
     "noFileSelected": "Ingen fil valgt.",
@@ -93,5 +109,13 @@
   "textArea": {
     "charactersOver": "Du har {count} tegn for mye.",
     "charactersRemaining": "Du har {count} tegn igjen."
+  },
+  "timePicker": {
+    "afterMax": "Klokkeslettet kan ikke være etter {{time}}",
+    "beforeMin": "Klokkeslettet kan ikke være før {{time}}",
+    "invalidFormat": "Ugyldig klokkeslett. Skriv klokkeslettet som tt:mm eller ttmm",
+    "invalidTime": "Klokkeslettet finnes ikke. Sjekk timer og minutter",
+    "open": "Åpne klokkeslettvelger",
+    "placeholder": "tt:mm"
   }
 }

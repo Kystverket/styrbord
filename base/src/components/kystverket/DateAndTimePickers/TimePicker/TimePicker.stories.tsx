@@ -22,6 +22,18 @@ const meta = {
   component: Wrapper,
   decorators: [StyrbordDecorator, (Story) => <Story />],
   tags: ['autodocs', 'kyv'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'Tekstfelt for klokkeslett i formatet `tt:mm`. Klokkeslettet kan skrives med eller uten kolon ' +
+          '(punktum og komma blir til kolon); når feltet mister fokus, vises det som `tt:mm`. ' +
+          'Knappen åpner nettleserens klokkeslettvelger, og vises bare i nettlesere som har en (Chrome, Edge, Safari). ' +
+          'Ugyldig tekst eller klokkeslett utenfor `minTime`/`maxTime` gir `onChange(undefined)` og en innebygd ' +
+          'feilmelding når feltet mister fokus. `error` fra applikasjonen vises i stedet for den innebygde meldingen.',
+      },
+    },
+  },
   argTypes: {
     width: {
       control: 'select',
