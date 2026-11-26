@@ -3,14 +3,6 @@
     "toDark": "Bytt til mørk modus",
     "toLight": "Bytt til lys modus"
   },
-  "datepicker": {
-    "afterMax": "Datoen kan ikke være etter {{date}}",
-    "beforeMin": "Datoen kan ikke være før {{date}}",
-    "invalidDate": "Datoen finnes ikke. Sjekk dag og måned",
-    "invalidFormat": "Ugyldig dato. Skriv datoen som dd.mm.åååå, ddmmåååå eller ddmmåå",
-    "open": "Åpne datovelger",
-    "placeholder": "dd.mm.åååå"
-  },
   "dateTimePicker": {
     "afterMax": "Tidspunktet kan ikke være etter {{date}}",
     "beforeMin": "Tidspunktet kan ikke være før {{date}}",
@@ -18,6 +10,14 @@
     "invalidFormat": "Ugyldig tidspunkt. Skriv tidspunktet som dd.mm.åååå tt:mm, ddmmååååttmm eller ddmmåå ttmm",
     "open": "Åpne dato- og klokkeslettvelger",
     "placeholder": "dd.mm.åååå tt:mm"
+  },
+  "datepicker": {
+    "afterMax": "Datoen kan ikke være etter {{date}}",
+    "beforeMin": "Datoen kan ikke være før {{date}}",
+    "invalidDate": "Datoen finnes ikke. Sjekk dag og måned",
+    "invalidFormat": "Ugyldig dato. Skriv datoen som dd.mm.åååå, ddmmåååå eller ddmmåå",
+    "open": "Åpne datovelger",
+    "placeholder": "dd.mm.åååå"
   },
   "filePreviewer": {
     "download": "Last ned",

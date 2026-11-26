@@ -3,14 +3,6 @@
     "toDark": "Switch to dark mode",
     "toLight": "Switch to light mode"
   },
-  "datepicker": {
-    "afterMax": "The date cannot be after {{date}}",
-    "beforeMin": "The date cannot be before {{date}}",
-    "invalidDate": "This date does not exist. Check the day and month",
-    "invalidFormat": "Invalid date. Enter the date as dd.mm.yyyy, ddmmyyyy or ddmmyy",
-    "open": "Open date picker",
-    "placeholder": "dd.mm.yyyy"
-  },
   "dateTimePicker": {
     "afterMax": "The time cannot be after {{date}}",
     "beforeMin": "The time cannot be before {{date}}",
@@ -18,6 +10,14 @@
     "invalidFormat": "Invalid date and time. Enter it as dd.mm.yyyy hh:mm, ddmmyyyyhhmm or ddmmyy hhmm",
     "open": "Open date and time picker",
     "placeholder": "dd.mm.yyyy hh:mm"
+  },
+  "datepicker": {
+    "afterMax": "The date cannot be after {{date}}",
+    "beforeMin": "The date cannot be before {{date}}",
+    "invalidDate": "This date does not exist. Check the day and month",
+    "invalidFormat": "Invalid date. Enter the date as dd.mm.yyyy, ddmmyyyy or ddmmyy",
+    "open": "Open date picker",
+    "placeholder": "dd.mm.yyyy"
   },
   "filePreviewer": {
     "download": "Download",
