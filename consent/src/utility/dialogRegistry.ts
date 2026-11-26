@@ -5,7 +5,7 @@ import { ConsentContext } from './consentContext';
 
 /**
  * Teller over hvor mange flater som kan vise samtykkeinnstillingene: `ConsentPreferencesDialog`
- * i `modal`-varianten, `ConsentBanner` i `banner`-varianten.
+ * i `floating`-varianten, `ConsentBanner` i `banner`-varianten.
  *
  * Et muterbart objekt framfor tilstand: ingen skal rendre på nytt fordi en flate registrerer
  * seg. Dette brukes bare til å advare utviklere om et oppsett som ikke henger sammen.
@@ -49,7 +49,7 @@ const warned = new Set<string>();
 
 /**
  * Advarer når en flate som åpner innstillingene vises uten at flaten som viser dem er mountet:
- * `ConsentPreferencesDialog` i `modal`-varianten, `ConsentBanner` i `banner`-varianten.
+ * `ConsentPreferencesDialog` i `floating`-varianten, `ConsentBanner` i `banner`-varianten.
  *
  * Flatene som åpner innstillingene skjuler seg selv når de setter `activeUI` til `dialog`. Er
  * det ingenting til å ta over, forsvinner flaten uten at noe kommer i stedet, og brukeren sitter
@@ -61,7 +61,7 @@ const warned = new Set<string>();
  */
 export function useMissingConsentDialogWarning(componentName: string, active: boolean): void {
   const registry = useContext(ConsentDialogRegistryContext);
-  const layout = useContext(ConsentContext)?.layout ?? 'banner';
+  const layout = useContext(ConsentContext)?.layout ?? 'floating';
 
   useEffect(() => {
     if (!active || !registry || warned.has(componentName)) {
@@ -77,7 +77,7 @@ export function useMissingConsentDialogWarning(componentName: string, active: bo
       }
 
       warned.add(componentName);
-      const needed = layout === 'modal' ? 'ConsentPreferencesDialog' : 'ConsentBanner';
+      const needed = layout === 'floating' ? 'ConsentPreferencesDialog' : 'ConsentBanner';
       console.warn(
         `<${componentName}> is shown without a <${needed}> mounted, and with layout="${layout}" that is ` +
           `where the consent settings open. Opening them will hide <${componentName}> with nothing to ` +

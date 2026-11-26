@@ -27,9 +27,9 @@ type Story = StoryObj<ConsentStoryArgs>;
  * Flatene slik en applikasjon normalt mounter dem: banneret vises til brukeren har svart,
  * innstillingene åpnes derfra, og innstillingsknappen står igjen i hjørnet etterpå.
  *
- * Standardvarianten `banner` legger banneret øverst i innholdet, og «Velg selv» utvider
- * banneret med avkrysningsbokser. Bytt til `modal` under Controls for et banner som ligger fast
- * over innholdet og innstillinger i en modal dialog.
+ * Standardvarianten `floating` legger banneret fast nederst i vinduet uten å låse siden, og
+ * «Velg selv» åpner innstillingene i en modal dialog. Bytt til `banner` under Controls for et
+ * banner øverst i innholdet, slik Designsystemet anbefaler.
  *
  * Trykk «Nullstill samtykke» for å få banneret tilbake — svaret lagres i en informasjonskapsel
  * og forsvinner ellers ikke ved reload.
@@ -43,11 +43,12 @@ export const Default: Story = {
 };
 
 /**
- * `layout="modal"`: banneret ligger fast nederst over innholdet, og innstillingene åpnes i en
- * modal dialog. For applikasjoner som ikke kan ta inn et banner øverst i layouten.
+ * `layout="banner"`: banneret ligger øverst i innholdet og skyver siden ned, slik Designsystemet
+ * anbefaler, og «Velg selv» utvider banneret med avkrysningsbokser. Krever at `<CookieConsent />`
+ * står først i `<body>`, før «Hopp til hovedinnhold».
  */
-export const Modal: Story = {
-  args: { layout: 'modal' },
+export const Toppbanner: Story = {
+  args: { layout: 'banner' },
   render: ({ language, layout }) => (
     <ConsentDemo language={language} layout={layout}>
       <CookieConsent />

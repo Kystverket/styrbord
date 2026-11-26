@@ -30,7 +30,7 @@ function mergeTranslations(base: ConsentTranslations, overrides?: Partial<Consen
  */
 export function ConsentProvider({
   children,
-  layout = 'banner',
+  layout = 'floating',
   language,
   translations: translationOverrides,
   ...config

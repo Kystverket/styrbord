@@ -45,13 +45,13 @@ innstillingene og den flytende knappen som åpner innstillingene igjen.
 
 Samtykket kan vises på to måter, valgt med `layout` på `ConsentProvider`:
 
-- **`banner`** (standard) følger [Designsystemets mønster](https://designsystemet.no/no/patterns/consent-banner):
+- **`floating`** (standard) legger banneret fast nederst i vinduet. Det låser ikke siden, så
+  brukeren kan lese og bruke tjenesten uten å svare først. «Velg selv» åpner innstillingene i en
+  modal dialog. Plasseringen av `<CookieConsent />` spiller ingen rolle.
+- **`banner`** følger [Designsystemets mønster](https://designsystemet.no/no/patterns/consent-banner):
   banneret ligger i innholdet og skyver siden ned, i stedet for å dekke den. «Velg selv» utvider
-  banneret med innstillingene. Banneret havner der `<CookieConsent />` står, så den skal stå
+  banneret med innstillingene. Banneret havner der `<CookieConsent />` står, så den må stå
   **først i `<body>`, før «Hopp til hovedinnhold»**.
-- **`modal`** legger banneret fast nederst i vinduet, over innholdet, og åpner innstillingene i
-  en modal dialog. For applikasjoner som ikke kan ta inn et banner øverst i layouten. Her spiller
-  plasseringen av `<CookieConsent />` ingen rolle.
 
 ```tsx
 import { ConsentProvider, CookieConsent, hotjarService, plausibleService } from '@kystverket/styrbord-consent';
@@ -61,22 +61,31 @@ import { ConsentProvider, CookieConsent, hotjarService, plausibleService } from 
   cookieDomain=".kystverket.no"
   services={[plausibleService({ domain: 'kystverket.no' }), hotjarService({ siteId: 1234567 })]}
 >
-  <CookieConsent />
-  <a href="#main">Hopp til hovedinnhold</a>
   {children}
+  <CookieConsent />
 </ConsentProvider>;
 ```
 
+Med toppbanner:
+
+```tsx
+<ConsentProvider layout="banner" …>
+  <CookieConsent />
+  <a href="#main">Hopp til hovedinnhold</a>
+  {children}
+</ConsentProvider>
+```
+
 > Plasserer du flatene hver for seg i stedet for gjennom `CookieConsent`, må flaten som viser
-> innstillingene være med: `ConsentBanner` i `banner`-varianten, `ConsentPreferencesDialog` i
-> `modal`-varianten. Banneret og innstillingsknappen skjuler seg selv når de åpner innstillingene,
+> innstillingene være med: `ConsentPreferencesDialog` i `floating`-varianten, `ConsentBanner` i
+> `banner`-varianten. Banneret og innstillingsknappen skjuler seg selv når de åpner innstillingene,
 > så uten den forsvinner flaten uten at noe kommer i stedet. Pakken advarer i konsollet om den
 > oppdager det.
 
 ### Oppgradering fra 2.x
 
-- Banneret ligger nå i innholdet som standard. Flytt `<CookieConsent />` først i `<body>`, eller
-  sett `layout="modal"` for å beholde oppførselen fra 2.x.
+- Plasseringen er uendret som standard (`layout="floating"`). Det nye toppbanneret slås på med
+  `layout="banner"`.
 - Innstillingene bruker avkrysningsbokser i stedet for brytere, og «Godta» og «Avslå» ser like ut.
 - Tekstene er skrevet om etter Designsystemets råd: overskriften er et spørsmål om formålet, og
   avslå-knappen heter «Avslå» / «Avslå alle» i stedet for «Kun nødvendige». Har du overstyrt tekster

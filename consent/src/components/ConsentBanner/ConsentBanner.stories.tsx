@@ -22,12 +22,12 @@ type Story = StoryObj<ConsentStoryArgs>;
  * framtvunget ved å sperre innholdet er ikke gyldig etter GDPR, og «Godta» og «Avslå» er derfor
  * også likestilte visuelt.
  *
- * I standardvarianten `banner` ligger det øverst i innholdet, og «Velg selv» utvider banneret
- * med innstillingene.
+ * I standardvarianten `floating` må `ConsentPreferencesDialog` stå mountet ved siden av, som her:
+ * «Velg selv» setter `activeUI` til `dialog`, og da skjuler banneret seg selv. Er ikke dialogen
+ * der til å ta over, forsvinner banneret uten at noe kommer i stedet.
  *
- * I `modal`-varianten må `ConsentPreferencesDialog` stå mountet ved siden av, som her: «Velg
- * selv» setter `activeUI` til `dialog`, og da skjuler banneret seg selv. Er ikke dialogen der
- * til å ta over, forsvinner banneret uten at noe kommer i stedet.
+ * Med `layout="banner"` ligger det øverst i innholdet, og «Velg selv» utvider banneret med
+ * innstillingene.
  */
 export const Default: Story = {
   render: ({ language, layout }) => (

@@ -118,7 +118,7 @@ export function ConsentDemo({
   language = 'nb-NO',
   services = demoServices,
   start = 'banner',
-  layout = 'banner',
+  layout = 'floating',
   children,
 }: Readonly<ConsentDemoProps>) {
   // Ryddes i selve renderen, ikke i en effekt: `ConsentProvider` leser lagret samtykke idet
@@ -149,12 +149,12 @@ export function ConsentDemo({
       {children}
 
       <div
-        className={[styles.page, layout === 'modal' && styles.modalPage].filter(Boolean).join(' ')}
+        className={[styles.page, layout === 'floating' && styles.floatingPage].filter(Boolean).join(' ')}
         data-color="neutral"
       >
         <h1 className={styles.heading}>Demoside</h1>
         <p>
-          {layout === 'modal'
+          {layout === 'floating'
             ? 'Innholdet her er en flate for samtykkeflatene å legge seg over. Banneret ligger nederst, og innstillingsknappen dukker opp i hjørnet når banneret er besvart.'
             : 'Banneret ligger øverst i innholdet og skyver siden ned. Innstillingsknappen dukker opp i hjørnet når banneret er besvart, og åpner innstillingene i banneret igjen.'}
         </p>
@@ -189,7 +189,7 @@ export const languageArgTypes = {
   layout: {
     name: 'Variant',
     control: 'inline-radio' as const,
-    options: ['banner', 'modal'] satisfies ConsentLayout[],
+    options: ['floating', 'banner'] satisfies ConsentLayout[],
     description: 'Sendes videre til `ConsentProvider` som `layout`.',
   },
 };
@@ -197,5 +197,5 @@ export const languageArgTypes = {
 /** Standardverdier for `ConsentStoryArgs`. */
 export const languageArgs: ConsentStoryArgs = {
   language: 'nb-NO',
-  layout: 'banner',
+  layout: 'floating',
 };

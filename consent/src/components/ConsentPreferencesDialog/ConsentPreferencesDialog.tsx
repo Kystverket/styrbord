@@ -8,10 +8,12 @@ import { ConsentPreferencesActions, ConsentPreferencesFields } from '../ConsentP
 import styles from './ConsentPreferencesDialog.module.css';
 
 /**
- * Innstillingsdialogen i `modal`-varianten, der brukeren krysser av kategoriene enkeltvis.
+ * Innstillingsdialogen i `floating`-varianten (standard), der brukeren krysser av kategoriene
+ * enkeltvis.
  *
- * Rendrer ingenting i `banner`-varianten: der åpnes innstillingene i selve banneret, slik
- * Designsystemet anbefaler, fordi en modal dialog dekker innholdet og tvinger fram et valg.
+ * Dialogen er modal, men åpnes bare når brukeren selv ber om det via «Velg selv» eller
+ * innstillingsknappen — den tvinger aldri fram et valg. Rendrer ingenting i `banner`-varianten:
+ * der åpnes innstillingene i selve banneret.
  *
  * Bygget på `<dialog>` direkte. `showModal()` gir fokusfelle, Escape og backdrop gratis, som er
  * hele grunnen til at vi ikke trenger et dialogbibliotek for å klare oss uten Styrbord.
@@ -22,12 +24,12 @@ export function ConsentPreferencesDialog(): ReactElement | null {
   const activeUI = useStoreValue(store, (state) => state.activeUI);
 
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const modal = layout === 'modal';
-  const open = modal && activeUI === 'dialog';
+  const floating = layout === 'floating';
+  const open = floating && activeUI === 'dialog';
 
   // Melder fra om at dialogen finnes, slik at banneret og innstillingsknappen kan advare
-  // dersom de står der uten den. Bare i `modal`: i `banner` er det banneret som tar over.
-  useRegisterConsentDialog(modal);
+  // dersom de står der uten den. Bare i `floating`: i `banner` er det banneret som tar over.
+  useRegisterConsentDialog(floating);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -42,7 +44,7 @@ export function ConsentPreferencesDialog(): ReactElement | null {
     }
   }, [open]);
 
-  if (!mounted || !modal) {
+  if (!mounted || !floating) {
     return null;
   }
 

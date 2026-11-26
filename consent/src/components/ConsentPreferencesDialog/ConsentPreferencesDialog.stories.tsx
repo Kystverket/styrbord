@@ -10,16 +10,15 @@ const meta: Meta<ConsentStoryArgs> = {
     layout: 'fullscreen',
   },
   argTypes: languageArgTypes,
-  // Dialogen finnes bare i `modal`-varianten.
-  args: { ...languageArgs, layout: 'modal' },
+  args: languageArgs,
 };
 
 export default meta;
 type Story = StoryObj<ConsentStoryArgs>;
 
 /**
- * Dialogen åpnet med én gang. Den brukes bare med `layout="modal"`; i standardvarianten åpnes
- * innstillingene i banneret.
+ * Dialogen åpnet med én gang. Den brukes i standardvarianten `floating`; med `layout="banner"`
+ * åpnes innstillingene i selve banneret, og dialogen rendrer ingenting.
  *
  * Kategoriene og kapseltabellene er utledet av tjenestelista — det er ingen fast liste i
  * komponenten. Plausible havner i «alltid på»-seksjonen fordi den går uten samtykke, mens

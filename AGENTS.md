@@ -76,11 +76,12 @@ There are no meaningful tests in either workspace (`test` scripts are no-ops).
 **Components** (`consent/src/components/`):
 
 - `ConsentProvider` — Creates the consent store and provides it. Everything else must live inside it.
-  Its `layout` prop picks `banner` (default, Designsystemet's pattern: in-flow at the top of the page,
-  preferences expand inside the banner) or `modal` (the 2.x behaviour: fixed banner over the content,
-  preferences in a modal dialog).
-- `CookieConsent` — Banner, preferences and settings button in one. What apps normally mount — first in
-  `<body>` with `layout="banner"`, since that is where the banner renders.
+  Its `layout` prop picks `floating` (default, the 2.x placement: fixed banner at the bottom that does not
+  block the page, preferences in a modal dialog opened on request) or `banner` (Designsystemet's pattern:
+  in-flow at the top of the page, preferences expand inside the banner). `floating` is the default on
+  purpose — it doesn't force a layout change or an immediate choice on apps.
+- `CookieConsent` — Banner, preferences and settings button in one. What apps normally mount. With
+  `layout="banner"` it must go first in `<body>`, since that is where the banner renders.
 - `ConsentBanner` / `ConsentPreferencesDialog` / `ConsentSettingsButton` — The individual surfaces, exported
   for apps that want to place them themselves. The dialog renders nothing with `layout="banner"`.
 - `ConsentPreferences/` (internal) — The checkbox `fieldset` and the save/accept/reject buttons, shared by
@@ -115,7 +116,7 @@ Consequences worth knowing:
   contains `:root` or a `ds` layer again. Standalone apps import `theme.css` + `style.css`;
   Styrbord apps import `style.css` only.
 - **The surface that shows the preferences must be mounted wherever one that opens them is** —
-  `ConsentBanner` with `layout="banner"`, `ConsentPreferencesDialog` with `layout="modal"`.
+  `ConsentPreferencesDialog` with `layout="floating"`, `ConsentBanner` with `layout="banner"`.
   `activeUI === 'dialog'` means "preferences open" in both layouts. The banner and the settings
   button hide themselves when they set it, so without the right surface the user is left with
   nothing and can neither give nor withdraw consent. `utility/dialogRegistry.ts` counts the

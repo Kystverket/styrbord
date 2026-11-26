@@ -100,17 +100,18 @@ export type ConsentState = Record<ConsentCategory, boolean>;
  * Hvilken del av samtykke-grensesnittet som vises.
  *
  * `dialog` betyr «innstillingene er åpne», uansett variant: i `banner`-varianten vises de i
- * selve banneret, i `modal`-varianten i `ConsentPreferencesDialog`.
+ * selve banneret, i `floating`-varianten i `ConsentPreferencesDialog`.
  */
 export type ConsentUI = 'none' | 'banner' | 'dialog';
 
 /**
  * Hvordan samtykket presenteres.
  *
- * - `banner` (standard): banneret ligger øverst i innholdet og skyver siden ned. Innstillingene
- *   åpnes i selve banneret. Dette er Designsystemets mønster: ingenting dekker innholdet, og
- *   ingenting tvinger fram et valg.
- * - `modal`: banneret ligger fast nederst i vinduet over innholdet, og innstillingene åpnes i en
- *   modal dialog. For applikasjoner som ikke kan ta inn et banner i layouten sin.
+ * - `floating` (standard): banneret ligger fast nederst i vinduet. Det låser ikke siden, så
+ *   brukeren kan lese og bruke tjenesten uten å svare først. «Velg selv» åpner innstillingene i
+ *   en modal dialog. Plasseringen av `<CookieConsent />` i DOM-en spiller ingen rolle.
+ * - `banner`: banneret ligger øverst i innholdet og skyver siden ned, og innstillingene åpnes i
+ *   selve banneret. Dette er Designsystemets mønster — ingenting dekker innholdet — men det krever
+ *   at `<CookieConsent />` står først i `<body>`.
  */
-export type ConsentLayout = 'banner' | 'modal';
+export type ConsentLayout = 'floating' | 'banner';

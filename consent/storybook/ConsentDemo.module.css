@@ -10,8 +10,8 @@
   line-height: var(--ds-body-md-line-height);
 }
 
-/* Plass til banneret i `modal`-varianten, som ligger fast mot bunnen av vinduet. */
-.modalPage {
+/* Plass til banneret i `floating`-varianten, som ligger fast mot bunnen av vinduet. */
+.floatingPage {
   padding-bottom: 18rem;
 }
 

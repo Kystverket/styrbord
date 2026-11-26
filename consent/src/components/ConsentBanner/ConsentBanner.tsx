@@ -11,14 +11,14 @@ import styles from './ConsentBanner.module.css';
 /**
  * Samtykkebanneret som vises til brukeren har tatt et valg.
  *
- * I `banner`-varianten (standard) ligger det i innholdet og skyver siden ned, slik
- * Designsystemet anbefaler. Det skal derfor stå først i `<body>`, før «Hopp til hovedinnhold».
- * «Velg selv» utvider banneret med innstillingene i stedet for å åpne en dialog, og det er også
- * her innstillingsknappen og `ManageConsentLink` lander — med fokus flyttet hit, så brukeren
- * ikke blir stående igjen der hen klikket.
- *
- * I `modal`-varianten ligger det fast nederst i vinduet, og «Velg selv» åpner
+ * I `floating`-varianten (standard) ligger det fast nederst i vinduet, og «Velg selv» åpner
  * `ConsentPreferencesDialog`.
+ *
+ * I `banner`-varianten ligger det i innholdet og skyver siden ned, slik Designsystemet anbefaler.
+ * Det skal derfor stå først i `<body>`, før «Hopp til hovedinnhold». «Velg selv» utvider banneret
+ * med innstillingene i stedet for å åpne en dialog, og det er også her innstillingsknappen og
+ * `ManageConsentLink` lander — med fokus flyttet hit, så brukeren ikke blir stående igjen der
+ * hen klikket.
  *
  * Uansett variant er det ikke en modal: det låser ikke fokus og blokkerer ikke siden. Å sperre
  * innholdet til brukeren har svart presser fram et samtykke, og et framtvunget samtykke er ikke
@@ -36,7 +36,7 @@ export function ConsentBanner(): ReactElement | null {
   // I `banner`-varianten er det banneret selv som viser innstillingene, så det trenger ingen
   // dialog — men innstillingsknappen og `ManageConsentLink` trenger banneret.
   useRegisterConsentDialog(layout === 'banner');
-  useMissingConsentDialogWarning('ConsentBanner', visible && layout === 'modal');
+  useMissingConsentDialogWarning('ConsentBanner', visible && layout === 'floating');
 
   const headingRef = useRef<HTMLHeadingElement>(null);
   const wasExpanded = useRef(expanded);
@@ -62,7 +62,7 @@ export function ConsentBanner(): ReactElement | null {
   }
 
   const { saveConsents, setActiveUI } = store.getState();
-  const className = [styles.banner, layout === 'modal' && styles.floating].filter(Boolean).join(' ');
+  const className = [styles.banner, layout === 'floating' && styles.floating].filter(Boolean).join(' ');
 
   if (expanded) {
     // Tilbake til banneret om brukeren ikke har svart ennå, ellers helt bort.

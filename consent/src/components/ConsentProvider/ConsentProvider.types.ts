@@ -6,9 +6,10 @@ export interface ConsentProviderProps extends ConsentConfig {
   children: ReactNode;
 
   /**
-   * Hvordan samtykket presenteres. Standard er `banner`, som legger banneret øverst i innholdet
-   * — da må `<CookieConsent />` stå først i `<body>`, før «Hopp til hovedinnhold». `modal` gir et
-   * banner som ligger fast over innholdet og innstillinger i en modal dialog.
+   * Hvordan samtykket presenteres. Standard er `floating`: et banner som ligger fast nederst i
+   * vinduet uten å låse siden, og innstillinger i en modal dialog. `banner` legger banneret øverst
+   * i innholdet, slik Designsystemet anbefaler — da må `<CookieConsent />` stå først i `<body>`,
+   * før «Hopp til hovedinnhold».
    */
   layout?: ConsentLayout;
 
