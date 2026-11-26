@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.20.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.19.0...styrbord-v2.20.0) (2026-11-26)
+
+
+### Features
+
+* **base:** ColorSchemeToggle får data-size, icon-variant og mono som standard ([#429](https://github.com/Kystverket/styrbord/issues/429)) ([b14a5cf](https://github.com/Kystverket/styrbord/commit/b14a5cf510d2e2db48b83eae876ceed5110506bd))
+
 ## [2.19.0](https://github.com/Kystverket/styrbord/compare/styrbord-v2.18.1...styrbord-v2.19.0) (2026-11-25)
 
 
