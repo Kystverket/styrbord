@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.1](https://github.com/Kystverket/styrbord/compare/styrbord-consent-v2.2.0...styrbord-consent-v2.2.1) (2026-11-26)
+
+
+### Bug Fixes
+
+* **consent:** ikonet på innstillingsknappen følger tekstfargen i mørk modus ([#425](https://github.com/Kystverket/styrbord/issues/425)) ([fa36ef6](https://github.com/Kystverket/styrbord/commit/fa36ef6293b27b79f9bd29e0a161c4cefd85b7af))
+
 ## [2.2.0](https://github.com/Kystverket/styrbord/compare/styrbord-consent-v2.1.0...styrbord-consent-v2.2.0) (2026-11-18)
 
 
