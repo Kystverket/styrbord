@@ -16,7 +16,6 @@
     z-index: 1000;
     padding: var(--ds-size-14) var(--ds-size-7);
     background: var(--ds-color-neutral-background-default);
-    border-top: 1px solid var(--ds-color-neutral-border-subtle);
     border-bottom: none;
     box-shadow: var(--ds-shadow-lg);
   }
