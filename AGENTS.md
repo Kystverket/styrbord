@@ -290,4 +290,8 @@ Run `npm run pretty:fix` (or `npm run pretty:fix --workspace base`) and `npm run
   through the wrapper. The mapping table lives in the `ButtonProps.variant` JSDoc and in the
   Storybook docs page; keep all three in sync. Note this is about `variant` only — `color` being
   capped at `primary | neutral | danger` is a separate, still-open issue.
+- **No outreach labels on GitHub issues.** When you create an issue, do not add `good first issue`,
+  `help wanted`, `hacktoberfest` or any other label that invites outside contributors. The repo is
+  public, but it is maintained by Kystverket, and those labels draw in third-party developers we have no
+  capacity to onboard or review. Plain topic labels such as `documentation` or `bug` are fine.
 - **Prop naming.** Match existing prop conventions instead of inventing new ones — color picks use `data-color`, style variants (e.g. `subtle`, `tinted`) use `data-color-variant`. Keep prop names short: drop redundant prefixes (`weight` not `fontWeight` on `Text` — `font` adds nothing).
