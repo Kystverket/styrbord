@@ -1,7 +1,7 @@
 import { useId, type ChangeEvent, type ReactElement } from 'react';
-import styles from './Switch.module.css';
+import styles from './Checkbox.module.css';
 
-export interface ConsentSwitchProps {
+export interface ConsentCheckboxProps {
   label: string;
   description?: string;
   checked: boolean;
@@ -9,22 +9,23 @@ export interface ConsentSwitchProps {
 }
 
 /**
- * Av/på-bryteren for en samtykkekategori.
+ * Avkrysningsboksen for en samtykkekategori.
  *
- * En vanlig avkrysningsboks med `role="switch"` framfor et eget kontrollelement: da følger
- * tastaturbruk, skjermlesere og nettleserens autofyll med av seg selv, og det eneste vi
- * faktisk trenger å gjøre er å tegne den om.
+ * Avkrysningsboks og ikke bryter, slik Designsystemet anbefaler: en bryter sier at endringen
+ * skjer med en gang, mens samtykket her først lagres når brukeren trykker «Lagre valg».
+ *
+ * Et vanlig `<input type="checkbox">` med `appearance: none`, så tastaturbruk og skjermlesere
+ * følger med av seg selv og det eneste vi gjør er å tegne den om.
  */
-export function Switch({ label, description, checked, onChange }: Readonly<ConsentSwitchProps>): ReactElement {
+export function Checkbox({ label, description, checked, onChange }: Readonly<ConsentCheckboxProps>): ReactElement {
   const id = useId();
   const descriptionId = `${id}-description`;
 
   return (
-    <div className={styles.switch}>
+    <div className={styles.checkbox}>
       <input
         id={id}
         type="checkbox"
-        role="switch"
         className={styles.input}
         checked={checked}
         onChange={onChange}

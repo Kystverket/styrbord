@@ -11,6 +11,7 @@ import {
   useConsent,
   useConsentStore,
   type ConsentLanguage,
+  type ConsentLayout,
   type ConsentService,
 } from '~/main';
 import styles from './ConsentDemo.module.css';
@@ -96,12 +97,18 @@ export interface ConsentDemoProps {
   /** Hvor i forløpet demoen skal starte. */
   start?: ConsentDemoStart;
 
+  /** Sendes videre til `ConsentProvider`. */
+  layout?: ConsentLayout;
+
   /** Samtykkeflatene som skal vises — `<CookieConsent />` eller enkeltkomponentene. */
   children: ReactNode;
 }
 
 /**
- * Siden samtykkeflatene vises på: litt innhold å legge seg over, og en knapp for å nullstille.
+ * Siden samtykkeflatene vises på: litt innhold, og en knapp for å nullstille.
+ *
+ * Samtykkeflatene står først, slik de skal i en applikasjon: i `banner`-varianten havner
+ * banneret der det står i DOM-en, og skal ligge over resten av innholdet.
  *
  * Nullstillingen er poenget med hele rammen. Samtykket lagres i en informasjonskapsel og i
  * localStorage, så uten den ville banneret vært borte for godt etter første klikk — og en
@@ -111,6 +118,7 @@ export function ConsentDemo({
   language = 'nb-NO',
   services = demoServices,
   start = 'banner',
+  layout = 'floating',
   children,
 }: Readonly<ConsentDemoProps>) {
   // Ryddes i selve renderen, ikke i en effekt: `ConsentProvider` leser lagret samtykke idet
@@ -130,12 +138,25 @@ export function ConsentDemo({
   };
 
   return (
-    <ConsentProvider key={generation} language={language} storageKey={STORY_STORAGE_KEY} services={services}>
-      <div className={styles.page} data-color="neutral">
+    <ConsentProvider
+      key={generation}
+      language={language}
+      layout={layout}
+      storageKey={STORY_STORAGE_KEY}
+      services={services}
+    >
+      <ApplyStart start={start} />
+      {children}
+
+      <div
+        className={[styles.page, layout === 'floating' && styles.floatingPage].filter(Boolean).join(' ')}
+        data-color="neutral"
+      >
         <h1 className={styles.heading}>Demoside</h1>
         <p>
-          Innholdet her er bare en flate for samtykkeflatene å legge seg over. Banneret ligger nederst, og
-          innstillingsknappen dukker opp i hjørnet når banneret er besvart.
+          {layout === 'floating'
+            ? 'Innholdet her er en flate for samtykkeflatene å legge seg over. Banneret ligger nederst, og innstillingsknappen dukker opp i hjørnet når banneret er besvart.'
+            : 'Banneret ligger øverst i innholdet og skyver siden ned. Innstillingsknappen dukker opp i hjørnet når banneret er besvart, og åpner innstillingene i banneret igjen.'}
         </p>
         <ConsentStatus />
         <div>
@@ -144,9 +165,6 @@ export function ConsentDemo({
           </Button>
         </div>
       </div>
-
-      <ApplyStart start={start} />
-      {children}
     </ConsentProvider>
   );
 }
@@ -154,9 +172,13 @@ export function ConsentDemo({
 /** Argumentene historiene deler. */
 export interface ConsentStoryArgs {
   language: ConsentLanguage;
+  layout: ConsentLayout;
 }
 
-/** Språkvelgeren i Controls, slik at de tre tekstsettene kan sammenlignes uten å bytte historie. */
+/**
+ * Språk- og variantvelgeren i Controls, slik at tekstsettene og de to variantene kan
+ * sammenlignes uten å bytte historie.
+ */
 export const languageArgTypes = {
   language: {
     name: 'Språk',
@@ -164,9 +186,16 @@ export const languageArgTypes = {
     options: ['nb-NO', 'nn-NO', 'en-US'] satisfies ConsentLanguage[],
     description: 'Sendes videre til `ConsentProvider` som `language`.',
   },
+  layout: {
+    name: 'Variant',
+    control: 'inline-radio' as const,
+    options: ['floating', 'banner'] satisfies ConsentLayout[],
+    description: 'Sendes videre til `ConsentProvider` som `layout`.',
+  },
 };
 
 /** Standardverdier for `ConsentStoryArgs`. */
 export const languageArgs: ConsentStoryArgs = {
   language: 'nb-NO',
+  layout: 'floating',
 };

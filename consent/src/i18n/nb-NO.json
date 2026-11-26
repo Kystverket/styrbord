@@ -1,17 +1,18 @@
 {
   "banner": {
-    "heading": "Informasjonskapsler",
-    "body": "Vi bruker informasjonskapsler for å forstå hvordan tjenesten brukes, slik at vi kan gjøre den bedre. Du velger selv hva du samtykker til.",
-    "acceptAll": "Godta alle",
-    "rejectAll": "Kun nødvendige",
+    "heading": "Kan vi måle hvordan tjenesten brukes?",
+    "body": "Vi vil gjerne lagre litt informasjon på enheten din for å se hvordan tjenesten brukes, slik at vi kan gjøre den bedre. Du kan endre svaret når som helst.",
+    "acceptAll": "Godta",
+    "rejectAll": "Avslå",
     "managePreferences": "Velg selv"
   },
   "dialog": {
-    "heading": "Innstillinger for informasjonskapsler",
+    "heading": "Velg hva vi kan lagre",
     "body": "Nødvendige informasjonskapsler er alltid på, fordi tjenesten ikke fungerer uten dem. De øvrige velger du selv.",
+    "legend": "Hva kan vi lagre?",
     "savePreferences": "Lagre valg",
     "acceptAll": "Godta alle",
-    "rejectAll": "Kun nødvendige",
+    "rejectAll": "Avslå alle",
     "close": "Lukk",
     "servicesLabel": "Tjenester",
     "showCookies": "Vis informasjonskapsler",
@@ -53,5 +54,5 @@
       "description": "Brukes til å tilpasse annonser. Kystverket bruker ikke dette i dag."
     }
   },
-  "manageLink": "Administrer informasjonskapsler"
+  "manageLink": "Endre samtykke"
 }

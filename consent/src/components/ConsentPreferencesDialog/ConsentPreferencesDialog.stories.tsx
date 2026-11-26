@@ -17,15 +17,16 @@ export default meta;
 type Story = StoryObj<ConsentStoryArgs>;
 
 /**
- * Dialogen åpnet med én gang.
+ * Dialogen åpnet med én gang. Den brukes i standardvarianten `floating`; med `layout="banner"`
+ * åpnes innstillingene i selve banneret, og dialogen rendrer ingenting.
  *
  * Kategoriene og kapseltabellene er utledet av tjenestelista — det er ingen fast liste i
  * komponenten. Plausible havner i «alltid på»-seksjonen fordi den går uten samtykke, mens
- * Hotjar og PostHog får hver sin bryter.
+ * Hotjar og PostHog får hver sin avkrysningsboks.
  */
 export const Default: Story = {
-  render: ({ language }) => (
-    <ConsentDemo language={language} start="dialog">
+  render: ({ language, layout }) => (
+    <ConsentDemo language={language} layout={layout} start="dialog">
       <ConsentPreferencesDialog />
     </ConsentDemo>
   ),

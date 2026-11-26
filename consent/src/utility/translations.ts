@@ -22,6 +22,8 @@ export interface ConsentTranslations {
   dialog: {
     heading: string;
     body: string;
+    /** Spørsmålet over avkrysningsboksene, i `<legend>`. */
+    legend: string;
     savePreferences: string;
     acceptAll: string;
     rejectAll: string;
