@@ -22,7 +22,7 @@
     background: var(--ds-color-neutral-background-default);
     border-bottom: none;
     border-radius: var(--ds-border-radius-lg);
-    box-shadow: var(--ds-shadow-lg);
+    box-shadow: var(--ds-shadow-xl);
   }
 
   .inner {
