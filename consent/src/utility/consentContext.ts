@@ -1,10 +1,14 @@
 import { createContext, useContext } from 'react';
+import type { ConsentLayout } from './consent.types';
 import type { ConsentStore } from './consentStore';
 import type { ConsentTranslations } from './translations';
 
 export interface ConsentContextValue {
   store: ConsentStore;
   translations: ConsentTranslations;
+
+  /** Hvordan samtykket presenteres. Se `ConsentLayout`. */
+  layout: ConsentLayout;
 
   /** Falsk når ingen av tjenestene faktisk avhenger av samtykke. Da vises ikke banneret. */
   showsBanner: boolean;

@@ -1,21 +1,30 @@
 @layer styrbord-consent {
+  /* `banner`-varianten: en vanlig seksjon i flyten øverst på siden. Den skyver innholdet ned i
+     stedet for å legge seg over det, så den trenger verken z-index eller skygge. */
   .banner {
+    padding: var(--ds-size-6) var(--ds-size-4);
+    background: var(--ds-color-background-tinted);
+    color: var(--ds-color-neutral-text-default);
+    border-bottom: 1px solid var(--ds-color-border-subtle);
+  }
+
+  /* `modal`-varianten: fast nederst i vinduet, over innholdet. */
+  .floating {
     position: fixed;
     inset-inline: 0;
     bottom: calc(var(--ds-size-14) + env(safe-area-inset-bottom, 0px));
     z-index: 1000;
     padding: var(--ds-size-14) var(--ds-size-7);
     background: var(--ds-color-neutral-background-default);
-    color: var(--ds-color-neutral-text-default);
     border-top: 1px solid var(--ds-color-neutral-border-subtle);
+    border-bottom: none;
     box-shadow: var(--ds-shadow-lg);
-    padding-bottom: var(--ds-size-14);
   }
 
   .inner {
     display: flex;
     flex-direction: column;
-    gap: var(--ds-size-7);
+    gap: var(--ds-size-6);
     max-width: 68rem;
     margin-inline: auto;
   }
@@ -26,6 +35,13 @@
     gap: var(--ds-size-2);
   }
 
+  .header {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: var(--ds-size-4);
+  }
+
   .heading {
     margin: 0;
     font-family: var(--ds-font-family), system-ui, sans-serif;
@@ -33,6 +49,17 @@
     font-weight: var(--ds-heading-xs-font-weight);
     line-height: var(--ds-heading-xs-line-height);
     letter-spacing: var(--ds-heading-xs-letter-spacing);
+  }
+
+  /* Overskriften får fokus programmatisk når banneret utvides; ringen hjelper seende
+     tastaturbrukere å se hvor de havnet. */
+  .heading:focus-visible {
+    outline: var(--ds-border-width-focus) solid var(--ds-color-focus-outer);
+    outline-offset: var(--ds-border-width-focus);
+  }
+
+  .heading:focus:not(:focus-visible) {
+    outline: none;
   }
 
   .body {
@@ -46,5 +73,34 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--ds-size-2);
+  }
+
+  .close {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--ds-size-10);
+    height: var(--ds-size-10);
+    padding: 0;
+    border: none;
+    border-radius: var(--ds-border-radius-full);
+    background: transparent;
+    color: var(--ds-color-neutral-text-subtle);
+    cursor: pointer;
+  }
+
+  .close svg {
+    width: var(--ds-size-5);
+    height: var(--ds-size-5);
+  }
+
+  .close:hover {
+    background: var(--ds-color-surface-hover);
+  }
+
+  .close:focus-visible {
+    outline: var(--ds-border-width-focus) solid var(--ds-color-focus-outer);
+    outline-offset: var(--ds-border-width-focus);
   }
 }

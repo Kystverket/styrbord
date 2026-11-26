@@ -96,5 +96,21 @@ export interface ConsentConfig {
 /** Samtykkestatus per kategori. */
 export type ConsentState = Record<ConsentCategory, boolean>;
 
-/** Hvilken del av samtykke-grensesnittet som vises. */
+/**
+ * Hvilken del av samtykke-grensesnittet som vises.
+ *
+ * `dialog` betyr «innstillingene er åpne», uansett variant: i `banner`-varianten vises de i
+ * selve banneret, i `modal`-varianten i `ConsentPreferencesDialog`.
+ */
 export type ConsentUI = 'none' | 'banner' | 'dialog';
+
+/**
+ * Hvordan samtykket presenteres.
+ *
+ * - `banner` (standard): banneret ligger øverst i innholdet og skyver siden ned. Innstillingene
+ *   åpnes i selve banneret. Dette er Designsystemets mønster: ingenting dekker innholdet, og
+ *   ingenting tvinger fram et valg.
+ * - `modal`: banneret ligger fast nederst i vinduet over innholdet, og innstillingene åpnes i en
+ *   modal dialog. For applikasjoner som ikke kan ta inn et banner i layouten sin.
+ */
+export type ConsentLayout = 'banner' | 'modal';

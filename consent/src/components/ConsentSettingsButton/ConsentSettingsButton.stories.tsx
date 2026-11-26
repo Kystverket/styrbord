@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ConsentDemo, languageArgTypes, languageArgs, type ConsentStoryArgs } from '../../../storybook/ConsentDemo';
+import { ConsentBanner } from '../ConsentBanner/ConsentBanner';
 import { ConsentPreferencesDialog } from '../ConsentPreferencesDialog/ConsentPreferencesDialog';
 import { ConsentSettingsButton } from './ConsentSettingsButton';
 
@@ -23,8 +24,10 @@ type Story = StoryObj<ConsentStoryArgs>;
  * samme hjørne er bare forvirrende.
  */
 export const Default: Story = {
-  render: ({ language }) => (
-    <ConsentDemo language={language} start="answered">
+  render: ({ language, layout }) => (
+    <ConsentDemo language={language} layout={layout} start="answered">
+      {/* Innstillingene åpnes i banneret (`banner`) eller i dialogen (`modal`), så begge står her. */}
+      <ConsentBanner />
       <ConsentSettingsButton />
       <ConsentPreferencesDialog />
     </ConsentDemo>

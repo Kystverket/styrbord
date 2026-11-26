@@ -16,7 +16,7 @@ export interface UseConsentResult {
   /** Sant inntil brukeren har tatt et valg. */
   needsDecision: boolean;
 
-  /** Åpner innstillingsdialogen. */
+  /** Åpner innstillingene: i banneret med `layout="banner"`, i dialogen med `layout="modal"`. */
   showPreferences: () => void;
 
   /** Lukker banner og dialog uten å lagre. */

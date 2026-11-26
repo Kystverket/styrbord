@@ -9,9 +9,14 @@ import { ConsentSettingsButton } from '../ConsentSettingsButton/ConsentSettingsB
 import styles from './CookieConsent.module.css';
 
 /**
- * Samtykkeflatene samlet: banner, innstillingsdialog og knappen som åpner den igjen.
+ * Samtykkeflatene samlet: banner, innstillinger og knappen som åpner dem igjen.
  *
- * Legges én gang inne i `<ConsentProvider>`, typisk nederst i applikasjonens layout.
+ * Legges én gang inne i `<ConsentProvider>`. Med standardvarianten `layout="banner"` havner
+ * banneret der komponenten står, så den skal stå først i `<body>`, før «Hopp til
+ * hovedinnhold». Med `layout="modal"` ligger flatene fast over innholdet, og plasseringen
+ * spiller ingen rolle.
+ *
+ * `ConsentPreferencesDialog` mountes i begge varianter, men rendrer bare noe i `modal`.
  */
 export function CookieConsent(): ReactElement {
   return (

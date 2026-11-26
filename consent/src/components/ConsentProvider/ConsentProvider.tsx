@@ -30,6 +30,7 @@ function mergeTranslations(base: ConsentTranslations, overrides?: Partial<Consen
  */
 export function ConsentProvider({
   children,
+  layout = 'banner',
   language,
   translations: translationOverrides,
   ...config
@@ -61,13 +62,14 @@ export function ConsentProvider({
   const value = useMemo<ConsentContextValue>(
     () => ({
       store,
+      layout,
       translations: mergeTranslations(getConsentTranslations(language), translationOverrides),
       showsBanner: hasGatedServices(services),
       mounted,
     }),
     // `serviceIds` står her med vilje i stedet for `services`: lista bygges som regel inline
     // hos kallstedet og har ny identitet ved hver render, mens innholdet er det samme.
-    [store, language, translationOverrides, serviceIds, mounted],
+    [store, layout, language, translationOverrides, serviceIds, mounted],
   );
 
   return (

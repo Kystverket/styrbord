@@ -1,6 +1,6 @@
 # Styrbord Consent
 
-Samtykke for informasjonskapsler (cookie-banner, innstillingsdialog og tilhørende logikk) for
+Samtykke for informasjonskapsler (cookie-banner, innstillinger og tilhørende logikk) for
 Kystverkets interne og eksterne applikasjoner.
 
 Pakken står på egne bein: den bruker ikke `@kystverket/styrbord`, bare designtokenene, slik at
@@ -38,13 +38,20 @@ import '@kystverket/styrbord-consent/style.css';
 > samme cascade layer som i Styrbord (`dsno`), så importeres det likevel i en Styrbord-app, slår
 > kopiene seg sammen i stedet for å overstyre hverandre.
 
-Legg `ConsentProvider` rundt applikasjonen og `CookieConsent` inni. Sistnevnte gir banner,
-innstillingsdialog og den flytende knappen som åpner innstillingene igjen.
+Legg `ConsentProvider` rundt applikasjonen og `CookieConsent` inni. Sistnevnte gir banneret,
+innstillingene og den flytende knappen som åpner innstillingene igjen.
 
-> Plasserer du flatene hver for seg i stedet, må `ConsentPreferencesDialog` alltid være med.
-> Både banneret og innstillingsknappen skjuler seg selv når de åpner innstillingene, så uten
-> dialogen forsvinner flaten uten at noe kommer i stedet. Pakken advarer i konsollet om den
-> oppdager det.
+### Plassering: `layout`
+
+Samtykket kan vises på to måter, valgt med `layout` på `ConsentProvider`:
+
+- **`banner`** (standard) følger [Designsystemets mønster](https://designsystemet.no/no/patterns/consent-banner):
+  banneret ligger i innholdet og skyver siden ned, i stedet for å dekke den. «Velg selv» utvider
+  banneret med innstillingene. Banneret havner der `<CookieConsent />` står, så den skal stå
+  **først i `<body>`, før «Hopp til hovedinnhold»**.
+- **`modal`** legger banneret fast nederst i vinduet, over innholdet, og åpner innstillingene i
+  en modal dialog. For applikasjoner som ikke kan ta inn et banner øverst i layouten. Her spiller
+  plasseringen av `<CookieConsent />` ingen rolle.
 
 ```tsx
 import { ConsentProvider, CookieConsent, hotjarService, plausibleService } from '@kystverket/styrbord-consent';
@@ -54,10 +61,26 @@ import { ConsentProvider, CookieConsent, hotjarService, plausibleService } from 
   cookieDomain=".kystverket.no"
   services={[plausibleService({ domain: 'kystverket.no' }), hotjarService({ siteId: 1234567 })]}
 >
-  {children}
   <CookieConsent />
+  <a href="#main">Hopp til hovedinnhold</a>
+  {children}
 </ConsentProvider>;
 ```
+
+> Plasserer du flatene hver for seg i stedet for gjennom `CookieConsent`, må flaten som viser
+> innstillingene være med: `ConsentBanner` i `banner`-varianten, `ConsentPreferencesDialog` i
+> `modal`-varianten. Banneret og innstillingsknappen skjuler seg selv når de åpner innstillingene,
+> så uten den forsvinner flaten uten at noe kommer i stedet. Pakken advarer i konsollet om den
+> oppdager det.
+
+### Oppgradering fra 2.x
+
+- Banneret ligger nå i innholdet som standard. Flytt `<CookieConsent />` først i `<body>`, eller
+  sett `layout="modal"` for å beholde oppførselen fra 2.x.
+- Innstillingene bruker avkrysningsbokser i stedet for brytere, og «Godta» og «Avslå» ser like ut.
+- Tekstene er skrevet om etter Designsystemets råd: overskriften er et spørsmål om formålet, og
+  avslå-knappen heter «Avslå» / «Avslå alle» i stedet for «Kun nødvendige». Har du overstyrt tekster
+  med `translations`, sjekk at de fortsatt passer. Ny tekst: `dialog.legend`.
 
 Les samtykke i egen kode med `useConsent`:
 
