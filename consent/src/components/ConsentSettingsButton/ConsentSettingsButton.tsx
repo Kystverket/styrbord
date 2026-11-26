@@ -7,12 +7,12 @@ import { useStoreValue } from '../../hooks/useStoreValue';
 import styles from './ConsentSettingsButton.module.css';
 
 /**
- * Tannhjulet på innstillingsknappen.
+ * Cookie-ikonet på innstillingsknappen.
  *
  * Tegnet som inline SVG framfor et ikonbibliotek eller en ikonfont: pakken skal kunne brukes
  * uten at applikasjonen laster noe annet enn den ene CSS-fila.
  */
-function SettingsIcon() {
+function CookieIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px">
       <path
@@ -54,7 +54,7 @@ export function ConsentSettingsButton(): ReactElement | null {
       title={translations.manageLink}
       onClick={() => store.getState().setActiveUI('dialog')}
     >
-      <SettingsIcon />
+      <CookieIcon />
     </button>
   );
 }
