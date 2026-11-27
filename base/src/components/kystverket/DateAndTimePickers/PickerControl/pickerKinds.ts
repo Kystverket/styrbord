@@ -167,7 +167,13 @@ const parseDateTime = (text: string): Date | undefined => {
   const date = parseDate(match[1]);
   const time = parseTime(match[2]);
   if (!date || !time) return undefined;
+  const day = date.getDate();
   date.setHours(time.getHours(), time.getMinutes());
+  // setHours moves a time that falls in a daylight-saving gap (02:30 on the spring-forward night
+  // in Europe/Oslo) to one that exists (03:30), so a mismatch means the time doesn't exist that day.
+  if (date.getDate() !== day || date.getHours() !== time.getHours() || date.getMinutes() !== time.getMinutes()) {
+    return undefined;
+  }
   return date;
 };
 

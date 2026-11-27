@@ -1,4 +1,5 @@
 import { ChangeEvent, KeyboardEvent, MouseEvent, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import { useTranslation } from '~/translations';
 import type { PickerControlProps } from './PickerControl';
 import type { PickerKind } from './pickerKinds';
@@ -70,12 +71,24 @@ export const usePickerText = ({
     caretRef.current = null;
   });
 
+  // The last value passed to onChange, until the parent echoes it back. Kept as state, not a ref,
+  // because it is read during render.
+  const [emitted, setEmitted] = useState<{ value: Date | undefined }>();
+  const report = (next: Date | undefined) => {
+    setEmitted({ value: next });
+    onChange(next);
+  };
+
   // Follow `value` when it changes from outside, but leave the text alone when the change is
   // just the parent echoing back what was typed — otherwise typing would be reformatted mid-edit.
+  // An echo of `undefined` after a rejected entry (before minDate, say) must keep that text and
+  // its error too, and the text alone can't tell it from a reset, hence `emitted`.
   const [prevValue, setPrevValue] = useState(value);
   if (value?.getTime() !== prevValue?.getTime()) {
     setPrevValue(value);
-    if (kind.format(value) !== kind.format(kind.parse(normalize(kind, text, false)))) {
+    const echo = emitted !== undefined && kind.format(emitted.value) === kind.format(value);
+    if (emitted !== undefined) setEmitted(undefined);
+    if (!echo && kind.format(value) !== kind.format(kind.parse(normalize(kind, text, false)))) {
       setText(kind.format(value));
       setError(undefined);
     }
@@ -99,7 +112,41 @@ export const usePickerText = ({
     return { parsed, error: undefined };
   };
 
+  /** Settles the text as on blur: lays it out, sets the error and reports the value. */
+  const commit = () => {
+    const normalized = normalize(kind, text, true);
+    const result = validate(normalized);
+    setError(result.error);
+    if (result.error) {
+      if (value) report(undefined);
+      setText(normalized);
+    } else {
+      setText(kind.format(result.parsed));
+      // Some input only becomes a value on blur (a two-digit year), so report it here too
+      if (kind.format(result.parsed) !== kind.format(value)) report(result.parsed);
+    }
+  };
+
+  // onBlur runs after the value from the blur has reached the parent, so it sees that value and
+  // not the one from before. Calling it straight from the handler would hand the app the callback
+  // from the previous render, closed over the old value.
+  const onBlurRef = useRef(onBlur);
+  useLayoutEffect(() => {
+    onBlurRef.current = onBlur;
+  });
+  const [blurCount, setBlurCount] = useState(0);
+  useEffect(() => {
+    if (blurCount > 0) onBlurRef.current?.();
+  }, [blurCount]);
+
   const onTextKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    // Enter can submit the form without a blur, so settle the text first. flushSync makes the
+    // parent re-render before the browser submits, so its submit handler sees the new value and
+    // not the old one (or a half-typed edit that was never reported).
+    if (e.key === 'Enter' && !e.nativeEvent.isComposing && !readOnly) {
+      flushSync(commit);
+      return;
+    }
     // Mobile keyboards often report "Unidentified" here; the filter in onTextChange covers those and paste.
     if (e.key.length === 1 && !kind.allowedKey.test(e.key) && !e.ctrlKey && !e.metaKey && !e.altKey) {
       e.preventDefault();
@@ -119,29 +166,19 @@ export const usePickerText = ({
     const result = validate(normalize(kind, kept, false));
     if (result.error) return;
     setError(undefined);
-    if (kind.format(result.parsed) !== kind.format(value)) onChange(result.parsed);
+    if (kind.format(result.parsed) !== kind.format(value)) report(result.parsed);
   };
 
   const onTextBlur = () => {
-    const normalized = normalize(kind, text, true);
-    const result = validate(normalized);
-    setError(result.error);
-    if (result.error) {
-      if (value) onChange(undefined);
-      setText(normalized);
-    } else {
-      setText(kind.format(result.parsed));
-      // Some input only becomes a value on blur (a two-digit year), so report it here too
-      if (kind.format(result.parsed) !== kind.format(value)) onChange(result.parsed);
-    }
-    onBlur?.();
+    commit();
+    setBlurCount((n) => n + 1);
   };
 
   const onNativeChange = (e: ChangeEvent<HTMLInputElement>) => {
     const parsed = kind.fromNative(e.target.value);
     setText(kind.format(parsed));
     setError(undefined);
-    onChange(parsed);
+    report(parsed);
     // Never move focus to the text field. Opened from the keyboard, focus stays on the button.
     // Opened with the mouse, the button only has focus because it was clicked, and keeping it
     // there leaves it looking pressed after the popup closes, so let go of it.
