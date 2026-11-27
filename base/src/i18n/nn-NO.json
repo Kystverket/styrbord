@@ -3,6 +3,22 @@
     "toDark": "Byt til mørk modus",
     "toLight": "Byt til lys modus"
   },
+  "dateTimePicker": {
+    "afterMax": "Tidspunktet kan ikkje vere etter {{date}}",
+    "beforeMin": "Tidspunktet kan ikkje vere før {{date}}",
+    "invalidDateTime": "Tidspunktet finst ikkje. Sjekk dag, månad, timar og minutt",
+    "invalidFormat": "Ugyldig tidspunkt. Skriv tidspunktet som dd.mm.åååå tt:mm, ddmmååååttmm eller ddmmåå ttmm",
+    "open": "Opne dato- og klokkeslettveljar",
+    "placeholder": "dd.mm.åååå tt:mm"
+  },
+  "datepicker": {
+    "afterMax": "Datoen kan ikkje vere etter {{date}}",
+    "beforeMin": "Datoen kan ikkje vere før {{date}}",
+    "invalidDate": "Datoen finst ikkje. Sjekk dag og månad",
+    "invalidFormat": "Ugyldig dato. Skriv datoen som dd.mm.åååå, ddmmåååå eller ddmmåå",
+    "open": "Opne datoveljar",
+    "placeholder": "dd.mm.åååå"
+  },
   "filePreviewer": {
     "download": "Last ned",
     "noFileSelected": "Inga fil er vald.",
@@ -93,5 +109,13 @@
   "textArea": {
     "charactersOver": "Du har {count} teikn for mykje.",
     "charactersRemaining": "Du har {count} teikn igjen."
+  },
+  "timePicker": {
+    "afterMax": "Klokkeslettet kan ikkje vere etter {{time}}",
+    "beforeMin": "Klokkeslettet kan ikkje vere før {{time}}",
+    "invalidFormat": "Ugyldig klokkeslett. Skriv klokkeslettet som tt:mm eller ttmm",
+    "invalidTime": "Klokkeslettet finst ikkje. Sjekk timar og minutt",
+    "open": "Opne klokkeslettveljar",
+    "placeholder": "tt:mm"
   }
 }

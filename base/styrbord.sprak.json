@@ -30,6 +30,12 @@
     { "key": "search.clear", "checks": ["untranslated"], "languages": ["nn-NO"] },
     { "key": "sideSheet.back", "checks": ["untranslated"], "languages": ["nn-NO"] },
     { "key": "sideSheet.close", "checks": ["untranslated"], "languages": ["nn-NO"] },
-    { "key": "sideSheet.pin", "checks": ["untranslated"], "languages": ["nn-NO"] }
+    { "key": "sideSheet.pin", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "dateTimePicker.invalidFormat", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "dateTimePicker.placeholder", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "datepicker.invalidFormat", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "datepicker.placeholder", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "timePicker.invalidFormat", "checks": ["untranslated"], "languages": ["nn-NO"] },
+    { "key": "timePicker.placeholder", "checks": ["untranslated"], "languages": ["nn-NO"] }
   ]
 }

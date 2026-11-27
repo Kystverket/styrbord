@@ -22,6 +22,20 @@ const meta = {
   component: Wrapper,
   decorators: [StyrbordDecorator, (Story) => <Story />],
   tags: ['autodocs', 'kyv'],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'Tekstfelt for dato i formatet `dd.mm.åååå`, med en knapp som åpner nettleserens kalender. ' +
+          'Datoen kan skrives med eller uten punktum, og med to- eller firesifret årstall; når feltet mister fokus, ' +
+          'vises den som `dd.mm.åååå`. Et tosifret årstall tolkes som et år fra 80 år bakover til 19 år framover ' +
+          '(i 2025: 1945–2044). ' +
+          'En dato som ikke finnes (f.eks. `33.09.2001`) gir en egen feilmelding. ' +
+          'Ugyldig tekst eller dato utenfor `minDate`/`maxDate` gir `onChange(undefined)` og en innebygd feilmelding når feltet mister fokus. ' +
+          '`error` fra applikasjonen vises i stedet for den innebygde meldingen.',
+      },
+    },
+  },
   argTypes: {
     width: {
       control: 'select',

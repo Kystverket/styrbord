@@ -1,8 +1,9 @@
-import { Field, Input, Label, ValidationMessage } from '@digdir/designsystemet-react';
-import { Icon, IconButton, InputSize, LabelContent } from '~/main';
+import { Field, Label, ValidationMessage } from '@digdir/designsystemet-react';
+import { InputSize, LabelContent } from '~/main';
 import { inputWidthClass } from '~/utils/input/input';
-import { useRef } from 'react';
-import styles from '../PickerInput.module.css';
+import { PickerControl } from '../PickerControl/PickerControl';
+import { timeKind } from '../PickerControl/pickerKinds';
+import { usePickerText } from '../PickerControl/usePickerText';
 
 export interface TimePickerProps {
   /** Id on the underlying `<input>`, e.g. for linking from an ErrorSummary. Generated if omitted. */
@@ -14,22 +15,23 @@ export interface TimePickerProps {
   required?: boolean | string;
   label: string;
   description?: string;
+  /** Takes precedence over the built-in format and min/max messages. */
   error?: string;
   onBlur?: () => void;
+  /** Only the time of day is shown; the date part is kept when the time changes. */
   value: Date | undefined;
+  /**
+   * Called with `value`'s date (today if there is none) at the chosen time, or `undefined` when
+   * the field is emptied or the typed text is invalid.
+   */
   onChange?: (date: Date | undefined) => void;
+  /** Only the time of day is compared. */
   minTime?: Date;
+  /** Only the time of day is compared. */
   maxTime?: Date;
   disabled?: boolean;
   readOnly?: boolean;
 }
-
-const toTimeString = (date: Date | undefined): string => {
-  if (!date) return '';
-  const h = date.getHours().toString().padStart(2, '0');
-  const mi = date.getMinutes().toString().padStart(2, '0');
-  return `${h}:${mi}`;
-};
 
 export const TimePicker = ({
   width = 'full',
@@ -39,12 +41,34 @@ export const TimePicker = ({
   required,
   optional,
   onChange,
+  onBlur,
   value,
   minTime,
   maxTime,
+  disabled,
+  readOnly,
   ...props
 }: TimePickerProps) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const { error, control } = usePickerText({
+    kind: timeKind,
+    value,
+    min: minTime,
+    max: maxTime,
+    disabled,
+    readOnly,
+    onChange: (time) => {
+      if (!time) {
+        onChange?.(undefined);
+        return;
+      }
+      const next = new Date(value ?? new Date());
+      next.setHours(time.getHours(), time.getMinutes(), 0, 0);
+      onChange?.(next);
+    },
+    onBlur,
+  });
+
+  const shownError = props.error || error;
 
   return (
     <Field className={[className, inputWidthClass(width)].filter(Boolean).join(' ')}>
@@ -52,48 +76,8 @@ export const TimePicker = ({
         <LabelContent text={label} required={required} optional={optional} loading={loading} />
       </Label>
       {props.description && <Field.Description>{props.description}</Field.Description>}
-      <div className={styles.wrapper}>
-        <Input
-          id={props.id}
-          ref={inputRef}
-          className={styles.input}
-          type="time"
-          value={toTimeString(value)}
-          min={toTimeString(minTime)}
-          max={toTimeString(maxTime)}
-          disabled={props.disabled}
-          readOnly={props.readOnly}
-          onBlur={props.onBlur}
-          onChange={(e) => {
-            const val = e.target.value;
-            if (!val) {
-              onChange?.(undefined);
-              return;
-            }
-            const [hours, minutes] = val.split(':').map(Number);
-            const next = new Date(value ?? new Date());
-            next.setHours(hours, minutes, 0, 0);
-            onChange?.(next);
-          }}
-        />
-        <IconButton
-          className={styles.pickerButton}
-          variant="outline"
-          color="neutral"
-          type="button"
-          disabled={props.disabled}
-          tabIndex={props.readOnly ? -1 : 0}
-          aria-hidden={props.readOnly}
-          aria-label="Åpne klokkeslettvelger"
-          onClick={() => {
-            if (props.readOnly) return;
-            inputRef.current?.showPicker?.();
-          }}
-        >
-          <Icon material="schedule" />
-        </IconButton>
-      </div>
-      {props.error && <ValidationMessage>{props.error}</ValidationMessage>}
+      <PickerControl {...control} id={props.id} />
+      {shownError && <ValidationMessage>{shownError}</ValidationMessage>}
     </Field>
   );
 };

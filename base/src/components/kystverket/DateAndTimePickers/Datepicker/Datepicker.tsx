@@ -1,8 +1,10 @@
-import { Field, Input, Label, ValidationMessage } from '@digdir/designsystemet-react';
-import { Icon, IconButton, InputSize, LabelContent } from '~/main';
+import { Field, Label, ValidationMessage } from '@digdir/designsystemet-react';
+import { InputSize, LabelContent } from '~/main';
 import { inputWidthClass } from '~/utils/input/input';
-import { useRef } from 'react';
-import styles from '../PickerInput.module.css';
+import { PickerControl } from '../PickerControl/PickerControl';
+import { dateKind } from '../PickerControl/pickerKinds';
+import { usePickerText } from '../PickerControl/usePickerText';
+import styles from '../PickerControl/PickerControl.module.css';
 
 export interface DatepickerProps {
   /** Id on the underlying `<input>`, e.g. for linking from an ErrorSummary. Generated if omitted. */
@@ -15,23 +17,17 @@ export interface DatepickerProps {
   required?: boolean | string;
   label: string;
   description?: string;
+  /** Takes precedence over the built-in format and min/max messages. */
   error?: string;
   onBlur?: () => void;
   value: Date | undefined;
+  /** Called with a valid date, or `undefined` when the field is emptied or the typed text is invalid. */
   onChange?: (date: Date | undefined) => void;
   minDate?: Date;
   maxDate?: Date;
   disabled?: boolean;
   readOnly?: boolean;
 }
-
-const toDateString = (date: Date | undefined): string => {
-  if (!date) return '';
-  const y = date.getFullYear().toString().padStart(4, '0');
-  const m = (date.getMonth() + 1).toString().padStart(2, '0');
-  const d = date.getDate().toString().padStart(2, '0');
-  return `${y}-${m}-${d}`;
-};
 
 export const Datepicker = ({
   width,
@@ -41,54 +37,35 @@ export const Datepicker = ({
   required,
   optional,
   onChange,
+  onBlur,
   value,
   minDate,
   maxDate,
+  disabled,
+  readOnly,
   ...props
 }: DatepickerProps) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const { error, control } = usePickerText({
+    kind: dateKind,
+    value,
+    min: minDate,
+    max: maxDate,
+    disabled,
+    readOnly,
+    onChange: (date) => onChange?.(date),
+    onBlur,
+  });
+
+  const shownError = props.error || error;
 
   return (
-    <Field className={`${className} ${width ? inputWidthClass(width) : styles.dateWidth}`}>
+    <Field className={[className, width ? inputWidthClass(width) : styles.dateWidth].filter(Boolean).join(' ')}>
       <Label style={{ display: 'block', width: 'fit-content' }}>
         <LabelContent text={label} required={required} optional={optional} loading={loading} />
       </Label>
       {props.description && <Field.Description>{props.description}</Field.Description>}
-      <div className={styles.wrapper}>
-        <Input
-          id={props.id}
-          ref={inputRef}
-          className={styles.input}
-          type="date"
-          value={toDateString(value)}
-          min={toDateString(minDate)}
-          max={toDateString(maxDate)}
-          disabled={props.disabled}
-          readOnly={props.readOnly}
-          onBlur={props.onBlur}
-          onChange={(e) => {
-            const val = e.target.value;
-            onChange?.(val ? new Date(val + 'T00:00:00') : undefined);
-          }}
-        />
-        <IconButton
-          className={styles.pickerButton}
-          variant="outline"
-          color="neutral"
-          type="button"
-          disabled={props.disabled}
-          tabIndex={props.readOnly ? -1 : 0}
-          aria-hidden={props.readOnly}
-          aria-label="Åpne datovelger"
-          onClick={() => {
-            if (props.readOnly) return;
-            inputRef.current?.showPicker?.();
-          }}
-        >
-          <Icon material="calendar_month" />
-        </IconButton>
-      </div>
-      {props.error && <ValidationMessage>{props.error}</ValidationMessage>}
+      <PickerControl {...control} id={props.id} />
+      {shownError && <ValidationMessage>{shownError}</ValidationMessage>}
     </Field>
   );
 };

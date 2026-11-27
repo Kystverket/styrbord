@@ -1,0 +1,133 @@
+/* Masked text input + picker button + hidden native input, shared by Datepicker, TimePicker and
+   DateTimePicker. The input and button look like one control: one focus ring, one hover
+   outline, one error border. */
+@layer styrbord-modules {
+  /* Default Datepicker width, on the control only: on the whole Field it squeezed the label too,
+     wrapping an optional/required tag onto its own line. */
+  .dateWidth .wrapper {
+    width: 10.25rem;
+    max-width: 100%;
+  }
+
+  .wrapper {
+    display: flex;
+    align-items: stretch;
+    border-radius: 4px;
+    /* anchors .nativeInput */
+    position: relative;
+  }
+
+  .input {
+    flex: 1 1 auto;
+    min-width: 0;
+    border-radius: 4px;
+  }
+
+  /* The button's left border (from the unlayered outline variant) is the divider */
+  .button {
+    display: flex;
+    flex-shrink: 0;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .wrapper[data-button='always'] .input {
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+  }
+
+  /* data-button="native": only show the button where the browser has a native picker to open.
+     Firefox and others without one get a plain text field. */
+  .wrapper[data-button='native'] .button {
+    display: none;
+  }
+  @supports selector(::-webkit-calendar-picker-indicator) {
+    .wrapper[data-button='native'] .button {
+      display: flex;
+    }
+    .wrapper[data-button='native'] .input {
+      border-right: none;
+      border-radius: 4px 0 0 4px;
+    }
+  }
+
+  /* Sits invisibly over the button so the browser anchors its picker popup there.
+     Must stay rendered — showPicker() throws on display:none — so this overrides the
+     `hidden` attribute, which is only there to keep ds-field from picking it as the input. */
+  .nativeInput {
+    display: block;
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: 0;
+    width: var(--ds-size-12);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Focusing the input rings the whole group, not just the input. Disabled inputs can't
+     match :focus-visible/:hover, so only [readonly] needs excluding, never :disabled. */
+  .wrapper:has(.input:focus-visible):not(:has(.input[readonly])) {
+    outline: var(--_ds--focus, var(--dsc-focus-outline));
+    outline-offset: var(--_ds--focus, var(--ds-border-width-focus));
+    box-shadow: var(--_ds--focus, var(--dsc-focus-boxShadow));
+  }
+  .wrapper:has(.input:focus-visible) .input {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Same for hover, skipped while focused. --dsc-input-outline-*--hover won't work here
+     (scoped to .ds-input, doesn't inherit up to the wrapper) */
+  .wrapper:has(.input:hover):not(:has(.input:focus-visible, .input[readonly])) {
+    outline-color: var(--ds-color-neutral-border-default);
+    outline-style: solid;
+    outline-width: var(--ds-border-width-default);
+  }
+  .wrapper:has(.input:hover) .input {
+    outline: none !important;
+  }
+
+  /* ds-field marks the text input invalid when there's a validation message; carry the red
+     border on round the button so the error frames the whole control. The left border is the
+     divider between input and button, so it stays neutral. Same token as
+     .ds-input[aria-invalid=true] (--dsc-input-accent-color--invalid is scoped to .ds-input).
+     !important because Button.module.scss is unlayered and beats this layer. */
+  .wrapper:has(.input[aria-invalid='true']) .button {
+    border-top-color: var(--ds-color-danger-text-subtle) !important;
+    border-right-color: var(--ds-color-danger-text-subtle) !important;
+    border-bottom-color: var(--ds-color-danger-text-subtle) !important;
+  }
+
+  /* Stale :hover right after a mouse pick (see usePickerText). Background only: the outline
+     variant's text colour is its own, not --dsc-button-color. */
+  .wrapper[data-picked] .button:hover {
+    background-color: var(--dsc-button-background) !important;
+  }
+
+  /* Raw tokens, not --dsc-input-*--readonly — those are scoped to .ds-input */
+  .input[readonly] {
+    color: var(--ds-color-neutral-text-subtle) !important;
+  }
+  .wrapper:has(.input[readonly]) {
+    opacity: 1;
+  }
+
+  /* readOnly leaves the button enabled (so it isn't dimmed like disabled), so it would otherwise
+     hover and press like a normal button. */
+  .wrapper:has(.input[readonly]) .button,
+  .wrapper:has(.input[readonly]) .button:hover,
+  .wrapper:has(.input[readonly]) .button:active {
+    border: 1px solid var(--ds-color-neutral-border-subtle) !important;
+    background-color: var(--ds-color-neutral-surface-tinted) !important;
+    color: var(--ds-color-neutral-text-subtle) !important;
+    cursor: revert;
+  }
+
+  /* A real :disabled button can't reach :hover/:active, but pin its background anyway in case
+     of forced devtools states */
+  .button:disabled {
+    background-color: var(--dsc-button-background) !important;
+  }
+}
