@@ -88,7 +88,12 @@ export const usePickerText = ({
     setPrevValue(value);
     const echo = emitted !== undefined && kind.format(emitted.value) === kind.format(value);
     if (emitted !== undefined) setEmitted(undefined);
-    if (!echo && kind.format(value) !== kind.format(kind.parse(normalize(kind, text, false)))) {
+    // Without a value, only an empty field matches: a half-typed draft doesn't parse either, but a
+    // reset to undefined must still clear it.
+    const matches = value
+      ? kind.format(value) === kind.format(kind.parse(normalize(kind, text, false)))
+      : text.trim() === '';
+    if (!echo && !matches) {
       setText(kind.format(value));
       setError(undefined);
     }
@@ -143,7 +148,7 @@ export const usePickerText = ({
     // Enter can submit the form without a blur, so settle the text first. flushSync makes the
     // parent re-render before the browser submits, so its submit handler sees the new value and
     // not the old one (or a half-typed edit that was never reported).
-    if (e.key === 'Enter' && !e.nativeEvent.isComposing && !readOnly) {
+    if (e.key === 'Enter' && !e.nativeEvent.isComposing && !readOnly && !disabled) {
       flushSync(commit);
       return;
     }
@@ -170,7 +175,10 @@ export const usePickerText = ({
   };
 
   const onTextBlur = () => {
-    commit();
+    // A read-only field can still take focus. It must not reformat or re-validate what the app put
+    // there; a value outside min/max would otherwise be reported as undefined and wiped.
+    // Disabled too: a field disabled while focused gets a blur.
+    if (!readOnly && !disabled) commit();
     setBlurCount((n) => n + 1);
   };
 
